@@ -1,0 +1,8 @@
+router bgp 100
+ bgp router-id 10.6.6.6
+!
+snmp-server ifindex persist
+snmp-server packetsize 4096
+snmp-server location SFO
+access-list 1 permit 10.10.15.15
+access-list 1 permit 10.10.20.20

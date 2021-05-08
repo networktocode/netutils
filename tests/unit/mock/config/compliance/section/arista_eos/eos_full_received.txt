@@ -1,0 +1,7 @@
+ntp server 10.1.1.1
+ntp server 10.2.2.2 prefer
+snmp-server contact John Smith
+snmp-server location Network to Code - NYC | NY
+snmp-server community networktocode ro
+snmp-server community secure rw
+snmp-server host 10.1.1.1 version 2c networktocode

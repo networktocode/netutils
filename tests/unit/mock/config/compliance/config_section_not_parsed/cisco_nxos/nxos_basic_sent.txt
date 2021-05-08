@@ -1,0 +1,6 @@
+ntp server 10.1.1.1 use-vrf default
+ntp server 10.2.2.2 prefer use-vrf default
+ip route 0.0.0.0/0 10.0.0.2
+vlan 1,248
+vlan 248
+  name vlan248

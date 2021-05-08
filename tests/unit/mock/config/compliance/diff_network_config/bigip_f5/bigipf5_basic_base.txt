@@ -1,0 +1,6 @@
+cm device-group gtm {
+    devices {
+        gns-elb01.7stacktech.com { }
+    }
+    network-failover disabled
+}

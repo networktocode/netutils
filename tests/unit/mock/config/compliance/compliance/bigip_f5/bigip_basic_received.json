@@ -1,0 +1,12 @@
+{
+   "rte": {
+      "actual": "net route-domain 0 {\n    id 0\n    vlans {\n        proxy_transit\n        http-tunnel\n        socks-tunnel\n        backend_transit\n    }\n}",
+      "cannot_parse": true,
+      "compliant": true,
+      "extra": "",
+      "intended": "net route-domain 0 {\n    id 0\n    vlans {\n        proxy_transit\n        http-tunnel\n        socks-tunnel\n        backend_transit\n    }\n}",
+      "missing": "",
+      "ordered_compliant": true,
+      "unordered_compliant": true
+   }
+}

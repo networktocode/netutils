@@ -1,0 +1,11 @@
+interface Ethernet1/1
+  no switchport
+  mac-address 0000.1100.2222
+  ip address 10.10.10.6/30
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  mac-address 0011.1111.2222
+  ip address 10.10.10.9/30
+  no shutdown

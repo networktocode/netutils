@@ -1,0 +1,9 @@
+net route-domain 0 {
+    id 0
+    vlans {
+        proxy_transit
+        http-tunnel
+        socks-tunnel
+        backend_transit
+    }
+}

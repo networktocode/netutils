@@ -1,0 +1,1 @@
+set interfaces ge-0/0/0 unit 0 family inet address 10.10.0.22/30

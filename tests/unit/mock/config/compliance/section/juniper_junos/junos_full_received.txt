@@ -1,0 +1,16 @@
+set interfaces ge-0/0/0 unit 0 family inet address 10.10.0.21/30
+set interfaces ge-0/0/1 unit 0 family inet address 10.10.0.25/30
+set interfaces ge-0/0/2 unit 0 family inet
+set interfaces ge-0/0/3 unit 0 family inet address 10.11.11.5/30
+set interfaces ge-0/0/4 unit 0 family inet
+set interfaces ge-0/0/5 unit 0 family inet
+set interfaces ge-0/0/6 unit 0 family inet
+set interfaces ge-0/0/7 unit 0 family inet
+set interfaces fxp0 unit 0 description MANAGEMENT_INTEFACE__DO_NOT_CHANGE
+set interfaces fxp0 unit 0 family inet address 10.0.0.15/24
+set interfaces lo0 unit 0 family inet address 10.0.20.1/32
+set protocols bgp local-as 65252
+set protocols bgp group p2p export send-direct
+set protocols bgp group p2p neighbor 10.10.0.22 peer-as 65252
+set protocols bgp group p2p neighbor 10.10.0.26 peer-as 65252
+set protocols bgp group p2p neighbor 10.11.11.6 peer-as 65253

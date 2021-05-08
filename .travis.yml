@@ -1,0 +1,42 @@
+---
+# Add additional stages in the order of execution here, and then under the job:include: key
+stages:
+  - "lint"
+  - "test"
+
+if: "type IN (pull_request)"  # Add in "branch" as an option if desired for branch testing as well
+language: "python"
+
+env:
+  global:
+    - "INVOKE_LOCAL=True"
+  matrix:
+    - "PYTHON_VER=3.6"
+    - "PYTHON_VER=3.7"
+    - "PYTHON_VER=3.8"
+    - "PYTHON_VER=3.9"
+before_script:
+  - "pip install --upgrade pip"
+  - "pip install invoke poetry toml"
+  - "poetry config virtualenvs.create false"
+  - "poetry install --no-interaction"
+script:
+  - "invoke coverage"
+
+jobs:
+  include:
+    - stage: "lint"
+      env:
+        - "INVOKE_LOCAL=True"
+      before_script:
+        - "pip install --upgrade pip"
+        - "pip install invoke poetry toml"
+        - "poetry config virtualenvs.create false"
+        - "poetry install --no-interaction"
+      script:
+        - "invoke black"
+        - "invoke bandit"  # Bandit fails to function on > Py3.8 https://github.com/PyCQA/bandit/issues/639
+        - "invoke pydocstyle"
+        - "invoke flake8"
+        - "invoke yamllint"
+        - "invoke pylint"

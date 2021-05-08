@@ -1,0 +1,7 @@
+interface Ethernet2
+   no switchport
+   ip address 10.11.11.14/30
+!
+interface Ethernet3
+   no switchport
+   ip address 10.11.11.19/30

@@ -1,0 +1,3 @@
+cm device-group gtm {
+    devices {
+        gns-elb02.7stacktech.com { }

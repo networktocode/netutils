@@ -1,0 +1,12 @@
+{
+    "bgp": {
+       "actual": "set protocols bgp local-as 65252\nset protocols bgp group p2p export send-direct\nset protocols bgp group p2p neighbor 10.10.0.22 peer-as 65252\nset protocols bgp group p2p neighbor 10.10.0.26 peer-as 65252\nset protocols bgp group p2p neighbor 10.11.11.6 peer-as 65253",
+       "cannot_parse": true,
+       "compliant": true,
+       "extra": "",
+       "intended": "set protocols bgp local-as 65252\nset protocols bgp group p2p export send-direct\nset protocols bgp group p2p neighbor 10.10.0.22 peer-as 65252\nset protocols bgp group p2p neighbor 10.10.0.26 peer-as 65252\nset protocols bgp group p2p neighbor 10.11.11.6 peer-as 65253",
+       "missing": "",
+       "ordered_compliant": true,
+       "unordered_compliant": true
+    }
+ }

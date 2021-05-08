@@ -1,0 +1,32 @@
+{
+   "bgp": {
+      "compliant": true,
+      "missing": "",
+      "extra": "",
+      "cannot_parse": true,
+      "unordered_compliant": true,
+      "ordered_compliant": true,
+      "actual": "router bgp 100\n bgp router-id 10.6.6.5",
+      "intended": "router bgp 100\n bgp router-id 10.6.6.5"
+   },
+   "snmp": {
+      "actual": "snmp-server ifindex persist\nsnmp-server packetsize 4096\nsnmp-server location San Fran",
+      "cannot_parse": true,
+      "compliant": false,
+      "extra": "snmp-server location San Fran",
+      "intended": "snmp-server ifindex persist\nsnmp-server packetsize 4096\nsnmp-server location SFO",
+      "missing": "snmp-server location SFO",
+      "ordered_compliant": false,
+      "unordered_compliant": false
+   },
+   "ntp": {
+      "actual": "ntp server 192.168.0.100\nntp server 192.168.0.101",
+      "cannot_parse": true,
+      "compliant": true,
+      "extra": "",
+      "intended": "ntp server 192.168.0.101\nntp server 192.168.0.100",
+      "missing": "",
+      "ordered_compliant": false,
+      "unordered_compliant": true
+   }
+}

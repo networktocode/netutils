@@ -1,0 +1,123 @@
+logging level aaa 4
+logging level acllog 4
+logging level aclmgr 4
+logging level adbm 4
+logging level ascii-cfg 4
+logging level bootvar 4
+logging level callhome 4
+logging level capability 4
+logging level cdp 4
+logging level cert_enroll 4
+logging level cfs 4
+logging level clk_mgr 4
+logging level confcheck 4
+logging level copp 4
+logging level dhclient 4
+logging level diag_port_lb 4
+logging level diagclient 4
+logging level diagmgr 4
+logging level eltm 4
+logging level eth_dstats 4
+logging level eth_port_channel 4
+logging level ethpm 4
+logging level evmc 4
+logging level evms 4
+logging level feature-mgr 4
+logging level fs-daemon 4
+logging level hsrp 4
+logging level ifmgr 4
+logging level interface-vlan 4
+logging level ipfib 4
+logging level l2fm 4
+logging level l2pt 4
+logging level licmgr 4
+logging level lim 4
+logging level module 4
+logging level monitor 4
+logging level mvsh 4
+logging level ntp 4
+logging level otm 4
+logging level pfstat 4
+logging level platform 4
+logging level plcmgr 4
+logging level plugin 4
+logging level radius 4
+logging level res_mgr 4
+logging level sal 4
+logging level securityd 4
+logging level session-mgr 4
+logging level sksd 4
+logging level snmpd 4
+logging level snmpmib_proc 4
+logging level spanning-tree 4
+logging level stripcl 4
+logging level template_manager 4
+logging level ufdm 4
+logging level vdc_mgr 4
+logging level virtual-service 4
+logging level vlan_mgr 4
+logging level vpc 4
+logging level vshd 4
+logging level xbar 4
+logging level xmlma 4
+logging level urib 4
+logging level igmp 4
+logging level mrib 4
+logging level m6rib 4
+logging level arp 4
+logging level clis 4
+logging level netstack 4
+logging level bgp 4
+logging level icmpv6 4
+logging level adjmgr 4
+logging level pktmgr 4
+logging level ecp 4
+logging level rpm 4
+logging level smm 4
+logging level u6rib 4
+logging level lldp 4
+logging level sysmgr 4
+router bgp 65250
+  router-id 10.0.10.4
+  log-neighbor-changes
+  address-family ipv4 unicast
+    redistribute direct route-map PERMIT_CONN_ROUTES
+  neighbor 10.10.10.6
+    remote-as 65250
+    address-family ipv4 unicast
+  neighbor 10.10.10.10
+    remote-as 65250
+    address-family ipv4 unicast
+  neighbor 10.10.10.14
+    remote-as 65250
+    address-family ipv4 unicast
+  neighbor 10.10.10.18
+    remote-as 65250
+    address-family ipv4 unicast
+  neighbor 10.10.11.5
+    remote-as 65251
+    address-family ipv4 unicast
+logging level l3vm 4
+logging server 10.125.1.171 6 port 7008
+logging source-interface mgmt0
+logging level kernel 4
+logging level user 4
+logging level mail 4
+logging level daemon 4
+logging level auth 4
+logging level syslog 4
+logging level lpr 4
+logging level news 4
+logging level uucp 4
+logging level cron 4
+logging level authpri 4
+logging level ftp 4
+logging level local0 4
+logging level local1 4
+logging level local2 4
+logging level local3 4
+logging level local4 4
+logging level local5 4
+logging level local6 4
+logging level local7 4
+logging origin-id hostname

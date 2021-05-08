@@ -1,0 +1,12 @@
+{
+    "pfl": {
+       "actual": "config wlan profiling radius dhcp disable 14\nconfig wlan profiling radius http disable 14\nconfig wlan profiling local dhcp disable 14\nconfig wlan profiling local http disable 14\nconfig wlan profiling radius dhcp disable 15\nconfig wlan profiling radius http disable 15\nconfig wlan profiling local dhcp disable 15\nconfig wlan profiling local http disable 15\nconfig wlan profiling radius dhcp disable 16\nconfig wlan profiling radius http disable 16\nconfig wlan profiling local dhcp disable 16\nconfig wlan profiling local http disable 16",
+       "cannot_parse": true,
+       "compliant": true,
+       "extra": "",
+       "intended": "config wlan profiling radius dhcp disable 14\nconfig wlan profiling radius http disable 14\nconfig wlan profiling local dhcp disable 14\nconfig wlan profiling local http disable 14\nconfig wlan profiling radius dhcp disable 15\nconfig wlan profiling radius http disable 15\nconfig wlan profiling local dhcp disable 15\nconfig wlan profiling local http disable 15\nconfig wlan profiling radius dhcp disable 16\nconfig wlan profiling radius http disable 16\nconfig wlan profiling local dhcp disable 16\nconfig wlan profiling local http disable 16",
+       "missing": "",
+       "ordered_compliant": true,
+       "unordered_compliant": true
+    }
+ }

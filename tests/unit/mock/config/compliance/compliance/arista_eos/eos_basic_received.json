@@ -1,0 +1,12 @@
+{
+   "bgp": {
+      "actual": "router bgp 65254\n   router-id 10.0.20.6\n   neighbor 10.11.11.13 remote-as 65253\n   neighbor 10.11.11.13 maximum-routes 12000\n   neighbor 10.11.11.21 remote-as 65253\n   neighbor 10.11.11.21 maximum-routes 12000\n   redistribute connected",
+      "cannot_parse": true,
+      "compliant": true,
+      "extra": "",
+      "intended": "router bgp 65254\n   router-id 10.0.20.6\n   neighbor 10.11.11.13 remote-as 65253\n   neighbor 10.11.11.13 maximum-routes 12000\n   neighbor 10.11.11.21 remote-as 65253\n   neighbor 10.11.11.21 maximum-routes 12000\n   redistribute connected",
+      "missing": "",
+      "ordered_compliant": true,
+      "unordered_compliant": true
+   }
+}

@@ -1,0 +1,540 @@
+auth password-policy { }
+auth remote-role { }
+auth remote-user { }
+auth source { }
+auth user admin {
+    description "Admin User"
+    encrypted-password $6$S60o5AF4$xxdlQFPDuVuiwypVP4jXWn59NA4CFBdG6PLQlD.PH.XpZYGkNQ76brrq1Za6/E0d/ZlWnM1EU5Iv7xLvD4pUc.
+    partition Common
+    partition-access {
+        all-partitions {
+            role admin
+        }
+    }
+    shell bash
+}
+cli global-settings { }
+cli preference {
+    alias-path { /Common }
+    prompt { host user status current-folder config-sync-status }
+}
+cm cert dtca-bundle.crt {
+    certificate-key-size 2048
+    checksum SHA1:1314:92add39743970ee8b3ae868dd4a3a05d57419982
+    create-time 2020-12-12:19:42:39
+    created-by root
+    expiration-date 1923190955
+    expiration-string "Dec 11 03:42:35 2030 GMT"
+    issuer CN=51d19b7f-e28f-4c53-b2de0c90711cd000
+    key-type rsa-public
+    last-update-time 2020-12-12:19:42:39
+    mode 33188
+    revision 2
+    serial-number 947166
+    size 1314
+    source-path none
+    subject CN=51d19b7f-e28f-4c53-b2de0c90711cd000
+    updated-by root
+    version 3
+}
+cm cert dtca.crt {
+    certificate-key-size 2048
+    checksum SHA1:1314:92add39743970ee8b3ae868dd4a3a05d57419982
+    create-time 2020-12-12:19:42:39
+    created-by root
+    expiration-date 1923190955
+    expiration-string "Dec 11 03:42:35 2030 GMT"
+    issuer CN=51d19b7f-e28f-4c53-b2de0c90711cd000
+    key-type rsa-public
+    last-update-time 2020-12-12:19:42:39
+    mode 33188
+    revision 2
+    serial-number 947166
+    size 1314
+    source-path none
+    subject CN=51d19b7f-e28f-4c53-b2de0c90711cd000
+    updated-by root
+    version 3
+}
+cm cert dtdi.crt {
+    certificate-key-size 2048
+    checksum SHA1:1294:af8b62db6ae91409690c880a99a17246b9e28723
+    create-time 2020-12-12:19:42:39
+    created-by root
+    expiration-date 1923190959
+    expiration-string "Dec 11 03:42:39 2030 GMT"
+    issuer CN=51d19b7f-e28f-4c53-b2de0c90711cd000
+    key-type rsa-public
+    last-update-time 2020-12-12:19:42:39
+    mode 33188
+    revision 2
+    serial-number 926011
+    size 1294
+    source-path none
+    subject CN=gns-elb01.7stacktech.com
+    updated-by root
+    version 3
+}
+cm device gns-elb01.7stacktech.com {
+    active-modules { "BIG-IP, VE Trial|XQLJTKD-TNNXIJC|Rate Shaping|External Interface and Network HSM, VE|SDN Services, VE|SSL, Forward Proxy, VE|BIG-IP VE, Multicast Routing|APM, Limited|SSL, VE|DNS (1K QPS), VE|Routing Bundle, VE|ASM, VE|Crytpo Offload, VE, Tier 1 (25M - 200M)|Max Compression, VE|Advanced Web Application Firewall, VE|AFM, VE|DNSSEC|Anti-Virus Checks|Base Endpoint Security Checks|Firewall Checks|Network Access|Secure Virtual Keyboard|APM, Web Application|Machine Certificate Checks|Protected Workspace|Remote Desktop|App Tunnel|VE, Carrier Grade NAT (AFM ONLY)|PSM, VE" }
+    base-mac 0c:90:71:1c:d0:00
+    build 0.0.9
+    cert dtdi.crt
+    chassis-id f24ca961-d5b6-0d42-7057eb061cd0
+    edition "Point Release 2"
+    failover-state active
+    hostname gns-elb01.7stacktech.com
+    key dtdi.key
+    management-ip 192.168.0.172
+    marketing-name "BIG-IP Virtual Edition"
+    platform-id Z100
+    product BIG-IP
+    self-device true
+    time-zone America/Los_Angeles
+    version 15.1.0.2
+}
+cm device-group device_trust_group {
+    auto-sync enabled
+    devices {
+        gns-elb01.7stacktech.com { }
+    }
+    network-failover disabled
+}
+cm device-group gtm {
+    devices {
+        gns-elb01.7stacktech.com { }
+    }
+    network-failover disabled
+}
+cm key dtca.key {
+    checksum SHA1:1704:9e6584f71aafa6fcf36354cc322ca74984756f13
+    create-time 2020-12-12:19:42:39
+    created-by root
+    key-size 2048
+    last-update-time 2020-12-12:19:42:39
+    mode 33184
+    revision 2
+    size 1704
+    source-path none
+    updated-by root
+}
+cm key dtdi.key {
+    checksum SHA1:1700:cbba9830104b16bc4ec7e7da4cfa46d0d24ad6f6
+    create-time 2020-12-12:19:42:39
+    created-by root
+    key-size 2048
+    last-update-time 2020-12-12:19:42:39
+    mode 33184
+    revision 2
+    size 1700
+    source-path none
+    updated-by root
+}
+cm traffic-group traffic-group-1 {
+    unit-id 1
+}
+cm traffic-group traffic-group-local-only {
+    is-floating false
+}
+cm trust-domain Root {
+    ca-cert dtca.crt
+    ca-cert-bundle dtca-bundle.crt
+    ca-devices { /Common/gns-elb01.7stacktech.com }
+    ca-key dtca.key
+    status standalone
+    trust-group device_trust_group
+}
+ltm default-node-monitor {
+    rule none
+}
+ltm dns analytics global-settings { }
+ltm dns cache global-settings { }
+ltm global-settings connection { }
+ltm global-settings general {
+    share-single-mac vmw-compat
+}
+ltm global-settings rule { }
+ltm global-settings traffic-control { }
+ltm persistence global-settings { }
+ltm tacdb licenseddb licensed-tacdb {
+    partition none
+}
+net cos global-settings { }
+net dag-globals { }
+net dns-resolver f5-aws-dns {
+    forward-zones {
+        amazonaws.com {
+            nameservers {
+                8.8.8.8:domain { }
+            }
+        }
+        idservice.net {
+            nameservers {
+                8.8.8.8:domain { }
+            }
+        }
+    }
+    route-domain 0
+}
+net fdb tunnel http-tunnel { }
+net fdb tunnel socks-tunnel { }
+net fdb vlan backend_transit { }
+net fdb vlan proxy_transit { }
+net interface 1.1 {
+    if-index 48
+    mac-address 0c:90:71:1c:d0:01
+    media-active 10000T-FD
+    media-fixed 10000T-FD
+    media-max auto
+}
+net interface 1.2 {
+    if-index 64
+    mac-address 0c:90:71:1c:d0:02
+    media-active 10000T-FD
+    media-fixed 10000T-FD
+    media-max auto
+    mtu 9198
+}
+net interface mgmt {
+    if-index 32
+    mac-address 0c:90:71:1c:d0:00
+    media-active 100TX-FD
+}
+net ipsec ike-daemon ikedaemon {
+    log-publisher default-ipsec-log-publisher
+}
+net lldp-globals { }
+net multicast-globals { }
+net packet-filter-trusted { }
+net port-list _sys_self_allow_tcp_defaults {
+    ports {
+        1029-1043 { }
+        domain { }
+        f5-iquery { }
+        https { }
+        snmp { }
+        ssh { }
+    }
+}
+net port-list _sys_self_allow_udp_defaults {
+    ports {
+        520 { }
+        cap { }
+        domain { }
+        f5-iquery { }
+        snmp { }
+    }
+}
+net route Default {
+    description "for managing system and internet updates"
+    gw 192.168.192.10
+    network default
+}
+net route-domain 0 {
+    id 0
+    vlans {
+        proxy_transit
+        http-tunnel
+        socks-tunnel
+        backend_transit
+    }
+}
+net self app-servers-backend_selfIP {
+    address 192.168.194.1/24
+    allow-service all
+    traffic-group traffic-group-local-only
+    vlan backend_transit
+}
+net self Proxy_transit_selfIP {
+    address 192.168.192.11/29
+    allow-service all
+    traffic-group traffic-group-local-only
+    vlan proxy_transit
+}
+net self-allow {
+    defaults {
+        igmp:any
+        ospf:any
+        pim:any
+        tcp:domain
+        tcp:f5-iquery
+        tcp:https
+        tcp:snmp
+        tcp:ssh
+        udp:520
+        udp:cap
+        udp:domain
+        udp:f5-iquery
+        udp:snmp
+    }
+}
+net stp-globals { }
+net tunnels tunnel http-tunnel {
+    description "Tunnel for http-explicit profile"
+    if-index 96
+    profile tcp-forward
+}
+net tunnels tunnel socks-tunnel {
+    description "Tunnel for socks profile"
+    if-index 112
+    profile tcp-forward
+}
+net vlan backend_transit {
+    description "application servers"
+    fwd-mode l3
+    if-index 128
+    interfaces {
+        1.2 { }
+    }
+    sflow {
+        poll-interval-global no
+        sampling-rate-global no
+    }
+    tag 5
+}
+net vlan proxy_transit {
+    description "L2/L3 link between bigip and external firewall"
+    fwd-mode l3
+    if-index 144
+    interfaces {
+        1.1 { }
+    }
+    sflow {
+        poll-interval-global no
+        sampling-rate-global no
+    }
+    tag 4
+}
+security firewall management-ip-rules { }
+sys aom { }
+sys autoscale-group { }
+sys core {
+    bigd-action rotate
+    bigd-manage false
+    bigd-max 1
+    mcpd-action rotate
+    mcpd-manage false
+    mcpd-max 1
+    retention 30
+    tmm-action rotate
+    tmm-manage false
+    tmm-max 1
+}
+sys crypto acceleration-strategy { }
+sys crypto allow-key-export { }
+sys crypto key f5_api_com.key {
+    key-size 4096
+    key-type rsa-private
+    security-type password
+}
+sys daemon-log-settings clusterd { }
+sys daemon-log-settings csyncd { }
+sys daemon-log-settings icr-eventd { }
+sys daemon-log-settings icrd { }
+sys daemon-log-settings lind { }
+sys daemon-log-settings mcpd { }
+sys daemon-log-settings tmm { }
+sys datastor { }
+sys diags ihealth {
+    expiration 30
+    no-ihealth false
+    options none
+    password none
+    user none
+}
+sys diags ihealth-request {
+    error-str none
+    ihealth-finish-time 0
+    ihealth-start-time 0
+    progress 0
+    qk-progress 0
+    qk-progress-msg none
+    qkview-date 0
+    qkview-filename none
+    qkview-size 0
+    qkview-user none
+    tcpdump-date 0
+    tcpdump-filename none
+    tcpdump-size 0
+}
+sys disk logical-disk HD1 {
+    mode mixed
+    size 77824
+    vg-free 21420
+    vg-in-use 56184
+}
+sys disk logical-disk HD2 {
+    size 102400
+    vg-reserved 20480
+}
+sys dns { }
+sys dynad settings {
+    development-mode false
+}
+sys ecm cloud-provider aws-ec2 {
+    description "The aws-ec2 parameters"
+    property-template {
+        account { }
+        availability-zone {
+            valid-values { a b c d }
+        }
+        instance-type {
+            valid-values { t2.micro t2.small t2.medium m3.medium m3.large m3.xlarge m3.2xlarge c3.large c3.xlarge c3.2xlarge c3.4xlarge c3.8xlarge r3.large r3.xlarge r3.2xlarge r3.4xlarge r3.8xlarge }
+        }
+        region {
+            valid-values { us-east-1 us-west-1 us-west-2 sa-east-1 eu-west-1 eu-central-1 ap-southeast-2 ap-southeast-1 ap-northeast-1 }
+        }
+    }
+}
+sys ecm cloud-provider dnet {
+    description "The dnet parameters"
+}
+sys ecm cloud-provider vsphere {
+    description "The vsphere parameters"
+    property-template {
+        cloud-host-ip { }
+        dhcp-network-name { }
+        end-point-url { }
+        node-name { }
+    }
+}
+sys ecm config { }
+sys file ssl-key f5_api_com.key {
+    checksum SHA1:3306:91ec823d0735dc55a9a10a79fbfb06bcc0d492f6
+    create-time 2020-12-12:19:34:46
+    created-by root
+    key-size 4096
+    last-update-time 2020-12-12:19:34:46
+    mode 33184
+    passphrase $M$rM$EzlYKD/VPkXkAtpwTviMk6MSuXiyAUcuoizZ1fVycn62ZUAFWjS5gHy8jfxIDYGJQmP7wmOX9kMacQY851RvxQ3INO/NklfBsKToZd8R5ho=
+    revision 1
+    security-type password
+    size 3306
+    source-path file:///config/ssl/ssl.key/f5_api_com.key
+    updated-by root
+}
+sys folder Drafts {
+    device-group none
+    inherited-devicegroup true
+    inherited-traffic-group true
+    traffic-group traffic-group-1
+}
+sys fpga firmware-config {
+    type standard-balanced-fpga
+}
+sys global-settings {
+    gui-setup disabled
+    hostname gns-elb01.7stacktech.com
+    mgmt-dhcp disabled
+}
+sys httpd { }
+sys icontrol-soap { }
+sys log-rotate { }
+sys management-dhcp sys-mgmt-dhcp-config {
+    request-options { subnet-mask broadcast-address routers domain-name domain-name-servers host-name ntp-servers interface-mtu }
+}
+sys management-ip 192.168.0.172/24 {
+    description static-fallback
+}
+sys management-ovsdb {
+    bfd-disabled
+    bfd-route-domain none
+    ca-cert-file none
+    cert-file none
+    cert-key-file none
+    disabled
+    flooding-type replicator
+    log-level info
+    logical-routing-type none
+    tunnel-maintenance-mode active
+}
+sys management-route default {
+    gateway 192.168.0.1
+    network default
+}
+sys ntp { }
+sys outbound-smtp {
+    from-line-override disabled
+    mailhub localhost
+}
+sys provision ltm {
+    level nominal
+}
+sys scriptd { }
+sys sflow global-settings http { }
+sys sflow global-settings interface { }
+sys sflow global-settings system { }
+sys sflow global-settings vlan { }
+sys snmp {
+    agent-addresses { tcp6:161 udp6:161 }
+    communities {
+        comm-public {
+            community-name public
+            source default
+        }
+    }
+    disk-monitors {
+        root {
+            minspace 2000
+            path /
+        }
+        var {
+            minspace 10000
+            path /var
+        }
+    }
+    process-monitors {
+        bigd {
+            max-processes infinity
+            process bigd
+        }
+        chmand {
+            process chmand
+        }
+        httpd {
+            max-processes infinity
+            process httpd
+        }
+        mcpd {
+            process mcpd
+        }
+        sod {
+            process sod
+        }
+        tmm {
+            max-processes infinity
+            process tmm
+        }
+    }
+}
+sys software update {
+    auto-check enabled
+    auto-phonehome enabled
+    frequency weekly
+}
+sys software volume HD1.1 {
+    active
+    active-requested
+    basebuild 0.0.9
+    build 0.0.9
+    media {
+        HD1.1 {
+            default-boot-location
+            media hd
+            size default
+        }
+    }
+    product BIG-IP
+    status complete
+    version 15.1.0.2
+}
+sys sshd { }
+sys state-mirroring { }
+sys syslog { }
+sys telemd {
+    partition none
+}
+sys turboflex profile-config {
+    type turboflex-adc
+}
+sys url-db download-schedule urldb { }

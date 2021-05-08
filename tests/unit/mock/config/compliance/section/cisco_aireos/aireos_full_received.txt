@@ -1,0 +1,6 @@
+config snmp version v1 disable
+config snmp version v2c disable
+config snmp community delete public
+config snmp community delete private
+config snmp version v3 disable
+config snmp v3user delete default

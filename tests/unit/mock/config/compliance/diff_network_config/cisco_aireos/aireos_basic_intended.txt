@@ -1,0 +1,5 @@
+config interface vlan management 40
+config interface port management 5
+config interface address management 192.168.2.154 255.255.255.224 192.168.2.158
+config interface dhcp management primary 192.168.2.159
+config interface dhcp management proxy-mode disable

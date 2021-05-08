@@ -1,0 +1,7 @@
+config mdns snooping disable
+config lag enable
+config port adminmode 1 disable
+config port adminmode 2 disable
+config port adminmode 3 disable
+config port adminmode 4 disable
+config port adminmode 5 enable

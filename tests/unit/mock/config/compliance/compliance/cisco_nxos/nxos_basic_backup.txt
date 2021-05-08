@@ -1,0 +1,343 @@
+version 9.3(3) Bios:version
+hostname jcy-spine-01
+vdc jcy-spine-01 id 1
+  limit-resource vlan minimum 16 maximum 4094
+  limit-resource vrf minimum 2 maximum 4096
+  limit-resource port-channel minimum 0 maximum 511
+  limit-resource u4route-mem minimum 128 maximum 128
+  limit-resource u6route-mem minimum 96 maximum 96
+  limit-resource m4route-mem minimum 58 maximum 58
+  limit-resource m6route-mem minimum 8 maximum 8
+
+feature nxapi
+feature bash-shell
+feature scp-server
+cfs eth distribute
+feature bgp
+feature interface-vlan
+feature hsrp
+feature vpc
+feature lldp
+
+logging level aaa 4
+logging level acllog 4
+logging level aclmgr 4
+logging level adbm 4
+logging level ascii-cfg 4
+logging level bootvar 4
+logging level callhome 4
+logging level capability 4
+logging level cdp 4
+logging level cert_enroll 4
+logging level cfs 4
+logging level clk_mgr 4
+logging level confcheck 4
+logging level copp 4
+logging level dhclient 4
+logging level diag_port_lb 4
+logging level diagclient 4
+logging level diagmgr 4
+logging level eltm 4
+logging level eth_dstats 4
+logging level eth_port_channel 4
+logging level ethpm 4
+logging level evmc 4
+logging level evms 4
+logging level feature-mgr 4
+logging level fs-daemon 4
+logging level hsrp 4
+logging level ifmgr 4
+logging level interface-vlan 4
+logging level ipfib 4
+logging level l2fm 4
+logging level l2pt 4
+logging level licmgr 4
+logging level lim 4
+logging level module 4
+logging level monitor 4
+logging level mvsh 4
+logging level ntp 4
+logging level otm 4
+logging level pfstat 4
+logging level platform 4
+logging level plcmgr 4
+logging level plugin 4
+logging level radius 4
+logging level res_mgr 4
+logging level sal 4
+logging level securityd 4
+logging level session-mgr 4
+logging level sksd 4
+logging level snmpd 4
+logging level snmpmib_proc 4
+logging level spanning-tree 4
+logging level stripcl 4
+logging level template_manager 4
+logging level ufdm 4
+logging level vdc_mgr 4
+logging level virtual-service 4
+logging level vlan_mgr 4
+logging level vpc 4
+logging level vshd 4
+logging level xbar 4
+logging level xmlma 4
+logging level urib 4
+logging level igmp 4
+logging level mrib 4
+logging level m6rib 4
+logging level arp 4
+logging level clis 4
+logging level netstack 4
+logging level bgp 4
+logging level icmpv6 4
+logging level adjmgr 4
+logging level pktmgr 4
+logging level ecp 4
+logging level rpm 4
+logging level smm 4
+logging level u6rib 4
+logging level lldp 4
+
+no password strength-check
+username admin password 5 <redacted_config>  role network-admin
+username ntc password 5 <redacted_config>  role network-admin
+username ntc passphrase  lifetime 99999 warntime 14 gracetime 3
+ip domain-lookup
+ip domain-name infra.ntc.com
+ip access-list PERMIT_ROUTES
+  10 permit ip any any
+copp profile strict
+snmp-server contact John Smith
+snmp-server location Network to Code - NYC | NY
+snmp-server user ntc network-admin auth md5 0xe15d7e7768418903040d565987788402 priv 0xe15d7e7768418903040d565987788402 localizedkey
+snmp-server user admin auth md5 0x3c0c5d5139941831378b36418799e1cc priv 0x3c0c5d5139941831378b36418799e1cc localizedkey engineID 128:0:0:9:3:82:208:168:0:27:1
+snmp-server host 10.1.1.1 traps version 2c networktocode
+rmon event 1 description FATAL(1) owner PMON@FATAL
+rmon event 2 description CRITICAL(2) owner PMON@CRITICAL
+rmon event 3 description ERROR(3) owner PMON@ERROR
+rmon event 4 description WARNING(4) owner PMON@WARNING
+rmon event 5 description INFORMATION(5) owner PMON@INFO
+snmp-server community secure group network-admin
+snmp-server community networktocode group network-operator
+ntp server 10.1.1.1 use-vrf default
+ntp server 10.2.2.2 prefer use-vrf default
+
+ip route 0.0.0.0/0 10.0.0.2
+vlan 1,248
+vlan 248
+  name vlan248
+
+route-map PERMIT_CONN_ROUTES permit 10
+  match ip address PERMIT_ROUTES
+vrf context management
+
+logging level sysmgr 4
+nxapi ssl ciphers weak
+nxapi ssl protocols TLSv1
+
+
+interface Vlan1
+
+interface Ethernet1/1
+  no switchport
+  mac-address 0000.1100.2222
+  ip address 10.10.10.5/30
+  no shutdown
+
+interface Ethernet1/2
+  no switchport
+  mac-address 0011.1111.2222
+  ip address 10.10.10.9/30
+  no shutdown
+
+interface Ethernet1/3
+  no switchport
+  mac-address 0022.1122.2222
+  ip address 10.10.10.13/30
+  no shutdown
+
+interface Ethernet1/4
+  no switchport
+  mac-address 0033.1133.2222
+  ip address 10.10.10.17/30
+  no shutdown
+
+interface Ethernet1/5
+  no switchport
+  mac-address 0044.1144.2222
+  ip address 10.10.11.6/30
+  no shutdown
+
+interface Ethernet1/6
+
+interface Ethernet1/7
+
+interface Ethernet1/8
+
+interface Ethernet1/9
+
+interface Ethernet1/10
+
+interface Ethernet1/11
+
+interface Ethernet1/12
+
+interface Ethernet1/13
+
+interface Ethernet1/14
+
+interface Ethernet1/15
+
+interface Ethernet1/16
+
+interface Ethernet1/17
+
+interface Ethernet1/18
+
+interface Ethernet1/19
+
+interface Ethernet1/20
+
+interface Ethernet1/21
+
+interface Ethernet1/22
+
+interface Ethernet1/23
+
+interface Ethernet1/24
+
+interface Ethernet1/25
+
+interface Ethernet1/26
+
+interface Ethernet1/27
+
+interface Ethernet1/28
+
+interface Ethernet1/29
+
+interface Ethernet1/30
+
+interface Ethernet1/31
+
+interface Ethernet1/32
+
+interface Ethernet1/33
+
+interface Ethernet1/34
+
+interface Ethernet1/35
+
+interface Ethernet1/36
+
+interface Ethernet1/37
+
+interface Ethernet1/38
+
+interface Ethernet1/39
+
+interface Ethernet1/40
+
+interface Ethernet1/41
+
+interface Ethernet1/42
+
+interface Ethernet1/43
+
+interface Ethernet1/44
+
+interface Ethernet1/45
+
+interface Ethernet1/46
+
+interface Ethernet1/47
+
+interface Ethernet1/48
+
+interface Ethernet1/49
+
+interface Ethernet1/50
+
+interface Ethernet1/51
+
+interface Ethernet1/52
+
+interface Ethernet1/53
+
+interface Ethernet1/54
+
+interface Ethernet1/55
+
+interface Ethernet1/56
+
+interface Ethernet1/57
+
+interface Ethernet1/58
+
+interface Ethernet1/59
+
+interface Ethernet1/60
+
+interface Ethernet1/61
+
+interface Ethernet1/62
+
+interface Ethernet1/63
+
+interface Ethernet1/64
+
+interface mgmt0
+  description MANAGEMENT_DO_NOT_CHANGE
+  vrf member management
+  ip address 10.0.0.15/24
+
+interface loopback0
+  ip address 10.0.10.4/32
+line console
+line vty
+router bgp 65250
+  router-id 10.0.10.4
+  log-neighbor-changes
+  address-family ipv4 unicast
+    redistribute direct route-map PERMIT_CONN_ROUTES
+  neighbor 10.10.10.6
+    remote-as 65250
+    address-family ipv4 unicast
+  neighbor 10.10.10.10
+    remote-as 65250
+    address-family ipv4 unicast
+  neighbor 10.10.10.14
+    remote-as 65250
+    address-family ipv4 unicast
+  neighbor 10.10.10.18
+    remote-as 65250
+    address-family ipv4 unicast
+  neighbor 10.10.11.5
+    remote-as 65251
+    address-family ipv4 unicast
+logging level l3vm 4
+
+logging server 10.125.1.171 6 port 7008
+logging source-interface mgmt0
+logging level kernel 4
+logging level user 4
+logging level mail 4
+logging level daemon 4
+logging level auth 4
+logging level syslog 4
+logging level lpr 4
+logging level news 4
+logging level uucp 4
+logging level cron 4
+logging level authpri 4
+logging level ftp 4
+logging level local0 4
+logging level local1 4
+logging level local2 4
+logging level local3 4
+logging level local4 4
+logging level local5 4
+logging level local6 4
+logging level local7 4
+logging origin-id hostname
+boot nxos bootflash:/nxos.9.3.3.bin sup-1

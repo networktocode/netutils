@@ -1,0 +1,12 @@
+{
+   "bgp": {
+      "actual": "router bgp 65250\n  router-id 10.0.10.4\n  log-neighbor-changes\n  address-family ipv4 unicast\n    redistribute direct route-map PERMIT_CONN_ROUTES\n  neighbor 10.10.10.6\n    remote-as 65250\n    address-family ipv4 unicast\n  neighbor 10.10.10.10\n    remote-as 65250\n    address-family ipv4 unicast\n  neighbor 10.10.10.14\n    remote-as 65250\n    address-family ipv4 unicast\n  neighbor 10.10.10.18\n    remote-as 65250\n    address-family ipv4 unicast\n  neighbor 10.10.11.5\n    remote-as 65251\n    address-family ipv4 unicast",
+      "cannot_parse": true,
+      "compliant": true,
+      "extra": "",
+      "intended": "router bgp 65250\n  router-id 10.0.10.4\n  log-neighbor-changes\n  address-family ipv4 unicast\n    redistribute direct route-map PERMIT_CONN_ROUTES\n  neighbor 10.10.10.6\n    remote-as 65250\n    address-family ipv4 unicast\n  neighbor 10.10.10.10\n    remote-as 65250\n    address-family ipv4 unicast\n  neighbor 10.10.10.14\n    remote-as 65250\n    address-family ipv4 unicast\n  neighbor 10.10.10.18\n    remote-as 65250\n    address-family ipv4 unicast\n  neighbor 10.10.11.5\n    remote-as 65251\n    address-family ipv4 unicast",
+      "missing": "",
+      "ordered_compliant": true,
+      "unordered_compliant": true
+   }
+}

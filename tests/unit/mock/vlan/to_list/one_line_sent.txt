@@ -1,0 +1,1 @@
+switchport trunk allowed vlan 1025,1069-1072,1114,1173-1181,1501,1502

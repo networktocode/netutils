@@ -1,0 +1,2 @@
+interface Ethernet1/1
+  ip address 10.10.10.6/30

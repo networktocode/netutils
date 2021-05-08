@@ -1,0 +1,4 @@
+set interfaces ge-0/0/0 unit 0 family inet address 10.10.0.21/30
+set interfaces ge-0/0/1 unit 0 family inet address 10.10.0.25/30
+set interfaces ge-0/0/2 unit 0 family inet
+set interfaces ge-0/0/3 unit 0 family inet address 10.11.11.5/30

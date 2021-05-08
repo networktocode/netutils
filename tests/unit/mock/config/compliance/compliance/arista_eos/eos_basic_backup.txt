@@ -1,0 +1,18 @@
+router bgp 65254
+   router-id 10.0.20.6
+   neighbor 10.11.11.13 remote-as 65253
+   neighbor 10.11.11.13 maximum-routes 12000
+   neighbor 10.11.11.21 remote-as 65253
+   neighbor 10.11.11.21 maximum-routes 12000
+   redistribute connected
+!
+management api http-commands
+   protocol http
+   protocol unix-socket
+   no shutdown
+!
+management api gnmi
+   transport grpc default
+      port 830
+!
+end

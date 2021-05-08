@@ -1,0 +1,12 @@
+Building configuration...
+Current configuration : 1582 bytes
+!
+version 12.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname CSR1
+!
+!
+!

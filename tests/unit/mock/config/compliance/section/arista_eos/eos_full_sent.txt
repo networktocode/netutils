@@ -1,0 +1,196 @@
+
+transceiver qsfp default-mode 4x10G
+!
+logging host 10.125.1.171 7002
+logging format hostname fqdn
+logging facility local6
+logging source-interface Management1
+!
+logging level AAA informational
+logging level ACCOUNTING informational
+logging level ACL informational
+logging level AGENT informational
+logging level ALE informational
+logging level ARP informational
+logging level BFD informational
+logging level BGP informational
+logging level BMP informational
+logging level CAPACITY informational
+logging level CAPI informational
+logging level CLEAR informational
+logging level CVX informational
+logging level DATAPLANE informational
+logging level DHCP informational
+logging level DOT1X informational
+logging level DSCP informational
+logging level ENVMON informational
+logging level ETH informational
+logging level EVENTMON informational
+logging level EXTENSION informational
+logging level FHRP informational
+logging level FLOW informational
+logging level FORWARDING informational
+logging level FRU informational
+logging level FWK informational
+logging level GMP informational
+logging level HARDWARE informational
+logging level HEALTH informational
+logging level HTTPSERVICE informational
+logging level IGMP informational
+logging level IGMPSNOOPING informational
+logging level INT informational
+logging level INTF informational
+logging level IP6ROUTING informational
+logging level IPRIB informational
+logging level IRA informational
+logging level ISIS informational
+logging level KERNELFIB informational
+logging level LACP informational
+logging level LAG informational
+logging level LAUNCHER informational
+logging level LDP informational
+logging level LICENSE informational
+logging level LINEPROTO informational
+logging level LLDP informational
+logging level LOGMGR informational
+logging level LOOPBACK informational
+logging level LOOPPROTECT informational
+logging level MAPREDUCEMONITOR informational
+logging level MIRRORING informational
+logging level MKA informational
+logging level MLAG informational
+logging level MMODE informational
+logging level MROUTE informational
+logging level MRP informational
+logging level MSDP informational
+logging level MSRP informational
+logging level MSSPOLICYMONITOR informational
+logging level MVRP informational
+logging level NAT informational
+logging level OPENCONFIG informational
+logging level OPENFLOW informational
+logging level OSPF informational
+logging level OSPF3 informational
+logging level PACKAGE informational
+logging level PFC informational
+logging level PIMBSR informational
+logging level PORTSECURITY informational
+logging level PTP informational
+logging level PWRMGMT informational
+logging level QOS informational
+logging level QUEUEMONITOR informational
+logging level REDUNDANCY informational
+logging level RIB informational
+logging level ROUTING informational
+logging level SECURITY informational
+logging level SERVERMONITOR informational
+logging level SPANTREE informational
+logging level SSO informational
+logging level STAGEMGR informational
+logging level SYS informational
+logging level SYSDB informational
+logging level TAPAGG informational
+logging level TCP informational
+logging level TRANSCEIVER informational
+logging level TUNNEL informational
+logging level TUNNELINTF informational
+logging level VMTRACERSESS informational
+logging level VMWAREVI informational
+logging level VMWAREVS informational
+logging level VRF informational
+logging level VRRP informational
+logging level VXLAN informational
+logging level XMPP informational
+logging level ZTP informational
+!
+hostname nyc-leaf-01
+ip domain-name infra.ntc.com
+!
+ntp server 10.1.1.1
+ntp server 10.2.2.2 prefer
+!
+snmp-server contact John Smith
+snmp-server location Network to Code - NYC | NY
+snmp-server community networktocode ro
+snmp-server community secure rw
+snmp-server host 10.1.1.1 version 2c networktocode
+!
+spanning-tree mode mstp
+!
+aaa authorization exec default local
+!
+no aaa root
+!
+username ntc privilege 15 secret sha512 $6$I96u7PN2rdf8y1xH$1Iq523MXOQlfsZDiFPmZiSOvpfFsCpH.EuSblMyQvokhVfCqreJLHbzFlG6SPHzbL1mIElnDIm8Px6Jw55IN1/
+!
+interface Ethernet1
+!
+interface Ethernet2
+   no switchport
+   ip address 10.11.11.14/30
+!
+interface Ethernet3
+   no switchport
+   ip address 10.11.11.18/30
+!
+interface Ethernet4
+!
+interface Ethernet5
+!
+interface Ethernet6
+!
+interface Ethernet7
+!
+interface Ethernet8
+!
+interface Ethernet9
+!
+interface Ethernet10
+!
+interface Ethernet11
+!
+interface Ethernet12
+!
+interface Ethernet13
+!
+interface Ethernet14
+!
+interface Ethernet15
+!
+interface Ethernet16
+!
+interface Ethernet17
+!
+interface Ethernet18
+!
+interface Ethernet19
+!
+interface Loopback0
+   ip address 10.0.20.6/32
+!
+interface Management1
+   description MANAGEMENT_DO_NOT_CHANGE
+   ip address 10.0.0.15/24
+!
+ip route 0.0.0.0/0 10.0.0.2
+!
+ip routing
+!
+router bgp 65254
+   router-id 10.0.20.6
+   neighbor 10.11.11.13 remote-as 65253
+   neighbor 10.11.11.13 maximum-routes 12000
+   neighbor 10.11.11.21 remote-as 65253
+   neighbor 10.11.11.21 maximum-routes 12000
+   redistribute connected
+!
+management api http-commands
+   protocol http
+   protocol unix-socket
+   no shutdown
+!
+management api gnmi
+   transport grpc default
+      port 830
+!
+end

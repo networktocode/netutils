@@ -1,0 +1,514 @@
+! PID: AIR-CT3504-K9
+! Product Version: 8.5.161.0
+
+
+config sysname POP-101-WLC
+config prompt POP-101-WLC
+
+
+config mobility group domain POP-101-MG
+config network rf-network-name POP-101-RF
+
+
+config mgmtuser add POP-101-ADMIN uZrt1E2ouhoZ read-write
+config mgmtuser telnet POP-101-ADMIN disable
+config ap mgmtuser add username POP-101-ADMIN password uZrt1E2ouhoZ secret uZrt1E2ouhoZ all
+
+
+config time ntp server 1 192.168.2.177
+
+
+config snmp version v1 disable
+config snmp version v2c disable
+config snmp community delete public
+config snmp community delete private
+config snmp version v3 disable
+config snmp v3user delete default
+
+
+config switchconfig strong-pwd case-check disable
+config switchconfig strong-pwd consecutive-check disable
+config switchconfig strong-pwd username-check disable
+config switchconfig strong-pwd lockout attempts mgmtuser 3
+config switchconfig strong-pwd lockout time mgmtuser 5
+config switchconfig strong-pwd default-check disable
+
+
+config network multicast global enable
+config network multicast igmp snooping enable
+config network multicast l2mcast disable service-port
+config network multicast l2mcast disable virtual
+config network multicast mld snooping enable
+
+
+config network multicast mode multicast 239.255.2.154
+
+
+config mdns snooping disable
+
+
+config lag enable
+config port adminmode 1 disable
+config port adminmode 2 disable
+config port adminmode 3 disable
+config port adminmode 4 disable
+config port adminmode 5 enable
+
+
+config switchconfig fips-prerequisite enable
+config switchconfig fips-authorization-secret encrypt 1 df54cb494cddd573f74b80cf6436b6e5 c16b31809c669ad447cfa9269d5fd322026e8ace 16 27cc2f098c982310133d043d10579c63000000000000000000000000000000000000000000000000
+config network webcolor red
+config network mgmt-via-wireless enable
+config network ap-priority enable
+config ap preferred-mode ipv4 all
+config ap tcp-adjust-mss enable all 1250
+config dhcp proxy disable bootp-broadcast disable
+
+
+
+
+
+config interface vlan management 40
+config interface port management 5
+config interface address management 192.168.2.154 255.255.255.224 192.168.2.158
+config interface dhcp management primary 192.168.2.158
+config interface dhcp management proxy-mode disable
+
+config interface create data 10
+config interface vlan data 10
+config interface port data 5
+config interface address dynamic-interface data 192.168.1.250 255.255.254.0 192.168.1.254
+config interface dhcp dynamic-interface data primary 192.168.1.254
+config interface dhcp dynamic-interface data proxy-mode disable
+
+config interface create special 20
+config interface vlan special 20
+config interface port special 5
+config interface address dynamic-interface special 192.168.2.58 255.255.255.192 192.168.2.62
+config interface dhcp dynamic-interface special primary 192.168.2.62
+config interface dhcp dynamic-interface special proxy-mode disable
+
+config interface create voice 30
+config interface vlan voice 30
+config interface port voice 5
+config interface address dynamic-interface voice 192.168.2.122 255.255.255.192 192.168.2.126
+config interface dhcp dynamic-interface voice primary 192.168.2.126
+config interface dhcp dynamic-interface voice proxy-mode disable
+
+config interface create special 50
+config interface vlan special 50
+config interface port special 5
+config interface address dynamic-interface special  255.255.255.192 
+config interface dhcp dynamic-interface special primary 
+config interface dhcp dynamic-interface special proxy-mode disable
+
+
+
+config interface address virtual 192.0.2.1
+
+
+
+config country US
+config countries-list add US
+
+config 802.11b 11gsupport enable
+config 802.11b rate disabled 1
+config 802.11b rate disabled 2
+config 802.11b rate supported 5.5
+config 802.11b rate supported 6
+config 802.11b rate supported 9
+config 802.11b rate mandatory 11
+config 802.11b rate supported 12
+config 802.11b rate supported 18
+config 802.11b rate supported 24
+config 802.11b rate supported 36
+config 802.11b rate supported 48
+config 802.11b rate supported 54
+
+config advanced 802.11b edca-parameters optimized-video-voice
+
+config advanced 802.11b profile foreign global 10
+config advanced 802.11b profile clients global 12
+config advanced 802.11b profile noise global -70
+config advanced 802.11b profile utilization global 80
+config advanced 802.11b monitor channel-list all
+config advanced 802.11b monitor signal 180
+config advanced 802.11b monitor noise 180
+
+config 802.11b channel global auto
+config advanced 802.11b channel dca interval 1 
+config advanced 802.11b channel foreign enable
+config advanced 802.11b channel load disable
+config advanced 802.11b channel noise enable
+config advanced 802.11b channel device disable
+config advanced 802.11b channel dca sensitivity medium
+config advanced 802.11b channel cleanair-event disable
+
+config advanced 802.11b channel add 1
+config advanced 802.11b channel delete 2
+config advanced 802.11b channel delete 3
+config advanced 802.11b channel delete 4
+config advanced 802.11b channel delete 5
+config advanced 802.11b channel add 6
+config advanced 802.11b channel delete 7
+config advanced 802.11b channel delete 8
+config advanced 802.11b channel delete 9
+config advanced 802.11b channel delete 10
+config advanced 802.11b channel add 11
+config advanced 802.11b channel delete 12
+config advanced 802.11b channel delete 13
+
+config 802.11a rate mandatory 6
+config 802.11a rate supported 9
+config 802.11a rate mandatory 12
+config 802.11a rate supported 18
+config 802.11a rate mandatory 24
+config 802.11a rate supported 36
+config 802.11a rate supported 48
+config 802.11a rate supported 54
+
+config advanced 802.11a edca-parameters optimized-video-voice
+
+config 802.11a channel global auto
+config advanced 802.11a channel dca interval 1 
+config advanced 802.11a channel foreign enable
+config advanced 802.11a channel load disable
+config advanced 802.11a channel noise enable
+config advanced 802.11a channel device disable
+config advanced 802.11a channel dca sensitivity medium
+config advanced 802.11a channel dca chan-width 20
+config advanced 802.11a channel cleanair-event disable
+config advanced 802.11a channel outdoor-ap-dca disable
+
+config advanced 802.11a channel add 36
+config advanced 802.11a channel add 40
+config advanced 802.11a channel add 44
+config advanced 802.11a channel add 48
+config advanced 802.11a channel add 52
+config advanced 802.11a channel add 56
+config advanced 802.11a channel add 60
+config advanced 802.11a channel add 64
+config advanced 802.11a channel add 100
+config advanced 802.11a channel add 104
+config advanced 802.11a channel add 108
+config advanced 802.11a channel add 112
+config advanced 802.11a channel add 116
+config advanced 802.11a channel add 120
+config advanced 802.11a channel add 124
+config advanced 802.11a channel add 128
+config advanced 802.11a channel add 132
+config advanced 802.11a channel add 136
+config advanced 802.11a channel add 140
+config advanced 802.11a channel delete 144
+config advanced 802.11a channel add 149
+config advanced 802.11a channel add 153
+config advanced 802.11a channel add 157
+config advanced 802.11a channel add 161
+config advanced 802.11a channel delete 165
+
+
+
+
+config wlan create 14 POP-101-DATA POP-101-DATA
+
+config wlan radio 14 all
+config wlan interface 14 data
+config wlan broadcast-ssid enable 14
+
+config wlan nac radius disable 14
+config wlan mac-filtering disable 14
+
+config wlan security wpa enable 14
+config wlan security ft disable 14
+config wlan security ft over-the-ds disable 14
+config wlan security wpa wpa1 disable 14
+config wlan security wpa wpa1 ciphers aes disable 14
+config wlan security wpa wpa1 ciphers tkip disable 14
+config wlan security wpa wpa2 enable 14
+config wlan security wpa wpa2 ciphers aes enable 14
+config wlan security wpa wpa2 ciphers tkip disable 14
+config wlan security wpa akm 802.1x disable 14
+config wlan security wpa akm cckm disable 14
+config wlan security wpa akm psk enable 14
+config wlan security wpa akm ft 802.1x disable 14
+config wlan security wpa akm ft psk disable 14
+
+config wlan security web-auth disable 14
+config wlan security web-auth server-precedence 14 local radius ldap
+
+config wlan radius_server acct interim-update disable 14
+config wlan radius_server auth disable 14
+config wlan radius_server acct disable 14
+
+config wlan qos 14 platinum
+config wlan avc 14 visibility disable
+config wlan wmm allow 14
+
+config wlan aaa-override disable 14
+config wlan chd 14 enable
+config wlan session-timeout 14 0
+config wlan usertimeout 0 14
+config wlan ccx aironetiesupport enable 14
+config wlan peer-blocking disable 14
+config wlan exclusionlist 14 disabled
+config wlan exclusionlist 14 60
+
+config wlan mfp client enable 14
+
+config wlan dtim 802.11a 1 14
+config wlan dtim 802.11b 1 14
+
+config wlan flexconnect local-switching 14 disable
+config wlan load-balance allow disable 14
+config wlan band-select allow disable 14
+config wlan assisted-roaming neighbor-list enable 14
+config wlan assisted-roaming dual-list disable 14
+config wlan assisted-roaming prediction disable 14
+
+config wlan bss-transition enable 14
+config wlan dms enable 14
+
+config wlan profiling radius dhcp disable 14
+config wlan profiling radius http disable 14
+config wlan profiling local dhcp disable 14
+config wlan profiling local http disable 14
+
+config wlan mdns disable 14
+
+config wlan security wpa akm psk set-key ascii VlQ5548n 14
+
+config wlan enable 14
+
+
+
+config wlan create 15 POP-101-SPECIAL POP-101-SPECIAL
+
+config wlan radio 15 all
+config wlan interface 15 special
+config wlan broadcast-ssid enable 15
+
+config wlan nac radius disable 15
+config wlan mac-filtering disable 15
+
+config wlan security wpa enable 15
+config wlan security ft disable 15
+config wlan security ft over-the-ds disable 15
+config wlan security wpa wpa1 disable 15
+config wlan security wpa wpa1 ciphers aes disable 15
+config wlan security wpa wpa1 ciphers tkip disable 15
+config wlan security wpa wpa2 enable 15
+config wlan security wpa wpa2 ciphers aes enable 15
+config wlan security wpa wpa2 ciphers tkip disable 15
+config wlan security wpa akm 802.1x disable 15
+config wlan security wpa akm cckm disable 15
+config wlan security wpa akm psk enable 15
+config wlan security wpa akm ft 802.1x disable 15
+config wlan security wpa akm ft psk disable 15
+
+config wlan security web-auth disable 15
+config wlan security web-auth server-precedence 15 local radius ldap
+
+config wlan radius_server acct interim-update disable 15
+config wlan radius_server auth disable 15
+config wlan radius_server acct disable 15
+
+config wlan qos 15 platinum
+config wlan avc 15 visibility disable
+config wlan wmm allow 15
+
+config wlan aaa-override disable 15
+config wlan chd 15 enable
+config wlan session-timeout 15 0
+config wlan usertimeout 0 15
+config wlan ccx aironetiesupport enable 15
+config wlan peer-blocking disable 15
+config wlan exclusionlist 15 disabled
+config wlan exclusionlist 15 60
+
+config wlan mfp client enable 15
+
+config wlan dtim 802.11a 1 15
+config wlan dtim 802.11b 1 15
+
+config wlan flexconnect local-switching 15 disable
+config wlan load-balance allow disable 15
+config wlan band-select allow disable 15
+config wlan assisted-roaming neighbor-list enable 15
+config wlan assisted-roaming dual-list disable 15
+config wlan assisted-roaming prediction disable 15
+
+config wlan bss-transition enable 15
+config wlan dms enable 15
+
+config wlan profiling radius dhcp disable 15
+config wlan profiling radius http disable 15
+config wlan profiling local dhcp disable 15
+config wlan profiling local http disable 15
+
+config wlan mdns disable 15
+
+config wlan security wpa akm psk set-key ascii SSVNeVE8 15
+
+config wlan enable 15
+
+
+
+
+config wlan create 16 POP-101-VOICE POP-101-VOICE
+
+config wlan radio 16 all
+config wlan interface 16 voice
+config wlan broadcast-ssid enable 16
+
+config wlan nac radius disable 16
+config wlan mac-filtering disable 16
+
+config wlan security wpa enable 16
+config wlan security ft disable 16
+config wlan security ft over-the-ds disable 16
+config wlan security wpa wpa1 disable 16
+config wlan security wpa wpa1 ciphers aes disable 16
+config wlan security wpa wpa1 ciphers tkip disable 16
+config wlan security wpa wpa2 enable 16
+config wlan security wpa wpa2 ciphers aes enable 16
+config wlan security wpa wpa2 ciphers tkip disable 16
+config wlan security wpa akm 802.1x disable 16
+config wlan security wpa akm cckm disable 16
+config wlan security wpa akm psk enable 16
+config wlan security wpa akm ft 802.1x disable 16
+config wlan security wpa akm ft psk disable 16
+
+config wlan security web-auth disable 16
+config wlan security web-auth server-precedence 16 local radius ldap
+
+config wlan radius_server acct interim-update disable 16
+config wlan radius_server auth disable 16
+config wlan radius_server acct disable 16
+
+config wlan qos 16 platinum
+config wlan avc 16 visibility disable
+config wlan wmm allow 16
+
+config wlan aaa-override disable 16
+config wlan chd 16 enable
+config wlan session-timeout 16 0
+config wlan usertimeout 0 16
+config wlan ccx aironetiesupport enable 16
+config wlan peer-blocking disable 16
+config wlan exclusionlist 16 disabled
+config wlan exclusionlist 16 60
+
+config wlan mfp client enable 16
+
+config wlan dtim 802.11a 1 16
+config wlan dtim 802.11b 1 16
+
+config wlan flexconnect local-switching 16 disable
+config wlan load-balance allow disable 16
+config wlan band-select allow disable 16
+config wlan assisted-roaming neighbor-list enable 16
+config wlan assisted-roaming dual-list disable 16
+config wlan assisted-roaming prediction disable 16
+
+config wlan bss-transition enable 16
+config wlan dms enable 16
+
+config wlan profiling radius dhcp disable 16
+config wlan profiling radius http disable 16
+config wlan profiling local dhcp disable 16
+config wlan profiling local http disable 16
+
+config wlan mdns disable 16
+
+config wlan security wpa akm psk set-key ascii AntTfLJO 16
+
+config wlan enable 16
+
+
+
+
+config acl counter start
+
+config acl create Cisco8821-Provision
+
+config acl rule add Cisco8821-Provision 1
+config acl rule protocol Cisco8821-Provision 1 17
+config acl rule source port range Cisco8821-Provision 1 68 68
+config acl rule destination port range Cisco8821-Provision 1 67 67
+config acl rule direction Cisco8821-Provision 1 in
+config acl rule action Cisco8821-Provision 1 permit
+
+config acl rule add Cisco8821-Provision 2
+config acl rule protocol Cisco8821-Provision 2 17
+config acl rule source port range Cisco8821-Provision 2 67 67
+config acl rule destination port range Cisco8821-Provision 2 68 68
+config acl rule direction Cisco8821-Provision 2 out
+config acl rule action Cisco8821-Provision 2 permit
+
+config acl rule add Cisco8821-Provision 3
+config acl rule protocol Cisco8821-Provision 3 17
+config acl rule source port range Cisco8821-Provision 3 0 65535
+config acl rule destination port range Cisco8821-Provision 3 5060 5061
+config acl rule direction Cisco8821-Provision 3 in
+config acl rule action Cisco8821-Provision 3 deny
+
+config acl rule add Cisco8821-Provision 4
+config acl rule protocol Cisco8821-Provision 4 17
+config acl rule source port range Cisco8821-Provision 4 5060 5061
+config acl rule destination port range Cisco8821-Provision 4 0 65535
+config acl rule direction Cisco8821-Provision 4 out
+config acl rule action Cisco8821-Provision 4 deny
+
+config acl rule add Cisco8821-Provision 5
+config acl rule protocol Cisco8821-Provision 5 17
+config acl rule source port range Cisco8821-Provision 5 0 65535
+config acl rule destination address Cisco8821-Provision 5 192.168.2.177 255.255.255.255
+config acl rule destination port range Cisco8821-Provision 5 0 65535
+config acl rule direction Cisco8821-Provision 5 in
+config acl rule action Cisco8821-Provision 5 permit
+
+config acl rule add Cisco8821-Provision 6
+config acl rule protocol Cisco8821-Provision 6 17
+config acl rule source address Cisco8821-Provision 6 192.168.2.177 255.255.255.255
+config acl rule source port range Cisco8821-Provision 6 0 65535
+config acl rule destination port range Cisco8821-Provision 6 0 65535
+config acl rule direction Cisco8821-Provision 6 out
+config acl rule action Cisco8821-Provision 6 permit
+
+config acl rule add Cisco8821-Provision 7
+config acl rule direction Cisco8821-Provision 7 any
+config acl rule action Cisco8821-Provision 7 deny
+
+config acl apply Cisco8821-Provision
+
+config wlan create 13 Cisco8821-Provision cisco
+config wlan broadcast-ssid disable 13
+config wlan acl 13 Cisco8821-Provision
+
+config wlan qos 13 silver
+config wlan wmm allow 13
+
+config wlan security wpa akm 802.1x disable 13
+config wlan security wpa wpa2 ciphers aes disable 13
+config wlan security wpa wpa2 disable 13
+config wlan security wpa disable 13
+config wlan security web-auth server-precedence 13 local radius ldap
+config wlan security ft over-the-ds disable 13
+
+config wlan radius_server acct interim-update disable 13
+config wlan radius_server acct disable 13
+config wlan radius_server auth disable 13
+
+config wlan dms enable 13
+config wlan assisted-roaming neighbor-list enable 13
+config wlan interface 13 voice
+
+config wlan chd 13 disable
+config wlan mdns disable 13
+
+config wlan exclusionlist 13 0
+config wlan bss-transition enable 13
+config wlan session-timeout 13 1800
+config wlan mfp client enable 13
+
+config wlan enable 13
