@@ -1,0 +1,9 @@
+!
+logging history size 500
+logging origin-id hostname
+logging source-interface Loopback0
+logging host 10.5.84.24
+!
+logging trap informational
+!
+!
