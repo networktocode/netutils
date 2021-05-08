@@ -101,67 +101,70 @@ def is_ip(ip):
         return False
 
 
+def is_netmask(netmask):
+    """Verifies whether or not a string is a valid subnet mask.
+
+    Args:
+        netmask (str): A subnet mask in
+
+    Returns:
+        bool: True if string is a valid subnet mask. Otherwise, false.
+
+    Example:
+        >>> from netutils.ip import is_netmask
+        >>> is_netmask('255.255.255.0')
+        True
+        >>> is_netmask('24')
+        False
+        >>> is_netmask('255.255.266.0)
+        False
+    """
+    try:
+        return netmask == str(ipaddress.IPv4Network(f"0.0.0.0/{netmask}").netmask)
+    except ipaddress.NetmaskValueError:
+        return False
 
 
+def netmask_to_cidr(netmask):
+    """Creates a CIDR notation of a given subnet mask in decimal format.
+
+    Args:
+        netmask (str): A subnet mask in decimal format.
+
+    Returns:
+      cidr (str): CIDR representation of subnet mask.
+
+    Example:
+        >>> from netutils.ip import netmask_to_cidr
+        >>> netmask_to_cidr("255.255.255.0")
+        24
+        >>> netmask_to_cidr("255.255.254.0")
+        23
+    """
+    if is_netmask(netmask):
+        return sum(bin(int(x)).count("1") for x in netmask.split("."))
+    raise ValueError("Subnet mask is not valid.")
 
 
+def cidr_to_netmask(cidr):
+    """Creates a decimal format of a CIDR value.
 
+    Args:
+        cidr (int): A CIDR value.
 
+    Returns:
+      netmask (str): Decimal format representation of CIDR value.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    Example:
+        >>> from netutils.ip import netmask_to_cidr
+        >>> cidr_to_netmask(24)
+        '255.255.255.0
+        >>> cidr_to_netmask(17)
+        '255.255.128.0'
+    """
+    if isinstance(cidr, int) and 0 <= cidr <= 32:
+        return ".".join([str((0xFFFFFFFF << (32 - cidr) >> i) & 0xFF) for i in [24, 16, 8, 0]])
+    raise ValueError("Parameter must be an integer between 0 and 32.")
 
 
 def get_all_host(ip_network):
