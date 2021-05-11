@@ -1,6 +1,7 @@
 """Tasks for use with Invoke."""
 import os
 import sys
+import requests
 from distutils.util import strtobool
 from invoke import task
 
@@ -39,7 +40,10 @@ IMAGE_VER = os.getenv("IMAGE_VER", f"{TOOL_CONFIG['version']}-py{PYTHON_VER}")
 PWD = os.getcwd()
 # Local or Docker execution provide "local" to run locally without docker execution
 INVOKE_LOCAL = is_truthy(os.getenv("INVOKE_LOCAL", False))  # pylint: disable=W1508
-
+# Get project name from the toml file
+PROJECT_NAME = PYPROJECT_CONFIG['tool']['poetry']['name']
+# Get current project version from the toml file
+PROJECT_VERSION = PYPROJECT_CONFIG['tool']['poetry']['version']
 
 def run_cmd(context, exec_cmd, local=INVOKE_LOCAL):
     """Wrapper to run the invoke task commands.
@@ -234,3 +238,26 @@ def tests(context, local=INVOKE_LOCAL):
     coverage(context, local)
 
     print("All tests have passed!")
+
+@task
+def check_pypi_version(context, name=PROJECT_NAME, version=PROJECT_VERSION):
+    """Verify if the version specified already exists on PyPI. Used
+    mostly in CI/CD to make sure that the new version is merged to main.
+    If version already exists, then function exits with non-zero return code,
+    else the function exits with zero return code.
+
+    Args:
+        context (obj): Used to run specific commands
+        name (str): The name of the project
+        version (str): The version of the project
+    """
+    url = f'https://pypi.org/pypi/{name}/json'
+    response = requests.get(url)
+    data = response.json()
+    if version in data.get('releases', {}).keys():
+        print(f'The version {version} already exists.')
+        print('Bump the version. Run the command: poetry version.')
+        sys.exit(1)
+    print(f'The version {version} does not exist on PyPI.')
+    print('The version can be released.')
+    sys.exit(0)
