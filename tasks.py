@@ -1,8 +1,8 @@
 """Tasks for use with Invoke."""
 import os
 import sys
-import requests
 from distutils.util import strtobool
+import requests
 from invoke import task
 
 try:
@@ -254,6 +254,10 @@ def check_pypi_version(context, name=PROJECT_NAME, version=PROJECT_VERSION):
         name (str): The name of the project
         version (str): The version of the project
     """
+    # Running the following from context to pass pylint:
+    # context must be the first argument in invoke
+    context.run(f"echo Verifying the version {version} on PyPI.")
+
     url = f"https://pypi.org/pypi/{name}/json"
     response = requests.get(url)
     data = response.json()
