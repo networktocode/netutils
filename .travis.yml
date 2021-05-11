@@ -56,9 +56,7 @@ jobs:
     - stage: "deploy_github"
       before_script:
         - "pip install --upgrade pip"
-        - "pip install invoke poetry toml"
-        - "poetry config virtualenvs.create false"
-        - "poetry install --no-interaction"
+        - "pip install poetry"
       script:
         - "echo Deploying the release to GitHub"
         - "export RELEASE_VERSION=`poetry version -s`"
@@ -75,9 +73,7 @@ jobs:
     - stage: "deploy_pypi"
       before_script:
         - "pip install --upgrade pip"
-        - "pip install invoke poetry toml"
-        - "poetry config virtualenvs.create false"
-        - "poetry install --no-interaction"
+        - "pip install poetry"
       script:
         - "echo Deploying the release to PyPI"
       deploy:
