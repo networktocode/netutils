@@ -243,8 +243,9 @@ def tests(context, local=INVOKE_LOCAL):
 
 @task
 def check_pypi_version(context, name=PROJECT_NAME, version=PROJECT_VERSION):
-    """Verify if the version specified already exists on PyPI. Used
-    mostly in CI/CD to make sure that the new version is merged to main.
+    """Verify if the version specified already exists on PyPI.
+
+    Used mostly in CI/CD to make sure that the new version is merged to main.
     If version already exists, then function exits with non-zero return code,
     else the function exits with zero return code.
 
