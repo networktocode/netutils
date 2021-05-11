@@ -268,3 +268,30 @@ def check_pypi_version(context, name=PROJECT_NAME, version=PROJECT_VERSION):
     print(f"The version {version} does not exist on PyPI.")
     print("The version can be released.")
     sys.exit(0)
+
+
+@task
+def html(context, sourcedir="docs/source", builddir="docs/build"):
+    """Creates html docs using sphinx-build command.
+
+    Args:
+        context (obj): Used to run specific commands
+        sourcedir (str, optional): Source directory for sphinx to use. Defaults to "source".
+        builddir (str, optional): Output directory for sphinx to use. Defaults to "build".
+    """
+    print("Building html documentation...")
+    clean_docs(context, builddir)
+    command = f"sphinx-build {sourcedir} {builddir}"
+    context.run(command)
+
+
+@task
+def clean_docs(context, builddir="docs/build"):
+    """Removes the build directory and all of its contents.
+
+    Args:
+        context (obj): Used to run specific commands
+        builddir (str, optional): Directory to be removed. Defaults to "build".
+    """
+    print(f"Removing everything under {builddir} directory...")
+    context.run("rm -rf " + builddir)

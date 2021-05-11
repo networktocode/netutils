@@ -5,6 +5,7 @@ import random
 import string
 import secrets
 import sys
+from functools import wraps
 
 # Code example from Python docs
 ALPHABET = string.ascii_letters + string.digits
@@ -71,6 +72,7 @@ XLAT = [
 def _fail_on_mac(func):
     """There is an issue with Macintosh for encryption."""
 
+    @wraps(func)
     def decorated(*args, **kwargs):
         if sys.platform == "darwin":
             raise ValueError("Macintosh is not supported, see https://bugs.python.org/issue33213 for upstream issue.")
@@ -176,8 +178,8 @@ def encrypt_type5(unencrypted_password, salt=None, salt_len=4):
 
     Example:
         >>> from netutils.password import encrypt_type5
-        >>> encrypt_type5("cisco")
-        '$1$zZcS$OYeBzJ3d6rRfC4.p9LwFg1'
+        >>> encrypt_type5("cisco")  # doctest: +SKIP
+        '$1$MHkb$v2MFmDkQX66TTxLkFF50K/'
         >>>
     """
     if not salt:
