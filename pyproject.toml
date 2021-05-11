@@ -6,7 +6,6 @@ authors = ["Network to Code, LLC <info@networktocode.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.6"
-requests = "^2.25.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6"
@@ -20,6 +19,7 @@ invoke = "^1.4.1"
 toml = "0.10.1"
 flake8 = "^3.8.3"
 coverage = "^5.5"
+requests = "^2.25.1"
 
 [tool.black]
 line-length = 120
