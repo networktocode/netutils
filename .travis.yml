@@ -1,10 +1,15 @@
 ---
 # Add additional stages in the order of execution here, and then under the job:include: key
 stages:
-  - "lint"
-  - "test"
+  - name: "lint"
+  - name: "test"
+  - name: "verify_pypi_release"
+    if: "branch = main"
+  - name: "deploy_github"
+    if: "branch = main AND type = push"
+  - name: "deploy_pypi"
+    if: "branch = main AND type = push"
 
-if: "type IN (pull_request)"  # Add in "branch" as an option if desired for branch testing as well
 language: "python"
 
 env:
@@ -40,3 +45,43 @@ jobs:
         - "invoke flake8"
         - "invoke yamllint"
         - "invoke pylint"
+    - stage: "verify_pypi_release"
+      before_script:
+        - "pip install --upgrade pip"
+        - "pip install invoke poetry toml"
+        - "poetry config virtualenvs.create false"
+        - "poetry install --no-interaction"
+      script:
+        - "invoke check-pypi-version"
+    - stage: "deploy_github"
+      before_script:
+        - "pip install --upgrade pip"
+        - "pip install invoke poetry toml"
+        - "poetry config virtualenvs.create false"
+        - "poetry install --no-interaction"
+      script:
+        - "echo Deploying the release to GitHub"
+        - "export RELEASE_VERSION=`poetry version -s`"
+        - "git tag $RELEASE_VERSION"
+        - "poetry build"
+      deploy:
+        provider: "releases"
+        api_key: "$GITHUB_AUTH_TOKEN"
+        file_glob: true
+        file: "dist/*"
+        skip_cleanup: true
+        on:
+          branch: main
+    - stage: "deploy_pypi"
+      before_script:
+        - "pip install --upgrade pip"
+        - "pip install invoke poetry toml"
+        - "poetry config virtualenvs.create false"
+        - "poetry install --no-interaction"
+      script:
+        - "echo Deploying the release to PyPI"
+      deploy:
+        provider: "script"
+        script: "poetry publish --build -u __token__ -p $PYPI_TOKEN"
+        on:
+          branch: main
