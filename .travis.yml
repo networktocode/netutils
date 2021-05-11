@@ -71,7 +71,7 @@ jobs:
         file: "dist/*"
         skip_cleanup: true
         on:
-          branch: main
+          branch: "main"
     - stage: "deploy_pypi"
       before_script:
         - "pip install --upgrade pip"
@@ -84,4 +84,4 @@ jobs:
         provider: "script"
         script: "poetry publish --build -u __token__ -p $PYPI_TOKEN"
         on:
-          branch: main
+          branch: "main"
