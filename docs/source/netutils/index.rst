@@ -1,5 +1,5 @@
 ******************
-Netutil Functions
+Netutils Functions
 ******************
 
 .. toctree::
