@@ -4,11 +4,11 @@ stages:
   - name: "lint"
   - name: "test"
   - name: "verify_pypi_release"
-    if: "branch = main"
+    if: "tag IS present"
   - name: "deploy_github"
-    if: "branch = main AND type = push"
+    if: "tag IS present"
   - name: "deploy_pypi"
-    if: "branch = main AND type = push"
+    if: "tag IS present"
 
 language: "python"
 
@@ -59,8 +59,7 @@ jobs:
         - "pip install poetry"
       script:
         - "echo Deploying the release to GitHub"
-        - "export RELEASE_VERSION=`poetry version -s`"
-        - "git tag $RELEASE_VERSION"
+        - "poetry version $TRAVIS_TAG"
         - "poetry build"
       deploy:
         provider: "releases"
@@ -68,16 +67,18 @@ jobs:
         file_glob: true
         file: "dist/*"
         skip_cleanup: true
-        on:
-          branch: "main"
+        "on":
+          all_branches: true
     - stage: "deploy_pypi"
       before_script:
         - "pip install --upgrade pip"
         - "pip install poetry"
       script:
         - "echo Deploying the release to PyPI"
+        - "poetry version $TRAVIS_TAG"
       deploy:
         provider: "script"
+        skip_cleanup: true
         script: "poetry publish --build -u __token__ -p $PYPI_TOKEN"
-        on:
-          branch: "main"
+        "on":
+          all_branches: true
