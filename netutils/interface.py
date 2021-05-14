@@ -72,6 +72,14 @@ def interface_tail_addition(interface_number):
 
     Returns:
         int: Sum of number in interface tail with each one getting a priority of magnitude 10 from right to left.
+
+    Example:
+        >>> from netutils.interface import interface_tail_addition
+        >>> interface_tail_addition("1/0/6")
+        106
+        >>> interface_tail_addition("2/3/6")
+        236
+        >>>
     """
     priority_values = []
     factor_value = 1
@@ -101,6 +109,14 @@ def list_alphabetical(interfaces, reverse=False):
 
     Returns:
         list: Interfaces listed in alphabetical order.
+
+    Example:
+        >>> from netutils.interface import list_alphabetical
+        >>> list_alphabetical(["GigabitEthernet0/0", "GigabitEthernet0/1", "FastEthernet0/1", "FasEthernet0/0"])
+        ['FasEthernet0/0', 'FastEthernet0/1', 'GigabitEthernet0/0', 'GigabitEthernet0/1']
+        >>> list_alphabetical(["GigabitEthernet0/0", "GigabitEthernet0/1", "FastEthernet0/1", "FasEthernet0/0", "Ethernet1/0/1", "Ethernet0/0/1"])
+        ['Ethernet0/0/1', 'Ethernet1/0/1', 'FasEthernet0/0', 'FastEthernet0/1', 'GigabitEthernet0/0', 'GigabitEthernet0/1']
+        >>>
     """
     separate_interfaces_list = []
     contained_interfaces = set()
