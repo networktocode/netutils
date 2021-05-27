@@ -19,8 +19,8 @@ test_fqdn = [
 
 
 @pytest.mark.parametrize("data", test_is_fqdn)
-def test_is_fqdn_valid(data):
-    assert dns.is_fqdn_valid(data["sent"]) == data["received"]
+def test_is_fqdn_resolvable(data):
+    assert dns.is_fqdn_resolvable(data["sent"]) == data["received"]
 
 
 @pytest.mark.parametrize("data", test_fqdn)
