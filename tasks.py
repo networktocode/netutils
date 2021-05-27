@@ -135,7 +135,7 @@ def pytest(context, local=INVOKE_LOCAL):
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
-    exec_cmd = "pytest"
+    exec_cmd = "pytest -vv --doctest-modules netutils/ && coverage run --source=netutils -m pytest && coverage report"
     run_cmd(context, exec_cmd, local)
 
 
@@ -236,7 +236,7 @@ def tests(context, local=INVOKE_LOCAL):
     yamllint(context, local)
     pydocstyle(context, local)
     bandit(context, local)
-    coverage(context, local)
+    pytest(context, local)
 
     print("All tests have passed!")
 

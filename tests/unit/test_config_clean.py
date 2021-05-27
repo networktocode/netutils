@@ -5,7 +5,7 @@ import os
 import pytest
 
 from netutils.config import clean
-from netutils.variables import _PROVIDED_CLEAN_FILTERS, _PROVIDED_SANITIZE_FILTERS
+from netutils.constants import _PROVIDED_CLEAN_FILTERS, _PROVIDED_SANITIZE_FILTERS
 
 MOCK_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mock", "config")
 TXT_FILE = "_sent.txt"
