@@ -1,6 +1,6 @@
 """Functions for working with interface."""
 
-from .variables import BASE_INTERFACES, REVERSE_MAPPING
+from .constants import BASE_INTERFACES, REVERSE_MAPPING
 
 
 def split_interface(interface):

@@ -3,15 +3,14 @@
 
 
 import re
-from ..variables import CLEAN_FILTERS, SANITIZE_FILTERS  # pylint: disable=relative-beyond-top-level
 
 
-def clean_config(config, filters=CLEAN_FILTERS):  # pylint: disable=dangerous-default-value
+def clean_config(config, filters):
     r"""Given a list of regex patterns, delete those lines that match.
 
     Args:
         config (str): A string representation of a device configuration.
-        filters (list, optional): A list of regex patterns used to delete remove configuration. Defaults to an empty list.
+        filters (list): A list of regex patterns used to delete remove configuration.
 
     Returns:
         str: Stripped down configuration.
@@ -53,7 +52,7 @@ def clean_config(config, filters=CLEAN_FILTERS):  # pylint: disable=dangerous-de
     return config
 
 
-def sanitize_config(config, filters=SANITIZE_FILTERS):  # pylint: disable=dangerous-default-value
+def sanitize_config(config, filters):
     r"""Given a dictionary of filters, remove sensitive data from the provided config.
 
     Args:

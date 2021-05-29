@@ -116,7 +116,7 @@ def is_netmask(netmask):
         True
         >>> is_netmask('24')
         False
-        >>> is_netmask('255.255.266.0)
+        >>> is_netmask('255.255.266.0')
         False
     """
     try:
@@ -158,7 +158,7 @@ def cidr_to_netmask(cidr):
     Example:
         >>> from netutils.ip import netmask_to_cidr
         >>> cidr_to_netmask(24)
-        '255.255.255.0
+        '255.255.255.0'
         >>> cidr_to_netmask(17)
         '255.255.128.0'
     """
