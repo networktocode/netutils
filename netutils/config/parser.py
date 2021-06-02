@@ -603,3 +603,75 @@ class JunosConfigParser(BaseSpaceConfigParser):
 
     comment_chars = []
     banner_start = []
+
+
+class ASAConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
+    """Cisco ASA implementation of ConfigParser Class."""
+
+    comment_chars = [":"]
+
+    def __init__(self, config):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        self.unique_config_lines = set()
+        self.same_line_children = set()
+        super(ASAConfigParser, self).__init__(config)
+
+    def _update_same_line_children_configs(self):
+        """Update parents in ``self.config_lines`` per ``self.same_line_children``."""
+        new_config_lines = []
+        for line in self.config_lines:
+            if line in self.same_line_children:
+                previous_line = new_config_lines[-1]
+                previous_config_line = previous_line.config_line
+                current_parents = previous_line.parents + (previous_config_line,)
+                line = ConfigLine(line.config_line, current_parents)
+            new_config_lines.append(line)
+        self.config_lines = new_config_lines
+
+    def _update_config_lines(self, config_line):
+        """Add a ``ConfigLine`` object to ``self.config_lines``.
+
+        In addition to adding entries to config_lines, this also updates:
+          * self.same_line_children
+          * self.unique_config_lines
+
+        Args:
+            config_line (str): The current config line being evaluated.
+
+        Returns:
+            None
+        """
+        super(ASAConfigParser, self)._update_config_lines(config_line)
+        entry = self.config_lines[-1]
+        if entry in self.unique_config_lines:
+            self.same_line_children.add(entry)
+        self.unique_config_lines.add(entry)
+
+    def build_config_relationship(self):
+        r"""Parse text tree of config lines and their parents.
+
+        Example:
+            >>> config = '''
+            ... interface Ethernet1/1
+            ...   vlan 10
+            ...   no shutdown
+            ... interface Ethernet1/2
+            ...   shutdown'''
+            >>> config_tree = IOSConfigParser(str(config))
+            >>> config_tree.build_config_relationship() == \
+            ... [
+            ...     ConfigLine(config_line='interface Ethernet1/1', parents=()),
+            ...     ConfigLine(config_line='  vlan 10', parents=('interface Ethernet1/1',)),
+            ...     ConfigLine(config_line='  no shutdown', parents=('interface Ethernet1/1',)),
+            ...     ConfigLine(config_line='interface Ethernet1/2', parents=()),
+            ...     ConfigLine(config_line='  shutdown', parents=('interface Ethernet1/2',))
+            ... ]
+            True
+        """
+        super(ASAConfigParser, self).build_config_relationship()
+        self._update_same_line_children_configs()
+        return self.config_lines
