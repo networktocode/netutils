@@ -16,14 +16,14 @@ data = [
     ConfigLine(config_line="passwd ntc123 encrypted", parents=()),
     ConfigLine(config_line="names", parents=()),
     ConfigLine(config_line="interface Management0/0", parents=()),
-    ConfigLine(config_line=" management-only", parents=("interface Management0/0")),
-    ConfigLine(config_line=" nameif Management", parents=("interface Management0/0")),
-    ConfigLine(config_line=" security-level 100", parents=("interface Management0/0")),
-    ConfigLine(config_line=" ip address 10.1.1.10 255.255.255.0", parents=("interface Management0/0")),
+    ConfigLine(config_line=" management-only", parents=("interface Management0/0",)),
+    ConfigLine(config_line=" nameif Management", parents=("interface Management0/0",)),
+    ConfigLine(config_line=" security-level 100", parents=("interface Management0/0",)),
+    ConfigLine(config_line=" ip address 10.1.1.10 255.255.255.0", parents=("interface Management0/0",)),
     ConfigLine(
         config_line="banner motd ********************************************************************", parents=()
     ),
-    ConfigLine(config_line="banner motd ", parents=()),
+    ConfigLine(config_line="banner motd", parents=()),
     ConfigLine(config_line="banner motd                         This is a test banner.", parents=()),
     ConfigLine(config_line="banner motd", parents=()),
     ConfigLine(
@@ -44,7 +44,7 @@ data = [
     ConfigLine(config_line="no logging message 10101010", parents=()),
     ConfigLine(config_line="mtu Management 1500", parents=()),
     ConfigLine(config_line="ip verify reverse-path interface Management", parents=()),
-    ConfigLine(config_line="no monitor-interface service-module ", parents=()),
+    ConfigLine(config_line="no monitor-interface service-module", parents=()),
     ConfigLine(config_line="icmp unreachable rate-limit 1 burst-size 1", parents=()),
     ConfigLine(config_line="icmp permit 10.0.0.0 255.0.0.0 Management", parents=()),
     ConfigLine(config_line="no asdm history enable", parents=()),
@@ -67,12 +67,12 @@ data = [
     ConfigLine(config_line="timeout conn-holddown 0:00:15", parents=()),
     ConfigLine(config_line="timeout igp stale-route 0:01:10", parents=()),
     ConfigLine(config_line="aaa-server TACACS+ protocol tacacs+", parents=()),
-    ConfigLine(config_line=" reactivation-mode timed", parents=("aaa-server TACACS+ protocol tacacs+")),
-    ConfigLine(config_line=" max-failed-attempts 5", parents=("aaa-server TACACS+ protocol tacacs+")),
+    ConfigLine(config_line=" reactivation-mode timed", parents=("aaa-server TACACS+ protocol tacacs+",)),
+    ConfigLine(config_line=" max-failed-attempts 5", parents=("aaa-server TACACS+ protocol tacacs+",)),
     ConfigLine(config_line="aaa-server TACACS+ (Management) host 10.1.1.100", parents=()),
-    ConfigLine(config_line=" key *****", parents=("aaa-server TACACS+ (Management) host 10.1.1.100")),
+    ConfigLine(config_line=" key *****", parents=("aaa-server TACACS+ (Management) host 10.1.1.100",)),
     ConfigLine(config_line="user-identity default-domain LOCAL", parents=()),
-    ConfigLine(config_line="aaa authentication serial console LOCAL ", parents=()),
+    ConfigLine(config_line="aaa authentication serial console LOCAL", parents=()),
     ConfigLine(config_line="aaa authentication ssh console TACACS+ LOCAL", parents=()),
     ConfigLine(config_line="aaa authentication enable console TACACS+ LOCAL", parents=()),
     ConfigLine(config_line="aaa authentication http console TACACS+ LOCAL", parents=()),
@@ -94,27 +94,59 @@ data = [
     ConfigLine(config_line="dynamic-access-policy-record DfltAccessPolicy", parents=()),
     ConfigLine(config_line="username ntc password ntc123 encrypted privilege 15", parents=()),
     ConfigLine(config_line="class-map inspection_default", parents=()),
-    ConfigLine(config_line=" match default-inspection-traffic", parents=("class-map inspection_default")),
+    ConfigLine(config_line=" match default-inspection-traffic", parents=("class-map inspection_default",)),
     ConfigLine(config_line="policy-map type inspect dns preset_dns_map", parents=()),
-    ConfigLine(config_line=" parameters", parents=("policy-map type inspect dns preset_dns_map")),
+    ConfigLine(config_line=" parameters", parents=("policy-map type inspect dns preset_dns_map",)),
     ConfigLine(
         config_line="  message-length maximum client auto",
-        parents=("policy-map type inspect dns preset_dns_map", " parameters"),
+        parents=(
+            "policy-map type inspect dns preset_dns_map",
+            " parameters",
+        ),
     ),
     ConfigLine(
         config_line="  message-length maximum 512",
-        parents=("policy-map type inspect dns preset_dns_map", " parameters"),
+        parents=(
+            "policy-map type inspect dns preset_dns_map",
+            " parameters",
+        ),
     ),
     ConfigLine(
-        config_line="  no tcp-inspection", parents=("policy-map type inspect dns preset_dns_map", " parameters")
+        config_line="  no tcp-inspection",
+        parents=(
+            "policy-map type inspect dns preset_dns_map",
+            " parameters",
+        ),
     ),
     ConfigLine(config_line="policy-map global_policy", parents=()),
-    ConfigLine(config_line=" class inspection_default", parents=("policy-map global_policy")),
+    ConfigLine(config_line=" class inspection_default", parents=("policy-map global_policy",)),
     ConfigLine(
-        config_line="  inspect dns preset_dns_map ", parents=("policy-map global_policy", " class inspection_default")
+        config_line="  inspect dns preset_dns_map",
+        parents=(
+            "policy-map global_policy",
+            " class inspection_default",
+        ),
     ),
-    ConfigLine(config_line="  inspect ftp ", parents=("policy-map global_policy", " class inspection_default")),
-    ConfigLine(config_line="  inspect tftp ", parents=("policy-map global_policy", " class inspection_default")),
-    ConfigLine(config_line="  inspect ip-options ", parents=("policy-map global_policy", " class inspection_default")),
+    ConfigLine(
+        config_line="  inspect ftp",
+        parents=(
+            "policy-map global_policy",
+            " class inspection_default",
+        ),
+    ),
+    ConfigLine(
+        config_line="  inspect tftp",
+        parents=(
+            "policy-map global_policy",
+            " class inspection_default",
+        ),
+    ),
+    ConfigLine(
+        config_line="  inspect ip-options",
+        parents=(
+            "policy-map global_policy",
+            " class inspection_default",
+        ),
+    ),
     ConfigLine(config_line="service-policy global_policy global", parents=()),
 ]
