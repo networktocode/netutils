@@ -6,7 +6,7 @@ parser_map = {
     "arista_eos": parser.EOSConfigParser,
     "cisco_ios": parser.IOSConfigParser,
     "cisco_nxos": parser.NXOSConfigParser,
-    "cisco_aireos": parser.AIREOSConfigParser,
+    "cisco_wlc": parser.AIREOSConfigParser,
     "linux": parser.LINUXConfigParser,
     "bigip_f5": parser.F5ConfigParser,
     "juniper_junos": parser.JunosConfigParser,
