@@ -17,7 +17,7 @@ def tcp_ping(ip, port, timeout=1):  # pylint: disable=invalid-name
         >>> from netutils.ping import tcp_ping
         >>> tcp_ping("1.1.1.1", 443)
         True
-        >>> tcp_ping("1.0.100.0", 443)
+        >>> tcp_ping("1.0.100.0", 27)
         False
         >>>
     """

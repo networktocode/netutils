@@ -22,7 +22,7 @@ def longest_prefix_match(ip_addr, routes):
         >>> lookup = "10.1.1.245"
         >>> routes = [{"network": "192.168.1.1", "mask": "255.255.255.255"},{"network": "10.1.1.0", "mask": "24"}]
         >>> longest_prefix_match(lookup, routes)
-        IPv4Network('10.1.1.0/24')
+        '10.1.1.0/24'
     """
     if not isinstance(routes, list):
         raise TypeError(f"'routing_table' should be a list, got {type(routes)}")
