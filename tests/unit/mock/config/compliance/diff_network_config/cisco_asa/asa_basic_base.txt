@@ -1,0 +1,16 @@
+hostname jcy-fw-01
+!
+logging enable
+logging timestamp
+logging standby
+logging buffer-size 1048576
+logging buffered informational
+logging trap informational
+logging asdm informational
+logging facility 21
+logging queue 0
+logging device-id hostname
+logging host Management 10.1.1.20
+no logging message 10101010
+!
+route Management 0.0.0.0 0.0.0.0 10.1.1.254 1
