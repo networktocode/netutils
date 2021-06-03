@@ -6,7 +6,7 @@ This library intends to keep the following tenets:
 
 * Must not be any dependencies required to run the library.
   * May be some optional dependencies, to be managed by the user in opt in fashion.
-* Shall prefer functional programming over object oriented programming.
+* Shall prefer functions over classes.
 * Shall prefer a folder and file structure that is flat.
 * Shall leverage docstrings as the primary documentation mechanism.
   * Must provide examples in every public function.
@@ -174,5 +174,5 @@ Each command can be executed with `invoke <command>`. Each command also has its 
 
 ## Questions
 
-For any questions or comments, please check the [FAQ](FAQ.md) first and feel free to swing by the [Network to Code slack channel](https://networktocode.slack.com/) (channel #networktocode).
+For any questions or comments, feel free to swing by the [Network to Code slack channel](https://networktocode.slack.com/) (channel #networktocode).
 Sign up [here](http://slack.networktocode.com/)
