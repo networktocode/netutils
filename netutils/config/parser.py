@@ -605,7 +605,7 @@ class JunosConfigParser(BaseSpaceConfigParser):
     banner_start = []
 
 
-class ASAConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
+class ASAConfigParser(CiscoConfigParser):
     """Cisco ASA implementation of ConfigParser Class."""
 
     comment_chars = ["!", ":"]
