@@ -10,6 +10,7 @@ parser_map = {
     "linux": parser.LINUXConfigParser,
     "bigip_f5": parser.F5ConfigParser,
     "juniper_junos": parser.JunosConfigParser,
+    "cisco_asa": parser.ASAConfigParser,
 }
 
 default_feature = {
