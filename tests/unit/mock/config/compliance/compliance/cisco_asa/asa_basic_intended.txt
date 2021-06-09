@@ -1,0 +1,25 @@
+hostname jcy-fw-01
+!
+logging enable
+logging timestamp
+logging standby
+logging buffer-size 1048576
+logging buffered informational
+logging trap informational
+logging asdm informational
+logging facility 21
+logging queue 0
+logging device-id hostname
+logging host Management 10.1.1.200
+no logging message 20202020
+!
+aaa-server TACACS+ protocol tacacs+
+ reactivation-mode timed
+ max-failed-attempts 5
+aaa-server TACACS+ (Management) host 10.1.1.100
+ key 20202020
+aaa authentication serial console LOCAL 
+aaa authentication ssh console TACACS+ LOCAL
+aaa authentication enable console TACACS+ LOCAL
+aaa authentication http console TACACS+ LOCAL
+aaa accounting command TACACS+

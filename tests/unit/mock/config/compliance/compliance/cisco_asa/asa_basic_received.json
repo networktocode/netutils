@@ -1,0 +1,32 @@
+{
+    "hostname": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "hostname jcy-fw-01",
+        "intended": "hostname jcy-fw-01"
+    },
+    "logging": {
+        "actual": "logging enable\nlogging timestamp\nlogging standby\nlogging buffer-size 1048576\nlogging buffered informational\nlogging trap informational\nlogging asdm informational\nlogging facility 21\nlogging queue 0\nlogging device-id hostname\nlogging host Management 10.1.1.20\nno logging message 10101010",
+        "cannot_parse": true,
+        "compliant": false,
+        "extra": "logging host Management 10.1.1.20\nno logging message 10101010",
+        "intended": "logging enable\nlogging timestamp\nlogging standby\nlogging buffer-size 1048576\nlogging buffered informational\nlogging trap informational\nlogging asdm informational\nlogging facility 21\nlogging queue 0\nlogging device-id hostname\nlogging host Management 10.1.1.200\nno logging message 20202020",
+        "missing": "logging host Management 10.1.1.200\nno logging message 20202020",
+        "ordered_compliant": false,
+        "unordered_compliant": false
+    },
+    "aaa": {
+        "actual": "aaa-server TACACS+ protocol tacacs+\n reactivation-mode timed\n max-failed-attempts 5\naaa-server TACACS+ (Management) host 10.1.1.100\n key 10101010\naaa authentication serial console LOCAL\naaa authentication ssh console TACACS+ LOCAL\naaa authentication enable console TACACS+ LOCAL\naaa authentication http console TACACS+ LOCAL\naaa accounting command TACACS+",
+        "cannot_parse": true,
+        "compliant": false,
+        "extra": "aaa-server TACACS+ (Management) host 10.1.1.100\n key 10101010",
+        "intended": "aaa-server TACACS+ protocol tacacs+\n reactivation-mode timed\n max-failed-attempts 5\naaa-server TACACS+ (Management) host 10.1.1.100\n key 20202020\naaa authentication serial console LOCAL\naaa authentication ssh console TACACS+ LOCAL\naaa authentication enable console TACACS+ LOCAL\naaa authentication http console TACACS+ LOCAL\naaa accounting command TACACS+",
+        "missing": "aaa-server TACACS+ (Management) host 10.1.1.100\n key 20202020",
+        "ordered_compliant": false,
+        "unordered_compliant": false
+    }
+}
