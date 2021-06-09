@@ -7,6 +7,7 @@ BASE_INTERFACES = {
     "B": "Bdi",
     "Bd": "Bdi",
     "Bdi": "Bdi",
+    "Bridge-Aggregation": "Port-channel",
     "EOBC": "EOBC",
     "EO": "EOBC",
     "Ethernet": "Ethernet",
@@ -104,6 +105,9 @@ BASE_INTERFACES = {
     "Serial": "Serial",
     "Se": "Serial",
     "S": "Serial",
+    "Sync": "Sync",
+    "Sy": "Sync",
+    "Ten-GigabitEthernet": "TenGigabitEthernet",
     "TenGigabitEthernet": "TenGigabitEthernet",
     "TenGigEthernet": "TenGigabitEthernet",
     "TenGigEth": "TenGigabitEthernet",
@@ -126,7 +130,10 @@ BASE_INTERFACES = {
     "VLAN": "VLAN",
     "V": "VLAN",
     "Vl": "VLAN",
+    "Vlan-interface": "VLAN",
+    "vlan": "VLAN",
     "Wlan-GigabitEthernet": "Wlan-GigabitEthernet",
+    "XGE": "TenGigabitEthernet",
 }
 
 # The default mac format
@@ -173,6 +180,7 @@ REVERSE_MAPPING = {
     "Port-channel": "Po",
     "POS": "PO",
     "Serial": "Se",
+    "Sync": "Sy",
     "TenGigabitEthernet": "Te",
     "Tunnel": "Tu",
     "TwoGigabitEthernet": "Two",
