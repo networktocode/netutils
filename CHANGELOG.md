@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.2.1 - 2021-06
+
+### Added
+
+- #16 Cisco ASA Parser.
+
+### Changed
+
+- #17 Update interface mapping for Sync, TenGig, Port-channel.
+
 ## v0.2.0 - 2021-06
 
 ### Fixed
