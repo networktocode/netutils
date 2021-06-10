@@ -1,0 +1,10 @@
+aaa-server TACACS+ protocol tacacs+
+ reactivation-mode timed
+ max-failed-attempts 5
+aaa-server TACACS+ (Management) host 10.1.1.100
+ key 20202020
+aaa authentication serial console LOCAL
+aaa authentication ssh console TACACS+ LOCAL
+aaa authentication enable console TACACS+ LOCAL
+aaa authentication http console TACACS+ LOCAL
+aaa accounting command TACACS+

@@ -1,0 +1,2 @@
+hostname jcy-fw-01
+enable password ntc123 encrypted
