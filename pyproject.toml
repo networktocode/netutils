@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netutils"
-version = "0.2.0"
+version = "0.2.1"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <info@networktocode.com>"]
 

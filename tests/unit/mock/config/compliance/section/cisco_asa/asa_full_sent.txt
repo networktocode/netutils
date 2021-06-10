@@ -1,0 +1,108 @@
+: Saved
+
+:
+ASA Version 9.7(1)24
+!
+terminal width 511
+hostname jcy-fw-01
+enable password ntc123 encrypted
+xlate per-session deny tcp any4 any4
+xlate per-session deny tcp any4 any6
+xlate per-session deny tcp any6 any4
+xlate per-session deny tcp any6 any6
+xlate per-session deny udp any4 any4 eq domain
+xlate per-session deny udp any4 any6 eq domain
+xlate per-session deny udp any6 any4 eq domain
+xlate per-session deny udp any6 any6 eq domain
+passwd ntc123 encrypted
+names
+
+!
+interface Management0/0
+ management-only
+ nameif Management
+ security-level 100
+ ip address 10.1.1.10 255.255.255.0
+!
+banner motd ********************************************************************
+banner motd 
+banner motd                         This is a test banner.
+banner motd
+banner motd ********************************************************************
+pager lines 24
+logging enable
+logging timestamp
+logging standby
+logging buffer-size 1048576
+logging buffered informational
+logging trap informational
+logging asdm informational
+logging facility 21
+logging queue 0
+logging device-id hostname
+logging host Management 10.1.1.20
+no logging message 10101010
+mtu Management 1500
+ip verify reverse-path interface Management
+no monitor-interface service-module 
+icmp unreachable rate-limit 1 burst-size 1
+icmp permit 10.0.0.0 255.0.0.0 Management
+no asdm history enable
+arp timeout 14400
+route Management 0.0.0.0 0.0.0.0 10.1.1.1 1
+timeout xlate 3:00:00
+timeout pat-xlate 0:00:30
+timeout conn 1:00:00 half-closed 0:10:00 udp 0:02:00 sctp 0:02:00 icmp 0:00:02
+timeout sunrpc 0:10:00 h323 0:05:00 h225 1:00:00 mgcp 0:05:00 mgcp-pat 0:05:00
+timeout sip 0:30:00 sip_media 0:02:00 sip-invite 0:03:00 sip-disconnect 0:02:00
+timeout sip-provisional-media 0:02:00 uauth 0:05:00 absolute
+timeout tcp-proxy-reassembly 0:01:00
+timeout floating-conn 0:00:00
+timeout conn-holddown 0:00:15
+timeout igp stale-route 0:01:10
+aaa-server TACACS+ protocol tacacs+
+ reactivation-mode timed
+ max-failed-attempts 5
+aaa-server TACACS+ (Management) host 10.1.1.100
+ key 10101010
+user-identity default-domain LOCAL
+aaa authentication serial console LOCAL 
+aaa authentication ssh console TACACS+ LOCAL
+aaa authentication enable console TACACS+ LOCAL
+aaa authentication http console TACACS+ LOCAL
+aaa accounting command TACACS+
+http server enable
+http 0.0.0.0 0.0.0.0 Management
+snmp-server host Management 10.1.1.50 community ***** version 2c
+no snmp-server contact
+snmp-server enable traps syslog
+sysopt noproxyarp Management
+crypto ipsec security-association pmtu-aging infinite
+telnet timeout 5
+ssh stricthostkeycheck
+ssh 0.0.0.0 0.0.0.0 Management
+ssh timeout 60
+ssh version 2
+ssh key-exchange group dh-group1-sha1
+no threat-detection statistics tcp-intercept
+dynamic-access-policy-record DfltAccessPolicy
+username ntc password ntc123 encrypted privilege 15
+!
+class-map inspection_default
+ match default-inspection-traffic
+!
+!
+policy-map type inspect dns preset_dns_map
+ parameters
+  message-length maximum client auto
+  message-length maximum 512
+  no tcp-inspection
+policy-map global_policy
+ class inspection_default
+  inspect dns preset_dns_map 
+  inspect ftp 
+  inspect tftp 
+  inspect ip-options 
+!
+service-policy global_policy global
+: end

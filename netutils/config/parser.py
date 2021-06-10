@@ -603,3 +603,78 @@ class JunosConfigParser(BaseSpaceConfigParser):
 
     comment_chars = []
     banner_start = []
+
+
+class ASAConfigParser(CiscoConfigParser):
+    """Cisco ASA implementation of ConfigParser Class."""
+
+    comment_chars = ["!", ":"]
+
+    def __init__(self, config):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        self.unique_config_lines = set()
+        self.same_line_children = set()
+        super(ASAConfigParser, self).__init__(config)
+
+    def _update_config_lines(self, config_line):
+        """Add a ``ConfigLine`` object to ``self.config_lines``.
+
+        In addition to adding entries to config_lines, this also updates:
+          * self.same_line_children
+          * self.unique_config_lines
+
+        Args:
+            config_line (str): The current config line being evaluated.
+
+        Returns:
+            None
+        """
+        super(ASAConfigParser, self)._update_config_lines(config_line)
+        entry = self.config_lines[-1]
+        if entry in self.unique_config_lines:
+            self.same_line_children.add(entry)
+        self.unique_config_lines.add(entry)
+
+    def build_config_relationship(self):
+        r"""Parse text tree of config lines and their parents.
+
+        Example:
+            >>> config = '''
+            ... interface Management0/0
+            ...  management-only
+            ...  nameif Management
+            ...  security-level 100
+            ...  ip address 10.1.1.10 255.255.255.0'''
+            >>> config_tree = ASAConfigParser(str(config))
+            >>> config_tree.build_config_relationship() == \
+            ... [
+            ...     ConfigLine(config_line="interface Management0/0", parents=()),
+            ...     ConfigLine(config_line=" management-only", parents=("interface Management0/0",)),
+            ...     ConfigLine(config_line=" nameif Management", parents=("interface Management0/0",)),
+            ...     ConfigLine(config_line=" security-level 100", parents=("interface Management0/0",)),
+            ...     ConfigLine(config_line=" ip address 10.1.1.10 255.255.255.0", parents=("interface Management0/0",)),
+            ... ]
+            True
+        """
+        for line in self.generator_config:
+            if not line[0].isspace():
+                self._current_parents = ()
+            else:
+                previous_config = self.config_lines[-1]
+                self._current_parents = (previous_config.config_line,)
+                self.indent_level = self.get_leading_space_count(line)
+                if line is not None and line[0].isspace():
+                    line = self._build_nested_config(line)
+                else:
+                    self._current_parents = ()
+
+            if line is None:
+                break
+
+            self._update_config_lines(line)
+
+        return self.config_lines
