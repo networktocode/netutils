@@ -34,7 +34,7 @@ Functions are grouped with like functions, such as IP or MAC address based funct
 
 # Examples
 
-While all functions come with examples in the docstrings, for quick reference of the types of problems this library intends to 
+While all functions come with examples in the docstrings, for quick reference of the types of problems this library intends to
 solve the following examples are provided.
 
 The following function will help in deploying list of VLANs and match the configuration style in a standard IOS-like configurations.
@@ -52,10 +52,10 @@ The following function will help in deploying list of VLANs and match the config
 ...         print(f"  switchport trunk allowed vlan {line}")
 ...     else:
 ...         print(f"  switchport trunk allowed vlan add {line}")
-... 
+...
   switchport trunk allowed vlan 1-3,5,6,1000,1002,1004,1006,1008,1010,1012,1014
   switchport trunk allowed vlan add 1016,1018
->>> 
+>>>
 ```
 
 You may want to compare a known password with a given encrypted password. This can help in verifying if the
@@ -111,8 +111,8 @@ issues. Functions that were known to be rewritten and their known origin.
 
 | Function | Origin |
 | -------- | ------ |
-| asn_to_int | NAPALM | 
-| is_ip | IPCal | 
+| asn_to_int | NAPALM |
+| is_ip | IPCal |
 | ip_to_bin | IPCal |
 | get_usable_range | IPCal |
 | encrypt_type7 | unknown |
@@ -141,7 +141,7 @@ The project is following Network to Code software development guidelines and are
 The project features a CLI helper based on [invoke](http://www.pyinvoke.org/) to help setup the development environment. The commands are listed below in 3 categories:
 - `dev environment`
 - `utility`
-- `testing`. 
+- `testing`.
 
 Each command can be executed with `invoke <command>`. Each command also has its own help `invoke <command> --help`
 
@@ -153,13 +153,13 @@ Each command can be executed with `invoke <command>`. Each command also has its 
   rebuild          Clean the Docker image and then rebuild without using cache.
 ```
 
-### Utility 
+### Utility
 
 ```
   cli              Enter the image to perform troubleshooting or dev work.
 ```
 
-### Testing 
+### Testing
 
 ```
   bandit           Run bandit to validate basic static code security analysis.
@@ -176,3 +176,4 @@ Each command can be executed with `invoke <command>`. Each command also has its 
 
 For any questions or comments, feel free to swing by the [Network to Code slack channel](https://networktocode.slack.com/) (channel #networktocode).
 Sign up [here](http://slack.networktocode.com/)
+

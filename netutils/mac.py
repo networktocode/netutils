@@ -1,12 +1,14 @@
 """Functions for working with MAC addresses."""
 
 import re
+from functools import wraps
 from .constants import MAC_CREATE, MAC_REGEX
 
 
 def _valid_mac(func):
     """Decorator to validate a MAC address is valid."""
 
+    @wraps(func)
     def decorated(*args, **kwargs):
         if kwargs.get("mac"):
             mac = kwargs.get("mac")
