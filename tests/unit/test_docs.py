@@ -85,7 +85,7 @@ def test_folders_contain_index(data):
         assert "index.rst" in os.listdir(folder)
 
 
-@pytest.mark.parametrize("start_end", START_END_LINES)
+@pytest.mark.parametrize("start_end", START_END_LINES, ids=[section["name"] for section in START_END_LINES])
 def test_docs_start_end_lines(start_end):
     assert README_LIST[start_end["start_line"]] == start_end["start_value"]
     assert README_LIST[start_end["end_line"]] == start_end["end_value"]
