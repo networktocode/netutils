@@ -11,6 +11,8 @@ Welcome to netutils's documentation!
    :caption: Contents:
 
    overview/index
+   installation/index
+   examples/index
    netutils/index
    attribution/index
    contributing/index
