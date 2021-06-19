@@ -208,6 +208,13 @@ CIDR_NETMASK6 = [
     {"sent": {"cidr": 80}, "received": "ffff:ffff:ffff:ffff:ffff::"},
 ]
 
+COUNT_BITS = [
+    {"sent": 0, "received": 0},
+    {"sent": 234, "received": 5},
+    {"sent": 255, "received": 8},
+    {"sent": 0xffffffffffffffff, "received": 64},
+]
+
 
 @pytest.mark.parametrize("data", IP_TO_HEX)
 def test_ip_to_hex(data):
@@ -284,3 +291,13 @@ def test_cidr_to_netmask_fail():
     with pytest.raises(ValueError, match=r"Parameter must be an integer between 0 and 32."):
         data = {"cidr": 37}
         ip.cidr_to_netmask(**data)
+
+
+@pytest.mark.parametrize("data", COUNT_BITS)
+def test_count_bits(data):
+    assert ip.count_bits(data["sent"]) == data["received"]
+
+
+def test_count_bits_fail():
+    with pytest.raises(ValueError):
+        ip.cidr_to_netmask(-42)
