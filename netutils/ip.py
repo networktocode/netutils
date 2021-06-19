@@ -1,6 +1,7 @@
 """Functions for working with IP addresses."""
 # pylint: disable=invalid-name
 import ipaddress
+from netutils.constants import IPV4_MASKS, IPV6_MASKS
 
 
 def ip_to_hex(ip):
@@ -120,8 +121,8 @@ def is_netmask(netmask):
         False
     """
     try:
-        return netmask == str(ipaddress.IPv4Network(f"0.0.0.0/{netmask}").netmask)
-    except ipaddress.NetmaskValueError:
+        return int(ipaddress.ip_address(netmask)) in IPV4_MASKS or int(ipaddress.ip_address(netmask)) in IPV6_MASKS
+    except Exception:
         return False
 
 
@@ -142,12 +143,14 @@ def netmask_to_cidr(netmask):
         23
     """
     if is_netmask(netmask):
-        return sum(bin(int(x)).count("1") for x in netmask.split("."))
+        # is_netmask validates contiguous 1's, count_bit simply sums them
+        return count_bits(int(ipaddress.ip_address(netmask)))
     raise ValueError("Subnet mask is not valid.")
 
 
 def cidr_to_netmask(cidr):
     """Creates a decimal format of a CIDR value.
+    **IPv4** only.  For IPv6, please use `cidr_to_netmask6`.
 
     Args:
         cidr (int): A CIDR value.
@@ -165,6 +168,27 @@ def cidr_to_netmask(cidr):
     if isinstance(cidr, int) and 0 <= cidr <= 32:
         return ".".join([str((0xFFFFFFFF << (32 - cidr) >> i) & 0xFF) for i in [24, 16, 8, 0]])
     raise ValueError("Parameter must be an integer between 0 and 32.")
+
+
+def cidr_to_netmask6(cidr):
+    """Creates a decimal format of a CIDR value.
+
+    Args:
+        cidr (int): A CIDR value.
+
+    Returns:
+      netmask (str): Decimal format (IPv6) representation of CIDR value.
+
+    Example:
+        >>> from netutils.ip import netmask_to_cidr6
+        >>> cidr_to_netmask6(24)
+        'ffff:ff00::'
+        >>> cidr_to_netmask6(17)
+        'ffff:8000::'
+    """
+    if isinstance(cidr, int) and 0 <= cidr <= 128:
+        return str(ipaddress.IPv6Address(((1 << cidr) - 1) << (128 - cidr)))
+    raise ValueError("Parameter must be an integer between 0 and 128.")
 
 
 def get_all_host(ip_network):
@@ -247,3 +271,21 @@ def get_usable_range(ip_network):
         lower_bound = str(net[1])
         upper_bound = str(net[-2])
     return f"{lower_bound} - {upper_bound}"
+
+
+def count_bits(i: int) -> int:
+    """Given an integer, count the number of 1's present in its binary form.
+    This function is **not** sufficient to validate netmasks.  This does not check
+    for a contiguous bit string.
+
+    Args:
+        i (int): Any integer.
+    Returns:
+        int: The number of 1's set.
+    """
+    c = 0
+    while i:
+        if i & 1:
+            c += 1
+        i >>= 1
+    return c
