@@ -55,7 +55,7 @@ def ip_to_bin(ip):
         '1010011001000110010001100100'
         >>>
     """
-    return str(bin(int(ipaddress.ip_address(ip))))[2:]
+    return bin(int(ipaddress.ip_address(ip)))[2:]
 
 
 def ip_subtract(ip, val):
@@ -174,15 +174,15 @@ def get_all_host(ip_network):
         ip_network (str): An IP network in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        list: List of usable IP Addresses within network.
+        generator: Generator of usable IP Addresses within network.
 
     Example:
         >>> from netutils.ip import get_all_host
-        >>> print(get_all_host("10.100.100.0/29"))
+        >>> print(list(get_all_host("10.100.100.0/29")))
         ['10.100.100.1', '10.100.100.2', '10.100.100.3', '10.100.100.4', '10.100.100.5', '10.100.100.6']
         >>>
     """
-    return [str(ip) for ip in ipaddress.ip_network(ip_network).hosts()]
+    return (str(ip) for ip in ipaddress.ip_network(ip_network).hosts())
 
 
 def get_broadcast_address(ip_network):
