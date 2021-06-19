@@ -183,12 +183,17 @@ IS_NETMASK = [
     {"sent": {"netmask": "255.0.128.0"}, "received": False},
     {"sent": {"netmask": "44"}, "received": False},
     {"sent": {"netmask": "mynetmask"}, "received": False},
+    {"sent": {"netmask": "dead:beef:cafe::"}, "received": False},
+    {"sent": {"netmask": "ff00::"}, "received": True},
+    {"sent": {"netmask": "ffff:ffff:ffff:ffff:ffff::"}, "received": True},
 ]
 
 NETMASK_CIDR = [
     {"sent": {"netmask": "255.255.255.0"}, "received": 24},
     {"sent": {"netmask": "255.192.0.0"}, "received": 10},
     {"sent": {"netmask": "255.255.255.252"}, "received": 30},
+    {"sent": {"netmask": "ff00::"}, "received": 8},
+    {"sent": {"netmask": "ffff:ffff:ffff:ffff:ffff::"}, "received": 80},
 ]
 
 CIDR_NETMASK = [
@@ -196,6 +201,11 @@ CIDR_NETMASK = [
     {"sent": {"cidr": 28}, "received": "255.255.255.240"},
     {"sent": {"cidr": 10}, "received": "255.192.0.0"},
     {"sent": {"cidr": 17}, "received": "255.255.128.0"},
+]
+
+CIDR_NETMASK6 = [
+    {"sent": {"cidr": 8}, "received": "ff00::"},
+    {"sent": {"cidr": 80}, "received": "ffff:ffff:ffff:ffff:ffff::"},
 ]
 
 
@@ -226,7 +236,7 @@ def test_is_ip(data):
 
 @pytest.mark.parametrize("data", GET_ALL_HOST)
 def test_get_all_host(data):
-    assert ip.get_all_host(**data["sent"]) == data["received"]
+    assert list(ip.get_all_host(**data["sent"])) == data["received"]
 
 
 @pytest.mark.parametrize("data", GET_BROADCAST_ADDRESS)
@@ -263,6 +273,11 @@ def test_netmask_to_cidr_fail():
 @pytest.mark.parametrize("data", CIDR_NETMASK)
 def test_cidr_to_netmask(data):
     assert ip.cidr_to_netmask(**data["sent"]) == data["received"]
+
+
+@pytest.mark.parametrize("data", CIDR_NETMASK6)
+def test_cidr_to_netmask6(data):
+    assert ip.cidr_to_netmask6(**data["sent"]) == data["received"]
 
 
 def test_cidr_to_netmask_fail():
