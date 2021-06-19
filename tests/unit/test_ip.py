@@ -212,7 +212,7 @@ COUNT_BITS = [
     {"sent": 0, "received": 0},
     {"sent": 234, "received": 5},
     {"sent": 255, "received": 8},
-    {"sent": 0xffffffffffffffff, "received": 64},
+    {"sent": 0xFFFFFFFFFFFFFFFF, "received": 64},
 ]
 
 
