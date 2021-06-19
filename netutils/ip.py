@@ -122,7 +122,7 @@ def is_netmask(netmask):
     """
     try:
         return int(ipaddress.ip_address(netmask)) in IPV4_MASKS or int(ipaddress.ip_address(netmask)) in IPV6_MASKS
-    except Exception:
+    except ValueError:
         return False
 
 
@@ -150,6 +150,7 @@ def netmask_to_cidr(netmask):
 
 def cidr_to_netmask(cidr):
     """Creates a decimal format of a CIDR value.
+
     **IPv4** only.  For IPv6, please use `cidr_to_netmask6`.
 
     Args:
@@ -275,11 +276,13 @@ def get_usable_range(ip_network):
 
 def count_bits(i: int) -> int:
     """Given an integer, count the number of 1's present in its binary form.
+
     This function is **not** sufficient to validate netmasks.  This does not check
     for a contiguous bit string.
 
     Args:
         i (int): Any integer.
+
     Returns:
         int: The number of 1's set.
     """
