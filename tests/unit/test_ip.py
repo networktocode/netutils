@@ -283,8 +283,8 @@ def test_cidr_to_netmask(data):
 
 
 @pytest.mark.parametrize("data", CIDR_NETMASK6)
-def test_cidr_to_netmask6(data):
-    assert ip.cidr_to_netmask6(**data["sent"]) == data["received"]
+def test_cidr_to_netmaskv6(data):
+    assert ip.cidr_to_netmaskv6(**data["sent"]) == data["received"]
 
 
 def test_cidr_to_netmask_fail():

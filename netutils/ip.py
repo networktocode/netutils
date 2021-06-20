@@ -151,7 +151,7 @@ def netmask_to_cidr(netmask):
 def cidr_to_netmask(cidr):
     """Creates a decimal format of a CIDR value.
 
-    **IPv4** only.  For IPv6, please use `cidr_to_netmask6`.
+    **IPv4** only.  For IPv6, please use `cidr_to_netmaskv6`.
 
     Args:
         cidr (int): A CIDR value.
@@ -171,7 +171,7 @@ def cidr_to_netmask(cidr):
     raise ValueError("Parameter must be an integer between 0 and 32.")
 
 
-def cidr_to_netmask6(cidr):
+def cidr_to_netmaskv6(cidr):
     """Creates a decimal format of a CIDR value.
 
     Args:
@@ -181,10 +181,10 @@ def cidr_to_netmask6(cidr):
       netmask (str): Decimal format (IPv6) representation of CIDR value.
 
     Example:
-        >>> from netutils.ip import cidr_to_netmask6
-        >>> cidr_to_netmask6(24)
+        >>> from netutils.ip import cidr_to_netmaskv6
+        >>> cidr_to_netmaskv6(24)
         'ffff:ff00::'
-        >>> cidr_to_netmask6(17)
+        >>> cidr_to_netmaskv6(17)
         'ffff:8000::'
     """
     if isinstance(cidr, int) and 0 <= cidr <= 128:
@@ -274,23 +274,23 @@ def get_usable_range(ip_network):
     return f"{lower_bound} - {upper_bound}"
 
 
-def count_bits(i: int) -> int:
+def count_bits(positive_integer_or_zero: int) -> int:
     """Given a positive integer, count the number of 1's present in its binary form.
 
     This function is **not** sufficient to validate netmasks.  This does not check
     for a contiguous bit string.
 
     Args:
-        i (int): Any integer.
+        positive_integer_or_zero (int): Any integer.
 
     Returns:
         int: The number of 1's set.
     """
-    if i < 0:
+    if positive_integer_or_zero < 0:
         raise ValueError("count_bits requires a positive integer")
     c = 0
-    while i:
-        if i & 1:
+    while positive_integer_or_zero:
+        if positive_integer_or_zero & 1:
             c += 1
-        i >>= 1
+        positive_integer_or_zero >>= 1
     return c
