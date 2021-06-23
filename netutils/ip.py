@@ -1,5 +1,4 @@
 """Functions for working with IP addresses."""
-# pylint: disable=invalid-name
 import ipaddress
 from netutils.constants import IPV4_MASKS, IPV6_MASKS
 
@@ -288,9 +287,9 @@ def count_bits(positive_integer_or_zero: int) -> int:
     """
     if positive_integer_or_zero < 0:
         raise ValueError("count_bits requires a positive integer")
-    c = 0
+    count = 0
     while positive_integer_or_zero:
         if positive_integer_or_zero & 1:
-            c += 1
+            count += 1
         positive_integer_or_zero >>= 1
-    return c
+    return count
