@@ -1,6 +1,6 @@
 """Functions for working with IP addresses."""
-# pylint: disable=invalid-name
 import ipaddress
+from netutils.constants import IPV4_MASKS, IPV6_MASKS
 
 
 def ip_to_hex(ip):
@@ -55,7 +55,7 @@ def ip_to_bin(ip):
         '1010011001000110010001100100'
         >>>
     """
-    return str(bin(int(ipaddress.ip_address(ip))))[2:]
+    return bin(int(ipaddress.ip_address(ip)))[2:]
 
 
 def ip_subtract(ip, val):
@@ -120,8 +120,8 @@ def is_netmask(netmask):
         False
     """
     try:
-        return netmask == str(ipaddress.IPv4Network(f"0.0.0.0/{netmask}").netmask)
-    except ipaddress.NetmaskValueError:
+        return int(ipaddress.ip_address(netmask)) in IPV4_MASKS or int(ipaddress.ip_address(netmask)) in IPV6_MASKS
+    except ValueError:
         return False
 
 
@@ -142,12 +142,15 @@ def netmask_to_cidr(netmask):
         23
     """
     if is_netmask(netmask):
-        return sum(bin(int(x)).count("1") for x in netmask.split("."))
+        # is_netmask validates contiguous 1's, count_bit simply sums them
+        return count_bits(int(ipaddress.ip_address(netmask)))
     raise ValueError("Subnet mask is not valid.")
 
 
 def cidr_to_netmask(cidr):
     """Creates a decimal format of a CIDR value.
+
+    **IPv4** only.  For IPv6, please use `cidr_to_netmaskv6`.
 
     Args:
         cidr (int): A CIDR value.
@@ -156,7 +159,7 @@ def cidr_to_netmask(cidr):
       netmask (str): Decimal format representation of CIDR value.
 
     Example:
-        >>> from netutils.ip import netmask_to_cidr
+        >>> from netutils.ip import cidr_to_netmask
         >>> cidr_to_netmask(24)
         '255.255.255.0'
         >>> cidr_to_netmask(17)
@@ -167,6 +170,27 @@ def cidr_to_netmask(cidr):
     raise ValueError("Parameter must be an integer between 0 and 32.")
 
 
+def cidr_to_netmaskv6(cidr):
+    """Creates a decimal format of a CIDR value.
+
+    Args:
+        cidr (int): A CIDR value.
+
+    Returns:
+      netmask (str): Decimal format (IPv6) representation of CIDR value.
+
+    Example:
+        >>> from netutils.ip import cidr_to_netmaskv6
+        >>> cidr_to_netmaskv6(24)
+        'ffff:ff00::'
+        >>> cidr_to_netmaskv6(17)
+        'ffff:8000::'
+    """
+    if isinstance(cidr, int) and 0 <= cidr <= 128:
+        return str(ipaddress.IPv6Address(((1 << cidr) - 1) << (128 - cidr)))
+    raise ValueError("Parameter must be an integer between 0 and 128.")
+
+
 def get_all_host(ip_network):
     """Given a network, return the list of usable IP addresses.
 
@@ -174,15 +198,15 @@ def get_all_host(ip_network):
         ip_network (str): An IP network in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        list: List of usable IP Addresses within network.
+        generator: Generator of usable IP Addresses within network.
 
     Example:
         >>> from netutils.ip import get_all_host
-        >>> print(get_all_host("10.100.100.0/29"))
+        >>> print(list(get_all_host("10.100.100.0/29")))
         ['10.100.100.1', '10.100.100.2', '10.100.100.3', '10.100.100.4', '10.100.100.5', '10.100.100.6']
         >>>
     """
-    return [str(ip) for ip in ipaddress.ip_network(ip_network).hosts()]
+    return (str(ip) for ip in ipaddress.ip_network(ip_network).hosts())
 
 
 def get_broadcast_address(ip_network):
@@ -247,3 +271,25 @@ def get_usable_range(ip_network):
         lower_bound = str(net[1])
         upper_bound = str(net[-2])
     return f"{lower_bound} - {upper_bound}"
+
+
+def count_bits(positive_integer_or_zero: int) -> int:
+    """Given a positive integer, count the number of 1's present in its binary form.
+
+    This function is **not** sufficient to validate netmasks.  This does not check
+    for a contiguous bit string.
+
+    Args:
+        positive_integer_or_zero (int): Any integer.
+
+    Returns:
+        int: The number of 1's set.
+    """
+    if positive_integer_or_zero < 0:
+        raise ValueError("count_bits requires a positive integer")
+    count = 0
+    while positive_integer_or_zero:
+        if positive_integer_or_zero & 1:
+            count += 1
+        positive_integer_or_zero >>= 1
+    return count
