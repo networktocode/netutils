@@ -142,8 +142,7 @@ def netmask_to_cidr(netmask):
         23
     """
     if is_netmask(netmask):
-        # is_netmask validates contiguous 1's, count_bit simply sums them
-        return count_bits(int(ipaddress.ip_address(netmask)))
+        return bin(int(ipaddress.ip_address(netmask))).count("1")
     raise ValueError("Subnet mask is not valid.")
 
 
@@ -271,25 +270,3 @@ def get_usable_range(ip_network):
         lower_bound = str(net[1])
         upper_bound = str(net[-2])
     return f"{lower_bound} - {upper_bound}"
-
-
-def count_bits(positive_integer_or_zero: int) -> int:
-    """Given a positive integer, count the number of 1's present in its binary form.
-
-    This function is **not** sufficient to validate netmasks.  This does not check
-    for a contiguous bit string.
-
-    Args:
-        positive_integer_or_zero (int): Any integer.
-
-    Returns:
-        int: The number of 1's set.
-    """
-    if positive_integer_or_zero < 0:
-        raise ValueError("count_bits requires a positive integer")
-    count = 0
-    while positive_integer_or_zero:
-        if positive_integer_or_zero & 1:
-            count += 1
-        positive_integer_or_zero >>= 1
-    return count
