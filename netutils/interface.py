@@ -1,6 +1,73 @@
 """Functions for working with interface."""
+import re
+from .constants import BASE_INTERFACES, REVERSE_MAPPING, ALPHANUMERIC_EXPANSION_PATTERN
 
-from .constants import BASE_INTERFACES, REVERSE_MAPPING
+
+def _parse_alphanumeric_range(pattern):
+    """Expand an alphanumberic range into a list.
+
+    Args:
+        pattern (str):
+
+    Raises:
+        ValueError: Raised if a character range is invalid.
+
+    Returns:
+        list: Contains the expanded range of values.
+    """
+    values = []
+    for dash_range in pattern.split(","):
+        try:
+            begin, end = dash_range.split("-")
+            vals = begin + end
+            if (not (vals.isdigit() or vals.isalpha())) or (vals.isalpha() and not (vals.isupper() or vals.islower())):
+                return []
+        except ValueError:
+            begin, end = dash_range, dash_range
+        if begin.isdigit() and end.isdigit():
+            for number in list(range(int(begin), int(end) + 1)):
+                values.append(number)
+        else:
+            if begin == end:
+                values.append(begin)
+            else:
+                if not len(begin) == len(end) == 1:
+                    raise ValueError("Not a valid character range.")
+                for letter in list(range(ord(begin), ord(end) + 1)):
+                    values.append(chr(letter))
+
+    return values
+
+
+def interface_range_expansion(interface_pattern):
+    """Expand interface pattern into a list of interfaces.
+
+    Args:
+        interface_pattern (str): The string pattern that will be parsed to create the list of interfaces.
+
+    Returns:
+        list: Contains the expanded range of values.
+
+    Example:
+        >>> from netutils.interface import interface_range_expansion
+        >>> interface_range_expansion("Gi0/[1-4]")
+        ['Gi0/1', 'Gi0/2', 'Gi0/3', 'Gi0/4']
+        >>> interface_range_expansion("[ge,xe]0/[0-2]")
+        ['ge0/0', 'ge0/1', 'ge0/2', 'xe0/0', 'xe0/1', 'xe0/2']
+    """
+    if not re.search(ALPHANUMERIC_EXPANSION_PATTERN, interface_pattern):
+        raise ValueError("Pattern cannot be parsed")
+
+    interface_list = []
+    lead, pattern, remnant = re.split(ALPHANUMERIC_EXPANSION_PATTERN, interface_pattern, maxsplit=1)
+    parsed_range = _parse_alphanumeric_range(pattern)
+    for value in parsed_range:
+        if re.search(ALPHANUMERIC_EXPANSION_PATTERN, remnant):
+            for string in interface_range_expansion(remnant):
+                interface_list.append("{}{}{}".format(lead, value, string))
+        else:
+            interface_list.append("{}{}{}".format(lead, value, remnant))
+    return interface_list
 
 
 def split_interface(interface):
