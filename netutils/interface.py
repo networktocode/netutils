@@ -1,42 +1,7 @@
 """Functions for working with interface."""
 import re
-from .constants import BASE_INTERFACES, REVERSE_MAPPING, ALPHANUMERIC_EXPANSION_PATTERN
-
-
-def _parse_alphanumeric_range(pattern):
-    """Expand an alphanumberic range into a list.
-
-    Args:
-        pattern (str):
-
-    Raises:
-        ValueError: Raised if a character range is invalid.
-
-    Returns:
-        list: Contains the expanded range of values.
-    """
-    values = []
-    for dash_range in pattern.split(","):
-        try:
-            begin, end = dash_range.split("-")
-            vals = begin + end
-            if (not (vals.isdigit() or vals.isalpha())) or (vals.isalpha() and not (vals.isupper() or vals.islower())):
-                return []
-        except ValueError:
-            begin, end = dash_range, dash_range
-        if begin.isdigit() and end.isdigit():
-            for number in list(range(int(begin), int(end) + 1)):
-                values.append(number)
-        else:
-            if begin == end:
-                values.append(begin)
-            else:
-                if not len(begin) == len(end) == 1:
-                    raise ValueError("Not a valid character range.")
-                for letter in list(range(ord(begin), ord(end) + 1)):
-                    values.append(chr(letter))
-
-    return values
+import itertools
+from .constants import BASE_INTERFACES, REVERSE_MAPPING
 
 
 def interface_range_expansion(interface_pattern):
@@ -46,28 +11,59 @@ def interface_range_expansion(interface_pattern):
         interface_pattern (str): The string pattern that will be parsed to create the list of interfaces.
 
     Returns:
-        list: Contains the expanded range of values.
+        list: Contains the expanded list of interfaces.
 
     Example:
         >>> from netutils.interface import interface_range_expansion
         >>> interface_range_expansion("Gi0/[1-4]")
         ['Gi0/1', 'Gi0/2', 'Gi0/3', 'Gi0/4']
-        >>> interface_range_expansion("[ge,xe]0/[0-2]")
-        ['ge0/0', 'ge0/1', 'ge0/2', 'xe0/0', 'xe0/1', 'xe0/2']
+        >>> interface_range_expansion("FastEthernet[1-2]/0/[10-15]")
+        ['FastEthernet1/0/10', 'FastEthernet1/0/11', 'FastEthernet1/0/12', 'FastEthernet1/0/13', 'FastEthernet1/0/14', 'FastEthernet1/0/15', 'FastEthernet2/0/10', 'FastEthernet2/0/11', 'FastEthernet2/0/12', 'FastEthernet2/0/13', 'FastEthernet2/0/14', 'FastEthernet2/0/15']
     """
-    if not re.search(ALPHANUMERIC_EXPANSION_PATTERN, interface_pattern):
-        raise ValueError("Pattern cannot be parsed")
 
-    interface_list = []
-    lead, pattern, remnant = re.split(ALPHANUMERIC_EXPANSION_PATTERN, interface_pattern, maxsplit=1)
-    parsed_range = _parse_alphanumeric_range(pattern)
-    for value in parsed_range:
-        if re.search(ALPHANUMERIC_EXPANSION_PATTERN, remnant):
-            for string in interface_range_expansion(remnant):
-                interface_list.append("{}{}{}".format(lead, value, string))
-        else:
-            interface_list.append("{}{}{}".format(lead, value, remnant))
-    return interface_list
+    def _rangeexpand(regex_match):
+        number_range = []
+        for value in regex_match.split(","):
+            if "-" in value[1:]:
+                first_number, second_number = value[1:].split("-", 1)
+                number_range += range(int(value[0] + first_number), int(second_number) + 1)
+            else:
+                number_range.append(int(value))
+        return number_range
+
+    def _pairwise(interface_constant):
+        interface_constant_it = iter(interface_constant)
+        return list(zip(interface_constant_it, interface_constant_it))
+
+    match_pattern = r"(\[(?:\d|,|-)+\])"
+    re_compiled = re.compile(match_pattern)
+    # Use case when sent without an actual range, e.g. Gi1
+    if not re_compiled.search(interface_pattern):
+        return [interface_pattern]
+
+    cartesian_list = []
+    interface_constant = [0]
+    for match in re_compiled.finditer(interface_pattern):
+        interface_constant.append(match.start())
+        interface_constant.append(match.end())
+        cartesian_list.append(_rangeexpand(match.group()[1:-1]))
+
+    # Use case where interface range is at the end, e.g. Gi[1-10]
+    if len(interface_pattern) == interface_constant[-1]:
+        interface_constant.pop()
+    else:
+        interface_constant.append(len(interface_pattern))
+
+    interface_constant_out = _pairwise(interface_constant)
+    expanded_interfaces = []
+    for element in itertools.product(*cartesian_list):
+        current_interface = ""
+        for count, item in enumerate(interface_constant_out):
+            current_interface += interface_pattern[item[0] : item[1]]  # noqa: E203
+            current_interface += str(element[count])
+        expanded_interfaces.append(current_interface)
+
+    return expanded_interfaces
 
 
 def split_interface(interface):

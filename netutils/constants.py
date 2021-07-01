@@ -191,8 +191,6 @@ REVERSE_MAPPING = {
     "Wlan-GigabitEthernet": "Wl-Gi",
 }
 
-ALPHANUMERIC_EXPANSION_PATTERN = r"\[((?:[a-zA-Z0-9]+[?:,-])+[a-zA-Z0-9]+)\]"
-
 # These are base level filters to provide documentation of how a CLEAN_FILTER can be used, This is a private variable, and subject
 # to change without notice between revisions.
 _PROVIDED_CLEAN_FILTERS = [

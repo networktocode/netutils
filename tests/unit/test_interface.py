@@ -92,6 +92,7 @@ INTERFACE_EXPANSION = [
             "FortyGig2/6/10",
         ],
     },
+    {"sent": "Gi1", "recieved": ["Gi1"]},
 ]
 
 
@@ -125,13 +126,3 @@ def test_abbreviated_interface_name_failure():
 @pytest.mark.parametrize("data", INTERFACE_EXPANSION)
 def test_interface_range_expansion(data):
     assert interface.interface_range_expansion(data["sent"]) == data["recieved"]
-
-
-def test_interface_range_parsing_error():
-    with pytest.raises(ValueError, match=r"Pattern cannot be parsed"):
-        interface.interface_range_expansion("NotAValidRange")
-
-
-def test_interface_range_character_error():
-    with pytest.raises(ValueError, match=r"Not a valid character range."):
-        interface.interface_range_expansion("Vlan[ab-z]")
