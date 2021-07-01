@@ -291,13 +291,3 @@ def test_cidr_to_netmask_fail():
     with pytest.raises(ValueError, match=r"Parameter must be an integer between 0 and 32."):
         data = {"cidr": 37}
         ip.cidr_to_netmask(**data)
-
-
-@pytest.mark.parametrize("data", COUNT_BITS)
-def test_count_bits(data):
-    assert ip.count_bits(data["sent"]) == data["received"]
-
-
-def test_count_bits_fail():
-    with pytest.raises(ValueError):
-        ip.cidr_to_netmask(-42)
