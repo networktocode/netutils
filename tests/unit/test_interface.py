@@ -43,10 +43,10 @@ ABBREVIATED_INTERFACE_NAME = [
 ]
 
 INTERFACE_EXPANSION = [
-    {"sent": "Ethernet0/[1-4]", "recieved": ["Ethernet0/1", "Ethernet0/2", "Ethernet0/3", "Ethernet0/4"]},
+    {"sent": "Ethernet0/[1-4]", "received": ["Ethernet0/1", "Ethernet0/2", "Ethernet0/3", "Ethernet0/4"]},
     {
         "sent": "GigabitEthernet[1,2]/0/[1-10]",
-        "recieved": [
+        "received": [
             "GigabitEthernet1/0/1",
             "GigabitEthernet1/0/2",
             "GigabitEthernet1/0/3",
@@ -71,7 +71,7 @@ INTERFACE_EXPANSION = [
     },
     {
         "sent": "FortyGig[1,2]/[4-6]/[8-10]",
-        "recieved": [
+        "received": [
             "FortyGig1/4/8",
             "FortyGig1/4/9",
             "FortyGig1/4/10",
@@ -92,7 +92,10 @@ INTERFACE_EXPANSION = [
             "FortyGig2/6/10",
         ],
     },
-    {"sent": "Gi1", "recieved": ["Gi1"]},
+    {"sent": "Gi1", "received": ["Gi1"]},
+    {"sent": "Gi[1,3-5]", "received": ["Gi1", "Gi3", "Gi4", "Gi5"]},
+    {"sent": "Gi[1,3-5,8]", "received": ["Gi1", "Gi3", "Gi4", "Gi5", "Gi8"]},
+    {"sent": "[1,2]/0/[1-2]", "received": ["1/0/1", "1/0/2", "2/0/1", "2/0/2"]},
 ]
 
 
@@ -125,4 +128,4 @@ def test_abbreviated_interface_name_failure():
 
 @pytest.mark.parametrize("data", INTERFACE_EXPANSION)
 def test_interface_range_expansion(data):
-    assert interface.interface_range_expansion(data["sent"]) == data["recieved"]
+    assert interface.interface_range_expansion(data["sent"]) == data["received"]
