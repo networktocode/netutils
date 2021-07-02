@@ -21,7 +21,7 @@ def interface_range_expansion(interface_pattern):
         ['FastEthernet1/0/10', 'FastEthernet1/0/11', 'FastEthernet1/0/12', 'FastEthernet1/0/13', 'FastEthernet1/0/14', 'FastEthernet1/0/15', 'FastEthernet2/0/10', 'FastEthernet2/0/11', 'FastEthernet2/0/12', 'FastEthernet2/0/13', 'FastEthernet2/0/14', 'FastEthernet2/0/15']
     """
 
-    def _rangeexpand(regex_match):
+    def _range_expand(regex_match):
         number_range = []
         for value in regex_match.split(","):
             if "-" in value[1:]:
@@ -46,13 +46,7 @@ def interface_range_expansion(interface_pattern):
     for match in re_compiled.finditer(interface_pattern):
         interface_constant.append(match.start())
         interface_constant.append(match.end())
-        cartesian_list.append(_rangeexpand(match.group()[1:-1]))
-
-    # Use case where interface range is at the end, e.g. Gi[1-10]
-    if len(interface_pattern) == interface_constant[-1]:
-        interface_constant.pop()
-    else:
-        interface_constant.append(len(interface_pattern))
+        cartesian_list.append(_range_expand(match.group()[1:-1]))
 
     interface_constant_out = _pairwise(interface_constant)
     expanded_interfaces = []
