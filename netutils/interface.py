@@ -1,6 +1,8 @@
 """Functions for working with interface."""
 import re
 import itertools
+from typing import Union, List, Tuple
+from operator import itemgetter
 from .constants import BASE_INTERFACES, REVERSE_MAPPING
 
 
@@ -172,3 +174,128 @@ def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=N
         raise ValueError(f"Verify interface on and no match found for {interface}")
     # If abbreviated name lookup fails, return original name
     return interface
+
+
+def interface_range_generator(interfaces: Union[str, List[str]] = None,
+                              prefix: str = "interface range ",
+                              max_ranges: int = 5) -> List[str]:
+    """Function which takes interfaces and return interface ranges.
+    Ranges are based on last interface part (aka ports).
+    Whitespace characters are ignored in the input.
+
+    Example:
+        >>> interface_range_generator("Gi1/0/1 Gi1/0/2 Gi1/0/4")
+        'interface range Gi1/0/1-2,Gi1/0/4'
+        >>> interface_range_generator(["Gi1/0/1 Gi1/0/2","Gi1/0/3,Gi1/0/4"])
+        'interface range Gi1/0/1-4'
+
+    Args:
+        prefix: prefix string used in each line of the output
+        interfaces: interfaces in a line or in a list of lines
+        max_ranges: maximum number of ranges in one line in the output
+
+    Returns:
+        lines of interface range commands (or ranges with specified prefix)
+    """
+
+    def to_port(port_in: Tuple[str, int, int, int, int]):
+        """Assemble exploded port_in
+        Separator is `/`. -1 value means that value is not used.
+        Only physical ports are supported.
+        Example: Gi, 1, 0, 1, -1 will become: Gi1/0/1
+
+        Args:
+            port_in: tuple of port name and fex, chasses, module, interface numbers
+
+        Returns:
+            string of assembled interface
+        """
+        out = port_in[0]
+        if port_in[1] >= 0:
+            out += str(port_in[1])
+            if port_in[2] >= 0:
+                out += "/" + str(port_in[2])
+                if port_in[3] >= 0:
+                    out += "/" + str(port_in[3])
+                    if port_in[4] >= 0:
+                        out += "/" + str(port_in[4])
+        return out
+
+    ports = []  # collect exploded interfaces
+    port_regex = re.compile(r"(?i)([a-z]+)([0-9]+)(?:/([0-9]+))?(?:/([0-9]+))?(?:/([0-9]+))?")
+    output = []
+    if interfaces is None:
+        return output
+    ports_in = [interfaces] if type(interfaces) is str else interfaces
+    # read all lines and explode all interfaces as preparation for sorting
+    for line in ports_in:
+        matches = port_regex.findall(line)
+        for match in matches:
+            port_name = match[0]
+            port1 = int(match[1]) if len(match[1]) > 0 else -1
+            port2 = int(match[2]) if len(match[2]) > 0 else -1
+            port3 = int(match[3]) if len(match[3]) > 0 else -1
+            port4 = int(match[4]) if len(match[4]) > 0 else -1
+            ports.append((port_name, port1, port2, port3, port4))
+
+    # sort exploded interface data in order to prepare for finding ranges
+    ports = sorted(ports, key=itemgetter(0, 1, 2, 3, 4))  # Sort interfaces
+    if not ports:  # could not read interfaces from input
+        return []
+    range_start = ports[0]  # contains interface range start (Gi0/0)
+    range_index = 1  # counts number of ranges on line (gi0/0-1,g0/3-5 = 2)
+    current_port = range_start
+    last_port_index = 1
+    outline = "%s%s" % (prefix, to_port(range_start))
+    i = 0  # range counter
+    for port in ports[1:]:
+        # interface name
+        if range_start[0] != port[0]:
+            if i > 0:  # it's a range
+                outline += "-%d" % current_port[last_port_index]
+                i = 0  # reset range counter
+            if range_index >= 5:
+                range_index = 1
+                output.append(outline)
+                outline = "%s%s" % (prefix, to_port(port))
+            else:
+                range_index += 1
+                outline += ", %s" % to_port(port)
+            range_start = port
+            current_port = port
+            continue  # move ahead for next port
+
+        # interface numbers
+        for port_index in range(1, 5):
+            if current_port[port_index] == port[port_index]:
+                pass
+            elif port[port_index] == (current_port[port_index] + 1) and port_index == 4:
+                i += 1
+                current_port = port
+                last_port_index = port_index
+                break
+            elif port[port_index] == (current_port[port_index] + 1) and port[port_index + 1] < 0:  # port_index < 4
+                # check if we found the last sane index
+                i += 1
+                current_port = port
+                last_port_index = port_index
+                break
+            else:
+                if i > 0:  # it's a range
+                    outline += "-%d" % current_port[last_port_index]
+                    i = 0  # reset range counter
+                if range_index >= max_ranges:
+                    range_index = 1
+                    output.append(outline)
+                    outline = "%s%s" % (prefix, to_port(port))
+                else:
+                    range_index += 1
+                    outline += ", %s" % to_port(port)
+                range_start = port
+                current_port = port
+                break  # move ahead for next port
+
+    if i > 0:
+        outline += "-%d" % current_port[last_port_index]
+    output.append(outline)
+    return output
