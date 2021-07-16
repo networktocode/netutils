@@ -176,12 +176,12 @@ def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=N
     return interface
 
 
-def interface_range_generator(interfaces: Union[str, List[str]] = None,
-                              prefix: str = "interface range ",
-                              max_ranges: int = 5) -> List[str]:
+def interface_range_generator(
+    interfaces: Union[str, List[str]] = None, prefix: str = "interface range ", max_ranges: int = 5
+) -> List[str]:
     """Function which takes interfaces and return interface ranges.
     Ranges are based on last interface part (aka ports).
-    Whitespace characters are ignored in the input.
+    Whitespace and special characters are ignored in the input.
 
     Example:
         >>> interface_range_generator("Gi1/0/1 Gi1/0/2 Gi1/0/4")
@@ -222,6 +222,8 @@ def interface_range_generator(interfaces: Union[str, List[str]] = None,
         return out
 
     ports = []  # collect exploded interfaces
+    # case insensitive port parsing. We do a hard assumption that we only have ports in the input.
+    # we support 4 module depth. This is enough for Cisco FEX.
     port_regex = re.compile(r"(?i)([a-z]+)([0-9]+)(?:/([0-9]+))?(?:/([0-9]+))?(?:/([0-9]+))?")
     output = []
     if interfaces is None:
@@ -269,6 +271,7 @@ def interface_range_generator(interfaces: Union[str, List[str]] = None,
         for port_index in range(1, 5):
             if current_port[port_index] == port[port_index]:
                 pass
+            # check if we found a subsequent interface number (we are at max supported depth)
             elif port[port_index] == (current_port[port_index] + 1) and port_index == 4:
                 i += 1
                 current_port = port
@@ -282,14 +285,14 @@ def interface_range_generator(interfaces: Union[str, List[str]] = None,
                 last_port_index = port_index
                 break
             else:
-                if i > 0:  # it's a range
+                if i > 0:  # set last port number
                     outline += "-%d" % current_port[last_port_index]
                     i = 0  # reset range counter
-                if range_index >= max_ranges:
+                if range_index >= max_ranges:  # max no of ranges reached, start a new range cmd
                     range_index = 1
                     output.append(outline)
                     outline = "%s%s" % (prefix, to_port(port))
-                else:
+                else:  # just append new range to current line
                     range_index += 1
                     outline += ", %s" % to_port(port)
                 range_start = port
