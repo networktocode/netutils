@@ -274,8 +274,9 @@ def interface_range_generator(interfaces: Union[str, List[str]] = None,
                 current_port = port
                 last_port_index = port_index
                 break
-            elif port[port_index] == (current_port[port_index] + 1) and port[port_index + 1] < 0:  # port_index < 4
-                # check if we found the last sane index
+            # check if we found a subsequent interface number
+            elif port[port_index] == (current_port[port_index] + 1) and \
+                    port[port_index + 1] < 0 and current_port[port_index + 1] < 0:
                 i += 1
                 current_port = port
                 last_port_index = port_index
