@@ -177,13 +177,14 @@ def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=N
     return interface
 
 
-def interface_range_compress(  # noqa: R0914, R0912, R0915
+def interface_range_compress(
     interfaces: Union[str, List[str]] = None, prefix: str = "interface range ", max_ranges: int = 5
-) -> List[str]:
+) -> List[str]:  # noqa: R0914, R0912, R0915
     """Function which takes interfaces and return interface ranges.
 
-    Ranges are based on last interface part (aka ports).
-    Whitespace and special characters are ignored in the input.
+    By default this function creates Cisco `interface range ...` commands.
+    Whitespace and special characters are ignored in the input. Input must contain only interfaces,
+    there is no check against correct interface names!
 
     Example:
         >>> interface_range_compress("Gi1/0/1 Gi1/0/2 Gi1/0/4")
@@ -197,11 +198,11 @@ def interface_range_compress(  # noqa: R0914, R0912, R0915
         max_ranges: maximum number of ranges in one line in the output
 
     Returns:
-        lines of interface range commands (or ranges with specified prefix)
+        list: list of interface ranges
     """
     Port = namedtuple("Port", ["iface_name", "module1", "module2", "module3", "module4"])
     """ Port type which contains the interface name and submodules/ports.
-    
+
     iface_name: str - name of interface (Gi, Fa, etc..)
     module1..4: int - number of submoduled or port. -1 indicates that it is not part of the
                       interface
