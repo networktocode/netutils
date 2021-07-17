@@ -98,35 +98,22 @@ INTERFACE_EXPANSION = [
     {"sent": "[1,2]/0/[1-2]", "received": ["1/0/1", "1/0/2", "2/0/1", "2/0/2"]},
 ]
 
-INTERFACE_RANGE_GENERATOR = [
+INTERFACE_RANGE_COMPRESS = [
     {"sent": "", "received": []},
     {"sent": "Gi1", "received": ["interface range Gi1"]},
     {"sent": "Gi1 Gi2 Gi3", "received": ["interface range Gi1-3"]},
+    {"sent": ["Gi0/1 Gi0/2 Gi0/4", "Gi1/0, Gi1/1"], "received": ["interface range Gi0/1-2, Gi0/4, Gi1/0-1"]},
     {
-        "sent": ["Gi0/1 Gi0/2 Gi0/4", "Gi1/0, Gi1/1"],
-        "received": [
-         "interface range Gi0/1-2, Gi0/4, Gi1/0-1"
-        ]
-    },
-    {
-        "sent": [
-            "Gi1 Gi3 Gi5 Gi7 Gi9 Gi11",
-            "Gi0/1 Gi0/2 Gi0/3 Gi0/0 Gi0/4"
-        ],
-        "received": [
-            "interface range Gi0/0-4, Gi1, Gi3, Gi5, Gi7",
-            "interface range Gi9, Gi11"
-        ]
+        "sent": ["Gi1 Gi3 Gi5 Gi7 Gi9 Gi11", "Gi0/1 Gi0/2 Gi0/3 Gi0/0 Gi0/4"],
+        "received": ["interface range Gi0/0-4, Gi1, Gi3, Gi5, Gi7", "interface range Gi9, Gi11"],
     },
     {
         "sent": [
             "Gi152/1/0/2, Gi152/1/0/3, Gi152/1/0/4, Gi152/1/0/5, Gi152/1/0/6",
             "Gi152/2/0/1, Gi152/2/0/2, Gi152/2/0/2, Gi152/2/0/3, Gi152/2/0/5",
         ],
-        "received": [
-            "interface range Gi152/1/0/2-6, Gi152/2/0/1-3, Gi152/2/0/5"
-        ]
-    }
+        "received": ["interface range Gi152/1/0/2-6, Gi152/2/0/1-3, Gi152/2/0/5"],
+    },
 ]
 
 
@@ -162,6 +149,6 @@ def test_interface_range_expansion(data):
     assert interface.interface_range_expansion(data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", INTERFACE_RANGE_GENERATOR)
+@pytest.mark.parametrize("data", INTERFACE_RANGE_COMPRESS)
 def test_interface_range_generator(data):
-    assert interface.interface_range_generator(data["sent"]) == data["received"]
+    assert interface.interface_range_compress(data["sent"]) == data["received"]

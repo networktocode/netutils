@@ -2,6 +2,7 @@
 import re
 import itertools
 from typing import Union, List, Tuple
+from collections import namedtuple
 from operator import itemgetter
 from .constants import BASE_INTERFACES, REVERSE_MAPPING
 
@@ -176,7 +177,7 @@ def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=N
     return interface
 
 
-def interface_range_generator(
+def interface_range_compress(
     interfaces: Union[str, List[str]] = None, prefix: str = "interface range ", max_ranges: int = 5
 ) -> List[str]:
     """Function which takes interfaces and return interface ranges.
@@ -184,9 +185,9 @@ def interface_range_generator(
     Whitespace and special characters are ignored in the input.
 
     Example:
-        >>> interface_range_generator("Gi1/0/1 Gi1/0/2 Gi1/0/4")
+        >>> interface_range_compress("Gi1/0/1 Gi1/0/2 Gi1/0/4")
         'interface range Gi1/0/1-2,Gi1/0/4'
-        >>> interface_range_generator(["Gi1/0/1 Gi1/0/2","Gi1/0/3,Gi1/0/4"])
+        >>> interface_range_compress(["Gi1/0/1 Gi1/0/2","Gi1/0/3,Gi1/0/4"])
         'interface range Gi1/0/1-4'
 
     Args:
@@ -198,7 +199,9 @@ def interface_range_generator(
         lines of interface range commands (or ranges with specified prefix)
     """
 
-    def to_port(port_in: Tuple[str, int, int, int, int]):
+    Port = namedtuple('Port', ['iface_name', 'module1', 'module2', 'module3', 'module4'])
+
+    def to_port(port_in: Port):
         """Assemble exploded port_in
         Separator is `/`. -1 value means that value is not used.
         Only physical ports are supported.
@@ -224,21 +227,24 @@ def interface_range_generator(
     ports = []  # collect exploded interfaces
     # case insensitive port parsing. We do a hard assumption that we only have ports in the input.
     # we support 4 module depth. This is enough for Cisco FEX.
-    port_regex = re.compile(r"(?i)([a-z]+)([0-9]+)(?:/([0-9]+))?(?:/([0-9]+))?(?:/([0-9]+))?")
+    # ort_regex = re.compile(r"(?i)([a-z]+)([0-9]+)(?:/([0-9]+))?(?:/([0-9]+))?(?:/([0-9]+))?")
     output = []
     if interfaces is None:
         return output
-    ports_in = [interfaces] if type(interfaces) is str else interfaces
     # read all lines and explode all interfaces as preparation for sorting
-    for line in ports_in:
-        matches = port_regex.findall(line)
+    for line in [interfaces] if isinstance(interfaces, str) else interfaces:
+        # matches = port_regex.findall(line)
+        matches = re.findall(r"(?i)([a-z]+)([0-9]+)(?:/([0-9]+))?(?:/([0-9]+))?(?:/([0-9]+))?", line)
         for match in matches:
-            port_name = match[0]
-            port1 = int(match[1]) if len(match[1]) > 0 else -1
-            port2 = int(match[2]) if len(match[2]) > 0 else -1
-            port3 = int(match[3]) if len(match[3]) > 0 else -1
-            port4 = int(match[4]) if len(match[4]) > 0 else -1
-            ports.append((port_name, port1, port2, port3, port4))
+            ports.append(
+                (
+                    match[0],
+                    int(match[1]) if len(match[1]) > 0 else -1,
+                    int(match[2]) if len(match[2]) > 0 else -1,
+                    int(match[3]) if len(match[3]) > 0 else -1,
+                    int(match[4]) if len(match[4]) > 0 else -1
+                )
+            )
 
     # sort exploded interface data in order to prepare for finding ranges
     ports = sorted(ports, key=itemgetter(0, 1, 2, 3, 4))  # Sort interfaces
@@ -278,8 +284,11 @@ def interface_range_generator(
                 last_port_index = port_index
                 break
             # check if we found a subsequent interface number
-            elif port[port_index] == (current_port[port_index] + 1) and \
-                    port[port_index + 1] < 0 and current_port[port_index + 1] < 0:
+            elif (
+                port[port_index] == (current_port[port_index] + 1)
+                and port[port_index + 1] < 0
+                and current_port[port_index + 1] < 0
+            ):
                 i += 1
                 current_port = port
                 last_port_index = port_index
