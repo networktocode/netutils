@@ -1,7 +1,7 @@
 """Functions for working with interface."""
 import re
 import itertools
-from typing import Union, List, Tuple
+from typing import Union, List
 from collections import namedtuple
 from operator import itemgetter
 from .constants import BASE_INTERFACES, REVERSE_MAPPING
@@ -177,18 +177,19 @@ def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=N
     return interface
 
 
-def interface_range_compress(
+def interface_range_compress(  # noqa: R0914, R0912, R0915
     interfaces: Union[str, List[str]] = None, prefix: str = "interface range ", max_ranges: int = 5
 ) -> List[str]:
     """Function which takes interfaces and return interface ranges.
+
     Ranges are based on last interface part (aka ports).
     Whitespace and special characters are ignored in the input.
 
     Example:
         >>> interface_range_compress("Gi1/0/1 Gi1/0/2 Gi1/0/4")
-        'interface range Gi1/0/1-2,Gi1/0/4'
+        ['interface range Gi1/0/1-2, Gi1/0/4']
         >>> interface_range_compress(["Gi1/0/1 Gi1/0/2","Gi1/0/3,Gi1/0/4"])
-        'interface range Gi1/0/1-4'
+        ['interface range Gi1/0/1-4']
 
     Args:
         prefix: prefix string used in each line of the output
@@ -198,14 +199,23 @@ def interface_range_compress(
     Returns:
         lines of interface range commands (or ranges with specified prefix)
     """
+    Port = namedtuple("Port", ["iface_name", "module1", "module2", "module3", "module4"])
+    """ Port type which contains the interface name and submodules/ports.
+    
+    iface_name: str - name of interface (Gi, Fa, etc..)
+    module1..4: int - number of submoduled or port. -1 indicates that it is not part of the
+                      interface
+                      4 module depth is supported which should cover most cases.
+    """  # noqa: W0105
 
-    Port = namedtuple('Port', ['iface_name', 'module1', 'module2', 'module3', 'module4'])
+    def assemble_port(port_in: Port):
+        """Assemble exploded port_in.
 
-    def to_port(port_in: Port):
-        """Assemble exploded port_in
         Separator is `/`. -1 value means that value is not used.
         Only physical ports are supported.
-        Example: Gi, 1, 0, 1, -1 will become: Gi1/0/1
+
+        Example:
+            Gi, 1, 0, 1, -1 will become: Gi1/0/1
 
         Args:
             port_in: tuple of port name and fex, chasses, module, interface numbers
@@ -213,36 +223,35 @@ def interface_range_compress(
         Returns:
             string of assembled interface
         """
-        out = port_in[0]
-        if port_in[1] >= 0:
-            out += str(port_in[1])
-            if port_in[2] >= 0:
-                out += "/" + str(port_in[2])
-                if port_in[3] >= 0:
-                    out += "/" + str(port_in[3])
-                    if port_in[4] >= 0:
-                        out += "/" + str(port_in[4])
+        out = port_in.iface_name
+        if port_in.module1 >= 0:
+            out += str(port_in.module1)
+            if port_in.module2 >= 0:
+                out += "/" + str(port_in.module2)
+                if port_in.module3 >= 0:
+                    out += "/" + str(port_in.module3)
+                    if port_in.module4 >= 0:
+                        out += "/" + str(port_in.module4)
         return out
 
     ports = []  # collect exploded interfaces
     # case insensitive port parsing. We do a hard assumption that we only have ports in the input.
-    # we support 4 module depth. This is enough for Cisco FEX.
-    # ort_regex = re.compile(r"(?i)([a-z]+)([0-9]+)(?:/([0-9]+))?(?:/([0-9]+))?(?:/([0-9]+))?")
+
     output = []
     if interfaces is None:
-        return output
+        return []
     # read all lines and explode all interfaces as preparation for sorting
     for line in [interfaces] if isinstance(interfaces, str) else interfaces:
         # matches = port_regex.findall(line)
         matches = re.findall(r"(?i)([a-z]+)([0-9]+)(?:/([0-9]+))?(?:/([0-9]+))?(?:/([0-9]+))?", line)
         for match in matches:
             ports.append(
-                (
-                    match[0],
-                    int(match[1]) if len(match[1]) > 0 else -1,
-                    int(match[2]) if len(match[2]) > 0 else -1,
-                    int(match[3]) if len(match[3]) > 0 else -1,
-                    int(match[4]) if len(match[4]) > 0 else -1
+                Port(
+                    iface_name=match[0],
+                    module1=int(match[1]) if len(match[1]) > 0 else -1,
+                    module2=int(match[2]) if len(match[2]) > 0 else -1,
+                    module3=int(match[3]) if len(match[3]) > 0 else -1,
+                    module4=int(match[4]) if len(match[4]) > 0 else -1,
                 )
             )
 
@@ -254,32 +263,30 @@ def interface_range_compress(
     range_index = 1  # counts number of ranges on line (gi0/0-1,g0/3-5 = 2)
     current_port = range_start
     last_port_index = 1
-    outline = "%s%s" % (prefix, to_port(range_start))
-    i = 0  # range counter
+    outline = "%s%s" % (prefix, assemble_port(range_start))
+    range_size = 0
     for port in ports[1:]:
-        # interface name
-        if range_start[0] != port[0]:
-            if i > 0:  # it's a range
+        if range_start[0] != port[0]:  # check if interface name changed
+            if range_size > 0:  # we had a range before
                 outline += "-%d" % current_port[last_port_index]
-                i = 0  # reset range counter
-            if range_index >= 5:
+                range_size = 0
+            if range_index >= max_ranges:
                 range_index = 1
                 output.append(outline)
-                outline = "%s%s" % (prefix, to_port(port))
+                outline = "%s%s" % (prefix, assemble_port(port))
             else:
                 range_index += 1
-                outline += ", %s" % to_port(port)
+                outline += ", %s" % assemble_port(port)
             range_start = port
             current_port = port
             continue  # move ahead for next port
 
-        # interface numbers
-        for port_index in range(1, 5):
+        for port_index in range(1, 5):  # find last port index and check if it is part of a range
             if current_port[port_index] == port[port_index]:
                 pass
             # check if we found a subsequent interface number (we are at max supported depth)
             elif port[port_index] == (current_port[port_index] + 1) and port_index == 4:
-                i += 1
+                range_size += 1
                 current_port = port
                 last_port_index = port_index
                 break
@@ -289,26 +296,26 @@ def interface_range_compress(
                 and port[port_index + 1] < 0
                 and current_port[port_index + 1] < 0
             ):
-                i += 1
+                range_size += 1
                 current_port = port
                 last_port_index = port_index
                 break
-            else:
-                if i > 0:  # set last port number
+            else:  # new range starting
+                if range_size > 0:  # finish previous range
                     outline += "-%d" % current_port[last_port_index]
-                    i = 0  # reset range counter
+                    range_size = 0
                 if range_index >= max_ranges:  # max no of ranges reached, start a new range cmd
                     range_index = 1
                     output.append(outline)
-                    outline = "%s%s" % (prefix, to_port(port))
+                    outline = "%s%s" % (prefix, assemble_port(port))
                 else:  # just append new range to current line
                     range_index += 1
-                    outline += ", %s" % to_port(port)
+                    outline += ", %s" % assemble_port(port)
                 range_start = port
                 current_port = port
                 break  # move ahead for next port
 
-    if i > 0:
+    if range_size > 0:  # finish previous range
         outline += "-%d" % current_port[last_port_index]
     output.append(outline)
     return output
