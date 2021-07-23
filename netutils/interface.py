@@ -1,7 +1,7 @@
 """Functions for working with interface."""
 import re
 import itertools
-from typing import Union, List
+from typing import Union, List, Optional
 from collections import namedtuple
 from operator import itemgetter
 from .constants import BASE_INTERFACES, REVERSE_MAPPING
@@ -178,7 +178,7 @@ def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=N
 
 
 def interface_range_compress(
-    interfaces: Union[str, List[str]] = None, prefix: str = "interface range ", max_ranges: int = 5
+    interfaces: Optional[Union[str, List[str]]], prefix: str = "interface range ", max_ranges: int = 5
 ) -> List[str]:  # noqa: R0914, R0912, R0915
     """Function which takes interfaces and return interface ranges.
 
@@ -225,14 +225,11 @@ def interface_range_compress(
             string of assembled interface
         """
         out = port_in.iface_name
-        if port_in.module1 >= 0:
-            out += str(port_in.module1)
-            if port_in.module2 >= 0:
-                out += "/" + str(port_in.module2)
-                if port_in.module3 >= 0:
-                    out += "/" + str(port_in.module3)
-                    if port_in.module4 >= 0:
-                        out += "/" + str(port_in.module4)
+        for idx, module in enumerate(port_in[1:]):
+            if module >= 0 and idx == 0:
+                out += str(module)
+            elif module >= 0:
+                out += f"/{str(module)}"
         return out
 
     ports = []  # collect exploded interfaces
@@ -243,7 +240,6 @@ def interface_range_compress(
         return []
     # read all lines and explode all interfaces as preparation for sorting
     for line in [interfaces] if isinstance(interfaces, str) else interfaces:
-        # matches = port_regex.findall(line)
         matches = re.findall(r"(?i)([a-z]+)([0-9]+)(?:/([0-9]+))?(?:/([0-9]+))?(?:/([0-9]+))?", line)
         for match in matches:
             ports.append(
