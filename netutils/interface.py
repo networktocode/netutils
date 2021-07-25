@@ -177,9 +177,9 @@ def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=N
     return interface
 
 
-def interface_range_compress(
+def interface_range_compress(  # pylint: disable=R0914,R0912, R0915
     interfaces: Optional[Union[str, List[str]]], prefix: str = "interface range ", max_ranges: int = 5
-) -> List[str]:  # noqa: R0914, R0912, R0915
+) -> List[str]:
     """Function which takes interfaces and return interface ranges.
 
     By default this function creates Cisco `interface range ...` commands.
@@ -207,7 +207,7 @@ def interface_range_compress(
     module1..4: int - number of submoduled or port. -1 indicates that it is not part of the
                       interface
                       4 module depth is supported which should cover most cases.
-    """  # noqa: W0105
+    """  # pylint: disable= W0105
 
     def assemble_port(port_in: Port):
         """Assemble exploded port_in.
