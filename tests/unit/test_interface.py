@@ -114,18 +114,11 @@ INTERFACE_RANGE_COMPRESS = [
         ],
         "received": ["interface range Gi152/1/0/2-6, Gi152/2/0/1-3, Gi152/2/0/5"],
     },
+    {"sent": {"interfaces": "Gi1 Gi2 Gi3", "prefix": "test prefix "}, "received": ["test prefix Gi1-3"]},
     {
-        "sent": {"interfaces": "Gi1 Gi2 Gi3",
-                 "prefix": "test prefix "
-                 },
-        "received": ["test prefix Gi1-3"]
-     },
-    {
-        "sent": {"interfaces": "Gi1 Gi2 Gi4 Gi5 Gi7 Gi8",
-                 "max_ranges": 2
-                 },
-        "received": ["interface range Gi1-2, Gi4-5", "interface range Gi7-8"]
-     },
+        "sent": {"interfaces": "Gi1 Gi2 Gi4 Gi5 Gi7 Gi8", "max_ranges": 2},
+        "received": ["interface range Gi1-2, Gi4-5", "interface range Gi7-8"],
+    },
 ]
 
 
@@ -163,7 +156,7 @@ def test_interface_range_expansion(data):
 
 @pytest.mark.parametrize("data", INTERFACE_RANGE_COMPRESS)
 def test_interface_range_compress(data):
-    if type(data["sent"]) is dict:
+    if isinstance(data["sent"], dict):
         assert interface.interface_range_compress(**data["sent"]) == data["received"]
     else:
         assert interface.interface_range_compress(data["sent"]) == data["received"]
