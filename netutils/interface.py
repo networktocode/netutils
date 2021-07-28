@@ -1,6 +1,10 @@
 """Functions for working with interface."""
-import re
 import itertools
+import re
+import typing as t
+from abc import ABC, abstractmethod, abstractproperty
+from functools import total_ordering
+
 from .constants import BASE_INTERFACES, REVERSE_MAPPING
 
 
@@ -172,3 +176,167 @@ def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=N
         raise ValueError(f"Verify interface on and no match found for {interface}")
     # If abbreviated name lookup fails, return original name
     return interface
+
+
+@total_ordering
+class CharacterClass(ABC):
+    """CharacterClass embodies the state needed to sort interfaces."""
+
+    def __init__(self, val: str, terminal: bool = False) -> None:  # noqa: D107
+        self.val = val
+        self._terminal = terminal
+        super().__init__()
+
+    @abstractmethod
+    def __lt__(self, other) -> bool:  # noqa: D105
+        ...
+
+    def __eq__(self, other) -> bool:  # noqa: D105
+        return self.weight == other.weight and self.val == other.val
+
+    @abstractproperty
+    def weight(self) -> int:
+        """Weight property."""
+        ...
+
+    @property
+    def terminal(self):
+        """Flag whether a node is terminal."""
+        return self._terminal
+
+    @terminal.setter
+    def terminal(self, val: bool) -> None:
+        """This is a one-way switch to prevent overwriting a terminal node."""
+        if not self._terminal:
+            self._terminal = val
+
+    def __str__(self) -> str:  # noqa: D105
+        return str(self.val)
+
+    def __hash__(self) -> int:  # noqa: D105
+        return self.val.__hash__()
+
+
+class CCString(CharacterClass):
+    """Strings are sorted lexicographically."""
+
+    def __lt__(self, other) -> bool:  # noqa: D105
+        return self.weight < other.weight or self.val < other.val
+
+    def __repr__(self) -> str:  # noqa: D105
+        return f'CCString("{self.val}", {self.terminal})'
+
+    @property
+    def weight(self) -> int:  # noqa: D107,D102
+        return 10
+
+
+class CCInt(CharacterClass):
+    """Ints must be sorted canonically because '11' < '5'."""
+
+    def __lt__(self, other) -> bool:  # noqa: D105
+        return self.weight < other.weight or int(self.val) < int(other.val)
+
+    def __repr__(self) -> str:  # noqa: D105
+        return f"CCInt({self.val}, {self.terminal})"
+
+    @property
+    def weight(self) -> int:  # noqa: D107,D102
+        return 20
+
+
+class CCSeparator(CharacterClass):
+    """Separators require custom logic, so we sort them by arbitrary weight."""
+
+    weights: t.Dict[str, int] = {".": 10, "/": 20}
+
+    def __lt__(self, other) -> bool:  # noqa: D105
+        return self.weight < other.weight or self.weights.get(self.val, 0) < self.weights.get(other.val, 0)
+
+    def __repr__(self) -> str:  # noqa: D105
+        return f'CCSeparator("{self.val}", {self.terminal})'
+
+    @property
+    def weight(self) -> int:  # noqa: D102
+        return 30
+
+
+def _CCfail(*args):  # pylint: disable=C0103
+    """Helper to raise an exception on a bad character match."""
+    raise ValueError(f"unknown character '{args[0][0]}'.")
+
+
+def split_interface_tuple(interface: str) -> t.Tuple[CharacterClass, ...]:
+    """Parser-combinator hack, keeping dependencies light."""
+    idx = 0
+    # we mutate tail's reference, so mypy needs help
+    tail: t.Tuple[CharacterClass, ...] = ()
+    regexes = [
+        (r"[a-zA-Z\-]", CCString),
+        (r"[0-9]", CCInt),
+        (r"[./]", CCSeparator),
+        # Fallthrough case, keep it at the end!
+        (r".*", _CCfail),
+    ]
+    while idx < len(interface):
+        for regex, cls in regexes:
+            part = ""
+            while idx < len(interface) and re.match(regex, interface[idx]):
+                part += interface[idx]
+                idx += 1
+            if part and idx == len(interface):
+                tail = (*tail, cls(part, True))
+                break
+            if part:
+                tail = (*tail, cls(part))
+                break
+    return tail
+
+
+def insert_nodes(node: t.Dict[CharacterClass, t.Any], values: t.Tuple[CharacterClass, ...]) -> None:
+    """Recursively updates a tree from a list of values.
+
+    This function mutates the node dict in place.  A terminal value needs to be
+    preserved from overwrites, hence the one-way switch in CharacterClass.  These
+    clases are compared only by weight and value, so dict updates are a little tricky.
+    We need to pop the key and add a new pointer, or `terminal` will not be updated
+    in the new entry.
+    """
+    if not values:
+        return
+    key = values[0]
+    if key not in node:
+        node[key] = {}
+    if not values[1:]:  # This is the last node
+        val = node[key]
+        key.terminal = True
+        node.pop(key)
+        node[key] = val
+    insert_nodes(node[key], values[1:])
+
+
+def iter_tree(node: t.Dict[CharacterClass, t.Any], parents: t.List[CharacterClass]) -> t.Generator[str, None, None]:
+    """Walk a tree of interface name parts.
+
+    Weights are assigned based on domain logic to produce a
+    'cannonical' ordering of names.
+    """
+    for _, items in itertools.groupby(sorted(node.keys()), lambda t: t.weight):
+        for item in sorted(items):
+            if item.terminal:
+                yield "".join(map(str, parents + [item]))
+            parents.append(item)
+            yield from iter_tree(node[item], list(parents))
+            parents.pop()
+
+
+def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
+    """This function sorts and cleans a list of interfaces.
+
+    Note that a new list of interfaces is returned and that duplicates
+    are removed.
+    """
+    root: t.Dict[CharacterClass, t.Any] = {}
+    for ifname in interfaces:
+        insert_nodes(root, split_interface_tuple(ifname))
+    return list(iter_tree(root, []))
