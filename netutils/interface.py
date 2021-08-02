@@ -334,6 +334,15 @@ def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
     """This function sorts and cleans a list of interfaces.
 
     Note that a new list of interfaces is returned and that duplicates
+    nodes are removed.
+
+    Args:
+        interfaces (list[str]): A list of interfaces to be sorted.  The input list is not mutated by this function.
+
+    Returns:
+        list[str]: A **new** sorted, unique list elements from the input.
+
+    Example:
         >>> sort_interface_list(["Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Gi2/0/2", "Po40", "Po160", "Lo10"])
         ['Gi1/0/1', 'Gi1/0/2', 'Gi1/0/2.50', 'Gi1/0/3', 'Gi1/0/3.100', 'Gi2/0/2', 'Lo10', 'Po40', 'Po160']
         >>> sort_interface_list(['GigabitEthernet1/0/1', 'GigabitEthernet1/0/3', 'GigabitEthernet1/0/2', "GigabitEthernett3/0/5", 'GigabitEthernet3/0/7', 'GigabitEthernet2/0/8.5',  'Port-channel40', 'Vlan20', 'Loopback10'])
