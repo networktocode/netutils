@@ -298,7 +298,7 @@ def insert_nodes(node: t.Dict[CharacterClass, t.Any], values: t.Tuple[CharacterC
 
     This function mutates the node dict in place.  A terminal value needs to be
     preserved from overwrites, hence the one-way switch in CharacterClass.  These
-    clases are compared only by weight and value, so dict updates are a little tricky.
+    classes are compared only by weight and value, so dict updates are a little tricky.
     We need to pop the key and add a new pointer, or `terminal` will not be updated
     in the new entry.
     """
