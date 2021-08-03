@@ -234,7 +234,7 @@ def test_interface_range_expansion(data):
 @pytest.mark.parametrize("data", BAD_INTERFACE_NAMES)
 def test_split_interface_tuple_fails(data):
     with pytest.raises(ValueError):
-        interface.split_interface_tuple(data)
+        interface._split_interface_tuple(data)  # pylint: disable=W0212
 
 
 def test_interface_sort_empty():

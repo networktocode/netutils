@@ -266,7 +266,7 @@ def _CCfail(*args):  # pylint: disable=C0103
     raise ValueError(f"unknown character '{args[0][0]}'.")
 
 
-def split_interface_tuple(interface: str) -> t.Tuple[CharacterClass, ...]:
+def _split_interface_tuple(interface: str) -> t.Tuple[CharacterClass, ...]:
     """Parser-combinator hack, keeping dependencies light."""
     idx = 0
     # we mutate tail's reference, so mypy needs help
@@ -293,7 +293,7 @@ def split_interface_tuple(interface: str) -> t.Tuple[CharacterClass, ...]:
     return tail
 
 
-def insert_nodes(node: t.Dict[CharacterClass, t.Any], values: t.Tuple[CharacterClass, ...]) -> None:
+def _insert_nodes(node: t.Dict[CharacterClass, t.Any], values: t.Tuple[CharacterClass, ...]) -> None:
     """Recursively updates a tree from a list of values.
 
     This function mutates the node dict in place.  A terminal value needs to be
@@ -312,7 +312,7 @@ def insert_nodes(node: t.Dict[CharacterClass, t.Any], values: t.Tuple[CharacterC
         key.terminal = True
         node.pop(key)
         node[key] = val
-    insert_nodes(node[key], values[1:])
+    _insert_nodes(node[key], values[1:])
 
 
 def iter_tree(node: t.Dict[CharacterClass, t.Any], parents: t.List[CharacterClass]) -> t.Generator[str, None, None]:
@@ -350,5 +350,5 @@ def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
     """
     root: t.Dict[CharacterClass, t.Any] = {}
     for ifname in interfaces:
-        insert_nodes(root, split_interface_tuple(ifname))
+        _insert_nodes(root, _split_interface_tuple(ifname))
     return list(iter_tree(root, []))
