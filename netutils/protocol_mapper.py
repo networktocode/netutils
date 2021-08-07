@@ -1,3 +1,4 @@
+# pylint: disable=too-many-lines
 """Mappers used to take protocol number-->name and vice-versa.  Number needed for test command, name needed for test command if querying by application-id."""
 
 # Protocol mapping based on https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml.
