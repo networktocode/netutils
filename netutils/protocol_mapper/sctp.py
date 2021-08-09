@@ -1,3 +1,5 @@
+"""SCTP port to name and name to port mapper."""
+
 # https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
 # SCTP port to name mapping.
 SCTP_NUM_TO_NAME = {

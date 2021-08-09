@@ -1,3 +1,5 @@
+"""DCCP port to name and name to port mapper."""
+
 # https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
 # DCCP port to name mapping.
 DCCP_NUM_TO_NAME = {
