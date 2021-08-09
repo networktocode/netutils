@@ -58,10 +58,20 @@ def test_udp_to_num_name():
 
 
 def test_sctp_name_to_num():
+    """Simple test of UDP protocol to number mapper."""
+    assert SCTP_NAME_TO_NUM["SSH"] == 22
+
+
+def test_sctp_to_num_name():
+    """Simple test of UDP protocol to name mapper."""
+    assert SCTP_NUM_TO_NAME[22] == "SSH"
+
+
+def test_dccp_name_to_num():
     """Simple test of DCCP protocol to number mapper."""
     assert DCCP_NAME_TO_NUM["DISCARD"] == 9
 
 
-def test_sctp_to_num_name():
+def test_dccp_to_num_name():
     """Simple test of DCCP protocol to name mapper."""
     assert DCCP_NUM_TO_NAME[9] == "DISCARD"

@@ -1,4 +1,5 @@
 """UDP port to name and name to port mapper."""
+# pylint: disable=too-many-lines
 
 # https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
 # UDP port to name mapping.

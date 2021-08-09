@@ -1,4 +1,5 @@
 """TCP port to name and name to port mapper."""
+# pylint: disable=too-many-lines
 
 # https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
 # TCP port to name mapping.
