@@ -1,4 +1,14 @@
 """Constant definitions used in project."""
+import os
+import json
+import netutils
+
+
+# Define the netutils installed path to retrieve files.
+NETUTILS_PATH = os.path.dirname(netutils.__file__)
+
+# Load the PROTOCOLS json file.
+PROTOCOLS = json.load(open(f"{NETUTILS_PATH}/data/protocols.json"))
 
 # This variable provides mapping for known interface variants, to the associated long form.
 BASE_INTERFACES = {

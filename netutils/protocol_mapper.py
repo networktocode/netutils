@@ -1,5 +1,5 @@
 """Protocol Mappers."""
-from netutils.protocol_mapper.protocols import PROTOCOLS
+from netutils.constants import PROTOCOLS
 
 
 def number_to_name_mapper(proto: str) -> dict:
