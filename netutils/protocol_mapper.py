@@ -5,11 +5,11 @@ from netutils.constants import PROTOCOLS
 def number_to_name_mapper(proto: str) -> dict:
     """Create a dictionary that maps protocol port number to a name.
 
-    Parameters:
-        proto (str): Protocol to map ['tcp', 'udp', 'sctp', 'dccp']
+    Args:
+        proto: Protocol to map ['tcp', 'udp', 'sctp', 'dccp']
 
     Returns:
-        proto_num_to_name (dict): Dictionary of the number to name mapping.
+        proto_num_to_name: Dictionary of the number to name mapping.
     """
     proto_num_to_name = {}
 
