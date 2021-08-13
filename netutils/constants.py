@@ -1,7 +1,8 @@
 """Constant definitions used in project."""
 import json
-import netutils
 from importlib import resources
+import netutils
+
 
 # Load the PROTOCOLS json file.
 PROTOCOLS = json.load(resources.open_text(netutils, "protocols.json"))
