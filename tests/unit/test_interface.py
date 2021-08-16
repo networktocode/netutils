@@ -246,6 +246,7 @@ INTERFACE_SORT = [
             "Gi0/0/1",
             "Gi0/0/2",
             "Gi0/1",
+            "Gi1/0/1",
             "Gi1/0/2",
             "Gi1/0/2.50",
             "Gi1/0/3",
@@ -538,12 +539,8 @@ def test_interface_sort_order(data):
     """Assert that the tree iterates in canonical order."""
     assert interface.sort_interface_list(data["sent"]) == data["received"]
 
+
 def test_abbreviated_interface_name_order_failure():
     with pytest.raises(ValueError, match=r"weight is not one of the supported orderings"):
         data = {"interfaces": "SuperFastEth 1/0/1", "order": "weight"}
         interface.abbreviated_interface_name_list(**data)
-
-
-@pytest.mark.parametrize("data", ORDERED_INTERFACE_NAME_LIST)
-def test_list_alphabetical(data):
-    assert interface.list_alphabetical(**data["sent"]) == data["received"]
