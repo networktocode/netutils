@@ -168,16 +168,9 @@ def canonical_interface_name_list(interfaces, addl_name_map=None, verify=False, 
     if order and order not in INTERFACE_LIST_ORDERING_OPTIONS.keys():
         raise ValueError(f"{order} is not one of the supported orderings")
 
-    if isinstance(addl_name_map, dict):
-        name_map.update(addl_name_map)
-
     for interface in interfaces:
-        interface_type, interface_number = split_interface(interface)
-        if name_map.get(interface_type):
-            long_int = name_map.get(interface_type)
-            canonical_interface_list.append(long_int + str(interface_number))
-        else:
-            canonical_interface_list.append(interface)
+        canonical_interface_list.append(canonical_interface_name(interface, addl_name_map=addl_name_map))
+        if interface == canonical_interface_name(interface):
             no_match_list.append(interface)
 
     if verify:
