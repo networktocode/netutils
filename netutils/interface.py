@@ -4,6 +4,7 @@ import re
 import typing as t
 from abc import ABC, abstractmethod, abstractproperty
 from functools import total_ordering
+from operator import itemgetter
 
 from .constants import BASE_INTERFACES, REVERSE_MAPPING
 
@@ -358,17 +359,14 @@ def _reverse_list(interface_list):
     Args:
         interface_list (list): Alphabetically sorted list of interfaces.
     """
-    r_list = []
+    # Convert interface name into Tuple of : Text, Int and Separator
+    split_intf = re.compile(r"([^\W0-9]+|[0-9]+|\W)")
+    mytuple = [tuple(split_intf.findall(intf)) for intf in interface_list]
 
-    for _, group_iterable in itertools.groupby(interface_list, lambda x: x.rstrip("0123456789/.")):
-        list_interable = list(group_iterable)
-        first_index = interface_list.index(list_interable[0])
-        last_index = interface_list.index(list_interable[-1])
-        sublist = interface_list[first_index : last_index + 1]  # noqa: E203
+    # Sort the list of tuple
+    mytuple.sort(key=itemgetter(0), reverse=True)
 
-        r_list.insert(0, sublist)
-
-    return list(itertools.chain.from_iterable(r_list))
+    return ["".join(x) for x in mytuple]
 
 
 def _insert_nodes(node: t.Dict[CharacterClass, t.Any], values: t.Tuple[CharacterClass, ...]) -> None:
