@@ -166,8 +166,8 @@ def canonical_interface_name_list(interfaces, addl_name_map=None, verify=False, 
     if reverse and not order:
         raise ValueError("Order must be set to use reverse.")
 
-    if order and order not in INTERFACE_LIST_ORDERING_OPTIONS.keys():
-        raise ValueError(f"{order} is not one of the supported orderings")
+    if order:
+        _check_order_option_exists(order)
 
     for interface in interfaces:
         canonical_interface_list.append(canonical_interface_name(interface, addl_name_map=addl_name_map))
@@ -468,8 +468,8 @@ def abbreviated_interface_name_list(  # pylint: disable=R0913, R0914
     if reverse and not order:
         raise ValueError("Order must be set to use reverse.")
 
-    if order and order not in INTERFACE_LIST_ORDERING_OPTIONS.keys():
-        raise ValueError(f"{order} is not one of the supported orderings")
+    if order:
+        _check_order_option_exists(order)
 
     if isinstance(addl_name_map, dict):
         name_map.update(addl_name_map)
@@ -506,3 +506,16 @@ def abbreviated_interface_name_list(  # pylint: disable=R0913, R0914
         abbreviated_interface_list = _reverse_list(abbreviated_interface_list)
 
     return abbreviated_interface_list
+
+
+def _check_order_option_exists(order):
+    """Check if the given order for an interface list exists.
+
+    Args:
+        order (str): Requested ordering of the interface list.
+
+    Raises:
+        ValueError: Raised the given order is not a proper ordering type.
+    """
+    if order not in INTERFACE_LIST_ORDERING_OPTIONS.keys():
+        raise ValueError(f"{order} is not one of the supported orderings")

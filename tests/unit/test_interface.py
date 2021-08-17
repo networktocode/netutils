@@ -502,6 +502,12 @@ def test_abbreviated_interface_name_list_failure():
         interface.canonical_interface_name_list(**data)
 
 
+def test_abbreviated_interface_name_list_order_failure():
+    with pytest.raises(ValueError, match=r"speed is not one of the supported orderings"):
+        data = {"interfaces": ["GigabitEthernet1/0/1", "GigabitEthernet1/0/2"], "order": "speed"}
+        interface.abbreviated_interface_name_list(**data)
+
+
 @pytest.mark.parametrize("data", ABBREVIATED_INTERFACE_NAME)
 def test_abbreviated_interface_name(data):
     assert interface.abbreviated_interface_name(**data["sent"]) == data["received"]
