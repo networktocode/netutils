@@ -28,6 +28,7 @@ Functions are grouped with like functions, such as IP or MAC address based funct
 * MAC Address - Provides the ability to work with MAC addresses such as validating or converting to integer.
 * Password - Provides the ability to compare and encrypt common password schemas such as type5 and type7 Cisco passwords.
 * Ping - Provides the ability to ping, currently only tcp ping.
+* Port Mapper - Provides a mapping for common port names to numbers and vice versa. Also provides a mapping for common port names to protocol names.
 * Protocol Mapper - Provides a mapping for protocol names to numbers and vice versa.
 * Route - Provides the ability to provide a list of routes and an IP Address and return the longest prefix matched route.
 * VLANs - Provide the ability to convert configuration into lists or lists into configuration.
