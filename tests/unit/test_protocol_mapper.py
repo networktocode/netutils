@@ -1,4 +1,4 @@
-"""Test for the lib_mapper definitions."""
+"""Test for the protocol_mapper definitions."""
 import pytest
 
 from netutils.protocol_mapper import PROTO_NAME_TO_NUM, PROTO_NUM_TO_NAME
@@ -16,7 +16,7 @@ def test_name_not_exist_name_to_num():
 
 
 def test_proto_num_to_name():
-    """Simple test of protocol number to name mappper."""
+    """Simple test of protocol number to name mapper."""
     assert PROTO_NUM_TO_NAME[1] == "ICMP"
 
 
