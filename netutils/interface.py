@@ -4,6 +4,7 @@ import re
 import typing as t
 from abc import ABC, abstractmethod, abstractproperty
 from functools import total_ordering
+from operator import itemgetter
 
 from .constants import BASE_INTERFACES, REVERSE_MAPPING
 
@@ -125,6 +126,65 @@ def canonical_interface_name(interface, addl_name_map=None, verify=False):
         raise ValueError(f"Verify interface on and no match found for {interface}")
     # if nothing matched, return the original name
     return interface
+
+
+def canonical_interface_name_list(interfaces, addl_name_map=None, verify=False, order=None, reverse=None):
+    """Function to return a list of interface's canonical name (fully expanded name).
+
+    Use of explicit matches used to indicate a clear understanding on any potential
+    match. Regex and other looser matching methods were not implmented to avoid false
+    positive matches. As an example, it would make sense to do "[P|p][O|o]" which would
+    incorrectly match PO = POS and Po = Port-channel, leading to a false positive, not
+    easily troubleshot, found, or known.
+
+    Args:
+        interfaces (list): List of interfaces you are attempting to expand.
+        addl_name_map (dict, optional): A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
+        verify (bool, optional): Whether or not to verify the interface matches a known interface standard. Defaults to False.
+        order (str, optional): Determines what order the list of interfaces should be returned in. Defaults to None.
+        reverse (bool, optional): Specify if the order of the list should be reversed when setting an order. Defaults to None.
+
+    Returns:
+        list: List of the interfaces in their long form.
+
+    Raises:
+        ValueError: Raised if any interface name in list cannot be converted to its long form and verify parameter is set to true.
+
+    Example:
+        >>> from netutils.interface import canonical_interface_name_list
+        >>> canonical_interface_name_list(["Gi1/0/1", "Gi1/0/2", "Eth1"])
+        ['GigabitEthernet1/0/1', 'GigabitEthernet1/0/2', 'Ethernet1']
+        >>> canonical_interface_name_list(["Gi1/0/1", "Po40", "Lo10"])
+        ['GigabitEthernet1/0/1', 'Port-channel40', 'Loopback10']
+        >>>
+    """
+    name_map = {}
+    name_map.update(BASE_INTERFACES)
+    canonical_interface_list = []
+    no_match_list = []
+
+    if reverse and not order:
+        raise ValueError("Order must be set to use reverse.")
+
+    if order:
+        _check_order_option_exists(order)
+
+    for interface in interfaces:
+        canonical_interface_list.append(canonical_interface_name(interface, addl_name_map=addl_name_map))
+        if interface == canonical_interface_name(interface):
+            no_match_list.append(interface)
+
+    if verify:
+        no_match_string = ", ".join(no_match_list)
+        raise ValueError(f"Verify interface on and no match found for {no_match_string}")
+
+    if order:
+        canonical_interface_list = INTERFACE_LIST_ORDERING_OPTIONS.get(order)(canonical_interface_list)
+
+    if reverse:
+        canonical_interface_list = _reverse_list(canonical_interface_list)
+
+    return canonical_interface_list
 
 
 def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=None, verify=False):
@@ -293,6 +353,22 @@ def _split_interface_tuple(interface: str) -> t.Tuple[CharacterClass, ...]:
     return tail
 
 
+def _reverse_list(interface_list):
+    """Reverses an alphabetical list of interfaces.
+
+    Args:
+        interface_list (list): Alphabetically sorted list of interfaces.
+    """
+    # Convert interface name into Tuple of : Text, Int and Separator
+    split_intf = re.compile(r"([^\W0-9]+|[0-9]+|\W)")
+    mytuple = [tuple(split_intf.findall(intf)) for intf in interface_list]
+
+    # Sort the list of tuple
+    mytuple.sort(key=itemgetter(0), reverse=True)
+
+    return ["".join(x) for x in mytuple]
+
+
 def _insert_nodes(node: t.Dict[CharacterClass, t.Any], values: t.Tuple[CharacterClass, ...]) -> None:
     """Recursively updates a tree from a list of values.
 
@@ -352,3 +428,94 @@ def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
     for ifname in interfaces:
         _insert_nodes(root, _split_interface_tuple(ifname))
     return list(iter_tree(root, []))
+
+
+INTERFACE_LIST_ORDERING_OPTIONS = {"alphabetical": sort_interface_list}
+
+
+def abbreviated_interface_name_list(  # pylint: disable=R0913, R0914
+    interfaces, addl_name_map=None, addl_reverse_map=None, verify=False, order=None, reverse=None
+):
+    """Function to return a list of interface's abbreviated name.
+
+    Args:
+        interfaces (list): List of interface names you are attempting to abbreviate.
+        addl_name_map (dict, optional): A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
+        addl_reverse_map (dict, optional): A dict containing key/value pairs that updates the abbreviated mapping. Defaults to None.
+        verify (bool, optional): Whether or not to verify the interface matches a known interface standard. Defaults to False.
+        order (str, optional): Determines what order the list of interfaces should be returned in. Defaults to None.
+        reverse (bool, optional): Specify if the order of the list should be reversed when setting an order. Defaults to None.
+
+    Returns:
+        list: List of the interfaces in their abbreviated form.
+
+    Raises:
+        ValueError: Raised if any interface name in list cannot be converted to its abbreviated form and verify parameter is set to true.
+
+    Example:
+        >>> from netutils.interface import abbreviated_interface_name_list
+        >>> abbreviated_interface_name_list(["GigabitEthernet1/0/1", "GigabitEthernet1/0/2", "Ethernet1"])
+        ['Gi1/0/1', 'Gi1/0/2', 'Et1']
+        >>> abbreviated_interface_name_list(['GigabitEthernet1/0/1', 'Port-channel40', 'Loopback10'])
+        ['Gi1/0/1', 'Po40', 'Lo10']
+        >>>
+    """
+    name_map = {}
+    name_map.update(BASE_INTERFACES)
+    abbreviated_interface_list = []
+    no_match_list = []
+
+    if reverse and not order:
+        raise ValueError("Order must be set to use reverse.")
+
+    if order:
+        _check_order_option_exists(order)
+
+    if isinstance(addl_name_map, dict):
+        name_map.update(addl_name_map)
+
+    rev_name_map = {}
+    rev_name_map.update(REVERSE_MAPPING)
+
+    if isinstance(addl_reverse_map, dict):
+        rev_name_map.update(addl_reverse_map)
+
+    for interface in interfaces:
+        interface_type, interface_number = split_interface(interface)
+        # Try to ensure canonical type.
+        if name_map.get(interface_type):
+            canonical_type = name_map.get(interface_type)
+        else:
+            canonical_type = interface_type
+
+        try:
+            abbreviated_name = rev_name_map[canonical_type] + str(interface_number)
+            abbreviated_interface_list.append(abbreviated_name)
+        except KeyError:
+            abbreviated_interface_list.append(interface)
+            no_match_list.append(interface)
+
+    if verify:
+        no_match_string = ", ".join(no_match_list)
+        raise ValueError(f"Verify interface on and no match found for {no_match_string}")
+
+    if order:
+        abbreviated_interface_list = INTERFACE_LIST_ORDERING_OPTIONS.get(order)(abbreviated_interface_list)
+
+    if reverse:
+        abbreviated_interface_list = _reverse_list(abbreviated_interface_list)
+
+    return abbreviated_interface_list
+
+
+def _check_order_option_exists(order):
+    """Check if the given order for an interface list exists.
+
+    Args:
+        order (str): Requested ordering of the interface list.
+
+    Raises:
+        ValueError: Raised the given order is not a proper ordering type.
+    """
+    if order not in INTERFACE_LIST_ORDERING_OPTIONS.keys():
+        raise ValueError(f"{order} is not one of the supported orderings")
