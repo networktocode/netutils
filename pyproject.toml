@@ -21,6 +21,7 @@ classifiers = [
 include = [
     "CHANGELOG.md",
     "LICENSE",
+    "README.md"
 ]
 
 [tool.poetry.dependencies]
