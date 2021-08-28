@@ -1,10 +1,11 @@
 """Constant definitions used in project."""
 import json
-import pkg_resources
-import netutils
+from os.path import dirname
+from netutils import __file__ as netutils_file
 
 # Load the PROTOCOLS json file.
-PROTOCOLS = json.loads(pkg_resources.resource_string(netutils.__name__, "protocols.json"))
+with open("/".join([dirname(netutils_file), "protocols.json"])) as f:
+    PROTOCOLS = json.loads(f.read())
 
 # This variable provides mapping for known interface variants, to the associated long form.
 BASE_INTERFACES = {
