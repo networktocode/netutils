@@ -22,6 +22,7 @@ include = [
     "CHANGELOG.md",
     "LICENSE",
     "README.md"
+    "netutils/protocols.json",
 ]
 
 [tool.poetry.dependencies]
@@ -38,7 +39,6 @@ pytest = "^6"
 pyyaml = "^5.3"
 pydocstyle = "^5.0.2"
 m2r2 = "^0.2.7"
-requests = "^2.25.1"
 sphinx = "^4.0.1"
 sphinx-rtd-theme = "^0.5.2"
 toml = "0.10.1"
