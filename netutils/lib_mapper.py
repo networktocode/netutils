@@ -180,7 +180,7 @@ PYATS_LIB_MAPPER = {
     "viptela": "cisco_viptella",
 }
 
-SCRAPLI = {
+SCRAPLI_LIB_MAPPER = {
     "cisco_iosxe": "cisco_ios",
     "cisco_iosxr": "cisco_xr",
     "cisco_nxos": "cisco_nxos",
