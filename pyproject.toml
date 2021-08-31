@@ -21,8 +21,8 @@ classifiers = [
 include = [
     "CHANGELOG.md",
     "LICENSE",
-    "README.md"
-    "netutils/protocols.json",
+    "README.md",
+    "netutils/protocols.json"
 ]
 
 [tool.poetry.dependencies]
