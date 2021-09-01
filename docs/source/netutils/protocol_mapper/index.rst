@@ -2,8 +2,8 @@
 Protocol Mappers
 *****************
 
-These protocol mappers can be used whenver you have either the application protocol name or number but need the corresponding value. Something to note is that these mappings are broken up per IP protocol.
-The reasoning behind this is that the same port number could be tied to two different application protocols depending on if you are using TCP or UDP. An example of this is port 13400. When using UDP, the application protocol name is `doip-disc`
+These protocol mappers can be used when you have either the application protocol name or number but need the corresponding value. Something to note is that these mappings are broken up per IP protocol.
+The reasoning behind this is that the same port number could be tied to two different application protocols depending on if you are using TCP, UDP, SCTP, or any other IP protocols. An example of this is port 13400. When using UDP, the application protocol name is `doip-disc`
 but when using TCP it is `doip-data`.
 
 Here are a few examples showing how you would use these in your python code.
