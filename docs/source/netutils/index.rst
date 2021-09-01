@@ -14,5 +14,6 @@ Netutils Functions
    mac/index
    password/index
    ping/index
+   protocol_mapper/index
    route/index
    vlan/index
