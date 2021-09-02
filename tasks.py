@@ -2,7 +2,6 @@
 import os
 import sys
 from distutils.util import strtobool
-import requests
 from invoke import task
 
 try:
@@ -242,29 +241,27 @@ def tests(context, local=INVOKE_LOCAL):
 
 
 @task
-def check_pypi_version(context, name=PROJECT_NAME, version=PROJECT_VERSION):
-    """Verify if the version specified already exists on PyPI.
-
-    Used mostly in CI/CD to make sure that the new version is merged to main.
-    If version already exists, then function exits with non-zero return code,
-    else the function exits with zero return code.
+def html(context, sourcedir="docs/source", builddir="docs/build"):
+    """Creates html docs using sphinx-build command.
 
     Args:
         context (obj): Used to run specific commands
-        name (str): The name of the project
-        version (str): The version of the project
+        sourcedir (str, optional): Source directory for sphinx to use. Defaults to "source".
+        builddir (str, optional): Output directory for sphinx to use. Defaults to "build".
     """
-    # Running the following from context to pass pylint:
-    # context must be the first argument in invoke
-    context.run(f"echo Verifying the version {version} on PyPI.")
+    print("Building html documentation...")
+    clean_docs(context, builddir)
+    command = f"sphinx-build {sourcedir} {builddir}"
+    context.run(command)
 
-    url = f"https://pypi.org/pypi/{name}/json"
-    response = requests.get(url)
-    data = response.json()
-    if version in data.get("releases", {}).keys():
-        print(f"The version {version} already exists.")
-        print("Bump the version. Run the command: poetry version.")
-        sys.exit(1)
-    print(f"The version {version} does not exist on PyPI.")
-    print("The version can be released.")
-    sys.exit(0)
+
+@task
+def clean_docs(context, builddir="docs/build"):
+    """Removes the build directory and all of its contents.
+
+    Args:
+        context (obj): Used to run specific commands
+        builddir (str, optional): Directory to be removed. Defaults to "build".
+    """
+    print(f"Removing everything under {builddir} directory...")
+    context.run("rm -rf " + builddir)
