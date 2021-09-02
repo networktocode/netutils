@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.2.2 - 2021-09
+
+### Added
+
+- #35 TCP/UDP Mappings
+- #31 Interface range expansion
+- #28 IPv6 Functionality to IP Module
+- #34 Interface sorting
+
+### Changed
+
+- #39 Updated docs to include automation library mappings
+- #41 Updated docs to include tcp/udp mappings
+
+### Fixed
+
+- Corrected contribution and attribution docs
+
 ## v0.2.1 - 2021-06
 
 ### Added
