@@ -1,3 +1,50 @@
+"""Protocol Mappers."""
+from netutils.constants import PROTOCOLS
+
+
+def _number_to_name_mapper(proto: str) -> dict:
+    """Create a dictionary that maps protocol port number to a name.
+
+    Args:
+        proto: Protocol to map ['tcp', 'udp', 'sctp', 'dccp']
+
+    Returns:
+        proto_num_to_name: Dictionary of the number to name mapping.
+    """
+    proto_num_to_name = {}
+
+    for item in PROTOCOLS:
+        if proto.lower() in PROTOCOLS[item]["protocols"]:
+            proto_num_to_name[PROTOCOLS[item]["port_number"]] = item.upper()
+
+    return proto_num_to_name
+
+
+# https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml
+# TCP port to name mapping.
+TCP_NUM_TO_NAME = _number_to_name_mapper("tcp")
+
+# TCP port name to number mapping
+TCP_NAME_TO_NUM = {value: key for (key, value) in TCP_NUM_TO_NAME.items()}
+
+# UDP port to name mapping.
+UDP_NUM_TO_NAME = _number_to_name_mapper("udp")
+
+# UDP port name to number mapping
+UDP_NAME_TO_NUM = {value: key for (key, value) in UDP_NUM_TO_NAME.items()}
+
+# SCTP port to name mapping.
+SCTP_NUM_TO_NAME = _number_to_name_mapper("sctp")
+
+# SCTP port name to number mapping
+SCTP_NAME_TO_NUM = {value: key for (key, value) in SCTP_NUM_TO_NAME.items()}
+
+# DCCP port to name mapping.
+DCCP_NUM_TO_NAME = _number_to_name_mapper("dccp")
+
+# DCCP port name to number mapping
+DCCP_NAME_TO_NUM = {value: key for (key, value) in DCCP_NUM_TO_NAME.items()}
+
 """Mappers used to take protocol number-->name and vice-versa.  Number needed for test command, name needed for test command if querying by application-id."""
 
 # Protocol mapping based on https://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml.
