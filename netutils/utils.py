@@ -27,10 +27,20 @@ def _build_jinja2_function_mappings():
             function_mappings[function_name] = function_object
     return function_mappings
 
-_EXCLUDED_FILES = ["__init__.py", "__pycache__", "constants.py", "lib_mapper.py", "protocol_mapper.py", "protocols.json", "config"]
+
+_EXCLUDED_FILES = [
+    "__init__.py",
+    "__pycache__",
+    "constants.py",
+    "lib_mapper.py",
+    "protocol_mapper.py",
+    "protocols.json",
+    "config",
+]
 _JINJA2_FUNCTION_MAPPINGS = _build_jinja2_function_mappings()
 
-def jinja2_convenience_function(*args):
+
+def jinja2_convenience_function():
     """Convenience function that allows netutils filter to be used easily with jinja2.
 
     Returns:
