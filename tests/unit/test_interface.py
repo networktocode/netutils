@@ -99,25 +99,29 @@ INTERFACE_EXPANSION = [
 ]
 
 INTERFACE_RANGE_COMPRESS = [
-    {"sent": "", "received": []},
-    {"sent": "Gi1", "received": ["interface range Gi1"]},
-    {"sent": "Gi1 Gi2 Gi3", "received": ["interface range Gi1-3"]},
-    {"sent": ["Gi0/1 Gi0/2 Gi0/4", "Gi1/0, Gi1/1"], "received": ["interface range Gi0/1-2, Gi0/4, Gi1/0-1"]},
+    {"sent": [], "received": []},
+    {"sent": ["Gi1"], "received": ["Gi1"]},
+    {"sent": ["Gi1", "Gi2", "Gi3"], "received": ["Gi1-3"]},
+    {"sent": ["Gi1", "Gi1/1/1/1/1", "Gi1/1/1/1/2"], "received": ["Gi1"]},
+    {"sent": ["Gi0/1", "Gi0/2", "Gi0/4", "Gi1/0, Gi1/1"], "received": ["Gi0/1-2", "Gi0/4", "Gi1/0-1"]},
     {
-        "sent": ["Gi1 Gi3 Gi5 Gi7 Gi9 Gi11", "Gi0/1 Gi0/2 Gi0/3 Gi0/0 Gi0/4"],
-        "received": ["interface range Gi0/0-4, Gi1, Gi3, Gi5, Gi7", "interface range Gi9, Gi11"],
+        "sent": ["Gi1", "Gi3", "Gi5", "Gi7", "Gi9", "Gi11", "Gi0/1 Gi0/2 Gi0/3 Gi0/0 Gi0/4"],
+        "received": ["Gi0/0-4", "Gi1", "Gi3", "Gi5", "Gi7", "Gi9", "Gi11"],
     },
     {
         "sent": [
-            "Gi152/1/0/2, Gi152/1/0/3, Gi152/1/0/4, Gi152/1/0/5, Gi152/1/0/6",
-            "Gi152/2/0/1, Gi152/2/0/2, Gi152/2/0/2, Gi152/2/0/3, Gi152/2/0/5",
+            "Gi152/1/0/2",
+            "Gi152/1/0/3",
+            "Gi152/1/0/4",
+            "Gi152/1/0/5",
+            "Gi152/1/0/6",
+            "Gi152/2/0/1",
+            "Gi152/2/0/2",
+            "Gi152/2/0/2",
+            "Gi152/2/0/3",
+            "Gi152/2/0/5",
         ],
-        "received": ["interface range Gi152/1/0/2-6, Gi152/2/0/1-3, Gi152/2/0/5"],
-    },
-    {"sent": {"interfaces": "Gi1 Gi2 Gi3", "prefix": "test prefix "}, "received": ["test prefix Gi1-3"]},
-    {
-        "sent": {"interfaces": "Gi1 Gi2 Gi4 Gi5 Gi7 Gi8", "max_ranges": 2},
-        "received": ["interface range Gi1-2, Gi4-5", "interface range Gi7-8"],
+        "received": ["Gi152/1/0/2-6", "Gi152/2/0/1-3", "Gi152/2/0/5"],
     },
 ]
 
@@ -156,7 +160,4 @@ def test_interface_range_expansion(data):
 
 @pytest.mark.parametrize("data", INTERFACE_RANGE_COMPRESS)
 def test_interface_range_compress(data):
-    if isinstance(data["sent"], dict):
-        assert interface.interface_range_compress(**data["sent"]) == data["received"]
-    else:
-        assert interface.interface_range_compress(data["sent"]) == data["received"]
+    assert interface.interface_range_compress(*data["sent"]) == data["received"]

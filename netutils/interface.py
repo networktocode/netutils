@@ -1,7 +1,7 @@
 """Functions for working with interface."""
 import re
 import itertools
-from typing import Union, List, Optional
+from typing import List
 from collections import namedtuple
 from operator import itemgetter
 from .constants import BASE_INTERFACES, REVERSE_MAPPING
@@ -177,37 +177,32 @@ def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=N
     return interface
 
 
-def interface_range_compress(  # pylint: disable=R0914,R0912, R0915
-    interfaces: Optional[Union[str, List[str]]], prefix: str = "interface range ", max_ranges: int = 5
-) -> List[str]:
+def interface_range_compress(*interfaces: str) -> List[str]:  # pylint: disable=R0912,R0915
     """Function which takes interfaces and return interface ranges.
 
-    By default this function creates Cisco `interface range ...` commands.
     Whitespace and special characters are ignored in the input. Input must contain only interfaces,
     there is no check against correct interface names!
+    Subinterface separator is `/` and maximum depth is 4!
 
     Example:
-        >>> interface_range_compress("Gi1/0/1 Gi1/0/2 Gi1/0/4")
-        ['interface range Gi1/0/1-2, Gi1/0/4']
-        >>> interface_range_compress(["Gi1/0/1 Gi1/0/2","Gi1/0/3,Gi1/0/4"])
-        ['interface range Gi1/0/1-4']
+        >>> interface_range_compress("Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/5")
+        ['Gi1/0/1-3', 'Gi1/0/5']
 
     Args:
-        prefix: prefix string used in each line of the output
         interfaces: interfaces in a line or in a list of lines
-        max_ranges: maximum number of ranges in one line in the output
 
     Returns:
         list: list of interface ranges
     """
     Port = namedtuple("Port", ["iface_name", "module1", "module2", "module3", "module4"])
-    """ Port type which contains the interface name and submodules/ports.
+    # pylint: disable=W0105
+    """Port type which contains the interface name and submodules/ports.
 
     iface_name: str - name of interface (Gi, Fa, etc..)
     module1..4: int - number of submoduled or port. -1 indicates that it is not part of the
                       interface
                       4 module depth is supported which should cover most cases.
-    """  # pylint: disable= W0105
+    """
 
     def assemble_port(port_in: Port):
         """Assemble exploded port_in.
@@ -234,13 +229,12 @@ def interface_range_compress(  # pylint: disable=R0914,R0912, R0915
 
     ports = []  # collect exploded interfaces
     # case insensitive port parsing. We do a hard assumption that we only have ports in the input.
-
     output = []
     if interfaces is None:
         return []
     # read all lines and explode all interfaces as preparation for sorting
-    for line in [interfaces] if isinstance(interfaces, str) else interfaces:
-        matches = re.findall(r"(?i)([a-z]+)([0-9]+)(?:/([0-9]+))?(?:/([0-9]+))?(?:/([0-9]+))?", line)
+    for line in interfaces:
+        matches = re.findall(r"(?i)([a-z]+)([0-9]+)(?:/([0-9]+))?(?:/([0-9]+))?(?:/([0-9]+))?(?!/)", line)
         for match in matches:
             ports.append(
                 Port(
@@ -251,33 +245,25 @@ def interface_range_compress(  # pylint: disable=R0914,R0912, R0915
                     module4=int(match[4]) if len(match[4]) > 0 else -1,
                 )
             )
-
     # sort exploded interface data in order to prepare for finding ranges
     ports = sorted(ports, key=itemgetter(0, 1, 2, 3, 4))  # Sort interfaces
     if not ports:  # could not read interfaces from input
         return []
     range_start = ports[0]  # contains interface range start (Gi0/0)
-    range_index = 1  # counts number of ranges on line (gi0/0-1,g0/3-5 = 2)
     current_port = range_start
     last_port_index = 1
-    outline = "%s%s" % (prefix, assemble_port(range_start))
+    outline = assemble_port(range_start)
     range_size = 0
     for port in ports[1:]:
         if range_start[0] != port[0]:  # check if interface name changed
             if range_size > 0:  # we had a range before
                 outline += "-%d" % current_port[last_port_index]
                 range_size = 0
-            if range_index >= max_ranges:
-                range_index = 1
                 output.append(outline)
-                outline = "%s%s" % (prefix, assemble_port(port))
-            else:
-                range_index += 1
-                outline += ", %s" % assemble_port(port)
+                outline = assemble_port(port)
             range_start = port
             current_port = port
             continue  # move ahead for next port
-
         for port_index in range(1, 5):  # find last port index and check if it is part of a range
             if current_port[port_index] == port[port_index]:
                 pass
@@ -301,17 +287,11 @@ def interface_range_compress(  # pylint: disable=R0914,R0912, R0915
                 if range_size > 0:  # finish previous range
                     outline += "-%d" % current_port[last_port_index]
                     range_size = 0
-                if range_index >= max_ranges:  # max no of ranges reached, start a new range cmd
-                    range_index = 1
-                    output.append(outline)
-                    outline = "%s%s" % (prefix, assemble_port(port))
-                else:  # just append new range to current line
-                    range_index += 1
-                    outline += ", %s" % assemble_port(port)
+                output.append(outline)
+                outline = assemble_port(port)
                 range_start = port
                 current_port = port
                 break  # move ahead for next port
-
     if range_size > 0:  # finish previous range
         outline += "-%d" % current_port[last_port_index]
     output.append(outline)
