@@ -128,10 +128,12 @@ NAPALM_LIB_MAPPER = {
     "cisco_wlc_ssh": "cisco_wlc",
     "eos": "arista_eos",
     "fortios": "fortinet",
+    "huawei": "huawei_vrp",
     "ios": "cisco_ios",
     "nxos": "cisco_nxos",
     "iosxr": "cisco_xr",
     "junos": "juniper_junos",
+    "panos": "paloalto_panos",
     "sros": "nokia_sros",
     "vyos": "brocade_vyos",
 }
@@ -202,7 +204,9 @@ NAPALM_LIB_MAPPER_REVERSE = {
     "cisco_xr": "iosxr",
     "cisco_wlc": "cisco_wlc_ssh",
     "fortinet": "fortios",
+    "huawei_vrp": "huawei",
     "juniper_junos": "junos",
+    "paloalto_panos": "panos",
     "sros": "nokia_sros",
 }
 
