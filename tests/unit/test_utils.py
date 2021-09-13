@@ -58,18 +58,18 @@ def _recursive_dict_expand(nested_dict):
 
 def test_jinja2_mapping_contains_all_functions(get_jinja2_function_names):  # pylint: disable=redefined-outer-name
     function_paths = _recursive_dict_expand(_JINJA2_FUNCTION_MAPPINGS)
-    function_names = [x.split(".")[1] for x in function_paths]
+    function_names_from_defined_dict = [x.split(".")[1] for x in function_paths]
 
-    assert set(get_jinja2_function_names) == set(function_names)
+    assert set(get_jinja2_function_names) == set(function_names_from_defined_dict)
 
 
 def test_jinja2_mapping_missing_function(get_jinja2_function_names):  # pylint: disable=redefined-outer-name
     function_paths = _recursive_dict_expand(_JINJA2_FUNCTION_MAPPINGS)
-    function_names = [x.split(".")[1] for x in function_paths]
-    function_names.append("MyExtraFunction")
+    function_names_from_defined_dict = [x.split(".")[1] for x in function_paths]
+    function_names_from_defined_dict.append("MyExtraFunction")
 
     with pytest.raises(AssertionError):
-        assert set(get_jinja2_function_names) == set(function_names)
+        assert set(get_jinja2_function_names) == set(function_names_from_defined_dict)
 
 
 def test_jinja2_template():

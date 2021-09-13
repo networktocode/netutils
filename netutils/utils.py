@@ -54,7 +54,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
 }
 
 
-def jinja2_convenience_function(jinja_mappings_dict=None, parent_file=None):
+def jinja2_convenience_function(jinja_mappings_dict=None, parent_folder=None):
     """Convenience function that allows netutils filter to be used easily with jinja2.
 
     Returns:
@@ -72,8 +72,8 @@ def jinja2_convenience_function(jinja_mappings_dict=None, parent_file=None):
             result.update(recursive_dict)
         else:
             function_import_module, function_import_name = function_import_path.split(".", 1)
-            if parent_file:
-                imported_module = import_module(f"netutils.{parent_file}.{function_import_module}")
+            if parent_folder:
+                imported_module = import_module(f"netutils.{parent_folder}.{function_import_module}")
             else:
                 imported_module = import_module(f"netutils.{function_import_module}")
             function_object = getattr(imported_module, function_import_name)
