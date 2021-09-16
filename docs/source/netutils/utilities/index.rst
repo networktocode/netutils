@@ -5,7 +5,7 @@ Netutils Utilities
 Netutils to Jinja2 Filters
 ============================
 
-In an effort to simplify the process of adding netutil's functions to jinja2 as filters we have created a convenience function. Let me give you an example of one use case.
+In an effort to simplify the process of adding netutils' functions to jinja2 as filters we have created a convenience function. One use case.
 Here is the current folder structure.
 
 .. code-block:: python
