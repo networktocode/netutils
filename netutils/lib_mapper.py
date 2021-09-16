@@ -207,7 +207,7 @@ NAPALM_LIB_MAPPER_REVERSE = {
     "huawei_vrp": "huawei",
     "juniper_junos": "junos",
     "paloalto_panos": "panos",
-    "sros": "nokia_sros",
+    "nokia_sros": "sros",
 }
 
 PYNTC_LIB_MAPPER_REVERSE = {
