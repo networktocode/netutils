@@ -53,7 +53,7 @@ Netutils to Jinja2 Filters List
 The below list shows what jinja2 filters are added when you add them using the process above. The keys of the dictionary are the names you would use to call the jinja2 filter.
 
 .. note::
-    Some names have been changed from their python function names to provide more context when used as a jinja2 filter.
+    The jinja2 filter names match the python function names.
 
 .. exec::
     import json

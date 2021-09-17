@@ -30,10 +30,10 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "netmask_to_cidr": "ip.netmask_to_cidr",
     "cidr_to_netmask": "ip.cidr_to_netmask",
     "cidr_to_netmaskv6": "ip.cidr_to_netmaskv6",
-    "get_all_host_ip_network": "ip.get_all_host",
-    "get_broadcast_address_ip_network": "ip.get_broadcast_address",
-    "get_first_usable_ip_network": "ip.get_first_usable",
-    "get_usable_range_ip_network": "ip.get_usable_range",
+    "get_all_host": "ip.get_all_host",
+    "get_broadcast_address": "ip.get_broadcast_address",
+    "get_first_usable": "ip.get_first_usable",
+    "get_usable_range": "ip.get_usable_range",
     "is_valid_mac": "mac.is_valid_mac",
     "mac_to_format": "mac.mac_to_format",
     "mac_to_int": "mac.mac_to_int",
@@ -61,9 +61,9 @@ def jinja2_convenience_function():
     Example:
         >>> from netutils.utils import jinja2_convenience_function
         >>> function_mappings = jinja2_convenience_function()
-        >>> function_mappings["get_first_usable_ip_network"]("192.168.0.0/24")
+        >>> function_mappings["get_first_usable"]("192.168.0.0/24")
         '192.168.0.1'
-        >>> function_mappings["get_broadcast_address_ip_network"]("192.168.0.0/24")
+        >>> function_mappings["get_broadcast_address"]("192.168.0.0/24")
         '192.168.0.255'
     """
     result = {}
