@@ -56,14 +56,21 @@ def jinja2_convenience_function():
     """Convenience function that allows netutils filter to be used easily with jinja2.
 
     Returns:
-        Any: Return value depends on the function called.
+        dict: Keys are the function names for the Jinja2 filter and values are the function objects.
 
+    Example:
+        >>> from netutils.utils import jinja2_convenience_function
+        >>> function_mappings = jinja2_convenience_function()
+        >>> function_mappings["get_first_usable_ip_network"]("192.168.0.0/24")
+        '192.168.0.1'
+        >>> function_mappings["get_broadcast_address_ip_network"]("192.168.0.0/24")
+        '192.168.0.255'
     """
     result = {}
 
-    for function_name, function_import_path in _JINJA2_FUNCTION_MAPPINGS.items():
+    for jinja2_function_name, function_import_path in _JINJA2_FUNCTION_MAPPINGS.items():
         module, function_name = function_import_path.rsplit(".", 1)
         imported_module = import_module(f"netutils.{module}")
         function_object = getattr(imported_module, function_name)
-        result[function_name] = function_object
+        result[jinja2_function_name] = function_object
     return result

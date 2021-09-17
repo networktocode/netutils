@@ -11,7 +11,7 @@ Here is the current folder structure.
 .. code-block:: python
 
     .
-    ├── p1.py
+    ├── jinja2_environment.py
     └── templates
     └── test.j2
 
