@@ -16,4 +16,5 @@ Netutils Functions
    ping/index
    protocol_mapper/index
    route/index
+   utilities/index
    vlan/index

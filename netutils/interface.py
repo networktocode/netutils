@@ -391,7 +391,7 @@ def _insert_nodes(node: t.Dict[CharacterClass, t.Any], values: t.Tuple[Character
     _insert_nodes(node[key], values[1:])
 
 
-def iter_tree(node: t.Dict[CharacterClass, t.Any], parents: t.List[CharacterClass]) -> t.Generator[str, None, None]:
+def _iter_tree(node: t.Dict[CharacterClass, t.Any], parents: t.List[CharacterClass]) -> t.Generator[str, None, None]:
     """Walk a tree of interface name parts.
 
     Weights are assigned based on domain logic to produce a
@@ -402,7 +402,7 @@ def iter_tree(node: t.Dict[CharacterClass, t.Any], parents: t.List[CharacterClas
             if item.terminal:
                 yield "".join(map(str, parents + [item]))
             parents.append(item)
-            yield from iter_tree(node[item], list(parents))
+            yield from _iter_tree(node[item], list(parents))
             parents.pop()
 
 
@@ -427,7 +427,7 @@ def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
     root: t.Dict[CharacterClass, t.Any] = {}
     for ifname in interfaces:
         _insert_nodes(root, _split_interface_tuple(ifname))
-    return list(iter_tree(root, []))
+    return list(_iter_tree(root, []))
 
 
 INTERFACE_LIST_ORDERING_OPTIONS = {"alphabetical": sort_interface_list}
