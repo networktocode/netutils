@@ -124,11 +124,18 @@ NTCTEMPLATES_LIB_MAPPER["huawei_vrp"] = "huawei_vrp"
 NTCTEMPLATES_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 
 NAPALM_LIB_MAPPER = {
+    "asa": "cisco_asa",
+    "cisco_wlc_ssh": "cisco_wlc",
     "eos": "arista_eos",
+    "fortios": "fortinet",
+    "huawei": "huawei_vrp",
     "ios": "cisco_ios",
     "nxos": "cisco_nxos",
     "iosxr": "cisco_xr",
     "junos": "juniper_junos",
+    "panos": "paloalto_panos",
+    "sros": "nokia_sros",
+    "vyos": "brocade_vyos",
 }
 
 PYNTC_LIB_MAPPER = {
@@ -190,10 +197,17 @@ SCRAPLI_LIB_MAPPER = {
 
 NAPALM_LIB_MAPPER_REVERSE = {
     "arista_eos": "eos",
+    "brocade_vyos": "vyos",
+    "cisco_asa": "asa",
     "cisco_ios": "ios",
     "cisco_nxos": "nxos",
     "cisco_xr": "iosxr",
+    "cisco_wlc": "cisco_wlc_ssh",
+    "fortinet": "fortios",
+    "huawei_vrp": "huawei",
     "juniper_junos": "junos",
+    "paloalto_panos": "panos",
+    "nokia_sros": "sros",
 }
 
 PYNTC_LIB_MAPPER_REVERSE = {
