@@ -21,7 +21,7 @@ Below is the code in the `test.j2` file.
 
     IP Address + 200 = {{ "192.168.0.1/10" | ip_addition(200) }}
 
-Below is a code in the `p1.py` folder.
+Below is a code in the `jinja2_environment.py` folder.
 
 .. code-block:: python
 
@@ -40,7 +40,7 @@ Below is a code in the `p1.py` folder.
     result = template.render()
     print(result)
 
-When you run `p1.py` the output will be:
+When you run `jinja2_environment.py` the output will be:
 
 .. code-block:: python
 
