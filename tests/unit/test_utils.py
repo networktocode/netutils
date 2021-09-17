@@ -44,39 +44,29 @@ def get_jinja2_function_names():
     return function_names
 
 
-def _recursive_dict_expand(nested_dict):
-    result = []
-    for _, function_path in nested_dict.items():
-        if isinstance(function_path, dict):
-            nested_items = _recursive_dict_expand(function_path)
-            for item in nested_items:
-                result.append(item)
-        else:
-            result.append(function_path)
-    return result
-
-
 def test_jinja2_mapping_contains_all_functions(get_jinja2_function_names):  # pylint: disable=redefined-outer-name
-    function_paths = _recursive_dict_expand(_JINJA2_FUNCTION_MAPPINGS)
-    function_names_from_defined_dict = [x.split(".")[1] for x in function_paths]
+    mapping_function_names = [path.split(".")[-1] for path in list(_JINJA2_FUNCTION_MAPPINGS.values())]
+    sorted_get_jinja2_function_names = sorted(get_jinja2_function_names)
+    sorted_mapping_function_names = sorted(mapping_function_names)
 
-    assert set(get_jinja2_function_names) == set(function_names_from_defined_dict)
+    assert sorted_get_jinja2_function_names == sorted_mapping_function_names
 
 
 def test_jinja2_mapping_missing_function(get_jinja2_function_names):  # pylint: disable=redefined-outer-name
-    function_paths = _recursive_dict_expand(_JINJA2_FUNCTION_MAPPINGS)
-    function_names_from_defined_dict = [x.split(".")[1] for x in function_paths]
-    function_names_from_defined_dict.append("MyExtraFunction")
+    mapping_function_names = [path.split(".")[-1] for path in list(_JINJA2_FUNCTION_MAPPINGS.values())]
+    mapping_function_names.append("MyExtraFunction")
+
+    sorted_mapping_function_names = sorted(mapping_function_names)
+    sorted_get_jinja2_function_names = sorted(get_jinja2_function_names)
 
     with pytest.raises(AssertionError):
-        assert set(get_jinja2_function_names) == set(function_names_from_defined_dict)
+        assert sorted_get_jinja2_function_names == sorted_mapping_function_names
 
 
 def test_jinja2_template():
     env = Environment(loader=FileSystemLoader("tests/unit/jinja2_template"), autoescape=select_autoescape())
 
-    for function_name, function_object in jinja2_convenience_function().items():
-        env.filters[function_name] = function_object
+    env.filters.update(jinja2_convenience_function())
 
     template = env.get_template("test.j2")
     result = template.render()

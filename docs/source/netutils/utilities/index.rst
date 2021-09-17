@@ -34,8 +34,7 @@ Below is a code in the `p1.py` folder.
         autoescape=select_autoescape()
     )
 
-    for function_name, function_object in jinja2_convenience_function().items():
-        env.filters[function_name] = function_object
+    env.filters.update(jinja2_convenience_function())
 
     template = env.get_template("test.j2")
     result = template.render()

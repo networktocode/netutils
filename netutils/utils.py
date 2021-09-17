@@ -3,16 +3,14 @@ from importlib import import_module
 
 _JINJA2_FUNCTION_MAPPINGS = {
     "asn_to_int": "asn.asn_to_int",
-    "config": {
-        "clean_config": "clean.clean_config",
-        "sanitize_config": "clean.sanitize_config",
-        "config_compliance": "compliance.compliance",
-        "config_section_not_parsed": "compliance.config_section_not_parsed",
-        "diff_network_config": "compliance.diff_network_config",
-        "feature_compliance": "compliance.feature_compliance",
-        "find_unordered_cfg_lines": "compliance.find_unordered_cfg_lines",
-        "section_config": "compliance.section_config",
-    },
+    "clean_config": "config.clean.clean_config",
+    "sanitize_config": "config.clean.sanitize_config",
+    "config_compliance": "config.compliance.compliance",
+    "config_section_not_parsed": "config.compliance.config_section_not_parsed",
+    "diff_network_config": "config.compliance.diff_network_config",
+    "feature_compliance": "config.compliance.feature_compliance",
+    "find_unordered_cfg_lines": "config.compliance.find_unordered_cfg_lines",
+    "section_config": "config.compliance.section_config",
     "fqdn_to_ip": "dns.fqdn_to_ip",
     "is_fqdn_valid": "dns.is_fqdn_valid",
     "is_fqdn_resolvable": "dns.is_fqdn_resolvable",
@@ -54,28 +52,18 @@ _JINJA2_FUNCTION_MAPPINGS = {
 }
 
 
-def jinja2_convenience_function(jinja_mappings_dict=None, parent_folder=None):
+def jinja2_convenience_function():
     """Convenience function that allows netutils filter to be used easily with jinja2.
 
     Returns:
         Any: Return value depends on the function called.
 
     """
-    if not jinja_mappings_dict:
-        jinja_mappings_dict = _JINJA2_FUNCTION_MAPPINGS
-
     result = {}
 
-    for function_name, function_import_path in jinja_mappings_dict.items():
-        if isinstance(function_import_path, dict):
-            recursive_dict = jinja2_convenience_function(function_import_path, function_name)
-            result.update(recursive_dict)
-        else:
-            function_import_module, function_import_name = function_import_path.split(".", 1)
-            if parent_folder:
-                imported_module = import_module(f"netutils.{parent_folder}.{function_import_module}")
-            else:
-                imported_module = import_module(f"netutils.{function_import_module}")
-            function_object = getattr(imported_module, function_import_name)
+    for function_name, function_import_path in _JINJA2_FUNCTION_MAPPINGS.items():
+        module, function_name = function_import_path.rsplit(".", 1)
+        imported_module = import_module(f"netutils.{module}")
+        function_object = getattr(imported_module, function_name)
         result[function_name] = function_object
     return result
