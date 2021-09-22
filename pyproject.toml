@@ -91,6 +91,7 @@ notes = """,
 python_paths = "./"
 testpaths = "tests/"
 addopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
+[build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"
 
