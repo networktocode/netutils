@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.2.3 - 2021-09
+
+### Added
+
+- #45 Added a jinja2 convenience function
+
+### Changed
+
+- #46 Updated NAPALM Maps to include community drivers
+
+### Fixed
+
+- #49 Fix read the docs
+
 ## v0.2.2 - 2021-09
 
 ### Added
