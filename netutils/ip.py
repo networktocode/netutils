@@ -247,6 +247,35 @@ def get_first_usable(ip_network):
     return str(net[1])
 
 
+def get_peer_ip(ip_interface):
+    """Given an IP interface (an ip address, with subnet mask) that is on a peer network, return the peer IP.
+
+    Args:
+        ip_interface (str): An IP interface in string format that is able to be converted by `ipaddress` library.
+
+    Returns:
+        str: IP address formatted string with the cooresponding peer IP.
+
+    Example:
+        >>> from netutils.ip import get_peer_ip
+        >>> get_peer_ip('10.0.0.1/255.255.255.252')
+        '10.0.0.2'
+        >>> get_peer_ip('10.0.0.2/30')
+        '10.0.0.1'
+        >>> get_peer_ip('10.0.0.1/255.255.255.254')
+        '10.0.0.0'
+        >>> get_peer_ip('10.0.0.0/31')
+        '10.0.0.1'
+        >>>
+    """
+    ip_obj = ipaddress.ip_interface(ip_interface)
+    last_bit = int(ip_obj) & 1
+    mask_type = ip_obj._prefixlen & 1
+    if mask_type ^ last_bit:
+        return ip_addition(str(ip_obj.ip), 1)
+    return ip_subtract(str(ip_obj.ip), 1)
+
+
 def get_usable_range(ip_network):
     """Given a network, return the string of usable IP addresses.
 

@@ -33,6 +33,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_all_host": "ip.get_all_host",
     "get_broadcast_address": "ip.get_broadcast_address",
     "get_first_usable": "ip.get_first_usable",
+    "get_peer_ip": "ip.get_peer_ip",
     "get_usable_range": "ip.get_usable_range",
     "is_valid_mac": "mac.is_valid_mac",
     "mac_to_format": "mac.mac_to_format",
