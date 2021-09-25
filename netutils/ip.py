@@ -269,11 +269,20 @@ def get_peer_ip(ip_interface):
         >>>
     """
     ip_obj = ipaddress.ip_interface(ip_interface)
-    last_bit = int(ip_obj) & 1
-    mask_type = ip_obj._prefixlen & 1
-    if mask_type ^ last_bit:
-        return ip_addition(str(ip_obj.ip), 1)
-    return ip_subtract(str(ip_obj.ip), 1)
+    if isinstance(ip_obj, ipaddress.IPv4Address) and ip_obj.network.prefixlen not in [30, 31]:
+        raise ValueError(f"{ip_obj} did not conform to IPv4 acceptable masks of 30 or 31")
+    if isinstance(ip_obj, ipaddress.IPv6Address) and ip_obj.network.prefixlen not in [126, 127]:
+        raise ValueError(f"{ip_obj} did not conform to IPv6 acceptable masks of 126 or 127")
+    if ip_obj.network.prefixlen in [30, 126] and ip_obj.ip in [
+        ip_obj.network.network_address,
+        ip_obj.network.broadcast_address,
+    ]:
+        raise ValueError(f"{ip_obj} is not an IP in the point-to-point link usable range.")
+    # The host lists returns all usable IPs, remove the matching one, return the first element. This can be optimized greatly, but left
+    # like this for simplicity. Note: IPv6 technically does not have a broadcast address, but for ptp, this is not considered.
+    val = list(get_all_host(str(ip_obj.network)))
+    val.remove(str(ip_obj.ip))
+    return val[0]
 
 
 def get_usable_range(ip_network):
