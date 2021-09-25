@@ -101,3 +101,13 @@ def test_route_no_best_route_found():
             {"network": "10.1.1.0", "mask": "24"},
         ]
         longest_prefix_match(lookup, routes)
+
+
+def test_route_non_ip_sent():
+    """Test when sending a non-ip."""
+    with pytest.raises(TypeError):
+        lookup = 12345
+        routes = [
+            {"network": "10.1.1.240", "mask": "255.255.255.240"},
+        ]
+        longest_prefix_match(lookup, routes)
