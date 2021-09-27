@@ -254,7 +254,7 @@ def get_peer_ip(ip_interface):
         ip_interface (str): An IP interface in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        str: IP address formatted string with the cooresponding peer IP.
+        str: IP address formatted string with the corresponding peer IP.
 
     Example:
         >>> from netutils.ip import get_peer_ip
