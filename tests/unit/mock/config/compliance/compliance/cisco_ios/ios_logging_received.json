@@ -1,12 +1,12 @@
 {
    "log": {
-      "compliant": true,
-      "missing": "",
-      "extra": "",
+      "compliant": false,
+      "missing": "logging host 10.1.1.1",
+      "extra": "logging history size 500\nlogging origin-id hostname\nlogging host 10.5.84.24",
       "cannot_parse": true,
-      "unordered_compliant": true,
-      "ordered_compliant": true,
+      "unordered_compliant": false,
+      "ordered_compliant": false,
       "actual": "logging history size 500\nlogging origin-id hostname\nlogging source-interface Loopback0\nlogging host 10.5.84.24\nlogging trap informational",
-      "intended": "logging history size 500\nlogging origin-id hostname\nlogging source-interface Loopback0\nlogging host 10.5.84.24\nlogging trap informational"
+      "intended": "logging source-interface Loopback0\nlogging host 10.1.1.1\nlogging trap informational"
    }
 }
