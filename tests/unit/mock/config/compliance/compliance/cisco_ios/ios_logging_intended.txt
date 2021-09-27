@@ -1,0 +1,9 @@
+logging source-interface Loopback0
+logging host 10.1.1.1
+!
+logging trap informational
+!
+snmp-server community <<REPLACED>> RO SNMP_ACL_RO
+snmp-server community <<REPLACED>> RW SNMP_ACL_RW
+snmp-server community <<REPLACED>> RO SNMP_ACL_RO
+!
