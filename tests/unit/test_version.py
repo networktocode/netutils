@@ -1,4 +1,4 @@
-"""Basic tests that do not require Django."""
+"""Basic test for version check."""
 import unittest
 import os
 import toml
