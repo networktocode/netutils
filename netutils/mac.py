@@ -89,7 +89,7 @@ def mac_to_int(mac):
 
 
 @_valid_mac
-def mac_type(mac):
+def mac_type(mac):  # pylint: disable=inconsistent-return-statements
     """Retuns the "type" of MAC address, as defined by the regex pattern names.
 
     Args:
@@ -109,7 +109,6 @@ def mac_type(mac):
     for name, pattern in MAC_REGEX.items():
         if re.fullmatch(pattern, mac):
             return name
-    raise ValueError("MAC pattern not found.")
 
 
 @_valid_mac
