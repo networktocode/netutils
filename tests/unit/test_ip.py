@@ -153,6 +153,57 @@ GET_ALL_HOST = [
     },
 ]
 
+GET_PEER = [
+    {
+        "sent": {"ip_interface": "10.0.0.1/255.255.255.252"},
+        "received": "10.0.0.2",
+    },
+    {
+        "sent": {"ip_interface": "10.0.0.2/30"},
+        "received": "10.0.0.1",
+    },
+    {
+        "sent": {"ip_interface": "10.0.0.1/31"},
+        "received": "10.0.0.0",
+    },
+    {
+        "sent": {"ip_interface": "10.0.0.0/255.255.255.254"},
+        "received": "10.0.0.1",
+    },
+    {
+        "sent": {"ip_interface": "2001::1/126"},
+        "received": "2001::2",
+    },
+    {
+        "sent": {"ip_interface": "2001::1/127"},
+        "received": "2001::",
+    },
+]
+GET_PEER_BAD_MASK = [
+    {
+        "sent": {"ip_interface": "10.0.0.1/255.255.255.255"},
+    },
+    {
+        "sent": {"ip_interface": "10.0.0.2/24"},
+    },
+    {
+        "sent": {"ip_interface": "2001::/64"},
+    },
+]
+
+GET_PEER_BAD_IP = [
+    {
+        "sent": {"ip_interface": "10.0.0.0/255.255.255.252"},
+    },
+    {
+        "sent": {"ip_interface": "10.0.0.3/30"},
+    },
+    {
+        "sent": {"ip_interface": "2001::/126"},
+    },
+]
+
+
 USABLE_RANGE = [
     {
         "sent": {"ip_network": "10.1.1.0/24"},
@@ -287,7 +338,30 @@ def test_cidr_to_netmaskv6(data):
     assert ip.cidr_to_netmaskv6(**data["sent"]) == data["received"]
 
 
+def test_cidr_to_netmaskv6_fail():
+    with pytest.raises(ValueError, match=r"Parameter must be an integer between 0 and 128.*"):
+        data = {"cidr": 129}
+        ip.cidr_to_netmaskv6(**data)
+
+
 def test_cidr_to_netmask_fail():
     with pytest.raises(ValueError, match=r"Parameter must be an integer between 0 and 32."):
         data = {"cidr": 37}
         ip.cidr_to_netmask(**data)
+
+
+@pytest.mark.parametrize("data", GET_PEER)
+def test_get_peer_ip(data):
+    assert ip.get_peer_ip(**data["sent"]) == data["received"]
+
+
+@pytest.mark.parametrize("data", GET_PEER_BAD_MASK)
+def test_get_peer_ip_fail_subnet(data):
+    with pytest.raises(ValueError, match=r".*acceptable masks.*"):
+        ip.get_peer_ip(**data["sent"])
+
+
+@pytest.mark.parametrize("data", GET_PEER_BAD_IP)
+def test_get_peer_ip_fail_ip(data):
+    with pytest.raises(ValueError, match=r".*usable range.*"):
+        ip.get_peer_ip(**data["sent"])
