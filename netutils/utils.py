@@ -50,6 +50,18 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "longest_prefix_match": "route.longest_prefix_match",
     "vlanlist_to_config": "vlan.vlanlist_to_config",
     "vlanconfig_to_list": "vlan.vlanconfig_to_list",
+    "kbps_to_mbps": "bandwidth.kbps_to_mbps",
+    "kbps_to_gbps": "bandwidth.kbps_to_gbps",
+    "kbps_to_tbps": "bandwidth.kbps_to_tbps",
+    "mbps_to_gbps": "bandwidth.mbps_to_gbps",
+    "mbps_to_tbps": "bandwidth.mbps_to_tbps",
+    "mbps_to_kbps": "bandwidth.mbps_to_kbps",
+    "gbps_to_kbps": "bandwidth.gbps_to_kbps",
+    "gbps_to_mbps": "bandwidth.gbps_to_mbps",
+    "gbps_to_tbps": "bandwidth.gbps_to_tbps",
+    "tbps_to_kbps": "bandwidth.tbps_to_kbps",
+    "tbps_to_mbps": "bandwidth.tbps_to_mbps",
+    "tbps_to_gbps": "bandwidth.tbps_to_gbps",
 }
 
 

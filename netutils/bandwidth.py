@@ -1,8 +1,7 @@
 """Functions for performing bandwidth calculations."""
-import math
 
 
-def convert_Kbps_to_Mbps(speed: float) -> float:
+def kbps_to_mbps(speed: float) -> float:
     """Method to convert `speed` from Kbps to Mbps value.
 
     Args:
@@ -14,7 +13,7 @@ def convert_Kbps_to_Mbps(speed: float) -> float:
     return speed / 1000
 
 
-def convert_Kbps_to_Gbps(speed: float) -> float:
+def kbps_to_gbps(speed: float) -> float:
     """Method to convert `speed` from Kbps to Gbps value.
 
     Args:
@@ -26,7 +25,7 @@ def convert_Kbps_to_Gbps(speed: float) -> float:
     return speed / 1000000
 
 
-def convert_Kbps_to_Tbps(speed: float) -> float:
+def kbps_to_tbps(speed: float) -> float:
     """Method to convert `speed` from Kbps to Tbps value.
 
     Args:
@@ -38,7 +37,7 @@ def convert_Kbps_to_Tbps(speed: float) -> float:
     return speed / 1000000000
 
 
-def convert_Mbps_to_Gbps(speed: float) -> float:
+def mbps_to_gbps(speed: float) -> float:
     """Method to convert `speed` from Mbps to Gbps value.
 
     Args:
@@ -50,7 +49,7 @@ def convert_Mbps_to_Gbps(speed: float) -> float:
     return speed / 1000
 
 
-def convert_Mbps_to_Tbps(speed: float) -> float:
+def mbps_to_tbps(speed: float) -> float:
     """Method to convert `speed` from Mbps to Tbps value.
 
     Args:
@@ -62,7 +61,7 @@ def convert_Mbps_to_Tbps(speed: float) -> float:
     return speed / 1000000
 
 
-def convert_Mbps_to_Kbps(speed: float) -> float:
+def mbps_to_kbps(speed: float) -> float:
     """Method to convert `speed` from Mbps to Kbps value.
 
     Args:
@@ -74,7 +73,7 @@ def convert_Mbps_to_Kbps(speed: float) -> float:
     return speed * 1000
 
 
-def convert_Gbps_to_Kbps(speed: float) -> float:
+def gbps_to_kbps(speed: float) -> float:
     """Method to convert `speed` from Gbps to Kbps value.
 
     Args:
@@ -86,7 +85,7 @@ def convert_Gbps_to_Kbps(speed: float) -> float:
     return speed * 1000000
 
 
-def convert_Gbps_to_Mbps(speed: float) -> float:
+def gbps_to_mbps(speed: float) -> float:
     """Method to convert `speed` from Gbps to Mbps value.
 
     Args:
@@ -98,7 +97,7 @@ def convert_Gbps_to_Mbps(speed: float) -> float:
     return speed * 1000
 
 
-def convert_Gbps_to_Tbps(speed: float) -> float:
+def gbps_to_tbps(speed: float) -> float:
     """Method to convert `speed` from Gbps to Tbps value.
 
     Args:
@@ -110,7 +109,7 @@ def convert_Gbps_to_Tbps(speed: float) -> float:
     return speed / 1000
 
 
-def convert_Tbps_to_Kbps(speed: float) -> float:
+def tbps_to_kbps(speed: float) -> float:
     """Method to convert `speed` from Tbps to Kbps value.
 
     Args:
@@ -122,7 +121,7 @@ def convert_Tbps_to_Kbps(speed: float) -> float:
     return speed * 1000000000
 
 
-def convert_Tbps_to_Mbps(speed: float) -> float:
+def tbps_to_mbps(speed: float) -> float:
     """Method to convert `speed` from Tbps to Mbps value.
 
     Args:
@@ -134,7 +133,7 @@ def convert_Tbps_to_Mbps(speed: float) -> float:
     return speed * 1000000
 
 
-def convert_Tbps_to_Gbps(speed: float) -> float:
+def tbps_to_gbps(speed: float) -> float:
     """Method to convert `speed` from Tbps to Gbps value.
 
     Args:
