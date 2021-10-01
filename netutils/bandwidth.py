@@ -1,4 +1,5 @@
 """Functions for performing bandwidth calculations."""
+import re
 
 
 def kbps_to_mbps(speed: float) -> float:
@@ -143,3 +144,35 @@ def tbps_to_gbps(speed: float) -> float:
         float: Speed in Gbps converted from Tbps.
     """
     return speed * 1000
+
+
+def bandwidth_to_int_kbps(speed: str) -> int:
+    """Method to convert a short bandwidth name to int value in Kbps.
+
+    Args:
+        speed (str): Bandwidth to be converted like `100Gbps` to Kbps.
+
+    Returns:
+        int: int value of bandwidth to be converted to Kbps
+    """
+    if re.search("[mM]bps", speed):
+        _value = int(mbps_to_kbps(int(re.sub("[mM]bps", "", speed))))
+    if re.search("[gG]bps", speed):
+        _value = int(gbps_to_kbps(int(re.sub("[gG]bps", "", speed))))
+    return _value
+
+
+def bandwidth_to_int_bps(speed: str) -> int:
+    """Method to convert a short bandwidth name to int value in bps.
+
+    Args:
+        speed (str): Bandwidth to be converted like `100Gbps` to bps.
+
+    Returns:
+        int: int value of bandwidth to be converted to bps
+    """
+    if re.search("[mM]bps", speed):
+        _value = bandwidth_to_int_kbps(speed) * 1000
+    if re.search("[gG]bps", speed):
+        _value = bandwidth_to_int_kbps(speed) * 1000
+    return _value
