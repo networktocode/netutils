@@ -146,7 +146,7 @@ def tbps_to_gbps(speed: float) -> float:
     return speed * 1000
 
 
-def bandwidth_to_int_kbps(speed: str) -> int:
+def name_to_kbits(speed: str) -> int:
     """Method to convert a short bandwidth name to int value in Kbps.
 
     Args:
@@ -162,7 +162,7 @@ def bandwidth_to_int_kbps(speed: str) -> int:
     return _value
 
 
-def bandwidth_to_int_bps(speed: str) -> int:
+def name_to_bits(speed: str) -> int:
     """Method to convert a short bandwidth name to int value in bps.
 
     Args:
@@ -172,7 +172,7 @@ def bandwidth_to_int_bps(speed: str) -> int:
         int: int value of bandwidth to be converted to bps
     """
     if re.search("[mM]bps", speed):
-        _value = bandwidth_to_int_kbps(speed) * 1000
+        _value = name_to_kbits(speed) * 1000
     if re.search("[gG]bps", speed):
-        _value = bandwidth_to_int_kbps(speed) * 1000
+        _value = name_to_kbits(speed) * 1000
     return _value

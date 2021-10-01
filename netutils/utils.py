@@ -62,8 +62,8 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "tbps_to_kbps": "bandwidth.tbps_to_kbps",
     "tbps_to_mbps": "bandwidth.tbps_to_mbps",
     "tbps_to_gbps": "bandwidth.tbps_to_gbps",
-    "bandwidth_to_int_kbps": "bandwidth.bandwidth_to_int_kbps",
-    "bandwidth_to_int_bps": "bandwidth.bandwidth_to_int_bps",
+    "name_to_kbits": "bandwidth.name_to_kbits",
+    "name_to_bits": "bandwidth.name_to_bits",
 }
 
 

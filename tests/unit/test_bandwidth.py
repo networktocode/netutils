@@ -111,7 +111,7 @@ def test_gbps_to_tbps(data):
     assert bandwidth.gbps_to_tbps(data["sent"]) == data["received"]
 
 
-bandwidth_to_int_kbps = [
+name_to_kbits = [
     {"sent": "10Mbps", "received": 10000},
     {"sent": "10 Mbps", "received": 10000},
     {"sent": "1Gbps", "received": 1000000},
@@ -121,12 +121,12 @@ bandwidth_to_int_kbps = [
 ]
 
 
-@pytest.mark.parametrize("data", bandwidth_to_int_kbps)
-def test_bandwidth_to_int_kbps(data):
-    assert bandwidth.bandwidth_to_int_kbps(data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", name_to_kbits)
+def test_name_to_kbits(data):
+    assert bandwidth.name_to_kbits(data["sent"]) == data["received"]
 
 
-bandwidth_to_int_bps = [
+name_to_bits = [
     {"sent": "10Mbps", "received": 10000000},
     {"sent": "10 Mbps", "received": 10000000},
     {"sent": "1Gbps", "received": 1000000000},
@@ -136,6 +136,6 @@ bandwidth_to_int_bps = [
 ]
 
 
-@pytest.mark.parametrize("data", bandwidth_to_int_bps)
-def test_bandwidth_to_int_bps(data):
-    assert bandwidth.bandwidth_to_int_bps(data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", name_to_bits)
+def test_name_to_bits(data):
+    assert bandwidth.name_to_bits(data["sent"]) == data["received"]
