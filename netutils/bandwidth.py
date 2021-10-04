@@ -6,12 +6,24 @@ def bps_to_kbps(speed: int) -> float:
     """Method to convert `speed` from bps to Kbps value.
 
     Args:
-        init_speed (int): Speed in bps to convert to Kbps.
+        speed (int): Speed in bps to convert to Kbps.
 
     Returns:
         float: Speed in Kbps converted from bps.
     """
     return speed / 1000
+
+
+def bps_to_kbytes(speed: int) -> float:
+    """Method to convert `speed` from bps to Kbps value.
+
+    Args:
+        speed (int): Speed in bps to convert to KBps.
+
+    Returns:
+        float: Speed in KBps converted from bps.
+    """
+    return speed / 8000
 
 
 def bps_to_mbps(speed: int) -> float:
@@ -26,6 +38,18 @@ def bps_to_mbps(speed: int) -> float:
     return speed / 1000000
 
 
+def bps_to_mbytes(speed: int) -> float:
+    """Method to convert `speed` from bps to MBps value.
+
+    Args:
+        init_speed (int): Speed in bps to convert to MBps.
+
+    Returns:
+        float: Speed in MBps converted from bps.
+    """
+    return speed / 8000000
+
+
 def bps_to_gbps(speed: int) -> float:
     """Method to convert `speed` from bps to Gbps value.
 
@@ -36,6 +60,18 @@ def bps_to_gbps(speed: int) -> float:
         float: Speed in Gbps converted from bps.
     """
     return speed / 1000000000
+
+
+def bps_to_gbytes(speed: int) -> float:
+    """Method to convert `speed` from bps to GBps value.
+
+    Args:
+        init_speed (int): Speed in bps to convert to GBps.
+
+    Returns:
+        float: Speed in GBps converted from bps.
+    """
+    return speed / 8000000000
 
 
 def bps_to_tbps(speed: int) -> float:
@@ -50,6 +86,18 @@ def bps_to_tbps(speed: int) -> float:
     return speed / 1000000000000
 
 
+def bps_to_tbytes(speed: int) -> float:
+    """Method to convert `speed` from bps to TBps value.
+
+    Args:
+        init_speed (int): Speed in bps to convert to TBps.
+
+    Returns:
+        float: Speed in TBps converted from bps.
+    """
+    return speed / 8000000000000
+
+
 def kbps_to_mbps(speed: float) -> float:
     """Method to convert `speed` from Kbps to Mbps value.
 
@@ -60,6 +108,18 @@ def kbps_to_mbps(speed: float) -> float:
         float: Speed in Mbps converted from Kbps.
     """
     return speed / 1000
+
+
+def kbps_to_mbytes(speed: float) -> float:
+    """Method to convert `speed` from Kbps to MBps value.
+
+    Args:
+        init_speed (float): Speed in Kbps to convert to MBps.
+
+    Returns:
+        float: Speed in MBps converted from Kbps.
+    """
+    return speed / 8000
 
 
 def kbps_to_gbps(speed: float) -> float:
@@ -74,6 +134,18 @@ def kbps_to_gbps(speed: float) -> float:
     return speed / 1000000
 
 
+def kbps_to_gbytes(speed: float) -> float:
+    """Method to convert `speed` from Kbps to GBps value.
+
+    Args:
+        init_speed (float): Speed in Kbps to convert to GBps.
+
+    Returns:
+        float: Speed in GBps converted from Kbps.
+    """
+    return speed / 8000000
+
+
 def kbps_to_tbps(speed: float) -> float:
     """Method to convert `speed` from Kbps to Tbps value.
 
@@ -86,6 +158,18 @@ def kbps_to_tbps(speed: float) -> float:
     return speed / 1000000000
 
 
+def kbps_to_tbytes(speed: float) -> float:
+    """Method to convert `speed` from Kbps to TBps value.
+
+    Args:
+        init_speed (float): Speed in Kbps to convert to TBps.
+
+    Returns:
+        float: Speed in TBps converted from Kbps.
+    """
+    return speed / 8000000000
+
+
 def mbps_to_gbps(speed: float) -> float:
     """Method to convert `speed` from Mbps to Gbps value.
 
@@ -93,9 +177,21 @@ def mbps_to_gbps(speed: float) -> float:
         init_speed (float): Speed in Mbps to convert to Gbps.
 
     Returns:
-        float: Speed in Mbps converted from Kbps.
+        float: Speed in Gbps converted from Mbps.
     """
     return speed / 1000
+
+
+def mbps_to_gbytes(speed: float) -> float:
+    """Method to convert `speed` from Mbps to GBps value.
+
+    Args:
+        init_speed (float): Speed in Mbps to convert to GBps.
+
+    Returns:
+        float: Speed in GBps converted from Mbps.
+    """
+    return speed / 8000
 
 
 def mbps_to_tbps(speed: float) -> float:
@@ -105,9 +201,21 @@ def mbps_to_tbps(speed: float) -> float:
         init_speed (float): Speed in Mbps to convert to Tbps.
 
     Returns:
-        float: Speed in Tbps converted from Kbps.
+        float: Speed in Tbps converted from Mbps.
     """
     return speed / 1000000
+
+
+def mbps_to_tbytes(speed: float) -> float:
+    """Method to convert `speed` from Mbps to TBps value.
+
+    Args:
+        init_speed (float): Speed in Mbps to convert to TBps.
+
+    Returns:
+        float: Speed in TBps converted from Mbps.
+    """
+    return speed / 8000000
 
 
 def mbps_to_kbps(speed: float) -> float:
@@ -122,6 +230,18 @@ def mbps_to_kbps(speed: float) -> float:
     return speed * 1000
 
 
+def mbps_to_kbytes(speed: float) -> float:
+    """Method to convert `speed` from Mbps to KBps value.
+
+    Args:
+        speed (float): Speed in Mbps to convert to KBps.
+
+    Returns:
+        float: Speed in KBps converted from Mbps.
+    """
+    return speed * 125
+
+
 def gbps_to_kbps(speed: float) -> float:
     """Method to convert `speed` from Gbps to Kbps value.
 
@@ -132,6 +252,18 @@ def gbps_to_kbps(speed: float) -> float:
         float: Speed in Kbps converted from Gbps.
     """
     return speed * 1000000
+
+
+def gbps_to_kbytes(speed: float) -> float:
+    """Method to convert `speed` from Gbps to KBps value.
+
+    Args:
+        speed (float): Speed in Gbps to convert to KBps.
+
+    Returns:
+        float: Speed in KBps converted from Gbps.
+    """
+    return speed * 125000
 
 
 def gbps_to_mbps(speed: float) -> float:
@@ -146,6 +278,18 @@ def gbps_to_mbps(speed: float) -> float:
     return speed * 1000
 
 
+def gbps_to_mbytes(speed: float) -> float:
+    """Method to convert `speed` from Gbps to MBps value.
+
+    Args:
+        speed (float): Speed in Gbps to convert to MBps.
+
+    Returns:
+        float: Speed in MBps converted from Gbps.
+    """
+    return speed * 125
+
+
 def gbps_to_tbps(speed: float) -> float:
     """Method to convert `speed` from Gbps to Tbps value.
 
@@ -156,6 +300,18 @@ def gbps_to_tbps(speed: float) -> float:
         float: Speed in Tbps converted from Gbps.
     """
     return speed / 1000
+
+
+def gbps_to_tbytes(speed: float) -> float:
+    """Method to convert `speed` from Gbps to TBps value.
+
+    Args:
+        speed (float): Speed in Gbps to convert to TBps.
+
+    Returns:
+        float: Speed in TBps converted from Gbps.
+    """
+    return speed / 8000
 
 
 def tbps_to_kbps(speed: float) -> float:
@@ -170,6 +326,18 @@ def tbps_to_kbps(speed: float) -> float:
     return speed * 1000000000
 
 
+def tbps_to_kbytes(speed: float) -> float:
+    """Method to convert `speed` from Tbps to KBps value.
+
+    Args:
+        speed (float): Speed in Tbps to convert to KBps.
+
+    Returns:
+        float: Speed in KBps converted from Tbps.
+    """
+    return speed * 125000000
+
+
 def tbps_to_mbps(speed: float) -> float:
     """Method to convert `speed` from Tbps to Mbps value.
 
@@ -182,6 +350,18 @@ def tbps_to_mbps(speed: float) -> float:
     return speed * 1000000
 
 
+def tbps_to_mbytes(speed: float) -> float:
+    """Method to convert `speed` from Tbps to MBps value.
+
+    Args:
+        speed (float): Speed in Tbps to convert to MBps.
+
+    Returns:
+        float: Speed in MBps converted from Tbps.
+    """
+    return speed * 125000
+
+
 def tbps_to_gbps(speed: float) -> float:
     """Method to convert `speed` from Tbps to Gbps value.
 
@@ -192,6 +372,18 @@ def tbps_to_gbps(speed: float) -> float:
         float: Speed in Gbps converted from Tbps.
     """
     return speed * 1000
+
+
+def tbps_to_gbytes(speed: float) -> float:
+    """Method to convert `speed` from Tbps to GBps value.
+
+    Args:
+        speed (float): Speed in Tbps to convert to GBps.
+
+    Returns:
+        float: Speed in GBps converted from Tbps.
+    """
+    return speed * 125
 
 
 def name_to_kbits(speed: str) -> int:
@@ -226,15 +418,47 @@ def name_to_bits(speed: str) -> int:
     return _value
 
 
+def name_to_kbytes(speed: str) -> int:
+    """Method to convert a short bandwidth name to int value in KBps.
+
+    Args:
+        speed (str): Bandwidth to be converted like `100GBps` to KBps.
+
+    Returns:
+        int: int value of bandwidth to be converted to KBps
+    """
+    if re.search("[mM]Bps", speed):
+        _value = int(mbps_to_kbytes(int(re.sub("[mM]Bps", "", speed))))
+    if re.search("[gG]Bps", speed):
+        _value = int(gbps_to_kbytes(int(re.sub("[gG]Bps", "", speed))))
+    return _value
+
+
+def name_to_bytes(speed: str) -> int:
+    """Method to convert a short bandwidth name to int value in Bps.
+
+    Args:
+        speed (str): Bandwidth to be converted like `100GBps` to Bps.
+
+    Returns:
+        int: int value of bandwidth to be converted to Bps
+    """
+    if re.search("[mM]Bps", speed):
+        _value = int(mbps_to_kbytes(int(re.sub("[mM]Bps", "", speed))))
+    if re.search("[gG]Bps", speed):
+        _value = int(gbps_to_kbytes(int(re.sub("[gG]Bps", "", speed))))
+    return _value
+
+
 def bits_to_name(speed: int, nbr_decimal: int = 0) -> str:  # pylint: disable=too-many-branches
-    """Method to convert a int value for speed to the name value.
+    """Method to convert an int value for speed int bits to the name value.
 
     Args:
         speed (int): Speed in bits to be converted.
-        nbr_decimal (int): Precision of end result, ie number of decimal points to round to.
+        nbr_decimal (int, optional): Precision of end result, ie number of decimal points to round to. Defaults to 0.
 
     Returns:
-        str: Name value for speed
+        str: Name value for speed in bits
     """
     if not isinstance(speed, int):
         return None
@@ -262,5 +486,42 @@ def bits_to_name(speed: int, nbr_decimal: int = 0) -> str:  # pylint: disable=to
             result = f"{round(bps_to_tbps(speed))}Tbps"
         else:
             result = f"{round(bps_to_tbps(speed), nbr_decimal)}Tbps"
+        return result
+    return None
+
+
+def bytes_to_name(speed: int, nbr_decimal: int = 0) -> str:
+    """Method to convert an int value for speed in bytes to the name value.
+
+    Args:
+        speed (int): Speed in bytes to be converted.
+        nbr_decimal (int, optional): Precision of end result, ie number of decimal points to round to. Defaults to 0.
+
+    Returns:
+        str: Name value for speed in bytes
+    """
+    if speed <= 8000:
+        if nbr_decimal == 0:
+            result = f"{round(bps_to_kbytes(speed))}KBps"
+        else:
+            result = f"{round(bps_to_kbytes(speed), nbr_decimal)}KBps"
+        return result
+    if speed <= 8000000:
+        if nbr_decimal == 0:
+            result = f"{round(bps_to_mbytes(speed))}MBps"
+        else:
+            result = f"{round(bps_to_mbytes(speed), nbr_decimal)}MBps"
+        return result
+    if speed <= 8000000000:
+        if nbr_decimal == 0:
+            result = f"{round(bps_to_gbytes(speed))}GBps"
+        else:
+            result = f"{round(bps_to_gbytes(speed), nbr_decimal)}GBps"
+        return result
+    if speed <= 8000000000000:
+        if nbr_decimal == 0:
+            result = f"{round(bps_to_tbytes(speed))}TBps"
+        else:
+            result = f"{round(bps_to_tbytes(speed), nbr_decimal)}TBps"
         return result
     return None
