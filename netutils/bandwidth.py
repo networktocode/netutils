@@ -2,6 +2,54 @@
 import re
 
 
+def bps_to_kbps(speed: int) -> float:
+    """Method to convert `speed` from bps to Kbps value.
+
+    Args:
+        init_speed (int): Speed in bps to convert to Kbps.
+
+    Returns:
+        float: Speed in Kbps converted from bps.
+    """
+    return speed / 1000
+
+
+def bps_to_mbps(speed: int) -> float:
+    """Method to convert `speed` from bps to Mbps value.
+
+    Args:
+        init_speed (int): Speed in bps to convert to Mbps.
+
+    Returns:
+        float: Speed in Mbps converted from bps.
+    """
+    return speed / 1000000
+
+
+def bps_to_gbps(speed: int) -> float:
+    """Method to convert `speed` from bps to Gbps value.
+
+    Args:
+        init_speed (int): Speed in bps to convert to Gbps.
+
+    Returns:
+        float: Speed in Gbps converted from bps.
+    """
+    return speed / 1000000000
+
+
+def bps_to_tbps(speed: int) -> float:
+    """Method to convert `speed` from bps to Tbps value.
+
+    Args:
+        init_speed (int): Speed in bps to convert to Tbps.
+
+    Returns:
+        float: Speed in Tbps converted from bps.
+    """
+    return speed / 1000000000000
+
+
 def kbps_to_mbps(speed: float) -> float:
     """Method to convert `speed` from Kbps to Mbps value.
 
@@ -176,3 +224,43 @@ def name_to_bits(speed: str) -> int:
     if re.search("[gG]bps", speed):
         _value = name_to_kbits(speed) * 1000
     return _value
+
+
+def bits_to_name(speed: int, nbr_decimal: int = 0) -> str:  # pylint: disable=too-many-branches
+    """Method to convert a int value for speed to the name value.
+
+    Args:
+        speed (int): Speed in bits to be converted.
+        nbr_decimal (int): Precision of end result, ie number of decimal points to round to.
+
+    Returns:
+        str: Name value for speed
+    """
+    if not isinstance(speed, int):
+        return None
+
+    if speed <= 1000:
+        if nbr_decimal == 0:
+            result = f"{round(bps_to_kbps(speed))}Kbps"
+        else:
+            result = f"{round(bps_to_kbps(speed), nbr_decimal)}Kbps"
+        return result
+    if speed <= 1000000:
+        if nbr_decimal == 0:
+            result = f"{round(bps_to_mbps(speed))}Mbps"
+        else:
+            result = f"{round(bps_to_mbps(speed), nbr_decimal)}Mbps"
+        return result
+    if speed <= 1000000000:
+        if nbr_decimal == 0:
+            result = f"{round(bps_to_gbps(speed))}Gbps"
+        else:
+            result = f"{round(bps_to_gbps(speed), nbr_decimal)}Gbps"
+        return result
+    if speed <= 1000000000000:
+        if nbr_decimal == 0:
+            result = f"{round(bps_to_tbps(speed))}Tbps"
+        else:
+            result = f"{round(bps_to_tbps(speed), nbr_decimal)}Tbps"
+        return result
+    return None

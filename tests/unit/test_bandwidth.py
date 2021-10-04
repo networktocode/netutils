@@ -139,3 +139,20 @@ name_to_bits = [
 @pytest.mark.parametrize("data", name_to_bits)
 def test_name_to_bits(data):
     assert bandwidth.name_to_bits(data["sent"]) == data["received"]
+
+
+bits_to_name = [
+    {"sent": {"speed": 1000}, "received": "1Kbps"},
+    {"sent": {"speed": 1000, "nbr_decimal": 1}, "received": "1.0Kbps"},
+    {"sent": {"speed": 1000000}, "received": "1Mbps"},
+    {"sent": {"speed": 1000000, "nbr_decimal": 1}, "received": "1.0Mbps"},
+    {"sent": {"speed": 1000000000}, "received": "1Gbps"},
+    {"sent": {"speed": 1000000000, "nbr_decimal": 1}, "received": "1.0Gbps"},
+    {"sent": {"speed": 1000000000000}, "received": "1Tbps"},
+    {"sent": {"speed": 1000000000000, "nbr_decimal": 1}, "received": "1.0Tbps"},
+]
+
+
+@pytest.mark.parametrize("data", bits_to_name)
+def test_bits_to_name(data):
+    assert bandwidth.bits_to_name(**data["sent"]) == data["received"]
