@@ -129,10 +129,10 @@ def test_name_to_kbits(data):
 name_to_bits = [
     {"sent": "10Mbps", "received": 10000000},
     {"sent": "10 Mbps", "received": 10000000},
-    {"sent": "1Gbps", "received": 1000000000},
-    {"sent": "1 Gbps", "received": 1000000000},
-    {"sent": "100Gbps", "received": 100000000000},
-    {"sent": "100 Gbps", "received": 100000000000},
+    {"sent": "1Gbps", "received": 1000000000000},
+    {"sent": "1 Gbps", "received": 1000000000000},
+    {"sent": "100Gbps", "received": 100000000000000},
+    {"sent": "100 Gbps", "received": 100000000000000},
 ]
 
 

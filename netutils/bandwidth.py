@@ -414,7 +414,7 @@ def name_to_bits(speed: str) -> int:
     if re.search("[mM]bps", speed):
         _value = name_to_kbits(speed) * 1000
     if re.search("[gG]bps", speed):
-        _value = name_to_kbits(speed) * 1000
+        _value = name_to_kbits(speed) * 1000000
     return _value
 
 
