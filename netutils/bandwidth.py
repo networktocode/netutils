@@ -447,6 +447,8 @@ def name_to_bytes(speed: str) -> int:
         _value = int(mbps_to_kbytes(int(re.sub("[mM]Bps", "", speed))))
     if re.search("[gG]Bps", speed):
         _value = int(gbps_to_kbytes(int(re.sub("[gG]Bps", "", speed))))
+    if re.search("[tT]Bps", speed):
+        _value = int(tbps_to_kbytes(int(re.sub("[tT]Bps", "", speed))))
     return _value
 
 

@@ -165,6 +165,8 @@ name_to_bytes = [
     {"sent": "1 GBps", "received": 125000},
     {"sent": "100GBps", "received": 12500000},
     {"sent": "100 GBps", "received": 12500000},
+    {"sent": "1TBps", "received": 125000000},
+    {"sent": "1 TBps", "received": 125000000},
 ]
 
 
