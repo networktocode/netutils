@@ -159,14 +159,16 @@ def test_bits_to_name(data):
 
 
 name_to_bytes = [
-    {"sent": "10MBps", "received": 1250},
-    {"sent": "10 MBps", "received": 1250},
-    {"sent": "1GBps", "received": 125000},
-    {"sent": "1 GBps", "received": 125000},
-    {"sent": "100GBps", "received": 12500000},
-    {"sent": "100 GBps", "received": 12500000},
-    {"sent": "1TBps", "received": 125000000},
-    {"sent": "1 TBps", "received": 125000000},
+    {"sent": "10MBps", "received": 1250.0},
+    {"sent": "10 MBps", "received": 1250.0},
+    {"sent": "1GBps", "received": 125000.0},
+    {"sent": "1 GBps", "received": 125000.0},
+    {"sent": "2.5GBps", "received": 312500.0},
+    {"sent": "2.5 GBps", "received": 312500.0},
+    {"sent": "100GBps", "received": 12500000.0},
+    {"sent": "100 GBps", "received": 12500000.0},
+    {"sent": "1TBps", "received": 125000000.0},
+    {"sent": "1 TBps", "received": 125000000.0},
 ]
 
 

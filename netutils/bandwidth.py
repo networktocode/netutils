@@ -418,7 +418,7 @@ def name_to_bits(speed: str) -> int:
     return _value
 
 
-def name_to_kbytes(speed: str) -> int:
+def name_to_kbytes(speed: str) -> float:
     """Method to convert a short bandwidth name to int value in KBps.
 
     Args:
@@ -428,13 +428,13 @@ def name_to_kbytes(speed: str) -> int:
         int: int value of bandwidth to be converted to KBps
     """
     if re.search("[mM]Bps", speed):
-        _value = int(mbps_to_kbytes(int(re.sub("[mM]Bps", "", speed))))
+        _value = mbps_to_kbytes(float(re.sub("[mM]Bps", "", speed)))
     if re.search("[gG]Bps", speed):
-        _value = int(gbps_to_kbytes(int(re.sub("[gG]Bps", "", speed))))
+        _value = gbps_to_kbytes(float(re.sub("[gG]Bps", "", speed)))
     return _value
 
 
-def name_to_bytes(speed: str) -> int:
+def name_to_bytes(speed: str) -> float:
     """Method to convert a short bandwidth name to int value in Bps.
 
     Args:
@@ -444,11 +444,11 @@ def name_to_bytes(speed: str) -> int:
         int: int value of bandwidth to be converted to Bps
     """
     if re.search("[mM]Bps", speed):
-        _value = int(mbps_to_kbytes(int(re.sub("[mM]Bps", "", speed))))
+        _value = mbps_to_kbytes(float(re.sub("[mM]Bps", "", speed)))
     if re.search("[gG]Bps", speed):
-        _value = int(gbps_to_kbytes(int(re.sub("[gG]Bps", "", speed))))
+        _value = gbps_to_kbytes(float(re.sub("[gG]Bps", "", speed)))
     if re.search("[tT]Bps", speed):
-        _value = int(tbps_to_kbytes(int(re.sub("[tT]Bps", "", speed))))
+        _value = tbps_to_kbytes(float(re.sub("[tT]Bps", "", speed)))
     return _value
 
 
