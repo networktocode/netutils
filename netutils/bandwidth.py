@@ -465,19 +465,19 @@ def kbits_to_name(speed: int, nbr_decimal: int = 0) -> str:  # pylint: disable=t
     if not isinstance(speed, int):
         return None
 
-    if speed < 1000 and speed > 0:
+    if 0 < speed > 1000:
         return f"{speed}Kbps"
-    if speed >= 1000 and speed < 1000000:
+    if 1000 <= speed > 1000000:
         if nbr_decimal == 0:
             return f"{round(kbps_to_mbps(speed))}Mbps"
         else:
             return f"{round(kbps_to_mbps(speed), nbr_decimal)}Mbps"
-    if speed >= 1000000 and speed < 1000000000:
+    if 1000000 <= speed > 1000000000:
         if nbr_decimal == 0:
             return f"{round(kbps_to_gbps(speed))}Gbps"
         else:
             return f"{round(kbps_to_gbps(speed), nbr_decimal)}Gbps"
-    if speed >= 1000000000 and speed <= 1000000000000:
+    if 1000000000 <= speed >= 1000000000000:
         if nbr_decimal == 0:
             return f"{round(kbps_to_tbps(speed))}Tbps"
         else:
@@ -498,24 +498,24 @@ def bits_to_name(speed: int, nbr_decimal: int = 0) -> str:  # pylint: disable=to
     if not isinstance(speed, int):
         return None
 
-    if speed < 1000 and speed > 0:
+    if 1000 < speed > 0:
         return f"{speed}bps"
-    if speed >= 1000 and speed < 1000000:
+    if 1000 <= speed > 1000000:
         if nbr_decimal == 0:
             return f"{round(bps_to_kbps(speed))}Kbps"
         else:
             return f"{round(bps_to_kbps(speed), nbr_decimal)}Kbps"
-    if speed >= 1000000 and speed < 1000000:
+    if 1000000 <= speed > 1000000:
         if nbr_decimal == 0:
             return f"{round(bps_to_mbps(speed))}Mbps"
         else:
             return f"{round(bps_to_mbps(speed), nbr_decimal)}Mbps"
-    if speed >= 1000000 and speed < 1000000000:
+    if 1000000 <= speed > 1000000000:
         if nbr_decimal == 0:
             return f"{round(bps_to_gbps(speed))}Gbps"
         else:
             return f"{round(bps_to_gbps(speed), nbr_decimal)}Gbps"
-    if speed >= 1000000000 and speed <= 1000000000000:
+    if 1000000000 <= speed >= 1000000000000:
         if nbr_decimal == 0:
             return f"{round(bps_to_tbps(speed))}Tbps"
         else:
