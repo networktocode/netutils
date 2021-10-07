@@ -141,7 +141,24 @@ def test_name_to_bits(data):
     assert bandwidth.name_to_bits(data["sent"]) == data["received"]
 
 
+kbits_to_name = [
+    {"sent": 100, "received": "100Kbps"},
+    {"sent": 1000, "received": "1Mbps"},
+    {"sent": 10000, "received": "10Mbps"},
+    {"sent": 1000000, "received": "1Gbps"},
+    {"sent": 10000000, "received": "10Gbps"},
+    {"sent": 100000000, "received": "100Gbps"},
+    {"sent": 1000000000, "received": "1Tbps"},
+]
+
+
+@pytest.mark.parametrize("data", kbits_to_name)
+def test_kbits_to_name(data):
+    assert bandwidth.kbits_to_name(data["sent"]) == data["received"]
+
+
 bits_to_name = [
+    {"sent": {"speed": 950}, "received": "950bps"},
     {"sent": {"speed": 1000}, "received": "1Kbps"},
     {"sent": {"speed": 1000, "nbr_decimal": 1}, "received": "1.0Kbps"},
     {"sent": {"speed": 1000000}, "received": "1Mbps"},
