@@ -512,7 +512,7 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
         """Update parents in ``self.config_lines`` per ``self.same_line_children``."""
         new_config_lines = []
         for line in self.config_lines:
-            if line in self.same_line_children:
+            if line in self.same_line_children and len(new_config_lines) > 0:
                 previous_line = new_config_lines[-1]
                 previous_config_line = previous_line.config_line
                 current_parents = previous_line.parents + (previous_config_line,)
