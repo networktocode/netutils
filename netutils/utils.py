@@ -86,6 +86,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "name_to_bits": "bandwidth.name_to_bits",
     "name_to_kbytes": "bandwidth.name_to_kbytes",
     "name_to_bytes": "bandwidth.name_to_bytes",
+    "kbits_to_name": "bandwidth.kbits_to_name",
     "bits_to_name": "bandwidth.bits_to_name",
     "bytes_to_name": "bandwidth.bytes_to_name",
 }
