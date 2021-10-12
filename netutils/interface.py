@@ -561,7 +561,7 @@ def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
         # find ranges in this port list
         ranges = _ranges_in_list(ports)
         # assemble module and port ranges
-        [
+        [  # pylint: disable=expression-not-assigned
             final_result_list.append(f"{module}{r[0]}" + (f"-{r[-1]}" if len(r) > 1 else "")) for r in ranges
-        ]  # pylint: disable=expression-not-assigned
+        ]
     return final_result_list
