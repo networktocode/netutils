@@ -521,7 +521,7 @@ def _check_order_option_exists(order):
 
 
 def _ranges_in_list(numbers: t.List[int]):
-    """Find contiguous ranges in a list of numbers
+    """Find contiguous ranges in a list of numbers.
 
     Example:
         >>> _ranges_in_list([1, 2, 3, 5, 6, 8])
