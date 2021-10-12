@@ -527,6 +527,9 @@ def _ranges_in_list(numbers: t.List[int]):
         >>> _ranges_in_list([1, 2, 3, 5, 6, 8])
         [[1, 2, 3], [5, 6], [8]]
 
+    Args:
+        numbers: list of numbers
+
     Returns:
         list: list of ranges in input
     """
@@ -545,7 +548,7 @@ def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
         ['Gi1/0/1-3', 'Gi1/0/5']
 
     Args:
-        interface_list: interfaces as list elements
+        interface_list: list of interfaces
 
     Returns:
         list: list of interface ranges
