@@ -521,6 +521,15 @@ def _check_order_option_exists(order):
 
 
 def _ranges_in_list(numbers: t.List[int]):
+    """Find contiguous ranges in a list of numbers
+
+    Example:
+        >>> _ranges_in_list([1, 2, 3, 5, 6, 8])
+        [[1, 2, 3], [5, 6], [8]]
+
+    Returns:
+        list: list of ranges in input
+    """
     return [list(map(itemgetter(1), g)) for k, g in itertools.groupby(enumerate(numbers), lambda x: x[0] - x[1])]
 
 
@@ -528,15 +537,15 @@ def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
     """Function which takes interfaces and return interface ranges.
 
     Whitespace and special characters are ignored in the input. Input must contain only interfaces,
-    there is no check against correct interface names!
-    Subinterface separator is `/` and maximum depth is 4!
+    there is no check against correct interface names! Also interface names must use the same abbreviation!
+    E.g. Gi =! GigabitEthernet
 
     Example:
         >>> interface_range_compress(["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/5"])
         ['Gi1/0/1-3', 'Gi1/0/5']
 
     Args:
-        interface_list: interfaces in a line or in a list of lines
+        interface_list: interfaces as list elements
 
     Returns:
         list: list of interface ranges
