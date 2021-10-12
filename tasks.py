@@ -2,7 +2,6 @@
 import os
 import sys
 from distutils.util import strtobool
-import requests
 from invoke import task
 
 try:
@@ -239,35 +238,6 @@ def tests(context, local=INVOKE_LOCAL):
     pytest(context, local)
 
     print("All tests have passed!")
-
-
-@task
-def check_pypi_version(context, name=PROJECT_NAME, version=PROJECT_VERSION):
-    """Verify if the version specified already exists on PyPI.
-
-    Used mostly in CI/CD to make sure that the new version is merged to main.
-    If version already exists, then function exits with non-zero return code,
-    else the function exits with zero return code.
-
-    Args:
-        context (obj): Used to run specific commands
-        name (str): The name of the project
-        version (str): The version of the project
-    """
-    # Running the following from context to pass pylint:
-    # context must be the first argument in invoke
-    context.run(f"echo Verifying the version {version} on PyPI.")
-
-    url = f"https://pypi.org/pypi/{name}/json"
-    response = requests.get(url)
-    data = response.json()
-    if version in data.get("releases", {}).keys():
-        print(f"The version {version} already exists.")
-        print("Bump the version. Run the command: poetry version.")
-        sys.exit(1)
-    print(f"The version {version} does not exist on PyPI.")
-    print("The version can be released.")
-    sys.exit(0)
 
 
 @task

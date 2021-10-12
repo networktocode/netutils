@@ -1,8 +1,9 @@
 """Functions for working with interface."""
-import re
 import itertools
-from typing import List
-from collections import namedtuple
+import re
+import typing as t
+from abc import ABC, abstractmethod, abstractproperty
+from functools import total_ordering
 from operator import itemgetter
 from .constants import BASE_INTERFACES, REVERSE_MAPPING
 
@@ -126,6 +127,65 @@ def canonical_interface_name(interface, addl_name_map=None, verify=False):
     return interface
 
 
+def canonical_interface_name_list(interfaces, addl_name_map=None, verify=False, order=None, reverse=None):
+    """Function to return a list of interface's canonical name (fully expanded name).
+
+    Use of explicit matches used to indicate a clear understanding on any potential
+    match. Regex and other looser matching methods were not implmented to avoid false
+    positive matches. As an example, it would make sense to do "[P|p][O|o]" which would
+    incorrectly match PO = POS and Po = Port-channel, leading to a false positive, not
+    easily troubleshot, found, or known.
+
+    Args:
+        interfaces (list): List of interfaces you are attempting to expand.
+        addl_name_map (dict, optional): A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
+        verify (bool, optional): Whether or not to verify the interface matches a known interface standard. Defaults to False.
+        order (str, optional): Determines what order the list of interfaces should be returned in. Defaults to None.
+        reverse (bool, optional): Specify if the order of the list should be reversed when setting an order. Defaults to None.
+
+    Returns:
+        list: List of the interfaces in their long form.
+
+    Raises:
+        ValueError: Raised if any interface name in list cannot be converted to its long form and verify parameter is set to true.
+
+    Example:
+        >>> from netutils.interface import canonical_interface_name_list
+        >>> canonical_interface_name_list(["Gi1/0/1", "Gi1/0/2", "Eth1"])
+        ['GigabitEthernet1/0/1', 'GigabitEthernet1/0/2', 'Ethernet1']
+        >>> canonical_interface_name_list(["Gi1/0/1", "Po40", "Lo10"])
+        ['GigabitEthernet1/0/1', 'Port-channel40', 'Loopback10']
+        >>>
+    """
+    name_map = {}
+    name_map.update(BASE_INTERFACES)
+    canonical_interface_list = []
+    no_match_list = []
+
+    if reverse and not order:
+        raise ValueError("Order must be set to use reverse.")
+
+    if order:
+        _check_order_option_exists(order)
+
+    for interface in interfaces:
+        canonical_interface_list.append(canonical_interface_name(interface, addl_name_map=addl_name_map))
+        if interface == canonical_interface_name(interface):
+            no_match_list.append(interface)
+
+    if verify:
+        no_match_string = ", ".join(no_match_list)
+        raise ValueError(f"Verify interface on and no match found for {no_match_string}")
+
+    if order:
+        canonical_interface_list = INTERFACE_LIST_ORDERING_OPTIONS.get(order)(canonical_interface_list)
+
+    if reverse:
+        canonical_interface_list = _reverse_list(canonical_interface_list)
+
+    return canonical_interface_list
+
+
 def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=None, verify=False):
     """Function to return an abbreviated representation of the interface name.
 
@@ -177,7 +237,294 @@ def abbreviated_interface_name(interface, addl_name_map=None, addl_reverse_map=N
     return interface
 
 
-def interface_range_compress(*interfaces: str) -> List[str]:  # pylint: disable=R0912,R0915
+@total_ordering
+class CharacterClass(ABC):
+    """CharacterClass embodies the state needed to sort interfaces."""
+
+    def __init__(self, val: str, terminal: bool = False) -> None:  # noqa: D107
+        self.val = val
+        self._terminal = terminal
+        super().__init__()
+
+    @abstractmethod
+    def __lt__(self, other) -> bool:  # noqa: D105
+        ...
+
+    def __eq__(self, other) -> bool:  # noqa: D105
+        return self.weight == other.weight and self.val == other.val
+
+    @abstractproperty
+    def weight(self) -> int:
+        """Weight property."""
+        ...
+
+    @property
+    def terminal(self):
+        """Flag whether a node is terminal."""
+        return self._terminal
+
+    @terminal.setter
+    def terminal(self, val: bool) -> None:
+        """This is a one-way switch to prevent overwriting a terminal node."""
+        if not self._terminal:
+            self._terminal = val
+
+    def __str__(self) -> str:  # noqa: D105
+        return str(self.val)
+
+    def __hash__(self) -> int:  # noqa: D105
+        return self.val.__hash__()
+
+
+class CCString(CharacterClass):
+    """Strings are sorted lexicographically."""
+
+    def __lt__(self, other) -> bool:  # noqa: D105
+        return self.weight < other.weight or self.val < other.val
+
+    def __repr__(self) -> str:  # noqa: D105
+        return f'CCString("{self.val}", {self.terminal})'
+
+    @property
+    def weight(self) -> int:  # noqa: D107,D102
+        return 10
+
+
+class CCInt(CharacterClass):
+    """Ints must be sorted canonically because '11' < '5'."""
+
+    def __lt__(self, other) -> bool:  # noqa: D105
+        return self.weight < other.weight or int(self.val) < int(other.val)
+
+    def __repr__(self) -> str:  # noqa: D105
+        return f"CCInt({self.val}, {self.terminal})"
+
+    @property
+    def weight(self) -> int:  # noqa: D107,D102
+        return 20
+
+
+class CCSeparator(CharacterClass):
+    """Separators require custom logic, so we sort them by arbitrary weight."""
+
+    weights: t.Dict[str, int] = {".": 10, "/": 20}
+
+    def __lt__(self, other) -> bool:  # noqa: D105
+        return self.weight < other.weight or self.weights.get(self.val, 0) < self.weights.get(other.val, 0)
+
+    def __repr__(self) -> str:  # noqa: D105
+        return f'CCSeparator("{self.val}", {self.terminal})'
+
+    @property
+    def weight(self) -> int:  # noqa: D102
+        return 30
+
+
+def _CCfail(*args):  # pylint: disable=C0103
+    """Helper to raise an exception on a bad character match."""
+    raise ValueError(f"unknown character '{args[0][0]}'.")
+
+
+def _split_interface_tuple(interface: str) -> t.Tuple[CharacterClass, ...]:
+    """Parser-combinator hack, keeping dependencies light."""
+    idx = 0
+    # we mutate tail's reference, so mypy needs help
+    tail: t.Tuple[CharacterClass, ...] = ()
+    regexes = [
+        (r"[a-zA-Z\-]", CCString),
+        (r"[0-9]", CCInt),
+        (r"[./]", CCSeparator),
+        # Fallthrough case, keep it at the end!
+        (r".*", _CCfail),
+    ]
+    while idx < len(interface):
+        for regex, cls in regexes:
+            part = ""
+            while idx < len(interface) and re.match(regex, interface[idx]):
+                part += interface[idx]
+                idx += 1
+            if part and idx == len(interface):
+                tail = (*tail, cls(part, True))
+                break
+            if part:
+                tail = (*tail, cls(part))
+                break
+    return tail
+
+
+def _reverse_list(interface_list):
+    """Reverses an alphabetical list of interfaces.
+
+    Args:
+        interface_list (list): Alphabetically sorted list of interfaces.
+    """
+    # Convert interface name into Tuple of : Text, Int and Separator
+    split_intf = re.compile(r"([^\W0-9]+|[0-9]+|\W)")
+    mytuple = [tuple(split_intf.findall(intf)) for intf in interface_list]
+
+    # Sort the list of tuple
+    mytuple.sort(key=itemgetter(0), reverse=True)
+
+    return ["".join(x) for x in mytuple]
+
+
+def _insert_nodes(node: t.Dict[CharacterClass, t.Any], values: t.Tuple[CharacterClass, ...]) -> None:
+    """Recursively updates a tree from a list of values.
+
+    This function mutates the node dict in place.  A terminal value needs to be
+    preserved from overwrites, hence the one-way switch in CharacterClass.  These
+    classes are compared only by weight and value, so dict updates are a little tricky.
+    We need to pop the key and add a new pointer, or `terminal` will not be updated
+    in the new entry.
+    """
+    if not values:
+        return
+    key = values[0]
+    if key not in node:
+        node[key] = {}
+    if not values[1:]:  # This is the last node
+        val = node[key]
+        key.terminal = True
+        node.pop(key)
+        node[key] = val
+    _insert_nodes(node[key], values[1:])
+
+
+def _iter_tree(node: t.Dict[CharacterClass, t.Any], parents: t.List[CharacterClass]) -> t.Generator[str, None, None]:
+    """Walk a tree of interface name parts.
+
+    Weights are assigned based on domain logic to produce a
+    'cannonical' ordering of names.
+    """
+    for _, items in itertools.groupby(sorted(node.keys()), lambda t: t.weight):
+        for item in sorted(items):
+            if item.terminal:
+                yield "".join(map(str, parents + [item]))
+            parents.append(item)
+            yield from _iter_tree(node[item], list(parents))
+            parents.pop()
+
+
+def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
+    """This function sorts and cleans a list of interfaces.
+
+    Note that a new list of interfaces is returned and that duplicates
+    nodes are removed.
+
+    Args:
+        interfaces (list[str]): A list of interfaces to be sorted.  The input list is not mutated by this function.
+
+    Returns:
+        list[str]: A **new** sorted, unique list elements from the input.
+
+    Example:
+        >>> sort_interface_list(["Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Gi2/0/2", "Po40", "Po160", "Lo10"])
+        ['Gi1/0/1', 'Gi1/0/2', 'Gi1/0/2.50', 'Gi1/0/3', 'Gi1/0/3.100', 'Gi2/0/2', 'Lo10', 'Po40', 'Po160']
+        >>> sort_interface_list(['GigabitEthernet1/0/1', 'GigabitEthernet1/0/3', 'GigabitEthernet1/0/2', "GigabitEthernett3/0/5", 'GigabitEthernet3/0/7', 'GigabitEthernet2/0/8.5',  'Port-channel40', 'Vlan20', 'Loopback10'])
+        ['GigabitEthernet1/0/1', 'GigabitEthernet1/0/2', 'GigabitEthernet1/0/3', 'GigabitEthernet2/0/8.5', 'GigabitEthernet3/0/7', 'GigabitEthernett3/0/5', 'Loopback10', 'Port-channel40', 'Vlan20']
+    """
+    root: t.Dict[CharacterClass, t.Any] = {}
+    for ifname in interfaces:
+        _insert_nodes(root, _split_interface_tuple(ifname))
+    return list(_iter_tree(root, []))
+
+
+INTERFACE_LIST_ORDERING_OPTIONS = {"alphabetical": sort_interface_list}
+
+
+def abbreviated_interface_name_list(  # pylint: disable=R0913, R0914
+    interfaces, addl_name_map=None, addl_reverse_map=None, verify=False, order=None, reverse=None
+):
+    """Function to return a list of interface's abbreviated name.
+
+    Args:
+        interfaces (list): List of interface names you are attempting to abbreviate.
+        addl_name_map (dict, optional): A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
+        addl_reverse_map (dict, optional): A dict containing key/value pairs that updates the abbreviated mapping. Defaults to None.
+        verify (bool, optional): Whether or not to verify the interface matches a known interface standard. Defaults to False.
+        order (str, optional): Determines what order the list of interfaces should be returned in. Defaults to None.
+        reverse (bool, optional): Specify if the order of the list should be reversed when setting an order. Defaults to None.
+
+    Returns:
+        list: List of the interfaces in their abbreviated form.
+
+    Raises:
+        ValueError: Raised if any interface name in list cannot be converted to its abbreviated form and verify parameter is set to true.
+
+    Example:
+        >>> from netutils.interface import abbreviated_interface_name_list
+        >>> abbreviated_interface_name_list(["GigabitEthernet1/0/1", "GigabitEthernet1/0/2", "Ethernet1"])
+        ['Gi1/0/1', 'Gi1/0/2', 'Et1']
+        >>> abbreviated_interface_name_list(['GigabitEthernet1/0/1', 'Port-channel40', 'Loopback10'])
+        ['Gi1/0/1', 'Po40', 'Lo10']
+        >>>
+    """
+    name_map = {}
+    name_map.update(BASE_INTERFACES)
+    abbreviated_interface_list = []
+    no_match_list = []
+
+    if reverse and not order:
+        raise ValueError("Order must be set to use reverse.")
+
+    if order:
+        _check_order_option_exists(order)
+
+    if isinstance(addl_name_map, dict):
+        name_map.update(addl_name_map)
+
+    rev_name_map = {}
+    rev_name_map.update(REVERSE_MAPPING)
+
+    if isinstance(addl_reverse_map, dict):
+        rev_name_map.update(addl_reverse_map)
+
+    for interface in interfaces:
+        interface_type, interface_number = split_interface(interface)
+        # Try to ensure canonical type.
+        if name_map.get(interface_type):
+            canonical_type = name_map.get(interface_type)
+        else:
+            canonical_type = interface_type
+
+        try:
+            abbreviated_name = rev_name_map[canonical_type] + str(interface_number)
+            abbreviated_interface_list.append(abbreviated_name)
+        except KeyError:
+            abbreviated_interface_list.append(interface)
+            no_match_list.append(interface)
+
+    if verify:
+        no_match_string = ", ".join(no_match_list)
+        raise ValueError(f"Verify interface on and no match found for {no_match_string}")
+
+    if order:
+        abbreviated_interface_list = INTERFACE_LIST_ORDERING_OPTIONS.get(order)(abbreviated_interface_list)
+
+    if reverse:
+        abbreviated_interface_list = _reverse_list(abbreviated_interface_list)
+
+    return abbreviated_interface_list
+
+
+def _check_order_option_exists(order):
+    """Check if the given order for an interface list exists.
+
+    Args:
+        order (str): Requested ordering of the interface list.
+
+    Raises:
+        ValueError: Raised the given order is not a proper ordering type.
+    """
+    if order not in INTERFACE_LIST_ORDERING_OPTIONS.keys():
+        raise ValueError(f"{order} is not one of the supported orderings")
+
+
+def _ranges_in_list(numbers: t.List[int]):
+    return [list(map(itemgetter(1), g)) for k, g in itertools.groupby(enumerate(numbers), lambda x: x[0] - x[1])]
+
+
+def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
     """Function which takes interfaces and return interface ranges.
 
     Whitespace and special characters are ignored in the input. Input must contain only interfaces,
@@ -185,114 +532,32 @@ def interface_range_compress(*interfaces: str) -> List[str]:  # pylint: disable=
     Subinterface separator is `/` and maximum depth is 4!
 
     Example:
-        >>> interface_range_compress("Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/5")
+        >>> interface_range_compress(["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/5]")
         ['Gi1/0/1-3', 'Gi1/0/5']
 
     Args:
-        interfaces: interfaces in a line or in a list of lines
+        interface_list: interfaces in a line or in a list of lines
 
     Returns:
         list: list of interface ranges
     """
-    Port = namedtuple("Port", ["iface_name", "module1", "module2", "module3", "module4"])
-    # pylint: disable=W0105
-    """Port type which contains the interface name and submodules/ports.
-
-    iface_name: str - name of interface (Gi, Fa, etc..)
-    module1..4: int - number of submoduled or port. -1 indicates that it is not part of the
-                      interface
-                      4 module depth is supported which should cover most cases.
-    """
-
-    def assemble_port(port_in: Port):
-        """Assemble exploded port_in.
-
-        Separator is `/`. -1 value means that value is not used.
-        Only physical ports are supported.
-
-        Example:
-            Gi, 1, 0, 1, -1 will become: Gi1/0/1
-
-        Args:
-            port_in: tuple of port name and fex, chasses, module, interface numbers
-
-        Returns:
-            string of assembled interface
-        """
-        out = port_in.iface_name
-        for idx, module in enumerate(port_in[1:]):
-            if module >= 0 and idx == 0:
-                out += str(module)
-            elif module >= 0:
-                out += f"/{str(module)}"
-        return out
-
-    ports = []  # collect exploded interfaces
-    # case insensitive port parsing. We do a hard assumption that we only have ports in the input.
-    output = []
-    if interfaces is None:
-        return []
-    # read all lines and explode all interfaces as preparation for sorting
-    for line in interfaces:
-        matches = re.findall(r"(?i)([a-z]+)([0-9]+)(?:/([0-9]+))?(?:/([0-9]+))?(?:/([0-9]+))?(?!/)", line)
-        for match in matches:
-            ports.append(
-                Port(
-                    iface_name=match[0],
-                    module1=int(match[1]) if len(match[1]) > 0 else -1,
-                    module2=int(match[2]) if len(match[2]) > 0 else -1,
-                    module3=int(match[3]) if len(match[3]) > 0 else -1,
-                    module4=int(match[4]) if len(match[4]) > 0 else -1,
-                )
-            )
-    # sort exploded interface data in order to prepare for finding ranges
-    ports = sorted(ports, key=itemgetter(0, 1, 2, 3, 4))  # Sort interfaces
-    if not ports:  # could not read interfaces from input
-        return []
-    range_start = ports[0]  # contains interface range start (Gi0/0)
-    current_port = range_start
-    last_port_index = 1
-    outline = assemble_port(range_start)
-    range_size = 0
-    for port in ports[1:]:
-        if range_start[0] != port[0]:  # check if interface name changed
-            if range_size > 0:  # we had a range before
-                outline += "-%d" % current_port[last_port_index]
-                range_size = 0
-                output.append(outline)
-                outline = assemble_port(port)
-            range_start = port
-            current_port = port
-            continue  # move ahead for next port
-        for port_index in range(1, 5):  # find last port index and check if it is part of a range
-            if current_port[port_index] == port[port_index]:
-                pass
-            # check if we found a subsequent interface number (we are at max supported depth)
-            elif port[port_index] == (current_port[port_index] + 1) and port_index == 4:
-                range_size += 1
-                current_port = port
-                last_port_index = port_index
-                break
-            # check if we found a subsequent interface number
-            elif (
-                port[port_index] == (current_port[port_index] + 1)
-                and port[port_index + 1] < 0
-                and current_port[port_index + 1] < 0
-            ):
-                range_size += 1
-                current_port = port
-                last_port_index = port_index
-                break
-            else:  # new range starting
-                if range_size > 0:  # finish previous range
-                    outline += "-%d" % current_port[last_port_index]
-                    range_size = 0
-                output.append(outline)
-                outline = assemble_port(port)
-                range_start = port
-                current_port = port
-                break  # move ahead for next port
-    if range_size > 0:  # finish previous range
-        outline += "-%d" % current_port[last_port_index]
-    output.append(outline)
-    return output
+    result_dict = {}
+    final_result_list = []
+    sorted_ints = [_split_interface_tuple(x) for x in sort_interface_list(interface_list)]
+    current_match = sorted_ints[0][0:-1]
+    for interface in sorted_ints:
+        if interface[0:-1] == current_match:
+            module = "".join([x.val for x in current_match])
+            if result_dict.get(module):
+                result_dict[module] += [int(interface[-1].val)]
+            else:
+                result_dict[module] = [int(interface[-1].val)]
+        else:
+            current_match = interface[0:-1]
+            result_dict["".join([x.val for x in current_match])] = [int(interface[-1].val)]
+    for module, ports in result_dict.items():
+        # find ranges in this port list
+        ranges = _ranges_in_list(ports)
+        # assemble module and port ranges
+        [final_result_list.append(f'{module}{r[0]}'+(f'-{r[-1]}' if len(r) > 1 else '')) for r in ranges]
+    return final_result_list
