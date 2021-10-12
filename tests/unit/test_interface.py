@@ -481,7 +481,7 @@ INTERFACE_RANGE_COMPRESS = [
             "Gi152/2/0/5",
         ],
         "received": ["Gi152/1/0/2-6", "Gi152/2/0/1-3", "Gi152/2/0/5"],
-    }
+    },
 ]
 
 
@@ -553,7 +553,8 @@ def test_interface_range_expansion(data):
 
 @pytest.mark.parametrize("data", INTERFACE_RANGE_COMPRESS)
 def test_interface_range_compress(data):
-    assert interface.interface_range_compress(*data["sent"]) == data["received"]
+    assert interface.interface_range_compress(data["sent"]) == data["received"]
+
 
 @pytest.mark.parametrize("data", BAD_INTERFACE_NAMES)
 def test_split_interface_tuple_fails(data):

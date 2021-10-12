@@ -532,7 +532,7 @@ def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
     Subinterface separator is `/` and maximum depth is 4!
 
     Example:
-        >>> interface_range_compress(["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/5]")
+        >>> interface_range_compress(["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/5"])
         ['Gi1/0/1-3', 'Gi1/0/5']
 
     Args:
@@ -544,6 +544,8 @@ def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
     result_dict = {}
     final_result_list = []
     sorted_ints = [_split_interface_tuple(x) for x in sort_interface_list(interface_list)]
+    if not sorted_ints:
+        return []
     current_match = sorted_ints[0][0:-1]
     for interface in sorted_ints:
         if interface[0:-1] == current_match:
@@ -559,5 +561,7 @@ def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
         # find ranges in this port list
         ranges = _ranges_in_list(ports)
         # assemble module and port ranges
-        [final_result_list.append(f'{module}{r[0]}'+(f'-{r[-1]}' if len(r) > 1 else '')) for r in ranges]
+        [
+            final_result_list.append(f"{module}{r[0]}" + (f"-{r[-1]}" if len(r) > 1 else "")) for r in ranges
+        ]  # pylint: disable=expression-not-assigned
     return final_result_list
