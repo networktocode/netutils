@@ -31,7 +31,7 @@ def longest_prefix_match(ip_addr, routes):
     if isinstance(ip_addr, str):
         ip_addr = ipaddress.ip_address(ip_addr)
     else:
-        if not isinstance(ipaddress.ip_address, ip_addr):
+        if not isinstance(ip_addr, (ipaddress.IPv4Address, ipaddress.IPv6Address)):
             raise TypeError(f"'ip_addr' should be a str, got {type(ip_addr)}")
 
     networks = [

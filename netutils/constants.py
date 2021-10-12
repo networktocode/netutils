@@ -1,4 +1,11 @@
 """Constant definitions used in project."""
+import json
+from os.path import dirname
+from netutils import __file__ as netutils_file
+
+# Load the PROTOCOLS json file.
+with open("/".join([dirname(netutils_file), "protocols.json"])) as f:
+    PROTOCOLS = json.loads(f.read())
 
 # This variable provides mapping for known interface variants, to the associated long form.
 BASE_INTERFACES = {

@@ -3,8 +3,6 @@
 stages:
   - name: "lint"
   - name: "test"
-  - name: "verify_pypi_release"
-    if: "tag IS present"
   - name: "deploy_github"
     if: "tag IS present"
   - name: "deploy_pypi"
@@ -45,14 +43,6 @@ jobs:
         - "invoke flake8"
         - "invoke yamllint"
         - "invoke pylint"
-    - stage: "verify_pypi_release"
-      before_script:
-        - "pip install --upgrade pip"
-        - "pip install invoke poetry toml"
-        - "poetry config virtualenvs.create false"
-        - "poetry install --no-interaction"
-      script:
-        - "invoke check-pypi-version"
     - stage: "deploy_github"
       before_script:
         - "pip install --upgrade pip"
