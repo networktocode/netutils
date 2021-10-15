@@ -546,6 +546,8 @@ def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
     Example:
         >>> interface_range_compress(["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/5"])
         ['Gi1/0/1-3', 'Gi1/0/5']
+        >>> interface_range_compress(["Gi0/1", "Gi0/2", "Gi0/4", "Gi1/0", "Gi1/1"])
+        ['Gi0/1-2', 'Gi0/4', 'Gi1/0-1']
 
     Args:
         interface_list: list of interfaces
@@ -573,7 +575,9 @@ def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
         # find ranges in this port list
         ranges = _ranges_in_list(ports)
         # assemble module and port ranges
-        [  # pylint: disable=expression-not-assigned
-            final_result_list.append(f"{module}{r[0]}" + (f"-{r[-1]}" if len(r) > 1 else "")) for r in ranges
-        ]
+        for range_group in ranges:
+            if len(range_group) > 1:
+                final_result_list.append(f"{module}{range_group[0]}-{range_group[-1]}")
+            else:
+                final_result_list.append(f"{module}{range_group[0]}")
     return final_result_list
