@@ -5,7 +5,6 @@ import typing as t
 from abc import ABC, abstractmethod, abstractproperty
 from functools import total_ordering
 from operator import itemgetter
-
 from .constants import BASE_INTERFACES, REVERSE_MAPPING
 
 
@@ -519,3 +518,66 @@ def _check_order_option_exists(order):
     """
     if order not in INTERFACE_LIST_ORDERING_OPTIONS.keys():
         raise ValueError(f"{order} is not one of the supported orderings")
+
+
+def _ranges_in_list(numbers: t.List[int]):
+    """Find contiguous ranges in a list of numbers.
+
+    Example:
+        >>> _ranges_in_list([1, 2, 3, 5, 6, 8])
+        [[1, 2, 3], [5, 6], [8]]
+
+    Args:
+        numbers: list of numbers
+
+    Returns:
+        list: list of ranges in input
+    """
+    return [list(map(itemgetter(1), g)) for k, g in itertools.groupby(enumerate(numbers), lambda x: x[0] - x[1])]
+
+
+def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
+    """Function which takes interfaces and return interface ranges.
+
+    Whitespace and special characters are ignored in the input. Input must contain only interfaces,
+    there is no check against correct interface names! Also interface names must use the same abbreviation!
+    E.g. Gi =! GigabitEthernet
+
+    Example:
+        >>> interface_range_compress(["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/5"])
+        ['Gi1/0/1-3', 'Gi1/0/5']
+        >>> interface_range_compress(["Gi0/1", "Gi0/2", "Gi0/4", "Gi1/0", "Gi1/1"])
+        ['Gi0/1-2', 'Gi0/4', 'Gi1/0-1']
+
+    Args:
+        interface_list: list of interfaces
+
+    Returns:
+        list: list of interface ranges
+    """
+    result_dict = {}
+    final_result_list = []
+    sorted_ints = [_split_interface_tuple(x) for x in sort_interface_list(interface_list)]
+    if not sorted_ints:
+        return []
+    current_match = sorted_ints[0][0:-1]
+    for interface in sorted_ints:
+        if interface[0:-1] == current_match:
+            module = "".join([x.val for x in current_match])
+            if result_dict.get(module):
+                result_dict[module] += [int(interface[-1].val)]
+            else:
+                result_dict[module] = [int(interface[-1].val)]
+        else:
+            current_match = interface[0:-1]
+            result_dict["".join([x.val for x in current_match])] = [int(interface[-1].val)]
+    for module, ports in result_dict.items():
+        # find ranges in this port list
+        ranges = _ranges_in_list(ports)
+        # assemble module and port ranges
+        for range_group in ranges:
+            if len(range_group) > 1:
+                final_result_list.append(f"{module}{range_group[0]}-{range_group[-1]}")
+            else:
+                final_result_list.append(f"{module}{range_group[0]}")
+    return final_result_list
