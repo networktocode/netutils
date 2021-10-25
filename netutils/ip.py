@@ -52,10 +52,11 @@ def ip_to_bin(ip):
     Example:
         >>> from netutils.ip import ip_to_bin
         >>> ip_to_bin("10.100.100.100")
-        '1010011001000110010001100100'
+        '00001010011001000110010001100100'
         >>>
     """
-    return bin(int(ipaddress.ip_address(ip)))[2:]
+    ip_obj = ipaddress.ip_address(ip)
+    return bin(int(ip_obj))[2:].zfill(ip_obj.max_prefixlen)
 
 
 def ip_subtract(ip, val):
