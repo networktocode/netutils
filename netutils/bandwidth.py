@@ -2,6 +2,27 @@
 import re
 
 
+BITS_MAPPING = {}
+_bits_value = 0
+for bit in ["bps", "Kbps", "Mbps", "Gbps", "Tbps", "Pbps", "Ebps", "Zbps"]:
+    BITS_MAPPING[bit] = {"low": _bits_value}
+    if _bits_value == 0:
+        _bits_value = 1000
+    else:
+        _bits_value = _bits_value * 1000
+    BITS_MAPPING[bit]["high"] = _bits_value
+
+BYTES_MAPPING = {}
+_bytes_value = 0
+for bit in ["Bps", "KBps", "MBps", "GBps", "TBps", "PBps", "EBps", "ZBps"]:
+    BYTES_MAPPING[bit] = {"low": _bytes_value}
+    if _bytes_value == 0:
+        _bytes_value = 8000
+    else:
+        _bytes_value = _bytes_value * 1000
+    BYTES_MAPPING[bit]["high"] = _bytes_value
+
+
 def bps_to_kbps(speed: int) -> float:
     """Method to convert `speed` from bps to Kbps value.
 
@@ -411,11 +432,11 @@ def name_to_bits(speed: str) -> int:
     Returns:
         int: int value of bandwidth to be converted to bps
     """
-    if re.search("[mM]bps", speed):
-        _value = name_to_kbits(speed) * 1000
-    if re.search("[gG]bps", speed):
-        _value = name_to_kbits(speed) * 1000000
-    return _value
+    match = re.match(r"(\d+)([A-Z]bps)", speed)
+    if not match:
+        raise ValueError(f"Speed of {speed} was not a valid speed representation.")
+    bit_speed, bit_name = match.groups()
+    return int(bit_speed) * BITS_MAPPING[bit_name]["low"]
 
 
 def name_to_kbytes(speed: str) -> float:
@@ -443,13 +464,11 @@ def name_to_bytes(speed: str) -> float:
     Returns:
         int: int value of bandwidth to be converted to Bps
     """
-    if re.search("[mM]Bps", speed):
-        _value = mbps_to_kbytes(float(re.sub("[mM]Bps", "", speed)))
-    if re.search("[gG]Bps", speed):
-        _value = gbps_to_kbytes(float(re.sub("[gG]Bps", "", speed)))
-    if re.search("[tT]Bps", speed):
-        _value = tbps_to_kbytes(float(re.sub("[tT]Bps", "", speed)))
-    return _value
+    match = re.match(r"(\d+)([A-Z]Bps)", speed)
+    if not match:
+        raise ValueError(f"Speed of {speed} was not a valid speed representation.")
+    bit_speed, bit_name = match.groups()
+    return (int(bit_speed) * BYTES_MAPPING[bit_name]["low"]) / 8
 
 
 def kbits_to_name(speed: int, nbr_decimal: int = 0) -> str:  # pylint: disable=too-many-branches
@@ -501,34 +520,15 @@ def bits_to_name(  # pylint: disable=too-many-branches,too-many-return-statement
         str: Name value for speed in bits
     """
     if not isinstance(speed, int):
-        return None
+        raise ValueError(f"Speed of {speed} was not a valid speed integer.")
 
-    if speed < 1000:
-        return f"{speed}bps"
-    if 1000 <= speed < 1000000:
-        if nbr_decimal == 0:
-            results = f"{round(bps_to_kbps(speed))}Kbps"
-        else:
-            results = f"{round(bps_to_kbps(speed), nbr_decimal)}Kbps"
-        return results
-    if 1000000 <= speed < 100000000:
-        if nbr_decimal == 0:
-            results = f"{round(bps_to_mbps(speed))}Mbps"
-        else:
-            results = f"{round(bps_to_mbps(speed), nbr_decimal)}Mbps"
-        return results
-    if 100000000 <= speed < 100000000000:
-        if nbr_decimal == 0:
-            results = f"{round(bps_to_gbps(speed))}Gbps"
-        else:
-            results = f"{round(bps_to_gbps(speed), nbr_decimal)}Gbps"
-        return results
-    if speed >= 100000000000:
-        if nbr_decimal == 0:
-            results = f"{round(bps_to_tbps(speed))}Tbps"
-        else:
-            results = f"{round(bps_to_tbps(speed), nbr_decimal)}Tbps"
-        return results
+    byte_speed = speed * 8
+    for bit_type, val in BYTES_MAPPING.items():
+        if val["low"] <= speed < val["high"]:
+            try:
+                return f"{round(byte_speed / val['low'], nbr_decimal)}{bit_type}"
+            except ZeroDivisionError:
+                return f"{round(byte_speed, nbr_decimal)}{bit_type}"
     return None
 
 
@@ -542,28 +542,48 @@ def bytes_to_name(speed: int, nbr_decimal: int = 0) -> str:
     Returns:
         str: Name value for speed in bytes
     """
-    if speed <= 8000:
-        if nbr_decimal == 0:
-            result = f"{round(bps_to_kbytes(speed))}KBps"
-        else:
-            result = f"{round(bps_to_kbytes(speed), nbr_decimal)}KBps"
-        return result
-    if speed <= 8000000:
-        if nbr_decimal == 0:
-            result = f"{round(bps_to_mbytes(speed))}MBps"
-        else:
-            result = f"{round(bps_to_mbytes(speed), nbr_decimal)}MBps"
-        return result
-    if speed <= 8000000000:
-        if nbr_decimal == 0:
-            result = f"{round(bps_to_gbytes(speed))}GBps"
-        else:
-            result = f"{round(bps_to_gbytes(speed), nbr_decimal)}GBps"
-        return result
-    if speed <= 8000000000000:
-        if nbr_decimal == 0:
-            result = f"{round(bps_to_tbytes(speed))}TBps"
-        else:
-            result = f"{round(bps_to_tbytes(speed), nbr_decimal)}TBps"
-        return result
+    if not isinstance(speed, int):
+        raise ValueError(f"Speed of {speed} was not a valid speed integer.")
+
+    for bit_type, val in BITS_MAPPING.items():
+        if val["low"] <= speed < val["high"]:
+            try:
+                return f"{round(speed / val['low'], nbr_decimal)}{bit_type}"
+            except ZeroDivisionError:
+                return f"{round(speed, nbr_decimal)}{bit_type}"
     return None
+
+
+def name_to_name(speed: str, speed_type: str, nbr_decimal: int = 0) -> str:
+    """Method to convert a short bandwidth name to another bandwdth name.
+
+    Args:
+        speed (str): Bandwidth to be converted like `100GBps`.
+        speed_type (str): Name to convert the bandwdth to like `MBps`.
+        nbr_decimal (int, optional): Precision of end result, ie number of decimal points to round to. Defaults to 0.
+
+    Returns:
+        str: The named value which user wishes to return to.
+    """
+    match = re.match(r"(\d+)([A-Z][b|B]ps)", speed)
+    if not match:
+        raise ValueError(f"Speed of {speed} was not a valid speed representation.")
+    _, name = match.groups()
+    # Find out if the `original` value is a bit or a byte
+    if name in BYTES_MAPPING.keys():
+        bit_value = name_to_bytes(speed) * 8
+    elif name in BITS_MAPPING.keys():
+        bit_value = name_to_bits(speed)
+    else:
+        raise ValueError(f"Speed of {speed} was not a valid speed representation.")
+
+    # Find out if the `expected` value is a bit or a byte
+    if speed_type in BYTES_MAPPING.keys():
+        bit_multiplier = BYTES_MAPPING[speed_type]["low"]
+    elif speed_type in BITS_MAPPING.keys():
+        bit_multiplier = BITS_MAPPING[speed_type]["low"]
+
+    try:
+        return f"{round(bit_value / bit_multiplier, nbr_decimal)}{speed_type}"
+    except ZeroDivisionError:
+        return f"{round(bit_value, nbr_decimal)}{speed_type}"
