@@ -3,24 +3,24 @@ import re
 
 
 BITS_MAPPING = {}
-_bits_value = 0
+BITS_VALUE = 0
 for bit in ["bps", "Kbps", "Mbps", "Gbps", "Tbps", "Pbps", "Ebps", "Zbps"]:
-    BITS_MAPPING[bit] = {"low": _bits_value}
-    if _bits_value == 0:
-        _bits_value = 1000
+    BITS_MAPPING[bit] = {"low": BITS_VALUE}
+    if BITS_VALUE == 0:
+        BITS_VALUE = 1000
     else:
-        _bits_value = _bits_value * 1000
-    BITS_MAPPING[bit]["high"] = _bits_value
+        BITS_VALUE = BITS_VALUE * 1000
+    BITS_MAPPING[bit]["high"] = BITS_VALUE
 
 BYTES_MAPPING = {}
-_bytes_value = 0
+BYTES_VALUE = 0
 for bit in ["Bps", "KBps", "MBps", "GBps", "TBps", "PBps", "EBps", "ZBps"]:
-    BYTES_MAPPING[bit] = {"low": _bytes_value}
-    if _bytes_value == 0:
-        _bytes_value = 8000
+    BYTES_MAPPING[bit] = {"low": BYTES_VALUE}
+    if BYTES_VALUE == 0:
+        BYTES_VALUE = 8000
     else:
-        _bytes_value = _bytes_value * 1000
-    BYTES_MAPPING[bit]["high"] = _bytes_value
+        BYTES_VALUE = BYTES_VALUE * 1000
+    BYTES_MAPPING[bit]["high"] = BYTES_VALUE
 
 
 def name_to_bits(speed: str) -> int:
