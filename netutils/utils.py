@@ -15,6 +15,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "is_fqdn_valid": "dns.is_fqdn_valid",
     "is_fqdn_resolvable": "dns.is_fqdn_resolvable",
     "interface_range_expansion": "interface.interface_range_expansion",
+    "interface_range_compress": "interface.interface_range_compress",
     "split_interface": "interface.split_interface",
     "canonical_interface_name": "interface.canonical_interface_name",
     "canonical_interface_name_list": "interface.canonical_interface_name_list",
