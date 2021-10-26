@@ -45,6 +45,7 @@ bits_to_name = [
     {"sent": {"speed": 1000000000, "nbr_decimal": 1}, "received": "1.0Gbps"},
     {"sent": {"speed": 1000000000000}, "received": "1.0Tbps"},
     {"sent": {"speed": 1000000000000, "nbr_decimal": 1}, "received": "1.0Tbps"},
+    {"sent": {"speed": -10}, "received": None},
 ]
 
 
@@ -75,6 +76,7 @@ bytes_to_name = [
     {"sent": {"speed": 1000000.0}, "received": "1000.0KBps"},
     {"sent": {"speed": 1000000000.0}, "received": "1000.0MBps"},
     {"sent": {"speed": 1000000000000.0}, "received": "1000.0GBps"},
+    {"sent": {"speed": -10.0}, "received": None},
 ]
 
 
