@@ -147,6 +147,8 @@ def name_to_name(speed: str, speed_type: str, nbr_decimal: int = 0) -> str:
         bit_multiplier = BYTES_MAPPING[speed_type]["low"]
     elif speed_type in BITS_MAPPING.keys():
         bit_multiplier = BITS_MAPPING[speed_type]["low"]
+    else:
+        raise ValueError(f"Speed type of {speed_type} was not a valid type.")
 
     try:
         return f"{round(bit_value / bit_multiplier, nbr_decimal)}{speed_type}"
