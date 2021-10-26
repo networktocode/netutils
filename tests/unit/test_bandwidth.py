@@ -24,6 +24,8 @@ name_to_bits_exceptions = [
     {"speed": "1 Qbps"},
     {"speed": "9"},
     {"speed": "bps"},
+    {"speed": 1.0},
+    {"speed": ("10Kbps",)},
 ]
 
 
@@ -56,6 +58,8 @@ bits_to_name_exceptions = [
     {"speed": "1 Qbps"},
     {"speed": "9"},
     {"speed": "bps"},
+    {"speed": 1.0},
+    {"speed": ("10Kbps",)},
 ]
 
 
@@ -119,6 +123,8 @@ name_to_bytes_exceptions = [
     {"speed": "1 QBps"},
     {"speed": "9"},
     {"speed": "Bps"},
+    {"speed": 1.0},
+    {"speed": ("10Kbps",)},
 ]
 
 
@@ -150,6 +156,9 @@ named_exceptions = [
     {"speed": "1 Qbps", "speed_type": "KBps"},
     {"speed": "9", "speed_type": "bps"},
     {"speed": "bps", "speed_type": "Mbps"},
+    {"speed": 10.0, "speed_type": "Mbps"},
+    {"speed": (10.0,), "speed_type": "Mbps"},
+    {"speed": 10, "speed_type": "Mbps"},
 ]
 
 
