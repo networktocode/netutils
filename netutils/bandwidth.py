@@ -30,29 +30,35 @@ def name_to_bits(speed: str) -> int:
         speed (str): Bandwidth to be converted like `100Gbps` to bps.
 
     Returns:
-        int: int value of bandwidth to be converted to bps
+        int: value of bandwidth to be converted to bps
     """
-    match = re.match(r"(\d+)([A-Z]bps)", speed)
+    if " " in speed:
+        match = re.match(r"([0-9.]+) ([A-Z]bps)", speed)
+    else:
+        match = re.match(r"([0-9.]+)([A-Z]bps)", speed)
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     bit_speed, bit_name = match.groups()
-    return int(bit_speed) * BITS_MAPPING[bit_name]["low"]
+    return int(float(bit_speed) * BITS_MAPPING[bit_name]["low"])
 
 
 def name_to_bytes(speed: str) -> float:
-    """Method to convert a short bandwidth name to int value in Bps.
+    """Method to convert a short bandwidth name to float value in Bps.
 
     Args:
         speed (str): Bandwidth to be converted like `100GBps` to Bps.
 
     Returns:
-        int: int value of bandwidth to be converted to Bps
+        float: value of bandwidth to be converted to Bps
     """
-    match = re.match(r"(\d+)([A-Z]Bps)", speed)
+    if " " in speed:
+        match = re.match(r"([0-9.]+) ([A-Z]Bps)", speed)
+    else:
+        match = re.match(r"([0-9.]+)([A-Z]Bps)", speed)
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     bit_speed, bit_name = match.groups()
-    return (int(bit_speed) * BYTES_MAPPING[bit_name]["low"]) / 8
+    return (float(bit_speed) * BYTES_MAPPING[bit_name]["low"]) / 8
 
 
 def bits_to_name(  # pylint: disable=too-many-branches,too-many-return-statements
@@ -70,17 +76,16 @@ def bits_to_name(  # pylint: disable=too-many-branches,too-many-return-statement
     if not isinstance(speed, int):
         raise ValueError(f"Speed of {speed} was not a valid speed integer.")
 
-    byte_speed = speed * 8
-    for bit_type, val in BYTES_MAPPING.items():
+    for bit_type, val in BITS_MAPPING.items():
         if val["low"] <= speed < val["high"]:
             try:
-                return f"{round(byte_speed / val['low'], nbr_decimal)}{bit_type}"
+                return f"{round(speed / val['low'], nbr_decimal)}{bit_type}"
             except ZeroDivisionError:
-                return f"{round(byte_speed, nbr_decimal)}{bit_type}"
+                return f"{round(speed, nbr_decimal)}{bit_type}"
     return None
 
 
-def bytes_to_name(speed: int, nbr_decimal: int = 0) -> str:
+def bytes_to_name(speed: float, nbr_decimal: int = 0) -> str:
     """Method to convert an int value for speed in bytes to the name value.
 
     Args:
@@ -90,15 +95,16 @@ def bytes_to_name(speed: int, nbr_decimal: int = 0) -> str:
     Returns:
         str: Name value for speed in bytes
     """
-    if not isinstance(speed, int):
-        raise ValueError(f"Speed of {speed} was not a valid speed integer.")
+    if not isinstance(speed, float):
+        raise ValueError(f"Speed of {speed} was not a valid speed.")
 
-    for bit_type, val in BITS_MAPPING.items():
+    byte_speed = speed * 8
+    for bit_type, val in BYTES_MAPPING.items():
         if val["low"] <= speed < val["high"]:
             try:
-                return f"{round(speed / val['low'], nbr_decimal)}{bit_type}"
+                return f"{round(byte_speed / val['low'], nbr_decimal)}{bit_type}"
             except ZeroDivisionError:
-                return f"{round(speed, nbr_decimal)}{bit_type}"
+                return f"{round(byte_speed, nbr_decimal)}{bit_type}"
     return None
 
 
@@ -113,7 +119,10 @@ def name_to_name(speed: str, speed_type: str, nbr_decimal: int = 0) -> str:
     Returns:
         str: The named value which user wishes to return to.
     """
-    match = re.match(r"(\d+)([A-Z][b|B]ps)", speed)
+    if " " in speed:
+        match = re.match(r"([0-9.]+) ([A-Z][bB]ps)", speed)
+    else:
+        match = re.match(r"([0-9.]+)([A-Z][bB]ps)", speed)
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     _, name = match.groups()
