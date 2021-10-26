@@ -71,3 +71,17 @@ name_to_name = [
 @pytest.mark.parametrize("data", name_to_name)
 def test_name_to_name(data):
     assert bandwidth.name_to_name(**data["sent"]) == data["received"]
+
+
+named_exceptions = [
+    {"speed": "1 Bbps", "speed_type": "Kbps"},
+    {"speed": "1 Qbps", "speed_type": "KBps"},
+    {"speed": "9", "speed_type": "bps"},
+    {"speed": "bps", "speed_type": "Mbps"},
+]
+
+
+@pytest.mark.parametrize("data", named_exceptions)
+def test_name_to_name_exceptions(data):
+    with pytest.raises(ValueError):
+        assert bandwidth.name_to_name(**data)
