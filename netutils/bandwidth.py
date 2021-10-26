@@ -46,10 +46,8 @@ def name_to_bits(speed: str) -> int:
     Returns:
         int: value of bandwidth to be converted to bps
     """
-    if " " in speed:
-        match = re.match(r"([0-9.]+) ([A-Z]bps)", speed)
-    else:
-        match = re.match(r"([0-9.]+)([A-Z]bps)", speed)
+    speed = speed.replace(" ", "")
+    match = re.match(r"([0-9.]+)([A-Z][bB]ps)", speed)
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     bit_speed, bit_name = match.groups()
@@ -65,10 +63,8 @@ def name_to_bytes(speed: str) -> float:
     Returns:
         float: value of bandwidth to be converted to Bps
     """
-    if " " in speed:
-        match = re.match(r"([0-9.]+) ([A-Z]Bps)", speed)
-    else:
-        match = re.match(r"([0-9.]+)([A-Z]Bps)", speed)
+    speed = speed.replace(" ", "")
+    match = re.match(r"([0-9.]+)([A-Z][bB]ps)", speed)
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     bit_speed, bit_name = match.groups()
@@ -133,10 +129,8 @@ def name_to_name(speed: str, speed_type: str, nbr_decimal: int = 0) -> str:
     Returns:
         str: The named value which user wishes to return to.
     """
-    if " " in speed:
-        match = re.match(r"([0-9.]+) ([A-Z][bB]ps)", speed)
-    else:
-        match = re.match(r"([0-9.]+)([A-Z][bB]ps)", speed)
+    speed = speed.replace(" ", "")
+    match = re.match(r"([0-9.]+)([A-Z][bB]ps)", speed)
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     _, name = match.groups()
