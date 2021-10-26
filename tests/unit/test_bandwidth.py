@@ -161,6 +161,8 @@ named_exceptions = [
     {"speed": 10.0, "speed_type": "Mbps"},
     {"speed": (10.0,), "speed_type": "Mbps"},
     {"speed": 10, "speed_type": "Mbps"},
+    {"speed": "-bps", "speed_type": "Mbps"},
+    {"speed": "10Mbps", "speed_type": "Qbps"},
 ]
 
 
