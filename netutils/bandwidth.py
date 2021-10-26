@@ -16,7 +16,6 @@ def _get_bits_mapping():
 
 
 BITS_MAPPING = _get_bits_mapping()
-
 BITS_VALUE = 0
 for bit in ["bps", "Kbps", "Mbps", "Gbps", "Tbps", "Pbps", "Ebps", "Zbps"]:
     BITS_MAPPING[bit] = {"low": BITS_VALUE}
@@ -51,6 +50,8 @@ def name_to_bits(speed: str) -> int:
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     bit_speed, bit_name = match.groups()
+    if bit_name not in BITS_MAPPING.keys():
+        raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     return int(float(bit_speed) * BITS_MAPPING[bit_name]["low"])
 
 
@@ -68,6 +69,8 @@ def name_to_bytes(speed: str) -> float:
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     bit_speed, bit_name = match.groups()
+    if bit_name not in BYTES_MAPPING.keys():
+        raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     return (float(bit_speed) * BYTES_MAPPING[bit_name]["low"]) / 8
 
 
