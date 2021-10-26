@@ -2,7 +2,21 @@
 import re
 
 
-BITS_MAPPING = {}
+def _get_bits_mapping():
+    bits_value = 0
+    bits_mapping = {}
+    for _bit in ["bps", "Kbps", "Mbps", "Gbps", "Tbps", "Pbps", "Ebps", "Zbps"]:
+        bits_mapping[_bit] = {"low": bits_value}
+        if bits_value == 0:
+            bits_value = 1000
+        else:
+            bits_value = bits_value * 1000
+        bits_mapping[_bit]["high"] = bits_value
+    return bits_mapping
+
+
+BITS_MAPPING = _get_bits_mapping()
+
 BITS_VALUE = 0
 for bit in ["bps", "Kbps", "Mbps", "Gbps", "Tbps", "Pbps", "Ebps", "Zbps"]:
     BITS_MAPPING[bit] = {"low": BITS_VALUE}
