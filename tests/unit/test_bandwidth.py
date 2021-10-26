@@ -19,6 +19,20 @@ def test_name_to_bits(data):
     assert bandwidth.name_to_bits(data["sent"]) == data["received"]
 
 
+name_to_bits_exceptions = [
+    {"speed": "1 Bbps"},
+    {"speed": "1 Qbps"},
+    {"speed": "9"},
+    {"speed": "bps"},
+]
+
+
+@pytest.mark.parametrize("data", name_to_bits_exceptions)
+def test_name_to_bits_exceptions(data):
+    with pytest.raises(ValueError):
+        assert bandwidth.name_to_bits(**data)
+
+
 bits_to_name = [
     {"sent": {"speed": 950}, "received": "950bps"},
     {"sent": {"speed": 1000}, "received": "1.0Kbps"},
@@ -35,6 +49,20 @@ bits_to_name = [
 @pytest.mark.parametrize("data", bits_to_name)
 def test_bits_to_name(data):
     assert bandwidth.bits_to_name(**data["sent"]) == data["received"]
+
+
+bits_to_name_exceptions = [
+    {"speed": "1 Bbps"},
+    {"speed": "1 Qbps"},
+    {"speed": "9"},
+    {"speed": "bps"},
+]
+
+
+@pytest.mark.parametrize("data", bits_to_name_exceptions)
+def test_bits_to_name_exceptions(data):
+    with pytest.raises(ValueError):
+        assert bandwidth.bits_to_name(**data)
 
 
 name_to_bytes = [
@@ -54,6 +82,20 @@ name_to_bytes = [
 @pytest.mark.parametrize("data", name_to_bytes)
 def test_name_to_bytes(data):
     assert bandwidth.name_to_bytes(data["sent"]) == data["received"]
+
+
+name_to_bytes_exceptions = [
+    {"speed": "1 BBps"},
+    {"speed": "1 QBps"},
+    {"speed": "9"},
+    {"speed": "Bps"},
+]
+
+
+@pytest.mark.parametrize("data", name_to_bytes_exceptions)
+def test_name_to_bytes_exceptions(data):
+    with pytest.raises(ValueError):
+        assert bandwidth.name_to_bytes(**data)
 
 
 name_to_name = [
