@@ -129,6 +129,8 @@ name_to_bytes_exceptions = [
     {"speed": "Bps"},
     {"speed": 1.0},
     {"speed": ("10Kbps",)},
+    {"speed": "1 bbps"},
+    {"speed": "kBps"},
 ]
 
 
@@ -165,6 +167,7 @@ named_exceptions = [
     {"speed": 10, "speed_type": "Mbps"},
     {"speed": "-bps", "speed_type": "Mbps"},
     {"speed": "10Mbps", "speed_type": "Qbps"},
+    {"speed": "10kBps", "speed_type": "Gbps"},
 ]
 
 
