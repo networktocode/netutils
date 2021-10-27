@@ -97,7 +97,7 @@ def bits_to_name(  # pylint: disable=too-many-branches,too-many-return-statement
                 return f"{round(speed / val['low'], nbr_decimal)}{bit_type}"
             except ZeroDivisionError:
                 return f"{round(speed, nbr_decimal)}{bit_type}"
-    return None
+    raise ValueError(f"Speed of {speed} was not a valid speed representation.")
 
 
 def bytes_to_name(speed: float, nbr_decimal: int = 0) -> str:
@@ -120,7 +120,7 @@ def bytes_to_name(speed: float, nbr_decimal: int = 0) -> str:
                 return f"{round(byte_speed / val['low'], nbr_decimal)}{bit_type}"
             except ZeroDivisionError:
                 return f"{round(byte_speed, nbr_decimal)}{bit_type}"
-    return None
+    raise ValueError(f"Speed of {speed} was not a valid speed representation.")
 
 
 def name_to_name(speed: str, speed_type: str, nbr_decimal: int = 0) -> str:
