@@ -53,7 +53,7 @@ def name_to_bits(speed: str) -> int:
     if bit_name in BITS_MAPPING.keys():
         return int(float(bit_speed) * BITS_MAPPING[bit_name]["low"])
     if bit_name in BYTES_MAPPING.keys():
-        return int(float(bit_speed) * BITS_MAPPING[bit_name]["low"]) * 8
+        return int(float(bit_speed) * BYTES_MAPPING[bit_name]["low"])
     raise ValueError(f"Speed of {speed} was not a valid speed representation.")
 
 
