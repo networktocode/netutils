@@ -51,6 +51,11 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "longest_prefix_match": "route.longest_prefix_match",
     "vlanlist_to_config": "vlan.vlanlist_to_config",
     "vlanconfig_to_list": "vlan.vlanconfig_to_list",
+    "name_to_bits": "bandwidth.name_to_bits",
+    "name_to_bytes": "bandwidth.name_to_bytes",
+    "bits_to_name": "bandwidth.bits_to_name",
+    "bytes_to_name": "bandwidth.bytes_to_name",
+    "name_to_name": "bandwidth.name_to_name",
 }
 
 
