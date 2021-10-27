@@ -62,6 +62,7 @@ bits_to_name_exceptions = [
     {"speed": 1.0},
     {"speed": ("10Kbps",)},
     {"speed": -10.0},
+    {"speed": 9999999999999999999999999999},
 ]
 
 
