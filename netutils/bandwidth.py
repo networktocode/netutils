@@ -42,6 +42,15 @@ def name_to_bits(speed: str) -> int:
 
     Returns:
         int: value of bandwidth to be converted to bps
+
+    Example:
+        >>> from netutils.bandwidth import name_to_bits
+        >>> name_to_bits("10Gbps")
+        10000000000
+        >>> name_to_bits("33.6Kbps")
+        33600
+        >>> name_to_bits("2.5Gbps")
+        2500000000
     """
     if not isinstance(speed, str):
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
@@ -65,6 +74,15 @@ def name_to_bytes(speed: str) -> float:
 
     Returns:
         float: value of bandwidth to be converted to Bps
+
+    Example:
+        >>> from netutils.bandwidth import name_to_bytes
+        >>> name_to_bytes("10Gbps")
+        1250000000.0
+        >>> name_to_bytes("100Mbps")
+        12500000.0
+        >>> name_to_bytes("100GBps")
+        100000000000.0
     """
     if not isinstance(speed, str):
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
@@ -91,6 +109,13 @@ def bits_to_name(  # pylint: disable=too-many-branches,too-many-return-statement
 
     Returns:
         str: Name value for speed in bits
+
+    Example:
+        >>> from netutils.bandwidth import bits_to_name
+        >>> bits_to_name(125000)
+        '125.0Kbps'
+        >>> bits_to_name(1000000000)
+        '1.0Gbps'
     """
     if not isinstance(speed, int):
         raise ValueError(f"Speed of {speed} was not a valid speed integer.")
@@ -113,6 +138,13 @@ def bytes_to_name(speed: float, nbr_decimal: int = 0) -> str:
 
     Returns:
         str: Name value for speed in bytes
+
+    Example:
+        >>> from netutils.bandwidth import bytes_to_name
+        >>> bytes_to_name(10000.0)
+        '10.0KBps'
+        >>> bytes_to_name(10000000.0)
+        '10.0MBps'
     """
     if not isinstance(speed, float):
         raise ValueError(f"Speed of {speed} was not a valid speed.")
@@ -137,6 +169,15 @@ def name_to_name(speed: str, speed_type: str, nbr_decimal: int = 0) -> str:
 
     Returns:
         str: The named value which user wishes to return to.
+
+    Example:
+        >>> from netutils.bandwidth import name_to_name
+        >>> name_to_name("10Gbps", "Kbps")
+        '10000000.0Kbps'
+        >>> name_to_name("10GBps", "Kbps")
+        '80000000.0Kbps'
+        >>> name_to_name("10KBps", "Gbps", 4)
+        '0.0001Gbps'
     """
     if not isinstance(speed, str):
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
