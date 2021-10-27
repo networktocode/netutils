@@ -50,9 +50,11 @@ def name_to_bits(speed: str) -> int:
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     bit_speed, bit_name = match.groups()
-    if bit_name not in BITS_MAPPING.keys():
-        raise ValueError(f"Speed of {speed} was not a valid speed representation.")
-    return int(float(bit_speed) * BITS_MAPPING[bit_name]["low"])
+    if bit_name in BITS_MAPPING.keys():
+        return int(float(bit_speed) * BITS_MAPPING[bit_name]["low"])
+    if bit_name in BYTES_MAPPING.keys():
+        return int(float(bit_speed) * BITS_MAPPING[bit_name]["low"]) * 8
+    raise ValueError(f"Speed of {speed} was not a valid speed representation.")
 
 
 def name_to_bytes(speed: str) -> float:
@@ -70,10 +72,12 @@ def name_to_bytes(speed: str) -> float:
     match = re.match(r"([0-9.]+)([A-Z]?[bB]ps)", speed)
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
-    bit_speed, bit_name = match.groups()
-    if bit_name not in BYTES_MAPPING.keys():
-        raise ValueError(f"Speed of {speed} was not a valid speed representation.")
-    return (float(bit_speed) * BYTES_MAPPING[bit_name]["low"]) / 8
+    byte_speed, byte_name = match.groups()
+    if byte_name in BYTES_MAPPING.keys():
+        return (float(byte_speed) * BYTES_MAPPING[byte_name]["low"]) / 8
+    if byte_name in BITS_MAPPING.keys():
+        return (float(byte_speed) * BITS_MAPPING[byte_name]["low"]) * 0.125
+    raise ValueError(f"Speed of {speed} was not a valid speed representation.")
 
 
 def bits_to_name(  # pylint: disable=too-many-branches,too-many-return-statements
