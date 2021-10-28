@@ -9,3 +9,9 @@ access-list 1 permit 10.10.20.20
 !
 ntp server 192.168.0.101
 ntp server 192.168.0.100
+!
+banner login ^
+******************
+    TEST BANNER
+******************
+^
