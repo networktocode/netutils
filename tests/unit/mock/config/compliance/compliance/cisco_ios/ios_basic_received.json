@@ -30,7 +30,7 @@
       "unordered_compliant": true
    },
    "banner": {
-      "actual": "banner login ^C\n******************\n    TEST BANNER\n******************\n^C",
+      "actual": "banner login ^\n******************\n    TEST BANNER\n******************\n^",
       "cannot_parse": true,
       "compliant": true,
       "extra": "",
