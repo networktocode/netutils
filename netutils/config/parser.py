@@ -678,3 +678,10 @@ class ASAConfigParser(CiscoConfigParser):
             self._update_config_lines(line)
 
         return self.config_lines
+
+
+class FortinetConfigParser(BaseSpaceConfigParser):
+    """Fortinet Fortios config parser."""
+
+    comment_chars = []
+    banner_start = []
