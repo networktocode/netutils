@@ -6,6 +6,8 @@ import pytest
 
 from netutils.config import compliance
 
+from pprint import pprint
+
 MOCK_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mock", "config", "parser")
 TXT_FILE = "_sent.txt"
 
@@ -22,6 +24,7 @@ def test_parser(_file, network_os, get_text_data, get_python_data):  # pylint: d
     device_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
     received_data = get_python_data(truncate_file + "_received.py", "data")
     os_parser = compliance.parser_map[network_os]
+    pprint(os_parser(device_cfg).config_lines)
     assert os_parser(device_cfg).config_lines == received_data
 
 

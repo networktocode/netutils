@@ -1,0 +1,12 @@
+{
+    "global": {
+        "actual": "config system global\n    set admin-concurrent enable\n    set admin-console-timeout 0\n    set admin-hsts-max-age 15552000\n    set admin-https-pki-required disable\n    set admin-https-redirect enable\n    set admin-https-ssl-versions tlsv1-1 tlsv1-2 tlsv1-3\n    set admin-lockout-duration 60\n    set admin-lockout-threshold 3\n    set admin-login-max 100\nend",
+        "cannot_parse": true,
+        "compliant": true,
+        "extra": "",
+        "intended": "config system global\n    set admin-concurrent enable\n    set admin-console-timeout 0\n    set admin-hsts-max-age 15552000\n    set admin-https-pki-required disable\n    set admin-https-redirect enable\n    set admin-https-ssl-versions tlsv1-1 tlsv1-2 tlsv1-3\n    set admin-lockout-duration 60\n    set admin-lockout-threshold 3\n    set admin-login-max 100\nend",
+        "missing": "",
+        "ordered_compliant": true,
+        "unordered_compliant": true
+    }
+}

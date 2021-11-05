@@ -685,3 +685,54 @@ class FortinetConfigParser(BaseSpaceConfigParser):
 
     comment_chars = []
     banner_start = []
+
+    def __init__(self, config):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(FortinetConfigParser, self).__init__(config)
+
+    def _build_nested_config(self, line):
+        """Handle building child config sections.
+
+        Args:
+            line (str): A configuration line from the configuration text.
+
+        Returns:
+            str: The next top-level configuration line in the configuration text.
+            None: When the last line of configuration text is a nested configuration line.
+
+        Raises:
+            IndexError: When the number of parents does not match the expected deindent level.
+        """
+        self._update_config_lines(line)
+        for line in self.generator_config:
+            if line == "end":
+                return line
+            if not line[0].isspace():
+                self._current_parents = ()
+                self.indent_level = 0
+                return line
+
+            spaces = self.get_leading_space_count(line)
+            if spaces == self.indent_level:
+                pass
+            elif spaces > self.indent_level:
+                previous_config = self.config_lines[-1]
+                self._current_parents += (previous_config.config_line,)
+            else:
+                self._current_parents = self._remove_parents(line, spaces)
+
+            if spaces != self.indent_level:
+                self.indent_level = spaces
+
+            if self.is_banner_start(line):
+                line = self._build_banner(line)
+                if line is None or not line[0].isspace():
+                    self._current_parents = ()
+                    self.indent_level = 0
+                    return line
+
+            self._update_config_lines(line)
