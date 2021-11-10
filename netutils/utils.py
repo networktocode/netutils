@@ -56,6 +56,8 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "bits_to_name": "bandwidth.bits_to_name",
     "bytes_to_name": "bandwidth.bytes_to_name",
     "name_to_name": "bandwidth.name_to_name",
+    "normalise_delimiter_caret_c": "banner.normalise_delimiter_caret_c",
+    "delimiter_change": "banner.delimiter_change",
 }
 
 
