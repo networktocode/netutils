@@ -309,6 +309,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
                 line = self._build_banner(line)
 
             self._update_config_lines(line)
+
         return self.config_lines
 
 
@@ -692,7 +693,43 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         Args:
             config (str): The config text to parse.
         """
+        self.uncommon_data = self._get_uncommon_lines(config)
         super(FortinetConfigParser, self).__init__(config)
+
+    def _parse_out_offending(self, config):
+        """Preprocess out strings that offend the normal spaced configuration syntax.
+
+        Args:
+            config (str): full config as a string.
+        """
+        pattern = r'(config system replacemsg.*(\".*\")\n)(\s{4}set\sbuffer\s\"[\S\s]*?\"\n)'
+        return re.sub(pattern, r"\1    [\2]\n", config)
+
+    @property
+    def config_lines_only(self):
+        """Remove spaces and comments from config lines.
+
+        Returns:
+            str: The non-space and non-comment lines from ``config``.
+        """
+        # Specific to fortinet to remove uncommon data patterns for use later.
+        self.config = self._parse_out_offending(self.config)
+        if self._config is None:
+            config_lines = (
+                line.rstrip()
+                for line in self.config.splitlines()
+                if line and not self.is_comment(line) and not line.isspace()
+            )
+            self._config = "\n".join(config_lines)
+        return self._config
+
+    def _get_uncommon_lines(self, config):
+        pattern = r'(config system replacemsg.*\n)(\s{4}set\sbuffer\s\"[\S\s]*?\"\n)'
+        regex_result = re.findall(pattern, config)
+        result = {}
+        for group_match in regex_result:
+            result.update({group_match[0].split('"')[1]: group_match[1]})
+        return result
 
     def _build_nested_config(self, line):
         """Handle building child config sections.
@@ -707,9 +744,11 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         Raises:
             IndexError: When the number of parents does not match the expected deindent level.
         """
+        if "[" in line:
+            line = self.uncommon_data.get(line.split('"')[1])
         self._update_config_lines(line)
         for line in self.generator_config:
-            if line == "end":
+            if line == "end" or "next" in line:
                 return line
             if not line[0].isspace():
                 self._current_parents = ()
@@ -727,12 +766,5 @@ class FortinetConfigParser(BaseSpaceConfigParser):
 
             if spaces != self.indent_level:
                 self.indent_level = spaces
-
-            if self.is_banner_start(line):
-                line = self._build_banner(line)
-                if line is None or not line[0].isspace():
-                    self._current_parents = ()
-                    self.indent_level = 0
-                    return line
 
             self._update_config_lines(line)
