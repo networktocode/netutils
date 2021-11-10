@@ -702,7 +702,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         Args:
             config (str): full config as a string.
         """
-        pattern = r'(config system replacemsg.*(\".*\")\n)(\s{4}set\sbuffer\s\"[\S\s]*?\"\n)'
+        pattern = r"(config system replacemsg.*(\".*\")\n)(\s{4}set\sbuffer\s\"[\S\s]*?\"\n)"
         return re.sub(pattern, r"\1    [\2]\n", config)
 
     @property
@@ -712,7 +712,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         Returns:
             str: The non-space and non-comment lines from ``config``.
         """
-        # Specific to fortinet to remove uncommon data patterns for use later.
+        # Specific to fortinet to remove uncommon data patterns for use later in _build_nested_config.
         self.config = self._parse_out_offending(self.config)
         if self._config is None:
             config_lines = (
@@ -724,7 +724,15 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         return self._config
 
     def _get_uncommon_lines(self, config):
-        pattern = r'(config system replacemsg.*\n)(\s{4}set\sbuffer\s\"[\S\s]*?\"\n)'
+        """Regex to find replacemsg lines which can contain html/css data.
+
+        Args:
+            config (str): Original config before parsing.
+
+        Returns:
+            dict: dictionary with replace message name as key, html/css data as value.
+        """
+        pattern = r"(config system replacemsg.*\n)(\s{4}set\sbuffer\s\"[\S\s]*?\"\n)"
         regex_result = re.findall(pattern, config)
         result = {}
         for group_match in regex_result:
