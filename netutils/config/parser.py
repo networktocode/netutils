@@ -309,7 +309,6 @@ class BaseSpaceConfigParser(BaseConfigParser):
                 line = self._build_banner(line)
 
             self._update_config_lines(line)
-
         return self.config_lines
 
 
@@ -696,7 +695,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         self.uncommon_data = self._get_uncommon_lines(config)
         super(FortinetConfigParser, self).__init__(config)
 
-    def _parse_out_offending(self, config):
+    def _parse_out_offending(self, config):  # pylint: disable=no-self-use
         """Preprocess out strings that offend the normal spaced configuration syntax.
 
         Args:
@@ -723,7 +722,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
             self._config = "\n".join(config_lines)
         return self._config
 
-    def _get_uncommon_lines(self, config):
+    def _get_uncommon_lines(self, config):  # pylint: disable=no-self-use
         """Regex to find replacemsg lines which can contain html/css data.
 
         Args:
