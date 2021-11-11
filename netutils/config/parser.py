@@ -705,9 +705,9 @@ class FortinetConfigParser(BaseSpaceConfigParser):
             bool: True if line has 'end' or 'next', else False.
 
         Example:
-            >>> FortinetConfigParser("config system virtual-switch").is_comment("config system virtual-switch")
+            >>> FortinetConfigParser("config system virtual-switch").is_end_next("config system virtual-switch")
             False
-            >>> FortinetConfigParser("end").is_comment("end")
+            >>> FortinetConfigParser("end").is_end_next("end")
             True
             >>>
         """
