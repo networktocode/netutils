@@ -1,9 +1,8 @@
 """Test for the network os parser functions."""
-import os
 import glob
+import os
 
 import pytest
-
 from netutils.config import compliance
 
 MOCK_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mock", "config", "parser")

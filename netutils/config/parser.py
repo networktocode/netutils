@@ -695,12 +695,36 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         self.uncommon_data = self._get_uncommon_lines(config)
         super(FortinetConfigParser, self).__init__(config)
 
+    def is_end_next(self, line):  # pylint: disable=no-self-use
+        """Determine if line has 'end' or 'next' in it.
+
+        Args:
+            line (str): A config line from the device.
+
+        Returns:
+            bool: True if line has 'end' or 'next', else False.
+
+        Example:
+            >>> FortinetConfigParser("config system virtual-switch").is_comment("config system virtual-switch")
+            False
+            >>> FortinetConfigParser("end").is_comment("end")
+            True
+            >>>
+        """
+        for end_next in ["end", "next"]:
+            if line.lstrip() == end_next:
+                return True
+        return False
+
     def _parse_out_offending(self, config):  # pylint: disable=no-self-use
         """Preprocess out strings that offend the normal spaced configuration syntax.
 
         Args:
             config (str): full config as a string.
         """
+        # This will grab everything between quotes after the 'set buffer' sub-command.
+        # Its explicitly looking for "\n to end the captured data.  This is to support html
+        # data that is supported in Fortinet config with double quotes within the html.
         pattern = r"(config system replacemsg.*(\".*\")\n)(\s{4}set\sbuffer\s\"[\S\s]*?\"\n)"
         return re.sub(pattern, r"\1    [\2]\n", config)
 
@@ -717,7 +741,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
             config_lines = (
                 line.rstrip()
                 for line in self.config.splitlines()
-                if line and not self.is_comment(line) and not line.isspace()
+                if line and not self.is_comment(line) and not line.isspace() and not self.is_end_next(line)
             )
             self._config = "\n".join(config_lines)
         return self._config
@@ -755,8 +779,6 @@ class FortinetConfigParser(BaseSpaceConfigParser):
             line = self.uncommon_data.get(line.split('"')[1])
         self._update_config_lines(line)
         for line in self.generator_config:
-            if line == "end" or "next" in line:
-                return line
             if not line[0].isspace():
                 self._current_parents = ()
                 self.indent_level = 0
