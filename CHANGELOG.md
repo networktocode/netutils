@@ -1,5 +1,27 @@
 # Changelog
 
+## v0.2.4 - 2021-11
+
+### Added
+
+- #33 Add interface range compress function
+- #53 Add get peer address function
+- #59 Add bandwidth converting function
+- #65 Added Docker caching
+- #68 Add Fortinet Fortios Parser support
+
+### Changed
+
+- #64 CI implementation on GitHub actions
+
+### Fixed
+
+- #52 Update pyproject.toml build-server 
+- #55 update version in toml and init files
+- #63 Fix lack of zero padding on ip to binary conversion
+- #70 Fix lack of zero padding on ip to hex conversion
+- #68 Update Black pinning
+
 ## v0.2.3 - 2021-09
 
 ### Added

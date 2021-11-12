@@ -54,7 +54,7 @@ START_END_LINES = [
 ]
 
 
-with open("README.md", "r") as file:
+with open("README.md", "r", encoding="utf-8") as file:
     README_LIST = file.readlines()
 README_LIST.insert(0, "")
 
