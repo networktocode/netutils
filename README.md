@@ -150,6 +150,38 @@ The project is following Network to Code software development guidelines and are
 - Black, Pylint, Bandit, flake8, and pydocstyle for Python linting and formatting.
 - pytest, coverage, and unittest for unit tests.
 
+There are a number of things that are required in order to have a successfull PR.
+
+- All new functions must contain at least 1 example in their docstrings.
+- Docstrings must conform to the google docstring standard.
+- Unit test for newly added functions are required.
+- If applicable, tests related to config parsing and compliuance must be added.
+- Update the jinja2 filter for any new functions.
+- If you create a new file in the `netutils` folder, you must create a new folder and `index.rst` in the docs folder.
+- Your PR must not introduce any required dependencies. You can introduce optional or development dependencies.
+
+## Adding to the jinja2 filter function
+
+To add a new function to the jinja2 filter, add a new entry to the `_JINJA2_FUNCTION_MAPPINGS` located in the `utils.py` file. When adding an entry, the key corresponds with the name to call the function and the value to the path to find the function.
+
+## Adding docs for a new python file
+
+If adding a new python file, the docs must be updated to account for the new file.
+
+1. Create a new folder in `docs/source/netutils` matching the name of your new file.
+2. Create an `index.rst` file in that folder.
+3. Add the following to the newly created file.
+
+```
+#############################
+# ENTER THE TITLE OF THE PAGE
+##############################
+
+.. automodule:: netutils.newfile
+    :members:
+```
+
+
 ## CLI Helper Commands
 
 The project features a CLI helper based on [invoke](http://www.pyinvoke.org/) to help setup the development environment. The commands are listed below in 3 categories:
