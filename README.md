@@ -59,7 +59,7 @@ The following function will help in deploying list of VLANs and match the config
 >>> vlan_cfg = vlanlist_to_config([1, 2, 3, 5, 6, 1000, 1002, 1004, 1006, 1008, 1010, 1012, 1014, 1016, 1018])
 >>>
 >>> vlan_cfg
-['1-3,5,6,1000,1002,1004,1006,1008,1010,1012,1014', '1016,1018']
+["1-3,5,6,1000,1002,1004,1006,1008,1010,1012,1014", "1016,1018"]
 >>>
 >>> for index, line in enumerate(vlan_cfg):
 ...     if index == 0:
@@ -172,7 +172,7 @@ If adding a new python file, the docs must be updated to account for the new fil
 2. Create an `index.rst` file in that folder.
 3. Add the following to the newly created file.
 
-```
+```python
 #############################
 # ENTER THE TITLE OF THE PAGE
 ##############################
