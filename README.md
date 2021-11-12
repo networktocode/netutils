@@ -156,8 +156,8 @@ There are a number of things that are required in order to have a successfull PR
 - Docstrings must conform to the google docstring [convention](https://google.github.io/styleguide/pyguide.html#381-docstrings).
 - Unit test for newly added functions are required.
 - If applicable, tests related to config parsing and compliuance must be added.
-- Update the jinja2 filter for any new functions.
-- If you create a new file in the `netutils` folder, you must create a new folder and `index.rst` in the docs folder.
+- Update the jinja2 filter for any new functions (see below for details).
+- If you create a new file in the `netutils` folder, you must create a new folder and `index.rst` in the docs folde r(see below for details).
 - Your PR must not introduce any required dependencies. You can introduce optional or development dependencies.
 
 ## Adding to the jinja2 filter function
@@ -180,7 +180,6 @@ If adding a new python file, the docs must be updated to account for the new fil
 .. automodule:: netutils.newfile
     :members:
 ```
-
 
 ## CLI Helper Commands
 

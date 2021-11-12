@@ -47,8 +47,8 @@ START_END_LINES = [
     {
         "name": "contribution",
         "start_line": 145,
-        "start_value": "Pull requests are welcomed and automatically built and tested against multiple versions of Python through GitHub Actions.\n",
-        "end_line": 229,
+        "start_value": "Pull requests are welcomed and automatically built and tested against multiple versions of Python through TravisCI.\n",
+        "end_line": 228,
         "end_value": "Sign up [here](http://slack.networktocode.com/)\n",
     },
 ]
