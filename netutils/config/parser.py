@@ -678,3 +678,122 @@ class ASAConfigParser(CiscoConfigParser):
             self._update_config_lines(line)
 
         return self.config_lines
+
+
+class FortinetConfigParser(BaseSpaceConfigParser):
+    """Fortinet Fortios config parser."""
+
+    comment_chars = []
+    banner_start = []
+
+    def __init__(self, config):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        self.uncommon_data = self._get_uncommon_lines(config)
+        super(FortinetConfigParser, self).__init__(config)
+
+    def is_end_next(self, line):  # pylint: disable=no-self-use
+        """Determine if line has 'end' or 'next' in it.
+
+        Args:
+            line (str): A config line from the device.
+
+        Returns:
+            bool: True if line has 'end' or 'next', else False.
+
+        Example:
+            >>> FortinetConfigParser("config system virtual-switch").is_end_next("config system virtual-switch")
+            False
+            >>> FortinetConfigParser("end").is_end_next("end")
+            True
+            >>>
+        """
+        for end_next in ["end", "next"]:
+            if line.lstrip() == end_next:
+                return True
+        return False
+
+    def _parse_out_offending(self, config):  # pylint: disable=no-self-use
+        """Preprocess out strings that offend the normal spaced configuration syntax.
+
+        Args:
+            config (str): full config as a string.
+        """
+        # This will grab everything between quotes after the 'set buffer' sub-command.
+        # Its explicitly looking for "\n to end the captured data.  This is to support html
+        # data that is supported in Fortinet config with double quotes within the html.
+        pattern = r"(config system replacemsg.*(\".*\")\n)(\s{4}set\sbuffer\s\"[\S\s]*?\"\n)"
+        return re.sub(pattern, r"\1    [\2]\n", config)
+
+    @property
+    def config_lines_only(self):
+        """Remove spaces and comments from config lines.
+
+        Returns:
+            str: The non-space and non-comment lines from ``config``.
+        """
+        # Specific to fortinet to remove uncommon data patterns for use later in _build_nested_config.
+        self.config = self._parse_out_offending(self.config)
+        if self._config is None:
+            config_lines = (
+                line.rstrip()
+                for line in self.config.splitlines()
+                if line and not self.is_comment(line) and not line.isspace() and not self.is_end_next(line)
+            )
+            self._config = "\n".join(config_lines)
+        return self._config
+
+    def _get_uncommon_lines(self, config):  # pylint: disable=no-self-use
+        """Regex to find replacemsg lines which can contain html/css data.
+
+        Args:
+            config (str): Original config before parsing.
+
+        Returns:
+            dict: dictionary with replace message name as key, html/css data as value.
+        """
+        pattern = r"(config system replacemsg.*\n)(\s{4}set\sbuffer\s\"[\S\s]*?\"\n)"
+        regex_result = re.findall(pattern, config)
+        result = {}
+        for group_match in regex_result:
+            result.update({group_match[0].split('"')[1]: group_match[1]})
+        return result
+
+    def _build_nested_config(self, line):
+        """Handle building child config sections.
+
+        Args:
+            line (str): A configuration line from the configuration text.
+
+        Returns:
+            str: The next top-level configuration line in the configuration text.
+            None: When the last line of configuration text is a nested configuration line.
+
+        Raises:
+            IndexError: When the number of parents does not match the expected deindent level.
+        """
+        if "[" in line:
+            line = self.uncommon_data.get(line.split('"')[1])
+        self._update_config_lines(line)
+        for line in self.generator_config:
+            if not line[0].isspace():
+                self._current_parents = ()
+                self.indent_level = 0
+                return line
+
+            spaces = self.get_leading_space_count(line)
+            if spaces == self.indent_level:
+                pass
+            elif spaces > self.indent_level:
+                previous_config = self.config_lines[-1]
+                self._current_parents += (previous_config.config_line,)
+            else:
+                self._current_parents = self._remove_parents(line, spaces)
+
+            if spaces != self.indent_level:
+                self.indent_level = spaces
+
+            self._update_config_lines(line)

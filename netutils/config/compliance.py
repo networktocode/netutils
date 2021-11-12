@@ -11,6 +11,7 @@ parser_map = {
     "bigip_f5": parser.F5ConfigParser,
     "juniper_junos": parser.JunosConfigParser,
     "cisco_asa": parser.ASAConfigParser,
+    "fortinet_fortios": parser.FortinetConfigParser,
 }
 
 default_feature = {
