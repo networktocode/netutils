@@ -33,7 +33,7 @@ class ExecDirective(Directive):
             return [
                 nodes.error(
                     None,
-                    nodes.paragraph(text="Unable to execute python code at %s:%d:" % (basename(source), self.lineno)),
+                    nodes.paragraph(text=f"Unable to execute python code at {basename(source)}:{self.lineno}:"),
                     nodes.paragraph(text=str(sys.exc_info()[1])),
                 )
             ]

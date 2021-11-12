@@ -172,7 +172,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
                 previous_parent = self._current_parents[-deindent_level]
                 previous_indent = self.get_leading_space_count(previous_parent)
         except IndexError:
-            raise IndexError("\nValidate the first line does not begin with a space" "\n{}\n".format(line))
+            raise IndexError(f"\nValidate the first line does not begin with a space\n{line}\n")
         parents = self._current_parents[:-deindent_level] or (self._current_parents[0],)
         return parents
 

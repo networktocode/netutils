@@ -19,7 +19,7 @@ def get_json_data():
         Returns:
             dict: The data structure from the JSON file.
         """
-        with open(_file) as file:
+        with open(_file, encoding="utf-8") as file:
             data = json.load(file)
         return data
 
@@ -39,7 +39,7 @@ def get_text_data():
         Returns:
             str: The data structure from the text file.
         """
-        with open(_file) as file:
+        with open(_file, encoding="utf-8") as file:
             data = file.read()
         return data
 

@@ -31,12 +31,12 @@ def vlanlist_to_config(vlan_list, first_line_len=48, other_line_len=44):
         raise ValueError("Valid VLAN range is 1-4094")
 
     # Group consecutive VLANs
-    vlan_groups = list()
+    vlan_groups = []
     for _, vlan in groupby(enumerate(clean_vlan_list), lambda vlan: vlan[0] - vlan[1]):
         vlan_groups.append(list(map(itemgetter(1), vlan)))
 
     # Create VLAN portion of config
-    vlan_strings = list()
+    vlan_strings = []
     for group in vlan_groups:
         if len(group) == 1:
             vlan_strings.append(f"{group[0]}")
