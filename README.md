@@ -153,7 +153,7 @@ The project is following Network to Code software development guidelines and are
 There are a number of things that are required in order to have a successfull PR.
 
 - All new functions must contain at least 1 example in their docstrings.
-- Docstrings must conform to the google docstring standard.
+- Docstrings must conform to the google docstring [convention](https://google.github.io/styleguide/pyguide.html#381-docstrings).
 - Unit test for newly added functions are required.
 - If applicable, tests related to config parsing and compliuance must be added.
 - Update the jinja2 filter for any new functions.
