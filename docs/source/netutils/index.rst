@@ -6,6 +6,7 @@ Netutils Functions
    :maxdepth: 2
 
    asn/index
+   bandwidth/index
    configs/index
    dns/index
    interface/index
