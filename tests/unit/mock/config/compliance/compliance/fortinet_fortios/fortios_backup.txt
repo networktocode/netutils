@@ -1,0 +1,313 @@
+config system global
+    set admin-concurrent enable
+    set admin-console-timeout 0
+    set admin-hsts-max-age 15552000
+    set admin-https-pki-required disable
+    set admin-https-redirect enable
+    set admin-https-ssl-versions tlsv1-1 tlsv1-2 tlsv1-3
+    set admin-lockout-duration 60
+    set admin-lockout-threshold 3
+    set admin-login-max 100
+end
+config wireless-controller global
+    set name ''
+    set location ''
+    set image-download enable
+    set max-retransmit 3
+    set control-message-offload ebp-frame aeroscout-tag ap-list sta-list sta-cap-list stats aeroscout-mu sta-health spectral-analysis
+    set data-ethernet-II enable
+    set link-aggregation disable
+    set mesh-eth-type 8755
+    set fiapp-eth-type 5252
+    set discovery-mc-addr 224.0.1.140
+    set max-clients 0
+    set rogue-scan-mac-adjacency 7
+    set ipsec-base-ip 169.254.0.1
+    set wtp-share disable
+    set ap-log-server disable
+end
+config system switch-interface
+end
+config system lte-modem
+    set status disable
+    set extra-init ''
+    set authtype none
+    set apn ''
+    set modem-port 255
+end
+config system interface
+    edit "mgmt"
+        set vrf 0
+        set distance 5
+        set priority 0
+        set dhcp-relay-service disable
+        set ip 10.0.0.41 255.255.252.0
+        set allowaccess ping https ssh snmp http fgfm
+        set fail-detect disable
+        set arpforward enable
+        set broadcast-forward disable
+        set bfd global
+        set l2forward disable
+        set icmp-send-redirect enable
+        set icmp-accept-redirect enable
+        set vlanforward disable
+        set stpforward disable
+        set ips-sniffer-mode disable
+        set ident-accept disable
+        set ipmac disable
+        set subst disable
+        set substitute-dst-mac 00:00:00:00:00:00
+        set status up
+        set netbios-forward disable
+        set wins-ip 0.0.0.0
+        set type physical
+        set dedicated-to management
+        set netflow-sampler disable
+        set sflow-sampler disable
+        set src-check enable
+        set sample-rate 2000
+        set polling-interval 20
+        set sample-direction both
+        set explicit-web-proxy disable
+        set explicit-ftp-proxy disable
+        set proxy-captive-portal disable
+        set tcp-mss 0
+        set inbandwidth 0
+        set outbandwidth 0
+        set egress-shaping-profile ''
+        set ingress-shaping-profile ''
+        set disconnect-threshold 0
+        set spillover-threshold 0
+        set ingress-spillover-threshold 0
+        set weight 0
+        set external disable
+        set description ''
+        set alias ''
+        set device-identification disable
+        set lldp-reception vdom
+        set lldp-transmission vdom
+        set estimated-upstream-bandwidth 0
+        set estimated-downstream-bandwidth 0
+        set measured-upstream-bandwidth 0
+        set measured-downstream-bandwidth 0
+        set bandwidth-measure-time 0
+        set monitor-bandwidth disable
+        set vrrp-virtual-mac disable
+        set role lan
+        set snmp-index 1
+        set secondary-IP disable
+        set preserve-session-route disable
+        set auto-auth-extension-device disable
+        set ap-discover enable
+        set switch-controller-igmp-snooping-proxy disable
+        set switch-controller-igmp-snooping-fast-leave disable
+        config ipv6
+            set ip6-mode static
+            set nd-mode basic
+            set ip6-address ::/0
+            unset ip6-allowaccess
+            set icmp6-send-redirect enable
+            set ip6-reachable-time 0
+            set ip6-retrans-time 0
+            set ip6-hop-limit 0
+            set vrrp-virtual-mac6 disable
+            set vrip6_link_local ::
+            set ip6-send-adv disable
+            set autoconf disable
+        end
+        set defaultgw enable
+        set dns-server-override enable
+        set speed auto
+        set trust-ip-1 0.0.0.0 0.0.0.0
+        set trust-ip-2 0.0.0.0 0.0.0.0
+        set trust-ip-3 0.0.0.0 0.0.0.0
+        set trust-ip6-1 ::/0
+        set trust-ip6-2 ::/0
+        set trust-ip6-3 ::/0
+        set mtu-override disable
+        set wccp disable
+        set drop-overlapped-fragment disable
+        set drop-fragment disable
+    next
+    edit "ha"
+        set vdom "root"
+        set vrf 0
+        set fortilink disable
+        set mode static
+        set dhcp-relay-service disable
+        set management-ip 0.0.0.0 0.0.0.0
+        set ip 0.0.0.0 0.0.0.0
+        unset allowaccess
+        set fail-detect disable
+        set arpforward enable
+        set broadcast-forward disable
+        set bfd global
+        set l2forward disable
+        set icmp-send-redirect enable
+        set icmp-accept-redirect enable
+        set vlanforward disable
+        set stpforward disable
+        set ips-sniffer-mode disable
+        set ident-accept disable
+        set ipmac disable
+        set subst disable
+        set substitute-dst-mac 00:00:00:00:00:00
+        set status up
+        set netbios-forward disable
+        set wins-ip 0.0.0.0
+        set type physical
+        set netflow-sampler disable
+        set sflow-sampler disable
+        set src-check enable
+        set sample-rate 2000
+        set polling-interval 20
+        set sample-direction both
+        set explicit-web-proxy disable
+        set explicit-ftp-proxy disable
+        set proxy-captive-portal disable
+        set tcp-mss 0
+        set inbandwidth 0
+        set outbandwidth 0
+        set egress-shaping-profile ''
+        set ingress-shaping-profile ''
+        set disconnect-threshold 0
+        set spillover-threshold 0
+        set ingress-spillover-threshold 0
+        set weight 0
+        set external disable
+        set description ''
+        set alias ''
+        set security-mode none
+        set device-identification disable
+        set lldp-reception vdom
+        set lldp-transmission vdom
+        set estimated-upstream-bandwidth 0
+        set estimated-downstream-bandwidth 0
+        set measured-upstream-bandwidth 0
+        set measured-downstream-bandwidth 0
+        set bandwidth-measure-time 0
+        set monitor-bandwidth disable
+        set vrrp-virtual-mac disable
+        set role undefined
+        set snmp-index 2
+        set secondary-IP disable
+        set preserve-session-route disable
+        set auto-auth-extension-device disable
+        set ap-discover enable
+        set ip-managed-by-fortiipam disable
+        set switch-controller-mgmt-vlan 4094
+        set switch-controller-igmp-snooping-proxy disable
+        set switch-controller-igmp-snooping-fast-leave disable
+        set swc-first-create 0
+        config ipv6
+            set ip6-mode static
+            set nd-mode basic
+            set ip6-address ::/0
+            unset ip6-allowaccess
+            set icmp6-send-redirect enable
+            set ip6-reachable-time 0
+            set ip6-retrans-time 0
+            set ip6-hop-limit 0
+            set dhcp6-prefix-delegation disable
+            set dhcp6-information-request disable
+            set vrrp-virtual-mac6 disable
+            set vrip6_link_local ::
+            set ip6-send-adv disable
+            set autoconf disable
+            set dhcp6-relay-service disable
+        end
+        set speed auto
+        set mtu-override disable
+        set wccp disable
+        set drop-overlapped-fragment disable
+        set drop-fragment disable
+    next
+end
+config system virtual-switch
+    edit "lan"
+        set physical-switch "sw0"
+        set span disable
+        config port
+            edit "port1"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port2"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port3"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port4"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port5"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port6"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port7"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port8"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port9"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port10"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port11"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port12"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port13"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port14"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port15"
+                set speed auto
+                set status up
+                set alias ''
+            next
+            edit "port16"
+                set speed auto
+                set status up
+                set alias ''
+            next
+        end
+    next
+end

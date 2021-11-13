@@ -11,6 +11,7 @@ parser_map = {
     "bigip_f5": parser.F5ConfigParser,
     "juniper_junos": parser.JunosConfigParser,
     "cisco_asa": parser.ASAConfigParser,
+    "fortinet_fortios": parser.FortinetConfigParser,
 }
 
 default_feature = {
@@ -98,7 +99,7 @@ def _is_feature_ordered_compliant(feature_intended_cfg, feature_actual_cfg):
 def _open_file_config(cfg_path):
     """Open config file from local disk."""
     try:
-        with open(cfg_path) as filehandler:
+        with open(cfg_path, encoding="utf-8") as filehandler:
             device_cfg = filehandler.read()
     except IOError:
         return False
@@ -167,7 +168,7 @@ def compliance(features, backup, intended, network_os, cfg_type="file"):
         backup_cfg = backup
         intended_cfg = intended
 
-    compliance_results = dict()
+    compliance_results = {}
 
     for feature in features:
         backup_str = section_config(feature, backup_cfg, network_os)
@@ -206,7 +207,7 @@ def config_section_not_parsed(features, device_cfg, network_os):
         {'remaining_cfg': '!\naccess-list 1 permit 10.10.10.10\naccess-list 1 permit 10.10.10.11', 'section_not_found': []}
     """
     remaining_cfg = device_cfg
-    section_not_found = list()
+    section_not_found = []
     for feature in features:
         feature_cfg = section_config(feature, device_cfg, network_os)
         if not feature_cfg:
@@ -356,7 +357,7 @@ def find_unordered_cfg_lines(intended_cfg, actual_cfg):
     """
     intended_lines = intended_cfg.splitlines()
     actual_lines = actual_cfg.splitlines()
-    unordered_lines = list()
+    unordered_lines = []
     if len(intended_lines) == len(actual_lines):
         # Process to find actual lines that are misordered
         unordered_lines = [(e1, e2) for e1, e2 in zip(intended_lines, actual_lines) if e1 != e2]

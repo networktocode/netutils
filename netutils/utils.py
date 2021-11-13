@@ -15,6 +15,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "is_fqdn_valid": "dns.is_fqdn_valid",
     "is_fqdn_resolvable": "dns.is_fqdn_resolvable",
     "interface_range_expansion": "interface.interface_range_expansion",
+    "interface_range_compress": "interface.interface_range_compress",
     "split_interface": "interface.split_interface",
     "canonical_interface_name": "interface.canonical_interface_name",
     "canonical_interface_name_list": "interface.canonical_interface_name_list",
@@ -33,6 +34,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_all_host": "ip.get_all_host",
     "get_broadcast_address": "ip.get_broadcast_address",
     "get_first_usable": "ip.get_first_usable",
+    "get_peer_ip": "ip.get_peer_ip",
     "get_usable_range": "ip.get_usable_range",
     "is_valid_mac": "mac.is_valid_mac",
     "mac_to_format": "mac.mac_to_format",
@@ -49,6 +51,11 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "longest_prefix_match": "route.longest_prefix_match",
     "vlanlist_to_config": "vlan.vlanlist_to_config",
     "vlanconfig_to_list": "vlan.vlanconfig_to_list",
+    "name_to_bits": "bandwidth.name_to_bits",
+    "name_to_bytes": "bandwidth.name_to_bytes",
+    "bits_to_name": "bandwidth.bits_to_name",
+    "bytes_to_name": "bandwidth.bytes_to_name",
+    "name_to_name": "bandwidth.name_to_name",
 }
 
 

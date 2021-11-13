@@ -185,7 +185,7 @@ def encrypt_type5(unencrypted_password, salt=None, salt_len=4):
     if not salt:
         salt = "".join(secrets.choice(ALPHABET) for i in range(salt_len))
     elif not set(salt) <= set(ALPHABET):
-        raise ValueError("type5_pw salt used inproper characters, must be one of %s" % (ALPHABET))
+        raise ValueError(f"type5_pw salt used inproper characters, must be one of {ALPHABET}")
     return crypt.crypt(unencrypted_password, f"$1${salt}$")
 
 
@@ -207,9 +207,10 @@ def encrypt_type7(unencrypted_password, salt=None):
     """
     if not salt:
         salt = random.randrange(0, 15)  # nosec
-    encrypted_password = "%02x" % salt
+    encrypted_password = "%02x" % salt  # pylint: disable=consider-using-f-string
     for i, _ in enumerate(unencrypted_password):
-        encrypted_password += "%02x" % (ord(unencrypted_password[i]) ^ XLAT[salt])
+        hex_password = "%02x" % (ord(unencrypted_password[i]) ^ XLAT[salt])  # pylint: disable=consider-using-f-string
+        encrypted_password += hex_password
         salt += 1
         if salt == 51:
             salt = 0
@@ -233,5 +234,5 @@ def get_hash_salt(encrypted_password):
     """
     split_password = encrypted_password.split("$")
     if len(split_password) != 4:
-        raise ValueError("Could not parse salt out password correctly from {0}".format(encrypted_password))
+        raise ValueError(f"Could not parse salt out password correctly from {encrypted_password}")
     return split_password[2]
