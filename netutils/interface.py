@@ -2,7 +2,7 @@
 import itertools
 import re
 import typing as t
-from abc import ABC, abstractmethod, abstractproperty
+from abc import ABC, abstractmethod
 from functools import total_ordering
 from operator import itemgetter
 from .constants import BASE_INTERFACES, REVERSE_MAPPING
@@ -253,7 +253,8 @@ class CharacterClass(ABC):
     def __eq__(self, other) -> bool:  # noqa: D105
         return self.weight == other.weight and self.val == other.val
 
-    @abstractproperty
+    @property
+    @abstractmethod
     def weight(self) -> int:
         """Weight property."""
         ...
