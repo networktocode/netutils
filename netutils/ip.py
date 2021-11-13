@@ -15,10 +15,11 @@ def ip_to_hex(ip):
     Example:
         >>> from netutils.ip import ip_to_hex
         >>> ip_to_hex("10.100.100.100")
-        'a646464'
+        '0a646464'
         >>>
     """
-    return str(hex(int(ipaddress.ip_address(ip))))[2:]
+    ip_obj = ipaddress.ip_address(ip)
+    return str(hex(int(ip_obj)))[2:].zfill(int(ip_obj.max_prefixlen / 4))
 
 
 def ip_addition(ip, val):
@@ -52,10 +53,11 @@ def ip_to_bin(ip):
     Example:
         >>> from netutils.ip import ip_to_bin
         >>> ip_to_bin("10.100.100.100")
-        '1010011001000110010001100100'
+        '00001010011001000110010001100100'
         >>>
     """
-    return bin(int(ipaddress.ip_address(ip)))[2:]
+    ip_obj = ipaddress.ip_address(ip)
+    return bin(int(ip_obj))[2:].zfill(ip_obj.max_prefixlen)
 
 
 def ip_subtract(ip, val):
@@ -242,9 +244,47 @@ def get_first_usable(ip_network):
         >>>
     """
     net = ipaddress.ip_network(ip_network)
-    if net.prefixlen == 31 or net.prefixlen == 127:
+    if net.prefixlen in [31, 127]:
         return str(net[0])
     return str(net[1])
+
+
+def get_peer_ip(ip_interface):
+    """Given an IP interface (an ip address, with subnet mask) that is on a peer network, return the peer IP.
+
+    Args:
+        ip_interface (str): An IP interface in string format that is able to be converted by `ipaddress` library.
+
+    Returns:
+        str: IP address formatted string with the corresponding peer IP.
+
+    Example:
+        >>> from netutils.ip import get_peer_ip
+        >>> get_peer_ip('10.0.0.1/255.255.255.252')
+        '10.0.0.2'
+        >>> get_peer_ip('10.0.0.2/30')
+        '10.0.0.1'
+        >>> get_peer_ip('10.0.0.1/255.255.255.254')
+        '10.0.0.0'
+        >>> get_peer_ip('10.0.0.0/31')
+        '10.0.0.1'
+        >>>
+    """
+    ip_obj = ipaddress.ip_interface(ip_interface)
+    if isinstance(ip_obj, ipaddress.IPv4Address) and ip_obj.network.prefixlen not in [30, 31]:
+        raise ValueError(f"{ip_obj} did not conform to IPv4 acceptable masks of 30 or 31")
+    if isinstance(ip_obj, ipaddress.IPv6Address) and ip_obj.network.prefixlen not in [126, 127]:
+        raise ValueError(f"{ip_obj} did not conform to IPv6 acceptable masks of 126 or 127")
+    if ip_obj.network.prefixlen in [30, 126] and ip_obj.ip in [
+        ip_obj.network.network_address,
+        ip_obj.network.broadcast_address,
+    ]:
+        raise ValueError(f"{ip_obj} is not an IP in the point-to-point link usable range.")
+    # The host lists returns all usable IPs, remove the matching one, return the first element. This can be optimized greatly, but left
+    # like this for simplicity. Note: IPv6 technically does not have a broadcast address, but for ptp, this is not considered.
+    val = list(get_all_host(str(ip_obj.network)))
+    val.remove(str(ip_obj.ip))
+    return val[0]
 
 
 def get_usable_range(ip_network):
@@ -263,7 +303,7 @@ def get_usable_range(ip_network):
         >>>
     """
     net = ipaddress.ip_network(ip_network)
-    if net.prefixlen == 31 or net.prefixlen == 127:
+    if net.prefixlen in [31, 127]:
         lower_bound = str(net[0])
         upper_bound = str(net[1])
     else:

@@ -48,13 +48,13 @@ START_END_LINES = [
         "name": "contribution",
         "start_line": 145,
         "start_value": "Pull requests are welcomed and automatically built and tested against multiple versions of Python through TravisCI.\n",
-        "end_line": 197,
+        "end_line": 228,
         "end_value": "Sign up [here](http://slack.networktocode.com/)\n",
     },
 ]
 
 
-with open("README.md", "r") as file:
+with open("README.md", "r", encoding="utf-8") as file:
     README_LIST = file.readlines()
 README_LIST.insert(0, "")
 
