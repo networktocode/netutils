@@ -6,7 +6,7 @@ from netutils import ip
 IP_TO_HEX = [
     {
         "sent": {"ip": "10.1.1.1"},
-        "received": "a010101",
+        "received": "0a010101",
     },
     {
         "sent": {"ip": "2001:db8:3333:4444:5555:6666:7777:8888"},
