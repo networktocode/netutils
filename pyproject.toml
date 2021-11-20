@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netutils"
-version = "0.2.4"
+version = "0.2.5"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 license = "Apache-2.0"
@@ -17,6 +17,7 @@ classifiers = [
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
 ]
 include = [
     "CHANGELOG.md",
@@ -26,7 +27,7 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6.2"
+python = "^3.6"
 
 [tool.poetry.dev-dependencies]
 bandit = "^1.6.2"
