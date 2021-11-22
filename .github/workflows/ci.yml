@@ -4,6 +4,9 @@ on:  # yamllint disable-line rule:truthy
   - "push"
   - "pull_request"
 
+env:
+  IMAGE_NAME: "netutils"
+
 jobs:
   black:
     runs-on: "ubuntu-20.04"
@@ -76,7 +79,6 @@ jobs:
     runs-on: "ubuntu-20.04"
     env:
       PYTHON_VER: "${{ matrix.python-version }}"
-      IMAGE_NAME: "netutils"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"
@@ -112,7 +114,6 @@ jobs:
         python-version: ["3.7"]
     env:
       PYTHON_VER: "${{ matrix.python-version }}"
-      IMAGE_NAME: "netutils"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"
