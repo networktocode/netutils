@@ -70,11 +70,10 @@ ipaddress Convenience Functions
 When adding the netutils functions to your jinja2 environment, you also gain access to the built-in ipaddress python library using these three jinja2 filters.
 
 .. code-block:: python
-    ...
+
     "ipaddress_address": "ip.ipaddress_address",
     "ipaddress_interface": "ip.ipaddress_interface",
     "ipaddress_network": "ip.ipaddress_network",
-    ...
 
 When using these filters, you must specify an attribute of that given class. Here is an example of how you would use the `version` if the `ipaddress_interface` filter.
 
@@ -115,5 +114,3 @@ When you run `jinja2_environment.py` the output will be:
 .. code-block:: python
 
     The version of 192.168.0.1/24 is IPv4.
-
-
