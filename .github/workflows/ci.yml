@@ -95,10 +95,10 @@ jobs:
           builder: "${{ steps.buildx.outputs.name }}"
           context: "./"
           push: false
-          tags: "${{ env.IMAGE_NAME }}:${{ IMAGE_VER }}-py${{ matrix.python-version }}"
+          tags: "${{ env.IMAGE_NAME }}:${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
           file: "./Dockerfile"
-          cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ IMAGE_VER }}-py${{ matrix.python-version }}"
-          cache-to: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ IMAGE_VER }}-py${{ matrix.python-version }}"
+          cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
+          cache-to: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
           build-args: |
             PYTHON_VER=${{ env.PYTHON_VER }}
 
@@ -151,10 +151,10 @@ jobs:
           builder: "${{ steps.buildx.outputs.name }}"
           context: "./"
           push: false
-          tags: "${{ env.IMAGE_NAME }}:${{ IMAGE_VER }}-py${{ matrix.python-version }}"
+          tags: "${{ env.IMAGE_NAME }}:${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
           file: "./Dockerfile"
-          cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ IMAGE_VER }}-py${{ matrix.python-version }}"
-          cache-to: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ IMAGE_VER }}-py${{ matrix.python-version }}"
+          cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
+          cache-to: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
           build-args: |
             PYTHON_VER=${{ env.PYTHON_VER }}
 
