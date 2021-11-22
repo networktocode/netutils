@@ -113,7 +113,7 @@ jobs:
     env:
       PYTHON_VER: "${{ matrix.python-version }}"
       IMAGE_NAME: "netutils"
-    steps:    
+    steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v2"
       - name: "Setup environment"
