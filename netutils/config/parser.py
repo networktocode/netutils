@@ -597,6 +597,33 @@ class F5ConfigParser(BaseBraceConfigParser):
 
     multiline_delimiters = ['"']
 
+    def __init__(self, config):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(F5ConfigParser, self).__init__(self._clean_config_f5(config))
+
+    def _clean_config_f5(self, config_text):  # pylint: disable=no-self-use
+        """Removes all configuration items with 'ltm rule'.  iRules are essentially impossible to parse with the lack of uniformity.
+
+        Args:
+            config_text (str): The entire config as a string.
+
+        Returns:
+            str: The sanitized config with all iRules (ltm rule) stanzas removed.
+        """
+        config_split = config_text.split("ltm rule")
+        if len(config_split) > 1:
+            start_config = config_split[0]
+            end_config = config_split[-1]
+            _, ltm, clean_config = end_config.partition("ltm")
+            final_config = start_config + ltm + clean_config
+        else:
+            final_config = config_text
+        return final_config
+
 
 class JunosConfigParser(BaseSpaceConfigParser):
     """Junos config parser."""
