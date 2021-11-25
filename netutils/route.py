@@ -2,6 +2,7 @@
 
 import ipaddress
 from typing import Union, List, Set, Dict
+from netutils.ip import ipaddress_subnet_of
 
 
 class NoRouteFound(BaseException):
@@ -84,7 +85,7 @@ def prefix_aggregate(
         while _prefixes:
             if _aggregate.prefixlen < _min_aggr_pref_len:  # don't eliminate if we crossed the limit
                 break
-            if _prefixes[0].subnet_of(_aggregate):
+            if ipaddress_subnet_of(_prefixes[0], _aggregate):
                 _prefixes.pop(0)  # eliminate contained prefix
                 _eliminated = True
             else:  # skip checking the following elements as those are guaranteed not contained
@@ -181,7 +182,7 @@ def find_prefix_gaps(
     continuous_prefs = prefix_aggregate(prefixes, min_aggr_pref_len=scope, force_continuous=True)
 
     for supernet in supernets:
-        cps = {prefix for prefix in continuous_prefs if prefix.subnet_of(supernet)}
+        cps = {prefix for prefix in continuous_prefs if ipaddress_subnet_of(prefix, supernet)}
         max_prefix_len = max([prefix.prefixlen for prefix in cps])
         agg_split = prefix_aggregate([supernet], min_aggr_pref_len=max_prefix_len)
         pref_pool = set()

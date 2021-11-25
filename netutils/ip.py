@@ -1,5 +1,6 @@
 """Functions for working with IP addresses."""
 import ipaddress
+from typing import Union
 from netutils.constants import IPV4_MASKS, IPV6_MASKS
 
 
@@ -310,3 +311,62 @@ def get_usable_range(ip_network):
         lower_bound = str(net[1])
         upper_bound = str(net[-2])
     return f"{lower_bound} - {upper_bound}"
+
+
+# Python 3.6 lacks of ipaddress.IPv[46]Network.subnet_of and supernet_of methods:
+IPNetwork = Union[ipaddress.IPv4Network, ipaddress.IPv6Network]
+
+
+def ipaddress_subnet_of(this: IPNetwork, other: IPNetwork) -> bool:
+    """Backport of ipaddress.IPv[46]Network.subnet_of method.
+
+    This function returns True when ``this`` is a subnet of ``other``.
+    Args:
+        this (IPNetwork): subject subnet of the check.
+        other (IPNetwork): intended supernet for checking.
+
+    Return:
+        (bool): True when ``this`` is a subnet of ``other``.
+
+    Example:
+        >>> from netutils.ip import ipaddress_subnet_of
+        >>> subnet = ipaddress.IPv4Network("10.0.1.0/24")
+        >>> supernet = ipaddress.IPv4Network("10.0.0.0/23")
+        >>> ipaddress_subnet_of(subnet, supernet)
+        True
+
+        >>> subnet = ipaddress.IPv4Network("10.0.1.0/24")
+        >>> supernet = ipaddress.IPv4Network("10.0.0.0/24")
+        >>> ipaddress_subnet_of(subnet, supernet)
+        False
+    """
+    super_netmask = int(other.netmask)
+    this_net = int(this.network_address) & super_netmask
+    other_net = int(other.network_address)
+    return this_net == other_net and this.netmask >= other.netmask
+
+
+def ipaddress_supernet_of(this: IPNetwork, other: IPNetwork) -> bool:
+    """Backport of ipaddress.IPv[46]Network.supernet_of method.
+
+    This function returns True when ``this`` is a supernet of ``other``.
+    Args:
+        this (IPNetwork): subject supernet of the check.
+        other (IPNetwork): intended subnet for checking.
+
+    Return:
+        (bool): True when ``this`` is a supernet of ``other``.
+
+    Example:
+        >>> from netutils.ip import ipaddress_supernet_of
+        >>> subnet = ipaddress.IPv4Network("10.0.1.0/24")
+        >>> supernet = ipaddress.IPv4Network("10.0.0.0/23")
+        >>> ipaddress_supernet_of(supernet, subnet)
+        True
+
+        >>> subnet = ipaddress.IPv4Network("10.0.1.0/24")
+        >>> supernet = ipaddress.IPv4Network("10.0.0.0/24")
+        >>> ipaddress_supernet_of(supernet, subnet)
+        False
+    """
+    return ipaddress_subnet_of(this=other, other=this)

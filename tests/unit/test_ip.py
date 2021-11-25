@@ -1,6 +1,7 @@
 """Test for the IP functions."""
 import pytest
 
+from ipaddress import IPv4Network, IPv6Network
 from netutils import ip
 
 IP_TO_HEX = [
@@ -365,3 +366,33 @@ def test_get_peer_ip_fail_subnet(data):
 def test_get_peer_ip_fail_ip(data):
     with pytest.raises(ValueError, match=r".*usable range.*"):
         ip.get_peer_ip(**data["sent"])
+
+
+def test_ipaddress_subnet_of_true():
+    sub = IPv4Network("10.0.0.0/24")
+    supernet = IPv4Network("10.0.0.0/23")
+    assert ip.ipaddress_subnet_of(sub, supernet)
+
+
+def test_ipaddress_subnet_of_same():
+    sub = IPv4Network("10.0.0.0/24")
+    supernet = IPv4Network("10.0.0.0/24")
+    assert ip.ipaddress_subnet_of(sub, supernet)
+
+
+def test_ipaddress_subnet_of_false():
+    sub = IPv4Network("10.0.0.0/23")
+    supernet = IPv4Network("10.0.0.0/24")
+    assert not ip.ipaddress_subnet_of(sub, supernet)
+
+
+def test_ipaddress_subnet_of_false_distinct_subnets():
+    sub = IPv4Network("10.0.1.0/24")
+    supernet = IPv4Network("10.0.0.0/24")
+    assert not ip.ipaddress_subnet_of(sub, supernet)
+
+
+def test_ipaddress_supernet():
+    sub = IPv4Network("10.0.1.0/24")
+    supernet = IPv4Network("10.0.0.0/24")
+    assert ip.ipaddress_supernet_of(supernet, sub)
