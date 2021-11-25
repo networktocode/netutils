@@ -4,6 +4,59 @@ import pytest
 from ipaddress import IPv4Network, IPv6Network
 from netutils import ip
 
+IP_ADDRESS = [
+    {
+        "sent": {"ip": "10.1.1.1", "attr": "is_loopback"},
+        "received": False,
+    },
+    {
+        "sent": {"ip": "10.1.1.1", "attr": "__int__"},
+        "received": 167837953,
+    },
+    {
+        "sent": {"ip": "10.1.1.1", "attr": "is_private"},
+        "received": True,
+    },
+    {
+        "sent": {"ip": "10.1.1.1", "attr": "__str__"},
+        "received": "10.1.1.1",
+    },
+]
+
+IP_INTERFACE = [
+    {
+        "sent": {"ip": "10.1.1.1/24", "attr": "is_loopback"},
+        "received": False,
+    },
+    {
+        "sent": {"ip": "10.1.1.1/24", "attr": "__int__"},
+        "received": 167837953,
+    },
+    {
+        "sent": {"ip": "10.1.1.1/24", "attr": "network.__str__"},
+        "received": "10.1.1.0/24",
+    },
+    {
+        "sent": {"ip": "10.1.1.1/24", "attr": "netmask.__str__"},
+        "received": "255.255.255.0",
+    },
+]
+
+IP_NETWORK = [
+    {
+        "sent": {"ip": "10.1.1.0/24", "attr": "hostmask.__str__"},
+        "received": "0.0.0.255",
+    },
+    {
+        "sent": {"ip": "10.1.1.0/24", "attr": "network_address.__int__"},
+        "received": 167837952,
+    },
+    {
+        "sent": {"ip": "10.1.1.0/24", "attr": "version"},
+        "received": 4,
+    },
+]
+
 IP_TO_HEX = [
     {
         "sent": {"ip": "10.1.1.1"},
@@ -366,6 +419,21 @@ def test_get_peer_ip_fail_subnet(data):
 def test_get_peer_ip_fail_ip(data):
     with pytest.raises(ValueError, match=r".*usable range.*"):
         ip.get_peer_ip(**data["sent"])
+
+
+@pytest.mark.parametrize("data", IP_ADDRESS)
+def test_ipaddress_address(data):
+    assert ip.ipaddress_address(**data["sent"]) == data["received"]
+
+
+@pytest.mark.parametrize("data", IP_INTERFACE)
+def test_ipaddress_interface(data):
+    assert ip.ipaddress_interface(**data["sent"]) == data["received"]
+
+
+@pytest.mark.parametrize("data", IP_NETWORK)
+def test_ipaddress_network(data):
+    assert ip.ipaddress_network(**data["sent"]) == data["received"]
 
 
 def test_ipaddress_subnet_of_true():
