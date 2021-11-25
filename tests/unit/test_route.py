@@ -131,7 +131,7 @@ def test_prefix_aggregate_bad_netmask():
 
 def test_prefix_aggregate_bad_minimum_preflength():
     prefixes = ["10.0.0.0/24"]
-    with pytest.raises(AssertionError) as execinfo:
+    with pytest.raises(ValueError) as execinfo:
         prefix_aggregate(prefixes, min_aggr_pref_len=33)
     assert execinfo.match("^min_aggr_pref_len is bigger than expected")
 

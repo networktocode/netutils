@@ -49,12 +49,13 @@ def longest_prefix_match(ip_addr, routes):
 IPNetwork = Union[ipaddress.IPv4Network, ipaddress.IPv6Network]
 
 
+# pylint: disable=too-many-branches
 def prefix_aggregate(
     prefixes: List[Union[ipaddress.IPv4Network, ipaddress.IPv6Network, str]],
     force_continuous: bool = True,
     min_aggr_pref_len: int = 0,
 ) -> Set[Union[ipaddress.IPv4Network, ipaddress.IPv6Network]]:
-    """Aggregate prefixes based on set minimum length and continuity
+    """Aggregate prefixes based on set minimum length and continuity.
 
     Args:
         prefixes (str): list of prefixes as string or ``ipaddress`` network object
@@ -104,9 +105,8 @@ def prefix_aggregate(
             family = type(ipaddress.IPv6Network(prefixes[0]))
         except (ipaddress.AddressValueError, ipaddress.NetmaskValueError, ValueError) as err:
             raise ipaddress.AddressValueError("Please specify valid IPv4 or IPv6 networks!") from err
-    assert (
-        min_aggr_pref_len <= family(0).max_prefixlen
-    ), f"min_aggr_pref_len is bigger than expected ({family.max_prefixlen})"
+    if min_aggr_pref_len > family(0).max_prefixlen:
+        raise ValueError("min_aggr_pref_len is bigger than expected ({family.max_prefixlen})")
     # convert all input elements to ipaddress object
     prefixes = {family(prefix) for prefix in prefixes}
     prefixes = list(ipaddress.collapse_addresses(prefixes))
@@ -145,7 +145,7 @@ def prefix_aggregate(
 def find_prefix_gaps(
     prefixes: List[Union[ipaddress.IPv4Network, ipaddress.IPv6Network, str]], min_gap_size: int, scope: int = 0
 ) -> Dict[IPNetwork, List[IPNetwork]]:
-    """Find gaps in given prefix list
+    """Find gaps in given prefix list.
 
     By default this function will find the longer possible aggregate prefix for the input. Then looks for gaps in
     that aggregate.
@@ -174,8 +174,8 @@ def find_prefix_gaps(
         {IPv4Network('10.0.0.0/22'): [IPv4Network('10.0.1.0/24')]}
     """
     gaps = {}
-    assert 0 <= min_gap_size <= 128
-    assert 0 <= scope <= 128
+    if not (0 <= min_gap_size <= 128 and 0 <= scope <= 128):
+        raise ValueError("min_gap_size and scope must be a valid prefixlength! (0-128)")
 
     supernets = prefix_aggregate(prefixes, min_aggr_pref_len=scope, force_continuous=False)
     continuous_prefs = prefix_aggregate(prefixes, min_aggr_pref_len=scope, force_continuous=True)
