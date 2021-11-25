@@ -114,66 +114,71 @@ def test_route_non_ip_sent():
 
 
 def test_prefix_aggregate_empty():
+    """Test empty input."""
     assert prefix_aggregate([]) == set()
 
 
 def test_prefix_aggregate_bad_prefix():
+    """Test non-valid prefix."""
     prefixes = ["300.0.0.0/24"]
-    with pytest.raises(AddressValueError):
+    with pytest.raises(ValueError):
         prefix_aggregate(prefixes)
 
 
 def test_prefix_aggregate_bad_netmask():
+    """Test non-valid netmask."""
     prefixes = ["100.0.0.0/33"]
-    with pytest.raises(AddressValueError):
+    with pytest.raises(ValueError):
         prefix_aggregate(prefixes)
 
 
 def test_prefix_aggregate_bad_minimum_preflength():
+    """Test wrong parameter."""
     prefixes = ["10.0.0.0/24"]
     with pytest.raises(ValueError) as execinfo:
         prefix_aggregate(prefixes, min_aggr_pref_len=33)
     assert execinfo.match("^min_aggr_pref_len is bigger than expected")
 
 
-def test_prefix_aggregate_too_big_min_prefix_length():
-    prefixes = ["300.0.0.0/24"]
-    with pytest.raises(AddressValueError):
-        prefix_aggregate(prefixes)
-
-
 def test_prefix_aggregate_mixed():
+    """Test mixed address families."""
     prefixes = [IPv4Network("10.0.0.0/24"), IPv6Network("beef::0/64")]
     with pytest.raises(AddressValueError):
         prefix_aggregate(prefixes)
 
 
 def test_prefix_aggregate_continuous_ipv4():
+    """Test with continuous range."""
     prefixes = [IPv4Network("10.0.0.0/24"), IPv4Network("10.0.1.0/24")]
     assert prefix_aggregate(prefixes) == {IPv4Network("10.0.0.0/23")}
 
 
 def test_prefix_aggregate_continuous_ipv6():
+    """Test with continuous range."""
     prefixes = ["2001:db8:0:0::/64", "2001:db8:0:1::/64"]
     assert prefix_aggregate(prefixes) == {IPv6Network("2001:db8::/63")}
 
 
 def test_prefix_aggregate_non_continuous_ipv4():
+    """Test with non-continuous range."""
     prefixes = [IPv4Network("10.0.0.0/24"), IPv4Network("10.0.2.0/24")]
     assert prefix_aggregate(prefixes) == {IPv4Network("10.0.0.0/24"), IPv4Network("10.0.2.0/24")}
 
 
 def test_prefix_aggregate_non_continuous_ipv6():
+    """Test with non-continuous range."""
     prefixes = ["2001:db8:0:0::/64", "2001:db8:0:2::/64"]
     assert prefix_aggregate(prefixes, force_continuous=False) == {IPv6Network("2001:db8::/62")}
 
 
 def test_prefix_aggregate_allow_non_continuous_ipv4():
+    """Test with gappy prefixes to see if those are aggregated."""
     prefixes = [IPv4Network("10.0.0.0/24"), IPv4Network("10.0.2.0/24")]
     assert prefix_aggregate(prefixes, force_continuous=False) == {IPv4Network("10.0.0.0/22")}
 
 
 def test_prefix_aggregate_split_if_input_can_be_aggregated_too_long():
+    """Test aggregate when we force it to be smaller than it could be."""
     prefixes = [
         IPv4Network("10.0.0.0/24"),
         IPv4Network("10.0.2.0/24"),
@@ -192,6 +197,7 @@ def test_prefix_aggregate_split_if_input_can_be_aggregated_too_long():
 
 
 def test_prefix_aggregate_smaller_minimum_still_find_the_longest_possible_prefixes():
+    """When smaller prefix is requested we still get the minimum which covers all."""
     prefixes = [
         IPv4Network("10.0.0.0/24"),
         IPv4Network("10.0.2.0/24"),
@@ -208,6 +214,7 @@ def test_prefix_aggregate_smaller_minimum_still_find_the_longest_possible_prefix
 
 
 def test_prefix_aggregate_ask_for_longer_prefix_length_will_generate_more_prefixes():
+    """When ask for longer, it will split the aggregates to these smaller pieces."""
     prefixes = [
         IPv4Network("10.0.0.0/24"),
         IPv4Network("10.0.1.0/24"),
@@ -221,6 +228,7 @@ def test_prefix_aggregate_ask_for_longer_prefix_length_will_generate_more_prefix
 
 
 def test_find_gaps_with_gap():
+    """Test if we find the gap."""
     prefixes = [
         IPv4Network("10.0.0.0/25"),
         # IPv4Network("10.0.0.128/25"),  # gap
@@ -232,6 +240,7 @@ def test_find_gaps_with_gap():
 
 
 def test_find_gaps_ipv6():
+    """Test to find the gap by IPv6."""
     prefixes = ["2001:db8:0:1::/64", "2001:db8:0:2::/64"]
     assert find_prefix_gaps(prefixes, min_gap_size=80) == {
         IPv6Network("2001:db8::/62"): [IPv6Network("2001:db8::/64"), IPv6Network("2001:db8:0:3::/64")]
@@ -239,6 +248,7 @@ def test_find_gaps_ipv6():
 
 
 def test_find_gaps_with_no_gap():
+    """Check empty output when no gaps present."""
     prefixes = [
         IPv4Network("10.0.0.0/24"),
         IPv4Network("10.0.1.0/24"),
@@ -247,6 +257,7 @@ def test_find_gaps_with_no_gap():
 
 
 def test_find_gaps_with_scope_change():
+    """Check if we have a gap but we wanted to see gaps in minimum /25 aggregates."""
     prefixes = [
         IPv4Network("10.0.0.0/25"),
         # IPv4Network("10.0.0.128/25"),  # gap, but we look for gaps in minimum /25 long prefixes
@@ -256,6 +267,7 @@ def test_find_gaps_with_scope_change():
 
 
 def test_find_gaps_with_two_gaps():
+    """Check to see if we have more gaps."""
     prefixes = [
         IPv4Network("10.0.0.0/25"),
         # IPv4Network("10.0.0.128/25"),  # gap
@@ -271,6 +283,7 @@ def test_find_gaps_with_two_gaps():
 
 
 def test_find_gaps_with_filtering():
+    """Filter out too small prefixes."""
     prefixes = [
         IPv4Network("10.0.0.1"),  # gap filtered
         IPv4Network("10.0.0.2"),  # gap filtered

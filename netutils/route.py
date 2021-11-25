@@ -59,12 +59,15 @@ def prefix_aggregate(
     """Aggregate prefixes based on set minimum length and continuity.
 
     Args:
-        prefixes (str): list of prefixes as string or ``ipaddress`` network object
-        force_continuous (boot): If ``True``, only consider continuous address range and don't make "holes" in the result
-        min_aggr_pref_len (int): output should contain this big prefixes only
+        prefixes (str): list of prefixes as string or ``ipaddress`` network object.
+        force_continuous (bool): If ``True``, only consider continuous address range and don't make "holes" in the result.
+        min_aggr_pref_len (int): output should contain this big prefixes only.
 
     Returns:
-        Set of IPv4 or IPv6 Network objects which are aggregates for the input
+        Set of IPv4 or IPv6 Network objects which are aggregates for the input.
+
+    Raises:
+        ValueError: on wrong input.
 
     Example:
         >>> prefix_aggregate(["10.0.0.0/24", "10.0.1.0/24"])
@@ -105,7 +108,7 @@ def prefix_aggregate(
         try:
             family = type(ipaddress.IPv6Network(prefixes[0]))
         except (ipaddress.AddressValueError, ipaddress.NetmaskValueError, ValueError) as err:
-            raise ipaddress.AddressValueError("Please specify valid IPv4 or IPv6 networks!") from err
+            raise ValueError("Please specify valid IPv4 or IPv6 networks!") from err
     if min_aggr_pref_len > family(0).max_prefixlen:
         raise ValueError("min_aggr_pref_len is bigger than expected ({family.max_prefixlen})")
     # convert all input elements to ipaddress object
@@ -154,12 +157,15 @@ def find_prefix_gaps(
     To limit how small gaps would be returned, set ``min_gap_size`` to a minimum prefix length.
 
     Args:
-        prefixes: list of prefixes to be checked
-        min_gap_size: filter out longer prefixes than that
-        scope: determine the minimum prefix length
+        prefixes: list of prefixes to be checked.
+        min_gap_size: filter out longer prefixes than that.
+        scope: determine the minimum prefix length.
 
     Returns:
-        list of IPvXNetwork objects which represents gaps in the given range
+        list of IPvXNetwork objects which represents gaps in the given range.
+
+    Raises:
+        ValueError: on wrong input.
 
     Example:
         >>> find_prefix_gaps(["10.0.0.0/30", "10.0.0.12/30"], min_gap_size=30)

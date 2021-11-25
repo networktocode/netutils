@@ -398,11 +398,12 @@ def ipaddress_subnet_of(this: IPNetwork, other: IPNetwork) -> bool:
     """Backport of ipaddress.IPv[46]Network.subnet_of method.
 
     This function returns True when ``this`` is a subnet of ``other``.
+
     Args:
         this (IPNetwork): subject subnet of the check.
         other (IPNetwork): intended supernet for checking.
 
-    Return:
+    Returns:
         (bool): True when ``this`` is a subnet of ``other``.
 
     Example:
@@ -427,11 +428,12 @@ def ipaddress_supernet_of(this: IPNetwork, other: IPNetwork) -> bool:
     """Backport of ipaddress.IPv[46]Network.supernet_of method.
 
     This function returns True when ``this`` is a supernet of ``other``.
+
     Args:
         this (IPNetwork): subject supernet of the check.
         other (IPNetwork): intended subnet for checking.
 
-    Return:
+    Returns:
         (bool): True when ``this`` is a supernet of ``other``.
 
     Example:

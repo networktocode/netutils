@@ -437,30 +437,63 @@ def test_ipaddress_network(data):
 
 
 def test_ipaddress_subnet_of_true():
+    """Test containment."""
     sub = IPv4Network("10.0.0.0/24")
     supernet = IPv4Network("10.0.0.0/23")
     assert ip.ipaddress_subnet_of(sub, supernet)
 
 
+def test_ipaddress_subnet_of_true_ipv6():
+    """Test containment."""
+    sub = IPv6Network("2001:db8:0:0::/65")
+    supernet = IPv6Network("2001:db8:0:0::/64")
+    assert ip.ipaddress_subnet_of(sub, supernet)
+
+
 def test_ipaddress_subnet_of_same():
+    """Test if same prefixes are supplied."""
     sub = IPv4Network("10.0.0.0/24")
     supernet = IPv4Network("10.0.0.0/24")
     assert ip.ipaddress_subnet_of(sub, supernet)
 
 
+def test_ipaddress_subnet_of_same_ipv6():
+    """Test if same prefixes are supplied."""
+    sub = IPv6Network("2001:db8:0:0::/65")
+    supernet = IPv6Network("2001:db8:0:0::/65")
+    assert ip.ipaddress_subnet_of(sub, supernet)
+
+
 def test_ipaddress_subnet_of_false():
+    """Test if sub is bigger than supernet."""
     sub = IPv4Network("10.0.0.0/23")
     supernet = IPv4Network("10.0.0.0/24")
     assert not ip.ipaddress_subnet_of(sub, supernet)
 
 
+def test_ipaddress_subnet_of_false_ipv6():
+    """Test if sub is bigger than supernet."""
+    sub = IPv6Network("2001:db8:0:0::/62")
+    supernet = IPv6Network("2001:db8:0:0::/65")
+    assert not ip.ipaddress_subnet_of(sub, supernet)
+
+
 def test_ipaddress_subnet_of_false_distinct_subnets():
+    """Check distinct subnets."""
     sub = IPv4Network("10.0.1.0/24")
     supernet = IPv4Network("10.0.0.0/24")
     assert not ip.ipaddress_subnet_of(sub, supernet)
 
 
+def test_ipaddress_supernet_ok():
+    """Check containment."""
+    sub = IPv4Network("10.0.1.0/24")
+    supernet = IPv4Network("10.0.0.0/20")
+    assert ip.ipaddress_supernet_of(supernet, sub)
+
+
 def test_ipaddress_supernet():
+    """Check distinct subnets."""
     sub = IPv4Network("10.0.1.0/24")
     supernet = IPv4Network("10.0.0.0/24")
-    assert ip.ipaddress_supernet_of(supernet, sub)
+    assert not ip.ipaddress_supernet_of(supernet, sub)
