@@ -137,8 +137,9 @@ def test_prefix_aggregate_bad_minimum_preflength():
     prefixes = [
         "10.0.0.0/24"
     ]
-    with pytest.raises(AddressValueError):
+    with pytest.raises(AssertionError) as execinfo:
         prefix_aggregate(prefixes, min_aggr_pref_len=33)
+    assert execinfo.match("^min_aggr_pref_len is bigger than expected")
 
 
 def test_prefix_aggregate_too_big_min_prefix_length():
@@ -246,7 +247,9 @@ def test_find_gaps_with_gap():
         # IPv4Network("10.0.0.128/25"),  # gap
         IPv4Network("10.0.1.0/24"),
     ]
-    assert find_prefix_gaps(prefixes=prefixes, min_gap_size=25) == {IPv4Network("10.0.0.0/23"): [IPv4Network("10.0.0.128/25")]}
+    assert find_prefix_gaps(prefixes=prefixes, min_gap_size=25) == {
+        IPv4Network("10.0.0.0/23"): [IPv4Network("10.0.0.128/25")]
+    }
 
 
 def test_find_gaps_ipv6():
@@ -254,8 +257,12 @@ def test_find_gaps_ipv6():
         "2001:db8:0:1::/64",
         "2001:db8:0:2::/64"
     ]
-    assert find_prefix_gaps(prefixes, min_gap_size=80) == {IPv6Network('2001:db8::/62'): [IPv6Network('2001:db8::/64'),
-                                                                                          IPv6Network('2001:db8:0:3::/64')]}
+    assert find_prefix_gaps(prefixes, min_gap_size=80) == {
+        IPv6Network('2001:db8::/62'): [
+            IPv6Network('2001:db8::/64'),
+            IPv6Network('2001:db8:0:3::/64')
+        ]
+    }
 
 
 def test_find_gaps_with_no_gap():

@@ -1,7 +1,7 @@
 """Utilities to get best route from routing table."""
 
-from typing import Union, List, Set, Dict
 import ipaddress
+from typing import Union, List, Set, Dict
 
 
 class NoRouteFound(BaseException):
@@ -77,6 +77,19 @@ def prefix_aggregate(
         >>> prefix_aggregate(["10.0.0.0/24", "10.0.2.0/24", "10.0.3.0/24"], force_continuous=False, min_aggr_pref_len=23)
         {IPv4Network('10.0.0.0/24'), IPv4Network('10.0.2.0/23')}
     """
+
+    def eliminate_contained(_aggregate, _min_aggr_pref_len, _prefixes):
+        _eliminated = False
+        while _prefixes:
+            if _aggregate.prefixlen < _min_aggr_pref_len:  # don't eliminate if we crossed the limit
+                break
+            if _prefixes[0].subnet_of(_aggregate):
+                _prefixes.pop(0)  # eliminate contained prefix
+                _eliminated = True
+            else:  # skip checking the following elements as those are guaranteed not contained
+                break
+        return _eliminated
+
     aggregates = set()
     # validate input
     if not prefixes:
@@ -91,8 +104,9 @@ def prefix_aggregate(
             family = type(ipaddress.IPv6Network(prefixes[0]))
         except (ipaddress.AddressValueError, ipaddress.NetmaskValueError, ValueError) as err:
             raise ipaddress.AddressValueError("Please specify valid IPv4 or IPv6 networks!") from err
-    if min_aggr_pref_len > family(0).max_prefixlen:
-        raise ipaddress.AddressValueError(f"min_aggr_pref_len is bigger than expected ({family.max_prefixlen})")
+    assert (
+        min_aggr_pref_len <= family(0).max_prefixlen
+    ), f"min_aggr_pref_len is bigger than expected ({family.max_prefixlen})"
     # convert all input elements to ipaddress object
     prefixes = {family(prefix) for prefix in prefixes}
     prefixes = list(ipaddress.collapse_addresses(prefixes))
@@ -111,18 +125,10 @@ def prefix_aggregate(
     prefixes.sort()
     aggregates = set()
 
-    min_aggregate = None
+    min_aggregate = None  # store minimum prefix while searching for other contained prefixes
     while prefixes:
         aggregate: IPNetwork = prefixes.pop(0)
-        eliminated = False
-        while prefixes:
-            if aggregate.prefixlen < min_aggr_pref_len:  # don't eliminate if we crossed the limit
-                break
-            if prefixes[0].subnet_of(aggregate):
-                prefixes.pop(0)  # eliminate contained prefix
-                eliminated = True
-            else:  # skip checking the following elements as those are guaranteed not contained
-                break
+        eliminated = eliminate_contained(aggregate, min_aggr_pref_len, prefixes)
         if eliminated:
             min_aggregate = aggregate
         if aggregate.prefixlen > min_aggr_pref_len and prefixes:
@@ -173,10 +179,6 @@ def find_prefix_gaps(
 
     supernets = prefix_aggregate(prefixes, min_aggr_pref_len=scope, force_continuous=False)
     continuous_prefs = prefix_aggregate(prefixes, min_aggr_pref_len=scope, force_continuous=True)
-
-    if min_gap_size < 0:
-        # a safe value else we can easily generate millions of missing IPs
-        min_gap_size = list(supernets)[0].max_prefixlen - 3
 
     for supernet in supernets:
         cps = {prefix for prefix in continuous_prefs if prefix.subnet_of(supernet)}
