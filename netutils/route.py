@@ -2,6 +2,7 @@
 
 import ipaddress
 from typing import Union, List, Set, Dict
+
 from netutils.ip import ipaddress_subnet_of
 
 

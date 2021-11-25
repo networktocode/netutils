@@ -1,7 +1,8 @@
 """Test for the IP functions."""
+from ipaddress import IPv4Network, IPv6Network
+
 import pytest
 
-from ipaddress import IPv4Network, IPv6Network
 from netutils import ip
 
 IP_ADDRESS = [

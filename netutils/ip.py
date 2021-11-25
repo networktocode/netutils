@@ -1,7 +1,8 @@
 """Functions for working with IP addresses."""
 import ipaddress
-from typing import Union
 from operator import attrgetter
+from typing import Union
+
 from netutils.constants import IPV4_MASKS, IPV6_MASKS
 
 
