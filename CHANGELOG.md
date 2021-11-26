@@ -1,5 +1,17 @@
 # Changelog
 
+## v0.2.5 - 2021-11
+
+### Added
+
+- #76 Added wrapper for Python ipaddress methods for use with Jinja
+
+### Fixed
+
+- #75 Updated Python requirements to be loosened
+- #76 Fixed doc errors with ip methods
+- #77 Fixed CI pipeline for docker caching
+
 ## v0.2.4 - 2021-11
 
 ### Added
