@@ -3,5 +3,5 @@ Contributing
 ############
 
 .. mdinclude:: ../../../README.md
-   :start-line: 144
-   :end-line: 228
+   :start-line: 145
+   :end-line: 229
