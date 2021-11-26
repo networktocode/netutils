@@ -1,6 +1,83 @@
 """Functions for working with IP addresses."""
 import ipaddress
+from operator import attrgetter
 from netutils.constants import IPV4_MASKS, IPV6_MASKS
+
+
+def ipaddress_address(ip, attr):
+    """Convenience function primarily built to expose ipaddress.ip_address to Jinja.
+
+    Args:
+        ip_addr (str): IP Address str compliant with ipaddress.ip_address inputs.
+        attr (atr): An attribute in string dotted format.
+
+    Returns:
+        str: Returns the value provided by the ipaddress.ip_address attribute provided.
+
+    Example:
+        >>> from netutils.ip import ipaddress_address
+        >>> ipaddress_address('10.1.1.1', 'version')
+        4
+        >>> ipaddress_address('10.1.1.1', '__int__')
+        167837953
+        >>> ipaddress_address('10.1.1.1', 'is_loopback')
+        False
+        >>>
+    """
+    retriever = attrgetter(attr)
+    retrieved_method = retriever(ipaddress.ip_address(ip))
+    if callable(retrieved_method):
+        return retrieved_method()
+    return retrieved_method
+
+
+def ipaddress_interface(ip, attr):
+    """Convenience function primarily built to expose ipaddress.ip_interface to Jinja.
+
+    Args:
+        ip_interface (str): IP interface str compliant with ipaddress.ip_interface inputs.
+        attr (atr): An attribute in string dotted format.
+
+    Returns:
+        str: Returns the value provided by the ipaddress.ip_interface attribute provided.
+
+    Example:
+        >>> from netutils.ip import ipaddress_interface
+        >>> ipaddress_interface('10.1.1.1/24', 'version')
+        4
+        >>> ipaddress_interface('10.1.1.1/24', '__int__')
+        167837953
+    """
+    retriever = attrgetter(attr)
+    retrieved_method = retriever(ipaddress.ip_interface(ip))
+    if callable(retrieved_method):
+        return retrieved_method()
+    return retrieved_method
+
+
+def ipaddress_network(ip, attr):
+    """Convenience function primarily built to expose ipaddress.ip_network to Jinja.
+
+    Args:
+        ip_network (str): IP network str compliant with ipaddress.ip_network inputs.
+        attr (atr): An attribute in string dotted format.
+
+    Returns:
+        str: Returns the value provided by the ipaddress.ip_network attribute provided.
+
+    Example:
+        >>> from netutils.ip import ipaddress_network
+        >>> ipaddress_network('10.1.1.0/24', 'version')
+        4
+        >>> ipaddress_network('10.1.1.0/24', '__str__')
+        '10.1.1.0/24'
+        >>>
+    """
+    retriever = attrgetter(attr)
+    retrieved_method = retriever(ipaddress.ip_network(ip))
+    if callable(retrieved_method):
+        return retrieved_method()
+    return retrieved_method
 
 
 def ip_to_hex(ip):

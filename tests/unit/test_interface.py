@@ -563,7 +563,7 @@ def test_split_interface_tuple_fails(data):
 
 
 def test_interface_sort_empty():
-    assert interface.sort_interface_list([]) == []
+    assert not interface.sort_interface_list([])
 
 
 @pytest.mark.parametrize("data", INTERFACE_SORT)
