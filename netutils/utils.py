@@ -3,6 +3,11 @@ from importlib import import_module
 
 _JINJA2_FUNCTION_MAPPINGS = {
     "asn_to_int": "asn.asn_to_int",
+    "name_to_bits": "bandwidth.name_to_bits",
+    "name_to_bytes": "bandwidth.name_to_bytes",
+    "bits_to_name": "bandwidth.bits_to_name",
+    "bytes_to_name": "bandwidth.bytes_to_name",
+    "name_to_name": "bandwidth.name_to_name",
     "clean_config": "config.clean.clean_config",
     "sanitize_config": "config.clean.sanitize_config",
     "config_compliance": "config.compliance.compliance",
@@ -36,6 +41,9 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_first_usable": "ip.get_first_usable",
     "get_peer_ip": "ip.get_peer_ip",
     "get_usable_range": "ip.get_usable_range",
+    "ipaddress_address": "ip.ipaddress_address",
+    "ipaddress_interface": "ip.ipaddress_interface",
+    "ipaddress_network": "ip.ipaddress_network",
     "is_valid_mac": "mac.is_valid_mac",
     "mac_to_format": "mac.mac_to_format",
     "mac_to_int": "mac.mac_to_int",
@@ -51,13 +59,8 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "longest_prefix_match": "route.longest_prefix_match",
     "vlanlist_to_config": "vlan.vlanlist_to_config",
     "vlanconfig_to_list": "vlan.vlanconfig_to_list",
-    "name_to_bits": "bandwidth.name_to_bits",
-    "name_to_bytes": "bandwidth.name_to_bytes",
-    "bits_to_name": "bandwidth.bits_to_name",
-    "bytes_to_name": "bandwidth.bytes_to_name",
-    "name_to_name": "bandwidth.name_to_name",
     "normalise_delimiter_caret_c": "banner.normalise_delimiter_caret_c",
-    "delimiter_change": "banner.delimiter_change",
+    "delimiter_change": "banner.delimiter_change",    
 }
 
 
