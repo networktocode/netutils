@@ -678,7 +678,7 @@ class F5ConfigParser(BaseBraceConfigParser):
             >>>
             >>>
             >>> config_tree = F5ConfigParser(str(config))
-            >>> pprint(config_tree.build_config_relationship())
+            >>> print(config_tree.build_config_relationship())
             [ConfigLine(config_line='apm resource webtop-link aShare {', parents=()),
             ConfigLine(config_line='    application-uri http://funshare.example.com', parents=('apm resource webtop-link aShare {',)),
             ConfigLine(config_line='    customization-group a_customization_group', parents=('apm resource webtop-link aShare {',)),
