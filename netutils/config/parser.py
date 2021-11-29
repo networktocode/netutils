@@ -684,7 +684,7 @@ class F5ConfigParser(BaseBraceConfigParser):
             ConfigLine(config_line='apm sso form-based portal_ext_sso_form_based {', parents=()),
             ConfigLine(config_line='    form-action /Citrix/Example/ExplicitAuth/LoginAttempt', parents=('apm sso form-based portal_ext_sso_form_based {',)),
             ConfigLine(config_line='    form-field "LoginBtn Log+On\nStateContext "', parents=('apm sso form-based portal_ext_sso_form_based {',)),
-            ConfigLine(config_line='    form-password password', parents=()),
+            ConfigLine(config_line='    form***', parents=()),
             ConfigLine(config_line='    form-username username', parents=()),
             ConfigLine(config_line='    passthru true', parents=()),
             ConfigLine(config_line='    start-uri /Citrix/Example/ExplicitAuth/Login*', parents=()),
