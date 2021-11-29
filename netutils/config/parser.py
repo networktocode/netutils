@@ -657,8 +657,6 @@ class F5ConfigParser(BaseBraceConfigParser):
             ConfigLine: The multiline string text that was added to ``self.config_lines``.
 
         Example:
-            config = '''apm resource webtop-link aShare {
-                application-uri http://>>>
             >>> config = '''apm resource webtop-link aShare {
             ...     application-uri http://funshare.example.com
             ...     customization-group a_customization_group
