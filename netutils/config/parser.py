@@ -418,7 +418,7 @@ class BaseBraceConfigParser(BaseConfigParser):
 class CiscoConfigParser(BaseSpaceConfigParser):
     """Cisco Implementation of ConfigParser Class."""
 
-    regex_banner = re.compile(r"^(banner\s+\S+|\s*vacant-message)\s+(?P<banner_delimiter>\^C|\x03|.{1,1})")
+    regex_banner = re.compile(r"^(banner\s+\S+|\s*vacant-message)\s+(?P<banner_delimiter>\^C|.)")
 
     def __init__(self, config):
         """Create ConfigParser Object.
@@ -442,7 +442,7 @@ class CiscoConfigParser(BaseSpaceConfigParser):
         Raises:
             ValueError: When the parser is unable to identify the End of the Banner.
         """
-        if CiscoConfigParser.is_banner_one_line(config_line):
+        if self.is_banner_one_line(config_line):
             self._update_config_lines(config_line)
             try:
                 return next(self.generator_config)

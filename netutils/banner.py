@@ -23,7 +23,6 @@ def delimiter_change(config, from_delimiter, to_delimiter):
         >>> delimiter_change("banner login ^CCCCC\n******************\n    TEST BANNER\n******************^C", "^C", "^C")
         'banner login ^C\n******************\n    TEST BANNER\n******************^C'
     """
-    # config_line = re.sub(from_delimiter, to_delimiter, config)
     config_line = config.replace(from_delimiter, to_delimiter)
     if to_delimiter == CARET_C:
         config_line = re.sub(r"\^C+", CARET_C, config_line)
