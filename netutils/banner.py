@@ -3,12 +3,12 @@ import re
 from netutils.constants import CARET_C
 
 
-def delimiter_change(config, from_delimiter_patt, to_delimiter):
+def delimiter_change(config, from_delimiter, to_delimiter):
     r"""Change the banner delimiter.
 
     Args:
         config (str): Configuration line containing banner delimiter.
-        from_delimiter_patt (str): Regex pattern to search for the delimiter to replace in the banner.
+        from_delimiter (str): Delimiter to replace in the banner.
         to_delimiter (str): Delimiter to include in the config.
 
     Returns:
@@ -16,21 +16,25 @@ def delimiter_change(config, from_delimiter_patt, to_delimiter):
 
     Example:
         >>> from netutils.banner import delimiter_change
-        >>> delimiter_change("banner login ^\n******************\n    TEST BANNER\n******************^", r"\^", "^C")
+        >>> delimiter_change("banner login ^\n******************\n    TEST BANNER\n******************^", "^", "^C")
         'banner login ^C\n******************\n    TEST BANNER\n******************^C'
-        >>> delimiter_change("banner login ^CCCCC\n******************\n    TEST BANNER\n******************^C", r"\^C", "^C")
+        >>> delimiter_change("banner login #\n******************\n    TEST BANNER\n******************#", "#", "^C")
+        'banner login ^C\n******************\n    TEST BANNER\n******************^C'        
+        >>> delimiter_change("banner login ^CCCCC\n******************\n    TEST BANNER\n******************^C", "^C", "^C")
         'banner login ^C\n******************\n    TEST BANNER\n******************^C'
     """
-    config_line = re.sub(from_delimiter_patt, to_delimiter, config)
+    # config_line = re.sub(from_delimiter, to_delimiter, config)
+    config_line = config.replace(from_delimiter, to_delimiter)
     if to_delimiter == CARET_C:
         config_line = re.sub(r"\^C+", CARET_C, config_line)
     return config_line
 
 
-def normalise_delimiter_caret_c(config):
+def normalise_delimiter_caret_c(delimiter, config):
     r"""Normalise delimiter to ^C.
 
     Args:
+        delimiter (str): Banner delimiter.    
         config (str): Configuration line containing banner delimiter.
 
     Returns:
@@ -38,10 +42,10 @@ def normalise_delimiter_caret_c(config):
 
     Example:
         >>> from netutils.banner import normalise_delimiter_caret_c
-        >>> normalise_delimiter_caret_c("banner login ^\n******************\n    TEST BANNER\n******************^")
+        >>> normalise_delimiter_caret_c("^", "banner login ^\n******************\n    TEST BANNER\n******************^")
         'banner login ^C\n******************\n    TEST BANNER\n******************^C'
-        >>> normalise_delimiter_caret_c("banner login ^CCCCC\n******************\n    TEST BANNER\n******************^C")
+        >>> normalise_delimiter_caret_c("^C", "banner login ^CCCCC\n******************\n    TEST BANNER\n******************^C")
         'banner login ^C\n******************\n    TEST BANNER\n******************^C'
     """
-    config_line = delimiter_change(config, r"\x03|\^(?=\s*|$)", CARET_C)
+    config_line = delimiter_change(config, delimiter, CARET_C)
     return config_line
