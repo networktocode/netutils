@@ -442,7 +442,7 @@ class CiscoConfigParser(BaseSpaceConfigParser):
         Raises:
             ValueError: When the parser is unable to identify the End of the Banner.
         """
-        if self.is_banner_one_line(config_line):
+        if CiscoConfigParser.is_banner_one_line(config_line):
             self._update_config_lines(config_line)
             try:
                 return next(self.generator_config)
@@ -450,7 +450,8 @@ class CiscoConfigParser(BaseSpaceConfigParser):
                 return None
         return super(CiscoConfigParser, self)._build_banner(config_line)
 
-    def is_banner_one_line(self, config_line):
+    @staticmethod
+    def is_banner_one_line(config_line):
         """Determine if all banner config is on one line."""
         _, delimeter, banner = config_line.partition("^C")
         # Based on NXOS configs, the banner delimeter is ignored until another char is used

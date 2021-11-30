@@ -45,13 +45,19 @@ banner_config_and_delimiter = [
     },
     {
         "sent": ["banner login $\n******************\n    TEST BANNER\n******************\n$", "$", "^C"],
-        "received": "banner login ^C\n******************\n    TEST BANNER\n******************\n^C",        
+        "received": "banner login ^C\n******************\n    TEST BANNER\n******************\n^C",
     },
 ]
 
 banner_config = [
-    {"sent": ["^", "banner login ^\n******************\n    TEST BANNER\n******************^"], "received": BANNER_CARET_C},
-    {"sent": ["^C", "banner login ^C\n******************\n    TEST BANNER\n******************^C"], "received": BANNER_CARET_C},
+    {
+        "sent": ["^", "banner login ^\n******************\n    TEST BANNER\n******************^"],
+        "received": BANNER_CARET_C,
+    },
+    {
+        "sent": ["^C", "banner login ^C\n******************\n    TEST BANNER\n******************^C"],
+        "received": BANNER_CARET_C,
+    },
     {
         "sent": ["\x03", "banner login \x03\n******************\n    TEST BANNER\n******************\x03"],
         "received": BANNER_CARET_C,
@@ -60,8 +66,14 @@ banner_config = [
         "sent": ["^C", "banner login ^CCCCC\n******************\n    TEST BANNER\n******************^C"],
         "received": BANNER_CARET_C,
     },
-    {"sent": ["#", "banner login #\n******************\n    TEST BANNER\n******************#"], "received": BANNER_CARET_C},
-    {"sent": ["Z", "banner login Z\n******************\n    TEST BANNER\n******************Z"], "received": BANNER_CARET_C},
+    {
+        "sent": ["#", "banner login #\n******************\n    TEST BANNER\n******************#"],
+        "received": BANNER_CARET_C,
+    },
+    {
+        "sent": ["Z", "banner login Z\n******************\n    TEST BANNER\n******************Z"],
+        "received": BANNER_CARET_C,
+    },
 ]
 
 

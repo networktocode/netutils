@@ -19,7 +19,7 @@ def delimiter_change(config, from_delimiter, to_delimiter):
         >>> delimiter_change("banner login ^\n******************\n    TEST BANNER\n******************^", "^", "^C")
         'banner login ^C\n******************\n    TEST BANNER\n******************^C'
         >>> delimiter_change("banner login #\n******************\n    TEST BANNER\n******************#", "#", "^C")
-        'banner login ^C\n******************\n    TEST BANNER\n******************^C'        
+        'banner login ^C\n******************\n    TEST BANNER\n******************^C'
         >>> delimiter_change("banner login ^CCCCC\n******************\n    TEST BANNER\n******************^C", "^C", "^C")
         'banner login ^C\n******************\n    TEST BANNER\n******************^C'
     """
@@ -34,7 +34,7 @@ def normalise_delimiter_caret_c(delimiter, config):
     r"""Normalise delimiter to ^C.
 
     Args:
-        delimiter (str): Banner delimiter.    
+        delimiter (str): Banner delimiter.
         config (str): Configuration line containing banner delimiter.
 
     Returns:
