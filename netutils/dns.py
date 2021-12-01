@@ -53,7 +53,3 @@ def is_fqdn_resolvable(hostname):
         return True
     except socket.error:
         return False
-
-
-# Provide until transition to 1.0
-is_fqdn_valid = is_fqdn_resolvable
