@@ -607,7 +607,7 @@ class F5ConfigParser(BaseBraceConfigParser):
 
     def _clean_config_f5(self, config_text):  # pylint: disable=no-self-use
         """Removes all configuration items with 'ltm rule'.
-        
+
         iRules are essentially impossible to parse with the lack of uniformity,
         therefore, this method ensures they are not included in ``self.config``.
 
