@@ -625,7 +625,30 @@ class F5ConfigParser(BaseBraceConfigParser):
         return final_config
 
     def build_config_relationship(self):
-        r"""Parse text tree of config lines and their parents."""
+        r"""Parse text tree of config lines and their parents.
+        
+        Example:
+            >>> config = '''apm resource webtop-link aShare {
+            ...     application-uri http://funshare.example.com
+            ...     customization-group a_customization_group
+            ... }
+            ... apm sso form-based portal_ext_sso_form_based {
+            ...     form-action /Citrix/Example/ExplicitAuth/LoginAttempt
+            ...     form-field "LoginBtn Log+On
+            ... StateContext "
+            ...     form-password password
+            ...     form-username username
+            ...     passthru true
+            ...     start-uri /Citrix/Example/ExplicitAuth/Login*
+            ...     success-match-type cookie
+            ...     success-match-value CtxsAuthId
+            ... }
+            ... '''
+            >>> 
+            >>> config_tree = F5ConfigParser(config)
+            >>> print(config_tree.build_config_relationship())
+            [ConfigLine(config_line='apm resource webtop-link aShare {', parents=()), ConfigLine(config_line='    application-uri http://funshare.example.com', parents=('apm resource webtop-link aShare {',)), ConfigLine(config_line='    customization-group a_customization_group', parents=('apm resource webtop-link aShare {',)), ConfigLine(config_line='}', parents=('apm resource webtop-link aShare {',)), ConfigLine(config_line='apm sso form-based portal_ext_sso_form_based {', parents=()), ConfigLine(config_line='    form-action /Citrix/Example/ExplicitAuth/LoginAttempt', parents=('apm sso form-based portal_ext_sso_form_based {',)), ConfigLine(config_line='    form-field "LoginBtn Log+On\nStateContext "', parents=('apm sso form-based portal_ext_sso_form_based {',)), ConfigLine(config_line='    form-password password', parents=()), ConfigLine(config_line='    form-username username', parents=()), ConfigLine(config_line='    passthru true', parents=()), ConfigLine(config_line='    start-uri /Citrix/Example/ExplicitAuth/Login*', parents=()), ConfigLine(config_line='    success-match-type cookie', parents=()), ConfigLine(config_line='    success-match-value CtxsAuthId', parents=()), ConfigLine(config_line='}', parents=())]        
+        """
         for line in self.generator_config:
             self.config_lines.append(ConfigLine(line, self._current_parents))
             line_end = line[-1]
