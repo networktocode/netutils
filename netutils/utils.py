@@ -59,6 +59,8 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "longest_prefix_match": "route.longest_prefix_match",
     "vlanlist_to_config": "vlan.vlanlist_to_config",
     "vlanconfig_to_list": "vlan.vlanconfig_to_list",
+    "normalise_delimiter_caret_c": "banner.normalise_delimiter_caret_c",
+    "delimiter_change": "banner.delimiter_change",
 }
 
 

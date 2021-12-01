@@ -3,6 +3,7 @@
 
 import re
 from collections import namedtuple
+from netutils.banner import normalise_delimiter_caret_c
 
 ConfigLine = namedtuple("ConfigLine", "config_line,parents")
 
@@ -196,7 +197,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
             if not self.is_banner_end(line):
                 banner_config.append(line)
             else:
-                line = line.replace("\x03", "^C")
+                line = normalise_delimiter_caret_c(self.banner_end, line)
                 banner_config.append(line)
                 line = "\n".join(banner_config)
                 if line.endswith("^C"):
@@ -417,7 +418,7 @@ class BaseBraceConfigParser(BaseConfigParser):
 class CiscoConfigParser(BaseSpaceConfigParser):
     """Cisco Implementation of ConfigParser Class."""
 
-    regex_banner = re.compile(r"^(banner\s+\S+|\s*vacant-message)\s+(?P<banner_delimiter>\^C|\x03)")
+    regex_banner = re.compile(r"^(banner\s+\S+|\s*vacant-message)\s+(?P<banner_delimiter>\^C|.)")
 
     def __init__(self, config):
         """Create ConfigParser Object.
@@ -449,9 +450,10 @@ class CiscoConfigParser(BaseSpaceConfigParser):
                 return None
         return super(CiscoConfigParser, self)._build_banner(config_line)
 
-    def is_banner_one_line(self, config_line):
+    @staticmethod
+    def is_banner_one_line(config_line):
         """Determine if all banner config is on one line."""
-        _, delimeter, banner = config_line.partition(self.banner_end)
+        _, delimeter, banner = config_line.partition("^C")
         # Based on NXOS configs, the banner delimeter is ignored until another char is used
         banner_config_start = banner.lstrip(delimeter)
         if delimeter not in banner_config_start:
@@ -504,8 +506,7 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
         Raises:
             ValueError: When the parser is unable to identify the End of the Banner.
         """
-        config_line = config_line.replace("\x03", "^C")
-        config_line = re.sub(r"\^C+", "^C", config_line)
+        config_line = normalise_delimiter_caret_c(self.banner_end, config_line)
         return super(IOSConfigParser, self)._build_banner(config_line)
 
     def _update_same_line_children_configs(self):

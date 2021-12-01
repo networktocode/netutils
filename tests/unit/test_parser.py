@@ -28,7 +28,7 @@ def test_incorrect_banner_ios():
     banner_cfg = (
         "aaa new-model\n"
         "!\n"
-        "banner exec c\n"
+        "banner exec $\n"
         "**************************************************************************\n"
         "* IOSv is strictly limited to use for evaluation, demonstration and IOS.  *\n"
         "**************************************************************************c\n"
