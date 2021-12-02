@@ -17,7 +17,6 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "find_unordered_cfg_lines": "config.compliance.find_unordered_cfg_lines",
     "section_config": "config.compliance.section_config",
     "fqdn_to_ip": "dns.fqdn_to_ip",
-    "is_fqdn_valid": "dns.is_fqdn_valid",
     "is_fqdn_resolvable": "dns.is_fqdn_resolvable",
     "interface_range_expansion": "interface.interface_range_expansion",
     "interface_range_compress": "interface.interface_range_compress",
