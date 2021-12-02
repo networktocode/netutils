@@ -17,7 +17,6 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "find_unordered_cfg_lines": "config.compliance.find_unordered_cfg_lines",
     "section_config": "config.compliance.section_config",
     "fqdn_to_ip": "dns.fqdn_to_ip",
-    "is_fqdn_valid": "dns.is_fqdn_valid",
     "is_fqdn_resolvable": "dns.is_fqdn_resolvable",
     "interface_range_expansion": "interface.interface_range_expansion",
     "interface_range_compress": "interface.interface_range_compress",
@@ -59,6 +58,8 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "longest_prefix_match": "route.longest_prefix_match",
     "vlanlist_to_config": "vlan.vlanlist_to_config",
     "vlanconfig_to_list": "vlan.vlanconfig_to_list",
+    "normalise_delimiter_caret_c": "banner.normalise_delimiter_caret_c",
+    "delimiter_change": "banner.delimiter_change",
 }
 
 

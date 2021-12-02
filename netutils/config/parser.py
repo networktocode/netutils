@@ -3,6 +3,7 @@
 
 import re
 from collections import namedtuple
+from netutils.banner import normalise_delimiter_caret_c
 
 ConfigLine = namedtuple("ConfigLine", "config_line,parents")
 
@@ -196,7 +197,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
             if not self.is_banner_end(line):
                 banner_config.append(line)
             else:
-                line = line.replace("\x03", "^C")
+                line = normalise_delimiter_caret_c(self.banner_end, line)
                 banner_config.append(line)
                 line = "\n".join(banner_config)
                 if line.endswith("^C"):
@@ -417,7 +418,7 @@ class BaseBraceConfigParser(BaseConfigParser):
 class CiscoConfigParser(BaseSpaceConfigParser):
     """Cisco Implementation of ConfigParser Class."""
 
-    regex_banner = re.compile(r"^(banner\s+\S+|\s*vacant-message)\s+(?P<banner_delimiter>\^C|\x03)")
+    regex_banner = re.compile(r"^(banner\s+\S+|\s*vacant-message)\s+(?P<banner_delimiter>\^C|.)")
 
     def __init__(self, config):
         """Create ConfigParser Object.
@@ -449,9 +450,10 @@ class CiscoConfigParser(BaseSpaceConfigParser):
                 return None
         return super(CiscoConfigParser, self)._build_banner(config_line)
 
-    def is_banner_one_line(self, config_line):
+    @staticmethod
+    def is_banner_one_line(config_line):
         """Determine if all banner config is on one line."""
-        _, delimeter, banner = config_line.partition(self.banner_end)
+        _, delimeter, banner = config_line.partition("^C")
         # Based on NXOS configs, the banner delimeter is ignored until another char is used
         banner_config_start = banner.lstrip(delimeter)
         if delimeter not in banner_config_start:
@@ -504,8 +506,7 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
         Raises:
             ValueError: When the parser is unable to identify the End of the Banner.
         """
-        config_line = config_line.replace("\x03", "^C")
-        config_line = re.sub(r"\^C+", "^C", config_line)
+        config_line = normalise_delimiter_caret_c(self.banner_end, config_line)
         return super(IOSConfigParser, self)._build_banner(config_line)
 
     def _update_same_line_children_configs(self):
@@ -596,6 +597,130 @@ class F5ConfigParser(BaseBraceConfigParser):
     """F5ConfigParser implementation fo ConfigParser Class."""
 
     multiline_delimiters = ['"']
+
+    def __init__(self, config):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super().__init__(self._clean_config_f5(config))
+
+    def _clean_config_f5(self, config_text):  # pylint: disable=no-self-use
+        """Removes all configuration items with 'ltm rule'.
+
+        iRules are essentially impossible to parse with the lack of uniformity,
+        therefore, this method ensures they are not included in ``self.config``.
+
+        Args:
+            config_text (str): The entire config as a string.
+
+        Returns:
+            str: The sanitized config with all iRules (ltm rule) stanzas removed.
+        """
+        config_split = config_text.split("ltm rule")
+        if len(config_split) > 1:
+            start_config = config_split[0]
+            end_config = config_split[-1]
+            _, ltm, clean_config = end_config.partition("ltm")
+            final_config = start_config + ltm + clean_config
+        else:
+            final_config = config_text
+        return final_config
+
+    def build_config_relationship(self):
+        r"""Parse text tree of config lines and their parents.
+
+        Example:
+            >>> config = '''apm resource webtop-link aShare {
+            ...     application-uri http://funshare.example.com
+            ...     customization-group a_customization_group
+            ... }
+            ... apm sso form-based portal_ext_sso_form_based {
+            ...     form-action /Citrix/Example/ExplicitAuth/LoginAttempt
+            ...     form-field "LoginBtn Log+On
+            ... StateContext "
+            ...     form-password password
+            ...     form-username username
+            ...     passthru true
+            ...     start-uri /Citrix/Example/ExplicitAuth/Login*
+            ...     success-match-type cookie
+            ...     success-match-value CtxsAuthId
+            ... }
+            ... '''
+            >>>
+            >>> config_tree = F5ConfigParser(config)
+            >>> print(config_tree.build_config_relationship())
+            [ConfigLine(config_line='apm resource webtop-link aShare {', parents=()), ConfigLine(config_line='    application-uri http://funshare.example.com', parents=('apm resource webtop-link aShare {',)), ConfigLine(config_line='    customization-group a_customization_group', parents=('apm resource webtop-link aShare {',)), ConfigLine(config_line='}', parents=('apm resource webtop-link aShare {',)), ConfigLine(config_line='apm sso form-based portal_ext_sso_form_based {', parents=()), ConfigLine(config_line='    form-action /Citrix/Example/ExplicitAuth/LoginAttempt', parents=('apm sso form-based portal_ext_sso_form_based {',)), ConfigLine(config_line='    form-field "LoginBtn Log+On\nStateContext "', parents=('apm sso form-based portal_ext_sso_form_based {',)), ConfigLine(config_line='    form-password password', parents=()), ConfigLine(config_line='    form-username username', parents=()), ConfigLine(config_line='    passthru true', parents=()), ConfigLine(config_line='    start-uri /Citrix/Example/ExplicitAuth/Login*', parents=()), ConfigLine(config_line='    success-match-type cookie', parents=()), ConfigLine(config_line='    success-match-value CtxsAuthId', parents=()), ConfigLine(config_line='}', parents=())]
+        """
+        for line in self.generator_config:
+            self.config_lines.append(ConfigLine(line, self._current_parents))
+            line_end = line[-1]
+            if line.endswith("{"):
+                self._current_parents += (line,)
+            elif line.lstrip() == "}":
+                self._current_parents = self._current_parents[:-1]
+            elif any(
+                delimiters in self.multiline_delimiters and line.count(delimiters) == 1
+                for delimiters in self.multiline_delimiters
+            ):
+                for delimiter in self.multiline_delimiters:
+                    if line.count(delimiter) == 1:
+                        self._build_multiline_single_configuration_line(delimiter, line)
+            elif line_end in self.multiline_delimiters and line.count(line_end) == 1:
+                self._current_parents += (line,)
+                self._build_multiline_config(line_end)
+
+        return self.config_lines
+
+    def _build_multiline_single_configuration_line(self, delimiter, prev_line):
+        r"""Concatenate Multiline strings between delimiter when newlines causes string to traverse multiple lines.
+
+        Args:
+            delimiter (str): The text to look for to end multiline config.
+            prev_line (str): The text from the previously analyzed line.
+
+        Returns:
+            ConfigLine: The multiline string text that was added to ``self.config_lines``.
+
+        Example:
+            config = '''apm resource webtop-link aShare {
+                application-uri http://funshare.example.com
+                customization-group a_customization_group
+            }
+            apm sso form-based portal_ext_sso_form_based {
+                form-action /Citrix/Example/ExplicitAuth/LoginAttempt
+            >>>
+            >>> config = '''apm resource webtop-link aShare {
+            ...     application-uri http://funshare.example.com
+            ...     customization-group a_customization_group
+            ... }
+            ... apm sso form-based portal_ext_sso_form_based {
+            ...     form-action /Citrix/Example/ExplicitAuth/LoginAttempt
+            ...     form-field "LoginBtn Log+On
+            ... StateContext "
+            ...     form-password password
+            ...     form-username username
+            ...     passthru true
+            ...     start-uri /Citrix/Example/ExplicitAuth/Login*
+            ...     success-match-type cookie
+            ...     success-match-value CtxsAuthId
+            ... }
+            ... '''
+            >>>
+            >>>
+            >>> config_tree = F5ConfigParser(str(config))
+            >>> print(config_tree.build_config_relationship())
+            [ConfigLine(config_line='apm resource webtop-link aShare {', parents=()), ConfigLine(config_line='    application-uri http://funshare.example.com', parents=('apm resource webtop-link aShare {',)), ConfigLine(config_line='    customization-group a_customization_group', parents=('apm resource webtop-link aShare {',)), ConfigLine(config_line='}', parents=('apm resource webtop-link aShare {',)), ConfigLine(config_line='apm sso form-based portal_ext_sso_form_based {', parents=()), ConfigLine(config_line='    form-action /Citrix/Example/ExplicitAuth/LoginAttempt', parents=('apm sso form-based portal_ext_sso_form_based {',)), ConfigLine(config_line='    form-field "LoginBtn Log+On\nStateContext "', parents=('apm sso form-based portal_ext_sso_form_based {',)), ConfigLine(config_line='    form-password password', parents=()), ConfigLine(config_line='    form-username username', parents=()), ConfigLine(config_line='    passthru true', parents=()), ConfigLine(config_line='    start-uri /Citrix/Example/ExplicitAuth/Login*', parents=()), ConfigLine(config_line='    success-match-type cookie', parents=()), ConfigLine(config_line='    success-match-value CtxsAuthId', parents=()), ConfigLine(config_line='}', parents=())]
+        """
+        multiline_config = [prev_line]
+        for line in self.generator_config:
+            multiline_config.append(line)
+            if line.endswith(delimiter):
+                multiline_entry = ConfigLine("\n".join(multiline_config), self._current_parents)
+                self.config_lines[-1] = multiline_entry
+                self._current_parents = self._current_parents[:-1]
+                return multiline_entry
 
 
 class JunosConfigParser(BaseSpaceConfigParser):
