@@ -24,6 +24,30 @@ data = [
     ConfigLine(config_line="    }", parents=("auth user admin {", "    partition-access {")),
     ConfigLine(config_line="    shell bash", parents=("auth user admin {",)),
     ConfigLine(config_line="}", parents=("auth user admin {",)),
+    ConfigLine(config_line="apm resource webtop-link aShare {", parents=()),
+    ConfigLine(
+        config_line="    application-uri http://funshare.example.com", parents=("apm resource webtop-link aShare {",)
+    ),
+    ConfigLine(
+        config_line="    customization-group a_customization_group", parents=("apm resource webtop-link aShare {",)
+    ),
+    ConfigLine(config_line="}", parents=("apm resource webtop-link aShare {",)),
+    ConfigLine(config_line="apm sso form-based portal_ext_sso_form_based {", parents=()),
+    ConfigLine(
+        config_line="    form-action /Citrix/Example/ExplicitAuth/LoginAttempt",
+        parents=("apm sso form-based portal_ext_sso_form_based {",),
+    ),
+    ConfigLine(
+        config_line='    form-field "LoginBtn Log+On\nStateContext "',
+        parents=("apm sso form-based portal_ext_sso_form_based {",),
+    ),
+    ConfigLine(config_line="    form-password password", parents=()),
+    ConfigLine(config_line="    form-username username", parents=()),
+    ConfigLine(config_line="    passthru true", parents=()),
+    ConfigLine(config_line="    start-uri /Citrix/Example/ExplicitAuth/Login*", parents=()),
+    ConfigLine(config_line="    success-match-type cookie", parents=()),
+    ConfigLine(config_line="    success-match-value CtxsAuthId", parents=()),
+    ConfigLine(config_line="}", parents=()),
     ConfigLine(config_line="cli global-settings { }", parents=()),
     ConfigLine(config_line="cli preference {", parents=()),
     ConfigLine(config_line="    alias-path { /Common }", parents=("cli preference {",)),

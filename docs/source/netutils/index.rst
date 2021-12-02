@@ -7,6 +7,7 @@ Netutils Functions
 
    asn/index
    bandwidth/index
+   banner/index
    configs/index
    dns/index
    interface/index
