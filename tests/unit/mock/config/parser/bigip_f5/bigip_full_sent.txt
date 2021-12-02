@@ -13,6 +13,21 @@ auth user admin {
     }
     shell bash
 }
+apm resource webtop-link aShare {
+    application-uri http://funshare.example.com
+    customization-group a_customization_group
+}
+apm sso form-based portal_ext_sso_form_based {
+    form-action /Citrix/Example/ExplicitAuth/LoginAttempt
+    form-field "LoginBtn Log+On
+StateContext "
+    form-password password
+    form-username username
+    passthru true
+    start-uri /Citrix/Example/ExplicitAuth/Login*
+    success-match-type cookie
+    success-match-value CtxsAuthId
+}
 cli global-settings { }
 cli preference {
     alias-path { /Common }
@@ -154,6 +169,40 @@ ltm global-settings general {
     share-single-mac vmw-compat
 }
 ltm global-settings rule { }
+ltm rule imap_tls {
+when CLIENT_ACCEPTED {   
+     SSL::disable 
+ }   
+ when SERVER_CONNECTED {   
+     TCP::collect 
+ }   
+ when CLIENT_DATA {   
+     set lcpayload [string tolower [TCP::payload]] 
+     if { $lcpayload contains "starttls" } {  
+         set tag [getfield [TCP::payload]  " " 1] 
+         TCP::respond "$tag OK \"Begin TLS negotiation now\"\r\n" 
+         TCP::payload replace 0 [TCP::payload length] "" 
+         TCP::release 
+         SSL::enable 
+     } else { 
+         set id [getfield [TCP::payload]  " " 1] 
+         TCP::respond "$id BAD \"Must issue a STARTTLS command first\"\r\n" 
+         TCP::payload replace 0 [TCP::payload length] "" 
+         TCP::release 
+         TCP::collect 
+     }   
+ }   
+ when SERVER_DATA { 
+     if { [TCP::payload] contains "* CAPABILITY" } { 
+         TCP::payload replace 12 0 " STARTTLS" 
+         TCP::release 
+         clientside { TCP::collect }   
+     } else { 
+         TCP::release 
+         TCP::collect 
+     } 
+}
+}
 ltm global-settings traffic-control { }
 ltm persistence global-settings { }
 ltm tacdb licenseddb licensed-tacdb {
