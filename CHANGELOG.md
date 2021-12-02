@@ -1,5 +1,19 @@
 # Changelog
 
+## v1.0.0 - 2021-11
+
+### Added
+
+- #69 Normalise banner demiliter for IOS to ^C & support parsing delimiter ^
+
+### Fixed
+
+- #79 F5 parser fix for irules with multiline single command lines.
+
+### Removed
+
+- #83 remove support for old function 'is_fqdn_valid' as prep for 1.0.0
+
 ## v0.2.5 - 2021-11
 
 ### Added
