@@ -387,3 +387,23 @@ def get_usable_range(ip_network):
         lower_bound = str(net[1])
         upper_bound = str(net[-2])
     return f"{lower_bound} - {upper_bound}"
+
+
+def ip_to_ptr(ip_address):
+    """Generates a ptr record from a given IPv4 address.
+
+    Args:
+        ip4_address (str): IPv4 address.
+
+    Returns:
+        str: ptr address generated from given IPv4 address.
+
+    Example:
+        >>> from netutils.ip import ip_to_ptr
+        >>> ip_to_ptr("10.10.0.1")
+        '1.0.10.10.in-addr.arpa'
+        >>> ip_to_ptr("2001:db8::1")
+        '1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa'
+    """
+    ip_obj = ipaddress.ip_address(ip_address)
+    return ip_obj.reverse_pointer

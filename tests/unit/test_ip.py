@@ -319,6 +319,16 @@ COUNT_BITS = [
     {"sent": 0xFFFFFFFFFFFFFFFF, "received": 64},
 ]
 
+ip_ptr = [
+    {"sent": "10.10.10.1", "recieved": "1.10.10.10.in-addr.arpa"},
+    {"sent": "192.168.100.10", "recieved": "10.100.168.192.in-addr.arpa"},
+    {"sent": "2001:db8::1", "recieved": "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa"},
+    {
+        "sent": "2001:DB8:0:0:22:F376:FF3B:AC99",
+        "recieved": "9.9.c.a.b.3.f.f.6.7.3.f.2.2.0.0.0.0.0.0.0.0.0.0.8.b.d.0.1.0.0.2.ip6.arpa",
+    },
+]
+
 
 @pytest.mark.parametrize("data", IP_TO_HEX)
 def test_ip_to_hex(data):
@@ -433,3 +443,13 @@ def test_ipaddress_interface(data):
 @pytest.mark.parametrize("data", IP_NETWORK)
 def test_ipaddress_network(data):
     assert ip.ipaddress_network(**data["sent"]) == data["received"]
+
+
+@pytest.mark.parametrize("data", ip_ptr)
+def test_ip4_to_ptr(data):
+    assert ip.ip_to_ptr(data["sent"]) == data["recieved"]
+
+
+def test_ip_to_ptr_fail():
+    with pytest.raises(ValueError):
+        ip.ip_to_ptr("1.1.1.1.1")

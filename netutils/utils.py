@@ -60,6 +60,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "vlanconfig_to_list": "vlan.vlanconfig_to_list",
     "normalise_delimiter_caret_c": "banner.normalise_delimiter_caret_c",
     "delimiter_change": "banner.delimiter_change",
+    "ip_to_ptr": "ip.ip_to_ptr",
 }
 
 
