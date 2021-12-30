@@ -3,5 +3,5 @@ Examples
 ########
 
 .. mdinclude:: ../../../README.md
-   :start-line: 50
-   :end-line: 102
+   :start-line: 52
+   :end-line: 105
