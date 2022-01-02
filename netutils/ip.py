@@ -390,13 +390,13 @@ def get_usable_range(ip_network):
 
 
 def ip_to_ptr(ip_address):
-    """Generates a ptr record from a given IPv4 address.
+    """Generates a ptr record from a given IP address.
 
     Args:
         ip4_address (str): IPv4 address.
 
     Returns:
-        str: ptr address generated from given IPv4 address.
+        str: ptr address generated from given IP address.
 
     Example:
         >>> from netutils.ip import ip_to_ptr
