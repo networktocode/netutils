@@ -393,7 +393,7 @@ def ip_to_ptr(ip_address):
     """Generates a ptr record from a given IP address.
 
     Args:
-        ip4_address (str): IPv4 address.
+        ip4_address (str): IP address.
 
     Returns:
         str: ptr address generated from given IP address.
