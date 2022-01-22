@@ -16,6 +16,8 @@ This library intends to keep the following tenets:
 
 Functions are grouped with like functions, such as IP or MAC address based functions. Included to date are groupings of:
 
+* Bandwidth - Provides the ability to convert between various bandwidth values.
+* Banner - Provides the ability to normalize the various banner delimiters.
 * BGP ASN - Provides the ability to convert BGP ASN from integer to dot notation.
 * Configuration
   * Cleaning - Provides the ability to remove or replace lines based on regex matches.
@@ -30,6 +32,7 @@ Functions are grouped with like functions, such as IP or MAC address based funct
 * Ping - Provides the ability to ping, currently only tcp ping.
 * Protocol Mapper - Provides a mapping for protocol names to numbers and vice versa.
 * Route - Provides the ability to provide a list of routes and an IP Address and return the longest prefix matched route.
+* Time -Provides the ability to convert between integer time and string times.
 * VLANs - Provide the ability to convert configuration into lists or lists into configuration.
 
 # Installation
@@ -139,6 +142,7 @@ Relevant PR's
 * https://github.com/ansible/ansible/pull/39901
 * https://github.com/ansible/ansible/pull/26566
 
+In building out the time conversion, the regex patterns are based on NAPALM implementation with their consent.
 
 # Contributing
 

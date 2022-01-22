@@ -60,6 +60,8 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "vlanconfig_to_list": "vlan.vlanconfig_to_list",
     "normalise_delimiter_caret_c": "banner.normalise_delimiter_caret_c",
     "delimiter_change": "banner.delimiter_change",
+    "uptime_seconds_to_string": "time.uptime_seconds_to_string",
+    "uptime_string_to_seconds": "time.uptime_string_to_seconds",
 }
 
 

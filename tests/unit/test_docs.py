@@ -35,7 +35,7 @@ START_END_LINES = [
     {
         "name": "attribution",
         "start_value": "The library was built to be a centralized place for common network automation code to be accessed. While in most cases it is\n",
-        "end_value": "* https://github.com/ansible/ansible/pull/26566\n",
+        "end_value": "In building out the time conversion, the regex patterns are based on NAPALM implementation with their consent.\n",
     },
     {
         "name": "contributing",
