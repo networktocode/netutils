@@ -3,6 +3,7 @@
 
 import re
 from collections import namedtuple
+
 from netutils.banner import normalise_delimiter_caret_c
 
 ConfigLine = namedtuple("ConfigLine", "config_line,parents")
@@ -570,6 +571,32 @@ class NXOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
     """NXOS implementation of ConfigParser Class."""
 
     regex_banner = re.compile(r"^banner\s+\S+\s+(?P<banner_delimiter>\S)")
+
+    def __init__(self, config):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        self.unique_config_lines = set()
+        self.same_line_children = set()
+        super(NXOSConfigParser, self).__init__(config)
+
+    def _build_banner(self, config_line):
+        """Handle banner config lines.
+
+        Args:
+            config_line (str): The start of the banner config.
+
+        Returns:
+            str: The next configuration line in the configuration text.
+            None: When banner end is the end of the config text.
+
+        Raises:
+            ValueError: When the parser is unable to identify the End of the Banner.
+        """
+        config_line = normalise_delimiter_caret_c(self.banner_end, config_line)
+        return super(NXOSConfigParser, self)._build_banner(config_line)
 
 
 class EOSConfigParser(BaseSpaceConfigParser):

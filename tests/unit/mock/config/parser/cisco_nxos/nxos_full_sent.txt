@@ -19,6 +19,11 @@ feature hsrp
 feature vpc
 feature lldp
 
+banner motd #
+This is a test,
+banner message.
+#
+
 logging level aaa 4
 logging level acllog 4
 logging level aclmgr 4
