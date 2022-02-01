@@ -20,6 +20,8 @@ data = [
     ConfigLine(config_line="feature hsrp", parents=()),
     ConfigLine(config_line="feature vpc", parents=()),
     ConfigLine(config_line="feature lldp", parents=()),
+    ConfigLine(config_line="banner motd ^C", parents=()),
+    ConfigLine(config_line="This is a test,\nbanner message.^C", parents=("banner motd ^C",)),
     ConfigLine(config_line="logging level aaa 4", parents=()),
     ConfigLine(config_line="logging level acllog 4", parents=()),
     ConfigLine(config_line="logging level aclmgr 4", parents=()),
