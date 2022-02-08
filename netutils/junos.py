@@ -1,5 +1,6 @@
 """Functions for working with junos lists."""
 
+
 def junos_list(item_list: list):
     """Given a list of items it will output a Junos formatted list.
 
@@ -7,7 +8,7 @@ def junos_list(item_list: list):
         item_list (list): List of strings.
 
     Returns:
-        str: Sorted string list of items in the junos format. 
+        str: Sorted string list of items in the junos format.
 
     Example:
         >>> from netutils.junos import junos_list
