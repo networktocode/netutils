@@ -14,10 +14,15 @@ Configs
 Edge Cases
 ==============
 
-Fortinet Fortios Parser
+Fortinet FortiOS Parser
 -----------------------
-- In order to support html blocks that exist in Fortios configurations, some preprocessing is executed, this is a regex that specifically grabs everything between quotes after the 'set buffer' sub-command. It's explicitly looking for double quote followed by a newline ("\n) to end the captured data.  This support for html data will not support any other html that doesn't follow this convention.
+- To support HTML blocks that exist in FortiOS configurations, some preprocessing via a regex is performed that specifically grabs everything between quotes after the 'set buffer' sub-command. It is explicitly looking for the double quote followed by a newline ("\n) to end the captured data. This support for HTML data will not support any other HTML that doesn't follow this convention.
 
 F5 Parser
 -----------------------
-- The "ltm rule" configuration sections are not uniform nor standardized; therefor, these sections are completely removed from the configuration in a preprocessing event.
+- The "ltm rule" configuration sections are not uniform nor standardized; therefore, these sections are completely removed from the configuration in a preprocessing event.
+
+Nokia SrOS Parser
+-----------------
+
+- The parser depends upon the configuration presented in backups being in the "info" format as opposed to the indented MD-CLI format.
