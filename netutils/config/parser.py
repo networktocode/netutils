@@ -1,5 +1,5 @@
 """Parsers for different network operating systems."""
-# pylint: disable=no-member,super-with-arguments,invalid-overridden-method,raise-missing-from,invalid-overridden-method,inconsistent-return-statements,super-with-arguments,redefined-argument-from-local,no-else-break,useless-super-delegation
+# pylint: disable=no-member,super-with-arguments,invalid-overridden-method,raise-missing-from,invalid-overridden-method,inconsistent-return-statements,super-with-arguments,redefined-argument-from-local,no-else-break,useless-super-delegation,too-many-lines
 
 import re
 from collections import namedtuple
@@ -949,3 +949,10 @@ class FortinetConfigParser(BaseSpaceConfigParser):
                 self.indent_level = spaces
 
             self._update_config_lines(line)
+
+
+class NokiaConfigParser(BaseSpaceConfigParser):
+    """Nokia SrOS config parser."""
+
+    comment_chars = []
+    banner_start = []
