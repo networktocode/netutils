@@ -170,6 +170,7 @@ ANSIBLE_LIB_MAPPER = {
     "community.network.routeros": "mikrotik_routeros",
     "community.network.netvisor": "pluribus",
     "community.network.icx": "ruckus_icx",
+    "community.network.sros": "nokia_sros",
     "vyos.vyos.vyos": "vyos",
 }
 
@@ -240,6 +241,7 @@ ANSIBLE_LIB_MAPPER_REVERSE = {
     "lenovo_cnos": "community.network.cnos",
     "lenovo_enos": "community.network.enos",
     "mikrotik_routeros": "community.network.routeros",
+    "nokia_sros": "community.network.sros",
     "pluribus": "community.network.netvisor",
     "ruckus_icx": "community.network.icx",
     "vyos": "vyos.vyos.vyos",
