@@ -2,8 +2,8 @@
 import subprocess
 import glob
 import os
-import pytest
 import re
+import pytest
 
 UNDOCUMENTED_FILES = ["__init__", "constants", "lib_mapper", "protocol_mapper", "variables"]
 
