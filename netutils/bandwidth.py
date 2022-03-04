@@ -113,19 +113,20 @@ def bits_to_name(  # pylint: disable=too-many-branches,too-many-return-statement
     Example:
         >>> from netutils.bandwidth import bits_to_name
         >>> bits_to_name(125000)
-        '125.0Kbps'
+        '125Kbps'
         >>> bits_to_name(1000000000)
-        '1.0Gbps'
+        '1Gbps'
     """
     if not isinstance(speed, int):
         raise ValueError(f"Speed of {speed} was not a valid speed integer.")
 
     for bit_type, val in BITS_MAPPING.items():
         if val["low"] <= speed < val["high"]:
-            try:
-                return f"{round(speed / val['low'], nbr_decimal)}{bit_type}"
-            except ZeroDivisionError:
+            if nbr_decimal == 0:
+                nbr_decimal = None
+            if val["low"] == 0:
                 return f"{round(speed, nbr_decimal)}{bit_type}"
+            return f"{round(speed / val['low'], nbr_decimal)}{bit_type}"
     raise ValueError(f"Speed of {speed} was not a valid speed representation.")
 
 

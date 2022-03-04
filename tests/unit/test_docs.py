@@ -2,8 +2,8 @@
 import subprocess
 import glob
 import os
+import re
 import pytest
-import regex
 
 UNDOCUMENTED_FILES = ["__init__", "constants", "lib_mapper", "protocol_mapper", "variables"]
 
@@ -54,7 +54,7 @@ def _get_readme_line(folder_name, start_end):
     regex_dict = {"start": r"(:start-line:\s+(?P<value>\d+))", "end": r"(:end-line:\s+(?P<value>\d+))"}
     with open(f"{SPHINX_DIRECTORIES[0]['source_dir']}/{folder_name}/index.rst", "r", encoding="utf-8") as index_file:
         for line in index_file.readlines():
-            match = regex.search(regex_dict[start_end], line)
+            match = re.search(regex_dict[start_end], line)
             if match:
                 break
 
