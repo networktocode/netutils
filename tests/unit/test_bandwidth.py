@@ -38,14 +38,16 @@ def test_name_to_bits_exceptions(data):
 
 bits_to_name = [
     {"sent": {"speed": 950}, "received": "950bps"},
-    {"sent": {"speed": 1000}, "received": "1.0Kbps"},
+    {"sent": {"speed": 1000}, "received": "1Kbps"},
     {"sent": {"speed": 1000, "nbr_decimal": 1}, "received": "1.0Kbps"},
-    {"sent": {"speed": 1000000}, "received": "1.0Mbps"},
+    {"sent": {"speed": 1000000}, "received": "1Mbps"},
     {"sent": {"speed": 1000000, "nbr_decimal": 1}, "received": "1.0Mbps"},
-    {"sent": {"speed": 1000000000}, "received": "1.0Gbps"},
+    {"sent": {"speed": 1000000000}, "received": "1Gbps"},
+    {"sent": {"speed": 1100000000, "nbr_decimal": 1}, "received": "1.1Gbps"},
     {"sent": {"speed": 1000000000, "nbr_decimal": 1}, "received": "1.0Gbps"},
-    {"sent": {"speed": 1000000000000}, "received": "1.0Tbps"},
+    {"sent": {"speed": 1000000000000}, "received": "1Tbps"},
     {"sent": {"speed": 1000000000000, "nbr_decimal": 1}, "received": "1.0Tbps"},
+    {"sent": {"speed": 1234, "nbr_decimal": 0}, "received": "1Kbps"},
 ]
 
 
