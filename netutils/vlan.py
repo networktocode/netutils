@@ -6,13 +6,14 @@ from operator import itemgetter
 from itertools import groupby
 
 
-def vlanlist_to_config(vlan_list, first_line_len=48, other_line_len=44):
+def vlanlist_to_config(vlan_list, first_line_len=48, other_line_len=44, min_grouping_size=3):
     """Given a List of VLANs, build the IOS-like vlan list of configurations.
 
     Args:
         vlan_list (list): Unsorted list of vlan integers.
         first_line_len (int, optional): The maximum length of the line of the first element of within the return list. Defaults to 48.
         other_line_len (int, optional): The maximum length of the line of all other elements of within the return list. Defaults to 44.
+        min_grouping_size (int, optional): The minimum grouping size. Defaults to Cisco's minimum grouping size of 3.
 
     Returns:
         list: Sorted string list of integers according to IOS-like vlan list rules
@@ -24,26 +25,28 @@ def vlanlist_to_config(vlan_list, first_line_len=48, other_line_len=44):
         >>>
     """
     # Sort and de-dup VLAN list
-    clean_vlan_list = sorted(set(vlan_list))
+    vlan_list = sorted(set(vlan_list))
 
     # Check for invalid VLAN IDs
-    if clean_vlan_list[0] < 1 or clean_vlan_list[-1] > 4094:
+    if vlan_list[0] < 1 or vlan_list[-1] > 4094:
         raise ValueError("Valid VLAN range is 1-4094")
 
     # Group consecutive VLANs
     vlan_groups = []
-    for _, vlan in groupby(enumerate(clean_vlan_list), lambda vlan: vlan[0] - vlan[1]):
+    for _, vlan in groupby(enumerate(vlan_list), lambda vlan: vlan[0] - vlan[1]):
         vlan_groups.append(list(map(itemgetter(1), vlan)))
 
     # Create VLAN portion of config
     vlan_strings = []
     for group in vlan_groups:
-        if len(group) == 1:
-            vlan_strings.append(f"{group[0]}")
-        elif len(group) == 2:
-            vlan_strings.append(f"{group[0]},{group[1]}")
-        else:
-            vlan_strings.append(f"{group[0]}-{group[-1]}")
+        group_string = f"{group[0]}"
+        # Compress based on grouping_size
+        if len(group) >= min_grouping_size:
+            group_string += f"-{group[-1]}"
+        # If it does not match grouping_size, and is greater than one
+        elif len(group) != 1:
+            group_string += f",{group[1]}"
+        vlan_strings.append(group_string)
 
     vlan_cfg = ",".join(vlan_strings)
     if len(vlan_cfg) <= first_line_len:
