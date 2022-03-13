@@ -22,8 +22,13 @@ def vlanlist_to_config(vlan_list, first_line_len=48, other_line_len=44, min_grou
         >>> from netutils.vlan import vlanlist_to_config
         >>> vlanlist_to_config([1, 2, 3, 5, 6, 1000, 1002, 1004, 1006, 1008, 1010, 1012, 1014, 1016, 1018])
         ['1-3,5,6,1000,1002,1004,1006,1008,1010,1012,1014', '1016,1018']
-        >>>
+        >>> vlanlist_to_config([1,3,5,6,100,101,102,103,104,105,107,109], min_grouping_size=2)
+        ['1,3,5-6,100-105,107,109']
     """
+    # 1 is the loneliest number. Fail if min_grouping_size is less than 2.
+    if min_grouping_size < 2:
+        raise ValueError("Minimum grouping size must be two or greater.")
+
     # Sort and de-dup VLAN list
     vlan_list = sorted(set(vlan_list))
 

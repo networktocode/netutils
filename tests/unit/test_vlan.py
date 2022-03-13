@@ -24,6 +24,8 @@ def test_to_config_success(_file, get_json_data):
 def test_to_config_failure(sent_data):
     with pytest.raises(ValueError, match=r"Valid VLAN range*"):
         vlan.vlanlist_to_config(**sent_data)
+    with pytest.raises(ValueError, match="Minimum grouping size must be two or greater."):
+        vlan.vlanlist_to_config("switchport trunk allowed vlan 1025,1069-1072", min_grouping_size=1)
 
 
 @pytest.mark.parametrize("_file", glob.glob(f"{MOCK_DIR}/to_list/*{TXT_FILE}"))
