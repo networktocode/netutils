@@ -92,6 +92,6 @@ def vlanconfig_to_list(vlan_config):
         vlans.extend(list(range(*[int(first) + 1, int(second)])))
 
     vlans = sorted(vlans)
-    if max(vlans) > 4094:
+    if vlans[-1] > 4094:
         raise ValueError(f"Valid VLAN range is 1-4094, found {vlans[-1]}")
     return vlans
