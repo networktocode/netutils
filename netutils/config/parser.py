@@ -1023,20 +1023,3 @@ class NokiaConfigParser(BaseSpaceConfigParser):
                         config_lines.append(line.rstrip())
             self._config = "\n".join(config_lines)
         return self._config
-
-    def build_config_relationship(self):
-        r"""Parse text tree of config lines and their parents."""
-        for line in self.generator_config:
-            if not line[0].isspace():
-                self._current_parents = ()
-            else:
-                previous_config = self.config_lines[-1]
-                self._current_parents = (previous_config.config_line,)
-                self.indent_level = self.get_leading_space_count(line)
-                line = self._build_nested_config(line)
-
-            if line is None:
-                break
-
-            self._update_config_lines(line)
-        return self.config_lines
