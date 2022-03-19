@@ -13,7 +13,7 @@ def vlanlist_to_config(vlan_list, first_line_len=48, other_line_len=44, min_grou
         vlan_list (list): Unsorted list of vlan integers.
         first_line_len (int, optional): The maximum length of the line of the first element of within the return list. Defaults to 48.
         other_line_len (int, optional): The maximum length of the line of all other elements of within the return list. Defaults to 44.
-        min_grouping_size (int, optional): The minimum grouping size. Defaults to Cisco's minimum grouping size of 3.
+        min_grouping_size (int, optional): The minimum consecutive VLANs to aggregate with a hyphen . Defaults to Cisco's minimum grouping size of 3.
 
     Returns:
         list: Sorted string list of integers according to IOS-like vlan list rules
