@@ -965,19 +965,6 @@ class NokiaConfigParser(BaseSpaceConfigParser):
         """
         super(NokiaConfigParser, self).__init__(config)
 
-    def is_exit_next(self, line):  # pylint: disable=no-self-use
-        """Determine if line has 'exit' or 'exit all' in it.
-
-        Args:
-            line (str): A config line from the device.
-
-        Returns:
-            bool: True if line has 'exit' or 'exit all', else False.
-        """
-        if line.lstrip() == "exit" or line.lstrip() == "exit all":
-            return True
-        return False
-
     def is_section_title(self, line):  # pylint: disable=no-self-use
         """Determine if line is a section title in banner.
 
