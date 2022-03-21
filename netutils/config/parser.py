@@ -965,7 +965,7 @@ class NokiaConfigParser(BaseSpaceConfigParser):
         """
         super(NokiaConfigParser, self).__init__(config)
 
-    def is_section_title(self, line):  # pylint: disable=no-self-use
+    def _is_section_title(self, line):  # pylint: disable=no-self-use
         """Determine if line is a section title in banner.
 
         Args:
@@ -978,7 +978,7 @@ class NokiaConfigParser(BaseSpaceConfigParser):
             return True
         return False
 
-    def get_section_title(self, line):  # pylint: disable=no-self-use
+    def _get_section_title(self, line):  # pylint: disable=no-self-use
         """Determine section title from banner.
 
         Args:
@@ -1003,8 +1003,8 @@ class NokiaConfigParser(BaseSpaceConfigParser):
             config_lines = []
             for line in self.config.splitlines():
                 if line and not self.is_comment(line) and not line.isspace():
-                    if self.is_section_title(line):
-                        config_lines.append(self.get_section_title(line))
+                    if self._is_section_title(line):
+                        config_lines.append(self._get_section_title(line))
                     else:
                         config_lines.append(line.rstrip())
             self._config = "\n".join(config_lines)
