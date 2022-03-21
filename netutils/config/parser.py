@@ -999,7 +999,6 @@ class NokiaConfigParser(BaseSpaceConfigParser):
         Returns:
             str: The non-space and non-comment lines from ``config``.
         """
-        # Specific to fortinet to remove uncommon data patterns for use later in _build_nested_config.
         if self._config is None:
             config_lines = []
             for line in self.config.splitlines():
