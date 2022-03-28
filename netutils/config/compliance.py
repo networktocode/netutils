@@ -319,8 +319,7 @@ def feature_compliance(feature, backup_cfg, intended_cfg, network_os):
             }
         )
     else:
-        if backup_cfg and intended_cfg:
-            feature_data.update(_check_configs_differences(intended_cfg, backup_cfg, network_os))
+        feature_data.update(_check_configs_differences(intended_cfg, backup_cfg, network_os))
     if feature["ordered"] is True:
         feature_data["compliant"] = feature_data["ordered_compliant"]
     elif feature["ordered"] is False:
