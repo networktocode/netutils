@@ -73,19 +73,24 @@ def vlanconfig_to_list(vlan_config):
         [1025, 1069, 1070, 1071, 1072, 1114, 1173, 1174, 1175, 1176, 1177, 1178, 1179, 1180, 1181, 1501, 1502]
         >>>
     """
-    vlans = []
-    for line in vlan_config.splitlines():
-        match = re.search(r"\d", line)
-        if not match:
-            raise ValueError(f"No digits found in line `{line}`")
-        for parsed in line[match.start() :].split(","):  # noqa: E203
-            if any(char not in "0123456789-" for char in parsed):
-                raise ValueError(f"There were non-digits and dashes found in `{parsed}`")
-            if re.search("-", parsed):
-                vlans.extend(list(range(*[int(i) for i in parsed.split("-")])))
-                vlans.append(int(parsed.split("-")[1]))
-            else:
-                vlans.append(int(parsed))
+    # Check for invalid data within the vlan_config
+    # example: switchport trunk allowed vlan 1025,1069-1072,BADDATA
+    invalid_data = re.findall(r",?[^0-9\-],?$", vlan_config)
+    # Regular VLANs that are not condensed and can be converted to integers
+    vlans = list(map(int, re.findall(r"\d+", vlan_config)))
+
+    # Fail if invalid data is found
+    if invalid_data and vlans:
+        raise ValueError(f"There were non-digits and dashes found in `{vlan_config}`.")
+    if invalid_data:
+        raise ValueError(f"No digits found in `{vlan_config}`")
+
+    vlan_ranges = re.findall(r"\d+-\d+", vlan_config)
+    for v_range in vlan_ranges:
+        first, second = v_range.split("-")
+        # Add one to first to prevent duplicates that already exist within vlans
+        vlans.extend(list(range(*[int(first) + 1, int(second)])))
+
     vlans = sorted(vlans)
     if vlans[-1] > 4094:
         raise ValueError(f"Valid VLAN range is 1-4094, found {vlans[-1]}")
