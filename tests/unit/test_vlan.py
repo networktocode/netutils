@@ -40,5 +40,5 @@ def test_to_list_failure():
         vlan.vlanconfig_to_list("switchport trunk allowed vlan 1025,1069-1072,4099")
     with pytest.raises(ValueError, match=r"There were non-digits and dashes*"):
         vlan.vlanconfig_to_list("switchport trunk allowed vlan 1025,1069-1072,BADDATA")
-    with pytest.raises(ValueError, match=r"No digits found in line *"):
+    with pytest.raises(ValueError, match=r"No digits found in `switchport trunk allowed vlan BADDATA`"):
         vlan.vlanconfig_to_list("switchport trunk allowed vlan BADDATA")
