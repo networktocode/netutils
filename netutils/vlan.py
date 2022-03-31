@@ -49,7 +49,7 @@ def vlanlist_to_config(vlan_list, first_line_len=48, other_line_len=44, min_grou
 
     # If grouping size is zero, sort, and return the config list as no other processing is required.
     if min_grouping_size == 1:
-        return build_final_vlan_cfg(",".join([str(x) for x in vlan_list]))
+        return build_final_vlan_cfg(",".join([str(vlan) for vlan in vlan_list]))
 
     # Group consecutive VLANs
     vlan_groups = []
