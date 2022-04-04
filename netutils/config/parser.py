@@ -954,7 +954,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
 class NokiaConfigParser(BaseSpaceConfigParser):
     """Nokia SrOS config parser."""
 
-    comment_chars = ["# ", "#--------------------------------------------------"]
+    comment_chars = ["#"]
     banner_start = []
 
     def __init__(self, config):
