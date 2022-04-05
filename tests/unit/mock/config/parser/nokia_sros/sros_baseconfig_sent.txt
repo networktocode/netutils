@@ -1,0 +1,257 @@
+# TiMOS-B-21.2.R1 both/x86_64 Nokia 7750 SR Copyright (c) 2000-2021 Nokia.
+# All rights reserved. All use subject to applicable license agreements.
+# Built on Thu Feb 25 15:50:28 PST 2021 by builder in /builds/c/212B/R1/panos/main/sros
+# Configuration format version 21.2 revision 0
+
+# Generated THU APR 15 01:28:37 2021 UTC
+
+exit all
+configure
+#--------------------------------------------------
+echo "System Configuration"
+#--------------------------------------------------
+    system
+        name "sros-r1"
+        netconf
+            auto-config-save
+            no shutdown
+        exit
+        snmp
+            streaming
+                no shutdown
+            exit
+            packet-size 9216
+        exit
+        time
+            sntp
+                shutdown
+            exit
+            zone UTC
+        exit
+        bluetooth
+            module A
+            exit
+            power off
+        exit
+    exit
+#--------------------------------------------------
+echo "System Security Configuration"
+#--------------------------------------------------
+    system
+        security
+            profile "administrative"
+                netconf
+                    base-op-authorization
+                        kill-session
+                        lock
+                    exit
+                exit
+                entry 10
+                    match "configure system security"
+                    action permit
+                exit
+                entry 20
+                    match "show system security"
+                    action permit
+                exit
+                entry 30
+                    match "tools perform security"
+                    action permit
+                exit
+                entry 40
+                    match "tools dump security"
+                    action permit
+                exit
+                entry 50
+                    match "admin system security"
+                    action permit
+                exit
+                entry 100
+                    match "configure li"
+                    action deny
+                exit
+                entry 110
+                    match "show li"
+                    action deny
+                exit
+                entry 111
+                    match "clear li"
+                    action deny
+                exit
+                entry 112
+                    match "tools dump li"
+                    action deny
+                exit
+            exit
+            user "admin"
+                password "$2y$10$TQrZlpBDra86.qoexZUzQeBXDY1FcdDhGWdD9lLxMuFyPVSm0OGy6"
+                access console ftp snmp netconf grpc
+                console
+                    member "administrative"
+                exit
+            exit
+            user "vrnetlab"
+                password "$2y$10$zjlEA0qAfjuXNwo1gXA5..BImKLQpWGaJNZ7SIidoHJ59vu7haI7C"
+                access console netconf
+                console
+                    member "administrative"
+                    member "default"
+                exit
+            exit
+            per-peer-queuing
+            dist-cpu-protection
+                policy "_default-access-policy" create
+                exit
+                policy "_default-network-policy" create
+                exit
+            exit
+        exit
+    exit
+#--------------------------------------------------
+echo "System Login Control Configuration"
+#--------------------------------------------------
+    system
+        login-control
+            ssh
+                inbound-max-sessions 30
+            exit
+        exit
+    exit
+#--------------------------------------------------
+echo "Log Configuration"
+#--------------------------------------------------
+    log
+    exit
+#--------------------------------------------------
+echo "System gRPC Configuration"
+#--------------------------------------------------
+    system
+        grpc
+            allow-unsecure-connection
+            gnmi
+                auto-config-save
+                no shutdown
+            exit
+            rib-api
+                no shutdown
+            exit
+            no shutdown
+        exit
+    exit
+#--------------------------------------------------
+echo "Card Configuration"
+#--------------------------------------------------
+    card 1
+        card-type iom-1
+        mda 1
+            mda-type me12-100gb-qsfp28
+            no shutdown
+        exit
+        no shutdown
+    exit
+#--------------------------------------------------
+echo "Connector Configuration"
+#--------------------------------------------------
+    port 1/1/c1
+        shutdown
+    exit
+    port 1/1/c2
+        shutdown
+    exit
+    port 1/1/c3
+        shutdown
+    exit
+    port 1/1/c4
+        shutdown
+    exit
+    port 1/1/c5
+        shutdown
+    exit
+    port 1/1/c6
+        shutdown
+    exit
+    port 1/1/c7
+        shutdown
+    exit
+    port 1/1/c8
+        shutdown
+    exit
+    port 1/1/c9
+        shutdown
+    exit
+    port 1/1/c10
+        shutdown
+    exit
+    port 1/1/c11
+        shutdown
+    exit
+    port 1/1/c12
+        shutdown
+    exit
+#--------------------------------------------------
+echo "Port Configuration"
+#--------------------------------------------------
+    port A/3
+        shutdown
+        ethernet
+        exit
+    exit
+    port A/4
+        shutdown
+    exit
+#--------------------------------------------------
+echo "System Sync-If-Timing Configuration"
+#--------------------------------------------------
+    system
+        sync-if-timing
+            begin
+            commit
+        exit
+    exit
+#--------------------------------------------------
+echo "Management Router Configuration"
+#--------------------------------------------------
+    router management
+    exit
+
+#--------------------------------------------------
+echo "Router (Network Side) Configuration"
+#--------------------------------------------------
+    router Base
+        interface "system"
+            no shutdown
+        exit
+    exit
+
+#--------------------------------------------------
+echo "Service Configuration"
+#--------------------------------------------------
+    service
+        customer 1 name "1" create
+            description "Default customer"
+        exit
+    exit
+#--------------------------------------------------
+echo "Router (Service Side) Configuration"
+#--------------------------------------------------
+    router Base
+    exit
+
+#--------------------------------------------------
+echo "Log all events for service vprn Configuration"
+#--------------------------------------------------
+    log
+    exit
+#--------------------------------------------------
+echo "System Configuration Mode Configuration"
+#--------------------------------------------------
+    system
+        management-interface
+            configuration-mode model-driven
+        exit
+    exit
+
+exit all
+
+# Finished THU APR 15 01:29:00 2021 UTC
+INFO: CLI #2052: Switching to the MD-CLI engine
