@@ -1,0 +1,112 @@
+exit all
+configure
+#--------------------------------------------------
+echo "System Configuration"
+#--------------------------------------------------
+    system
+        name "sros-r1"
+        netconf
+            auto-config-save
+            no shutdown
+        exit
+        snmp
+            streaming
+                no shutdown
+            exit
+            packet-size 9216
+        exit
+        time
+            sntp
+                shutdown
+            exit
+            zone UTC
+        exit
+        bluetooth
+            module A
+            exit
+            power off
+        exit
+    exit
+#--------------------------------------------------
+echo "System Security Configuration"
+#--------------------------------------------------
+    system
+        security
+            profile "administrative"
+                netconf
+                    base-op-authorization
+                        kill-session
+                        lock
+                    exit
+                exit
+                entry 10
+                    match "configure system security"
+                    action permit
+                exit
+                entry 20
+                    match "show system security"
+                    action permit
+                exit
+                entry 30
+                    match "tools perform security"
+                    action permit
+                exit
+                entry 40
+                    match "tools dump security"
+                    action permit
+                exit
+                entry 50
+                    match "admin system security"
+                    action permit
+                exit
+                entry 100
+                    match "configure li"
+                    action deny
+                exit
+                entry 110
+                    match "show li"
+                    action deny
+                exit
+                entry 111
+                    match "clear li"
+                    action deny
+                exit
+                entry 112
+                    match "tools dump li"
+                    action deny
+                exit
+            exit
+            user "admin"
+                password "$2y$10$TQrZlpBDra86.qoexZUzQeBXDY1FcdDhGWdD9lLxMuFyPVSm0OGy6"
+                access console ftp snmp netconf grpc
+                console
+                    member "administrative"
+                exit
+            exit
+            user "vrnetlab"
+                password "$2y$10$zjlEA0qAfjuXNwo1gXA5..BImKLQpWGaJNZ7SIidoHJ59vu7haI7C"
+                access console netconf
+                console
+                    member "administrative"
+                    member "default"
+                exit
+            exit
+            per-peer-queuing
+            dist-cpu-protection
+                policy "_default-access-policy" create
+                exit
+                policy "_default-network-policy" create
+                exit
+            exit
+        exit
+    exit
+#--------------------------------------------------
+echo "System Login Control Configuration"
+#--------------------------------------------------
+    system
+        login-control
+            ssh
+                inbound-max-sessions 30
+            exit
+        exit
+    exit
