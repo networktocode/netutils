@@ -1,8 +1,6 @@
 exit all
 configure
-#--------------------------------------------------
-echo "System Configuration"
-#--------------------------------------------------
+System Configuration
     system
         name "sros-r1"
         netconf
@@ -27,9 +25,7 @@ echo "System Configuration"
             power off
         exit
     exit
-#--------------------------------------------------
-echo "System Security Configuration"
-#--------------------------------------------------
+System Security Configuration
     system
         security
             profile "administrative"
@@ -100,9 +96,7 @@ echo "System Security Configuration"
             exit
         exit
     exit
-#--------------------------------------------------
-echo "System Login Control Configuration"
-#--------------------------------------------------
+System Login Control Configuration
     system
         login-control
             ssh

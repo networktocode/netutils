@@ -1,4 +1,4 @@
 {
-    "remaining_cfg": "exit all\nconfigure\n\"System Login Control Configuration\"\n        system\n            login-control\n                ssh\n                    inbound-max-sessions 30\n                exit\n            exit\n        exit",
+    "remaining_cfg": "exit all\nconfigure\n\n\nSystem Login Control Configuration\n    system\n        login-control\n            ssh\n                inbound-max-sessions 30\n            exit\n        exit\n    exit",
     "section_not_found": []
 }
