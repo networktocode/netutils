@@ -1,0 +1,29 @@
+exit all
+configure
+#--------------------------------------------------
+echo "System Configuration"
+#--------------------------------------------------
+    system
+        name "core-router.example.com"
+        netconf
+            auto-config-save
+            no shutdown
+        exit
+        snmp
+            streaming
+                no shutdown
+            exit
+            packet-size 9216
+        exit
+        time
+            sntp
+                shutdown
+            exit
+            zone EDT
+        exit
+        bluetooth
+            module A
+            exit
+            power off
+        exit
+    exit
