@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.1.0 - 2021-04
+
+### Added
+
+- #90 Uptime Conversions.
+- #102 Add Ansible mapping for Nokia SrOS.
+- #105 Add min_grouping_sizing to vlanlist_to_config method.
+- #106 Add Nokia SrOS Config Parser.
+
+### Changed
+
+- #104 Optimize vlanconfig_to_list using builtin Regex methods.
+
+### Fixed
+
+- #99 Fixed decimal place in bits_to_name.
+- #107 Fix issue when backup or intended is empty.
+
+
 ## v1.0.0 - 2021-11
 
 ### Added
