@@ -12,6 +12,7 @@ parser_map = {
     "juniper_junos": parser.JunosConfigParser,
     "cisco_asa": parser.ASAConfigParser,
     "fortinet_fortios": parser.FortinetConfigParser,
+    "nokia_sros": parser.NokiaConfigParser,
 }
 
 default_feature = {

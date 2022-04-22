@@ -1,5 +1,5 @@
 """Parsers for different network operating systems."""
-# pylint: disable=no-member,super-with-arguments,invalid-overridden-method,raise-missing-from,invalid-overridden-method,inconsistent-return-statements,super-with-arguments,redefined-argument-from-local,no-else-break,useless-super-delegation
+# pylint: disable=no-member,super-with-arguments,invalid-overridden-method,raise-missing-from,invalid-overridden-method,inconsistent-return-statements,super-with-arguments,redefined-argument-from-local,no-else-break,useless-super-delegation,too-many-lines
 
 import re
 from collections import namedtuple
@@ -949,3 +949,63 @@ class FortinetConfigParser(BaseSpaceConfigParser):
                 self.indent_level = spaces
 
             self._update_config_lines(line)
+
+
+class NokiaConfigParser(BaseSpaceConfigParser):
+    """Nokia SrOS config parser."""
+
+    comment_chars = ["#"]
+    banner_start = []
+
+    def __init__(self, config):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(NokiaConfigParser, self).__init__(config)
+
+    def _is_section_title(self, line):  # pylint: disable=no-self-use
+        """Determine if line is a section title in banner.
+
+        Args:
+            line (str): A config line from the device.
+
+        Returns:
+            bool: True if line is a sectiont, else False.
+        """
+        if re.match(r"^echo\s\".+\"", string=line):
+            return True
+        return False
+
+    def _get_section_title(self, line):  # pylint: disable=no-self-use
+        """Determine section title from banner.
+
+        Args:
+            line (str): A config line from the device that has been found to be a section title.
+
+        Returns:
+            str|bool: The section's title from the section banner, else False.
+        """
+        section_title = re.match(r"^echo\s\"(?P<section_name>.+)\"", string=line)
+        if section_title:
+            return section_title.group("section_name")
+        return False
+
+    @property
+    def config_lines_only(self):
+        """Remove spaces and comments from config lines.
+
+        Returns:
+            str: The non-space and non-comment lines from ``config``.
+        """
+        if self._config is None:
+            config_lines = []
+            for line in self.config.splitlines():
+                if line and not self.is_comment(line) and not line.isspace():
+                    if self._is_section_title(line):
+                        config_lines.append(self._get_section_title(line))
+                    else:
+                        config_lines.append(line.rstrip())
+            self._config = "\n".join(config_lines)
+        return self._config
