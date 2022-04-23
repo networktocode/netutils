@@ -2,6 +2,7 @@
 import subprocess
 import glob
 import os
+import re
 import pytest
 
 UNDOCUMENTED_FILES = ["__init__", "constants", "lib_mapper", "protocol_mapper", "variables"]
@@ -18,37 +19,27 @@ MODULE_FOLDERS = [{"doc_module_folder": "../../docs/source/netutils/", "netutils
 START_END_LINES = [
     {
         "name": "overview",
-        "start_line": 1,
         "start_value": "# netutils\n",
-        "end_line": 33,
         "end_value": "* VLANs - Provide the ability to convert configuration into lists or lists into configuration.\n",
     },
     {
         "name": "installation",
-        "start_line": 37,
         "start_value": "Option 1: Install from PyPI.\n",
-        "end_line": 47,
         "end_value": "```\n",
     },
     {
         "name": "examples",
-        "start_line": 49,
-        "start_value": "# Examples\n",
-        "end_line": 102,
+        "start_value": "While all functions come with examples in the docstrings, for quick reference of the types of problems this library intends to\n",
         "end_value": "These are just some examples of the many functions provided by this library.\n",
     },
     {
         "name": "attribution",
-        "start_line": 106,
         "start_value": "The library was built to be a centralized place for common network automation code to be accessed. While in most cases it is\n",
-        "end_line": 140,
-        "end_value": "* https://github.com/ansible/ansible/pull/26566\n",
+        "end_value": "In building out the time conversion, the regex patterns are based on NAPALM implementation with their consent.\n",
     },
     {
-        "name": "contribution",
-        "start_line": 145,
+        "name": "contributing",
         "start_value": "Pull requests are welcomed and automatically built and tested against multiple versions of Python through TravisCI.\n",
-        "end_line": 229,
         "end_value": "Sign up [here](http://slack.networktocode.com/)\n",
     },
 ]
@@ -56,7 +47,24 @@ START_END_LINES = [
 
 with open("README.md", "r", encoding="utf-8") as file:
     README_LIST = file.readlines()
-README_LIST.insert(0, "")
+
+
+def _get_readme_line(folder_name, start_end):
+
+    regex_dict = {"start": r"(:start-line:\s+(?P<value>\d+))", "end": r"(:end-line:\s+(?P<value>\d+))"}
+    with open(f"{SPHINX_DIRECTORIES[0]['source_dir']}/{folder_name}/index.rst", "r", encoding="utf-8") as index_file:
+        for line in index_file.readlines():
+            match = re.search(regex_dict[start_end], line)
+            if match:
+                break
+
+        if match:
+            int_value = int(match.groupdict()["value"])
+            return int_value
+
+        raise Exception(
+            f"Not able to find {start_end} line value from {SPHINX_DIRECTORIES[0]['source_dir']}/{folder_name}/index.rst. Ensure each line is spelled correctly and exists. "
+        )
 
 
 @pytest.mark.parametrize("data", SPHINX_DIRECTORIES)
@@ -87,5 +95,17 @@ def test_folders_contain_index(data):
 
 @pytest.mark.parametrize("start_end", START_END_LINES, ids=[section["name"] for section in START_END_LINES])
 def test_docs_start_end_lines(start_end):
-    assert README_LIST[start_end["start_line"]] == start_end["start_value"]
-    assert README_LIST[start_end["end_line"]] == start_end["end_value"]
+    start_line_value = _get_readme_line(start_end["name"], "start")
+    end_line_value = _get_readme_line(start_end["name"], "end")
+    assert README_LIST[start_line_value] == start_end["start_value"]
+    assert README_LIST[end_line_value - 1] == start_end["end_value"]
+
+
+def test_docs_start_end_lines_fail():
+    end_line_value = _get_readme_line("overview", "end")
+    overview = {
+        "name": "overview",
+        "start_value": "# netutils\n",
+        "end_value": "This is what I think the last line of the overview section will be.\n",
+    }
+    assert README_LIST[end_line_value - 1] != overview["end_value"]

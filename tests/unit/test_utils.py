@@ -6,7 +6,10 @@ import os
 import pytest
 from jinja2 import Environment, select_autoescape
 from jinja2.loaders import FileSystemLoader
-from netutils.utils import _JINJA2_FUNCTION_MAPPINGS, jinja2_convenience_function
+from netutils.utils import (
+    _JINJA2_FUNCTION_MAPPINGS,
+    jinja2_convenience_function,
+)
 
 _EXCLUDED_FILES = [
     "__init__",
@@ -18,10 +21,11 @@ _EXCLUDED_FILES = [
     "protocol_mapper",
     "protocols.json",
     "config",
-    "utils",
 ]
 
 _EXCLUDED_DECORATOR_FUNCTIONS = ["wraps", "total_ordering", "abstractmethod"]
+
+_EXCLUDED_FUNCTIONS = ["jinja2_convenience_function", "import_module"]
 
 
 @pytest.fixture
@@ -38,7 +42,11 @@ def get_jinja2_function_names():
     for file in filtered_python_files:
         imported_module = import_module(f"netutils.{file}")
         for function_name, _ in getmembers(imported_module, isfunction):
-            if function_name.startswith("_") or function_name.startswith(tuple(_EXCLUDED_DECORATOR_FUNCTIONS)):
+            if (
+                function_name.startswith("_")
+                or function_name.startswith(tuple(_EXCLUDED_DECORATOR_FUNCTIONS))
+                or function_name.startswith(tuple(_EXCLUDED_FUNCTIONS))
+            ):
                 continue
             function_names.append(f"{function_name}")
     return function_names

@@ -97,7 +97,12 @@ logging level rpm 4
 logging level smm 4
 logging level u6rib 4
 logging level lldp 4
-
+!
+banner motd #
+This is a test,
+banner message.
+#
+!
 no password strength-check
 username admin password 5 <redacted_config>  role network-admin
 username ntc password 5 <redacted_config>  role network-admin

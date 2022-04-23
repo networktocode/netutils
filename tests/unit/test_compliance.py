@@ -82,6 +82,18 @@ def test_config_section_not_parsed(
     assert compliance.config_section_not_parsed(features, device_cfg, network_os) == received_data
 
 
+@pytest.mark.parametrize("_file", glob.glob(f"{MOCK_DIR}/feature_compliance/*{INTEND_FILE}"))
+def test_feature_compliance(_file, get_text_data, get_python_data):
+    truncate_file = os.path.join(MOCK_DIR, _file[: -len(INTEND_FILE)])
+
+    intended_config = get_text_data(os.path.join(MOCK_DIR, _file))
+    actual_config = get_text_data(truncate_file + "_actual.txt")
+    received_data = get_python_data(truncate_file + "_received.py", "data")
+    feature = get_python_data(truncate_file + "_feature.py", "feature")
+    nos = get_python_data(truncate_file + "_feature.py", "network_os")
+    assert compliance.feature_compliance(feature, actual_config, intended_config, nos) == received_data
+
+
 def test_incorrect_cfg_type():
     with pytest.raises(ValueError):
         compliance.compliance({}, "backup_cfg", "intended_cfg", "cisco_ios", "text")

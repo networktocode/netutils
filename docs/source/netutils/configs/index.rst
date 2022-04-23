@@ -21,3 +21,7 @@ Fortinet Fortios Parser
 F5 Parser
 -----------------------
 - The "ltm rule" configuration sections are not uniform nor standardized; therefor, these sections are completely removed from the configuration in a preprocessing event.
+
+Nokia SROS Parser
+-----------------
+- The section banners have been simplified to extract the section header itself. This means that `echo "System Configuration"` will be converted to just "System Configuration".
