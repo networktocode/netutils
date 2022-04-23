@@ -1,0 +1,5 @@
+System Configuration
+    system
+        name "core-router.example.com"
+        time
+            zone EDT

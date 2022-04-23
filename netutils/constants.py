@@ -385,3 +385,28 @@ IPV6_MASKS = {
 ETX_HEX = "\x03"
 CARET_C = "^C"
 CARET = "^"
+
+TIME_MAPPINGS = (
+    ("years", 31536000),
+    ("weeks", 604800),
+    ("days", 86400),
+    ("hours", 3600),
+    ("minutes", 60),
+    ("seconds", 1),
+)
+
+UPTIME_REGEX_PATTERNS = [
+    (
+        r"((?P<years>\d+) year(s)?,\s+)?((?P<weeks>\d+) week(s)?,\s+)?"
+        r"((?P<days>\d+) day(s)?,\s+)?((?P<hours>\d+) "
+        r"hour(s)?,\s+)?((?P<minutes>\d+) minute(s)?)"
+    ),
+    (
+        r"((?P<days>\d+) day(s)?,\s+)?"
+        r"((?P<hours>\d+)):((?P<minutes>\d+)):((?P<seconds>\d+))"  # pylint: disable=implicit-str-concat
+    ),
+    (
+        r"(((?P<years>\d+)y)?(?P<weeks>\d+)w)?((?P<days>\d+)d)?((?P<hours>\d+)h)?"
+        r"((?P<minutes>\d+)m)?((?P<seconds>\d+)s)"
+    ),  # pylint: disable=implicit-str-concat
+]
