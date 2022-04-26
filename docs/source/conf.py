@@ -72,10 +72,18 @@ def build_mapping_tables(app):
     """Build the library mappings tables."""
     env = Environment(loader=FileSystemLoader("docs/source"))
     template_file = env.get_template("table_template.j2")
-    for dict_name in lib_mapper._LIST_OF_MAP_DICTS:
+
+    LIST_OF_MAP_DICTS = []
+    for attr in dir(lib_mapper):
+        if (attr.endswith("MAPPER_REVERSE") or attr.endswith("_MAPPER")) and not (
+            attr.startswith("_") or attr.startswith("NETMIKO") or attr.startswith("MAIN")
+        ):
+            LIST_OF_MAP_DICTS.append(attr)
+
+    for dict_name in LIST_OF_MAP_DICTS:
         lib_name = dict_name.split("_")[0]
         filename = f"{lib_name}_reverse" if "REVERSE" in dict_name else lib_name
-        headers = ["NETMIKO", lib_name] if "REVERSE" in dict_name else [lib_name, "NETMIKO"]
+        headers = ["NORMALIZED", lib_name] if "REVERSE" in dict_name else [lib_name, "NORMALIZED"]
         rendered_template = template_file.render(lib_names=headers, mappings=getattr(lib_mapper, dict_name))
         with open(f"docs/source/netutils/lib_mapping/{filename}_table.rst", "w") as table_file:
             table_file.write(rendered_template)

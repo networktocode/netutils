@@ -283,19 +283,3 @@ MAIN_LIB_MAPPER["lenovo_enos"] = "lenovo_enos"
 MAIN_LIB_MAPPER["ruckus_icx"] = "ruckus_icx"
 MAIN_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 MAIN_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
-
-# Used for dynamic creation of html library tables
-_LIST_OF_MAP_DICTS = [
-    "NAPALM_LIB_MAPPER",
-    "NAPALM_LIB_MAPPER_REVERSE",
-    "PYNTC_LIB_MAPPER",
-    "PYNTC_LIB_MAPPER_REVERSE",
-    "ANSIBLE_LIB_MAPPER",
-    "ANSIBLE_LIB_MAPPER_REVERSE",
-    "PYATS_LIB_MAPPER",
-    "PYATS_LIB_MAPPER_REVERSE",
-    "SCRAPLI_LIB_MAPPER",
-    "SCRAPLI_LIB_MAPPER_REVERSE",
-    "NTCTEMPLATES_LIB_MAPPER",
-    "NTCTEMPLATES_LIB_MAPPER_REVERSE",
-]
