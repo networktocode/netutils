@@ -13,11 +13,14 @@
 import os
 import sys
 import toml
+from jinja2 import Environment, FileSystemLoader
+
 
 sys.path.insert(0, os.path.abspath("../.."))
+from netutils import lib_mapper  # noqa: E402
+
 sys.path.append(os.path.abspath("sphinxext"))
 toml_dict = toml.load("../../pyproject.toml")
-
 
 # -- Project information -----------------------------------------------------
 
@@ -63,3 +66,29 @@ html_theme = "sphinx_rtd_theme"
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["_static"]
+
+
+def build_mapping_tables(app):
+    """Build the library mappings tables."""
+    env = Environment(loader=FileSystemLoader("docs/source"))
+    template_file = env.get_template("table_template.j2")
+
+    LIST_OF_MAP_DICTS = []
+    for attr in dir(lib_mapper):
+        if (attr.endswith("MAPPER_REVERSE") or attr.endswith("_MAPPER")) and not (
+            attr.startswith("_") or attr.startswith("NETMIKO") or attr.startswith("MAIN")
+        ):
+            LIST_OF_MAP_DICTS.append(attr)
+
+    for dict_name in LIST_OF_MAP_DICTS:
+        lib_name = dict_name.split("_")[0]
+        filename = f"{lib_name}_reverse" if "REVERSE" in dict_name else lib_name
+        headers = ["NORMALIZED", lib_name] if "REVERSE" in dict_name else [lib_name, "NORMALIZED"]
+        rendered_template = template_file.render(lib_names=headers, mappings=getattr(lib_mapper, dict_name))
+        with open(f"docs/source/netutils/lib_mapping/{filename}_table.rst", "w") as table_file:
+            table_file.write(rendered_template)
+
+
+def setup(app):
+    """Call methods during builder initiated."""
+    app.connect("builder-inited", build_mapping_tables)

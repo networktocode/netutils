@@ -41,111 +41,51 @@ a python script to leverage the backup capabilities of pyntc? Here's an example 
 Another use case could be using an example like the above in an Ansible filter. That would allow you to write a filter utilizing whichever automation library you needed without having to store the driver for each one in your Source of Truth.
 
 Napalm Mapper
-===================
-.. exec::
-    import json
-    from netutils.lib_mapper import NAPALM_LIB_MAPPER
-    json_obj = json.dumps(NAPALM_LIB_MAPPER, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: NAPALM_table.rst
 
 Reverse Napalm Mapper
-=====================
-.. exec::
-    import json
-    from netutils.lib_mapper import NAPALM_LIB_MAPPER_REVERSE
-    json_obj = json.dumps(NAPALM_LIB_MAPPER_REVERSE, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: NAPALM_reverse_table.rst
 
 PyNTC Mapper
-==============
-.. exec::
-    import json
-    from netutils.lib_mapper import PYNTC_LIB_MAPPER
-    json_obj = json.dumps(PYNTC_LIB_MAPPER, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: PYNTC_table.rst
 
 Reverse PyNTC Mapper
-====================
-.. exec::
-    import json
-    from netutils.lib_mapper import PYNTC_LIB_MAPPER_REVERSE
-    json_obj = json.dumps(PYNTC_LIB_MAPPER_REVERSE, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: PYNTC_reverse_table.rst
 
 Ansible Mapper
-==============
-.. exec::
-    import json
-    from netutils.lib_mapper import ANSIBLE_LIB_MAPPER
-    json_obj = json.dumps(ANSIBLE_LIB_MAPPER, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: ANSIBLE_table.rst
 
 Reverse Ansible Mapper
-======================
-.. exec::
-    import json
-    from netutils.lib_mapper import ANSIBLE_LIB_MAPPER_REVERSE
-    json_obj = json.dumps(ANSIBLE_LIB_MAPPER_REVERSE, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: ANSIBLE_reverse_table.rst
 
 PyATS Mapper
-==============
-.. exec::
-    import json
-    from netutils.lib_mapper import PYATS_LIB_MAPPER
-    json_obj = json.dumps(PYATS_LIB_MAPPER, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: PYATS_table.rst
 
 Reverse PyATS Mapper
-====================
-.. exec::
-    import json
-    from netutils.lib_mapper import PYATS_LIB_MAPPER_REVERSE
-    json_obj = json.dumps(PYATS_LIB_MAPPER_REVERSE, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: PYATS_reverse_table.rst
 
 Scrapli Mapper
-==============
-.. exec::
-    import json
-    from netutils.lib_mapper import SCRAPLI_LIB_MAPPER
-    json_obj = json.dumps(SCRAPLI_LIB_MAPPER, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: SCRAPLI_table.rst
 
 Reverse Scrapli Mapper
-======================
-.. exec::
-    import json
-    from netutils.lib_mapper import SCRAPLI_LIB_MAPPER_REVERSE
-    json_obj = json.dumps(SCRAPLI_LIB_MAPPER_REVERSE, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: SCRAPLI_reverse_table.rst
 
 NTC Templates Mapper
-====================
-.. exec::
-    import json
-    from netutils.lib_mapper import NTCTEMPLATES_LIB_MAPPER
-    json_obj = json.dumps(NTCTEMPLATES_LIB_MAPPER, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: NTCTEMPLATES_table.rst
 
 Reverse NTC Templates Mapper
-============================
-.. exec::
-    import json
-    from netutils.lib_mapper import NTCTEMPLATES_LIB_MAPPER_REVERSE
-    json_obj = json.dumps(NTCTEMPLATES_LIB_MAPPER_REVERSE, sort_keys=True, indent=4)
-    json_obj = json_obj[:-1] + "    }"
-    print(f".. code-block:: JavaScript\n\n    {json_obj}\n\n")
+==============================
+.. include:: NTCTEMPLATES_reverse_table.rst
 
 
