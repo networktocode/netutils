@@ -19,6 +19,7 @@ from jinja2 import Environment, FileSystemLoader
 sys.path.insert(0, os.path.abspath("../.."))
 from netutils import lib_mapper  # noqa: E402
 
+DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 sys.path.append(os.path.abspath("sphinxext"))
 toml_dict = toml.load("../../pyproject.toml")
 
@@ -70,7 +71,7 @@ html_static_path = ["_static"]
 
 def build_mapping_tables(app):
     """Build the library mappings tables."""
-    env = Environment(loader=FileSystemLoader("docs/source"))
+    env = Environment(loader=FileSystemLoader(f"{DIR_PATH}"))
     template_file = env.get_template("table_template.j2")
 
     LIST_OF_MAP_DICTS = []
@@ -85,7 +86,7 @@ def build_mapping_tables(app):
         filename = f"{lib_name}_reverse" if "REVERSE" in dict_name else lib_name
         headers = ["NORMALIZED", lib_name] if "REVERSE" in dict_name else [lib_name, "NORMALIZED"]
         rendered_template = template_file.render(lib_names=headers, mappings=getattr(lib_mapper, dict_name))
-        with open(f"docs/source/netutils/lib_mapping/{filename}_table.rst", "w") as table_file:
+        with open(f"{DIR_PATH}/netutils/lib_mapping/{filename}_table.rst", "w") as table_file:
             table_file.write(rendered_template)
 
 
