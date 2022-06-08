@@ -1,0 +1,2 @@
+router bgp 100
+ bgp router-id 10.6.6.5

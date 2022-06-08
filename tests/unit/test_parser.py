@@ -37,3 +37,18 @@ def test_incorrect_banner_ios():
     )
     with pytest.raises(ValueError):
         compliance.parser_map["cisco_ios"](banner_cfg).config_lines  # pylint: disable=expression-not-assigned
+
+
+def test_incorrect_banner_iosxe():
+    banner_cfg = (
+        "aaa new-model\n"
+        "!\n"
+        "banner exec $\n"
+        "**************************************************************************\n"
+        "* IOSv is strictly limited to use for evaluation, demonstration and IOS.  *\n"
+        "**************************************************************************c\n"
+        "!\n"
+        "ip route 0.0.0.0 0.0.0.0 192.168.1.1\n"
+    )
+    with pytest.raises(ValueError):
+        compliance.parser_map["cisco_iosxe"](banner_cfg).config_lines  # pylint: disable=expression-not-assigned

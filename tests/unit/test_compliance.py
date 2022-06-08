@@ -94,6 +94,11 @@ def test_feature_compliance(_file, get_text_data, get_python_data):
     assert compliance.feature_compliance(feature, actual_config, intended_config, nos) == received_data
 
 
-def test_incorrect_cfg_type():
+def test_incorrect_cfg_type_ios():
     with pytest.raises(ValueError):
         compliance.compliance({}, "backup_cfg", "intended_cfg", "cisco_ios", "text")
+
+
+def test_incorrect_cfg_type_iosxe():
+    with pytest.raises(ValueError):
+        compliance.compliance({}, "backup_cfg", "intended_cfg", "cisco_iosxe", "text")

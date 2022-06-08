@@ -1,0 +1,72 @@
+interface Loopback0
+ ip address 10.0.10.3 255.255.255.255
+interface GigabitEthernet1
+ description MANAGEMENT_DO_NOT_CHANGE
+ ip address 10.0.0.15 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+interface GigabitEthernet2
+ ip address 10.10.0.6 255.255.255.252
+ ip access-group BLOCK_TRANSIT_LINKS in
+ negotiation auto
+ no mop enabled
+ no mop sysid
+interface GigabitEthernet3
+ ip address 10.10.0.14 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+interface GigabitEthernet4
+ description backbone-to-vmx3-ge0/0/3
+ ip address 10.10.0.17 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+interface GigabitEthernet5
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C

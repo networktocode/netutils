@@ -40,8 +40,7 @@ call-home
 !
 !
 no ip domain lookup
-ip name-server 10.0.0.1 10.2.2.2
-ip domain name infra.ntc.com
+ip domain-name infra.ntc.com
 !
 !
 !
