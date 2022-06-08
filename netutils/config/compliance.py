@@ -5,6 +5,7 @@ from . import parser  # pylint: disable=relative-beyond-top-level
 parser_map = {
     "arista_eos": parser.EOSConfigParser,
     "cisco_ios": parser.IOSConfigParser,
+    "cisco_iosxe": parser.IOSConfigParser,
     "cisco_nxos": parser.NXOSConfigParser,
     "cisco_aireos": parser.AIREOSConfigParser,
     "linux": parser.LINUXConfigParser,
