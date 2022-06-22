@@ -8,5 +8,15 @@
       "missing": "",
       "ordered_compliant": true,
       "unordered_compliant": true
+   },
+   "banner": {
+      "actual": "banner login\n********************************************************************\n*          This system is the property of Allied Widget Co.        *\n*          UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED        *\n*                                                                  *\n* You must have explicit, authorized permission to access or       *\n* configure this device. Unauthorized attempts and actions to      *\n* access or use this system may result in civil and/or criminal    *\n* penalties.                                                       *\n*                                                                  *\n* All activities performed on this deviceare logged and monitored. *\n********************************************************************\nEOF",
+      "cannot_parse": true,
+      "compliant": true,
+      "extra": "",
+      "intended": "banner login\n********************************************************************\n*          This system is the property of Allied Widget Co.        *\n*          UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED        *\n*                                                                  *\n* You must have explicit, authorized permission to access or       *\n* configure this device. Unauthorized attempts and actions to      *\n* access or use this system may result in civil and/or criminal    *\n* penalties.                                                       *\n*                                                                  *\n* All activities performed on this deviceare logged and monitored. *\n********************************************************************\nEOF",
+      "missing": "",
+      "ordered_compliant": true,
+      "unordered_compliant": true
    }
 }

@@ -604,6 +604,36 @@ class EOSConfigParser(BaseSpaceConfigParser):
 
     banner_end = "EOF"
 
+    def _build_banner(self, config_line):
+        """Handle banner config lines.
+
+        Args:
+            config_line (str): The start of the banner config.
+
+        Returns:
+            str: The next configuration line in the configuration text.
+            None: When banner end is the end of the config text.
+
+        Raises:
+            ValueError: When the parser is unable to identify the End of the Banner.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                self._update_config_lines(line)
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+        raise ValueError("Unable to parse banner end.")
+
 
 class AIREOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
     """AireOSConfigParser implementation fo ConfigParser Class."""
