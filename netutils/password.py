@@ -202,32 +202,31 @@ def encrypt_type7(unencrypted_password, salt=None):
 
     Example:
         >>> from netutils.password import encrypt_type7
-        >>> encrypt_type5("cisco")  # doctest: +SKIP
+        >>> encrypt_type5("cisco")
         '094F471A1A0A'
         >>>
     """
     # max length of password for encrypt t7 is 25
-    if len(unencrypted_password) <= 25:
-        key_hex = []
-        for char in 'dsfd;kfoA,.iyewrkldJKDHSUBsgvca69834ncxv9873254k;fg87': # the same key is used in decrypt_type7 for the reverse operation
-            key_hex.append(hex(ord(char)))
-        if not salt:
-            salt = random.randint(0, 15)
-        # Start building the encrypted password - pre-pend the 2 decimal digit offset.
-        encrypted_password = format(salt, "02d")
-        for i, _ in enumerate(unencrypted_password):
-            # Get the next of the plaintext character.
-            dec_char = ord(unencrypted_password[i])
-            # Get the next character of the key.
-            key_char = ast.literal_eval(key_hex[(i + salt) % 53])
-            # XOR the plaintext character with the key character.
-            enc_char = dec_char ^ key_char
-            # Build the encrypted password one character at a time.
-            # The ASCII code of each encrypted character is added as 2 hex digits.
-            encrypted_password += format(enc_char, "02X")
-        return encrypted_password
-    else:
-        raise ValueError(f"Max password length must be 25.")
+    assert len(unencrypted_password) <= 25, "Password must not exceed 25 characters."
+    key_hex = []
+    # the same key string is used in decrypt_type7 for the reverse operation
+    for char in "dsfd;kfoA,.iyewrkldJKDHSUBsgvca69834ncxv9873254k;fg87":
+        key_hex.append(hex(ord(char)))
+    if not salt:
+        salt = random.randint(0, 15)
+    # Start building the encrypted password - pre-pend the 2 decimal digit offset.
+    encrypted_password = format(salt, "02d")
+    for i, _ in enumerate(unencrypted_password):
+        # Get the next of the plaintext character.
+        dec_char = ord(unencrypted_password[i])
+        # Get the next character of the key.
+        key_char = ast.literal_eval(key_hex[(i + salt) % 53])
+        # XOR the plaintext character with the key character.
+        enc_char = dec_char ^ key_char
+        # Build the encrypted password one character at a time.
+        # The ASCII code of each encrypted character is added as 2 hex digits.
+        encrypted_password += format(enc_char, "02X")
+    return encrypted_password
 
 
 def get_hash_salt(encrypted_password):
