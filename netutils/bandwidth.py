@@ -1,8 +1,9 @@
 """Functions for performing bandwidth calculations."""
 import re
+from typing import Dict
 
 
-def _get_bits_mapping():
+def _get_bits_mapping() -> Dict[str, Dict[str, int]]:
     bits_value = 0
     bits_mapping = {}
     for _bit in ["bps", "Kbps", "Mbps", "Gbps", "Tbps", "Pbps", "Ebps", "Zbps"]:
@@ -18,7 +19,7 @@ def _get_bits_mapping():
 BITS_MAPPING = _get_bits_mapping()
 
 
-def _get_bytes_mapping():
+def _get_bytes_mapping() -> Dict[str, Dict[str, int]]:
     bytes_value = 0
     bytes_mapping = {}
     for _byte in ["Bps", "KBps", "MBps", "GBps", "TBps", "PBps", "EBps", "ZBps"]:
@@ -123,7 +124,7 @@ def bits_to_name(  # pylint: disable=too-many-branches,too-many-return-statement
     for bit_type, val in BITS_MAPPING.items():
         if val["low"] <= speed < val["high"]:
             if nbr_decimal == 0:
-                nbr_decimal = None
+                nbr_decimal = None  # type: ignore
             if val["low"] == 0:
                 return f"{round(speed, nbr_decimal)}{bit_type}"
             return f"{round(speed / val['low'], nbr_decimal)}{bit_type}"

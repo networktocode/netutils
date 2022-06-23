@@ -2,7 +2,7 @@
 import socket
 
 
-def fqdn_to_ip(hostname):
+def fqdn_to_ip(hostname: str) -> str:
     """Provides the IP address of a resolvable name on the machine it is running from.
 
        There are many reasons that a valid FQDN may not be resolvable, such as a network error
@@ -28,7 +28,7 @@ def fqdn_to_ip(hostname):
     return socket.getaddrinfo(hostname, 0)[0][4][0]
 
 
-def is_fqdn_resolvable(hostname):
+def is_fqdn_resolvable(hostname: str) -> bool:
     """Verifies whether a hostname is resolvable on the machine it is running from.
 
        There are many reasons that a valid FQDN may not be resolvable, such as a network error

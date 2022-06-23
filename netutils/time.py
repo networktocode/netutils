@@ -1,9 +1,10 @@
 """Functions for working with time."""
 import re
+
 from .constants import TIME_MAPPINGS, UPTIME_REGEX_PATTERNS
 
 
-def uptime_seconds_to_string(uptime_seconds):
+def uptime_seconds_to_string(uptime_seconds: int) -> str:
     """Converts uptime in seconds to uptime in string format.
 
     Args:
@@ -29,7 +30,7 @@ def uptime_seconds_to_string(uptime_seconds):
     return ", ".join(result)
 
 
-def uptime_string_to_seconds(uptime_string):
+def uptime_string_to_seconds(uptime_string: str) -> int:
     """Converts uptime string seconds.
 
     Args:
@@ -65,5 +66,5 @@ def uptime_string_to_seconds(uptime_string):
     uptime_seconds = 0
     for time_interval, value in TIME_MAPPINGS:
         if uptime_dict.get(time_interval):
-            uptime_seconds += int(uptime_dict.get(time_interval)) * value
+            uptime_seconds += int(uptime_dict.get(time_interval)) * value  # type: ignore
     return uptime_seconds

@@ -1,12 +1,17 @@
 """Functions for working with VLANs."""
 
 import re
-
-from operator import itemgetter
+import typing as t
 from itertools import groupby
+from operator import itemgetter
 
 
-def vlanlist_to_config(vlan_list, first_line_len=48, other_line_len=44, min_grouping_size=3):
+def vlanlist_to_config(
+    vlan_list: t.List[int],
+    first_line_len: t.Optional[int] = 48,
+    other_line_len: t.Optional[int] = 44,
+    min_grouping_size: t.Optional[int] = 3,
+) -> t.List[str]:
     """Given a List of VLANs, build the IOS-like vlan list of configurations.
 
     Args:
@@ -28,20 +33,20 @@ def vlanlist_to_config(vlan_list, first_line_len=48, other_line_len=44, min_grou
         ['1,3,5,6,100,101,102,103,104,105,107,109']
     """
 
-    def build_final_vlan_cfg(vlan_cfg):
-        if len(vlan_cfg) <= first_line_len:
+    def build_final_vlan_cfg(vlan_cfg: str) -> t.List[str]:
+        if len(vlan_cfg) <= first_line_len:  # type: ignore
             return [vlan_cfg]
 
         # Split VLAN config if lines are too long
         first_line = re.match(f"^.{{0,{first_line_len}}}(?=,)", vlan_cfg)
-        vlan_cfg_lines = [first_line.group(0)]
+        vlan_cfg_lines = [first_line.group(0)]  # type: ignore
         next_lines = next_lines = re.compile(f"(?<=,).{{0,{other_line_len}}}(?=,|$)")
-        for line in next_lines.findall(vlan_cfg, first_line.end()):
+        for line in next_lines.findall(vlan_cfg, first_line.end()):  # type: ignore
             vlan_cfg_lines.append(line)
         return vlan_cfg_lines
 
     # Fail if min_grouping_size is less than 1.
-    if min_grouping_size < 1:
+    if min_grouping_size < 1:  # type: ignore
         raise ValueError("Minimum grouping size must be equal to or greater than one.")
 
     # Sort and de-dup VLAN list
@@ -66,7 +71,7 @@ def vlanlist_to_config(vlan_list, first_line_len=48, other_line_len=44, min_grou
         group_length = len(group)
         group_string = f"{group[0]}"
         # Compress based on grouping_size
-        if group_length >= min_grouping_size:
+        if group_length >= min_grouping_size:  # type: ignore
             group_string += f"-{group[-1]}"
         # If it does not match grouping_size, and is greater than one
         elif group_length != 1:
@@ -76,7 +81,7 @@ def vlanlist_to_config(vlan_list, first_line_len=48, other_line_len=44, min_grou
     return build_final_vlan_cfg(",".join(vlan_strings))
 
 
-def vlanconfig_to_list(vlan_config):
+def vlanconfig_to_list(vlan_config: str) -> t.List[int]:
     """Given an IOS-like vlan list of configurations, return the list of VLANs.
 
     Args:

@@ -1,4 +1,5 @@
 """Utilities for the netutils library."""
+import typing as t
 from importlib import import_module
 
 _JINJA2_FUNCTION_MAPPINGS = {
@@ -65,7 +66,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
 }
 
 
-def jinja2_convenience_function():
+def jinja2_convenience_function() -> t.Dict[str, str]:
     """Convenience function that allows netutils filter to be used easily with jinja2.
 
     Returns:

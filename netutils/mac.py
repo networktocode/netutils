@@ -1,27 +1,29 @@
 """Functions for working with MAC addresses."""
 
 import re
+import typing as t
 from functools import wraps
+
 from .constants import MAC_CREATE, MAC_REGEX
 
 
-def _valid_mac(func):
+def _valid_mac(func):  # type: ignore
     """Decorator to validate a MAC address is valid."""
 
     @wraps(func)
-    def decorated(*args, **kwargs):
+    def decorated(*args, **kwargs):  # type: ignore
         if kwargs.get("mac"):
             mac = kwargs.get("mac")
         else:
             mac = args[0]
-        if not is_valid_mac(mac):
+        if not is_valid_mac(mac):  # type: ignore
             raise ValueError(f"There was not a valid mac address in: `{mac}`")
         return func(*args, **kwargs)
 
     return decorated
 
 
-def is_valid_mac(mac):
+def is_valid_mac(mac: str) -> bool:
     """Verifies whether or not a string is a valid MAC address.
 
     Args:
@@ -44,8 +46,8 @@ def is_valid_mac(mac):
     return False
 
 
-@_valid_mac
-def mac_to_format(mac, frmt="MAC_NO_SPECIAL"):
+@_valid_mac  # type: ignore
+def mac_to_format(mac: str, frmt: str = "MAC_NO_SPECIAL") -> str:
     """Converts the MAC address to a specific format.
 
     Args:
@@ -66,11 +68,11 @@ def mac_to_format(mac, frmt="MAC_NO_SPECIAL"):
     mac = mac_normalize(mac)
     count = MAC_CREATE[frmt]["count"]
     char = MAC_CREATE[frmt]["char"]
-    return char.join([mac[i : i + count] for i in range(0, len(mac), count)])  # noqa: E203
+    return char.join([mac[i : i + count] for i in range(0, len(mac), count)])  # type: ignore # noqa: E203
 
 
-@_valid_mac
-def mac_to_int(mac):
+@_valid_mac  # type: ignore
+def mac_to_int(mac: str) -> int:
     """Converts the MAC address to an integer.
 
     Args:
@@ -88,8 +90,8 @@ def mac_to_int(mac):
     return int(mac_normalize(mac), 16)
 
 
-@_valid_mac
-def mac_type(mac):  # pylint: disable=inconsistent-return-statements
+@_valid_mac  # type: ignore
+def mac_type(mac: str) -> str:  # type: ignore # pylint: disable=inconsistent-return-statements
     """Retuns the "type" of MAC address, as defined by the regex pattern names.
 
     Args:
@@ -111,8 +113,8 @@ def mac_type(mac):  # pylint: disable=inconsistent-return-statements
             return name
 
 
-@_valid_mac
-def mac_normalize(mac):
+@_valid_mac  # type: ignore
+def mac_normalize(mac: str) -> str:
     """Retuns the MAC address with only the address, and no special characters.
 
     Args:
