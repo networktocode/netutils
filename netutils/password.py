@@ -13,62 +13,6 @@ ALPHABET = string.ascii_letters + string.digits
 DEFAULT_PASSWORD_CHARS = "".join((string.ascii_letters + string.digits + ".,:-_"))
 DEFAULT_PASSWORD_LENGTH = 20
 
-XLAT = [
-    0x64,
-    0x73,
-    0x66,
-    0x64,
-    0x3B,
-    0x6B,
-    0x66,
-    0x6F,
-    0x41,
-    0x2C,
-    0x2E,
-    0x69,
-    0x79,
-    0x65,
-    0x77,
-    0x72,
-    0x6B,
-    0x6C,
-    0x64,
-    0x4A,
-    0x4B,
-    0x44,
-    0x48,
-    0x53,
-    0x55,
-    0x42,
-    0x73,
-    0x67,
-    0x76,
-    0x63,
-    0x61,
-    0x36,
-    0x39,
-    0x38,
-    0x33,
-    0x34,
-    0x6E,
-    0x63,
-    0x78,
-    0x76,
-    0x39,
-    0x38,
-    0x37,
-    0x33,
-    0x32,
-    0x35,
-    0x34,
-    0x6B,
-    0x3B,
-    0x66,
-    0x67,
-    0x38,
-    0x37,
-]
-
 
 def _fail_on_mac(func):
     """There is an issue with Macintosh for encryption."""
@@ -202,30 +146,33 @@ def encrypt_type7(unencrypted_password, salt=None):
 
     Example:
         >>> from netutils.password import encrypt_type7
-        >>> encrypt_type5("cisco")
-        '094F471A1A0A'
+        >>> encrypt_type7("cisco", 11)
+        '110A1016141D'
         >>>
     """
+    encrypted_password = ""  # nosec
     # max length of password for encrypt t7 is 25
-    assert len(unencrypted_password) <= 25, "Password must not exceed 25 characters."
-    key_hex = []
-    # the same key string is used in decrypt_type7 for the reverse operation
-    for char in "dsfd;kfoA,.iyewrkldJKDHSUBsgvca69834ncxv9873254k;fg87":
-        key_hex.append(hex(ord(char)))
-    if not salt:
-        salt = random.randint(0, 15)
-    # Start building the encrypted password - pre-pend the 2 decimal digit offset.
-    encrypted_password = format(salt, "02d")
-    for i, _ in enumerate(unencrypted_password):
-        # Get the next of the plaintext character.
-        dec_char = ord(unencrypted_password[i])
-        # Get the next character of the key.
-        key_char = ast.literal_eval(key_hex[(i + salt) % 53])
-        # XOR the plaintext character with the key character.
-        enc_char = dec_char ^ key_char
-        # Build the encrypted password one character at a time.
-        # The ASCII code of each encrypted character is added as 2 hex digits.
-        encrypted_password += format(enc_char, "02X")
+    if len(unencrypted_password) <= 25:  # nosec
+        key_hex = []
+        # the same key string is used in decrypt_type7 for the reverse operation
+        for char in "dsfd;kfoA,.iyewrkldJKDHSUBsgvca69834ncxv9873254k;fg87":
+            key_hex.append(hex(ord(char)))
+        if not salt:
+            salt = random.randint(0, 15)  # nosec
+        # Start building the encrypted password - pre-pend the 2 decimal digit offset.
+        encrypted_password = format(salt, "02d")
+        for i, _ in enumerate(unencrypted_password):
+            # Get the next of the plaintext character.
+            dec_char = ord(unencrypted_password[i])
+            # Get the next character of the key.
+            key_char = ast.literal_eval(key_hex[(i + salt) % 53])
+            # XOR the plaintext character with the key character.
+            enc_char = dec_char ^ key_char
+            # Build the encrypted password one character at a time.
+            # The ASCII code of each encrypted character is added as 2 hex digits.
+            encrypted_password += format(enc_char, "02X")
+    else:
+        print("Password must not exceed 25 characters.")
     return encrypted_password
 
 
