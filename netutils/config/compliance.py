@@ -1,8 +1,10 @@
 """Filter Plugins for compliance checks."""
 
+import typing as t
+
 from . import parser  # pylint: disable=relative-beyond-top-level
 
-parser_map = {
+parser_map: t.Dict[str, t.Callable] = {  # type: ignore
     "arista_eos": parser.EOSConfigParser,
     "cisco_ios": parser.IOSConfigParser,
     "cisco_nxos": parser.NXOSConfigParser,
@@ -15,7 +17,7 @@ parser_map = {
     "nokia_sros": parser.NokiaConfigParser,
 }
 
-default_feature = {
+default_feature: t.Dict[str, t.Union[str, bool, None]] = {
     "compliant": None,
     "missing": None,
     "extra": None,
@@ -27,7 +29,7 @@ default_feature = {
 }
 
 
-def _check_configs_differences(intended_cfg, actual_cfg, network_os):
+def _check_configs_differences(intended_cfg: str, actual_cfg: str, network_os: str) -> t.Dict[str, t.Union[str, bool]]:
     r"""Find differences between intended and actual config lines.
 
     Args:
@@ -69,7 +71,7 @@ def _check_configs_differences(intended_cfg, actual_cfg, network_os):
     }
 
 
-def _is_feature_ordered_compliant(feature_intended_cfg, feature_actual_cfg):
+def _is_feature_ordered_compliant(feature_intended_cfg: str, feature_actual_cfg: str) -> bool:
     """Check if feature intended cfg is compliant with feature actual cfg.
 
     Args:
@@ -97,17 +99,23 @@ def _is_feature_ordered_compliant(feature_intended_cfg, feature_actual_cfg):
     return False
 
 
-def _open_file_config(cfg_path):
+def _open_file_config(cfg_path: str) -> t.Union[str, bool]:
     """Open config file from local disk."""
     try:
         with open(cfg_path, encoding="utf-8") as filehandler:
             device_cfg = filehandler.read()
     except IOError:
-        return False
+        return False  # This should probably be changed to a exception raise. Causing mypy issues on L183, L184
     return device_cfg.strip()
 
 
-def compliance(features, backup, intended, network_os, cfg_type="file"):
+def compliance(
+    features: t.List[t.Dict[str, t.Union[str, bool, t.List[str]]]],
+    backup: str,
+    intended: str,
+    network_os: str,
+    cfg_type: t.Optional[str] = "file",
+) -> t.Dict[str, t.Dict[str, t.Union[str, bool]]]:
     r"""Report compliance for all features provided as input.
 
     Args:
@@ -172,14 +180,16 @@ def compliance(features, backup, intended, network_os, cfg_type="file"):
     compliance_results = {}
 
     for feature in features:
-        backup_str = section_config(feature, backup_cfg, network_os)
-        intended_str = section_config(feature, intended_cfg, network_os)
+        backup_str = section_config(feature, backup_cfg, network_os)  # type: ignore
+        intended_str = section_config(feature, intended_cfg, network_os)  # type: ignore
         compliance_results.update({feature["name"]: feature_compliance(feature, backup_str, intended_str, network_os)})
 
-    return compliance_results
+    return compliance_results  # type: ignore
 
 
-def config_section_not_parsed(features, device_cfg, network_os):
+def config_section_not_parsed(
+    features: t.List[t.Dict[str, t.Union[str, bool, t.List[str]]]], device_cfg: str, network_os: str
+) -> t.Dict[str, t.Union[str, t.List[str]]]:
     r"""Return device config section that is not checked by compliance.
 
     Args:
@@ -216,11 +226,11 @@ def config_section_not_parsed(features, device_cfg, network_os):
         remaining_cfg = remaining_cfg.replace(feature_cfg, "")
     return {
         "remaining_cfg": remaining_cfg.strip(),
-        "section_not_found": section_not_found,
+        "section_not_found": section_not_found,  # type: ignore
     }
 
 
-def diff_network_config(compare_config, base_config, network_os):
+def diff_network_config(compare_config: str, base_config: str, network_os: str) -> str:
     """Identify which lines in compare_config are not in base_config.
 
     Args:
@@ -270,7 +280,9 @@ def diff_network_config(compare_config, base_config, network_os):
     return "\n".join(needed_lines)
 
 
-def feature_compliance(feature, backup_cfg, intended_cfg, network_os):
+def feature_compliance(
+    feature: t.Dict[str, t.Union[str, bool, t.List[str]]], backup_cfg: str, intended_cfg: str, network_os: str
+) -> t.Dict[str, t.Union[str, bool]]:
     r"""Report compliance for all features provided as input.
 
     Args:
@@ -328,10 +340,10 @@ def feature_compliance(feature, backup_cfg, intended_cfg, network_os):
     else:
         raise  # pylint: disable=misplaced-bare-raise
 
-    return feature_data
+    return feature_data  # type: ignore
 
 
-def find_unordered_cfg_lines(intended_cfg, actual_cfg):
+def find_unordered_cfg_lines(intended_cfg: str, actual_cfg: str) -> t.Tuple[bool, t.List[t.Tuple[str, str]]]:
     """Check if config lines are miss-ordered, i.e in ACL-s.
 
     Args:
@@ -367,7 +379,7 @@ def find_unordered_cfg_lines(intended_cfg, actual_cfg):
     return (False, unordered_lines)
 
 
-def section_config(feature, device_cfg, network_os):
+def section_config(feature: t.Dict[str, t.Union[str, bool, t.List[str]]], device_cfg: str, network_os: str) -> str:
     """Parse feature section config from device cfg.
 
         In case section attribute of the the feature is not provided
@@ -379,7 +391,7 @@ def section_config(feature, device_cfg, network_os):
         network_os (str): Device network operating system that is in parser_map keys.
 
     Returns:
-        list: The hash report data mapping file hashes to report data.
+        str: The hash report data mapping file hashes to report data.
 
     Example:
         >>> feature =  {
@@ -418,7 +430,7 @@ def section_config(feature, device_cfg, network_os):
                 continue
             else:
                 match = False
-        for line_start in section_starts_with:
+        for line_start in section_starts_with:  # type: ignore
             if not match and line.config_line.startswith(line_start):
                 section_config_list.append(line.config_line)
                 match = True

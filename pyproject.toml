@@ -44,6 +44,7 @@ sphinx = "*"
 sphinx-rtd-theme = "*"
 toml = "*"
 yamllint = "*"
+mypy = "^0.961"
 
 [tool.black]
 line-length = 120
@@ -93,6 +94,28 @@ notes = """,
 python_paths = "./"
 testpaths = "tests/"
 addopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
+
+[tool.mypy]
+python_version = 3.7
+ignore_errors = false
+disallow_untyped_calls = true
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+disallow_untyped_decorators = true
+check_untyped_defs = true
+disallow_any_generics = true
+ignore_missing_imports = true
+strict_optional = true
+warn_unused_ignores = true
+warn_return_any = true
+warn_unused_configs = true
+warn_redundant_casts = true
+disallow_subclassing_any = true
+no_implicit_optional = true
+implicit_reexport = true
+strict_equality = true
+exclude = ["tests/", "tasks.py"]
+show_error_codes = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

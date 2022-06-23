@@ -1,10 +1,12 @@
 """Functions for working with IP addresses."""
 import ipaddress
+import typing as t
 from operator import attrgetter
+
 from netutils.constants import IPV4_MASKS, IPV6_MASKS
 
 
-def ipaddress_address(ip, attr):
+def ipaddress_address(ip: str, attr: str) -> t.Any:
     """Convenience function primarily built to expose ipaddress.ip_address to Jinja.
 
     Args:
@@ -31,7 +33,7 @@ def ipaddress_address(ip, attr):
     return retrieved_method
 
 
-def ipaddress_interface(ip, attr):
+def ipaddress_interface(ip: str, attr: str) -> t.Any:
     """Convenience function primarily built to expose ipaddress.ip_interface to Jinja.
 
     Args:
@@ -55,7 +57,7 @@ def ipaddress_interface(ip, attr):
     return retrieved_method
 
 
-def ipaddress_network(ip, attr):
+def ipaddress_network(ip: str, attr: str) -> t.Any:
     """Convenience function primarily built to expose ipaddress.ip_network to Jinja.
 
     Args:
@@ -80,7 +82,7 @@ def ipaddress_network(ip, attr):
     return retrieved_method
 
 
-def ip_to_hex(ip):
+def ip_to_hex(ip: str) -> str:
     """Converts an IP address in string format to a hex string.
 
     Args:
@@ -99,7 +101,7 @@ def ip_to_hex(ip):
     return str(hex(int(ip_obj)))[2:].zfill(int(ip_obj.max_prefixlen / 4))
 
 
-def ip_addition(ip, val):
+def ip_addition(ip: str, val: int) -> str:
     """Adds an integer to an IP address.
 
     Args:
@@ -118,7 +120,7 @@ def ip_addition(ip, val):
     return str(ipaddress.ip_address(ip) + val)
 
 
-def ip_to_bin(ip):
+def ip_to_bin(ip: str) -> str:
     """Converts an IP address in string format to a binary string.
 
     Args:
@@ -137,7 +139,7 @@ def ip_to_bin(ip):
     return bin(int(ip_obj))[2:].zfill(ip_obj.max_prefixlen)
 
 
-def ip_subtract(ip, val):
+def ip_subtract(ip: str, val: int) -> str:
     """Subtract an integer to an IP address.
 
     Args:
@@ -156,7 +158,7 @@ def ip_subtract(ip, val):
     return str(ipaddress.ip_address(ip) - val)
 
 
-def is_ip(ip):
+def is_ip(ip: str) -> bool:
     """Verifies whether or not a string is a valid IP address.
 
     Args:
@@ -174,13 +176,13 @@ def is_ip(ip):
         >>>
     """
     try:
-        ip = ipaddress.ip_address(ip)
+        ip = ipaddress.ip_address(ip)  # type: ignore
         return True
     except ValueError:
         return False
 
 
-def is_netmask(netmask):
+def is_netmask(netmask: str) -> bool:
     """Verifies whether or not a string is a valid subnet mask.
 
     Args:
@@ -204,7 +206,7 @@ def is_netmask(netmask):
         return False
 
 
-def netmask_to_cidr(netmask):
+def netmask_to_cidr(netmask: str) -> str:
     """Creates a CIDR notation of a given subnet mask in decimal format.
 
     Args:
@@ -221,11 +223,11 @@ def netmask_to_cidr(netmask):
         23
     """
     if is_netmask(netmask):
-        return bin(int(ipaddress.ip_address(netmask))).count("1")
+        return bin(int(ipaddress.ip_address(netmask))).count("1")  # type: ignore
     raise ValueError("Subnet mask is not valid.")
 
 
-def cidr_to_netmask(cidr):
+def cidr_to_netmask(cidr: int) -> str:
     """Creates a decimal format of a CIDR value.
 
     **IPv4** only.  For IPv6, please use `cidr_to_netmaskv6`.
@@ -248,7 +250,7 @@ def cidr_to_netmask(cidr):
     raise ValueError("Parameter must be an integer between 0 and 32.")
 
 
-def cidr_to_netmaskv6(cidr):
+def cidr_to_netmaskv6(cidr: int) -> str:
     """Creates a decimal format of a CIDR value.
 
     Args:
@@ -269,7 +271,7 @@ def cidr_to_netmaskv6(cidr):
     raise ValueError("Parameter must be an integer between 0 and 128.")
 
 
-def get_all_host(ip_network):
+def get_all_host(ip_network: str) -> t.List[str]:
     """Given a network, return the list of usable IP addresses.
 
     Args:
@@ -284,10 +286,10 @@ def get_all_host(ip_network):
         ['10.100.100.1', '10.100.100.2', '10.100.100.3', '10.100.100.4', '10.100.100.5', '10.100.100.6']
         >>>
     """
-    return (str(ip) for ip in ipaddress.ip_network(ip_network).hosts())
+    return (str(ip) for ip in ipaddress.ip_network(ip_network).hosts())  # type: ignore
 
 
-def get_broadcast_address(ip_network):
+def get_broadcast_address(ip_network: str) -> str:
     """Given a network, determine the broadcast IP address.
 
     Args:
@@ -305,7 +307,7 @@ def get_broadcast_address(ip_network):
     return str(ipaddress.ip_network(ip_network).broadcast_address)
 
 
-def get_first_usable(ip_network):
+def get_first_usable(ip_network: str) -> str:
     """Given a network, determine the first usable IP address.
 
     Args:
@@ -326,7 +328,7 @@ def get_first_usable(ip_network):
     return str(net[1])
 
 
-def get_peer_ip(ip_interface):
+def get_peer_ip(ip_interface: str) -> t.Any:
     """Given an IP interface (an ip address, with subnet mask) that is on a peer network, return the peer IP.
 
     Args:
@@ -364,7 +366,7 @@ def get_peer_ip(ip_interface):
     return val[0]
 
 
-def get_usable_range(ip_network):
+def get_usable_range(ip_network: str) -> str:
     """Given a network, return the string of usable IP addresses.
 
     Args:

@@ -1,11 +1,11 @@
 """Functions for working with configuration to clean the config."""
 # pylint: disable=anomalous-backslash-in-string
 
-
 import re
+import typing as t
 
 
-def clean_config(config, filters):
+def clean_config(config: str, filters: t.List[str]) -> str:
     r"""Given a list of regex patterns, delete those lines that match.
 
     Args:
@@ -48,11 +48,11 @@ def clean_config(config, filters):
         >>>
     """
     for item in filters:
-        config = re.sub(item["regex"], "", config, flags=re.MULTILINE)
+        config = re.sub(item["regex"], "", config, flags=re.MULTILINE)  # type: ignore
     return config
 
 
-def sanitize_config(config, filters):
+def sanitize_config(config: str, filters: t.Optional[t.Dict[str, str]]) -> str:
     r"""Given a dictionary of filters, remove sensitive data from the provided config.
 
     Args:
@@ -75,6 +75,6 @@ def sanitize_config(config, filters):
         'enable secret 5 <removed>'
         >>>
     """
-    for item in filters:
-        config = re.sub(item["regex"], item["replace"], config, flags=re.MULTILINE)
+    for item in filters:  # type: ignore
+        config = re.sub(item["regex"], item["replace"], config, flags=re.MULTILINE)  # type: ignore
     return config

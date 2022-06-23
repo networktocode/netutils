@@ -2,10 +2,14 @@
 
 import crypt
 import random
-import string
 import secrets
+import string
 import sys
+<<<<<<< HEAD
 import ast
+=======
+import typing as t
+>>>>>>> 593c804 (initial pass at type hinting and getting mypy to run)
 from functools import wraps
 
 # Code example from Python docs
@@ -71,11 +75,11 @@ XLAT = [
 ]
 
 
-def _fail_on_mac(func):
+def _fail_on_mac(func):  # type: ignore
     """There is an issue with Macintosh for encryption."""
 
     @wraps(func)
-    def decorated(*args, **kwargs):
+    def decorated(*args, **kwargs):  # type: ignore
         if sys.platform == "darwin":
             raise ValueError("Macintosh is not supported, see https://bugs.python.org/issue33213 for upstream issue.")
         return func(*args, **kwargs)
@@ -83,7 +87,9 @@ def _fail_on_mac(func):
     return decorated
 
 
-def compare_type5(unencrypted_password, encrypted_password, return_original=False):
+def compare_type5(
+    unencrypted_password: str, encrypted_password: str, return_original: t.Optional[bool] = False
+) -> bool:
     """Given an encrypted and unencrypted password of Cisco Type 5 password, compare if they are a match.
 
     Args:
@@ -105,12 +111,14 @@ def compare_type5(unencrypted_password, encrypted_password, return_original=Fals
     salt = get_hash_salt(encrypted_password)
     if encrypt_type5(unencrypted_password, salt) == encrypted_password:
         if return_original is True:
-            return encrypted_password
+            return encrypted_password  # type: ignore
         return True
     return False
 
 
-def compare_type7(unencrypted_password, encrypted_password, return_original=False):
+def compare_type7(
+    unencrypted_password: str, encrypted_password: str, return_original: t.Optional[bool] = False
+) -> bool:
     """Given an encrypted and unencrypted password of Cisco Type 7 password, compare if they are a match.
 
     Args:
@@ -131,19 +139,19 @@ def compare_type7(unencrypted_password, encrypted_password, return_original=Fals
     """
     if decrypt_type7(encrypted_password) == unencrypted_password:
         if return_original is True:
-            return encrypted_password
+            return encrypted_password  # type: ignore
         return True
     return False
 
 
-def decrypt_type7(encrypted_password):
+def decrypt_type7(encrypted_password: str) -> str:
     """Given an unencrypted password of Cisco Type 7 password decrypt it.
 
     Args:
         encrypted_password (str): A password that has been encrypted, and will be decrypted.
 
     Returns:
-        string: The unencrypted_password password.
+        str: The unencrypted_password password.
 
     Example:
         >>> from netutils.password import decrypt_type7
@@ -166,8 +174,8 @@ def decrypt_type7(encrypted_password):
     )
 
 
-@_fail_on_mac
-def encrypt_type5(unencrypted_password, salt=None, salt_len=4):
+@_fail_on_mac  # type: ignore
+def encrypt_type5(unencrypted_password: str, salt: t.Optional[str] = None, salt_len: t.Optional[int] = 4) -> str:
     """Given an unencrypted password of Cisco Type 5 password, encrypt it.
 
     Args:
@@ -176,7 +184,7 @@ def encrypt_type5(unencrypted_password, salt=None, salt_len=4):
         salt_len (int, optional): The number of random set of characters, when not manually set. Defaults to 4.
 
     Returns:
-        string: The encrypted password.
+        str: The encrypted password.
 
     Example:
         >>> from netutils.password import encrypt_type5
@@ -185,21 +193,21 @@ def encrypt_type5(unencrypted_password, salt=None, salt_len=4):
         >>>
     """
     if not salt:
-        salt = "".join(secrets.choice(ALPHABET) for i in range(salt_len))
+        salt = "".join(secrets.choice(ALPHABET) for i in range(salt_len))  # type: ignore
     elif not set(salt) <= set(ALPHABET):
         raise ValueError(f"type5_pw salt used inproper characters, must be one of {ALPHABET}")
     return crypt.crypt(unencrypted_password, f"$1${salt}$")
 
 
-def encrypt_type7(unencrypted_password, salt=None):
+def encrypt_type7(unencrypted_password: str, salt: t.Optional[str] = None) -> str:
     """Given an unencrypted password of Cisco Type 7 password, encypt it.
 
     Args:
-        unencrypted_password (str): A password that has not been encrypted, and will be compared against.
-        salt (str, optional): A random number between 0 and 15 that can be set by the operator. Defaults to random generated one.
+        unencrypted_password: A password that has not been encrypted, and will be compared against.
+        salt: A random number between 0 and 15 that can be set by the operator. Defaults to random generated one.
 
     Returns:
-        str (optional): The encrypted password.
+        The encrypted password.
 
     Example:
         >>> from netutils.password import encrypt_type7
@@ -227,15 +235,14 @@ def encrypt_type7(unencrypted_password, salt=None):
         encrypted_password += format(enc_char, "02X")
     return encrypted_password
 
-
-def get_hash_salt(encrypted_password):
+def get_hash_salt(encrypted_password: str) -> str:
     """Given an encrypted password obtain the salt value from it.
 
     Args:
         encrypted_password (str): A password that has been encrypted, which the salt will be taken from.
 
     Returns:
-        string: The encrypted password.
+        str: The encrypted password.
 
     Example:
         >>> from netutils.password import get_hash_salt

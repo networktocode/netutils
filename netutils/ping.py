@@ -1,8 +1,9 @@
 """Functions to create a ping via pure Python."""
 import socket
+import typing as t
 
 
-def tcp_ping(ip, port, timeout=1):  # pylint: disable=invalid-name
+def tcp_ping(ip: str, port: int, timeout: t.Optional[int] = 1) -> bool:  # pylint: disable=invalid-name
     """Verifies whether a TCP port is open on a given IP address.
 
     Args:
@@ -22,10 +23,10 @@ def tcp_ping(ip, port, timeout=1):  # pylint: disable=invalid-name
         >>>
     """
     sckt = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sckt.settimeout(int(timeout))
+    sckt.settimeout(int(timeout))  # type: ignore
     try:
         sckt.connect((ip, int(port)))  # pylint: disable=invalid-name
-        sckt.shutdown(int(timeout))
+        sckt.shutdown(int(timeout))  # type: ignore
         return True
     except socket.error:
         return False

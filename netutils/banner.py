@@ -1,9 +1,10 @@
 """Functions for working with the banner configuration."""
 import re
+
 from netutils.constants import CARET_C
 
 
-def delimiter_change(config, from_delimiter, to_delimiter):
+def delimiter_change(config: str, from_delimiter: str, to_delimiter: str) -> str:
     r"""Change the banner delimiter.
 
     Args:
@@ -29,7 +30,7 @@ def delimiter_change(config, from_delimiter, to_delimiter):
     return config_line
 
 
-def normalise_delimiter_caret_c(delimiter, config):
+def normalise_delimiter_caret_c(delimiter: str, config: str) -> str:
     r"""Normalise delimiter to ^C.
 
     Args:
