@@ -1,0 +1,7 @@
+!
+banner login
+* GOOD DATA LINE 1
+* BAD DATA LINE 2
+EOF
+!
+end
