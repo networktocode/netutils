@@ -1,7 +1,6 @@
 """Functions for working with MAC addresses."""
 
 import re
-import typing as t
 from functools import wraps
 
 from .constants import MAC_CREATE, MAC_REGEX
