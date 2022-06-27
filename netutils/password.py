@@ -142,7 +142,7 @@ def encrypt_type7(unencrypted_password, salt=None):
         salt (str, optional): A random number between 0 and 15 that can be set by the operator. Defaults to random generated one.
 
     Returns:
-        string (optional): The encrypted password.
+        str (optional): The encrypted password.
 
     Example:
         >>> from netutils.password import encrypt_type7
