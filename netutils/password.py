@@ -152,7 +152,8 @@ def encrypt_type7(unencrypted_password, salt=None):
     """
     encrypted_password = ""  # nosec
     # max length of password for encrypt t7 is 25
-    if len(unencrypted_password) <= 25:  # nosec
+    if len(unencrypted_password) > 25:  # nosec
+        raise ValueError("Password must not exceed 25 characters.")
         key_hex = []
         # the same key string is used in decrypt_type7 for the reverse operation
         for char in "dsfd;kfoA,.iyewrkldJKDHSUBsgvca69834ncxv9873254k;fg87":
