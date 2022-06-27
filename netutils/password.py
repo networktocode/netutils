@@ -12,6 +12,63 @@ from functools import wraps
 ALPHABET = string.ascii_letters + string.digits
 DEFAULT_PASSWORD_CHARS = "".join((string.ascii_letters + string.digits + ".,:-_"))
 DEFAULT_PASSWORD_LENGTH = 20
+ENCRYPT_TYPE7_LENGTH = 25
+
+XLAT = [
+    "0x64",
+    "0x73",
+    "0x66",
+    "0x64",
+    "0x3b",
+    "0x6b",
+    "0x66",
+    "0x6f",
+    "0x41",
+    "0x2c",
+    "0x2e",
+    "0x69",
+    "0x79",
+    "0x65",
+    "0x77",
+    "0x72",
+    "0x6b",
+    "0x6c",
+    "0x64",
+    "0x4a",
+    "0x4b",
+    "0x44",
+    "0x48",
+    "0x53",
+    "0x55",
+    "0x42",
+    "0x73",
+    "0x67",
+    "0x76",
+    "0x63",
+    "0x61",
+    "0x36",
+    "0x39",
+    "0x38",
+    "0x33",
+    "0x34",
+    "0x6e",
+    "0x63",
+    "0x78",
+    "0x76",
+    "0x39",
+    "0x38",
+    "0x37",
+    "0x33",
+    "0x32",
+    "0x35",
+    "0x34",
+    "0x6b",
+    "0x3b",
+    "0x66",
+    "0x67",
+    "0x38",
+    "0x37",
+]
 
 
 def _fail_on_mac(func):
@@ -151,13 +208,13 @@ def encrypt_type7(unencrypted_password, salt=None):
         >>>
     """
     # max length of password for encrypt t7 is 25
-    if len(unencrypted_password) > 25:  # nosec
+    if len(unencrypted_password) > ENCRYPT_TYPE7_LENGTH:  # nosec
         raise ValueError("Password must not exceed 25 characters.")
 
-    key_hex = []
+    # key_hex = []
     # the same key string is used in decrypt_type7 for the reverse operation
-    for char in "dsfd;kfoA,.iyewrkldJKDHSUBsgvca69834ncxv9873254k;fg87":
-        key_hex.append(hex(ord(char)))
+    # for char in "dsfd;kfoA,.iyewrkldJKDHSUBsgvca69834ncxv9873254k;fg87":
+    #     key_hex.append(hex(ord(char)))
     if not salt:
         salt = random.randint(0, 15)  # nosec
     # Start building the encrypted password - pre-pend the 2 decimal digit offset.
@@ -166,7 +223,7 @@ def encrypt_type7(unencrypted_password, salt=None):
         # Get the next of the plaintext character.
         dec_char = ord(unencrypted_password[i])
         # Get the next character of the key.
-        key_char = ast.literal_eval(key_hex[(i + salt) % 53])
+        key_char = ast.literal_eval(XLAT[(i + salt) % 53])
         # XOR the plaintext character with the key character.
         enc_char = dec_char ^ key_char
         # Build the encrypted password one character at a time.
