@@ -9,10 +9,10 @@ def fqdn_to_ip(hostname: str) -> str:
        from your machine to the DNS server, an upstream DNS issue, etc.
 
     Args:
-        hostname (str): An FQDN that may or may not be resolvable.
+        hostname: An FQDN that may or may not be resolvable.
 
     Returns:
-        ip (str): The IP Address of a valid FQDN.
+        The IP Address of a valid FQDN.
 
     Example:
         >>> from netutils.dns import fqdn_to_ip

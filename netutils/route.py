@@ -12,11 +12,11 @@ def longest_prefix_match(ip_addr: str, routes: t.List[t.Dict[str, str]]) -> str:
     """From a list of networks and an IP address, find the most specific route.
 
     Args:
-        ip_addr (str): String representation of an IP address.
-        routes (list): list of dictionaries with network and mask as keys. Subnet can also be CIDR(number) notation.
+        ip_addr: String representation of an IP address.
+        routes: list of dictionaries with network and mask as keys. Subnet can also be CIDR(number) notation.
 
     Returns:
-        [IPv4Network object]: Longest Match Route
+        Longest Match Route
 
     Example:
         >>> from netutils.route import longest_prefix_match

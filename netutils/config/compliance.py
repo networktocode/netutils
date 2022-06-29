@@ -4,7 +4,7 @@ import typing as t
 
 from . import parser  # pylint: disable=relative-beyond-top-level
 
-parser_map: t.Dict[str, t.Callable] = {  # type: ignore
+parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "arista_eos": parser.EOSConfigParser,
     "cisco_ios": parser.IOSConfigParser,
     "cisco_nxos": parser.NXOSConfigParser,
@@ -17,6 +17,8 @@ parser_map: t.Dict[str, t.Callable] = {  # type: ignore
     "nokia_sros": parser.NokiaConfigParser,
 }
 
+# TODO: Once support for 3.7 is dropped, there should be a typing.TypedDict for this which should then also be used
+# as the return type for a bunch of the following methods.
 default_feature: t.Dict[str, t.Union[str, bool, None]] = {
     "compliant": None,
     "missing": None,
@@ -33,12 +35,12 @@ def _check_configs_differences(intended_cfg: str, actual_cfg: str, network_os: s
     r"""Find differences between intended and actual config lines.
 
     Args:
-        intended_cfg (str): Feature intended configuration.
-        actual_cfg: (str): Feature actual configuration.
-        network_os (str): Device network operating system that is in parser_map keys.
+        intended_cfg: Feature intended configuration.
+        actual_cfg: Feature actual configuration.
+        network_os: Device network operating system that is in parser_map keys.
 
     Returns:
-        dict: Config fragments that are missing, extra or unordered_compliant.
+        Config fragments that are missing, extra or unordered_compliant.
 
     Example:
         >>> from netutils.config.compliance import _check_configs_differences
@@ -75,8 +77,8 @@ def _is_feature_ordered_compliant(feature_intended_cfg: str, feature_actual_cfg:
     """Check if feature intended cfg is compliant with feature actual cfg.
 
     Args:
-        feature_intended_cfg (str): Feature intended configuration.
-        feature_actual_cfg: (str): Feature actual configuration.
+        feature_intended_cfg: Feature intended configuration.
+        feature_actual_cfg: Feature actual configuration.
 
     Returns:
         bool
@@ -99,13 +101,12 @@ def _is_feature_ordered_compliant(feature_intended_cfg: str, feature_actual_cfg:
     return False
 
 
-def _open_file_config(cfg_path: str) -> t.Union[str, bool]:
+def _open_file_config(cfg_path: str) -> str:
     """Open config file from local disk."""
-    try:
-        with open(cfg_path, encoding="utf-8") as filehandler:
-            device_cfg = filehandler.read()
-    except IOError:
-        return False  # This should probably be changed to a exception raise. Causing mypy issues on L183, L184
+    # This might fail, raising an IOError
+    with open(cfg_path, encoding="utf-8") as filehandler:
+        device_cfg = filehandler.read()
+
     return device_cfg.strip()
 
 
@@ -114,16 +115,16 @@ def compliance(
     backup: str,
     intended: str,
     network_os: str,
-    cfg_type: t.Optional[str] = "file",
+    cfg_type: str = "file",
 ) -> t.Dict[str, t.Dict[str, t.Union[str, bool]]]:
     r"""Report compliance for all features provided as input.
 
     Args:
-        features (list): List of features for particular network os.
-        backup (path): running config or config backup file  to compare against intended.
-        intended (path): intended config to compare against backup.
-        network_os (str): Device network operating system that is in parser_map keys.
-        cfg_type (str, optional): A string that is effectively a choice between `file` and `string`. Defaults to `file`.
+        features: List of features for particular network os.
+        backup: running config or config backup file  to compare against intended.
+        intended: intended config to compare against backup.
+        network_os: Device network operating system that is in parser_map keys.
+        cfg_type: A string that is effectively a choice between `file` and `string`. Defaults to `file`.
 
     Returns:
         dict: Compliance information per feature.
@@ -180,8 +181,8 @@ def compliance(
     compliance_results = {}
 
     for feature in features:
-        backup_str = section_config(feature, backup_cfg, network_os)  # type: ignore
-        intended_str = section_config(feature, intended_cfg, network_os)  # type: ignore
+        backup_str = section_config(feature, backup_cfg, network_os)
+        intended_str = section_config(feature, intended_cfg, network_os)
         compliance_results.update({feature["name"]: feature_compliance(feature, backup_str, intended_str, network_os)})
 
     return compliance_results  # type: ignore
@@ -193,12 +194,12 @@ def config_section_not_parsed(
     r"""Return device config section that is not checked by compliance.
 
     Args:
-        features (list): List of features for particular network os.
-        device_cfg (str): Device configuration.
-        network_os (str): Device network operating system that is in parser_map keys.
+        features: List of features for particular network os.
+        device_cfg: Device configuration.
+        network_os: Device network operating system that is in parser_map keys.
 
     Returns:
-        dict: Config that was not parsed or section not found.
+        Config that was not parsed or section not found.
 
     Example:
         >>> features = [{
@@ -234,12 +235,12 @@ def diff_network_config(compare_config: str, base_config: str, network_os: str) 
     """Identify which lines in compare_config are not in base_config.
 
     Args:
-        compare_config (str): The config to evaluate against base_config.
-        base_config (str): The config to compare compare_config against.
-        network_os (str): Device network operating system that is in parser_map keys.
+        compare_config: The config to evaluate against base_config.
+        base_config: The config to compare compare_config against.
+        network_os: Device network operating system that is in parser_map keys.
 
     Returns:
-        base_config (str): The string of additional commands in compare_config separated by a newline.
+        base_config: The string of additional commands in compare_config separated by a newline.
 
     Example:
         >>> compare_config = '''router bgp 100
@@ -286,10 +287,10 @@ def feature_compliance(
     r"""Report compliance for all features provided as input.
 
     Args:
-        feature (dict): A dictionary with the attributes of the feature check
-        backup_cfg (str): running config or config backup of a specific feature to compare.
-        intended_cfg (str): intended config of a specific feature to compare.
-        network_os (str): Device network operating system that is in parser_map keys.
+        feature: A dictionary with the attributes of the feature check
+        backup_cfg: running config or config backup of a specific feature to compare.
+        intended_cfg: intended config of a specific feature to compare.
+        network_os: Device network operating system that is in parser_map keys.
 
     Returns:
         dict: Compliance information of a single feature.
@@ -347,8 +348,8 @@ def find_unordered_cfg_lines(intended_cfg: str, actual_cfg: str) -> t.Tuple[bool
     """Check if config lines are miss-ordered, i.e in ACL-s.
 
     Args:
-        intended_cfg (str): Feature intended configuration.
-        actual_cfg: (str): Feature actual configuration.
+        intended_cfg: Feature intended configuration.
+        actual_cfg: Feature actual configuration.
 
     Returns:
         list: List of tuples with unordered_compliant cfg lines.
@@ -386,12 +387,12 @@ def section_config(feature: t.Dict[str, t.Union[str, bool, t.List[str]]], device
         entire content of the device_cfg is returned.
 
     Args:
-        feature (dict): Feature name and cfg lines that should be parsed.
-        device_cfg (str): Device configuration.
-        network_os (str): Device network operating system that is in parser_map keys.
+        feature: Feature name and cfg lines that should be parsed.
+        device_cfg: Device configuration.
+        network_os : Device network operating system that is in parser_map keys.
 
     Returns:
-        str: The hash report data mapping file hashes to report data.
+        he hash report data mapping file hashes to report data.
 
     Example:
         >>> feature =  {

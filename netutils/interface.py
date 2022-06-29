@@ -13,10 +13,10 @@ def interface_range_expansion(interface_pattern: str) -> t.List[str]:
     """Expand interface pattern into a list of interfaces.
 
     Args:
-        interface_pattern (str): The string pattern that will be parsed to create the list of interfaces.
+        interface_pattern: The string pattern that will be parsed to create the list of interfaces.
 
     Returns:
-        list: Contains the expanded list of interfaces.
+        Contains the expanded list of interfaces.
 
     Example:
         >>> from netutils.interface import interface_range_expansion
@@ -36,7 +36,7 @@ def interface_range_expansion(interface_pattern: str) -> t.List[str]:
                 number_range.append(int(value))
         return number_range
 
-    def _pairwise(interface_constant: t.List[int]) -> t.List[t.Iterable[t.Any]]:
+    def _pairwise(interface_constant: t.List[int]) -> t.List[t.Tuple[int, int]]:
         interface_constant_it = iter(interface_constant)
         return list(zip(interface_constant_it, interface_constant_it))
 
@@ -58,7 +58,7 @@ def interface_range_expansion(interface_pattern: str) -> t.List[str]:
     for element in itertools.product(*cartesian_list):
         current_interface = ""
         for count, item in enumerate(interface_constant_out):
-            current_interface += interface_pattern[item[0] : item[1]]  # type: ignore # noqa: E203
+            current_interface += interface_pattern[item[0] : item[1]]  # noqa: E203
             current_interface += str(element[count])
         expanded_interfaces.append(current_interface)
 
@@ -69,10 +69,10 @@ def split_interface(interface: str) -> t.Tuple[str, str]:
     """Split an interface name based on first digit, slash, or space match.
 
     Args:
-        interface (str): The interface you are attempting to split.
+        interface: The interface you are attempting to split.
 
     Returns:
-        tuple: The split between the name of the interface the value.
+        The split between the name of the interface the value.
 
     Example:
         >>> from netutils.interface import split_interface
@@ -88,7 +88,7 @@ def split_interface(interface: str) -> t.Tuple[str, str]:
 
 
 def canonical_interface_name(
-    interface: str, addl_name_map: t.Optional[t.Dict[str, str]] = None, verify: t.Optional[bool] = False
+    interface: str, addl_name_map: t.Optional[t.Dict[str, str]] = None, verify: bool = False
 ) -> str:
     """Function to return an interface's canonical name (fully expanded name).
 
@@ -99,12 +99,12 @@ def canonical_interface_name(
     easily troubleshot, found, or known.
 
     Args:
-        interface (str): The interface you are attempting to expand.
-        addl_name_map (dict, optional): A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
-        verify (bool, optional): Whether or not to verify the interface matches a known interface standard. Defaults to False.
+        interface: The interface you are attempting to expand.
+        addl_name_map: A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
+        verify: Whether or not to verify the interface matches a known interface standard. Defaults to False.
 
     Returns:
-        str: The name of the interface in the long form.
+        The name of the interface in the long form.
 
     Example:
         >>> from netutils.interface import canonical_interface_name
@@ -135,7 +135,7 @@ def canonical_interface_name_list(
     addl_name_map: t.Optional[t.Dict[str, str]] = None,
     verify: bool = False,
     order: t.Optional[str] = None,
-    reverse: t.Optional[bool] = None,
+    reverse: bool = False,
 ) -> t.List[str]:
     """Function to return a list of interface's canonical name (fully expanded name).
 
@@ -146,14 +146,14 @@ def canonical_interface_name_list(
     easily troubleshot, found, or known.
 
     Args:
-        interfaces (list): List of interfaces you are attempting to expand.
-        addl_name_map (dict, optional): A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
-        verify (bool, optional): Whether or not to verify the interface matches a known interface standard. Defaults to False.
-        order (str, optional): Determines what order the list of interfaces should be returned in. Defaults to None.
-        reverse (bool, optional): Specify if the order of the list should be reversed when setting an order. Defaults to None.
+        interfaces: List of interfaces you are attempting to expand.
+        addl_name_map: A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
+        verify: Whether or not to verify the interface matches a known interface standard. Defaults to False.
+        order: Determines what order the list of interfaces should be returned in. Defaults to None.
+        reverse: Specify if the order of the list should be reversed when setting an order. Defaults to None.
 
     Returns:
-        list: List of the interfaces in their long form.
+        List of the interfaces in their long form.
 
     Raises:
         ValueError: Raised if any interface name in list cannot be converted to its long form and verify parameter is set to true.
@@ -199,18 +199,18 @@ def abbreviated_interface_name(
     interface: str,
     addl_name_map: t.Optional[t.Dict[str, str]] = None,
     addl_reverse_map: t.Optional[t.Dict[str, str]] = None,
-    verify: t.Optional[bool] = False,
+    verify: bool = False,
 ) -> str:
     """Function to return an abbreviated representation of the interface name.
 
     Args:
-        interface (str): The interface you are attempting to shorten.
-        addl_name_map (dict, optional): A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
-        addl_reverse_map (dict, optional): A dict containing key/value pairs that updates the abbreviated mapping. Defaults to None.
-        verify (bool, optional): Whether or not to verify the interface matches a known interface standard. Defaults to False.
+        interface: The interface you are attempting to shorten.
+        addl_name_map: A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
+        addl_reverse_map: A dict containing key/value pairs that updates the abbreviated mapping. Defaults to None.
+        verify: Whether or not to verify the interface matches a known interface standard. Defaults to False.
 
     Returns:
-        str: The name of the interface in the abbreviated form.
+        The name of the interface in the abbreviated form.
 
     Example:
         >>> abbreviated_interface_name("GigabitEthernet1/0/1")
@@ -233,13 +233,12 @@ def abbreviated_interface_name(
         rev_name_map.update(addl_reverse_map)
 
     # Try to ensure canonical type.
-    if name_map.get(interface_type):
-        canonical_type = name_map.get(interface_type)
-    else:
+    canonical_type = name_map.get(interface_type, None)
+    if not canonical_type:
         canonical_type = interface_type
 
     try:
-        abbreviated_name = rev_name_map[canonical_type] + str(interface_number)  # type: ignore
+        abbreviated_name = rev_name_map[canonical_type] + str(interface_number)
         return abbreviated_name
 
     except KeyError:
@@ -251,6 +250,8 @@ def abbreviated_interface_name(
     return interface
 
 
+# Mypy is currently (0.961) unable to handle the combination of ABC and @total_ordering, see here:
+# https://github.com/python/mypy/issues/5374
 @total_ordering  # type: ignore
 class CharacterClass(ABC):
     """CharacterClass embodies the state needed to sort interfaces."""
@@ -261,10 +262,10 @@ class CharacterClass(ABC):
         super().__init__()
 
     @abstractmethod
-    def __lt__(self, other) -> bool:  # type: ignore  # noqa: D105
+    def __lt__(self, other: "CharacterClass") -> bool:  # noqa: D105
         ...
 
-    def __eq__(self, other) -> t.Any:  # type: ignore  # noqa: D105
+    def __eq__(self, other: t.Any) -> t.Any:  # noqa: D105
         return self.weight == other.weight and self.val == other.val
 
     @property
@@ -294,8 +295,8 @@ class CharacterClass(ABC):
 class CCString(CharacterClass):
     """Strings are sorted lexicographically."""
 
-    def __lt__(self, other) -> bool:  # type: ignore  # noqa: D105
-        return self.weight < other.weight or self.val < other.val  # type: ignore
+    def __lt__(self, other: "CharacterClass") -> bool:  # noqa: D105
+        return self.weight < other.weight or self.val < other.val
 
     def __repr__(self) -> str:  # noqa: D105
         return f'CCString("{self.val}", {self.terminal})'
@@ -308,7 +309,7 @@ class CCString(CharacterClass):
 class CCInt(CharacterClass):
     """Ints must be sorted canonically because '11' < '5'."""
 
-    def __lt__(self, other) -> bool:  # type: ignore  # noqa: D105
+    def __lt__(self, other: "CharacterClass") -> bool:  # noqa: D105
         return self.weight < other.weight or int(self.val) < int(other.val)
 
     def __repr__(self) -> str:  # noqa: D105
@@ -324,7 +325,7 @@ class CCSeparator(CharacterClass):
 
     weights: t.Dict[str, int] = {".": 10, "/": 20}
 
-    def __lt__(self, other) -> bool:  # type: ignore  # noqa: D105
+    def __lt__(self, other: "CharacterClass") -> bool:  # noqa: D105
         return self.weight < other.weight or self.weights.get(self.val, 0) < self.weights.get(other.val, 0)
 
     def __repr__(self) -> str:  # noqa: D105
@@ -335,7 +336,7 @@ class CCSeparator(CharacterClass):
         return 30
 
 
-def _CCfail(*args) -> None:  # type: ignore  # pylint: disable=C0103
+def _CCfail(*args: t.Any) -> t.NoReturn:  # pylint: disable=C0103
     """Helper to raise an exception on a bad character match."""
     raise ValueError(f"unknown character '{args[0][0]}'.")
 
@@ -354,15 +355,18 @@ def _split_interface_tuple(interface: str) -> t.Tuple[CharacterClass, ...]:
     ]
     while idx < len(interface):
         for regex, cls in regexes:
+            # Hint for Mypy to realize that both the classes and the function on the right side of the regexes tuples
+            # are in fact callable.
+            assert callable(cls)  # nosec
             part = ""
             while idx < len(interface) and re.match(regex, interface[idx]):
                 part += interface[idx]
                 idx += 1
             if part and idx == len(interface):
-                tail = (*tail, cls(part, True))  # type: ignore
+                tail = (*tail, cls(part, True))
                 break
             if part:
-                tail = (*tail, cls(part))  # type: ignore
+                tail = (*tail, cls(part))
                 break
     return tail
 
@@ -371,7 +375,7 @@ def _reverse_list(interface_list: t.List[str]) -> t.List[str]:
     """Reverses an alphabetical list of interfaces.
 
     Args:
-        interface_list (list): Alphabetically sorted list of interfaces.
+        interface_list: Alphabetically sorted list of interfaces.
     """
     # Convert interface name into Tuple of : Text, Int and Separator
     split_intf = re.compile(r"([^\W0-9]+|[0-9]+|\W)")
@@ -451,22 +455,22 @@ def abbreviated_interface_name_list(  # pylint: disable=R0913, R0914
     interfaces: t.List[str],
     addl_name_map: t.Optional[t.Dict[str, str]] = None,
     addl_reverse_map: t.Optional[t.Dict[str, str]] = None,
-    verify: t.Optional[bool] = False,
+    verify: bool = False,
     order: t.Optional[str] = None,
-    reverse: t.Optional[bool] = None,
+    reverse: bool = False,
 ) -> t.List[str]:
     """Function to return a list of interface's abbreviated name.
 
     Args:
-        interfaces (list): List of interface names you are attempting to abbreviate.
-        addl_name_map (dict, optional): A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
-        addl_reverse_map (dict, optional): A dict containing key/value pairs that updates the abbreviated mapping. Defaults to None.
-        verify (bool, optional): Whether or not to verify the interface matches a known interface standard. Defaults to False.
-        order (str, optional): Determines what order the list of interfaces should be returned in. Defaults to None.
-        reverse (bool, optional): Specify if the order of the list should be reversed when setting an order. Defaults to None.
+        interfaces: List of interface names you are attempting to abbreviate.
+        addl_name_map: A dict containing key/value pairs that updates the base mapping. Used if an OS has specific differences. e.g. {"Po": "PortChannel"} vs {"Po": "Port-Channel"}. Defaults to None.
+        addl_reverse_map: A dict containing key/value pairs that updates the abbreviated mapping. Defaults to None.
+        verify: Whether or not to verify the interface matches a known interface standard. Defaults to False.
+        order: Determines what order the list of interfaces should be returned in. Defaults to None.
+        reverse: Specify if the order of the list should be reversed when setting an order. Defaults to None.
 
     Returns:
-        list: List of the interfaces in their abbreviated form.
+        List of the interfaces in their abbreviated form.
 
     Raises:
         ValueError: Raised if any interface name in list cannot be converted to its abbreviated form and verify parameter is set to true.
@@ -502,13 +506,12 @@ def abbreviated_interface_name_list(  # pylint: disable=R0913, R0914
     for interface in interfaces:
         interface_type, interface_number = split_interface(interface)
         # Try to ensure canonical type.
-        if name_map.get(interface_type):
-            canonical_type = name_map.get(interface_type)
-        else:
+        canonical_type = name_map.get(interface_type, None)
+        if not canonical_type:
             canonical_type = interface_type
 
         try:
-            abbreviated_name = rev_name_map[canonical_type] + str(interface_number)  # type: ignore
+            abbreviated_name = rev_name_map[canonical_type] + str(interface_number)
             abbreviated_interface_list.append(abbreviated_name)
         except KeyError:
             abbreviated_interface_list.append(interface)
@@ -519,7 +522,10 @@ def abbreviated_interface_name_list(  # pylint: disable=R0913, R0914
         raise ValueError(f"Verify interface on and no match found for {no_match_string}")
 
     if order:
-        abbreviated_interface_list = INTERFACE_LIST_ORDERING_OPTIONS.get(order)(abbreviated_interface_list)  # type: ignore
+        order_function = INTERFACE_LIST_ORDERING_OPTIONS.get(order, None)
+        if not order_function:
+            raise ValueError(f"No order function available called {order}")
+        abbreviated_interface_list = order_function(abbreviated_interface_list)
 
     if reverse:
         abbreviated_interface_list = _reverse_list(abbreviated_interface_list)
@@ -531,7 +537,7 @@ def _check_order_option_exists(order: str) -> None:
     """Check if the given order for an interface list exists.
 
     Args:
-        order (str): Requested ordering of the interface list.
+        order: Requested ordering of the interface list.
 
     Raises:
         ValueError: Raised the given order is not a proper ordering type.
@@ -551,7 +557,7 @@ def _ranges_in_list(numbers: t.List[int]) -> t.List[t.List[int]]:
         numbers: list of numbers
 
     Returns:
-        list: list of ranges in input
+        list of ranges in input
     """
     return [list(map(itemgetter(1), g)) for k, g in itertools.groupby(enumerate(numbers), lambda x: x[0] - x[1])]
 
@@ -573,9 +579,9 @@ def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
         interface_list: list of interfaces
 
     Returns:
-        list: list of interface ranges
+        list of interface ranges
     """
-    result_dict = {}  # type: ignore
+    result_dict: t.Dict[str, t.List[int]] = {}
     final_result_list = []
     sorted_ints = [_split_interface_tuple(x) for x in sort_interface_list(interface_list)]
     if not sorted_ints:

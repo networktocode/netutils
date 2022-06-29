@@ -1,21 +1,23 @@
 """Functions for working with MAC addresses."""
 
 import re
+import typing as t
 from functools import wraps
 
 from .constants import MAC_CREATE, MAC_REGEX
 
 
-def _valid_mac(func):  # type: ignore
+def _valid_mac(func: t.Callable[..., t.Any]) -> t.Callable[..., t.Any]:
     """Decorator to validate a MAC address is valid."""
 
     @wraps(func)
-    def decorated(*args, **kwargs):  # type: ignore
+    def decorated(*args: t.Any, **kwargs: t.Any) -> t.Any:
         if kwargs.get("mac"):
             mac = kwargs.get("mac")
         else:
             mac = args[0]
-        if not is_valid_mac(mac):  # type: ignore
+        assert isinstance(mac, str)  # nosec
+        if not is_valid_mac(mac):
             raise ValueError(f"There was not a valid mac address in: `{mac}`")
         return func(*args, **kwargs)
 
@@ -26,10 +28,10 @@ def is_valid_mac(mac: str) -> bool:
     """Verifies whether or not a string is a valid MAC address.
 
     Args:
-        mac (str): A MAC address in string format that matches one of the defined regex patterns.
+        mac: A MAC address in string format that matches one of the defined regex patterns.
 
     Returns:
-        bool: The result as to whether or not the string is a valid MAC address.
+        The result as to whether or not the string is a valid MAC address.
 
     Example:
         >>> from netutils.mac import is_valid_mac
@@ -45,16 +47,16 @@ def is_valid_mac(mac: str) -> bool:
     return False
 
 
-@_valid_mac  # type: ignore
+@_valid_mac
 def mac_to_format(mac: str, frmt: str = "MAC_NO_SPECIAL") -> str:
     """Converts the MAC address to a specific format.
 
     Args:
-        mac (str): A MAC address in string format that matches one of the defined regex patterns.
-        frmt (str): A format in which the MAC address should be returned in.
+        mac: A MAC address in string format that matches one of the defined regex patterns.
+        frmt: A format in which the MAC address should be returned in.
 
     Returns:
-        str: A MAC address in the specified format.
+        A MAC address in the specified format.
 
     Example:
         >>> from netutils.mac import mac_to_format
@@ -70,15 +72,15 @@ def mac_to_format(mac: str, frmt: str = "MAC_NO_SPECIAL") -> str:
     return char.join([mac[i : i + count] for i in range(0, len(mac), count)])  # type: ignore # noqa: E203
 
 
-@_valid_mac  # type: ignore
+@_valid_mac
 def mac_to_int(mac: str) -> int:
     """Converts the MAC address to an integer.
 
     Args:
-        mac (str): A MAC address in string format that matches one of the defined regex patterns.
+        mac: A MAC address in string format that matches one of the defined regex patterns.
 
     Returns:
-        int: The valid MAC address converted to an integer.
+        The valid MAC address converted to an integer.
 
     Example:
         >>> from netutils.mac import mac_to_int
@@ -89,15 +91,15 @@ def mac_to_int(mac: str) -> int:
     return int(mac_normalize(mac), 16)
 
 
-@_valid_mac  # type: ignore
-def mac_type(mac: str) -> str:  # type: ignore # pylint: disable=inconsistent-return-statements
+@_valid_mac
+def mac_type(mac: str) -> t.Optional[str]:
     """Retuns the "type" of MAC address, as defined by the regex pattern names.
 
     Args:
-        mac (str): A MAC address in string format that matches one of the defined regex patterns.
+        mac: A MAC address in string format that matches one of the defined regex patterns.
 
     Returns:
-        str: The regex pattern type of the MAC address.
+        The regex pattern type of the MAC address.
 
     Example:
         >>> from netutils.mac import mac_type
@@ -110,17 +112,18 @@ def mac_type(mac: str) -> str:  # type: ignore # pylint: disable=inconsistent-re
     for name, pattern in MAC_REGEX.items():
         if re.fullmatch(pattern, mac):
             return name
+    return None
 
 
-@_valid_mac  # type: ignore
+@_valid_mac
 def mac_normalize(mac: str) -> str:
     """Retuns the MAC address with only the address, and no special characters.
 
     Args:
-        mac (str): A MAC address in string format that matches one of the defined regex patterns.
+        mac: A MAC address in string format that matches one of the defined regex patterns.
 
     Returns:
-        str: The MAC address with no special characters.
+        The MAC address with no special characters.
 
     Example:
         >>> from netutils.mac import mac_normalize

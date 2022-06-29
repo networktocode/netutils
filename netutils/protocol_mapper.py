@@ -11,7 +11,7 @@ def _number_to_name_mapper(proto: str) -> t.Dict[int, str]:
         proto: Protocol to map ['tcp', 'udp', 'sctp', 'dccp']
 
     Returns:
-        proto_num_to_name: Dictionary of the number to name mapping.
+        Dictionary of the number to name mapping.
     """
     proto_num_to_name = {}
 

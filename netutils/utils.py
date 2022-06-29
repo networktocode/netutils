@@ -66,11 +66,11 @@ _JINJA2_FUNCTION_MAPPINGS = {
 }
 
 
-def jinja2_convenience_function() -> t.Dict[str, str]:
+def jinja2_convenience_function() -> t.Dict[str, t.Callable[..., t.Any]]:
     """Convenience function that allows netutils filter to be used easily with jinja2.
 
     Returns:
-        dict: Keys are the function names for the Jinja2 filter and values are the function objects.
+        Keys are the function names for the Jinja2 filter and values are the function objects.
 
     Example:
         >>> from netutils.utils import jinja2_convenience_function

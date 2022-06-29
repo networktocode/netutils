@@ -5,10 +5,10 @@ def asn_to_int(asplain: str) -> int:
     """Convert AS Number to standardized asplain notation as an integer.
 
     Args:
-        asplain (str): An `asplain` notated BGP ASN with community.
+        asplain: An `asplain` notated BGP ASN with community.
 
     Returns:
-        int: Integer value within of the given asplain value provided.
+        Integer value within of the given asplain value provided.
 
     Example:
         >>> from netutils.asn import asn_to_int

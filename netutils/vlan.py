@@ -8,20 +8,20 @@ from operator import itemgetter
 
 def vlanlist_to_config(
     vlan_list: t.List[int],
-    first_line_len: t.Optional[int] = 48,
-    other_line_len: t.Optional[int] = 44,
-    min_grouping_size: t.Optional[int] = 3,
+    first_line_len: int = 48,
+    other_line_len: int = 44,
+    min_grouping_size: int = 3,
 ) -> t.List[str]:
     """Given a List of VLANs, build the IOS-like vlan list of configurations.
 
     Args:
-        vlan_list (list): Unsorted list of vlan integers.
-        first_line_len (int, optional): The maximum length of the line of the first element of within the return list. Defaults to 48.
-        other_line_len (int, optional): The maximum length of the line of all other elements of within the return list. Defaults to 44.
-        min_grouping_size (int, optional): The minimum consecutive VLANs to aggregate with a hyphen . Defaults to Cisco's minimum grouping size of 3.
+        vlan_list: Unsorted list of vlan integers.
+        first_line_len: The maximum length of the line of the first element of within the return list. Defaults to 48.
+        other_line_len: The maximum length of the line of all other elements of within the return list. Defaults to 44.
+        min_grouping_size: The minimum consecutive VLANs to aggregate with a hyphen. Defaults to Cisco's minimum grouping size of 3.
 
     Returns:
-        list: Sorted string list of integers according to IOS-like vlan list rules
+        Sorted string list of integers according to IOS-like vlan list rules
 
     Example:
         >>> from netutils.vlan import vlanlist_to_config
@@ -34,19 +34,21 @@ def vlanlist_to_config(
     """
 
     def build_final_vlan_cfg(vlan_cfg: str) -> t.List[str]:
-        if len(vlan_cfg) <= first_line_len:  # type: ignore
+        if len(vlan_cfg) <= first_line_len:
             return [vlan_cfg]
 
         # Split VLAN config if lines are too long
         first_line = re.match(f"^.{{0,{first_line_len}}}(?=,)", vlan_cfg)
-        vlan_cfg_lines = [first_line.group(0)]  # type: ignore
-        next_lines = next_lines = re.compile(f"(?<=,).{{0,{other_line_len}}}(?=,|$)")
-        for line in next_lines.findall(vlan_cfg, first_line.end()):  # type: ignore
+        if not first_line:
+            raise ValueError(f"Parsing VLAN list with first_line_len={first_line_len} yielded no regex results.")
+        vlan_cfg_lines = [first_line.group(0)]
+        next_lines = re.compile(f"(?<=,).{{0,{other_line_len}}}(?=,|$)")
+        for line in next_lines.findall(vlan_cfg, first_line.end()):
             vlan_cfg_lines.append(line)
         return vlan_cfg_lines
 
     # Fail if min_grouping_size is less than 1.
-    if min_grouping_size < 1:  # type: ignore
+    if min_grouping_size < 1:
         raise ValueError("Minimum grouping size must be equal to or greater than one.")
 
     # Sort and de-dup VLAN list
@@ -71,7 +73,7 @@ def vlanlist_to_config(
         group_length = len(group)
         group_string = f"{group[0]}"
         # Compress based on grouping_size
-        if group_length >= min_grouping_size:  # type: ignore
+        if group_length >= min_grouping_size:
             group_string += f"-{group[-1]}"
         # If it does not match grouping_size, and is greater than one
         elif group_length != 1:
@@ -85,10 +87,10 @@ def vlanconfig_to_list(vlan_config: str) -> t.List[int]:
     """Given an IOS-like vlan list of configurations, return the list of VLANs.
 
     Args:
-        vlan_config (list): IOS-like vlan list of configurations.
+        vlan_config: IOS-like vlan list of configurations.
 
     Returns:
-        dict: Sorted string list of integers according to IOS-like vlan list rules
+        Sorted string list of integers according to IOS-like vlan list rules
 
     Example:
         >>> vlan_config = '''switchport trunk allowed vlan 1025,1069-1072,1114,1173-1181,1501,1502'''

@@ -11,6 +11,7 @@ This library intends to keep the following tenets:
 * Shall leverage docstrings as the primary documentation mechanism.
   * Must provide examples in every public function.
 * Shall retain a high test coverage.
+* Shall be fully type hinted.
 
 # Function Groupings
 
