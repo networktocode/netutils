@@ -3,7 +3,6 @@
 
 import re
 import typing as t
-from abc import abstractmethod, ABCMeta
 from collections import namedtuple
 
 from netutils.banner import normalise_delimiter_caret_c
@@ -11,7 +10,7 @@ from netutils.banner import normalise_delimiter_caret_c
 ConfigLine = namedtuple("ConfigLine", "config_line,parents")
 
 
-class BaseConfigParser(metaclass=ABCMeta):
+class BaseConfigParser:
     """Base class for parsers."""
 
     comment_chars = ["!"]
@@ -30,22 +29,22 @@ class BaseConfigParser(metaclass=ABCMeta):
         self.config_lines: t.List[ConfigLine] = []
         self.build_config_relationship()
 
-    @abstractmethod
     @property
     def config_lines_only(self) -> str:
         """Remove lines not related to config."""
+        raise NotImplementedError()
 
-    @abstractmethod
     @property
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
+        raise NotImplementedError()
 
-    @abstractmethod
     def build_config_relationship(self) -> t.List[ConfigLine]:
         """Parse text tree of config lines and their parents."""
+        raise NotImplementedError()
 
 
-class BaseSpaceConfigParser(BaseConfigParser, metaclass=ABCMeta):
+class BaseSpaceConfigParser(BaseConfigParser):
     """Base parser class for config syntax that demarcates using spaces/indentation."""
 
     comment_chars = ["!"]
@@ -86,10 +85,10 @@ class BaseSpaceConfigParser(BaseConfigParser, metaclass=ABCMeta):
         """Determine if the line starts a banner config.
 
         Args:
-            line (str): The current config line in iteration.
+            line: The current config line in iteration.
 
         Returns:
-            bool: True if line starts banner, else False.
+            True if line starts banner, else False.
         """
         for banner_start in self.banner_start:
             if line.lstrip().startswith(banner_start):
@@ -100,10 +99,10 @@ class BaseSpaceConfigParser(BaseConfigParser, metaclass=ABCMeta):
         """Determine if line is a comment.
 
         Args:
-            line (str): A config line from the device.
+            line: A config line from the device.
 
         Returns:
-            bool: True if line is a comment, else False.
+            True if line is a comment, else False.
 
         Example:
             >>> BaseSpaceConfigParser("interface Ethernet1/1").is_comment("interface Ethernet1/1")
@@ -327,7 +326,7 @@ class BaseSpaceConfigParser(BaseConfigParser, metaclass=ABCMeta):
         return self.config_lines
 
 
-class BaseBraceConfigParser(BaseConfigParser, metaclass=ABCMeta):
+class BaseBraceConfigParser(BaseConfigParser):
     """Base parser class for config syntax that demarcates using braces."""
 
     multiline_delimiters: t.List[str] = []

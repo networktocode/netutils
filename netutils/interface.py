@@ -187,7 +187,10 @@ def canonical_interface_name_list(
         raise ValueError(f"Verify interface on and no match found for {no_match_string}")
 
     if order:
-        canonical_interface_list = INTERFACE_LIST_ORDERING_OPTIONS.get(order)(canonical_interface_list)  # type: ignore
+        order_function = INTERFACE_LIST_ORDERING_OPTIONS.get(order, None)
+        if not order_function:
+            raise ValueError(f"No order function available called {order}")
+        canonical_interface_list = order_function(canonical_interface_list)
 
     if reverse:
         canonical_interface_list = _reverse_list(canonical_interface_list)
