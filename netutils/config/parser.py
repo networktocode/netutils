@@ -617,15 +617,14 @@ class EOSConfigParser(BaseSpaceConfigParser):
 
     banner_end = "EOF"
 
-    def _build_banner(self, config_line):
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
 
         Args:
-            config_line (str): The start of the banner config.
+            config_line: The start of the banner config.
 
         Returns:
-            str: The next configuration line in the configuration text.
-            None: When banner end is the end of the config text.
+            The next configuration line in the configuration text or None when banner end is the end of the config text.
 
         Raises:
             ValueError: When the parser is unable to identify the End of the Banner.
