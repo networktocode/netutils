@@ -60,6 +60,11 @@ class BaseSpaceConfigParser(BaseConfigParser):
         super(BaseSpaceConfigParser, self).__init__(config)
 
     @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError()
+
+    @property
     def indent_level(self) -> int:
         """Count the number of spaces a config line is indented."""
         return self._indent_level
@@ -338,6 +343,11 @@ class BaseBraceConfigParser(BaseConfigParser):
             config (str): The config text to parse.
         """
         super(BaseBraceConfigParser, self).__init__(config)
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError()
 
     @property
     def config_lines_only(self) -> str:
