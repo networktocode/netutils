@@ -5,67 +5,69 @@ import random
 import string
 import secrets
 import sys
+import ast
 from functools import wraps
 
 # Code example from Python docs
 ALPHABET = string.ascii_letters + string.digits
 DEFAULT_PASSWORD_CHARS = "".join((string.ascii_letters + string.digits + ".,:-_"))
 DEFAULT_PASSWORD_LENGTH = 20
+ENCRYPT_TYPE7_LENGTH = 25
 
 XLAT = [
-    0x64,
-    0x73,
-    0x66,
-    0x64,
-    0x3B,
-    0x6B,
-    0x66,
-    0x6F,
-    0x41,
-    0x2C,
-    0x2E,
-    0x69,
-    0x79,
-    0x65,
-    0x77,
-    0x72,
-    0x6B,
-    0x6C,
-    0x64,
-    0x4A,
-    0x4B,
-    0x44,
-    0x48,
-    0x53,
-    0x55,
-    0x42,
-    0x73,
-    0x67,
-    0x76,
-    0x63,
-    0x61,
-    0x36,
-    0x39,
-    0x38,
-    0x33,
-    0x34,
-    0x6E,
-    0x63,
-    0x78,
-    0x76,
-    0x39,
-    0x38,
-    0x37,
-    0x33,
-    0x32,
-    0x35,
-    0x34,
-    0x6B,
-    0x3B,
-    0x66,
-    0x67,
-    0x38,
-    0x37,
+    "0x64",
+    "0x73",
+    "0x66",
+    "0x64",
+    "0x3b",
+    "0x6b",
+    "0x66",
+    "0x6f",
+    "0x41",
+    "0x2c",
+    "0x2e",
+    "0x69",
+    "0x79",
+    "0x65",
+    "0x77",
+    "0x72",
+    "0x6b",
+    "0x6c",
+    "0x64",
+    "0x4a",
+    "0x4b",
+    "0x44",
+    "0x48",
+    "0x53",
+    "0x55",
+    "0x42",
+    "0x73",
+    "0x67",
+    "0x76",
+    "0x63",
+    "0x61",
+    "0x36",
+    "0x39",
+    "0x38",
+    "0x33",
+    "0x34",
+    "0x6e",
+    "0x63",
+    "0x78",
+    "0x76",
+    "0x39",
+    "0x38",
+    "0x37",
+    "0x33",
+    "0x32",
+    "0x35",
+    "0x34",
+    "0x6b",
+    "0x3b",
+    "0x66",
+    "0x67",
+    "0x38",
+    "0x37",
 ]
 
 
@@ -197,23 +199,32 @@ def encrypt_type7(unencrypted_password, salt=None):
         salt (str, optional): A random number between 0 and 15 that can be set by the operator. Defaults to random generated one.
 
     Returns:
-        string: The encrypted password.
+        str (optional): The encrypted password.
 
     Example:
         >>> from netutils.password import encrypt_type7
-        >>> encrypt_type5("cisco")  # doctest: +SKIP
-        '$1$ZLGo$J.gAGxS2wqO96drs0Cith/'
+        >>> encrypt_type7("cisco", 11)
+        '110A1016141D'
         >>>
     """
+    # max length of password for encrypt t7 is 25
+    if len(unencrypted_password) > ENCRYPT_TYPE7_LENGTH:  # nosec
+        raise ValueError("Password must not exceed 25 characters.")
+
     if not salt:
-        salt = random.randrange(0, 15)  # nosec
-    encrypted_password = "%02x" % salt  # pylint: disable=consider-using-f-string
+        salt = random.randint(0, 15)  # nosec
+    # Start building the encrypted password - pre-pend the 2 decimal digit offset.
+    encrypted_password = format(salt, "02d")
     for i, _ in enumerate(unencrypted_password):
-        hex_password = "%02x" % (ord(unencrypted_password[i]) ^ XLAT[salt])  # pylint: disable=consider-using-f-string
-        encrypted_password += hex_password
-        salt += 1
-        if salt == 51:
-            salt = 0
+        # Get the next of the plaintext character.
+        dec_char = ord(unencrypted_password[i])
+        # Get the next character of the key.
+        key_char = ast.literal_eval(XLAT[(i + salt) % 53])
+        # XOR the plaintext character with the key character.
+        enc_char = dec_char ^ key_char
+        # Build the encrypted password one character at a time.
+        # The ASCII code of each encrypted character is added as 2 hex digits.
+        encrypted_password += format(enc_char, "02X")
     return encrypted_password
 
 
