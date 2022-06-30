@@ -211,10 +211,6 @@ def encrypt_type7(unencrypted_password, salt=None):
     if len(unencrypted_password) > ENCRYPT_TYPE7_LENGTH:  # nosec
         raise ValueError("Password must not exceed 25 characters.")
 
-    # key_hex = []
-    # the same key string is used in decrypt_type7 for the reverse operation
-    # for char in "dsfd;kfoA,.iyewrkldJKDHSUBsgvca69834ncxv9873254k;fg87":
-    #     key_hex.append(hex(ord(char)))
     if not salt:
         salt = random.randint(0, 15)  # nosec
     # Start building the encrypted password - pre-pend the 2 decimal digit offset.
