@@ -5,11 +5,8 @@ import random
 import secrets
 import string
 import sys
-<<<<<<< HEAD
 import ast
-=======
 import typing as t
->>>>>>> 593c804 (initial pass at type hinting and getting mypy to run)
 from functools import wraps
 
 # Code example from Python docs
