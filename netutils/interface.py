@@ -121,8 +121,8 @@ def canonical_interface_name(
     if isinstance(addl_name_map, dict):
         name_map.update(addl_name_map)
     # check in dict for mapping
-    if name_map.get(interface_type):
-        long_int = name_map.get(interface_type, "")
+    if interface_type in name_map:
+        long_int = name_map[interface_type]
         return long_int + str(interface_number)
     if verify:
         raise ValueError(f"Verify interface on and no match found for {interface}")

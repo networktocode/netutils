@@ -232,6 +232,7 @@ def encrypt_type7(unencrypted_password: str, salt: t.Optional[int] = None) -> st
         encrypted_password += format(enc_char, "02X")
     return encrypted_password
 
+
 def get_hash_salt(encrypted_password: str) -> str:
     """Given an encrypted password obtain the salt value from it.
 

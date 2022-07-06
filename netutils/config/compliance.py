@@ -392,7 +392,7 @@ def section_config(feature: t.Dict[str, t.Union[str, bool, t.List[str]]], device
         network_os : Device network operating system that is in parser_map keys.
 
     Returns:
-        he hash report data mapping file hashes to report data.
+        The hash report data mapping file hashes to report data.
 
     Example:
         >>> feature =  {
