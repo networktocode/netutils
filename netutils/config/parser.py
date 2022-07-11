@@ -60,11 +60,6 @@ class BaseSpaceConfigParser(BaseConfigParser):
         super(BaseSpaceConfigParser, self).__init__(config)
 
     @property
-    def banner_end(self) -> str:
-        """Demarcate End of Banner char(s)."""
-        raise NotImplementedError()
-
-    @property
     def indent_level(self) -> int:
         """Count the number of spaces a config line is indented."""
         return self._indent_level
@@ -126,7 +121,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         """Remove spaces and comments from config lines.
 
         Returns:
-            str: The non-space and non-comment lines from ``config``.
+            The non-space and non-comment lines from ``config``.
 
         Example:
             >>> config = '''!
@@ -345,16 +340,11 @@ class BaseBraceConfigParser(BaseConfigParser):
         super(BaseBraceConfigParser, self).__init__(config)
 
     @property
-    def banner_end(self) -> str:
-        """Demarcate End of Banner char(s)."""
-        raise NotImplementedError()
-
-    @property
     def config_lines_only(self) -> str:
         """Remove trailing spaces and empty lines from config lines.
 
         Returns:
-            str: The non-space lines from ``config``.
+            The non-space lines from ``config``.
         """
         config_lines = [line.rstrip() for line in self.config.splitlines() if line and not line.isspace()]
         return "\n".join(config_lines)

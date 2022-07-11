@@ -127,7 +127,7 @@ def ip_to_bin(ip: str) -> str:
         ip: An IP address in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        str: Binary value of the IP address.
+        Binary value of the IP address.
 
     Example:
         >>> from netutils.ip import ip_to_bin
@@ -257,7 +257,7 @@ def cidr_to_netmaskv6(cidr: int) -> str:
         cidr: A CIDR value.
 
     Returns:
-      netmask: Decimal format (IPv6) representation of CIDR value.
+        Decimal format (IPv6) representation of CIDR value.
 
     Example:
         >>> from netutils.ip import cidr_to_netmaskv6

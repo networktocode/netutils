@@ -181,7 +181,7 @@ def encrypt_type5(unencrypted_password: str, salt: t.Optional[str] = None, salt_
         salt_len: The number of random set of characters, when not manually set. Defaults to 4.
 
     Returns:
-        str: The encrypted password.
+        The encrypted password.
 
     Example:
         >>> from netutils.password import encrypt_type5
