@@ -12,6 +12,7 @@ ConfigLine = namedtuple("ConfigLine", "config_line,parents")
 
 class BaseConfigParser:
     """Base class for parsers."""
+
     # pylint: disable=abstract-method
     # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
 
@@ -48,6 +49,7 @@ class BaseConfigParser:
 
 class BaseSpaceConfigParser(BaseConfigParser):
     """Base parser class for config syntax that demarcates using spaces/indentation."""
+
     # pylint: disable=abstract-method
     # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
 
@@ -332,6 +334,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
 
 class BaseBraceConfigParser(BaseConfigParser):
     """Base parser class for config syntax that demarcates using braces."""
+
     # pylint: disable=abstract-method
     # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
 
