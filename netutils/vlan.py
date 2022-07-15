@@ -31,6 +31,15 @@ def vlanlist_to_config(
         ['1,3,5-6,100-105,107,109']
         >>> vlanlist_to_config([1,3,5,6,100,101,102,103,104,105,107,109], min_grouping_size=1)
         ['1,3,5,6,100,101,102,103,104,105,107,109']
+        >>> vlan_list = [1, 2, 3, 5, 6, 1000, 1002, 1004, 1006, 1008, 1010, 1012, 1014, 1016, 1018]
+        >>> for index, vlan in enumerate(vlanlist_to_config(vlan_list)):
+        ...     if index == 0:
+        ...         print(f"switchport trunk allowed vlan {vlan}")
+        ...     else:
+        ...         print(f"switchport trunk allowed vlan add {vlan}")
+        ...
+        switchport trunk allowed vlan 1-3,5,6,1000,1002,1004,1006,1008,1010,1012,1014
+        switchport trunk allowed vlan add 1016,1018
     """
 
     def build_final_vlan_cfg(vlan_cfg: str) -> t.List[str]:
@@ -40,7 +49,9 @@ def vlanlist_to_config(
         # Split VLAN config if lines are too long
         first_line = re.match(f"^.{{0,{first_line_len}}}(?=,)", vlan_cfg)
         if not first_line:
-            raise ValueError(f"Parsing VLAN list with first_line_len={first_line_len} yielded no regex results.")
+            raise ValueError(
+                f"Line with comma seperated vlans is expected.(E.g. 1-3,5,6,1000,1002) Received {vlan_cfg}"
+            )
         vlan_cfg_lines = [first_line.group(0)]
         next_lines = re.compile(f"(?<=,).{{0,{other_line_len}}}(?=,|$)")
         for line in next_lines.findall(vlan_cfg, first_line.end()):
