@@ -1,8 +1,9 @@
 """Functions for performing bandwidth calculations."""
 import re
+import typing as t
 
 
-def _get_bits_mapping():
+def _get_bits_mapping() -> t.Dict[str, t.Dict[str, int]]:
     bits_value = 0
     bits_mapping = {}
     for _bit in ["bps", "Kbps", "Mbps", "Gbps", "Tbps", "Pbps", "Ebps", "Zbps"]:
@@ -18,7 +19,7 @@ def _get_bits_mapping():
 BITS_MAPPING = _get_bits_mapping()
 
 
-def _get_bytes_mapping():
+def _get_bytes_mapping() -> t.Dict[str, t.Dict[str, int]]:
     bytes_value = 0
     bytes_mapping = {}
     for _byte in ["Bps", "KBps", "MBps", "GBps", "TBps", "PBps", "EBps", "ZBps"]:
@@ -38,10 +39,10 @@ def name_to_bits(speed: str) -> int:
     """Method to convert a short bandwidth name to int value in bps.
 
     Args:
-        speed (str): Bandwidth to be converted like `100Gbps` to bps.
+        speed: Bandwidth to be converted like `100Gbps` to bps.
 
     Returns:
-        int: value of bandwidth to be converted to bps
+        value of bandwidth to be converted to bps
 
     Example:
         >>> from netutils.bandwidth import name_to_bits
@@ -70,10 +71,10 @@ def name_to_bytes(speed: str) -> float:
     """Method to convert a short bandwidth name to float value in Bps.
 
     Args:
-        speed (str): Bandwidth to be converted like `100GBps` to Bps.
+        speed: Bandwidth to be converted like `100GBps` to Bps.
 
     Returns:
-        float: value of bandwidth to be converted to Bps
+        value of bandwidth to be converted to Bps
 
     Example:
         >>> from netutils.bandwidth import name_to_bytes
@@ -99,16 +100,16 @@ def name_to_bytes(speed: str) -> float:
 
 
 def bits_to_name(  # pylint: disable=too-many-branches,too-many-return-statements
-    speed: int, nbr_decimal: int = 0
+    speed: int, nbr_decimal: t.Optional[int] = 0
 ) -> str:
     """Method to convert an int value for speed int bits to the name value.
 
     Args:
-        speed (int): Speed in bits to be converted.
-        nbr_decimal (int, optional): Precision of end result, ie number of decimal points to round to. Defaults to 0.
+        speed: Speed in bits to be converted.
+        nbr_decimal: Precision of end result, ie number of decimal points to round to. Defaults to 0.
 
     Returns:
-        str: Name value for speed in bits
+        Name value for speed in bits
 
     Example:
         >>> from netutils.bandwidth import bits_to_name
@@ -119,11 +120,11 @@ def bits_to_name(  # pylint: disable=too-many-branches,too-many-return-statement
     """
     if not isinstance(speed, int):
         raise ValueError(f"Speed of {speed} was not a valid speed integer.")
+    if nbr_decimal == 0:
+        nbr_decimal = None
 
     for bit_type, val in BITS_MAPPING.items():
         if val["low"] <= speed < val["high"]:
-            if nbr_decimal == 0:
-                nbr_decimal = None
             if val["low"] == 0:
                 return f"{round(speed, nbr_decimal)}{bit_type}"
             return f"{round(speed / val['low'], nbr_decimal)}{bit_type}"
@@ -134,11 +135,11 @@ def bytes_to_name(speed: float, nbr_decimal: int = 0) -> str:
     """Method to convert an int value for speed in bytes to the name value.
 
     Args:
-        speed (int): Speed in bytes to be converted.
-        nbr_decimal (int, optional): Precision of end result, ie number of decimal points to round to. Defaults to 0.
+        speed: Speed in bytes to be converted.
+        nbr_decimal: Precision of end result, ie number of decimal points to round to. Defaults to 0.
 
     Returns:
-        str: Name value for speed in bytes
+        Name value for speed in bytes
 
     Example:
         >>> from netutils.bandwidth import bytes_to_name
@@ -164,12 +165,12 @@ def name_to_name(speed: str, speed_type: str, nbr_decimal: int = 0) -> str:
     """Method to convert a short bandwidth name to another bandwdth name.
 
     Args:
-        speed (str): Bandwidth to be converted like `100GBps`.
-        speed_type (str): Name to convert the bandwdth to like `MBps`.
-        nbr_decimal (int, optional): Precision of end result, ie number of decimal points to round to. Defaults to 0.
+        speed: Bandwidth to be converted like `100GBps`.
+        speed_type: Name to convert the bandwdth to like `MBps`.
+        nbr_decimal: Precision of end result, ie number of decimal points to round to. Defaults to 0.
 
     Returns:
-        str: The named value which user wishes to return to.
+        The named value which user wishes to return to.
 
     Example:
         >>> from netutils.bandwidth import name_to_name

@@ -1,16 +1,18 @@
 """Functions for working with time."""
 import re
+import typing as t
+
 from .constants import TIME_MAPPINGS, UPTIME_REGEX_PATTERNS
 
 
-def uptime_seconds_to_string(uptime_seconds):
+def uptime_seconds_to_string(uptime_seconds: int) -> str:
     """Converts uptime in seconds to uptime in string format.
 
     Args:
-        uptime_seconds (int): Uptime in seconds.
+        uptime_seconds: Uptime in seconds.
 
     Returns:
-        str: Uptime in string format.
+        Uptime in string format.
 
     Example:
         >>> from netutils.time import uptime_seconds_to_string
@@ -29,14 +31,14 @@ def uptime_seconds_to_string(uptime_seconds):
     return ", ".join(result)
 
 
-def uptime_string_to_seconds(uptime_string):
+def uptime_string_to_seconds(uptime_string: str) -> int:
     """Converts uptime string seconds.
 
     Args:
-        uptime_string (str): Uptime in string format
+        uptime_string: Uptime in string format
 
     Returns:
-        int: Uptime string converted to seconds.
+        Uptime string converted to seconds.
 
     Example:
         >>> from netutils.time import uptime_string_to_seconds
@@ -51,7 +53,7 @@ def uptime_string_to_seconds(uptime_string):
     """
     compiled_regex_list = [re.compile(reg_pattern) for reg_pattern in UPTIME_REGEX_PATTERNS]
 
-    uptime_dict = {}
+    uptime_dict: t.Dict[str, str] = {}
     for regex in compiled_regex_list:
         match = regex.search(uptime_string)
 
@@ -64,6 +66,7 @@ def uptime_string_to_seconds(uptime_string):
 
     uptime_seconds = 0
     for time_interval, value in TIME_MAPPINGS:
-        if uptime_dict.get(time_interval):
-            uptime_seconds += int(uptime_dict.get(time_interval)) * value
+        time_interval_as_int = uptime_dict.get(time_interval)
+        if time_interval_as_int:
+            uptime_seconds += int(time_interval_as_int) * value
     return uptime_seconds

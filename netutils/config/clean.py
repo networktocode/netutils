@@ -1,19 +1,19 @@
 """Functions for working with configuration to clean the config."""
 # pylint: disable=anomalous-backslash-in-string
 
-
 import re
+import typing as t
 
 
-def clean_config(config, filters):
+def clean_config(config: str, filters: t.List[t.Dict[str, str]]) -> str:
     r"""Given a list of regex patterns, delete those lines that match.
 
     Args:
-        config (str): A string representation of a device configuration.
-        filters (list): A list of regex patterns used to delete remove configuration.
+        config: A string representation of a device configuration.
+        filters: A list of regex patterns used to delete remove configuration.
 
     Returns:
-        str: Stripped down configuration.
+         Stripped down configuration.
 
     Example:
         >>> from netutils.config.clean import clean_config
@@ -52,12 +52,12 @@ def clean_config(config, filters):
     return config
 
 
-def sanitize_config(config, filters):
+def sanitize_config(config: str, filters: t.Optional[t.List[t.Dict[str, str]]] = None) -> str:
     r"""Given a dictionary of filters, remove sensitive data from the provided config.
 
     Args:
-        config (str): A string representation of a device configuration.
-        filters (dict, optional): A dictionary of regex patterns used to sanitize configuration, namely secrets. Defaults to empty dictionary.
+        config: A string representation of a device configuration.
+        filters: A list of dictionaries of regex patterns used to sanitize configuration, namely secrets. Defaults to an empty list.
 
     Returns:
         str: Sanitized configuration.
@@ -75,6 +75,8 @@ def sanitize_config(config, filters):
         'enable secret 5 <removed>'
         >>>
     """
+    if not filters:
+        filters = []
     for item in filters:
         config = re.sub(item["regex"], item["replace"], config, flags=re.MULTILINE)
     return config

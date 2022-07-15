@@ -2,16 +2,16 @@
 import socket
 
 
-def tcp_ping(ip, port, timeout=1):  # pylint: disable=invalid-name
+def tcp_ping(ip: str, port: int, timeout: int = 1) -> bool:  # pylint: disable=invalid-name
     """Verifies whether a TCP port is open on a given IP address.
 
     Args:
-        ip (str): An IP address in string format that is able to be converted by `ipaddress` library.
-        port (int): A valid TCP port.
-        timeout (int): The timeout in seconds before returning a False. Defaults to 1.
+        ip: An IP address in string format that is able to be converted by `ipaddress` library.
+        port: A valid TCP port.
+        timeout: The timeout in seconds before returning a False. Defaults to 1.
 
     Returns:
-        bool: The result as to whether or not you were able ping the IP address.
+        The result as to whether or not you were able ping the IP address.
 
     Example:
         >>> from netutils.ping import tcp_ping
