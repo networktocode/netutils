@@ -152,7 +152,7 @@ Except for unit tests, testing is only supported on Python 3.7.
 The project is packaged with a light development environment based on `docker-compose` to help with the local development of the project and to run tests within TravisCI.
 
 The project is following Network to Code software development guidelines and are leveraging the following:
-- Black, Pylint, Bandit, flake8, and pydocstyle for Python linting and formatting.
+- Black, Pylint, Bandit, Mypy, flake8, and pydocstyle for Python linting and formatting.
 - pytest, coverage, and unittest for unit tests.
 
 There are a number of things that are required in order to have a successful PR.
@@ -219,6 +219,7 @@ Each command can be executed with `invoke <command>`. Each command also has its 
   black              Run black to check that Python files adhere to its style standards.
   coverage           Run the coverage report against pytest.
   flake8             Run flake8 to check that Python files adhere to its style standards.
+  mypy               Run mypy to validate typing-hints.
   pylint             Run pylint code analysis.
   pydocstyle         Run pydocstyle to validate docstring formatting adheres to NTC defined standards.
   pytest             Run pytest for the specified name and Python version.

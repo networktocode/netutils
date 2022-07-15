@@ -1,18 +1,19 @@
 """Functions for working with the banner configuration."""
 import re
+
 from netutils.constants import CARET_C
 
 
-def delimiter_change(config, from_delimiter, to_delimiter):
+def delimiter_change(config: str, from_delimiter: str, to_delimiter: str) -> str:
     r"""Change the banner delimiter.
 
     Args:
-        config (str): Configuration line containing banner delimiter.
-        from_delimiter (str): Delimiter to replace in the banner.
-        to_delimiter (str): Delimiter to include in the config.
+        config: Configuration line containing banner delimiter.
+        from_delimiter: Delimiter to replace in the banner.
+        to_delimiter: Delimiter to include in the config.
 
     Returns:
-        str: Configuration with delimiter replaced.
+        Configuration with delimiter replaced.
 
     Example:
         >>> from netutils.banner import delimiter_change
@@ -29,15 +30,15 @@ def delimiter_change(config, from_delimiter, to_delimiter):
     return config_line
 
 
-def normalise_delimiter_caret_c(delimiter, config):
+def normalise_delimiter_caret_c(delimiter: str, config: str) -> str:
     r"""Normalise delimiter to ^C.
 
     Args:
-        delimiter (str): Banner delimiter.
-        config (str): Configuration line containing banner delimiter.
+        delimiter: Banner delimiter.
+        config: Configuration line containing banner delimiter.
 
     Returns:
-        str: Configuration with delimiter normalised to ^C.
+        Configuration with delimiter normalised to ^C.
 
     Example:
         >>> from netutils.banner import normalise_delimiter_caret_c
