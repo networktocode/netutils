@@ -1093,3 +1093,20 @@ class NokiaConfigParser(BaseSpaceConfigParser):
                         config_lines.append(line.rstrip())
             self._config = "\n".join(config_lines)
         return self._config
+
+
+class MikroTikConfigParser(BaseSpaceConfigParser):
+    """MikroTik Implementation of ConfigParser Class."""
+
+    comment_chars = ["#"]
+    banner_start = ['/system note set note="']
+    banner_end = '"'
+    regex_banner = re.compile(r"^(banner\s+\S+|\s*vacant-message)\s+(?P<banner_delimiter>\^C|.)")
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(MikroTikConfigParser, self).__init__(config)

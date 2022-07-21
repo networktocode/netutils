@@ -15,6 +15,7 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "cisco_asa": parser.ASAConfigParser,
     "fortinet_fortios": parser.FortinetConfigParser,
     "nokia_sros": parser.NokiaConfigParser,
+    "routeros": parser.MikroTikConfigParser,
 }
 
 # TODO: Once support for 3.7 is dropped, there should be a typing.TypedDict for this which should then also be used
