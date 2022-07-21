@@ -6,7 +6,7 @@ on:
       - jkala-auto-grab
   workflow_dispatch:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '0 5 30 * *'
 
 jobs:
   scheduled:
@@ -26,3 +26,4 @@ jobs:
         with:
           http_url: https://standards-oui.ieee.org/
           downloaded_filename: oui.txt
+          postprocess: ./postprocess.ts
