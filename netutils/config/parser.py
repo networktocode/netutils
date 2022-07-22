@@ -1093,3 +1093,15 @@ class NokiaConfigParser(BaseSpaceConfigParser):
                         config_lines.append(line.rstrip())
             self._config = "\n".join(config_lines)
         return self._config
+
+
+class S300ConfigParser(IOSConfigParser):
+    """Cisco S300 implementation of ConfigParser Class."""
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(IOSConfigParser, self).__init__(config)
