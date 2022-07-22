@@ -9,6 +9,7 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "cisco_ios": parser.IOSConfigParser,
     "cisco_nxos": parser.NXOSConfigParser,
     "cisco_aireos": parser.AIREOSConfigParser,
+    "ciscos350": parser.IOSConfigParser,
     "linux": parser.LINUXConfigParser,
     "bigip_f5": parser.F5ConfigParser,
     "juniper_junos": parser.JunosConfigParser,
