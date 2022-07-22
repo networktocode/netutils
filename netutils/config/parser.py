@@ -1104,4 +1104,4 @@ class S300ConfigParser(IOSConfigParser):
         Args:
             config (str): The config text to parse.
         """
-        super(IOSConfigParser, self).__init__(config)
+        super(S300ConfigParser, self).__init__(config)
