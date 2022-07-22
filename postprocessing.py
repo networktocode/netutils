@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     print("argv :", sys.argv)
 
-    with open(sys.argv[0], "r") as response:
+    with open(sys.argv[1], "r") as response:
         response_text = response.read()
 
     p = HTMLTableParser()
