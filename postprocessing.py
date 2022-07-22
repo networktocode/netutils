@@ -36,6 +36,11 @@ class HTMLTableParser(HTMLParser):
     def handle_data(self, data):
         """This is where we save content to a cell"""
         if self._in_td or self._in_th:
+            if data.encode() == b"\xe2\x9d\x8c":
+                data = False
+            else:
+                if data.encode() == b"\xe2\x9c\x85":
+                    data = True
             self._current_cell.append(data)
 
     def handle_endtag(self, tag):
@@ -73,9 +78,16 @@ if __name__ == "__main__":
     p = HTMLTableParser()
     p.feed(response_text)
     print(p.tables[8])
-    merged = list(itertools.chain(*p.tables[8]))
-    cleaned = [result for result in merged if result.strip()]
-    done = {cleaned[i]: cleaned[i + 1 : i + 8] for i in range(0, len(cleaned), 8)}
+    # Flatten the list of list and remove any empty indexes
+    cleaned = [x for x in list(itertools.chain(*p.tables[8])) if x]
+    # Grab the headers
+    headers = cleaned[:7]
+    # Grabs every multiple of 8 indexes and creates a dictionary where index 1 is the dict key, and index 2-8 are in a list of values for that key.
+    done = {cleaned[i]: cleaned[i + 1 : i + 8] for i in range(7, len(cleaned), 8)}
+
+    final_dict = {}
+    for getter, values in done.items():
+        final_dict.update({getter: dict(zip(headers, values))})
 
     with open(sys.argv[1], "w") as getters:
-        getters.write(str(done))
+        getters.write(str(final_dict))
