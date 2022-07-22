@@ -37,10 +37,10 @@ class HTMLTableParser(HTMLParser):
         """This is where we save content to a cell"""
         if self._in_td or self._in_th:
             if data.encode() == b"\xe2\x9d\x8c":
-                data = False
+                data = "No"
             else:
                 if data.encode() == b"\xe2\x9c\x85":
-                    data = True
+                    data = "Yes"
             self._current_cell.append(data)
 
     def handle_endtag(self, tag):
