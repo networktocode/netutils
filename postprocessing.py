@@ -72,10 +72,10 @@ if __name__ == "__main__":
 
     p = HTMLTableParser()
     p.feed(response_text)
-    print(p.tables)
+    print(p.tables[8])
     merged = list(itertools.chain(*p.tables[8]))
     cleaned = [result for result in merged if result.strip()]
     done = {cleaned[i]: cleaned[i + 1 : i + 8] for i in range(0, len(cleaned), 8)}
 
-    with open(sys.argv[0], "w") as getters:
+    with open(sys.argv[1], "w") as getters:
         getters.write(str(done))
