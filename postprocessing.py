@@ -72,6 +72,7 @@ if __name__ == "__main__":
 
     p = HTMLTableParser()
     p.feed(response_text)
+    print(p.tables)
     merged = list(itertools.chain(*p.tables[8]))
     cleaned = [result for result in merged if result.strip()]
     done = {cleaned[i]: cleaned[i + 1 : i + 8] for i in range(0, len(cleaned), 8)}
