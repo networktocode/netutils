@@ -24,6 +24,6 @@ jobs:
       - name: Fetch data
         uses: githubocto/flat@v3
         with:
-          http_url: https://standards-oui.ieee.org/
-          downloaded_filename: oui.txt
+          http_url: https://napalm.readthedocs.io/en/latest/support/index.html#getters-support-matrix
+          downloaded_filename: getters.txt
           postprocess: ./postprocess.ts
