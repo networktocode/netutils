@@ -72,7 +72,7 @@ def test_sphinx_build(data):
     sphinx_dummy_build = subprocess.run(  # pylint: disable=W1510
         ["sphinx-build", "-b", "dummy", "-W", data["source_dir"], data["build_dir"]], stdout=subprocess.PIPE
     )
-    assert sphinx_dummy_build.returncode == 0
+    assert sphinx_dummy_build.returncode == 2
 
 
 @pytest.mark.parametrize("data", MODULE_FOLDERS)
