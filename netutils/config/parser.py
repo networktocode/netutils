@@ -589,7 +589,7 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
         self._update_same_line_children_configs()
         return self.config_lines
 
-    def _get_groups(self, pattern: str) -> t.Any:  # type: ignore
+    def _get_groups(self, pattern: str) -> t.Any:
         """Groups children based on parent pattern."""
         children_list = []
         for line in self.config_lines:
