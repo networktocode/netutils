@@ -3,12 +3,15 @@
 
 import re
 <<<<<<< HEAD
+<<<<<<< HEAD
 import typing as t
 =======
 import itertools as it
 <<<<<<< HEAD
 >>>>>>> ec3a193 (adds utility functions for ios parser)
 =======
+=======
+>>>>>>> 3d7dfb8 (remove double import)
 import typing as t
 import itertools as it
 >>>>>>> f7d733d (adds tests)
@@ -597,7 +600,7 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
         self._update_same_line_children_configs()
         return self.config_lines
 
-    def _get_groups(self, pattern: str) -> t.Any:
+    def _get_groups(self, pattern: str) -> t.Any:  # type: ignore
         """Groups children based on parent pattern."""
         children_list = []
         for line in self.config_lines:
