@@ -6,7 +6,12 @@ import re
 import typing as t
 =======
 import itertools as it
+<<<<<<< HEAD
 >>>>>>> ec3a193 (adds utility functions for ios parser)
+=======
+import typing as t
+import itertools as it
+>>>>>>> f7d733d (adds tests)
 from collections import namedtuple
 
 from netutils.banner import normalise_delimiter_caret_c
@@ -592,17 +597,17 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
         self._update_same_line_children_configs()
         return self.config_lines
 
-    def _get_groups(self, pattern: str) -> list:
+    def _get_groups(self, pattern: str) -> t.Any:
         """Groups children based on parent pattern."""
         children_list = []
         for line in self.config_lines:
             for parent in line.parents:
                 if re.match(pattern, parent):
                     children_list.append(line)
-        grouped_data = it.groupby(children_list, key=lambda x: x.parents)
+        grouped_data = it.groupby(children_list, key=lambda x: x.parents)  # type: ignore
         return grouped_data
 
-    def get_path(self, pattern: str) -> list:
+    def get_path(self, pattern: str) -> t.List[str]:
         """Returns configuration part for specific pattern not including parents.
 
         Args:
@@ -620,12 +625,12 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
         """
         children = []
         grouped_data = self._get_groups(pattern)
-        for grp in grouped_data:
+        for _, grp in grouped_data:
             for line in list(grp):
                 children.append(line.config_line)
         return children
 
-    def get_path_with_parents(self, pattern: str) -> list:
+    def get_path_with_parents(self, pattern: str) -> t.List[str]:
         """Returns configuration part for specific pattern including parents and children.
 
         Args:
