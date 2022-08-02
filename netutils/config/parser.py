@@ -2,19 +2,8 @@
 # pylint: disable=no-member,super-with-arguments,invalid-overridden-method,raise-missing-from,invalid-overridden-method,inconsistent-return-statements,super-with-arguments,redefined-argument-from-local,no-else-break,useless-super-delegation,too-many-lines
 
 import re
-<<<<<<< HEAD
-<<<<<<< HEAD
-import typing as t
-=======
-import itertools as it
-<<<<<<< HEAD
->>>>>>> ec3a193 (adds utility functions for ios parser)
-=======
-=======
->>>>>>> 3d7dfb8 (remove double import)
 import typing as t
 import itertools as it
->>>>>>> f7d733d (adds tests)
 from collections import namedtuple
 
 from netutils.banner import normalise_delimiter_caret_c
