@@ -1,0 +1,10 @@
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1088426642
+ revocation-check none
+ rsakeypair TP-self-signed-1088426642
+ enrollment pkcs12
+ revocation-check crl
+ certificate self-signed 01
+  	quit
+ certificate ca 01
+  	quit

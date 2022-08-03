@@ -3,6 +3,7 @@
 
 import re
 import typing as t
+import itertools as it
 from collections import namedtuple
 
 from netutils.banner import normalise_delimiter_caret_c
@@ -587,6 +588,73 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
         super(IOSConfigParser, self).build_config_relationship()
         self._update_same_line_children_configs()
         return self.config_lines
+
+    def _get_groups(self, pattern: str) -> t.Any:
+        """Groups children based on parent pattern."""
+        children_list = []
+        for line in self.config_lines:
+            for parent in line.parents:
+                if re.match(pattern, parent):
+                    children_list.append(line)
+        grouped_data = it.groupby(children_list, key=lambda x: x.parents)  # type: ignore
+        return grouped_data
+
+    def get_path(self, pattern: str) -> t.List[str]:
+        """Returns configuration part for a specific pattern not including parents.
+
+        Args:
+            pattern: pattern that describes for parent.
+
+        Returns:
+            configuration under that parent pattern.
+
+        Example:
+            >>> config = '''
+            ... router bgp 45000
+            ...   address-family ipv4 unicast
+            ...    neighbor 192.168.1.2 activate
+            ...    network 172.17.1.0 mas'''
+            >>> bgp_conf = IOSConfigParser(str(config)).get_path("router bgp")
+            >>> print(bgp_conf)
+            ['  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mas']
+        """
+        children = []
+        grouped_data = self._get_groups(pattern)
+        for _, grp in grouped_data:
+            for line in list(grp):
+                children.append(line.config_line)
+        return children
+
+    def get_path_with_parents(self, pattern: str) -> t.List[str]:
+        """Returns configuration part for a specific pattern including parents and children.
+
+        Args:
+            pattern: pattern that describes for parent.
+
+        Returns:
+            configuration under that parent pattern.
+
+        Example:
+            >>> config = '''
+            ... router bgp 45000
+            ...   address-family ipv4 unicast
+            ...    neighbor 192.168.1.2 activate
+            ...    network 172.17.1.0 mas'''
+            >>> bgp_conf = IOSConfigParser(str(config)).get_path_with_parents("router bgp")
+            >>> print(bgp_conf)
+            ['router bgp 45000', '  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mas']
+        """
+        parents_and_children = []
+        previous_parent = ""
+        grouped_data = self._get_groups(pattern)
+        for key, grp in grouped_data:
+            # special case for nested parents, we do not want to repeat these multiple times
+            if previous_parent != key[0]:
+                parents_and_children.append(key[0])
+            previous_parent = key[0]
+            for line in list(grp):
+                parents_and_children.append(line.config_line)
+        return parents_and_children
 
 
 class NXOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
