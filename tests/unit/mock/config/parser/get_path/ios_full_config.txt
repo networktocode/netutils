@@ -1,0 +1,279 @@
+!
+version 17.1
+service timestamps debug datetime msec
+service timestamps log datetime msec
+! Call-home is enabled by Smart-Licensing.
+service call-home
+platform qfp utilization monitor load 80
+platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname jcy-bb-01
+!
+boot-start-marker
+boot-end-marker
+!
+!
+vrf definition MANAGEMENT
+ !
+ address-family ipv4
+ exit-address-family
+ !
+ address-family ipv6
+ exit-address-family
+!
+logging userinfo
+!
+no aaa new-model
+call-home
+ ! If contact email address in call-home is configured as sch-smart-licensing@cisco.com
+ ! the email address configured in Cisco Smart License Portal will be used as contact email address to send SCH notifications.
+ contact-email-addr sch-smart-licensing@cisco.com
+ profile "CiscoTAC-1"
+  active
+  destination transport-method http
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+ip domain name infra.ntc.com
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+!
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1088426642
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1088426642
+ revocation-check none
+ rsakeypair TP-self-signed-1088426642
+!
+crypto pki trustpoint SLA-TrustPoint
+ enrollment pkcs12
+ revocation-check crl
+!
+!
+crypto pki certificate chain TP-self-signed-1088426642
+ certificate self-signed 01
+  	quit
+crypto pki certificate chain SLA-TrustPoint
+ certificate ca 01
+  	quit
+!
+license udi pid CSR1000V sn 9SAGBHTUEE9
+diagnostic bootup level minimal
+archive
+ path bootflash:archive
+memory free low-watermark processor 72107
+!
+!
+spanning-tree extend system-id
+!
+username ntc privilege 15 password 0 ntc123
+!
+redundancy
+!
+!
+!
+!
+!
+lldp run
+cdp run
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 10.0.10.3 255.255.255.255
+!
+interface GigabitEthernet1
+ description MANAGEMENT_DO_NOT_CHANGE
+ ip address 10.0.0.15 255.255.255.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2
+ ip address 10.10.0.6 255.255.255.252
+ ip access-group BLOCK_TRANSIT_LINKS in
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet3
+ ip address 10.10.0.14 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet4
+ description backbone-to-vmx3-ge0/0/3
+ ip address 10.10.0.17 255.255.255.252
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet5
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet6
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet7
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet8
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet9
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+router bgp 65251
+ bgp router-id 10.0.10.3
+ bgp log-neighbor-changes
+ redistribute connected
+ neighbor 10.10.0.5 remote-as 65251
+ neighbor 10.10.0.13 remote-as 65251
+ neighbor 10.10.0.18 remote-as 65252
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip route 0.0.0.0 0.0.0.0 10.0.0.2
+ip scp server enable
+!
+!
+logging origin-id hostname
+logging host 10.125.1.171 transport udp port 7004
+!
+!
+snmp-server community ntc-public RO
+snmp-server community ntc-private RW
+snmp-server community networktocode RO
+snmp-server community secure RW
+snmp-server location Network to Code - NYC | NY
+snmp-server contact John Smith
+snmp-server host 10.1.1.1 version 2c networktocode
+!
+!
+!
+control-plane
+!
+!
+!
+!
+banner exec ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+banner incoming ^C
+**************************************************************************
+* IOSv is strictly limited to use for evaluation, demonstration and IOS  *
+* education. IOSv is provided as-is and is not supported by Cisco's      *
+* Technical Advisory Center. Any use or disclosure, in whole or in part, *
+* of the IOSv Software or Documentation to any third party for any       *
+* purposes is expressly prohibited except as otherwise authorized by     *
+* Cisco in writing.                                                      *
+**************************************************************************^C
+!
+alias exec ntcclear clear platform software vnic-if nv
+!
+line con 0
+ stopbits 1
+line vty 0 4
+ privilege level 15
+ login local
+ transport preferred ssh
+ transport input all
+line vty 5 15
+ privilege level 15
+ login local
+ transport preferred ssh
+ transport input all
+!
+ntp server 10.1.1.1
+ntp server 10.2.2.2 prefer
+!
+!
+!
+!
+!
+netconf-yang
+restconf
+end

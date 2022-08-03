@@ -1,14 +1,14 @@
+crypto pki trustpoint TP-self-signed-1088426642
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1088426642
+ revocation-check none
+ rsakeypair TP-self-signed-1088426642
 crypto pki trustpoint SLA-TrustPoint
  enrollment pkcs12
  revocation-check crl
-crypto pki trustpoint abcdefg
- enrollment terminal
- usage ssl-server
- fingerprint 1D102C47C
- revocation-check none
+crypto pki certificate chain TP-self-signed-1088426642
+ certificate self-signed 01
+  	quit
 crypto pki certificate chain SLA-TrustPoint
  certificate ca 01
-  	quit
-crypto pki certificate chain lalala
- certificate ca 40DB9A6E5B6E82
   	quit

@@ -17,11 +17,11 @@ for network_os in list(compliance.parser_map.keys()):
 
 # TODO: add more tests with different patterns
 get_path_parameters = [
-    ("get_path/full_config.txt", "crypto pki", "get_path/certificate_wo_parents.txt"),
+    ("get_path/ios_full_config.txt", "crypto pki", "get_path/certificate_wo_parents.txt"),
 ]
 
 get_path_with_parents_parameters = [
-    ("get_path/full_config.txt", "crypto pki", "get_path/certificate_with_parents.txt"),
+    ("get_path/ios_full_config.txt", "crypto pki", "get_path/certificate_with_parents.txt"),
 ]
 
 
