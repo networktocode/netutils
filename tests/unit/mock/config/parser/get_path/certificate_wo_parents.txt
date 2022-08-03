@@ -2,9 +2,9 @@
  revocation-check crl
  enrollment terminal
  usage ssl-server
- fingerprint 1D102C47C400088295AD604C35CBDEB96042F979
+ fingerprint 1D102C47C
  revocation-check none
  certificate ca 01
   	quit
- certificate ca 40DB9A6E5B6E827D4804BA4E0AA0BD0F
+ certificate ca 40DB9A6E5B6E82
   	quit

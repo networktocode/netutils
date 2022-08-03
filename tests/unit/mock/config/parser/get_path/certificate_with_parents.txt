@@ -1,14 +1,14 @@
 crypto pki trustpoint SLA-TrustPoint
  enrollment pkcs12
  revocation-check crl
-crypto pki trustpoint ddt.gov.gr_sub
+crypto pki trustpoint abcdefg
  enrollment terminal
  usage ssl-server
- fingerprint 1D102C47C400088295AD604C35CBDEB96042F979
+ fingerprint 1D102C47C
  revocation-check none
 crypto pki certificate chain SLA-TrustPoint
  certificate ca 01
   	quit
-crypto pki certificate chain ddt.gov.gr_sub
- certificate ca 40DB9A6E5B6E827D4804BA4E0AA0BD0F
+crypto pki certificate chain lalala
+ certificate ca 40DB9A6E5B6E82
   	quit
