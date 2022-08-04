@@ -51,22 +51,22 @@ def test_incorrect_banner_ios():
 
 
 @pytest.mark.parametrize("_file, pattern, expected", get_path_parameters)
-def test_get_path(_file, pattern, expected, get_text_data):
+def test_find_all_children(_file, pattern, expected, get_text_data):
     """Tests get_path method."""
     device_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
     config_tree = IOSConfigParser(str(device_cfg))
-    returned_path = config_tree.get_path(pattern)
+    returned_path = config_tree.find_all_children(pattern)
     expected_path = get_text_data(os.path.join(MOCK_DIR, expected))
 
     assert returned_path == expected_path.split("\n")
 
 
 @pytest.mark.parametrize("_file, pattern, expected", get_path_with_parents_parameters)
-def test_get_path_with_children(_file, pattern, expected, get_text_data):
+def test_find_children_w_parents(_file, pattern, expected, get_text_data):
     """Tests get_path_with_children method."""
     device_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
     config_tree = IOSConfigParser(str(device_cfg))
-    returned_path = config_tree.get_path_with_parents(pattern)
+    returned_path = config_tree.find_children_w_parents(pattern)
     expected_path = get_text_data(os.path.join(MOCK_DIR, expected))
 
     assert returned_path == expected_path.split("\n")
