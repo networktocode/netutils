@@ -1,0 +1,24 @@
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ no ip address
+ shutdown
+ negotiation auto
+ no mop enabled
+ no mop sysid

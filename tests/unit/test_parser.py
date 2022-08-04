@@ -20,6 +20,10 @@ get_path_parameters = [
     ("get_path/ios_full_config.txt", "crypto pki", "get_path/certificate.txt"),
 ]
 
+get_path_with_parents_parameters = [
+    ("get_path/ios_full_config.txt", "interface", " no ip", "get_path/interface.txt"),
+]
+
 
 @pytest.mark.parametrize("_file, network_os", parameters)
 def test_parser(_file, network_os, get_text_data, get_python_data):  # pylint: disable=redefined-outer-name
@@ -52,6 +56,19 @@ def test_find_all_children(_file, pattern, expected, get_text_data):
     device_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
     config_tree = IOSConfigParser(str(device_cfg))
     returned_path = config_tree.find_all_children(pattern=pattern, match_type="regex")
+    expected_path = get_text_data(os.path.join(MOCK_DIR, expected))
+
+    assert returned_path == expected_path.split("\n")
+
+
+@pytest.mark.parametrize("_file, parent_pattern, child_pattern, expected", get_path_with_parents_parameters)
+def test_find_children_w_parents(_file, parent_pattern, child_pattern, expected, get_text_data):
+    """Tests get_path_with_children method."""
+    device_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
+    config_tree = IOSConfigParser(str(device_cfg))
+    returned_path = config_tree.find_children_w_parents(
+        parent_pattern=parent_pattern, child_pattern=child_pattern, match_type="regex"
+    )
     expected_path = get_text_data(os.path.join(MOCK_DIR, expected))
 
     assert returned_path == expected_path.split("\n")

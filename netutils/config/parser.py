@@ -386,6 +386,15 @@ class BaseSpaceConfigParser(BaseConfigParser):
 
         Returns:
             configuration under that parent pattern.
+        Example:
+            >>> config = '''
+            ... router bgp 45000
+            ...   address-family ipv4 unicast
+            ...    neighbor 192.168.1.2 activate
+            ...    network 172.17.1.0 mas'''
+            >>> bgp_conf = BaseSpaceConfigParser(str(config)).find_children_w_parents(parent_pattern="router bgp", child_pattern="  address-family", match_type="regex")
+            >>> print(bgp_conf)
+            ['  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mas']
         """
         config = []
         potential_parents = [
