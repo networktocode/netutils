@@ -24,7 +24,7 @@ Functions are grouped with like functions, such as IP or MAC address based funct
   * Compliance - Provides the ability to compare two configurations to sanely understand the differences.
   * Parsing - Provides the ability to parse configuration for the minor differences that are there.
 * DNS - Provides the ability to work with DNS, such as validating that a FQDN is resolvable.
-* Interface - Provides the ability to work with interface names, expanding, abbreviating, and spliting the names.
+* Interface - Provides the ability to work with interface names, expanding, abbreviating, and splitting the names.
 * IP Address - Provides the ability to work with IP addresses, primarily exposing Python `ipaddress` functionality.
 * Library Mapper - Provides mappings in expected vendor names between Netmiko, NAPALM, pyntc, ntc-templates, pyats, and scrapli.
 * MAC Address - Provides the ability to work with MAC addresses such as validating or converting to integer.
@@ -160,7 +160,7 @@ There are a number of things that are required in order to have a successful PR.
 - All new functions must contain at least 1 example in their docstrings.
 - Docstrings must conform to the google docstring [convention](https://google.github.io/styleguide/pyguide.html#381-docstrings).
 - Unit test for newly added functions are required.
-- If applicable, tests related to config parsing and compliuance must be added.
+- If applicable, tests related to config parsing and compliance must be added.
 - Update the jinja2 filter (netutils.utils.jinja2_convenience_function) for any new functions (see below for details).
 - If you create a new file in the `netutils` folder, you must create a new folder and `index.rst` in the docs folder (see below for details).
 - Your PR must not introduce any required dependencies. You can introduce optional or development dependencies.

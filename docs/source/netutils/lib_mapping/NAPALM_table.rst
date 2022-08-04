@@ -22,6 +22,9 @@
 			<td>ios</td><td>cisco_ios</td>
 		</tr>
 		<tr>
+			<td>nxos_ssh</td><td>cisco_nxos</td>
+		</tr>
+		<tr>
 			<td>nxos</td><td>cisco_nxos</td>
 		</tr>
 		<tr>

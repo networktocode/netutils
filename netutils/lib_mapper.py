@@ -131,6 +131,7 @@ NAPALM_LIB_MAPPER = {
     "fortios": "fortinet",
     "huawei": "huawei_vrp",
     "ios": "cisco_ios",
+    "nxos_ssh": "cisco_nxos",
     "nxos": "cisco_nxos",
     "iosxr": "cisco_xr",
     "junos": "juniper_junos",
