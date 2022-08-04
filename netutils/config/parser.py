@@ -3,7 +3,6 @@
 
 import re
 import typing as t
-import itertools as it
 from collections import namedtuple
 
 from netutils.banner import normalise_delimiter_caret_c
@@ -333,7 +332,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         return self.config_lines
 
     @staticmethod
-    def _match_type_check(line: str, pattern: str, match_type: bool) -> bool:
+    def _match_type_check(line: str, pattern: str, match_type: str) -> bool:
         """Checks pattern for exact match or regex."""
         if match_type == "exact" and line == pattern:
             return True
@@ -345,12 +344,12 @@ class BaseSpaceConfigParser(BaseConfigParser):
             return True
         return False
 
-    def find_all_children(self, pattern: str, match_type="exact") -> t.List[str]:
+    def find_all_children(self, pattern: str, match_type: str = "exact") -> t.List[str]:
         """Returns configuration part for a specific pattern not including parents.
 
         Args:
             pattern: pattern that describes parent.
-            match_type (str, optional): Exact or regex. Defaults to "exact".
+            match_type (optional): Exact or regex. Defaults to "exact".
 
         Returns:
             configuration under that parent pattern.
@@ -360,9 +359,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
             ...   address-family ipv4 unicast
             ...    neighbor 192.168.1.2 activate
             ...    network 172.17.1.0 mas'''
-            >>> bgp_conf = IOSConfigParser(str(config)).find_all_children("router bgp")
+            >>> bgp_conf = BaseSpaceConfigParser(str(config)).find_all_children(pattern="router bgp", match_type="regex")
             >>> print(bgp_conf)
-            ['  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mas']
+            ['router bgp 45000', '  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mas']
         """
         config = []
         for cfg_line in self.build_config_relationship():
@@ -375,25 +374,18 @@ class BaseSpaceConfigParser(BaseConfigParser):
                 config.append(cfg_line.config_line)
         return config
 
-    def find_children_w_parents(self, parent_pattern: str, child_pattern="", match_type="exact") -> t.List[str]:
+    def find_children_w_parents(
+        self, parent_pattern: str, child_pattern: str, match_type: str = "exact"
+    ) -> t.List[str]:
         """Returns configuration part for a specific pattern including parents and children.
 
         Args:
-            parent_pattern (str): pattern that describes parent.
-            child_pattern (str, optional): pattern that describes child. Defaults to "".
-            match_type (str, optional): Exact or regex. Defaults to "exact".
+            parent_pattern: pattern that describes parent.
+            child_pattern: pattern that describes child.
+            match_type (optional): Exact or regex. Defaults to "exact".
 
         Returns:
             configuration under that parent pattern.
-        Example:
-            >>> config = '''
-            ... router bgp 45000
-            ...   address-family ipv4 unicast
-            ...    neighbor 192.168.1.2 activate
-            ...    network 172.17.1.0 mas'''
-            >>> bgp_conf = IOSConfigParser(str(config)).find_children_w_parents("router bgp")
-            >>> print(bgp_conf)
-            ['router bgp 45000', '  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mas']
         """
         config = []
         potential_parents = [

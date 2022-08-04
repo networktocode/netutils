@@ -17,11 +17,7 @@ for network_os in list(compliance.parser_map.keys()):
 
 # TODO: add more tests with different patterns
 get_path_parameters = [
-    ("get_path/ios_full_config.txt", "crypto pki", "get_path/certificate_wo_parents.txt"),
-]
-
-get_path_with_parents_parameters = [
-    ("get_path/ios_full_config.txt", "crypto pki", "get_path/certificate_with_parents.txt"),
+    ("get_path/ios_full_config.txt", "crypto pki", "get_path/certificate.txt"),
 ]
 
 
@@ -55,18 +51,7 @@ def test_find_all_children(_file, pattern, expected, get_text_data):
     """Tests get_path method."""
     device_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
     config_tree = IOSConfigParser(str(device_cfg))
-    returned_path = config_tree.find_all_children(pattern)
-    expected_path = get_text_data(os.path.join(MOCK_DIR, expected))
-
-    assert returned_path == expected_path.split("\n")
-
-
-@pytest.mark.parametrize("_file, pattern, expected", get_path_with_parents_parameters)
-def test_find_children_w_parents(_file, pattern, expected, get_text_data):
-    """Tests get_path_with_children method."""
-    device_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
-    config_tree = IOSConfigParser(str(device_cfg))
-    returned_path = config_tree.find_children_w_parents(pattern)
+    returned_path = config_tree.find_all_children(pattern=pattern, match_type="regex")
     expected_path = get_text_data(os.path.join(MOCK_DIR, expected))
 
     assert returned_path == expected_path.split("\n")
