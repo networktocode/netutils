@@ -331,6 +331,53 @@ class BaseSpaceConfigParser(BaseConfigParser):
             self._update_config_lines(line)
         return self.config_lines
 
+    @staticmethod
+    def _match_type_check(line, pattern, match_type):
+        if match_type == "exact" and line == pattern:
+            return True
+        if match_type == "startswith" and line.startswith(pattern):
+            return True
+        if match_type == "endswith" and line.endswith(pattern):
+            return True
+        if match_type == "regex" and re.match(pattern, line):
+            return True
+        return False
+
+    def find_all_children(self, pattern, match_type="exact"):
+        config = []
+        for cfg_line in self.build_config_relationship():
+            parents = cfg_line.parents[0] if cfg_line.parents else None
+            if parents and self._match_type_check(parents, pattern, match_type) or self._match_type_check(cfg_line.config_line, pattern, match_type):
+                config.append(cfg_line.config_line)
+        return config
+
+
+    def find_children_w_parents(self, parent_pattern, child_pattern, match_type="exact"):
+        config = []
+        potential_parents = [elem.parents[0] for elem in self.build_config_relationship() if self._match_type_check(elem.config_line, child_pattern, match_type)]
+        for cfg_line in self.build_config_relationship():
+            parents = cfg_line.parents[0] if cfg_line.parents else None
+            if parents in potential_parents and self._match_type_check(parents, parent_pattern, match_type):
+                config.append(cfg_line.config_line)
+        return config
+
+    # def find_blocks():
+    # def find_children():
+    # def find_children_w_parents():
+    # def find_interface_objects():
+    # def find_lineage():
+    # def find_lines():
+    # def find_object_branches():
+    # def find_objects():
+    # def find_objects_dna():
+    # def find_objects_w_all_children():
+    # def find_objects_w_child():
+    # def find_objects_w_missing_children():
+    # def find_objects_w_parents():
+    # def find_objects_wo_child():
+    # def find_parents_w_child():
+    # def find_parents_wo_child():
+
 
 class BaseBraceConfigParser(BaseConfigParser):
     """Base parser class for config syntax that demarcates using braces."""
