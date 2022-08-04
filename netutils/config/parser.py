@@ -358,10 +358,10 @@ class BaseSpaceConfigParser(BaseConfigParser):
             ... router bgp 45000
             ...   address-family ipv4 unicast
             ...    neighbor 192.168.1.2 activate
-            ...    network 172.17.1.0 mas'''
-            >>> bgp_conf = BaseSpaceConfigParser(str(config)).find_all_children(pattern="router bgp", match_type="regex")
+            ...    network 172.17.1.0 mask'''
+            >>> bgp_conf = BaseSpaceConfigParser(str(config)).find_all_children(pattern="router bgp", match_type="startswith")
             >>> print(bgp_conf)
-            ['router bgp 45000', '  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mas']
+            ['router bgp 45000', '  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mask']
         """
         config = []
         for cfg_line in self.build_config_relationship():
@@ -391,10 +391,10 @@ class BaseSpaceConfigParser(BaseConfigParser):
             ... router bgp 45000
             ...   address-family ipv4 unicast
             ...    neighbor 192.168.1.2 activate
-            ...    network 172.17.1.0 mas'''
+            ...    network 172.17.1.0 mask'''
             >>> bgp_conf = BaseSpaceConfigParser(str(config)).find_children_w_parents(parent_pattern="router bgp", child_pattern="  address-family", match_type="regex")
             >>> print(bgp_conf)
-            ['  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mas']
+            ['  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mask']
         """
         config = []
         potential_parents = [
@@ -407,23 +407,6 @@ class BaseSpaceConfigParser(BaseConfigParser):
             if parents in potential_parents and self._match_type_check(parents, parent_pattern, match_type):
                 config.append(cfg_line.config_line)
         return config
-
-    # def find_blocks():
-    # def find_children():
-    # def find_children_w_parents():
-    # def find_interface_objects():
-    # def find_lineage():
-    # def find_lines():
-    # def find_object_branches():
-    # def find_objects():
-    # def find_objects_dna():
-    # def find_objects_w_all_children():
-    # def find_objects_w_child():
-    # def find_objects_w_missing_children():
-    # def find_objects_w_parents():
-    # def find_objects_wo_child():
-    # def find_parents_w_child():
-    # def find_parents_wo_child():
 
 
 class BaseBraceConfigParser(BaseConfigParser):
