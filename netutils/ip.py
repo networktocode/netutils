@@ -1,18 +1,20 @@
 """Functions for working with IP addresses."""
 import ipaddress
+import typing as t
 from operator import attrgetter
+
 from netutils.constants import IPV4_MASKS, IPV6_MASKS
 
 
-def ipaddress_address(ip, attr):
+def ipaddress_address(ip: str, attr: str) -> t.Any:
     """Convenience function primarily built to expose ipaddress.ip_address to Jinja.
 
     Args:
-        ip_addr (str): IP Address str compliant with ipaddress.ip_address inputs.
-        attr (atr): An attribute in string dotted format.
+        ip: IP Address str compliant with ipaddress.ip_address inputs.
+        attr: An attribute in string dotted format.
 
     Returns:
-        str: Returns the value provided by the ipaddress.ip_address attribute provided.
+        Returns the value provided by the ipaddress.ip_address attribute provided.
 
     Example:
         >>> from netutils.ip import ipaddress_address
@@ -31,15 +33,15 @@ def ipaddress_address(ip, attr):
     return retrieved_method
 
 
-def ipaddress_interface(ip, attr):
+def ipaddress_interface(ip: str, attr: str) -> t.Any:
     """Convenience function primarily built to expose ipaddress.ip_interface to Jinja.
 
     Args:
-        ip_interface (str): IP interface str compliant with ipaddress.ip_interface inputs.
-        attr (atr): An attribute in string dotted format.
+        ip: IP interface str compliant with ipaddress.ip_interface inputs.
+        attr: An attribute in string dotted format.
 
     Returns:
-        str: Returns the value provided by the ipaddress.ip_interface attribute provided.
+        Returns the value provided by the ipaddress.ip_interface attribute provided.
 
     Example:
         >>> from netutils.ip import ipaddress_interface
@@ -55,15 +57,15 @@ def ipaddress_interface(ip, attr):
     return retrieved_method
 
 
-def ipaddress_network(ip, attr):
+def ipaddress_network(ip: str, attr: str) -> t.Any:
     """Convenience function primarily built to expose ipaddress.ip_network to Jinja.
 
     Args:
-        ip_network (str): IP network str compliant with ipaddress.ip_network inputs.
-        attr (atr): An attribute in string dotted format.
+        ip: IP network str compliant with ipaddress.ip_network inputs.
+        attr: An attribute in string dotted format.
 
     Returns:
-        str: Returns the value provided by the ipaddress.ip_network attribute provided.
+        Returns the value provided by the ipaddress.ip_network attribute provided.
 
     Example:
         >>> from netutils.ip import ipaddress_network
@@ -80,14 +82,14 @@ def ipaddress_network(ip, attr):
     return retrieved_method
 
 
-def ip_to_hex(ip):
+def ip_to_hex(ip: str) -> str:
     """Converts an IP address in string format to a hex string.
 
     Args:
-        ip (str): An IP address in string format that is able to be converted by `ipaddress` library.
+        ip: An IP address in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        str: HEX value of the IP address.
+        HEX value of the IP address.
 
     Example:
         >>> from netutils.ip import ip_to_hex
@@ -99,15 +101,15 @@ def ip_to_hex(ip):
     return str(hex(int(ip_obj)))[2:].zfill(int(ip_obj.max_prefixlen / 4))
 
 
-def ip_addition(ip, val):
+def ip_addition(ip: str, val: int) -> str:
     """Adds an integer to an IP address.
 
     Args:
-        ip (str): An IP address in string format that is able to be converted by `ipaddress` library.
-        val (int): An integer of which the IP address should be added by.
+        ip: An IP address in string format that is able to be converted by `ipaddress` library.
+        val: An integer of which the IP address should be added by.
 
     Returns:
-        str: IP address formatted string with the newly added IP address.
+        IP address formatted string with the newly added IP address.
 
     Example:
         >>> from netutils.ip import ip_addition
@@ -118,14 +120,14 @@ def ip_addition(ip, val):
     return str(ipaddress.ip_address(ip) + val)
 
 
-def ip_to_bin(ip):
+def ip_to_bin(ip: str) -> str:
     """Converts an IP address in string format to a binary string.
 
     Args:
-        ip (str): An IP address in string format that is able to be converted by `ipaddress` library.
+        ip: An IP address in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        str: Binary value of the IP address.
+        Binary value of the IP address.
 
     Example:
         >>> from netutils.ip import ip_to_bin
@@ -137,15 +139,15 @@ def ip_to_bin(ip):
     return bin(int(ip_obj))[2:].zfill(ip_obj.max_prefixlen)
 
 
-def ip_subtract(ip, val):
+def ip_subtract(ip: str, val: int) -> str:
     """Subtract an integer to an IP address.
 
     Args:
-        ip (str): An IP address in string format that is able to be converted by `ipaddress` library.
-        val (int): An integer of which the IP address should be subtracted by.
+        ip: An IP address in string format that is able to be converted by `ipaddress` library.
+        val: An integer of which the IP address should be subtracted by.
 
     Returns:
-        str: IP address formatted string with the newly subtracted IP address.
+        IP address formatted string with the newly subtracted IP address.
 
     Example:
         >>> from netutils.ip import ip_subtract
@@ -156,14 +158,14 @@ def ip_subtract(ip, val):
     return str(ipaddress.ip_address(ip) - val)
 
 
-def is_ip(ip):
+def is_ip(ip: str) -> bool:
     """Verifies whether or not a string is a valid IP address.
 
     Args:
-        ip (str): An IP address in string format that is able to be converted by `ipaddress` library.
+        ip: An IP address in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        bool: The result as to whether or not the string is a valid IP address.
+        The result as to whether or not the string is a valid IP address.
 
     Example:
         >>> from netutils.ip import is_ip
@@ -174,20 +176,20 @@ def is_ip(ip):
         >>>
     """
     try:
-        ip = ipaddress.ip_address(ip)
+        ipaddress.ip_address(ip)
         return True
     except ValueError:
         return False
 
 
-def is_netmask(netmask):
+def is_netmask(netmask: str) -> bool:
     """Verifies whether or not a string is a valid subnet mask.
 
     Args:
-        netmask (str): A subnet mask in
+        netmask: A subnet mask in
 
     Returns:
-        bool: True if string is a valid subnet mask. Otherwise, false.
+        True if string is a valid subnet mask. Otherwise, false.
 
     Example:
         >>> from netutils.ip import is_netmask
@@ -204,14 +206,14 @@ def is_netmask(netmask):
         return False
 
 
-def netmask_to_cidr(netmask):
+def netmask_to_cidr(netmask: str) -> int:
     """Creates a CIDR notation of a given subnet mask in decimal format.
 
     Args:
-        netmask (str): A subnet mask in decimal format.
+        netmask: A subnet mask in decimal format.
 
     Returns:
-      cidr (str): CIDR representation of subnet mask.
+        CIDR representation of subnet mask.
 
     Example:
         >>> from netutils.ip import netmask_to_cidr
@@ -225,16 +227,16 @@ def netmask_to_cidr(netmask):
     raise ValueError("Subnet mask is not valid.")
 
 
-def cidr_to_netmask(cidr):
+def cidr_to_netmask(cidr: int) -> str:
     """Creates a decimal format of a CIDR value.
 
     **IPv4** only.  For IPv6, please use `cidr_to_netmaskv6`.
 
     Args:
-        cidr (int): A CIDR value.
+        cidr: A CIDR value.
 
     Returns:
-      netmask (str): Decimal format representation of CIDR value.
+        Decimal format representation of CIDR value.
 
     Example:
         >>> from netutils.ip import cidr_to_netmask
@@ -248,14 +250,14 @@ def cidr_to_netmask(cidr):
     raise ValueError("Parameter must be an integer between 0 and 32.")
 
 
-def cidr_to_netmaskv6(cidr):
+def cidr_to_netmaskv6(cidr: int) -> str:
     """Creates a decimal format of a CIDR value.
 
     Args:
-        cidr (int): A CIDR value.
+        cidr: A CIDR value.
 
     Returns:
-      netmask (str): Decimal format (IPv6) representation of CIDR value.
+        Decimal format (IPv6) representation of CIDR value.
 
     Example:
         >>> from netutils.ip import cidr_to_netmaskv6
@@ -269,14 +271,14 @@ def cidr_to_netmaskv6(cidr):
     raise ValueError("Parameter must be an integer between 0 and 128.")
 
 
-def get_all_host(ip_network):
+def get_all_host(ip_network: str) -> t.Generator[str, None, None]:
     """Given a network, return the list of usable IP addresses.
 
     Args:
-        ip_network (str): An IP network in string format that is able to be converted by `ipaddress` library.
+        ip_network: An IP network in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        generator: Generator of usable IP Addresses within network.
+        Generator of usable IP Addresses within network.
 
     Example:
         >>> from netutils.ip import get_all_host
@@ -287,14 +289,14 @@ def get_all_host(ip_network):
     return (str(ip) for ip in ipaddress.ip_network(ip_network).hosts())
 
 
-def get_broadcast_address(ip_network):
+def get_broadcast_address(ip_network: str) -> str:
     """Given a network, determine the broadcast IP address.
 
     Args:
-        ip_network (str): An IP network in string format that is able to be converted by `ipaddress` library.
+        ip_network: An IP network in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        str: IP address formatted string with the broadcast IP address in the network.
+        IP address formatted string with the broadcast IP address in the network.
 
     Example:
         >>> from netutils.ip import get_broadcast_address
@@ -305,14 +307,14 @@ def get_broadcast_address(ip_network):
     return str(ipaddress.ip_network(ip_network).broadcast_address)
 
 
-def get_first_usable(ip_network):
+def get_first_usable(ip_network: str) -> str:
     """Given a network, determine the first usable IP address.
 
     Args:
-        ip_network (str): An IP network in string format that is able to be converted by `ipaddress` library.
+        ip_network: An IP network in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        str: IP address formatted string with the first usable IP address in the network.
+        IP address formatted string with the first usable IP address in the network.
 
     Example:
         >>> from netutils.ip import get_first_usable
@@ -326,14 +328,14 @@ def get_first_usable(ip_network):
     return str(net[1])
 
 
-def get_peer_ip(ip_interface):
+def get_peer_ip(ip_interface: str) -> str:
     """Given an IP interface (an ip address, with subnet mask) that is on a peer network, return the peer IP.
 
     Args:
-        ip_interface (str): An IP interface in string format that is able to be converted by `ipaddress` library.
+        ip_interface: An IP interface in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        str: IP address formatted string with the corresponding peer IP.
+        IP address formatted string with the corresponding peer IP.
 
     Example:
         >>> from netutils.ip import get_peer_ip
@@ -364,14 +366,14 @@ def get_peer_ip(ip_interface):
     return val[0]
 
 
-def get_usable_range(ip_network):
+def get_usable_range(ip_network: str) -> str:
     """Given a network, return the string of usable IP addresses.
 
     Args:
-        ip_network (str): An IP network in string format that is able to be converted by `ipaddress` library.
+        ip_network: An IP network in string format that is able to be converted by `ipaddress` library.
 
     Returns:
-        str: String of usable IP Addresses within network.
+        String of usable IP Addresses within network.
 
     Example:
         >>> from netutils.ip import get_usable_range

@@ -24,26 +24,26 @@ COMPARE_TYPE5 = [
 
 COMPARE_TYPE7 = [
     {
-        "sent": {"unencrypted_password": "cisco", "encrypted_password": "121A0C041104"},
+        "sent": {"unencrypted_password": "cisco", "encrypted_password": "070C285F4D06"},
         "received": True,
     },
     {
         "sent": {
             "unencrypted_password": "cisco",
-            "encrypted_password": "121A0C041104",
+            "encrypted_password": "070C285F4D06",
             "return_original": True,
         },
-        "received": "121A0C041104",
+        "received": "070C285F4D06",
     },
     {
-        "sent": {"unencrypted_password": "invalid_password", "encrypted_password": "121A0C041104"},
+        "sent": {"unencrypted_password": "invalid_password", "encrypted_password": "070C285F4D06"},
         "received": False,
     },
 ]
 
 DECRYPT_TYPE7 = [
     {
-        "sent": {"encrypted_password": "121A0C041104"},
+        "sent": {"encrypted_password": "14141B180F0B"},
         "received": "cisco",
     }
 ]
@@ -58,7 +58,7 @@ ENCRYPT_TYPE5 = [
 ENCRYPT_TYPE7 = [
     {
         "sent": {"unencrypted_password": "cisco", "salt": 10},
-        "received": "0a4d000a0618",
+        "received": "104D000A0618",
     },
 ]
 
