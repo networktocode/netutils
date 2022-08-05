@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.2.0 - 2022-08
+
+### Added
+
+- #128 Documentation for Nokia SROS duplicate lines/duplicate line detection
+- #138 Added nxos_ssh to Napalm mapper
+
+### Changed
+
+- #113 Updated lib mapping docs
+- #115 Switched build backend to poetry-core
+- #121 Update banner parsing for EOS
+- #129 Miscellaneous code cleanup and documentation
+- #134 Updated CODEOWNERS
+
+### Fixed
+
+- #122 Fixed encrypt type7
+
 ## v1.1.0 - 2022-04
 
 ### Added
@@ -23,7 +42,7 @@
 
 ### Added
 
-- #69 Normalise banner demiliter for IOS to ^C & support parsing delimiter ^
+- #69 Normalise banner delimiter for IOS to ^C & support parsing delimiter ^
 
 ### Fixed
 
@@ -113,7 +132,7 @@
 
 ### Fixed
 
-- Enable docsting tests
+- Enable docstring tests
 - Fix docstring tests
 - Fix wording and links on README
 
