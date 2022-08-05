@@ -12,7 +12,7 @@
 - #113 Updated lib mapping docs
 - #115 Switched build backend to poetry-core
 - #121 Update banner parsing for EOS
-- #129 Miscellaneous code cleanup and documentation
+- #129 Add type hints to the whole project and mypy testing setup and CI
 - #134 Updated CODEOWNERS
 
 ### Fixed
