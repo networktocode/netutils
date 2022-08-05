@@ -155,6 +155,11 @@ data = [
     ConfigLine(config_line="   neighbor 10.11.11.21 remote-as 65253", parents=("router bgp 65254",)),
     ConfigLine(config_line="   neighbor 10.11.11.21 maximum-routes 12000", parents=("router bgp 65254",)),
     ConfigLine(config_line="   redistribute connected", parents=("router bgp 65254",)),
+    ConfigLine(config_line="banner login", parents=()),
+    ConfigLine(
+        config_line="********************************************************************\n*          This system is the property of Allied Widget Co.        *\n*          UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED        *\n*                                                                  *\n* You must have explicit, authorized permission to access or       *\n* configure this device. Unauthorized attempts and actions to      *\n* access or use this system may result in civil and/or criminal    *\n* penalties.                                                       *\n*                                                                  *\n* All activities performed on this deviceare logged and monitored. *\n********************************************************************\nEOF",
+        parents=("banner login",),
+    ),
     ConfigLine(config_line="management api http-commands", parents=()),
     ConfigLine(config_line="   protocol http", parents=("management api http-commands",)),
     ConfigLine(config_line="   protocol unix-socket", parents=("management api http-commands",)),

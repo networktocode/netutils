@@ -1,0 +1,12 @@
+{
+   "banner": {
+      "actual": "banner login\n* GOOD DATA LINE 1\n* GOOD DATA LINE 2\nEOF",
+      "cannot_parse": true,
+      "compliant": false,
+      "extra": "banner login\n* GOOD DATA LINE 1\n* GOOD DATA LINE 2\nEOF",
+      "intended": "banner login\n* GOOD DATA LINE 1\n* BAD DATA LINE 2\nEOF",
+      "missing": "banner login\n* GOOD DATA LINE 1\n* BAD DATA LINE 2\nEOF",
+      "ordered_compliant": false,
+      "unordered_compliant": false
+   }
+}

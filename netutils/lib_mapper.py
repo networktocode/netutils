@@ -1,8 +1,9 @@
 """Variable definitions to map from network automation library to network automation library."""
 
 import copy
+import typing as t
 
-_NETMIKO_LIB_MAPPER = {
+_NETMIKO_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {
     "a10": {},
     "accedian": {},
     "adtran_os": {},
@@ -130,6 +131,7 @@ NAPALM_LIB_MAPPER = {
     "fortios": "fortinet",
     "huawei": "huawei_vrp",
     "ios": "cisco_ios",
+    "nxos_ssh": "cisco_nxos",
     "nxos": "cisco_nxos",
     "iosxr": "cisco_xr",
     "junos": "juniper_junos",

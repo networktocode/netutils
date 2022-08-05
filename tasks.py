@@ -2,6 +2,7 @@
 import os
 import sys
 from distutils.util import strtobool
+
 from invoke import task
 
 try:
@@ -211,6 +212,18 @@ def bandit(context, local=INVOKE_LOCAL):
 
 
 @task
+def mypy(context, local=INVOKE_LOCAL):
+    """Run mypy to validate typing-hints.
+
+    Args:
+        context (obj): Used to run specific commands
+        local (bool): Define as `True` to execute locally
+    """
+    exec_cmd = "mypy ./netutils"
+    run_cmd(context, exec_cmd, local)
+
+
+@task
 def cli(context):
     """Enter the image to perform troubleshooting or dev work.
 
@@ -235,6 +248,7 @@ def tests(context, local=INVOKE_LOCAL):
     yamllint(context, local)
     pydocstyle(context, local)
     bandit(context, local)
+    mypy(context, local)
     pytest(context, local)
 
     print("All tests have passed!")
