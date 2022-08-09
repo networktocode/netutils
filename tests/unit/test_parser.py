@@ -7,7 +7,11 @@ from netutils.config import compliance
 from netutils.config.parser import IOSConfigParser
 
 MOCK_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mock", "config", "parser")
+MOCK_GETPATH_DIR = os.path.join(
+    os.path.dirname(os.path.realpath(__file__)), "mock", "config", "parser", "find_children"
+)
 TXT_FILE = "_sent.txt"
+CONFIG_FILE = "full_config.txt"
 
 parameters = []
 for network_os in list(compliance.parser_map.keys()):
@@ -15,14 +19,27 @@ for network_os in list(compliance.parser_map.keys()):
         parameters.append([_file, network_os])
 
 
-# TODO: add more tests with different patterns
-get_path_parameters = [
-    ("get_path/ios_full_config.txt", "crypto pki", "get_path/certificate.txt"),
+find_all_children_parameters = []
+find_all_children_test_cases = [
+    ("crypto pki", "certificate.txt"),
 ]
+for network_os in list(compliance.parser_map.keys()):
+    for _file in glob.glob(f"{MOCK_GETPATH_DIR}/{network_os}/{CONFIG_FILE}"):
+        for test_case in find_all_children_test_cases:
+            find_all_children_parameters.append(
+                (_file, test_case[0], f"{MOCK_GETPATH_DIR}/{network_os}/{test_case[1]}")
+            )
 
-get_path_with_parents_parameters = [
-    ("get_path/ios_full_config.txt", "interface", " no ip", "get_path/interface.txt"),
+find_children_parents_parameters = []
+find_children_parents_test_cases = [
+    ("interface", " no ip", "interface.txt"),
 ]
+for network_os in list(compliance.parser_map.keys()):
+    for _file in glob.glob(f"{MOCK_GETPATH_DIR}/{network_os}/{CONFIG_FILE}"):
+        for test_case in find_children_parents_test_cases:
+            find_children_parents_parameters.append(
+                (_file, test_case[0], test_case[1], f"{MOCK_GETPATH_DIR}/{network_os}/{test_case[2]}")
+            )
 
 
 @pytest.mark.parametrize("_file, network_os", parameters)
@@ -50,7 +67,7 @@ def test_incorrect_banner_ios():
         compliance.parser_map["cisco_ios"](banner_cfg).config_lines  # pylint: disable=expression-not-assigned
 
 
-@pytest.mark.parametrize("_file, pattern, expected", get_path_parameters)
+@pytest.mark.parametrize("_file, pattern, expected", find_all_children_parameters)
 def test_find_all_children(_file, pattern, expected, get_text_data):
     """Tests get_path method."""
     device_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
@@ -61,7 +78,7 @@ def test_find_all_children(_file, pattern, expected, get_text_data):
     assert returned_path == expected_path.split("\n")
 
 
-@pytest.mark.parametrize("_file, parent_pattern, child_pattern, expected", get_path_with_parents_parameters)
+@pytest.mark.parametrize("_file, parent_pattern, child_pattern, expected", find_children_parents_parameters)
 def test_find_children_w_parents(_file, parent_pattern, child_pattern, expected, get_text_data):
     """Tests get_path_with_children method."""
     device_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
