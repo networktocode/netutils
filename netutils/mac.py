@@ -5,6 +5,7 @@ import typing as t
 from functools import wraps
 
 from .constants import MAC_CREATE, MAC_REGEX
+from oui_mappings import OUI_MAPPINGS
 
 
 def _valid_mac(func: t.Callable[..., t.Any]) -> t.Callable[..., t.Any]:
@@ -154,3 +155,5 @@ def get_oui(mac: str) -> str:
         'aabbccddeeff'
         >>>
     """
+    normalized_mac = mac_normalize(mac)[0:6]
+    return
