@@ -32404,4 +32404,4 @@
     "d80e29": "vivo Mobile Communication Co., Ltd.",
     "606d9d": "Otto Bock Healthcare Products GmbH",
     "64d315": "HMD Global Oy"
-},
+}
