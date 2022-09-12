@@ -1,4 +1,4 @@
-name: oui_filepull
+name: Flat
 
 on:
   push:
@@ -21,5 +21,5 @@ jobs:
       - name: Fetch data
         uses: githubocto/flat@v3
         with:
-          http_url: https://standards-oui.ieee.org/
+          http_url: https://standards-oui.ieee.org
           downloaded_filename: ./netutils/pulled_data/oui_mappings.py
