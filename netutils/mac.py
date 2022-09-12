@@ -150,10 +150,16 @@ def get_oui(mac: str) -> str:
         str: The name of the company the mac is related to.
 
     Example:
-        >>> from netutils.mac import mac_normalize
-        >>> mac_normalize("aa.bb.cc.dd.ee.ff")
-        'aabbccddeeff'
+        >>> from netutils.mac import get_oui
+        >>> from netutils.oui_mappings import OUI_MAPPINGS
+        >>> get_oui("cc.79.d7.dd.ee.ff")
+        'Cisco Systems, Inc'
         >>>
     """
-    normalized_mac = mac_normalize(mac)[0:6]
-    return
+    normalized_mac_prefix = mac_normalize(mac)[0:6]
+    oui_company = OUI_MAPPINGS.get(normalized_mac_prefix)
+
+    if not oui_company:
+        raise ValueError(f"There was no matching entry in OPUI_MAPPINGS for {normalized_mac_prefix}")
+
+    return oui_company
