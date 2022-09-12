@@ -2,8 +2,6 @@ import sys
 import re
 import json
 
-from Sandbox.p.p10 import OUI_MAPPINGS
-
 hex_re = r"^(?P<hex>[A-Fa-f0-9]{6})\s+\(.*\)[^a-zA-Z0-9]+(?P<company>.*)$"
 OUI_MAPPINGS = {}
 
@@ -17,5 +15,4 @@ if __name__ == "__main__":
                     OUI_MAPPINGS.update({group_regex_values.get("hex"): group_regex_values.get("company")})
 
     with open(sys.argv[1], "w") as oui_mappings:
-        oui_mappings.write("STUFF")
-    #        json.dump(OUI_MAPPINGS, oui_mappings, indent=4)
+        json.dump(OUI_MAPPINGS, oui_mappings, indent=4)
