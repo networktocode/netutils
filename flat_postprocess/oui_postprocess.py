@@ -12,7 +12,7 @@ if __name__ == "__main__":
             if re.search(hex_re, line):
                 group_regex_values = re.search(hex_re, line).groupdict()
                 if group_regex_values.get("hex") and group_regex_values.get("company"):
-                    OUI_MAPPINGS.update({group_regex_values.get("hex"): group_regex_values.get("company")})
+                    OUI_MAPPINGS.update({group_regex_values.get("hex").lower(): group_regex_values.get("company")})
 
     with open(sys.argv[1], "w") as oui_mappings:
         json.dump(OUI_MAPPINGS, oui_mappings, indent=4)
