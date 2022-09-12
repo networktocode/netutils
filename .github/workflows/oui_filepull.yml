@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - "oui_mapping"
+  schedule:
+    - cron: "15 12 13 * *"
 
 jobs:
   scheduled:
