@@ -16,4 +16,3 @@ if __name__ == "__main__":
 
     with open(sys.argv[1], "w") as oui_mappings:
         json.dump(OUI_MAPPINGS, oui_mappings, indent=4)
-        oui_mappings.write(",\n")
