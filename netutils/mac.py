@@ -117,7 +117,7 @@ def mac_type(mac: str) -> t.Optional[str]:
 
 @_valid_mac
 def mac_normalize(mac: str) -> str:
-    """Retuns the MAC address with only the address, and no special characters.
+    """Returns the MAC address with only the address, and no special characters.
 
     Args:
         mac: A MAC address in string format that matches one of the defined regex patterns.
@@ -136,3 +136,21 @@ def mac_normalize(mac: str) -> str:
         if char in mac:
             mac = mac.replace(char, "")
     return mac
+
+
+@_valid_mac
+def get_oui(mac: str) -> str:
+    """Returns the company name for a given mac as defined by the IEEE.
+
+    Args:
+        mac (str): A MAC address in string format that matches one of the defined regex patterns.
+
+    Returns:
+        str: The name of the company the mac is related to.
+
+    Example:
+        >>> from netutils.mac import mac_normalize
+        >>> mac_normalize("aa.bb.cc.dd.ee.ff")
+        'aabbccddeeff'
+        >>>
+    """
