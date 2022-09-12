@@ -22,4 +22,5 @@ jobs:
         uses: githubocto/flat@v3
         with:
           http_url: https://standards-oui.ieee.org
-          downloaded_filename: "test.txt"
+          downloaded_filename: ./netutils/oui_mappings.py
+          postprocess: ./oui_postprocessing.ts
