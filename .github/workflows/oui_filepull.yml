@@ -2,11 +2,8 @@
 name: "Flat"
 
 on:
-  push:
-    branches:
-      - "oui_mapping"
   schedule:
-    - cron: "15 12 13 * *"
+    - cron: "05 14 * * *"
 
 jobs:
   scheduled:
