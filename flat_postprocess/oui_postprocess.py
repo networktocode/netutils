@@ -7,7 +7,6 @@ HEX_RE = r"^(?P<hex>[A-Fa-f0-9]{6})\s+\(.*\)[^a-zA-Z0-9]+(?P<company>.*)$"
 OUI_MAPPINGS = {}
 
 if __name__ == "__main__":
-    print(f"argv: {sys.argv}")
     with open(sys.argv[1], "r", encoding="utf-8") as oui_file:
         for line in oui_file:
             if re.search(HEX_RE, line):
