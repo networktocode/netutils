@@ -1,3 +1,4 @@
+"""Python code used to postprocess Flat github action data related to OUI mappings."""
 import sys
 import re
 import json
