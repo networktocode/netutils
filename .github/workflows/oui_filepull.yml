@@ -3,7 +3,7 @@ name: "Flat"
 
 on:
   schedule:
-    - cron: "05 14 * * *"
+    - cron: "30 0 15 * *"
 
 jobs:
   scheduled:
