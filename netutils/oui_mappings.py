@@ -1,4 +1,5 @@
-{
+"""OUI mapping from hex code to company name."""
+OUI_MAPPINGS = {
     "002272": "American Micro-Fuel Device Corp.",
     "00d0ef": "IGT",
     "086195": "Rockwell Automation",
