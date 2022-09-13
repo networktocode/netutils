@@ -65,7 +65,7 @@ exclude = '''
     | dist
   )/
   | settings.py                # This is where you define files that should not be stylized by black
-  | netutils/oui_mappings.py   # the root of the project
+                               # the root of the project
 )
 '''
 

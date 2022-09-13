@@ -4,8 +4,7 @@ import re
 import typing as t
 from functools import wraps
 
-from .constants import MAC_CREATE, MAC_REGEX
-from oui_mappings import OUI_MAPPINGS
+from .constants import MAC_CREATE, MAC_REGEX, OUI_MAPPINGS
 
 
 def _valid_mac(func: t.Callable[..., t.Any]) -> t.Callable[..., t.Any]:

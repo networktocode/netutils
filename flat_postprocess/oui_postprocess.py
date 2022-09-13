@@ -16,6 +16,4 @@ if __name__ == "__main__":
                     OUI_MAPPINGS.update({group_regex_values.get("hex").lower(): group_regex_values.get("company")})
 
     with open(sys.argv[1], "w") as oui_mappings:
-        oui_mappings.write('"""OUI mapping from hex code to company name."""\n')
-        oui_mappings.write("OUI_MAPPINGS = ")
-        json.dump(OUI_MAPPINGS, oui_mappings, indent=4)
+        json.dump(OUI_MAPPINGS, oui_mappings, indent=2)
