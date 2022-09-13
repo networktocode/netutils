@@ -160,6 +160,6 @@ def get_oui(mac: str) -> str:
     oui_company = OUI_MAPPINGS.get(normalized_mac_prefix)
 
     if not oui_company:
-        raise ValueError(f"There was no matching entry in OPUI_MAPPINGS for {normalized_mac_prefix}")
+        raise ValueError(f"There was no matching entry in OUI_MAPPINGS for {normalized_mac_prefix}")
 
     return oui_company
