@@ -117,7 +117,7 @@ def mac_type(mac: str) -> t.Optional[str]:
 
 @_valid_mac
 def mac_normalize(mac: str) -> str:
-    """Returns the MAC address with only the address, and no special characters.
+    """Return the MAC address with only the address, and no special characters.
 
     Args:
         mac: A MAC address in string format that matches one of the defined regex patterns.
