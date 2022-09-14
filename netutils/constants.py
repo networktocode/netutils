@@ -1,6 +1,7 @@
 """Constant definitions used in project."""
 import json
 from os.path import dirname
+import typing
 from netutils import __file__ as netutils_file
 
 # Load the PROTOCOLS json file.
@@ -9,7 +10,7 @@ with open("/".join([dirname(netutils_file), "protocols.json"]), encoding="utf-8"
 
 # Load the oui_mappings json file.
 with open("/".join([dirname(netutils_file), "oui_mappings.json"]), encoding="utf-8") as fh:
-    OUI_MAPPINGS = json.loads(fh.read())
+    OUI_MAPPINGS: typing.Dict[str, str] = json.loads(fh.read())
 
 # This variable provides mapping for known interface variants, to the associated long form.
 BASE_INTERFACES = {

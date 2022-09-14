@@ -139,14 +139,14 @@ def mac_normalize(mac: str) -> str:
 
 
 @_valid_mac
-def get_oui(mac: str) -> t.Optional[str]:
+def get_oui(mac: str) -> str:
     """Returns the company name for a given mac as defined by the IEEE.
 
     Args:
-        mac (str): A MAC address in string format that matches one of the defined regex patterns.
+        mac: A MAC address in string format that matches one of the defined regex patterns.
 
     Returns:
-        str: The name of the company the mac is related to.
+        The name of the company the mac is related to.
 
     Example:
         >>> from netutils.mac import get_oui
@@ -161,4 +161,4 @@ def get_oui(mac: str) -> t.Optional[str]:
     if not oui_company:
         raise ValueError(f"There was no matching entry in OUI_MAPPINGS for {normalized_mac_prefix}")
 
-    return oui_company  # type: ignore
+    return oui_company
