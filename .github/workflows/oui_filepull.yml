@@ -1,7 +1,7 @@
 ---
 name: "Flat"
 
-on:
+on:    # yamllint disable-line rule:truthy
   schedule:
     - cron: "30 0 15 * *"
 
