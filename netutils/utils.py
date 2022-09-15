@@ -6,14 +6,6 @@ from importlib import import_module
 
 from netutils.lib_mapper import NAPALM_LIB_MAPPER
 
-try:
-    from napalm import get_network_driver
-    from napalm.base.exceptions import ModuleImportError
-except ImportError:
-    HAS_NAPALM = False
-else:
-    HAS_NAPALM = True
-
 _JINJA2_FUNCTION_MAPPINGS = {
     "asn_to_int": "asn.asn_to_int",
     "name_to_bits": "bandwidth.name_to_bits",
@@ -75,6 +67,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "delimiter_change": "banner.delimiter_change",
     "uptime_seconds_to_string": "time.uptime_seconds_to_string",
     "uptime_string_to_seconds": "time.uptime_string_to_seconds",
+    "get_napalm_getters": "utils.get_napalm_getters",
 }
 
 
@@ -119,7 +112,10 @@ def get_napalm_getters() -> t.Dict[str, t.Dict[str, bool]]:
         >>> napalm_getters["eos"]["get_ipv6_neighbors_table"]
         >>> False
     """
-    if HAS_NAPALM:
+    try:
+        from napalm import get_network_driver
+        from napalm.base.exceptions import ModuleImportError
+
         napalm_dict = {}
         oses = NAPALM_LIB_MAPPER.keys()
         for my_os in oses:
@@ -133,4 +129,5 @@ def get_napalm_getters() -> t.Dict[str, t.Dict[str, bool]]:
                     state = False if getter[1].__module__ == "napalm.base.base" else True
                     napalm_dict[my_os][getter[0]] = state
         return napalm_dict
-    raise ImportError("Napalm must be install for this function to operate.")
+    except ImportError as imp_err:
+        raise ImportError("Napalm must be install for this function to operate.") from imp_err

@@ -27,11 +27,10 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = "^3.7"
 
 [tool.poetry.dev-dependencies]
 bandit = "*"
-black = {version="^21.10b0", python="^3.6.2"}
 coverage = "*"
 invoke = "*"
 flake8 = "*"
@@ -45,6 +44,7 @@ sphinx-rtd-theme = "*"
 toml = "*"
 yamllint = "*"
 mypy = "^0.961"
+black = "*"
 
 [tool.black]
 line-length = 120
