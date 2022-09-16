@@ -3,16 +3,11 @@ import os
 from glob import glob
 from importlib import import_module
 from inspect import getmembers, isfunction
-from unittest import mock
 
 import pytest
 from jinja2 import Environment, select_autoescape
 from jinja2.loaders import FileSystemLoader
-from netutils.utils import (
-    _JINJA2_FUNCTION_MAPPINGS,
-    get_napalm_getters,
-    jinja2_convenience_function,
-)
+from netutils.utils import _JINJA2_FUNCTION_MAPPINGS, jinja2_convenience_function
 
 _EXCLUDED_FILES = [
     "__init__",
@@ -82,31 +77,3 @@ def test_jinja2_template():
     template = env.get_template("test.j2")
     result = template.render()
     assert result == "192.168.0.0 + 200 = 192.168.0.200"
-
-
-def test_get_napalm_getters_napalm_not_installed():
-    with pytest.raises(ImportError) as exc:
-        get_napalm_getters()
-    assert "Napalm must be install for this function to operate." == str(exc.value)
-
-
-def test_get_napalm_getters_napalm_installed():
-    with mock.patch.dict(
-        "sys.modules", {"napalm": mock.Mock(), "napalm.base": mock.Mock(), "napalm.base.exceptions": mock.Mock()}
-    ):
-        napalm_getters = get_napalm_getters()
-        assert napalm_getters == {
-            "asa": {},
-            "cisco_wlc_ssh": {},
-            "eos": {},
-            "fortios": {},
-            "huawei": {},
-            "ios": {},
-            "iosxr": {},
-            "junos": {},
-            "nxos": {},
-            "nxos_ssh": {},
-            "panos": {},
-            "sros": {},
-            "vyos": {},
-        }

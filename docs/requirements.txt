@@ -1,5 +1,5 @@
-m2r2==0.2.7
-mistune==0.8.4
+m2r2
+mistune
 Sphinx
 toml
 sphinx-rtd-theme

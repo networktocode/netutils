@@ -1,10 +1,7 @@
 """Utilities for the netutils library."""
 
-import inspect
 import typing as t
 from importlib import import_module
-
-from netutils.lib_mapper import NAPALM_LIB_MAPPER
 
 _JINJA2_FUNCTION_MAPPINGS = {
     "asn_to_int": "asn.asn_to_int",
@@ -67,7 +64,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "delimiter_change": "banner.delimiter_change",
     "uptime_seconds_to_string": "time.uptime_seconds_to_string",
     "uptime_string_to_seconds": "time.uptime_string_to_seconds",
-    "get_napalm_getters": "utils.get_napalm_getters",
+    "get_napalm_getters": "lib_helpers.get_napalm_getters",
 }
 
 
@@ -93,41 +90,3 @@ def jinja2_convenience_function() -> t.Dict[str, t.Callable[..., t.Any]]:
         function_object = getattr(imported_module, function_name)
         result[jinja2_function_name] = function_object
     return result
-
-
-def get_napalm_getters() -> t.Dict[str, t.Dict[str, bool]]:
-    """Utility to return a dictionary of napalm getters based on install napalm version.
-
-    Returns:
-        Keys are OS and values are a dictionary of supported napalm getters.
-
-    Raises:
-        ImportError: If optional dependency Napalm is not installed.
-
-    Example:
-        >>> from netutils.utils import get_napalm_getters
-        >>> napalm_getters = get_napalm_getters()
-        >>> napalm_getters["eos"]["get_arp_table"]
-        >>> True
-        >>> napalm_getters["eos"]["get_ipv6_neighbors_table"]
-        >>> False
-    """
-    try:
-        from napalm import get_network_driver
-        from napalm.base.exceptions import ModuleImportError
-
-        napalm_dict = {}
-        oses = NAPALM_LIB_MAPPER.keys()
-        for my_os in oses:
-            try:
-                get_network_driver(my_os)
-            except ModuleImportError:
-                continue
-            napalm_dict[my_os] = {}
-            for getter in inspect.getmembers(get_network_driver(my_os), predicate=inspect.isfunction):
-                if getter[0].startswith("get_"):
-                    state = False if getter[1].__module__ == "napalm.base.base" else True
-                    napalm_dict[my_os][getter[0]] = state
-        return napalm_dict
-    except ImportError as imp_err:
-        raise ImportError("Napalm must be install for this function to operate.") from imp_err

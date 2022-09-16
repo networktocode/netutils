@@ -39,12 +39,13 @@ pytest = "*"
 pyyaml = "*"
 pydocstyle = "*"
 m2r2 = "*"
-sphinx = "*"
 sphinx-rtd-theme = "*"
 toml = "*"
 yamllint = "*"
 mypy = "^0.961"
 black = "*"
+napalm = "^4.0.0"
+Sphinx = "^4.0.2"
 
 [tool.black]
 line-length = 120

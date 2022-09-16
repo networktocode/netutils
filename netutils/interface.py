@@ -275,7 +275,6 @@ class CharacterClass(ABC):
     @abstractmethod
     def weight(self) -> int:
         """Weight property."""
-        ...
 
     @property
     def terminal(self) -> bool:
