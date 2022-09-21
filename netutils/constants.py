@@ -1,7 +1,6 @@
 """Constant definitions used in project."""
 import json
 from os.path import dirname
-import typing
 from netutils import __file__ as netutils_file
 
 # Load the PROTOCOLS json file.
