@@ -4,7 +4,7 @@ name: "Flat"
 on: # yamllint disable-line rule:truthy
   push:
     branches:
-      - oui_mapping
+      - "oui_mapping"
   # pull_request:
   #   branches:
   #     - main
