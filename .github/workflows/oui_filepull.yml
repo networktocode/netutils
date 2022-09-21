@@ -1,9 +1,13 @@
 ---
 name: "Flat"
 
-on:    # yamllint disable-line rule:truthy
-  schedule:
-    - cron: "30 0 15 * *"
+on: # yamllint disable-line rule:truthy
+  push:
+    branches:
+      - oui_mapping
+  # pull_request:
+  #   branches:
+  #     - main
 
 jobs:
   scheduled:
