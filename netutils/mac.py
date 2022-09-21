@@ -138,7 +138,7 @@ def mac_normalize(mac: str) -> str:
     return mac
 
 
-@_valid_mac
+# @_valid_mac
 def get_oui(mac: str) -> str:
     """Returns the company name for a given mac as defined by the IEEE.
 
@@ -150,17 +150,17 @@ def get_oui(mac: str) -> str:
 
     Example:
         >>> from netutils.mac import get_oui
-        >>> from netutils.constants import OUI_MAPPINGS
+        >>> from netutils.oui_mappings import OUI_MAPPINGS
         >>> get_oui("cc.79.d7.dd.ee.ff")
         'Cisco Systems, Inc'
         >>>
     """
-    from oui_mappings import OUI_MAPPINGS
+    from netutils.oui_mappings import OUI_MAPPINGS
 
     normalized_mac_prefix = mac_normalize(mac)[0:6]
     oui_company = OUI_MAPPINGS.get(normalized_mac_prefix)
 
     if not oui_company:
-        raise ValueError(f"There was no matching entry in OUI_MAPPINGS for {normalized_mac_prefix}")
+        raise ValueError(f"There was no matching entry in OUI_MAPPINGS for {normalized_mac_prefix}.")
 
     return oui_company

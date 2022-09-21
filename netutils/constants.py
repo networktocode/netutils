@@ -8,10 +8,6 @@ from netutils import __file__ as netutils_file
 with open("/".join([dirname(netutils_file), "protocols.json"]), encoding="utf-8") as fh:
     PROTOCOLS = json.loads(fh.read())
 
-# Load the oui_mappings json file.
-with open("/".join([dirname(netutils_file), "oui_mappings.json"]), encoding="utf-8") as fh:
-    OUI_MAPPINGS: typing.Dict[str, str] = json.loads(fh.read())
-
 # This variable provides mapping for known interface variants, to the associated long form.
 BASE_INTERFACES = {
     "ATM": "ATM",
