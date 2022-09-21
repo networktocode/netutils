@@ -5,9 +5,6 @@ on: # yamllint disable-line rule:truthy
   pull_request:
     branches:
       - "main"
-  push:
-    branches:
-      - "oui_mapping"
 
 jobs:
   scheduled:
