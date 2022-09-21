@@ -1,4 +1,5 @@
 """Dictionary object to store OUI information."""
+import typing
 
 OUI_MAPPINGS: typing.Dict[str, str] = {
     "002272": "American Micro-Fuel Device Corp.",
