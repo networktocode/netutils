@@ -1,6 +1,6 @@
 """Dictionary object to store OUI information."""
 
-OUI_MAPPINGS = {
+OUI_MAPPINGS: typing.Dict[str, str] = {
     "002272": "American Micro-Fuel Device Corp.",
     "00d0ef": "IGT",
     "086195": "Rockwell Automation",
