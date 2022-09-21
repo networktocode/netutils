@@ -155,7 +155,7 @@ def get_oui(mac: str) -> str:
         'Cisco Systems, Inc'
         >>>
     """
-    from netutils.oui_mappings import OUI_MAPPINGS
+    from netutils.oui_mappings import OUI_MAPPINGS  # pylint: disable=import-outside-toplevel
 
     normalized_mac_prefix = mac_normalize(mac)[0:6]
     oui_company = OUI_MAPPINGS.get(normalized_mac_prefix)
