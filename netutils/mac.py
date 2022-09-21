@@ -155,6 +155,8 @@ def get_oui(mac: str) -> str:
         'Cisco Systems, Inc'
         >>>
     """
+    from oui_mappings import OUI_MAPPINGS
+
     normalized_mac_prefix = mac_normalize(mac)[0:6]
     oui_company = OUI_MAPPINGS.get(normalized_mac_prefix)
 

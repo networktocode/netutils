@@ -16,5 +16,7 @@ if __name__ == "__main__":
 
     with open(sys.argv[1], "w", encoding="utf-8") as oui_mappings:
         oui_mappings.write('"""Dictionary object to store OUI information."""\n\n')
-        oui_mappings.write("OUI_MAPPINGS = ")
-        json.dump(OUI_MAPPINGS, oui_mappings, indent=2)
+        oui_mappings.write("OUI_MAPPINGS = {\n")
+        for mac, company in OUI_MAPPINGS:
+            oui_mappings.write(f'    "{mac}":"{company}",\n')
+        oui_mappings.write("}\n")
