@@ -15,7 +15,7 @@ if __name__ == "__main__":
 
     with open(sys.argv[1], "w", encoding="utf-8") as oui_mappings:
         oui_mappings.write('"""Dictionary object to store OUI information."""\n')
-        oui_mappings.write("# pylint: disable=too-many-lines")
+        oui_mappings.write("# pylint: disable=too-many-lines\n")
         oui_mappings.write("import typing\n\n")
         oui_mappings.write("OUI_MAPPINGS: typing.Dict[str, str] = {\n")
         for mac, company in OUI_MAPPINGS.items():
