@@ -1,5 +1,6 @@
 """Dictionary object to store OUI information."""
-# pylint: disable=too-many-linesimport typing
+# pylint: disable=too-many-lines
+import typing
 
 OUI_MAPPINGS: typing.Dict[str, str] = {
     "002272": "American Micro-Fuel Device Corp.",
