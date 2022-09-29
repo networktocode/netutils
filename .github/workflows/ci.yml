@@ -116,7 +116,7 @@ jobs:
           build-args: |
             PYTHON_VER=${{ env.PYTHON_VER }}
             NAPALM_VER=${{ env.NAPALM_VER }}
-            NAPALM_PACKAGE=${{ env.NAPALM_PACKAGE }} 
+            NAPALM_PACKAGE=${{ env.NAPALM_PACKAGE }}
     needs:
       - "bandit"
       - "mypy"
@@ -156,7 +156,7 @@ jobs:
           build-args: |
             PYTHON_VER=${{ env.PYTHON_VER }}
             NAPALM_VER=${{ env.NAPALM_VER }}
-            NAPALM_PACKAGE=${{ env.NAPALM_PACKAGE }} 
+            NAPALM_PACKAGE=${{ env.NAPALM_PACKAGE }}
       - name: "Debug: Show docker images"
         run: "docker image ls"
       - name: "Linting: Pylint"
@@ -196,7 +196,7 @@ jobs:
           build-args: |
             PYTHON_VER=${{ env.PYTHON_VER }}
             NAPALM_VER=${{ env.NAPALM_VER }}
-            NAPALM_PACKAGE=${{ env.NAPALM_PACKAGE }} 
+            NAPALM_PACKAGE=${{ env.NAPALM_PACKAGE }}
       - name: "Debug: Show docker images"
         run: "docker image ls"
       - name: "Run Tests"
