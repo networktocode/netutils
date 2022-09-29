@@ -32,6 +32,9 @@ TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 
 # Can be set to a separate Python version to be used for launching or building image
 PYTHON_VER = os.getenv("PYTHON_VER", "3.9")
+# Can be set to a separate Napalm version to be used for launching or building image
+NAPALM_VER = os.getenv("NAPALM_VER", "4.0.0")
+NAPALM_PACKAGE = os.getenv("NAPALM_PACKAGE", "napalm")
 # Name of the docker image/image
 IMAGE_NAME = os.getenv("IMAGE_NAME", TOOL_CONFIG["name"])
 # Tag for the image
@@ -46,29 +49,49 @@ PROJECT_NAME = PYPROJECT_CONFIG["tool"]["poetry"]["name"]
 PROJECT_VERSION = PYPROJECT_CONFIG["tool"]["poetry"]["version"]
 
 
-def run_cmd(context, exec_cmd, local=INVOKE_LOCAL):
+def _get_image_name(with_napalm=False):
+    """Gets the name of the container image to use.
+
+    Args:
+        with_napalm (bool): Get name of container image with Napalm installed.
+
+    Returns:
+        str: Name of container image. Includes tag.
+    """
+    if with_napalm and not os.getenv("GITHUB_ACTION", None):
+        name = f"{IMAGE_NAME}:{IMAGE_VER}-{NAPALM_PACKAGE}{NAPALM_VER}"
+    else:
+        name = f"{IMAGE_NAME}:{IMAGE_VER}"
+
+    return name
+
+
+def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, with_napalm=False):
     """Wrapper to run the invoke task commands.
 
     Args:
         context ([invoke.task]): Invoke task object.
         exec_cmd ([str]): Command to run.
         local (bool): Define as `True` to execute locally
+        with_napalm (bool): Build a container with Napalm installed
 
     Returns:
         result (obj): Contains Invoke result from running task.
     """
+    name = _get_image_name(with_napalm)
+
     if is_truthy(local):
         print(f"LOCAL - Running command {exec_cmd}")
         result = context.run(exec_cmd, pty=True)
     else:
-        print(f"DOCKER - Running command: {exec_cmd} container: {IMAGE_NAME}:{IMAGE_VER}")
-        result = context.run(f"docker run -it -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} sh -c '{exec_cmd}'", pty=True)
+        print(f"DOCKER - Running command: {exec_cmd} container: {name}")
+        result = context.run(f"docker run -it -v {PWD}:/local {name} sh -c '{exec_cmd}'", pty=True)
 
     return result
 
 
 @task
-def build(context, nocache=False, forcerm=False, hide=False):  # pylint: disable=too-many-arguments
+def build(context, nocache=False, forcerm=False, hide=False, with_napalm=False):  # pylint: disable=too-many-arguments
     """Build a Docker image.
 
     Args:
@@ -76,10 +99,21 @@ def build(context, nocache=False, forcerm=False, hide=False):  # pylint: disable
         nocache (bool): Do not use cache when building the image
         forcerm (bool): Always remove intermediate containers
         hide (bool): Hide output of Docker image build
+        with_napalm (bool): Build a container with Napalm installed
     """
-    print(f"Building image {IMAGE_NAME}:{IMAGE_VER}")
-    command = f"docker build --tag {IMAGE_NAME}:{IMAGE_VER} --build-arg PYTHON_VER={PYTHON_VER} -f Dockerfile ."
+    name = _get_image_name(with_napalm)
+    env = {"PYTHON_VER": PYTHON_VER}
 
+    if with_napalm:
+        env["NAPALM_VER"] = NAPALM_VER
+        env["NAPALM_PACKAGE"] = NAPALM_PACKAGE
+        command = f"docker build --tag {name} --target with_napalm"
+        command += f" --build-arg NAPALM_VER={NAPALM_VER} --build-arg NAPALM_PACKAGE={NAPALM_PACKAGE}"
+
+    else:
+        command = command = f"docker build --tag {name} --target base"
+
+    command += f" --build-arg PYTHON_VER={PYTHON_VER} -f Dockerfile ."
     if nocache:
         command += " --no-cache"
     if forcerm:
@@ -91,15 +125,18 @@ def build(context, nocache=False, forcerm=False, hide=False):  # pylint: disable
 
 
 @task
-def clean(context):
+def clean(context, with_napalm=False):
     """Remove the project specific image.
 
     Args:
         context (obj): Used to run specific commands
+        with_napalm (bool): Build a container with Napalm installed
     """
-    print(f"Attempting to forcefully remove image {IMAGE_NAME}:{IMAGE_VER}")
-    context.run(f"docker rmi {IMAGE_NAME}:{IMAGE_VER} --force")
-    print(f"Successfully removed image {IMAGE_NAME}:{IMAGE_VER}")
+    name = _get_image_name(with_napalm)
+
+    print(f"Attempting to forcefully remove image {name}")
+    context.run(f"docker rmi {name} --force")
+    print(f"Successfully removed image {name}")
 
 
 @task
@@ -135,7 +172,22 @@ def pytest(context, local=INVOKE_LOCAL):
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
-    exec_cmd = "pytest -vv --doctest-modules netutils/ && coverage run --source=netutils -m pytest && coverage report"
+    exec_cmd = "pytest -vv --doctest-modules netutils/ && coverage run --source=netutils -m pytest --ignore='tests/unit/test_lib_helpers_no_napalm.py' && coverage report"
+    run_cmd(context, exec_cmd, local, with_napalm=True)
+
+
+@task
+def pytest_without_napalm(context, local=INVOKE_LOCAL):
+    """This will run pytest only to assert the correct errors are raised when pytest is not installed.
+
+    This must be run inside of a container or environment in which napalm is not installed, otherwise the test case
+    assertion will fail.
+
+    Args:
+        context (obj): Used to run specific commands
+        local (bool): Define as `True` to execute locally
+    """
+    exec_cmd = 'find tests/ -name "test_lib_helpers_no_napalm.py" | xargs pytest -vv'
     run_cmd(context, exec_cmd, local)
 
 
@@ -250,6 +302,7 @@ def tests(context, local=INVOKE_LOCAL):
     bandit(context, local)
     mypy(context, local)
     pytest(context, local)
+    pytest_without_napalm(context, local)
 
     print("All tests have passed!")
 
