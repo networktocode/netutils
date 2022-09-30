@@ -108,15 +108,13 @@ jobs:
           builder: "${{ steps.buildx.outputs.name }}"
           context: "./"
           push: false
-          target: "with_napalm"
+          target: "with_optionals"
           tags: "${{ env.IMAGE_NAME }}:${{ env.IMAGE_VER }}"
           file: "./Dockerfile"
           cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
           cache-to: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
           build-args: |
             PYTHON_VER=${{ env.PYTHON_VER }}
-            NAPALM_VER=${{ env.NAPALM_VER }}
-            NAPALM_PACKAGE=${{ env.NAPALM_PACKAGE }}
     needs:
       - "bandit"
       - "mypy"
@@ -148,15 +146,13 @@ jobs:
           context: "./"
           push: false
           load: true
-          target: "with_napalm"
+          target: "with_optionals"
           tags: "${{ env.IMAGE_NAME }}:${{ env.IMAGE_VER }}"
           file: "./Dockerfile"
           cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
           cache-to: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
           build-args: |
             PYTHON_VER=${{ env.PYTHON_VER }}
-            NAPALM_VER=${{ env.NAPALM_VER }}
-            NAPALM_PACKAGE=${{ env.NAPALM_PACKAGE }}
       - name: "Debug: Show docker images"
         run: "docker image ls"
       - name: "Linting: Pylint"
@@ -188,15 +184,13 @@ jobs:
           context: "./"
           push: false
           load: true
-          target: "with_napalm"
+          target: "with_optionals"
           tags: "${{ env.IMAGE_NAME }}:${{ env.IMAGE_VER }}"
           file: "./Dockerfile"
           cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
           cache-to: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
           build-args: |
             PYTHON_VER=${{ env.PYTHON_VER }}
-            NAPALM_VER=${{ env.NAPALM_VER }}
-            NAPALM_PACKAGE=${{ env.NAPALM_PACKAGE }}
       - name: "Debug: Show docker images"
         run: "docker image ls"
       - name: "Run Tests"

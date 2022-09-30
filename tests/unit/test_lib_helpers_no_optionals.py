@@ -1,4 +1,4 @@
-"""Test for the lib_helpers definitions failures when napalm not installed."""
+"""Test for the lib_helpers definitions failures when optionals not installed."""
 
 import pytest
 from netutils.lib_helpers import get_napalm_getters

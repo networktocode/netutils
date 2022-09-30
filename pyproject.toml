@@ -30,7 +30,7 @@ python = "^3.7"
 napalm = {version = "^4.0.0", optional = true}
 
 [tool.poetry.extras]
-napalm = ["napalm"]
+optionals = ["napalm"]
 
 [tool.poetry.dev-dependencies]
 bandit = "*"
