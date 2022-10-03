@@ -92,6 +92,7 @@ def mac_to_int(mac: str) -> int:
 
 
 @_valid_mac
+@profile
 def mac_type(mac: str) -> t.Optional[str]:
     """Retuns the "type" of MAC address, as defined by the regex pattern names.
 
@@ -138,7 +139,7 @@ def mac_normalize(mac: str) -> str:
     return mac
 
 
-# @_valid_mac
+@_valid_mac
 def get_oui(mac: str) -> str:
     """Returns the company name for a given mac as defined by the IEEE.
 
