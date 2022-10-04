@@ -1,8 +1,9 @@
 """Test for the sphinx documentation."""
-import subprocess
 import glob
 import os
 import re
+import subprocess
+
 import pytest
 
 UNDOCUMENTED_FILES = ["__init__", "constants", "lib_mapper", "protocol_mapper", "variables"]
@@ -25,7 +26,7 @@ START_END_LINES = [
     {
         "name": "installation",
         "start_value": "Option 1: Install from PyPI.\n",
-        "end_value": "```\n",
+        "end_value": "Installing the optional dependencies is only needed when the user needs access to the functions using the dependencies. As an example `get_napalm_getters()` which will provide a mapping of available NAPALM getters based on currently installed NAPALM libraries, if NAPALM is not installed the function simply raises an exception and warns the user that the library is not installed.\n",
     },
     {
         "name": "examples",

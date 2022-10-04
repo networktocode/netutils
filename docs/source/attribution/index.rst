@@ -3,5 +3,5 @@ Attribution
 ###########
 
 .. mdinclude:: ../../../README.md
-   :start-line: 108
-   :end-line: 145
+   :start-line: 120
+   :end-line: 157

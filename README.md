@@ -26,6 +26,7 @@ Functions are grouped with like functions, such as IP or MAC address based funct
 * DNS - Provides the ability to work with DNS, such as validating that a FQDN is resolvable.
 * Interface - Provides the ability to work with interface names, expanding, abbreviating, and splitting the names.
 * IP Address - Provides the ability to work with IP addresses, primarily exposing Python `ipaddress` functionality.
+* Library Helpers - Provides helpers to pull useful information, e.g. NAPALM getters.
 * Library Mapper - Provides mappings in expected vendor names between Netmiko, NAPALM, pyntc, ntc-templates, pyats, and scrapli.
 * MAC Address - Provides the ability to work with MAC addresses such as validating or converting to integer.
 * Password - Provides the ability to compare and encrypt common password schemas such as type5 and type7 Cisco passwords.
@@ -43,11 +44,22 @@ Option 1: Install from PyPI.
 $ pip install netutils
 ```
 
-Option 2: Install from a GitHub branch, such as develop as shown below.
+Option 2: Install from PyPI with optional requirements.
+
+```bash
+$ pip install netutils[napalm]
+```
+
+Option 3: Install from a GitHub branch, such as develop as shown below.
 
 ```bash
 $ pip install git+https://github.com/networktocode/netutils.git@develop
 ```
+
+## Optional Dependencies
+One of the requirements of this library is to avoid having dependencies; however, including a few optional dependencies in an opt in fashion allows `netutils` to remain lean while offering some powerful addons.
+
+Installing the optional dependencies is only needed when the user needs access to the functions using the dependencies. As an example `get_napalm_getters()` which will provide a mapping of available NAPALM getters based on currently installed NAPALM libraries, if NAPALM is not installed the function simply raises an exception and warns the user that the library is not installed.
 
 # Examples
 
@@ -149,7 +161,7 @@ In building out the time conversion, the regex patterns are based on NAPALM impl
 Pull requests are welcomed and automatically built and tested against multiple versions of Python through TravisCI.
 Except for unit tests, testing is only supported on Python 3.7.
 
-The project is packaged with a light development environment based on `docker-compose` to help with the local development of the project and to run tests within TravisCI.
+The project is packaged with a light development environment based on `docker-compose` to help with the local development of the project and to run tests within GitHub Actions.
 
 The project is following Network to Code software development guidelines and are leveraging the following:
 - Black, Pylint, Bandit, Mypy, flake8, and pydocstyle for Python linting and formatting.
@@ -223,6 +235,7 @@ Each command can be executed with `invoke <command>`. Each command also has its 
   pylint             Run pylint code analysis.
   pydocstyle         Run pydocstyle to validate docstring formatting adheres to NTC defined standards.
   pytest             Run pytest for the specified name and Python version.
+  pytest-without-optionals   This will run pytest only to assert the correct errors are raised when optional dependencies are not installed.
   tests              Run all tests for the specified name and Python version.
   yamllint           Run yamllint to validate formatting adheres to NTC defined YAML standards.
 ```
@@ -232,4 +245,3 @@ Each command can be executed with `invoke <command>`. Each command also has its 
 Please see [the documentation](https://netutils.readthedocs.io/) for detailed documentation on how to use netutils. For any additional questions or
 comments, feel free to swing by the [Network to Code slack channel](https://networktocode.slack.com/) (channel #networktocode).
 Sign up [here](http://slack.networktocode.com/)
-
