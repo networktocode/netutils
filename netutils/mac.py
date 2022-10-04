@@ -92,7 +92,6 @@ def mac_to_int(mac: str) -> int:
 
 
 @_valid_mac
-@profile
 def mac_type(mac: str) -> t.Optional[str]:
     """Retuns the "type" of MAC address, as defined by the regex pattern names.
 
