@@ -49,6 +49,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "mac_to_int": "mac.mac_to_int",
     "mac_type": "mac.mac_type",
     "mac_normalize": "mac.mac_normalize",
+    "get_oui": "mac.get_oui",
     "compare_type5": "password.compare_type5",
     "compare_type7": "password.compare_type7",
     "decrypt_type7": "password.decrypt_type7",

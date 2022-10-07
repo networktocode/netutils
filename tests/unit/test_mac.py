@@ -159,6 +159,14 @@ MAC_TO_INT = [
     },
 ]
 
+OUI = [
+    {"sent": {"mac": "64.b2.1d.aa.bb.cc"}, "received": "Chengdu Phycom Tech Co., Ltd."},
+    {"sent": {"mac": "68.db.f5.ff.32.44"}, "received": "Amazon Technologies Inc."},
+    {"sent": {"mac": "98e8facc87af"}, "received": "Nintendo Co.,Ltd"},
+    {"sent": {"mac": "4c:24:98:68:77:ff"}, "received": "Texas Instruments"},
+    {"sent": {"mac": "c8-aa-cc-33-54-67"}, "received": "Private"},
+]
+
 
 @pytest.mark.parametrize("data", IS_VALID_MAC)
 def test_is_valid_mac(data):
@@ -193,3 +201,13 @@ def test_to_list_failure():
 def test_to_format_failure():
     with pytest.raises(ValueError, match=r"An invalid mac format was provided in"):
         mac.mac_to_format("aa.bb.cc.dd.ee.ff", "NON_FORMAT")
+
+
+@pytest.mark.parametrize("data", OUI)
+def test_get_oui(data):
+    assert mac.get_oui(**data["sent"]) == data["received"]
+
+
+def test_get_oui_failure():
+    with pytest.raises(ValueError, match=r"There was no matching entry in OUI_MAPPINGS for ffffff"):
+        mac.get_oui("ff-ff-ff-aa-56-67")
