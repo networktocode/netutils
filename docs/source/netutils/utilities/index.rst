@@ -12,7 +12,7 @@ Here is the current folder structure.
 
     .
     ├── jinja2_environment.py
-    └── templates
+    ├── templates
     └── test.j2
 
 Below is the code in the `test.j2` file.
@@ -114,3 +114,14 @@ When you run `jinja2_environment.py` the output will be:
 .. code-block:: python
 
     The version of 192.168.0.1/24 is IPv4.
+
+In Ansible, one can add with the following code by adding to a folder called `filter_plugins` in a file called `nutils.py` as an example.
+
+.. code-block:: python
+
+    from netutils.utils import jinja2_convenience_function
+
+    class FilterModule(object):
+
+        def filters(self):
+            return jinja2_convenience_function()
