@@ -14,7 +14,7 @@ def fqdn_to_ip(hostname: str) -> str:
     Returns:
         The IP Address of a valid FQDN.
 
-    Example:
+    Examples:
         >>> from netutils.dns import fqdn_to_ip
         >>> from netutils.ip import is_ip
         >>> is_ip(fqdn_to_ip("google.com"))
@@ -40,7 +40,7 @@ def is_fqdn_resolvable(hostname: str) -> bool:
     Returns:
         bool: The result as to whether or not the domain was valid.
 
-    Example:
+    Examples:
         >>> from netutils.dns import is_fqdn_resolvable
         >>> is_fqdn_resolvable("google.com")
         True

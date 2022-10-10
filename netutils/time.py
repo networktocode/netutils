@@ -14,7 +14,7 @@ def uptime_seconds_to_string(uptime_seconds: int) -> str:
     Returns:
         Uptime in string format.
 
-    Example:
+    Examples:
         >>> from netutils.time import uptime_seconds_to_string
         >>> uptime_seconds_to_string(7250)
         '2 hours, 50 seconds'
@@ -40,7 +40,7 @@ def uptime_string_to_seconds(uptime_string: str) -> int:
     Returns:
         Uptime string converted to seconds.
 
-    Example:
+    Examples:
         >>> from netutils.time import uptime_string_to_seconds
         >>> uptime_string_to_seconds("58 minutes")
         3480

@@ -73,7 +73,7 @@ def jinja2_convenience_function() -> t.Dict[str, t.Callable[..., t.Any]]:
     Returns:
         Keys are the function names for the Jinja2 filter and values are the function objects.
 
-    Example:
+    Examples:
         >>> from netutils.utils import jinja2_convenience_function
         >>> function_mappings = jinja2_convenience_function()
         >>> function_mappings["get_first_usable"]("192.168.0.0/24")

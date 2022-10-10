@@ -33,7 +33,7 @@ def is_valid_mac(mac: str) -> bool:
     Returns:
         The result as to whether or not the string is a valid MAC address.
 
-    Example:
+    Examples:
         >>> from netutils.mac import is_valid_mac
         >>> is_valid_mac("aa.bb.cc.dd.ee.ff")
         True
@@ -58,7 +58,7 @@ def mac_to_format(mac: str, frmt: str = "MAC_NO_SPECIAL") -> str:
     Returns:
         A MAC address in the specified format.
 
-    Example:
+    Examples:
         >>> from netutils.mac import mac_to_format
         >>> mac_to_format("aa.bb.cc.dd.ee.ff", "MAC_DASH_FOUR")
         'aabb-ccdd-eeff'
@@ -82,7 +82,7 @@ def mac_to_int(mac: str) -> int:
     Returns:
         The valid MAC address converted to an integer.
 
-    Example:
+    Examples:
         >>> from netutils.mac import mac_to_int
         >>> mac_to_int("aa.bb.cc.dd.ee.ff")
         187723572702975
@@ -101,7 +101,7 @@ def mac_type(mac: str) -> t.Optional[str]:
     Returns:
         The regex pattern type of the MAC address.
 
-    Example:
+    Examples:
         >>> from netutils.mac import mac_type
         >>> mac_type("aa.bb.cc.dd.ee.ff")
         'MAC_DOT_TWO'
@@ -125,7 +125,7 @@ def mac_normalize(mac: str) -> str:
     Returns:
         The MAC address with no special characters.
 
-    Example:
+    Examples:
         >>> from netutils.mac import mac_normalize
         >>> mac_normalize("aa.bb.cc.dd.ee.ff")
         'aabbccddeeff'
@@ -148,7 +148,7 @@ def get_oui(mac: str) -> str:
     Returns:
         The name of the company the mac is related to.
 
-    Example:
+    Examples:
         >>> from netutils.mac import get_oui
         >>> from netutils.oui_mappings import OUI_MAPPINGS
         >>> get_oui("cc.79.d7.dd.ee.ff")

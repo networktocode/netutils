@@ -1,9 +1,0 @@
-.. raw:: html
-
-	<table border="1" class="docutils">
-		{% for lib_name in lib_names %}<th>{{lib_name|upper}}</th>{% endfor %}
-		{% for specific_driver, normalized_driver in mappings.items() %}
-		<tr>
-			<td>{{ specific_driver }}</td><td>{{ normalized_driver }}</td>
-		</tr>{% endfor %}
-	</table>
