@@ -59,7 +59,7 @@ There are a series of considerations documented below, when developing a new par
     - `BaseSpaceConfigParser` is for Cisco IOS-like configurations.
     - `BaseBraceConfigParser` is for JUNOS-like configurations that use curly braces.
 - Create the class name in the format of `{os_name.title()}ConfigParser`.
-    - The class's `__init__` method must keep true to the signature or `__init__(self, config)`.
+    - The classes `__init__` method must keep true to the signature or `__init__(self, config)`.
     - The class must provide a `self.config_lines` that is a list of `ConfigLine` named tuples.
 - Build tests for the `tests/unit/mock/config/compliance/{os_name}/*` and `tests/unit/mock/config/parser/{os_name}/*`.
 - Add to `netutils/config/compliance.py` the `parser_map`, that maps the name of the parser to the Plugin.

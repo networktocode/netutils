@@ -29,7 +29,7 @@ Full web-based HTML documentation for this library can be found over on the [Net
 
 ### Contributing to the Docs
 
-You can find all the Markdown source for the library documentation under the [docs](https://github.com/networktocode/netutils/tree/develop/docs) folder in this repository. For simple edits, a Markdown capable editor is sufficient - clone the repository and edit away.
+All the Markdown source for the library documentation can be found under the [docs](https://github.com/networktocode/netutils/tree/develop/docs) folder in this repository. For simple edits, a Markdown capable editor is sufficient - clone the repository and edit away.
 
 If you need to view the fully generated documentation site, you can build it with [mkdocs](https://www.mkdocs.org/). A container hosting the docs will be started using the invoke commands (details in the [Development Environment Guide](https://netutils.readthedocs.io/netutils/en/latest/dev/dev_environment/#docker-development-environment)) on [http://localhost:8001](http://localhost:8001). As your changes are saved, the live docs will be automatically reloaded.
 
