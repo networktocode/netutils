@@ -1,0 +1,1 @@
+set system user nsroot abcdef1234 -encrypted -hashmethod SHA512 -externalAuth DISABLED -timeout 900

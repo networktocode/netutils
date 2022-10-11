@@ -1,0 +1,12 @@
+{
+    "user": {
+        "actual": "set system user nsroot abcdef1234 -encrypted -hashmethod SHA512 -externalAuth DISABLED -timeout 900",
+        "cannot_parse": true,
+        "compliant": true,
+        "extra": "",
+        "intended": "set system user nsroot abcdef1234 -encrypted -hashmethod SHA512 -externalAuth DISABLED -timeout 900",
+        "missing": "",
+        "ordered_compliant": true,
+        "unordered_compliant": true
+    }
+}
