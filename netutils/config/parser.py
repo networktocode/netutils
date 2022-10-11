@@ -1172,3 +1172,15 @@ class NokiaConfigParser(BaseSpaceConfigParser):
                         config_lines.append(line.rstrip())
             self._config = "\n".join(config_lines)
         return self._config
+
+
+class NetscalerConfigParser(BaseSpaceConfigParser):
+    """Netscaler config parser."""
+
+    comment_chars: t.List[str] = []
+    banner_start: t.List[str] = []
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Netscaler platform doesn't have a banner.")
