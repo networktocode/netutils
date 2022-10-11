@@ -172,7 +172,7 @@ jobs:
         run: "poetry run invoke pylint"
     needs:
       - "build"
-  pytest:
+  pytest_all:
     strategy:
       fail-fast: true
       matrix:
@@ -207,10 +207,10 @@ jobs:
       - name: "Debug: Show docker images"
         run: "docker image ls"
       - name: "Run Tests"
-        run: "poetry run invoke pytest"
+        run: "poetry run invoke pytest-all"
     needs:
       - "pylint"
-  pytest_without_optionals:
+  pytest:
     strategy:
       fail-fast: true
       matrix:
@@ -245,7 +245,7 @@ jobs:
       - name: "Debug: Show docker images"
         run: "docker image ls"
       - name: "Run Tests"
-        run: "poetry run invoke pytest-without-optionals"
+        run: "poetry run invoke pytest"
     needs:
       - "pylint"
   publish_gh:

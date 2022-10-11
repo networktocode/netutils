@@ -227,17 +227,23 @@ Each command can be executed with `invoke <command>`. Each command also has its 
 ### Testing
 
 ```
-  bandit             Run bandit to validate basic static code security analysis.
-  black              Run black to check that Python files adhere to its style standards.
-  coverage           Run the coverage report against pytest.
-  flake8             Run flake8 to check that Python files adhere to its style standards.
-  mypy               Run mypy to validate typing-hints.
-  pylint             Run pylint code analysis.
-  pydocstyle         Run pydocstyle to validate docstring formatting adheres to NTC defined standards.
-  pytest             Run pytest for the specified name and Python version.
-  pytest-without-optionals   This will run pytest only to assert the correct errors are raised when optional dependencies are not installed.
-  tests              Run all tests for the specified name and Python version.
-  yamllint           Run yamllint to validate formatting adheres to NTC defined YAML standards.
+  bandit       Run bandit to validate basic static code security analysis.
+  black        Run black to check that Python files adherence to black standards.
+  build        Build a Docker image.
+  clean        Remove the project specific image.
+  clean-docs   Removes the build directory and all of its contents.
+  cli          Enter the image to perform troubleshooting or dev work.
+  coverage     Run the coverage report against pytest.
+  flake8       Run flake8 for the specified name and Python version.
+  html         Creates html docs using sphinx-build command.
+  mypy         Run mypy to validate typing-hints.
+  pydocstyle   Run pydocstyle to validate docstring formatting adheres to NTC defined standards.
+  pylint       Run pylint for the specified name and Python version.
+  pytest       This will run pytest only to assert the correct errors are raised when optional dependencies are not installed.
+  pytest-all   Run pytest for the specified name and Python version.
+  rebuild      Clean the Docker image and then rebuild without using cache.
+  tests        Run all tests for the specified name and Python version.
+  yamllint     Run yamllint to validate formatting adheres to NTC defined YAML standards.
 ```
 
 ## Questions

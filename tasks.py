@@ -160,7 +160,7 @@ def coverage(context, local=INVOKE_LOCAL):
 
 
 @task
-def pytest(context, local=INVOKE_LOCAL):
+def pytest_all(context, local=INVOKE_LOCAL):
     """Run pytest for the specified name and Python version.
 
     Args:
@@ -172,7 +172,7 @@ def pytest(context, local=INVOKE_LOCAL):
 
 
 @task
-def pytest_without_optionals(context, local=INVOKE_LOCAL):
+def pytest(context, local=INVOKE_LOCAL):
     """This will run pytest only to assert the correct errors are raised when optional dependencies are not installed.
 
     This must be run inside of a container or environment in which optionals is not installed, otherwise the test case
@@ -297,7 +297,7 @@ def tests(context, local=INVOKE_LOCAL):
     bandit(context, local)
     mypy(context, local)
     pytest(context, local)
-    pytest_without_optionals(context, local)
+    pytest_all(context, local)
 
     print("All tests have passed!")
 
