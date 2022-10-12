@@ -46,7 +46,7 @@ PROJECT_NAME = PYPROJECT_CONFIG["tool"]["poetry"]["name"]
 PROJECT_VERSION = PYPROJECT_CONFIG["tool"]["poetry"]["version"]
 
 
-def run_cmd(context, exec_cmd, local=INVOKE_LOCAL):
+def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, port=None):
     """Wrapper to run the invoke task commands.
 
     Args:
@@ -62,7 +62,14 @@ def run_cmd(context, exec_cmd, local=INVOKE_LOCAL):
         result = context.run(exec_cmd, pty=True)
     else:
         print(f"DOCKER - Running command: {exec_cmd} container: {IMAGE_NAME}:{IMAGE_VER}")
-        result = context.run(f"docker run -it -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} sh -c '{exec_cmd}'", pty=True)
+        if port:
+            result = context.run(
+                f"docker run -it -p {port} -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} sh -c '{exec_cmd}'", pty=True
+            )
+        else:
+            result = context.run(
+                f"docker run -it -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} sh -c '{exec_cmd}'", pty=True
+            )
 
     return result
 
@@ -255,27 +262,14 @@ def tests(context, local=INVOKE_LOCAL):
 
 
 @task
-def html(context, sourcedir="docs/source", builddir="docs/build"):
-    """Creates html docs using sphinx-build command.
-
-    Args:
-        context (obj): Used to run specific commands
-        sourcedir (str, optional): Source directory for sphinx to use. Defaults to "source".
-        builddir (str, optional): Output directory for sphinx to use. Defaults to "build".
-    """
-    print("Building html documentation...")
-    clean_docs(context, builddir)
-    command = f"sphinx-build {sourcedir} {builddir}"
-    context.run(command)
+def clean_container(context):
+    """Remove stopped containers that source for image `netutils:`."""
+    exec_cmd = """docker container rm $(docker container ls -a | grep -E "^\S+\s+netutils:" | awk 'NR>1 {print $1}')"""  # noqa: W605 # pylint:disable=anomalous-backslash-in-string
+    run_cmd(context, exec_cmd, local=True)
 
 
 @task
-def clean_docs(context, builddir="docs/build"):
-    """Removes the build directory and all of its contents.
-
-    Args:
-        context (obj): Used to run specific commands
-        builddir (str, optional): Directory to be removed. Defaults to "build".
-    """
-    print(f"Removing everything under {builddir} directory...")
-    context.run("rm -rf " + builddir)
+def docs(context, local=INVOKE_LOCAL):
+    """Build and serve docs locally for development."""
+    exec_cmd = "mkdocs serve -v --dev-addr=0.0.0.0:8001"
+    run_cmd(context, exec_cmd, local, port="8001:8001")

@@ -110,7 +110,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         Returns:
             True if line is a comment, else False.
 
-        Example:
+        Examples:
             >>> BaseSpaceConfigParser("interface Ethernet1/1").is_comment("interface Ethernet1/1")
             False
             >>> BaseSpaceConfigParser("!").is_comment("!")
@@ -129,7 +129,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         Returns:
             The non-space and non-comment lines from ``config``.
 
-        Example:
+        Examples:
             >>> config = '''!
             ... aaa group server tacacs+ auth
             ...  server 10.1.1.1
@@ -163,7 +163,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         Returns:
             The number of leading spaces.
 
-        Example:
+        Examples:
             >>> config = '''interface GigabitEthernet1\n description link to ISP'''
             >>> config_line = " description link to ISP"
             >>> indent_level = BaseSpaceConfigParser(config).get_leading_space_count(config_line)
@@ -287,7 +287,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
-        Example:
+        Examples:
             >>> config = (
             ...     "interface Ethernet1/1\n"
             ...     "  vlan 10\n"
@@ -353,7 +353,8 @@ class BaseSpaceConfigParser(BaseConfigParser):
 
         Returns:
             configuration under that parent pattern.
-        Example:
+
+        Examples:
             >>> config = '''
             ... router bgp 45000
             ...   address-family ipv4 unicast
@@ -386,7 +387,8 @@ class BaseSpaceConfigParser(BaseConfigParser):
 
         Returns:
             configuration under that parent pattern.
-        Example:
+
+        Examples:
             >>> config = '''
             ... router bgp 45000
             ...   address-family ipv4 unicast
@@ -438,7 +440,7 @@ class BaseBraceConfigParser(BaseConfigParser):
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
-        Example:
+        Examples:
             >>> config = '''auth ldap system-auth {
             ...         port ldaps
             ...         servers { ams-lda01.ntc.com }
@@ -482,7 +484,7 @@ class BaseBraceConfigParser(BaseConfigParser):
         Returns:
             The multiline string text that was added to ``self.config_lines``.
 
-        Example:
+        Examples:
             >>> config = (
             ...     'sys syslog {\n'
             ...     '    include "\n'
@@ -643,7 +645,7 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
-        Example:
+        Examples:
             >>> config = '''
             ... interface Ethernet1/1
             ...   vlan 10
@@ -795,7 +797,7 @@ class F5ConfigParser(BaseBraceConfigParser):
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
-        Example:
+        Examples:
             >>> config = '''apm resource webtop-link aShare {
             ...     application-uri http://funshare.example.com
             ...     customization-group a_customization_group
@@ -847,7 +849,7 @@ class F5ConfigParser(BaseBraceConfigParser):
         Returns:
             The multiline string text that was added to ``self.config_lines``.
 
-        Example:
+        Examples:
             config = '''apm resource webtop-link aShare {
                 application-uri http://funshare.example.com
                 customization-group a_customization_group
@@ -937,7 +939,7 @@ class ASAConfigParser(CiscoConfigParser):
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
-        Example:
+        Examples:
             >>> config = '''
             ... interface Management0/0
             ...  management-only
@@ -1004,7 +1006,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         Returns:
             True if line has 'end' or 'next', else False.
 
-        Example:
+        Examples:
             >>> FortinetConfigParser("config system virtual-switch").is_end_next("config system virtual-switch")
             False
             >>> FortinetConfigParser("end").is_end_next("end")

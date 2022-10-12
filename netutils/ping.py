@@ -13,7 +13,7 @@ def tcp_ping(ip: str, port: int, timeout: int = 1) -> bool:  # pylint: disable=i
     Returns:
         The result as to whether or not you were able ping the IP address.
 
-    Example:
+    Examples:
         >>> from netutils.ping import tcp_ping
         >>> tcp_ping("1.1.1.1", 443)
         True
