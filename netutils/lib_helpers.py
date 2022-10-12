@@ -23,7 +23,7 @@ def get_napalm_getters() -> t.Dict[str, t.Dict[str, bool]]:
     Raises:
         ImportError: If optional dependency Napalm is not installed.
 
-    Example:
+    Examples:
         >>> from netutils.lib_helpers import get_napalm_getters
         >>> napalm_getters = get_napalm_getters()  # doctest: +SKIP
         >>> napalm_getters["eos"]["get_arp_table"]  # doctest: +SKIP

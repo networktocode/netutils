@@ -77,7 +77,6 @@ Each command can be executed with `invoke <command>`. Each command also has its 
   clean              Remove the project specific image.
   docs               Build and serve docs locally.
   rebuild            Clean the Docker image and then rebuild without using cache.
-
 ```
 
 ### Utility
@@ -97,7 +96,8 @@ Each command can be executed with `invoke <command>`. Each command also has its 
   mypy               Run mypy to validate typing-hints.
   pylint             Run pylint code analysis.
   pydocstyle         Run pydocstyle to validate docstring formatting adheres to NTC defined standards.
-  pytest             Run pytest for the specified name and Python version.
+  pytest             This will run pytest only to assert the correct errors are raised when optional dependencies are not installed.
+  pytest-all         Run pytest for the specified name and Python version.
   tests              Run all tests for the specified name and Python version.
   yamllint           Run yamllint to validate formatting adheres to NTC defined YAML standards.
 ```

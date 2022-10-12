@@ -70,6 +70,7 @@ def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, port=None, with_optionals=Fal
         context ([invoke.task]): Invoke task object.
         exec_cmd ([str]): Command to run.
         local (bool): Define as `True` to execute locally
+        port (Optional[bool]): Use standard port or custom port
         with_optionals (bool): Build a container with optionals installed
 
     Returns:
@@ -83,13 +84,9 @@ def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, port=None, with_optionals=Fal
     else:
         print(f"DOCKER - Running command: {exec_cmd} container: {name}")
         if port:
-            result = context.run(
-                f"docker run -it -p {port} -v {PWD}:/local {name} sh -c '{exec_cmd}'", pty=True
-            )
+            result = context.run(f"docker run -it -p {port} -v {PWD}:/local {name} sh -c '{exec_cmd}'", pty=True)
         else:
-            result = context.run(
-                f"docker run -it -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} sh -c '{exec_cmd}'", pty=True
-            )
+            result = context.run(f"docker run -it -v {PWD}:/local {name} sh -c '{exec_cmd}'", pty=True)
 
     return result
 

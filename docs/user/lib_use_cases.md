@@ -16,6 +16,7 @@ Functions are grouped with like functions, such as IP or MAC address based funct
 - DNS - Provides the ability to work with DNS, such as validating that a FQDN is resolvable.
 - Interface - Provides the ability to work with interface names, expanding, abbreviating, and splitting the names.
 - IP Address - Provides the ability to work with IP addresses, primarily exposing Python `ipaddress` functionality.
+- Library Helpers - Provides helpers to pull useful information, e.g. NAPALM getters.
 - Library Mapper - Provides mappings in expected vendor names between Netmiko, NAPALM, pyntc, ntc-templates, pyats, and scrapli.
 - MAC Address - Provides the ability to work with MAC addresses such as validating or converting to integer.
 - Password - Provides the ability to compare and encrypt common password schemas such as type5 and type7 Cisco passwords.
