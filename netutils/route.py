@@ -18,7 +18,7 @@ def longest_prefix_match(ip_addr: str, routes: t.List[t.Dict[str, str]]) -> str:
     Returns:
         Longest Match Route
 
-    Example:
+    Examples:
         >>> from netutils.route import longest_prefix_match
         >>> lookup = "10.1.1.245"
         >>> routes = [{"network": "192.168.1.1", "mask": "255.255.255.255"},{"network": "10.1.1.0", "mask": "24"}]

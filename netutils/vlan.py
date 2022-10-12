@@ -23,7 +23,7 @@ def vlanlist_to_config(
     Returns:
         Sorted string list of integers according to IOS-like vlan list rules
 
-    Example:
+    Examples:
         >>> from netutils.vlan import vlanlist_to_config
         >>> vlanlist_to_config([1, 2, 3, 5, 6, 1000, 1002, 1004, 1006, 1008, 1010, 1012, 1014, 1016, 1018])
         ['1-3,5,6,1000,1002,1004,1006,1008,1010,1012,1014', '1016,1018']
@@ -103,7 +103,7 @@ def vlanconfig_to_list(vlan_config: str) -> t.List[int]:
     Returns:
         Sorted string list of integers according to IOS-like vlan list rules
 
-    Example:
+    Examples:
         >>> vlan_config = '''switchport trunk allowed vlan 1025,1069-1072,1114,1173-1181,1501,1502'''
         >>> vlanconfig_to_list(vlan_config)
         [1025, 1069, 1070, 1071, 1072, 1114, 1173, 1174, 1175, 1176, 1177, 1178, 1179, 1180, 1181, 1501, 1502]

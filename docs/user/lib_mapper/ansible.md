@@ -1,0 +1,26 @@
+| NORMALIZED | | ANSIBLE |
+| ---------- | -- | ------ |
+| arista.eos.eos | → | arista_eos |
+| ciena.saos6.saos6 | → | ciena_saos |
+| cisco.asa.asa | → | cisco_asa |
+| cisco.ios.ios | → | cisco_ios |
+| cisco.iosxr.iosxr | → | cisco_xr |
+| cisco.nxos.nxos | → | cisco_nxos |
+| community.network.ce | → | huawei |
+| community.network.cnos | → | lenovo_cnos |
+| community.network.enos | → | lenovo_enos |
+| community.network.eric_eccli | → | ericsson_ipos |
+| community.network.exos | → | extreme_exos |
+| community.network.icx | → | ruckus_icx |
+| community.network.ironware | → | extreme_netiron |
+| community.network.netvisor | → | pluribus |
+| community.network.nos | → | extreme_nos |
+| community.network.routeros | → | mikrotik_routeros |
+| community.network.slxos | → | extreme_slx |
+| community.network.sros | → | nokia_sros |
+| community.network.voss | → | extreme_vsp |
+| dellemc.os10.0s10 | → | dell_os10 |
+| dellemc.os6.os6 | → | dell_os6 |
+| dellemc.os9.os9 | → | dell_os9 |
+| junipernetworks.junos.junos | → | juniper_junos |
+| vyos.vyos.vyos | → | vyos |

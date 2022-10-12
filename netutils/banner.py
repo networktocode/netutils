@@ -15,7 +15,7 @@ def delimiter_change(config: str, from_delimiter: str, to_delimiter: str) -> str
     Returns:
         Configuration with delimiter replaced.
 
-    Example:
+    Examples:
         >>> from netutils.banner import delimiter_change
         >>> delimiter_change("banner login ^\n******************\n    TEST BANNER\n******************^", "^", "^C")
         'banner login ^C\n******************\n    TEST BANNER\n******************^C'
@@ -40,7 +40,7 @@ def normalise_delimiter_caret_c(delimiter: str, config: str) -> str:
     Returns:
         Configuration with delimiter normalised to ^C.
 
-    Example:
+    Examples:
         >>> from netutils.banner import normalise_delimiter_caret_c
         >>> normalise_delimiter_caret_c("^", "banner login ^\n******************\n    TEST BANNER\n******************^")
         'banner login ^C\n******************\n    TEST BANNER\n******************^C'

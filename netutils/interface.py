@@ -18,7 +18,7 @@ def interface_range_expansion(interface_pattern: str) -> t.List[str]:
     Returns:
         Contains the expanded list of interfaces.
 
-    Example:
+    Examples:
         >>> from netutils.interface import interface_range_expansion
         >>> interface_range_expansion("Gi0/[1-4]")
         ['Gi0/1', 'Gi0/2', 'Gi0/3', 'Gi0/4']
@@ -74,7 +74,7 @@ def split_interface(interface: str) -> t.Tuple[str, str]:
     Returns:
         The split between the name of the interface the value.
 
-    Example:
+    Examples:
         >>> from netutils.interface import split_interface
         >>> split_interface("GigabitEthernet1/0/1")
         ('GigabitEthernet', '1/0/1')
@@ -106,7 +106,7 @@ def canonical_interface_name(
     Returns:
         The name of the interface in the long form.
 
-    Example:
+    Examples:
         >>> from netutils.interface import canonical_interface_name
         >>> canonical_interface_name("Gi1/0/1")
         'GigabitEthernet1/0/1'
@@ -158,7 +158,7 @@ def canonical_interface_name_list(
     Raises:
         ValueError: Raised if any interface name in list cannot be converted to its long form and verify parameter is set to true.
 
-    Example:
+    Examples:
         >>> from netutils.interface import canonical_interface_name_list
         >>> canonical_interface_name_list(["Gi1/0/1", "Gi1/0/2", "Eth1"])
         ['GigabitEthernet1/0/1', 'GigabitEthernet1/0/2', 'Ethernet1']
@@ -215,7 +215,7 @@ def abbreviated_interface_name(
     Returns:
         The name of the interface in the abbreviated form.
 
-    Example:
+    Examples:
         >>> abbreviated_interface_name("GigabitEthernet1/0/1")
         'Gi1/0/1'
         >>> abbreviated_interface_name("Eth1")
@@ -438,7 +438,7 @@ def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
     Returns:
         list[str]: A **new** sorted, unique list elements from the input.
 
-    Example:
+    Examples:
         >>> sort_interface_list(["Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Gi2/0/2", "Po40", "Po160", "Lo10"])
         ['Gi1/0/1', 'Gi1/0/2', 'Gi1/0/2.50', 'Gi1/0/3', 'Gi1/0/3.100', 'Gi2/0/2', 'Lo10', 'Po40', 'Po160']
         >>> sort_interface_list(['GigabitEthernet1/0/1', 'GigabitEthernet1/0/3', 'GigabitEthernet1/0/2', "GigabitEthernett3/0/5", 'GigabitEthernet3/0/7', 'GigabitEthernet2/0/8.5',  'Port-channel40', 'Vlan20', 'Loopback10'])
@@ -477,7 +477,7 @@ def abbreviated_interface_name_list(  # pylint: disable=R0913, R0914
     Raises:
         ValueError: Raised if any interface name in list cannot be converted to its abbreviated form and verify parameter is set to true.
 
-    Example:
+    Examples:
         >>> from netutils.interface import abbreviated_interface_name_list
         >>> abbreviated_interface_name_list(["GigabitEthernet1/0/1", "GigabitEthernet1/0/2", "Ethernet1"])
         ['Gi1/0/1', 'Gi1/0/2', 'Et1']
@@ -551,7 +551,7 @@ def _check_order_option_exists(order: str) -> None:
 def _ranges_in_list(numbers: t.List[int]) -> t.List[t.List[int]]:
     """Find contiguous ranges in a list of numbers.
 
-    Example:
+    Examples:
         >>> _ranges_in_list([1, 2, 3, 5, 6, 8])
         [[1, 2, 3], [5, 6], [8]]
 
@@ -571,7 +571,7 @@ def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
     there is no check against correct interface names! Also interface names must use the same abbreviation!
     E.g. Gi =! GigabitEthernet
 
-    Example:
+    Examples:
         >>> interface_range_compress(["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/5"])
         ['Gi1/0/1-3', 'Gi1/0/5']
         >>> interface_range_compress(["Gi0/1", "Gi0/2", "Gi0/4", "Gi1/0", "Gi1/1"])
