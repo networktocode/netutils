@@ -42,7 +42,7 @@ def _check_configs_differences(intended_cfg: str, actual_cfg: str, network_os: s
     Returns:
         Config fragments that are missing, extra or unordered_compliant.
 
-    Example:
+    Examples:
         >>> from netutils.config.compliance import _check_configs_differences
         >>> intended_cfg = '''ntp server 10.10.10.10
         ... ntp server 10.10.10.11'''
@@ -83,7 +83,7 @@ def _is_feature_ordered_compliant(feature_intended_cfg: str, feature_actual_cfg:
     Returns:
         bool
 
-    Example:
+    Examples:
         >>> feature_intended_cfg = '''router bgp 100
         ...   bgp router-id 10.6.6.5'''
         >>>
@@ -129,7 +129,7 @@ def compliance(
     Returns:
         dict: Compliance information per feature.
 
-    Example:
+    Examples:
         >>> features = [
         ...     {
         ...         "name": "hostname",
@@ -201,7 +201,7 @@ def config_section_not_parsed(
     Returns:
         Config that was not parsed or section not found.
 
-    Example:
+    Examples:
         >>> features = [{
         ...    "name": "BGP",
         ...    "ordered": True,
@@ -242,7 +242,7 @@ def diff_network_config(compare_config: str, base_config: str, network_os: str) 
     Returns:
         base_config: The string of additional commands in compare_config separated by a newline.
 
-    Example:
+    Examples:
         >>> compare_config = '''router bgp 100
         ...  bgp router-id 10.6.6.5
         ... !
@@ -295,7 +295,7 @@ def feature_compliance(
     Returns:
         dict: Compliance information of a single feature.
 
-    Example:
+    Examples:
         >>> feature = {
         ...     "name": "ntp",
         ...     "ordered": True,
@@ -354,7 +354,7 @@ def find_unordered_cfg_lines(intended_cfg: str, actual_cfg: str) -> t.Tuple[bool
     Returns:
         list: List of tuples with unordered_compliant cfg lines.
 
-    Example:
+    Examples:
         >>> intended_cfg = '''
         ... ntp server 10.10.10.10
         ... ntp server 10.10.10.11
@@ -394,7 +394,7 @@ def section_config(feature: t.Dict[str, t.Union[str, bool, t.List[str]]], device
     Returns:
         The hash report data mapping file hashes to report data.
 
-    Example:
+    Examples:
         >>> feature =  {
         ...    "name": "BGP",
         ...    "ordered": False,

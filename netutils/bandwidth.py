@@ -44,7 +44,7 @@ def name_to_bits(speed: str) -> int:
     Returns:
         value of bandwidth to be converted to bps
 
-    Example:
+    Examples:
         >>> from netutils.bandwidth import name_to_bits
         >>> name_to_bits("10Gbps")
         10000000000
@@ -76,7 +76,7 @@ def name_to_bytes(speed: str) -> float:
     Returns:
         value of bandwidth to be converted to Bps
 
-    Example:
+    Examples:
         >>> from netutils.bandwidth import name_to_bytes
         >>> name_to_bytes("10Gbps")
         1250000000.0
@@ -111,7 +111,7 @@ def bits_to_name(  # pylint: disable=too-many-branches,too-many-return-statement
     Returns:
         Name value for speed in bits
 
-    Example:
+    Examples:
         >>> from netutils.bandwidth import bits_to_name
         >>> bits_to_name(125000)
         '125Kbps'
@@ -141,7 +141,7 @@ def bytes_to_name(speed: float, nbr_decimal: int = 0) -> str:
     Returns:
         Name value for speed in bytes
 
-    Example:
+    Examples:
         >>> from netutils.bandwidth import bytes_to_name
         >>> bytes_to_name(10000.0)
         '10.0KBps'
@@ -172,7 +172,7 @@ def name_to_name(speed: str, speed_type: str, nbr_decimal: int = 0) -> str:
     Returns:
         The named value which user wishes to return to.
 
-    Example:
+    Examples:
         >>> from netutils.bandwidth import name_to_name
         >>> name_to_name("10Gbps", "Kbps")
         '10000000.0Kbps'

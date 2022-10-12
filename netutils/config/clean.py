@@ -15,7 +15,7 @@ def clean_config(config: str, filters: t.List[t.Dict[str, str]]) -> str:
     Returns:
          Stripped down configuration.
 
-    Example:
+    Examples:
         >>> from netutils.config.clean import clean_config
         >>> config = '''Building configuration...
         ... Current configuration : 1582 bytes
@@ -62,7 +62,7 @@ def sanitize_config(config: str, filters: t.Optional[t.List[t.Dict[str, str]]] =
     Returns:
         str: Sanitized configuration.
 
-    Example:
+    Examples:
         >>> from netutils.config.clean import sanitize_config
         >>> config = '''enable secret 5 $1$nc08$bizeEFbgCBKjZP4nurNCd.!'''
         >>> SANITIZE_FILTERS = [
