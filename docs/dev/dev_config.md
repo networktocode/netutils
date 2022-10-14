@@ -22,6 +22,10 @@ The "ltm rule" configuration sections are not uniform nor standardized; therefor
 
 The section banners have been simplified to extract the section header itself. This means that `echo "System Configuration"` will be converted to just "System Configuration".
 
+### Citrix NetScaler Parser
+
+As the NetScaler configuration uses each line to make a specific configuration change there is no support for parent/child relationships in the parser.
+
 ### Duplicate Line Detection
 
 In some circumstances replacing lines, such as secrets without uniqueness in the replacement, will result in duplicated lines that are invalid configuration, such as::
@@ -50,22 +54,21 @@ Documented use cases that are actual configuration on a network device are consi
 
 ## New Parsers
 
-
 There are a series of considerations documented below, when developing a new parser.
 
 - Creation of a new class that must be created in `netutils/config/parser.py` file.
 - Creation of a parser class that inherits from the class `BaseConfigParser` in the Python Method Resolution Order (MRO).
-    - In nearly all cases should inherit directory off of `BaseSpaceConfigParser` or `BaseBraceConfigParser`.
-    - `BaseSpaceConfigParser` is for Cisco IOS-like configurations.
-    - `BaseBraceConfigParser` is for JUNOS-like configurations that use curly braces.
+  - In nearly all cases should inherit directory off of `BaseSpaceConfigParser` or `BaseBraceConfigParser`.
+  - `BaseSpaceConfigParser` is for Cisco IOS-like configurations.
+  - `BaseBraceConfigParser` is for JUNOS-like configurations that use curly braces.
 - Create the class name in the format of `{os_name.title()}ConfigParser`.
-    - The classes `__init__` method must keep true to the signature or `__init__(self, config)`.
-    - The class must provide a `self.config_lines` that is a list of `ConfigLine` named tuples.
+  - The classes `__init__` method must keep true to the signature or `__init__(self, config)`.
+  - The class must provide a `self.config_lines` that is a list of `ConfigLine` named tuples.
 - Build tests for the `tests/unit/mock/config/compliance/{os_name}/*` and `tests/unit/mock/config/parser/{os_name}/*`.
 - Add to `netutils/config/compliance.py` the `parser_map`, that maps the name of the parser to the Plugin.
 - Fill out docstrings in the class and methods within the class that describe the parameters and an Example that compiles.
 - The following tips will generally be applicable.
-    - Generally a class method should provide a `comment_chars` and `banner_start` as well as sometimes `banner_end`.
-    - Generally on the `__init__` should call the `build_config_relationship` method.
-    - Often can inherit directly from `CiscoConfigParser`.
-    - Observe the existing patterns, make use of `super`, and inheritance to reuse existing code.
+  - Generally a class method should provide a `comment_chars` and `banner_start` as well as sometimes `banner_end`.
+  - Generally on the `__init__` should call the `build_config_relationship` method.
+  - Often can inherit directly from `CiscoConfigParser`.
+  - Observe the existing patterns, make use of `super`, and inheritance to reuse existing code.
