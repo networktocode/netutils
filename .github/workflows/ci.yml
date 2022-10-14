@@ -102,26 +102,12 @@ jobs:
       - name: "Set up Docker Buildx"
         id: "buildx"
         uses: "docker/setup-buildx-action@v1"
-      - name: "Build with Optionals"
+      - name: "Build"
         uses: "docker/build-push-action@v2"
         with:
           builder: "${{ steps.buildx.outputs.name }}"
           context: "./"
           push: false
-          target: "with_optionals"
-          tags: "${{ env.IMAGE_NAME }}:${{ env.IMAGE_VER }}-optionals"
-          file: "./Dockerfile"
-          cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}-optionals"
-          cache-to: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}-optionals"
-          build-args: |
-            PYTHON_VER=${{ env.PYTHON_VER }}
-      - name: "Build Base"
-        uses: "docker/build-push-action@v2"
-        with:
-          builder: "${{ steps.buildx.outputs.name }}"
-          context: "./"
-          push: false
-          target: "base"
           tags: "${{ env.IMAGE_NAME }}:${{ env.IMAGE_VER }}"
           file: "./Dockerfile"
           cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
@@ -159,7 +145,6 @@ jobs:
           context: "./"
           push: false
           load: true
-          target: "with_optionals"
           tags: "${{ env.IMAGE_NAME }}:${{ env.IMAGE_VER }}"
           file: "./Dockerfile"
           cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
@@ -172,44 +157,6 @@ jobs:
         run: "poetry run invoke pylint"
     needs:
       - "build"
-  pytest_all:
-    strategy:
-      fail-fast: true
-      matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10"]
-    runs-on: "ubuntu-20.04"
-    env:
-      PYTHON_VER: "${{ matrix.python-version }}"
-    steps:
-      - name: "Check out repository code"
-        uses: "actions/checkout@v2"
-      - name: "Setup environment"
-        uses: "networktocode/gh-action-setup-poetry-environment@v2"
-      - name: "Get image version"
-        run: "echo IMAGE_VER=`poetry version -s`-py${{ matrix.python-version }} >> $GITHUB_ENV"
-      - name: "Set up Docker Buildx"
-        id: "buildx"
-        uses: "docker/setup-buildx-action@v1"
-      - name: "Load the image from cache"
-        uses: "docker/build-push-action@v2"
-        with:
-          builder: "${{ steps.buildx.outputs.name }}"
-          context: "./"
-          push: false
-          load: true
-          target: "with_optionals"
-          tags: "${{ env.IMAGE_NAME }}:${{ env.IMAGE_VER }}"
-          file: "./Dockerfile"
-          cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
-          cache-to: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
-          build-args: |
-            PYTHON_VER=${{ env.PYTHON_VER }}
-      - name: "Debug: Show docker images"
-        run: "docker image ls"
-      - name: "Run Tests"
-        run: "poetry run invoke pytest-all"
-    needs:
-      - "pylint"
   pytest:
     strategy:
       fail-fast: true
@@ -235,7 +182,6 @@ jobs:
           context: "./"
           push: false
           load: true
-          target: "base"
           tags: "${{ env.IMAGE_NAME }}:${{ env.IMAGE_VER }}"
           file: "./Dockerfile"
           cache-from: "type=gha,scope=${{ env.IMAGE_NAME }}-${{ env.IMAGE_VER }}-py${{ matrix.python-version }}"
@@ -246,6 +192,10 @@ jobs:
         run: "docker image ls"
       - name: "Run Tests"
         run: "poetry run invoke pytest"
+      - name: "Install Napalm"
+        run: "pip install napalm"
+      - name: "Run Optional Tests"
+        run: "find tests/ -name 'test_lib_helpers_optionals.py' | xargs pytest -vv"
     needs:
       - "pylint"
   publish_gh:

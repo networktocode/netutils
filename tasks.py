@@ -46,55 +46,36 @@ PROJECT_NAME = PYPROJECT_CONFIG["tool"]["poetry"]["name"]
 PROJECT_VERSION = PYPROJECT_CONFIG["tool"]["poetry"]["version"]
 
 
-def _get_image_name(with_optionals=False):
-    """Gets the name of the container image to use.
-
-    Args:
-        with_optionals (bool): Get name of container image with optionals installed.
-
-    Returns:
-        str: Name of container image. Includes tag.
-    """
-    if with_optionals and not os.getenv("GITHUB_ACTION", None):
-        name = f"{IMAGE_NAME}:{IMAGE_VER}-optionals"
-    else:
-        name = f"{IMAGE_NAME}:{IMAGE_VER}"
-
-    return name
-
-
-def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, port=None, with_optionals=False):
+def run_cmd(context, exec_cmd, local=INVOKE_LOCAL, port=None):
     """Wrapper to run the invoke task commands.
 
     Args:
         context ([invoke.task]): Invoke task object.
         exec_cmd ([str]): Command to run.
         local (bool): Define as `True` to execute locally
-        port (Optional[bool]): Use standard port or custom port
-        with_optionals (bool): Build a container with optionals installed
 
     Returns:
         result (obj): Contains Invoke result from running task.
     """
-    name = _get_image_name(with_optionals)
-
     if is_truthy(local):
         print(f"LOCAL - Running command {exec_cmd}")
         result = context.run(exec_cmd, pty=True)
     else:
-        print(f"DOCKER - Running command: {exec_cmd} container: {name}")
+        print(f"DOCKER - Running command: {exec_cmd} container: {IMAGE_NAME}:{IMAGE_VER}")
         if port:
-            result = context.run(f"docker run -it -p {port} -v {PWD}:/local {name} sh -c '{exec_cmd}'", pty=True)
+            result = context.run(
+                f"docker run -it -p {port} -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} sh -c '{exec_cmd}'", pty=True
+            )
         else:
-            result = context.run(f"docker run -it -v {PWD}:/local {name} sh -c '{exec_cmd}'", pty=True)
+            result = context.run(
+                f"docker run -it -v {PWD}:/local {IMAGE_NAME}:{IMAGE_VER} sh -c '{exec_cmd}'", pty=True
+            )
 
     return result
 
 
 @task
-def build(
-    context, nocache=False, forcerm=False, hide=False, with_optionals=False
-):  # pylint: disable=too-many-arguments
+def build(context, nocache=False, forcerm=False, hide=False):  # pylint: disable=too-many-arguments
     """Build a Docker image.
 
     Args:
@@ -102,17 +83,10 @@ def build(
         nocache (bool): Do not use cache when building the image
         forcerm (bool): Always remove intermediate containers
         hide (bool): Hide output of Docker image build
-        with_optionals (bool): Build a container with optionals installed
     """
-    name = _get_image_name(with_optionals)
+    print(f"Building image {IMAGE_NAME}:{IMAGE_VER}")
+    command = f"docker build --tag {IMAGE_NAME}:{IMAGE_VER} --build-arg PYTHON_VER={PYTHON_VER} -f Dockerfile ."
 
-    if with_optionals:
-        command = f"docker build --tag {name} --target with_optionals"
-
-    else:
-        command = command = f"docker build --tag {name} --target base"
-
-    command += f" --build-arg PYTHON_VER={PYTHON_VER} -f Dockerfile ."
     if nocache:
         command += " --no-cache"
     if forcerm:
@@ -124,18 +98,15 @@ def build(
 
 
 @task
-def clean(context, with_optionals=False):
+def clean(context):
     """Remove the project specific image.
 
     Args:
         context (obj): Used to run specific commands
-        with_optionals (bool): Build a container with optionals installed
     """
-    name = _get_image_name(with_optionals)
-
-    print(f"Attempting to forcefully remove image {name}")
-    context.run(f"docker rmi {name} --force")
-    print(f"Successfully removed image {name}")
+    print(f"Attempting to forcefully remove image {IMAGE_NAME}:{IMAGE_VER}")
+    context.run(f"docker rmi {IMAGE_NAME}:{IMAGE_VER} --force")
+    print(f"Successfully removed image {IMAGE_NAME}:{IMAGE_VER}")
 
 
 @task
@@ -164,29 +135,14 @@ def coverage(context, local=INVOKE_LOCAL):
 
 
 @task
-def pytest_all(context, local=INVOKE_LOCAL):
+def pytest(context, local=INVOKE_LOCAL):
     """Run pytest for the specified name and Python version.
 
     Args:
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
-    exec_cmd = "pytest -vv --doctest-modules netutils/ && coverage run --source=netutils -m pytest --ignore='tests/unit/test_lib_helpers_no_optionals.py' && coverage report"
-    run_cmd(context, exec_cmd, local, with_optionals=True)
-
-
-@task
-def pytest(context, local=INVOKE_LOCAL):
-    """This will run pytest only to assert the correct errors are raised when optional dependencies are not installed.
-
-    This must be run inside of a container or environment in which optionals is not installed, otherwise the test case
-    assertion will fail.
-
-    Args:
-        context (obj): Used to run specific commands
-        local (bool): Define as `True` to execute locally
-    """
-    exec_cmd = 'find tests/ -name "test_lib_helpers_no_optionals.py" | xargs pytest -vv'
+    exec_cmd = "pytest -vv --doctest-modules netutils/ && coverage run --source=netutils -m pytest && coverage report"
     run_cmd(context, exec_cmd, local)
 
 
@@ -301,7 +257,6 @@ def tests(context, local=INVOKE_LOCAL):
     bandit(context, local)
     mypy(context, local)
     pytest(context, local)
-    pytest_all(context, local)
 
     print("All tests have passed!")
 
