@@ -195,7 +195,7 @@ jobs:
       - name: "Install Napalm"
         run: "pip install napalm"
       - name: "Run Optional Tests"
-        run: "find tests/ -name 'test_lib_helpers_optionals.py' | xargs pytest -vv"
+        run: "poetry run pytest tests/unit/test_lib_helpers_optionals.py"
     needs:
       - "pylint"
   publish_gh:
