@@ -1,1 +1,42 @@
 set system user nsroot abcdef1234 -encrypted -hashmethod SHA512 -externalAuth DISABLED -timeout 900
+add system cmdPolicy XX-CMD-read-only ALLOW (^man.*)|(^show\s+(\?!system)(\?!configstatus)(\?!audit messages)(\?!techsupport).*)|(^stat.*)
+add system cmdPolicy XX-CMD-operator ALLOW (^show.*)|(^stat.*)|(^(enable|disable) (server|service).*)
+add system cmdPolicy XX-CMD-partition-read-only ALLOW (^man.*)|(^switch)|(^show\s+(\?!system)(\?!configstatus)(\?!audit messages)(\?!techsupport).*)|(^stat.*)
+add system cmdPolicy XX-CMD-partition-operator ALLOW (^man.*)|(^switch)|(^show\s+(\?!system)(\?!configstatus)(\?!audit messages)(\?!techsupport).*)|(^stat.*)|(^(enable|disable) (server|service).*)
+add ssl cipher XX-CIPHER-GROUP_1.0_v01
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1.2-ECDHE-RSA-AES256-GCM-SHA384
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1.2-ECDHE-RSA-AES128-GCM-SHA256
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1.2-ECDHE-RSA-AES-256-SHA384
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1.2-ECDHE-RSA-AES-128-SHA256
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1-ECDHE-RSA-AES256-SHA
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1-ECDHE-RSA-AES128-SHA
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1.2-DHE-RSA-AES256-GCM-SHA384
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1.2-DHE-RSA-AES128-GCM-SHA256
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1-DHE-RSA-AES-256-CBC-SHA
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1-DHE-RSA-AES-128-CBC-SHA
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1-AES-256-CBC-SHA
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName TLS1-AES-128-CBC-SHA
+bind ssl cipher XX-CIPHER-GROUP_1.0_v01 -cipherName SSL3-DES-CBC3-SHA
+add ssl cipher XX-CIPHER-GROUP_1.2_v01
+bind ssl cipher XX-CIPHER-GROUP_1.2_v01 -cipherName TLS1.2-ECDHE-RSA-AES256-GCM-SHA384
+bind ssl cipher XX-CIPHER-GROUP_1.2_v01 -cipherName TLS1.2-ECDHE-RSA-AES128-GCM-SHA256
+bind ssl cipher XX-CIPHER-GROUP_1.2_v01 -cipherName TLS1.2-ECDHE-RSA-AES-256-SHA384
+bind ssl cipher XX-CIPHER-GROUP_1.2_v01 -cipherName TLS1.2-ECDHE-RSA-AES-128-SHA256
+add ssl cipher XX-CIPHER-GROUP_1.2_v02
+bind ssl cipher XX-CIPHER-GROUP_1.0_v03 -cipherName TLS1.2-ECDHE-RSA-CHACHA20-POLY1305
+bind ssl cipher XX-CIPHER-GROUP_1.0_v03 -cipherName TLS1.2-ECDHE-RSA-AES256-GCM-SHA384
+bind ssl cipher XX-CIPHER-GROUP_1.0_v03 -cipherName TLS1.2-ECDHE-RSA-AES128-GCM-SHA256
+bind ssl cipher XX-CIPHER-GROUP_1.0_v03 -cipherName TLS1.2-ECDHE-RSA-AES-256-SHA384
+bind ssl cipher XX-CIPHER-GROUP_1.0_v03 -cipherName TLS1.2-ECDHE-RSA-AES-128-SHA256
+bind ssl cipher XX-CIPHER-GROUP_1.0_v03 -cipherName TLS1-ECDHE-RSA-AES256-SHA
+bind ssl cipher XX-CIPHER-GROUP_1.0_v03 -cipherName TLS1-ECDHE-RSA-AES128-SHA
+add ssl cipher XX-CIPHER-LIST_256
+bind ssl cipher XX-CIPHER-LIST_256 -cipherName TLS1.2-ECDHE-RSA-AES256-GCM-SHA384 -cipherPriority 1
+bind ssl cipher XX-CIPHER-LIST_256 -cipherName TLS1.2-ECDHE-RSA-AES-256-SHA384 -cipherPriority 2
+bind ssl cipher XX-CIPHER-LIST_256 -cipherName TLS1-ECDHE-RSA-AES256-SHA -cipherPriority 3
+bind ssl cipher XX-CIPHER-LIST_256 -cipherName TLS1.2-AES256-GCM-SHA384 -cipherPriority 4
+bind ssl cipher XX-CIPHER-LIST_256 -cipherName TLS1.2-AES-256-SHA256 -cipherPriority 5
+bind ssl cipher XX-CIPHER-LIST_256 -cipherName TLS1-AES-256-CBC-SHA -cipherPriority 6
+add ssl profile XX-SSL-Profile_1.0_v01 -eRSA ENABLED -eRSACount 1800 -sessReuse ENABLED -sessTimeout 1800 -ssl3 DISABLED -denySSLReneg ALL
+add ssl profile XX-SSL-Profile_1.2_v01 -eRSA ENABLED -eRSACount 1800 -sessReuse ENABLED -sessTimeout 1800 -ssl3 DISABLED -tls1 DISABLED -tls11 DISABLED -denySSLReneg ALL
+add ssl profile XX-SSL-Profile_1.2_v02 -eRSA ENABLED -eRSACount 1800 -sessReuse ENABLED -sessTimeout 1800 -ssl3 DISABLED -tls1 DISABLED -tls11 DISABLED -denySSLReneg NONSECURE
