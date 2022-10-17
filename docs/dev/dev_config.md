@@ -58,7 +58,7 @@ There are a series of considerations documented below, when developing a new par
 
 - Creation of a new class that must be created in `netutils/config/parser.py` file.
 - Creation of a parser class that inherits from the class `BaseConfigParser` in the Python Method Resolution Order (MRO).
-  - In nearly all cases should inherit directory off of `BaseSpaceConfigParser` or `BaseBraceConfigParser`.
+- In nearly all cases should inherit directory off of `BaseSpaceConfigParser` or `BaseBraceConfigParser`.
   - `BaseSpaceConfigParser` is for Cisco IOS-like configurations.
   - `BaseBraceConfigParser` is for JUNOS-like configurations that use curly braces.
 - Create the class name in the format of `{os_name.title()}ConfigParser`.
