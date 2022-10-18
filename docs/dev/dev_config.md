@@ -54,6 +54,7 @@ Documented use cases that are actual configuration on a network device are consi
 
 ## New Parsers
 
+
 There are a series of considerations documented below, when developing a new parser.
 
 - Creation of a new class that must be created in `netutils/config/parser.py` file.
