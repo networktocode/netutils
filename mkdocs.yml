@@ -128,6 +128,7 @@ nav:
           - DNS: "dev/code_reference/dns.md"
           - Interface: "dev/code_reference/interface.md"
           - IP: "dev/code_reference/ip.md"
+          - Library Helpers: "dev/code_reference/lib_helpers.md"
           - Library Mapping: "dev/code_reference/lib_mapping.md"
           - Mac Address: "dev/code_reference/mac.md"
           - Password: "dev/code_reference/password.md"

@@ -77,7 +77,6 @@ Each command can be executed with `invoke <command>`. Each command also has its 
   clean              Remove the project specific image.
   docs               Build and serve docs locally.
   rebuild            Clean the Docker image and then rebuild without using cache.
-
 ```
 
 ### Utility
