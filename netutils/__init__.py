@@ -1,3 +1,9 @@
 """Initialization file for library."""
 
-__version__ = "1.2.0"
+try:
+    from importlib import metadata
+except ImportError:
+    # Python version < 3.8
+    import importlib_metadata as metadata
+
+__version__ = metadata.version(__name__)
