@@ -22,6 +22,10 @@ The "ltm rule" configuration sections are not uniform nor standardized; therefor
 
 The section banners have been simplified to extract the section header itself. This means that `echo "System Configuration"` will be converted to just "System Configuration".
 
+### Citrix NetScaler Parser
+
+As the NetScaler configuration uses each line to make a specific configuration change there is no support for parent/child relationships in the parser.
+
 ### Duplicate Line Detection
 
 In some circumstances replacing lines, such as secrets without uniqueness in the replacement, will result in duplicated lines that are invalid configuration, such as::
