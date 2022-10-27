@@ -6,6 +6,7 @@
 | cisco_asa | netutils.config.parser.ASAConfigParser |
 | cisco_ios | netutils.config.parser.IOSConfigParser |
 | cisco_nxos | netutils.config.parser.NXOSConfigParser |
+| citrix_netscaler | netutils.config.parser.NetscalerConfigParser |
 | fortinet_fortios | netutils.config.parser.FortinetConfigParser |
 | juniper_junos | netutils.config.parser.JunosConfigParser |
 | linux | netutils.config.parser.LINUXConfigParser |
