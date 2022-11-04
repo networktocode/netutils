@@ -331,6 +331,7 @@ IS_CLASSFULL = [
     {"sent": {"ip_network": "224.0.0.0/24"}, "received": False},
 ]
 
+
 @pytest.mark.parametrize("data", IP_TO_HEX)
 def test_ip_to_hex(data):
     assert ip.ip_to_hex(**data["sent"]) == data["received"]
@@ -444,6 +445,7 @@ def test_ipaddress_interface(data):
 @pytest.mark.parametrize("data", IP_NETWORK)
 def test_ipaddress_network(data):
     assert ip.ipaddress_network(**data["sent"]) == data["received"]
+
 
 @pytest.mark.parametrize("data", IS_CLASSFULL)
 def test_is_classful(data):
