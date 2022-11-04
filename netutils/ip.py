@@ -168,10 +168,10 @@ def is_classfull(ip_network: str) -> bool:
        * Class C: 192.0.0.0/24 -> 223.255.255.0/24
 
     Args:
-        ip_network (str): A network string that can be parsed by ipaddress.ip_network.
+        ip_network: A network string that can be parsed by ipaddress.ip_network.
 
     Returns:
-        bool: Whether or not the network falls within class full boundaries.
+        Whether or not the network falls within class full boundaries.
 
     Examples:
         >>> from netutils.ip import is_classfull
