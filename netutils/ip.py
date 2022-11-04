@@ -158,7 +158,7 @@ def ip_subtract(ip: str, val: int) -> str:
     return str(ipaddress.ip_address(ip) - val)
 
 def is_classfull(ip_network: str) -> bool:
-    """Determines if a CIDR network address is within unicast class full boundaries.
+    """Determines if a CIDR network address is within unicast classful boundaries.
     
     The following class boundaries are checked:
     0.0.0.0/8 -> 127.0.0.0/8 as Class A
