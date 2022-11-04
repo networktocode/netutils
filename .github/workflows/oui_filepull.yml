@@ -18,6 +18,8 @@ jobs:
       # Check out the repository so it can read the files inside of it and do other operations
       - name: "Check out repo"
         uses: "actions/checkout@v2"
+        with:
+          ref: "update_flat_workflow"
       # The Flat Action step. We fetch the data in the http_url and save it as downloaded_filename
       - name: "Fetch data"
         uses: "githubocto/flat@v3"
