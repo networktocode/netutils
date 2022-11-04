@@ -2,9 +2,9 @@
 name: "Flat"
 
 on: # yamllint disable-line rule:truthy
-  push:
+  pull_request:
     branches:
-      - "OUI_mappings_update"
+      - "main"
 
 jobs:
   scheduled:
