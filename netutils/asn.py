@@ -10,7 +10,7 @@ def asn_to_int(asplain: str) -> int:
     Returns:
         Integer value within of the given asplain value provided.
 
-    Example:
+    Examples:
         >>> from netutils.asn import asn_to_int
         >>> asn_to_int("65000")
         65000

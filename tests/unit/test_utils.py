@@ -1,15 +1,13 @@
 """Test for the library utilities."""
+import os
+from glob import glob
 from importlib import import_module
 from inspect import getmembers, isfunction
-from glob import glob
-import os
+
 import pytest
 from jinja2 import Environment, select_autoescape
 from jinja2.loaders import FileSystemLoader
-from netutils.utils import (
-    _JINJA2_FUNCTION_MAPPINGS,
-    jinja2_convenience_function,
-)
+from netutils.utils import _JINJA2_FUNCTION_MAPPINGS, jinja2_convenience_function
 
 _EXCLUDED_FILES = [
     "__init__",
@@ -25,7 +23,7 @@ _EXCLUDED_FILES = [
 
 _EXCLUDED_DECORATOR_FUNCTIONS = ["wraps", "total_ordering", "abstractmethod"]
 
-_EXCLUDED_FUNCTIONS = ["jinja2_convenience_function", "import_module"]
+_EXCLUDED_FUNCTIONS = ["jinja2_convenience_function", "import_module", "get_network_driver"]
 
 
 @pytest.fixture
