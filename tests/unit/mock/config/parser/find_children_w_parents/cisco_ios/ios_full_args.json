@@ -1,0 +1,5 @@
+{ 
+    "parent_pattern": "call-home",
+    "child_pattern": " profile \"CiscoTAC-1\"",
+    "match_type": "exact"
+}

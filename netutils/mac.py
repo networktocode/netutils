@@ -33,7 +33,7 @@ def is_valid_mac(mac: str) -> bool:
     Returns:
         The result as to whether or not the string is a valid MAC address.
 
-    Example:
+    Examples:
         >>> from netutils.mac import is_valid_mac
         >>> is_valid_mac("aa.bb.cc.dd.ee.ff")
         True
@@ -58,7 +58,7 @@ def mac_to_format(mac: str, frmt: str = "MAC_NO_SPECIAL") -> str:
     Returns:
         A MAC address in the specified format.
 
-    Example:
+    Examples:
         >>> from netutils.mac import mac_to_format
         >>> mac_to_format("aa.bb.cc.dd.ee.ff", "MAC_DASH_FOUR")
         'aabb-ccdd-eeff'
@@ -82,7 +82,7 @@ def mac_to_int(mac: str) -> int:
     Returns:
         The valid MAC address converted to an integer.
 
-    Example:
+    Examples:
         >>> from netutils.mac import mac_to_int
         >>> mac_to_int("aa.bb.cc.dd.ee.ff")
         187723572702975
@@ -101,7 +101,7 @@ def mac_type(mac: str) -> t.Optional[str]:
     Returns:
         The regex pattern type of the MAC address.
 
-    Example:
+    Examples:
         >>> from netutils.mac import mac_type
         >>> mac_type("aa.bb.cc.dd.ee.ff")
         'MAC_DOT_TWO'
@@ -117,7 +117,7 @@ def mac_type(mac: str) -> t.Optional[str]:
 
 @_valid_mac
 def mac_normalize(mac: str) -> str:
-    """Retuns the MAC address with only the address, and no special characters.
+    """Return the MAC address with only the address, and no special characters.
 
     Args:
         mac: A MAC address in string format that matches one of the defined regex patterns.
@@ -125,7 +125,7 @@ def mac_normalize(mac: str) -> str:
     Returns:
         The MAC address with no special characters.
 
-    Example:
+    Examples:
         >>> from netutils.mac import mac_normalize
         >>> mac_normalize("aa.bb.cc.dd.ee.ff")
         'aabbccddeeff'
@@ -136,3 +136,31 @@ def mac_normalize(mac: str) -> str:
         if char in mac:
             mac = mac.replace(char, "")
     return mac
+
+
+@_valid_mac
+def get_oui(mac: str) -> str:
+    """Returns the company name for a given mac as defined by the IEEE.
+
+    Args:
+        mac: A MAC address in string format that matches one of the defined regex patterns.
+
+    Returns:
+        The name of the company the mac is related to.
+
+    Examples:
+        >>> from netutils.mac import get_oui
+        >>> from netutils.oui_mappings import OUI_MAPPINGS
+        >>> get_oui("cc.79.d7.dd.ee.ff")
+        'Cisco Systems, Inc'
+        >>>
+    """
+    from netutils.oui_mappings import OUI_MAPPINGS  # pylint: disable=import-outside-toplevel
+
+    normalized_mac_prefix = mac_normalize(mac)[0:6]
+    oui_company = OUI_MAPPINGS.get(normalized_mac_prefix)
+
+    if not oui_company:
+        raise ValueError(f"There was no matching entry in OUI_MAPPINGS for {normalized_mac_prefix}.")
+
+    return oui_company

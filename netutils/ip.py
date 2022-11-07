@@ -16,7 +16,7 @@ def ipaddress_address(ip: str, attr: str) -> t.Any:
     Returns:
         Returns the value provided by the ipaddress.ip_address attribute provided.
 
-    Example:
+    Examples:
         >>> from netutils.ip import ipaddress_address
         >>> ipaddress_address('10.1.1.1', 'version')
         4
@@ -43,7 +43,7 @@ def ipaddress_interface(ip: str, attr: str) -> t.Any:
     Returns:
         Returns the value provided by the ipaddress.ip_interface attribute provided.
 
-    Example:
+    Examples:
         >>> from netutils.ip import ipaddress_interface
         >>> ipaddress_interface('10.1.1.1/24', 'version')
         4
@@ -67,7 +67,7 @@ def ipaddress_network(ip: str, attr: str) -> t.Any:
     Returns:
         Returns the value provided by the ipaddress.ip_network attribute provided.
 
-    Example:
+    Examples:
         >>> from netutils.ip import ipaddress_network
         >>> ipaddress_network('10.1.1.0/24', 'version')
         4
@@ -91,7 +91,7 @@ def ip_to_hex(ip: str) -> str:
     Returns:
         HEX value of the IP address.
 
-    Example:
+    Examples:
         >>> from netutils.ip import ip_to_hex
         >>> ip_to_hex("10.100.100.100")
         '0a646464'
@@ -111,7 +111,7 @@ def ip_addition(ip: str, val: int) -> str:
     Returns:
         IP address formatted string with the newly added IP address.
 
-    Example:
+    Examples:
         >>> from netutils.ip import ip_addition
         >>> ip_addition("10.100.100.100", 200)
         '10.100.101.44'
@@ -129,7 +129,7 @@ def ip_to_bin(ip: str) -> str:
     Returns:
         Binary value of the IP address.
 
-    Example:
+    Examples:
         >>> from netutils.ip import ip_to_bin
         >>> ip_to_bin("10.100.100.100")
         '00001010011001000110010001100100'
@@ -149,7 +149,7 @@ def ip_subtract(ip: str, val: int) -> str:
     Returns:
         IP address formatted string with the newly subtracted IP address.
 
-    Example:
+    Examples:
         >>> from netutils.ip import ip_subtract
         >>> ip_subtract("10.100.100.100", 200)
         '10.100.99.156'
@@ -167,7 +167,7 @@ def is_ip(ip: str) -> bool:
     Returns:
         The result as to whether or not the string is a valid IP address.
 
-    Example:
+    Examples:
         >>> from netutils.ip import is_ip
         >>> is_ip("10.100.100.256")
         False
@@ -191,7 +191,7 @@ def is_netmask(netmask: str) -> bool:
     Returns:
         True if string is a valid subnet mask. Otherwise, false.
 
-    Example:
+    Examples:
         >>> from netutils.ip import is_netmask
         >>> is_netmask('255.255.255.0')
         True
@@ -215,7 +215,7 @@ def netmask_to_cidr(netmask: str) -> int:
     Returns:
         CIDR representation of subnet mask.
 
-    Example:
+    Examples:
         >>> from netutils.ip import netmask_to_cidr
         >>> netmask_to_cidr("255.255.255.0")
         24
@@ -238,7 +238,7 @@ def cidr_to_netmask(cidr: int) -> str:
     Returns:
         Decimal format representation of CIDR value.
 
-    Example:
+    Examples:
         >>> from netutils.ip import cidr_to_netmask
         >>> cidr_to_netmask(24)
         '255.255.255.0'
@@ -259,7 +259,7 @@ def cidr_to_netmaskv6(cidr: int) -> str:
     Returns:
         Decimal format (IPv6) representation of CIDR value.
 
-    Example:
+    Examples:
         >>> from netutils.ip import cidr_to_netmaskv6
         >>> cidr_to_netmaskv6(24)
         'ffff:ff00::'
@@ -280,7 +280,7 @@ def get_all_host(ip_network: str) -> t.Generator[str, None, None]:
     Returns:
         Generator of usable IP Addresses within network.
 
-    Example:
+    Examples:
         >>> from netutils.ip import get_all_host
         >>> print(list(get_all_host("10.100.100.0/29")))
         ['10.100.100.1', '10.100.100.2', '10.100.100.3', '10.100.100.4', '10.100.100.5', '10.100.100.6']
@@ -298,7 +298,7 @@ def get_broadcast_address(ip_network: str) -> str:
     Returns:
         IP address formatted string with the broadcast IP address in the network.
 
-    Example:
+    Examples:
         >>> from netutils.ip import get_broadcast_address
         >>> get_broadcast_address("10.100.0.0/16")
         '10.100.255.255'
@@ -316,7 +316,7 @@ def get_first_usable(ip_network: str) -> str:
     Returns:
         IP address formatted string with the first usable IP address in the network.
 
-    Example:
+    Examples:
         >>> from netutils.ip import get_first_usable
         >>> get_first_usable("10.100.0.0/16")
         '10.100.0.1'
@@ -337,7 +337,7 @@ def get_peer_ip(ip_interface: str) -> str:
     Returns:
         IP address formatted string with the corresponding peer IP.
 
-    Example:
+    Examples:
         >>> from netutils.ip import get_peer_ip
         >>> get_peer_ip('10.0.0.1/255.255.255.252')
         '10.0.0.2'
@@ -375,7 +375,7 @@ def get_usable_range(ip_network: str) -> str:
     Returns:
         String of usable IP Addresses within network.
 
-    Example:
+    Examples:
         >>> from netutils.ip import get_usable_range
         >>> get_usable_range("10.100.100.0/29")
         '10.100.100.1 - 10.100.100.6'

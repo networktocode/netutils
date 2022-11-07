@@ -1,4 +1,5 @@
 """Utilities for the netutils library."""
+
 import typing as t
 from importlib import import_module
 
@@ -49,6 +50,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "mac_to_int": "mac.mac_to_int",
     "mac_type": "mac.mac_type",
     "mac_normalize": "mac.mac_normalize",
+    "get_oui": "mac.get_oui",
     "compare_type5": "password.compare_type5",
     "compare_type7": "password.compare_type7",
     "decrypt_type7": "password.decrypt_type7",
@@ -63,6 +65,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "delimiter_change": "banner.delimiter_change",
     "uptime_seconds_to_string": "time.uptime_seconds_to_string",
     "uptime_string_to_seconds": "time.uptime_string_to_seconds",
+    "get_napalm_getters": "lib_helpers.get_napalm_getters",
 }
 
 
@@ -72,7 +75,7 @@ def jinja2_convenience_function() -> t.Dict[str, t.Callable[..., t.Any]]:
     Returns:
         Keys are the function names for the Jinja2 filter and values are the function objects.
 
-    Example:
+    Examples:
         >>> from netutils.utils import jinja2_convenience_function
         >>> function_mappings = jinja2_convenience_function()
         >>> function_mappings["get_first_usable"]("192.168.0.0/24")

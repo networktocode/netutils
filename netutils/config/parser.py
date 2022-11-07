@@ -110,7 +110,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         Returns:
             True if line is a comment, else False.
 
-        Example:
+        Examples:
             >>> BaseSpaceConfigParser("interface Ethernet1/1").is_comment("interface Ethernet1/1")
             False
             >>> BaseSpaceConfigParser("!").is_comment("!")
@@ -129,7 +129,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         Returns:
             The non-space and non-comment lines from ``config``.
 
-        Example:
+        Examples:
             >>> config = '''!
             ... aaa group server tacacs+ auth
             ...  server 10.1.1.1
@@ -163,7 +163,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         Returns:
             The number of leading spaces.
 
-        Example:
+        Examples:
             >>> config = '''interface GigabitEthernet1\n description link to ISP'''
             >>> config_line = " description link to ISP"
             >>> indent_level = BaseSpaceConfigParser(config).get_leading_space_count(config_line)
@@ -287,7 +287,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
-        Example:
+        Examples:
             >>> config = (
             ...     "interface Ethernet1/1\n"
             ...     "  vlan 10\n"
@@ -331,6 +331,85 @@ class BaseSpaceConfigParser(BaseConfigParser):
             self._update_config_lines(line)
         return self.config_lines
 
+    @staticmethod
+    def _match_type_check(line: str, pattern: str, match_type: str) -> bool:
+        """Checks pattern for exact match or regex."""
+        if match_type == "exact" and line == pattern:
+            return True
+        if match_type == "startswith" and line.startswith(pattern):
+            return True
+        if match_type == "endswith" and line.endswith(pattern):
+            return True
+        if match_type == "regex" and re.match(pattern, line):
+            return True
+        return False
+
+    def find_all_children(self, pattern: str, match_type: str = "exact") -> t.List[str]:
+        """Returns configuration part for a specific pattern not including parents.
+
+        Args:
+            pattern: pattern that describes parent.
+            match_type (optional): Exact or regex. Defaults to "exact".
+
+        Returns:
+            configuration under that parent pattern.
+
+        Examples:
+            >>> config = '''
+            ... router bgp 45000
+            ...   address-family ipv4 unicast
+            ...    neighbor 192.168.1.2 activate
+            ...    network 172.17.1.0 mask'''
+            >>> bgp_conf = BaseSpaceConfigParser(str(config)).find_all_children(pattern="router bgp", match_type="startswith")
+            >>> print(bgp_conf)
+            ['router bgp 45000', '  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mask']
+        """
+        config = []
+        for cfg_line in self.build_config_relationship():
+            parents = cfg_line.parents[0] if cfg_line.parents else None
+            if (
+                parents
+                and self._match_type_check(parents, pattern, match_type)
+                or self._match_type_check(cfg_line.config_line, pattern, match_type)
+            ):
+                config.append(cfg_line.config_line)
+        return config
+
+    def find_children_w_parents(
+        self, parent_pattern: str, child_pattern: str, match_type: str = "exact"
+    ) -> t.List[str]:
+        """Returns configuration part for a specific pattern including parents and children.
+
+        Args:
+            parent_pattern: pattern that describes parent.
+            child_pattern: pattern that describes child.
+            match_type (optional): Exact or regex. Defaults to "exact".
+
+        Returns:
+            configuration under that parent pattern.
+
+        Examples:
+            >>> config = '''
+            ... router bgp 45000
+            ...   address-family ipv4 unicast
+            ...    neighbor 192.168.1.2 activate
+            ...    network 172.17.1.0 mask'''
+            >>> bgp_conf = BaseSpaceConfigParser(str(config)).find_children_w_parents(parent_pattern="router bgp", child_pattern="  address-family", match_type="regex")
+            >>> print(bgp_conf)
+            ['  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mask']
+        """
+        config = []
+        potential_parents = [
+            elem.parents[0]
+            for elem in self.build_config_relationship()
+            if self._match_type_check(elem.config_line, child_pattern, match_type)
+        ]
+        for cfg_line in self.build_config_relationship():
+            parents = cfg_line.parents[0] if cfg_line.parents else None
+            if parents in potential_parents and self._match_type_check(parents, parent_pattern, match_type):
+                config.append(cfg_line.config_line)
+        return config
+
 
 class BaseBraceConfigParser(BaseConfigParser):
     """Base parser class for config syntax that demarcates using braces."""
@@ -361,7 +440,7 @@ class BaseBraceConfigParser(BaseConfigParser):
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
-        Example:
+        Examples:
             >>> config = '''auth ldap system-auth {
             ...         port ldaps
             ...         servers { ams-lda01.ntc.com }
@@ -405,7 +484,7 @@ class BaseBraceConfigParser(BaseConfigParser):
         Returns:
             The multiline string text that was added to ``self.config_lines``.
 
-        Example:
+        Examples:
             >>> config = (
             ...     'sys syslog {\n'
             ...     '    include "\n'
@@ -566,7 +645,7 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
-        Example:
+        Examples:
             >>> config = '''
             ... interface Ethernet1/1
             ...   vlan 10
@@ -718,7 +797,7 @@ class F5ConfigParser(BaseBraceConfigParser):
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
-        Example:
+        Examples:
             >>> config = '''apm resource webtop-link aShare {
             ...     application-uri http://funshare.example.com
             ...     customization-group a_customization_group
@@ -770,7 +849,7 @@ class F5ConfigParser(BaseBraceConfigParser):
         Returns:
             The multiline string text that was added to ``self.config_lines``.
 
-        Example:
+        Examples:
             config = '''apm resource webtop-link aShare {
                 application-uri http://funshare.example.com
                 customization-group a_customization_group
@@ -860,7 +939,7 @@ class ASAConfigParser(CiscoConfigParser):
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
-        Example:
+        Examples:
             >>> config = '''
             ... interface Management0/0
             ...  management-only
@@ -927,7 +1006,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         Returns:
             True if line has 'end' or 'next', else False.
 
-        Example:
+        Examples:
             >>> FortinetConfigParser("config system virtual-switch").is_end_next("config system virtual-switch")
             False
             >>> FortinetConfigParser("end").is_end_next("end")
@@ -1093,3 +1172,15 @@ class NokiaConfigParser(BaseSpaceConfigParser):
                         config_lines.append(line.rstrip())
             self._config = "\n".join(config_lines)
         return self._config
+
+
+class NetscalerConfigParser(BaseSpaceConfigParser):
+    """Netscaler config parser."""
+
+    comment_chars: t.List[str] = []
+    banner_start: t.List[str] = []
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Netscaler platform doesn't have a banner.")
