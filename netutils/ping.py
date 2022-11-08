@@ -15,9 +15,9 @@ def tcp_ping(ip: str, port: int, timeout: int = 1) -> bool:  # pylint: disable=i
 
     Examples:
         >>> from netutils.ping import tcp_ping
-        >>> tcp_ping("1.1.1.1", 443)
+        >>> tcp_ping("1.1.1.1", 443)  # doctest: +SKIP
         True
-        >>> tcp_ping("1.0.100.0", 27)
+        >>> tcp_ping("1.0.100.0", 27)  # doctest: +SKIP
         False
         >>>
     """
