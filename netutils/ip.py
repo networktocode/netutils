@@ -177,6 +177,27 @@ def is_classfull(ip_network: str) -> bool:
         >>> from netutils.ip import is_classfull
         >>> is_classfull("192.168.0.0/24")
         True
+
+        >>> from jinja2 import Environment
+        >>> from netutils.utils import jinja2_convenience_function
+        >>>
+        >>> env = Environment(trim_blocks=True, lstrip_blocks=True)
+        >>> env.filters.update(jinja2_convenience_function())
+        >>>
+        >>> template_str = \"\"\"
+        ... {%- for net in networks %}
+        ...   {% if net | is_classfull %}
+        ...   network {{ net | ipaddress_network('network_address') }}
+        ...   {% else %}
+        ...   network {{ net | ipaddress_network('network_address') }} mask {{ net | ipaddress_network('netmask') }}
+        ...   {% endif %}
+        ... {% endfor -%}
+        ... \"\"\"
+        >>> template = env.from_string(template_str)
+        >>> result = template.render({"networks": ["192.168.1.0/24", "172.16.1.0/24"]})
+        >>> print(result, end="")
+          network 192.168.1.0
+          network 172.16.1.0 mask 255.255.255.0
     """
     net = ipaddress.ip_network(ip_network)
     # Only IPv4 addresses can be classified as class full
