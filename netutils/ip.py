@@ -158,7 +158,7 @@ def ip_subtract(ip: str, val: int) -> str:
     return str(ipaddress.ip_address(ip) - val)
 
 
-def is_classfull(ip_network: str) -> bool:
+def is_classfull(ip_network: str) -> bool:  # noqa: D300,D301
     """Determines if a CIDR network address is within unicast class full boundaries.
 
        The following class boundaries are checked:
