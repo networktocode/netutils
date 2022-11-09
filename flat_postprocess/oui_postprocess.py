@@ -1,11 +1,17 @@
 """Python code used to postprocess Flat github action data related to OUI mappings."""
 import sys
 import re
+from urllib.request import urlopen
 
 HEX_RE = r"^(?P<hex>[A-Fa-f0-9]{6})\s+\(.*\)[^a-zA-Z0-9]+(?P<company>.*)$"
 OUI_MAPPINGS = {}
 
 if __name__ == "__main__":
+    if len(sys.argv) == 3:
+        with urlopen("https://standards-oui.ieee.org").read().decode("utf-8") as oui_textfile:  # nosec B310
+            with open(sys.argv[1], "w", encoding="utf-8") as oui_mappings:
+                oui_mappings.write(oui_textfile)
+
     with open(sys.argv[1], "r", encoding="utf-8") as oui_file:
         for line in oui_file:
             if re.search(HEX_RE, line):
