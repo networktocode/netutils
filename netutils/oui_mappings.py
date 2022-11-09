@@ -32691,11 +32691,6 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "a88055": "Tuya Smart Inc.",
     "508bb9": "Tuya Smart Inc.",
     "001b1f": "FORCE Technology",
-<<<<<<< HEAD
-    "28d0cb": "Adtran, Inc",
-    "ac51ee": "Adtran, Inc",
-=======
->>>>>>> ce44fc4 (Flat: latest data (2022-11-09T18:26:18.092Z))
     "fc6a1c": "Mellanox Technologies, Inc.",
     "a088c2": "Mellanox Technologies, Inc.",
     "6cacc2": "Samsung Electronics Co.,Ltd",
@@ -32706,12 +32701,9 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "a4d5c2": "Hangzhou Hikvision Digital Technology Co.,Ltd.",
     "0023c7": "AVSystem sp. z o. o.",
     "c4fc22": "NETWORK TECHNOLOGY CO.,LTD.",
-<<<<<<< HEAD
-=======
     "ac51ee": "Adtran Inc",
     "28d0cb": "Adtran Inc",
     "b837b2": "Aruba, a Hewlett Packard Enterprise Company",
     "3868a4": "Samsung Electronics Co.,Ltd",
     "ac1e92": "Samsung Electronics Co.,Ltd",
->>>>>>> ce44fc4 (Flat: latest data (2022-11-09T18:26:18.092Z))
 }
