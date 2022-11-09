@@ -6559,12 +6559,6 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "f83c80": "MITSUMI ELECTRIC CO.,LTD.",
     "d83add": "Raspberry Pi Trading Ltd",
     "70f8ae": "Microsoft Corporation",
-<<<<<<< HEAD
-    "f4a17f": "Co.Ltd",
-    "f42462": "Co., Ltd",
-    "64ec65": "vivo Mobile Communication Co., Ltd.",
-    "b85cee": "Co., Ltd",
-=======
     "f42462": "Co., Ltd",
     "64ec65": "vivo Mobile Communication Co., Ltd.",
     "b85cee": "Co., Ltd",
@@ -6573,7 +6567,6 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "5c76d5": "Nokia",
     "8c7a00": "Nokia",
     "8c7909": "Aruba, a Hewlett Packard Enterprise Company",
->>>>>>> ce44fc4 (Flat: latest data (2022-11-09T18:26:18.092Z))
     "9cffc2": "AVI Systems GmbH",
     "44d878": "Hui Zhou Gaoshengda Technology Co.,LTD",
     "a0d807": "Huawei Device Co., Ltd.",
@@ -13071,11 +13064,8 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "b4cbb8": "Universal Electronics, Inc.",
     "f8d758": "Veratron AG",
     "24fe9a": "CyberTAN Technology Inc.",
-<<<<<<< HEAD
-=======
     "ec8a48": "Arista Networks",
     "e81098": "Aruba, a Hewlett Packard Enterprise Company",
->>>>>>> ce44fc4 (Flat: latest data (2022-11-09T18:26:18.092Z))
     "848094": "Meter, Inc.",
     "10b3d5": "Cisco Systems, Inc",
     "30a2c2": "Huawei Device Co., Ltd.",
@@ -26172,14 +26162,9 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "4831db": "Huawei Device Co., Ltd.",
     "d0a9d3": "EM Microelectronic",
     "147f0f": "Texas Instruments",
-<<<<<<< HEAD
-    "205f3d": "Adtran, Inc",
-    "04f778": "Sony Interactive Entertainment Inc.",
-=======
     "04f778": "Sony Interactive Entertainment Inc.",
     "205f3d": "Adtran Inc",
     "0092a5": "LG Innotek",
->>>>>>> ce44fc4 (Flat: latest data (2022-11-09T18:26:18.092Z))
     "7c8ae1": "CO., LTD. ",
     "54e4a9": "BHR Tech GmbH",
     "208058": "Ciena Corporation",
