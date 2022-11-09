@@ -1,7 +1,7 @@
 ---
 name: "Flat"
 
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   pull_request:
     branches:
       - "main"
@@ -19,7 +19,7 @@ jobs:
       - name: "Check out repo"
         uses: "actions/checkout@v2"
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: "${{ github.event.pull_request.head.sha }}"
       # The Flat Action step. We fetch the data in the http_url and save it as downloaded_filename
       - name: "Fetch data"
         uses: "githubocto/flat@v3"
