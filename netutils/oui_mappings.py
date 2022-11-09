@@ -32,7 +32,6 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "44d791": "HUAWEI TECHNOLOGIES CO.,LTD",
     "8446fe": "HUAWEI TECHNOLOGIES CO.,LTD",
     "d82918": "HUAWEI TECHNOLOGIES CO.,LTD",
-    "d0d003": "Samsung Electronics Co.,LTD",
     "64b21d": "Chengdu Phycom Tech Co., Ltd.",
     "c42996": "Signify B.V.",
     "980637": "IEEE Registration Authority",
@@ -6560,10 +6559,21 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "f83c80": "MITSUMI ELECTRIC CO.,LTD.",
     "d83add": "Raspberry Pi Trading Ltd",
     "70f8ae": "Microsoft Corporation",
+<<<<<<< HEAD
     "f4a17f": "Co.Ltd",
     "f42462": "Co., Ltd",
     "64ec65": "vivo Mobile Communication Co., Ltd.",
     "b85cee": "Co., Ltd",
+=======
+    "f42462": "Co., Ltd",
+    "64ec65": "vivo Mobile Communication Co., Ltd.",
+    "b85cee": "Co., Ltd",
+    "f4a17f": "Co.Ltd",
+    "d0d003": "Samsung Electronics Co.,Ltd",
+    "5c76d5": "Nokia",
+    "8c7a00": "Nokia",
+    "8c7909": "Aruba, a Hewlett Packard Enterprise Company",
+>>>>>>> ce44fc4 (Flat: latest data (2022-11-09T18:26:18.092Z))
     "9cffc2": "AVI Systems GmbH",
     "44d878": "Hui Zhou Gaoshengda Technology Co.,LTD",
     "a0d807": "Huawei Device Co., Ltd.",
@@ -13061,6 +13071,11 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "b4cbb8": "Universal Electronics, Inc.",
     "f8d758": "Veratron AG",
     "24fe9a": "CyberTAN Technology Inc.",
+<<<<<<< HEAD
+=======
+    "ec8a48": "Arista Networks",
+    "e81098": "Aruba, a Hewlett Packard Enterprise Company",
+>>>>>>> ce44fc4 (Flat: latest data (2022-11-09T18:26:18.092Z))
     "848094": "Meter, Inc.",
     "10b3d5": "Cisco Systems, Inc",
     "30a2c2": "Huawei Device Co., Ltd.",
@@ -26157,8 +26172,14 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "4831db": "Huawei Device Co., Ltd.",
     "d0a9d3": "EM Microelectronic",
     "147f0f": "Texas Instruments",
+<<<<<<< HEAD
     "205f3d": "Adtran, Inc",
     "04f778": "Sony Interactive Entertainment Inc.",
+=======
+    "04f778": "Sony Interactive Entertainment Inc.",
+    "205f3d": "Adtran Inc",
+    "0092a5": "LG Innotek",
+>>>>>>> ce44fc4 (Flat: latest data (2022-11-09T18:26:18.092Z))
     "7c8ae1": "CO., LTD. ",
     "54e4a9": "BHR Tech GmbH",
     "208058": "Ciena Corporation",
@@ -31362,7 +31383,6 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "54f294": "Huawei Device Co., Ltd.",
     "245ab5": "Samsung Electronics Co.,Ltd",
     "c0d2dd": "Samsung Electronics Co.,Ltd",
-    "ac1e92": "Samsung Electronics Co.,LTD",
     "0068eb": "HP Inc.",
     "7cb37b": "Qingdao Intelligent&Precise Electronics Co.,Ltd.",
     "484c86": "Huawei Device Co., Ltd.",
@@ -31383,7 +31403,6 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "acbd0b": "Leimac Ltd.",
     "e0ccf8": "Xiaomi Communications Co Ltd",
     "98524a": "Technicolor CH USA Inc.",
-    "3868a4": "Samsung Electronics Co.,LTD",
     "b4a5ac": "GUANGDONG OPPO MOBILE TELECOMMUNICATIONS CORP.,LTD",
     "1c784e": "China Mobile Iot Limited company",
     "843e79": "Shenzhen Belon Technology CO.,LTD",
@@ -32672,8 +32691,11 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "a88055": "Tuya Smart Inc.",
     "508bb9": "Tuya Smart Inc.",
     "001b1f": "FORCE Technology",
+<<<<<<< HEAD
     "28d0cb": "Adtran, Inc",
     "ac51ee": "Adtran, Inc",
+=======
+>>>>>>> ce44fc4 (Flat: latest data (2022-11-09T18:26:18.092Z))
     "fc6a1c": "Mellanox Technologies, Inc.",
     "a088c2": "Mellanox Technologies, Inc.",
     "6cacc2": "Samsung Electronics Co.,Ltd",
@@ -32684,4 +32706,12 @@ OUI_MAPPINGS: typing.Dict[str, str] = {
     "a4d5c2": "Hangzhou Hikvision Digital Technology Co.,Ltd.",
     "0023c7": "AVSystem sp. z o. o.",
     "c4fc22": "NETWORK TECHNOLOGY CO.,LTD.",
+<<<<<<< HEAD
+=======
+    "ac51ee": "Adtran Inc",
+    "28d0cb": "Adtran Inc",
+    "b837b2": "Aruba, a Hewlett Packard Enterprise Company",
+    "3868a4": "Samsung Electronics Co.,Ltd",
+    "ac1e92": "Samsung Electronics Co.,Ltd",
+>>>>>>> ce44fc4 (Flat: latest data (2022-11-09T18:26:18.092Z))
 }
