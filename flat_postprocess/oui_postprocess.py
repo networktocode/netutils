@@ -8,7 +8,7 @@ OUI_MAPPINGS = {}
 
 if __name__ == "__main__":
     if len(sys.argv) == 3:
-        oui_textfile = urlopen("https://standards-oui.ieee.org").read().decode("utf-8")
+        oui_textfile = urlopen("https://standards-oui.ieee.org").read().decode("utf-8")  # nosec B310
         with open(sys.argv[1], "w", encoding="utf-8") as oui_mappings:
             oui_mappings.write(oui_textfile)
 
