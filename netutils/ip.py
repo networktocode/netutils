@@ -158,6 +158,60 @@ def ip_subtract(ip: str, val: int) -> str:
     return str(ipaddress.ip_address(ip) - val)
 
 
+def is_classfull(ip_network: str) -> bool:  # noqa: D300,D301
+    """Determines if a CIDR network address is within unicast class full boundaries.
+
+       The following class boundaries are checked:
+
+       * Class A: 0.0.0.0/8 -> 127.0.0.0/8
+       * Class B: 128.0.0.0/16 -> 191.255.0.0/16
+       * Class C: 192.0.0.0/24 -> 223.255.255.0/24
+
+    Args:
+        ip_network: A network string that can be parsed by ipaddress.ip_network.
+
+    Returns:
+        Whether or not the network falls within class full boundaries.
+
+    Examples:
+        >>> from netutils.ip import is_classfull
+        >>> is_classfull("192.168.0.0/24")
+        True
+
+        >>> from jinja2 import Environment
+        >>> from netutils.utils import jinja2_convenience_function
+        >>>
+        >>> env = Environment(trim_blocks=True, lstrip_blocks=True)
+        >>> env.filters.update(jinja2_convenience_function())
+        >>>
+        >>> template_str = \"\"\"
+        ... {%- for net in networks %}
+        ...   {% if net | is_classfull %}
+        ...   network {{ net | ipaddress_network('network_address') }}
+        ...   {% else %}
+        ...   network {{ net | ipaddress_network('network_address') }} mask {{ net | ipaddress_network('netmask') }}
+        ...   {% endif %}
+        ... {% endfor -%}
+        ... \"\"\"
+        >>> template = env.from_string(template_str)
+        >>> result = template.render({"networks": ["192.168.1.0/24", "172.16.1.0/24"]})
+        >>> print(result, end="")
+          network 192.168.1.0
+          network 172.16.1.0 mask 255.255.255.0
+    """
+    net = ipaddress.ip_network(ip_network)
+    # Only IPv4 addresses can be classified as class full
+    if net.version != 4:
+        return False
+    first_octet = net.network_address.packed[0]
+    netmask = int(net.netmask)
+    return (
+        ((first_octet & 0x80 == 0x00) and (netmask == 0xFF000000))  # Class A
+        or ((first_octet & 0xC0 == 0x80) and (netmask == 0xFFFF0000))  # Class B
+        or ((first_octet & 0xE0 == 0xC0) and (netmask == 0xFFFFFF00))  # Class C
+    )
+
+
 def is_ip(ip: str) -> bool:
     """Verifies whether or not a string is a valid IP address.
 
