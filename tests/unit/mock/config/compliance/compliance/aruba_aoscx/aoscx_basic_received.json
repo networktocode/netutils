@@ -1,0 +1,42 @@
+{
+    "bgp": {
+        "compliant": false,
+        "missing": "router bgp 65533\n    neighbor 10.20.1.9 remote-as 65533\n    neighbor 10.20.1.9 passive\n    address-family ipv4 unicast\n        neighbor 10.20.1.9 activate\n        neighbor 10.20.1.9 route-map test-01 in",
+        "extra": "router bgp 65533\n    neighbor 10.20.1.10 remote-as 65533\n    neighbor 10.20.1.10 passive\n    address-family ipv4 unicast\n        neighbor 10.20.1.10 activate\n        neighbor 10.20.1.10 route-map test-01 in",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "router bgp 65533\n    bgp router-id 10.22.0.2\n    maximum-paths 8\n    timers bgp 1 3\n    distance bgp 20 70\n    neighbor 10.20.1.10 remote-as 65533\n    neighbor 10.20.1.10 passive\n    address-family ipv4 unicast\n        neighbor 10.20.1.10 activate\n        neighbor 10.20.1.10 route-map test-01 in",
+        "intended": "router bgp 65533\n    bgp router-id 10.22.0.2\n    maximum-paths 8\n    timers bgp 1 3\n    distance bgp 20 70\n    neighbor 10.20.1.9 remote-as 65533\n    neighbor 10.20.1.9 passive\n    address-family ipv4 unicast\n        neighbor 10.20.1.9 activate\n        neighbor 10.20.1.9 route-map test-01 in"
+    },
+    "ntp": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": false,
+        "actual": "ntp server 10.20.1.9\nntp server 10.20.1.8\nntp server 10.20.1.7",
+        "intended": "ntp server 10.20.1.7\nntp server 10.20.1.8\nntp server 10.20.1.9"
+    },
+    "banner": {
+        "compliant": false,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "banner motd !\ntest motd banner\n!\nbanner exec !\ntest exec banner\n!",
+        "intended": "banner motd !\n###############################################################################\nThis is a test banner\n###############################################################################\n!\nbanner exec !\n###############################################################################\nThis is a test banner\n###############################################################################\n!"
+    },
+    "acl": {
+        "compliant": false,
+        "missing": "access-list ip test\n    10 deny any 10.10.0.0/255.255.255.128 10.10.0.128/255.255.255.192\n    20 deny any 10.10.0.128/255.255.255.192 10.10.0.0/255.255.255.128",
+        "extra": "access-list ip test\n    10 deny any 10.10.0.128/255.255.255.128 10.10.0.128/255.255.255.192\n    20 deny any 10.10.0.0/255.255.255.192 10.10.0.0/255.255.255.128",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "access-list ip test\n    10 deny any 10.10.0.128/255.255.255.128 10.10.0.128/255.255.255.192\n    20 deny any 10.10.0.0/255.255.255.192 10.10.0.0/255.255.255.128\n    30 permit any any any",
+        "intended": "access-list ip test\n    10 deny any 10.10.0.0/255.255.255.128 10.10.0.128/255.255.255.192\n    20 deny any 10.10.0.128/255.255.255.192 10.10.0.0/255.255.255.128\n    30 permit any any any"
+    }
+}

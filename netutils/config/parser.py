@@ -1184,3 +1184,88 @@ class NetscalerConfigParser(BaseSpaceConfigParser):
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
         raise NotImplementedError("Netscaler platform doesn't have a banner.")
+
+
+class ArubaConfigParser(BaseSpaceConfigParser):
+    """Aruba AOS-CX implementation fo ConfigParser Class."""
+
+    banner_end = "!"
+    comment_chars = ["!"]
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(ArubaConfigParser, self).__init__(config)
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None when banner end is the end of the config text.
+
+        Raises:
+            ValueError: When the parser is unable to identify the End of the Banner.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                self._update_config_lines(line)
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+        raise ValueError("Unable to parse banner end.")
+
+    def _parse_out_comments(self, config: str) -> str:
+        """Remove comments while retaining the banner end.
+
+        Args:
+            config (str): full config as a string.
+
+        Returns:
+            The non-comment lines from ``config``.
+        """
+        config_lines = []
+        # Grab the banner lines from the config.
+        # Remove the comments from the config.
+        # Add the banner back to the config after the "hostname" command.  The banner ALWAYS comes after the hostname.
+        pattern = r"^banner motd ![\s\S]+?!$|^banner exec ![\s\S]+?!$"
+        banner = re.findall(pattern, config, re.MULTILINE)
+        config = re.sub(pattern, "", config, flags=re.MULTILINE)
+        for line in config.splitlines():
+            if line and not self.is_comment(line) and not line.lstrip().startswith("Current configuration:"):
+                config_lines.append(line.rstrip())
+            if line.lstrip().startswith("hostname"):
+                for banner_line in banner:
+                    config_lines.append(banner_line)
+        config = "\n".join(config_lines)
+        return config
+
+    @property
+    def config_lines_only(self) -> str:
+        """Remove spaces and unwanted lines from config lines.
+
+        Returns:
+            The non-space and non-comment lines from ``config``.
+        """
+        if self._config is None:
+            config_lines = []
+            for line in self.config.splitlines():
+                if line and not line.isspace():
+                    config_lines.append(line.rstrip())
+            self._config = "\n".join(config_lines)
+            self._config = self._parse_out_comments(self._config)
+        return self._config
