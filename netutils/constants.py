@@ -1,11 +1,6 @@
 """Constant definitions used in project."""
-import json
-from os.path import dirname
-from netutils import __file__ as netutils_file
+from netutils.data_files.protocol_mappings import PROTOCOLS  # noqa: F401 # pylint:disable=unused-import
 
-# Load the PROTOCOLS json file.
-with open("/".join([dirname(netutils_file), "protocols.json"]), encoding="utf-8") as fh:
-    PROTOCOLS = json.loads(fh.read())
 
 # This variable provides mapping for known interface variants, to the associated long form.
 BASE_INTERFACES = {
