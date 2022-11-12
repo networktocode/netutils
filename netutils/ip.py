@@ -159,7 +159,7 @@ def ip_subtract(ip: str, val: int) -> str:
 
 
 def is_classfull(ip_network: str) -> bool:  # noqa: D300,D301
-    """Determines if a CIDR network address is within unicast class full boundaries.
+    """Determines if a CIDR network address is within unicast classfull boundaries.
 
        The following class boundaries are checked:
 
@@ -171,7 +171,7 @@ def is_classfull(ip_network: str) -> bool:  # noqa: D300,D301
         ip_network: A network string that can be parsed by ipaddress.ip_network.
 
     Returns:
-        Whether or not the network falls within class full boundaries.
+        Whether or not the network falls within classfull boundaries.
 
     Examples:
         >>> from netutils.ip import is_classfull
@@ -200,7 +200,7 @@ def is_classfull(ip_network: str) -> bool:  # noqa: D300,D301
           network 172.16.1.0 mask 255.255.255.0
     """
     net = ipaddress.ip_network(ip_network)
-    # Only IPv4 addresses can be classified as class full
+    # Only IPv4 addresses can be classified as classfull
     if net.version != 4:
         return False
     first_octet = net.network_address.packed[0]
