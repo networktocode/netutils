@@ -1246,7 +1246,7 @@ class ArubaConfigParser(BaseSpaceConfigParser):
         banner = re.findall(pattern, config, re.MULTILINE)
         config = re.sub(pattern, "", config, flags=re.MULTILINE)
         for line in config.splitlines():
-            if line and not self.is_comment(line) and not line.lstrip().startswith("Current configuration:"):
+            if line and not self.is_comment(line):
                 config_lines.append(line.rstrip())
             if line.lstrip().startswith("hostname"):
                 for banner_line in banner:
