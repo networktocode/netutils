@@ -1266,6 +1266,5 @@ class ArubaConfigParser(BaseSpaceConfigParser):
             for line in self.config.splitlines():
                 if line and not line.isspace():
                     config_lines.append(line.rstrip())
-            self._config = "\n".join(config_lines)
-            self._config = self._parse_out_comments(self._config)
+            self._config = self._parse_out_comments("\n".join(config_lines))
         return self._config
