@@ -1239,6 +1239,7 @@ class ArubaConfigParser(BaseSpaceConfigParser):
             The non-comment lines from ``config``.
         """
         # Aruba AOS-CX uses "!" as both comments and the banner delimiter.
+        # Even if another delimiter is used while creating the banner, show run changes the delimiter to use "!".
         # We need to remove comments while retaining the banner delimiter.
 
         config_lines = []
