@@ -319,7 +319,7 @@ COUNT_BITS = [
     {"sent": 0xFFFFFFFFFFFFFFFF, "received": 64},
 ]
 
-IS_CLASSFULL = [
+IS_CLASSFUL = [
     {"sent": {"ip_network": "0.0.0.0/8"}, "received": True},
     {"sent": {"ip_network": "127.0.0.0/8"}, "received": True},
     {"sent": {"ip_network": "128.0.0.0/8"}, "received": False},
@@ -447,6 +447,6 @@ def test_ipaddress_network(data):
     assert ip.ipaddress_network(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", IS_CLASSFULL)
+@pytest.mark.parametrize("data", IS_CLASSFUL)
 def test_is_classful(data):
-    assert ip.is_classfull(**data["sent"]) == data["received"]
+    assert ip.is_classful(**data["sent"]) == data["received"]
