@@ -278,8 +278,8 @@ def diff_network_config(compare_config: str, base_config: str, network_os: str) 
             for parent in line.parents:
                 if parent not in needed_lines:
                     needed_lines.append(parent)
-            needed_lines.append(line.config_line)
-
+            if line.config_line:
+                needed_lines.append(line.config_line)
     return "\n".join(needed_lines)
 
 

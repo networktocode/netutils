@@ -21,8 +21,8 @@
     },
     "banner": {
         "compliant": false,
-        "missing": "",
-        "extra": "",
+        "missing": "banner motd !\n###############################################################################\nThis is a test banner\n###############################################################################\n!\nbanner exec !\n###############################################################################\nThis is a test banner\n###############################################################################\n!",
+        "extra": "banner motd !\ntest motd banner\n!\nbanner exec !\ntest exec banner\n!",
         "cannot_parse": true,
         "unordered_compliant": false,
         "ordered_compliant": false,

@@ -123,6 +123,7 @@ NTCTEMPLATES_LIB_MAPPER = copy.deepcopy(NETMIKO_LIB_MAPPER)
 NTCTEMPLATES_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
 NTCTEMPLATES_LIB_MAPPER["huawei_vrp"] = "huawei_vrp"
 NTCTEMPLATES_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
+NTCTEMPLATES_LIB_MAPPER["aruba_aoscx"] = "aruba_aoscx"
 
 NAPALM_LIB_MAPPER = {
     "asa": "cisco_asa",
@@ -138,6 +139,7 @@ NAPALM_LIB_MAPPER = {
     "panos": "paloalto_panos",
     "sros": "nokia_sros",
     "vyos": "brocade_vyos",
+    "aoscx": "aruba_aoscx",
 }
 
 PYNTC_LIB_MAPPER = {
@@ -174,6 +176,7 @@ ANSIBLE_LIB_MAPPER = {
     "community.network.icx": "ruckus_icx",
     "community.network.sros": "nokia_sros",
     "vyos.vyos.vyos": "vyos",
+    "arubanetworks.aoscx": "aruba_aoscx",
 }
 
 PYATS_LIB_MAPPER = {
@@ -196,6 +199,7 @@ SCRAPLI_LIB_MAPPER = {
     "cisco_nxos": "cisco_nxos",
     "arista_eos": "arista_eos",
     "juniper_junos": "juniper_junos",
+    "aruba_aoscx": "aruba_aoscx",
 }
 
 NAPALM_LIB_MAPPER_REVERSE = {
@@ -211,6 +215,7 @@ NAPALM_LIB_MAPPER_REVERSE = {
     "juniper_junos": "junos",
     "paloalto_panos": "panos",
     "nokia_sros": "sros",
+    "aruba_aoscx": "aoscx",
 }
 
 PYNTC_LIB_MAPPER_REVERSE = {
@@ -247,6 +252,7 @@ ANSIBLE_LIB_MAPPER_REVERSE = {
     "pluribus": "community.network.netvisor",
     "ruckus_icx": "community.network.icx",
     "vyos": "vyos.vyos.vyos",
+    "aruba_aoscx": "arubanetworks.aoscx",
 }
 
 PYATS_LIB_MAPPER_REVERSE = {
@@ -268,6 +274,7 @@ SCRAPLI_LIB_MAPPER_REVERSE = {
     "cisco_nxos": "cisco_nxos",
     "arista_eos": "arista_eos",
     "juniper_junos": "juniper_junos",
+    "aruba_aoscx": "aruba_aoscx",
 }
 
 # Deep copy the reverse, where there is no actual translation happening.
@@ -285,3 +292,4 @@ MAIN_LIB_MAPPER["lenovo_enos"] = "lenovo_enos"
 MAIN_LIB_MAPPER["ruckus_icx"] = "ruckus_icx"
 MAIN_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 MAIN_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
+MAIN_LIB_MAPPER["aruba_aoscx"] = "aruba_aoscx"

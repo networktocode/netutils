@@ -1238,21 +1238,26 @@ class ArubaConfigParser(BaseSpaceConfigParser):
         Returns:
             The non-comment lines from ``config``.
         """
+        # Aruba AOS-CX uses "!" as both comments and the banner delimiter.
+        # We need to remove comments while retaining the banner delimiter.
+
         config_lines = []
-        # Grab the banner lines from the config.
-        # Remove the comments from the config.
-        # Add the banner back to the config after the "hostname" command.  The banner ALWAYS comes after the hostname.
-        pattern = r"^banner motd ![\s\S]+?!$|^banner exec ![\s\S]+?!$"
-        banner = re.findall(pattern, config, re.MULTILINE)
-        config = re.sub(pattern, "", config, flags=re.MULTILINE)
+        banner_started = False
+        banner_ended = False
         for line in config.splitlines():
-            if line and not self.is_comment(line):
+            if self.is_banner_start(line):
+                banner_started = True
+                banner_ended = False
+            if line and banner_started and not banner_ended:
                 config_lines.append(line.rstrip())
-            if line.lstrip().startswith("hostname"):
-                for banner_line in banner:
-                    config_lines.append(banner_line)
-        config = "\n".join(config_lines)
-        return config
+                if line.lstrip().startswith(self.banner_end):
+                    banner_ended = True
+                    banner_started = False
+            else:
+                if line and not self.is_comment(line):
+                    config_lines.append(line.rstrip())
+        full_config = "\n".join(config_lines)
+        return full_config
 
     @property
     def config_lines_only(self) -> str:
