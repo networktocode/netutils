@@ -1,6 +1,7 @@
 | ANSIBLE | | NORMALIZED |
 | ---------- | -- | ------ |
 | arista_eos | → | arista.eos.eos |
+| aruba_aoscx | → | arubanetworks.aoscx |
 | ciena_saos | → | ciena.saos6.saos6 |
 | cisco_asa | → | cisco.asa.asa |
 | cisco_ios | → | cisco.ios.ios |
