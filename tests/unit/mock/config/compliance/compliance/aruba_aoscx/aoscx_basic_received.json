@@ -22,11 +22,11 @@
     "banner": {
         "compliant": false,
         "missing": "banner motd !\n###############################################################################\nThis is a test banner\n###############################################################################\n!\nbanner exec !\n###############################################################################\nThis is a test banner\n###############################################################################\n!",
-        "extra": "banner motd !\ntest motd banner\n!\nbanner exec !\ntest exec banner\n!",
+        "extra": "banner motd !\ntest motd banner\n!",
         "cannot_parse": true,
         "unordered_compliant": false,
         "ordered_compliant": false,
-        "actual": "banner motd !\ntest motd banner\n!\nbanner exec !\ntest exec banner\n!",
+        "actual": "banner motd !\ntest motd banner\n!",
         "intended": "banner motd !\n###############################################################################\nThis is a test banner\n###############################################################################\n!\nbanner exec !\n###############################################################################\nThis is a test banner\n###############################################################################\n!"
     },
     "acl": {

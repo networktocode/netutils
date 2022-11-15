@@ -2,9 +2,6 @@ hostname spine-01
 banner motd !
 test motd banner
 !
-banner exec !
-test exec banner
-!
 ntp server 10.20.1.9
 ntp server 10.20.1.8
 ntp server 10.20.1.7
