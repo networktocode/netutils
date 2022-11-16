@@ -32,7 +32,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "ip_addition": "ip.ip_addition",
     "ip_to_bin": "ip.ip_to_bin",
     "ip_subtract": "ip.ip_subtract",
-    "is_classfull": "ip.is_classfull",
+    "is_classful": "ip.is_classful",
     "is_ip": "ip.is_ip",
     "is_netmask": "ip.is_netmask",
     "netmask_to_cidr": "ip.netmask_to_cidr",

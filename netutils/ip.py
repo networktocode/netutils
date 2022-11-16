@@ -158,8 +158,8 @@ def ip_subtract(ip: str, val: int) -> str:
     return str(ipaddress.ip_address(ip) - val)
 
 
-def is_classfull(ip_network: str) -> bool:  # noqa: D300,D301
-    """Determines if a CIDR network address is within unicast classfull boundaries.
+def is_classful(ip_network: str) -> bool:  # noqa: D300,D301
+    """Determines if a CIDR network address is within unicast classful boundaries.
 
        The following class boundaries are checked:
 
@@ -171,11 +171,11 @@ def is_classfull(ip_network: str) -> bool:  # noqa: D300,D301
         ip_network: A network string that can be parsed by ipaddress.ip_network.
 
     Returns:
-        Whether or not the network falls within classfull boundaries.
+        Whether or not the network falls within classful boundaries.
 
     Examples:
-        >>> from netutils.ip import is_classfull
-        >>> is_classfull("192.168.0.0/24")
+        >>> from netutils.ip import is_classful
+        >>> is_classful("192.168.0.0/24")
         True
 
         >>> from jinja2 import Environment
@@ -186,7 +186,7 @@ def is_classfull(ip_network: str) -> bool:  # noqa: D300,D301
         >>>
         >>> template_str = \"\"\"
         ... {%- for net in networks %}
-        ...   {% if net | is_classfull %}
+        ...   {% if net | is_classful %}
         ...   network {{ net | ipaddress_network('network_address') }}
         ...   {% else %}
         ...   network {{ net | ipaddress_network('network_address') }} mask {{ net | ipaddress_network('netmask') }}
@@ -200,7 +200,7 @@ def is_classfull(ip_network: str) -> bool:  # noqa: D300,D301
           network 172.16.1.0 mask 255.255.255.0
     """
     net = ipaddress.ip_network(ip_network)
-    # Only IPv4 addresses can be classified as classfull
+    # Only IPv4 addresses can be classified as classful
     if net.version != 4:
         return False
     first_octet = net.network_address.packed[0]
