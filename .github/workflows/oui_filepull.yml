@@ -2,26 +2,42 @@
 name: "Flat"
 
 on:  # yamllint disable-line rule:truthy
-  pull_request:
+  push:
     branches:
-      - "main"
+      - "test_ci_flat"
 
 jobs:
   scheduled:
     runs-on: "ubuntu-latest"
+    env:
+      BRANCH_NAME: "flatbot_oui_update"
     steps:
+      # This step creates a branch for the flatbot to propose any changes to the oui file
+      - name: "Create branch for flatbot"
+        uses: "peterjgrainger/action-create-branch@v2.2.0"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          branch: "${{ env.BRANCH_NAME }}"
+      # Check out the repository so it can read the files inside of it and do other operations
+      - name: "Check out repo"
+        uses: "actions/checkout@v2"
+        with:
+          ref: "${{ env.BRANCH_NAME }}"
       # This step installs Deno, which is a new Javascript runtime that improves on Node. Can be used for an optional postprocessing step
       - name: "Setup deno"
         uses: "denoland/setup-deno@main"
         with:
           deno-version: "v1.10.x"
-      # Check out the repository so it can read the files inside of it and do other operations
-      - name: "Check out repo"
-        uses: "actions/checkout@v2"
       # The Flat Action step. We fetch the data in the http_url and save it as downloaded_filename
       - name: "Fetch data"
         uses: "githubocto/flat@v3"
         with:
           http_url: "https://standards-oui.ieee.org"
-          downloaded_filename: "./netutils/oui_mappings.py"
+          downloaded_filename: "./netutils/data_files/oui_mappings.py"
           postprocess: "./flat_postprocess/oui_postprocess.ts"
+      # Create PR from branch created above into develop
+      - name: "Create a Pull Request"
+        run: "gh pr create -B develop -H $BRANCH_NAME --title 'Flatbot OUI File Updates' --body 'Created by Flatbot action'"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
