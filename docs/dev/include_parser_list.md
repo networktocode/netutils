@@ -5,6 +5,7 @@
 | cisco_aireos | netutils.config.parser.AIREOSConfigParser |
 | cisco_asa | netutils.config.parser.ASAConfigParser |
 | cisco_ios | netutils.config.parser.IOSConfigParser |
+| cisco_iosxr | netutils.config.parser.IOSXRConfigParser |
 | cisco_nxos | netutils.config.parser.NXOSConfigParser |
 | citrix_netscaler | netutils.config.parser.NetscalerConfigParser |
 | fortinet_fortios | netutils.config.parser.FortinetConfigParser |
