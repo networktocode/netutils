@@ -1,0 +1,10 @@
+hostname dfw1-core-01
+banner exec ~
+****************
+Network to Code
+New York City, New York
+****************
+~
+ntp
+ server vrf management 10.44.158.184 source Loopback40302
+ server vrf management 10.44.149.8 source Loopback40302
