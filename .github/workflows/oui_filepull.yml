@@ -2,9 +2,8 @@
 name: "Flat"
 
 on:  # yamllint disable-line rule:truthy
-  push:
-    branches:
-      - "test_ci_flat"
+  schedule:
+    - cron: "0 13 15 * *"
 
 jobs:
   scheduled:
