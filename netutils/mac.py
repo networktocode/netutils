@@ -150,7 +150,7 @@ def get_oui(mac: str) -> str:
 
     Examples:
         >>> from netutils.mac import get_oui
-        >>> from netutils.oui_mappings import OUI_MAPPINGS
+        >>> from netutils.data_files.oui_mappings import OUI_MAPPINGS
         >>> get_oui("cc.79.d7.dd.ee.ff")
         'Cisco Systems, Inc'
         >>>
