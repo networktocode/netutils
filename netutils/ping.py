@@ -27,9 +27,8 @@ def tcp_ping(ip: str, port: int, timeout: int = 1) -> bool:  # pylint: disable=i
         sckt.connect((ip, int(port)))  # pylint: disable=invalid-name
         sckt.shutdown(socket.SHUT_RDWR)
         return True
-    # We really only want to know if the TCP connection timed out
-    # or if there was an error resolving the DNS name, if anything
-    # else has happened the error should be raised.
+    # We really only want to know if the TCP connection timed out.
+    # If anything else has happened the error should be raised.
     except socket.timeout:
         return False
     finally:
