@@ -7,6 +7,7 @@ from . import parser  # pylint: disable=relative-beyond-top-level
 parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "arista_eos": parser.EOSConfigParser,
     "cisco_ios": parser.IOSConfigParser,
+    "cisco_iosxr": parser.IOSXRConfigParser,
     "cisco_nxos": parser.NXOSConfigParser,
     "cisco_aireos": parser.AIREOSConfigParser,
     "linux": parser.LINUXConfigParser,

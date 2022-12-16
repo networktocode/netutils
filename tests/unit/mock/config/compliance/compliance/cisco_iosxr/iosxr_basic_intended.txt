@@ -1,0 +1,28 @@
+hostname dfw1-core-01
+banner exec ~
+****************
+Network to Code
+New York City, New York
+****************
+~
+banner motd ~
+*********************!!!IMPORTANT NOTICE!!!************************
+*  This is a restricted system. All connections are logged.       *
+*  If you are not authorized to connect to this system, log       *
+*  off now.                                                       *
+*                                                                 *
+*  Violators will be prosecuted to the full extent of the law.    *
+*******************************************************************
+*                                                                 *
+**********************!!!AVIS IMPORTANT!!!*************************
+*  L'acces au present systeme est limite et tous ses acces sont   *
+*  actuellement utilises. Si vous n'etes pas autorise a vous y    *
+*  raccorder, veuillez quitter ce systeme immediatement.          *
+*                                                                 *
+*  Tout contrevenant sera poursuivi en vertu des mesures prevues  *
+*  par la loi.                                                    *
+*******************************************************************
+~
+ntp
+ server vrf management 10.44.158.184 source Loopback40302
+ server vrf management 10.44.149.8 source Loopback40302

@@ -1,0 +1,6 @@
+router bgp 40302
+ bgp router-id 98.200.230.153
+!
+snmp-server ifindex persist
+snmp-server mibs qosmib persist
+snmp-server vrf management

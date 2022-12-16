@@ -1,0 +1,6 @@
+{
+    "remaining_cfg": "hostname dfw1-core-01\nbanner exec ~\n****************\nNetwork to Code\nNew York City, New York\n****************\n~",
+    "section_not_found": [
+        "bgp"
+    ]
+}
