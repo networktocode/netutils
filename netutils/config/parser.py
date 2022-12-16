@@ -1194,6 +1194,7 @@ class ArubaConfigParser(BaseSpaceConfigParser):
 
     def __init__(self, config: str):
         """Create ConfigParser Object.
+
         Args:
             config (str): The config text to parse.
         """
@@ -1201,10 +1202,13 @@ class ArubaConfigParser(BaseSpaceConfigParser):
 
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
+
         Args:
             config_line: The start of the banner config.
+
         Returns:
             The next configuration line in the configuration text or None when banner end is the end of the config text.
+
         Raises:
             ValueError: When the parser is unable to identify the End of the Banner.
         """
@@ -1227,8 +1231,10 @@ class ArubaConfigParser(BaseSpaceConfigParser):
 
     def _parse_out_comments(self, config: str) -> str:
         """Remove comments while retaining the banner end.
+
         Args:
             config (str): full config as a string.
+
         Returns:
             The non-comment lines from ``config``.
         """
@@ -1257,6 +1263,7 @@ class ArubaConfigParser(BaseSpaceConfigParser):
     @property
     def config_lines_only(self) -> str:
         """Remove spaces and unwanted lines from config lines.
+
         Returns:
             The non-space and non-comment lines from ``config``.
         """
@@ -1279,6 +1286,7 @@ class IOSXRConfigParser(CiscoConfigParser):
 
     def __init__(self, config: str):
         """Create ConfigParser Object.
+
         Args:
             config (str): The config text to parse.
         """
@@ -1287,10 +1295,13 @@ class IOSXRConfigParser(CiscoConfigParser):
 
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
+
         Args:
             config_line: The start of the banner config.
+
         Returns:
             The next configuration line in the configuration text or None
+
         Raises:
             ValueError: When the parser is unable to identify the end of the Banner.
         """
@@ -1325,6 +1336,7 @@ class IOSXRConfigParser(CiscoConfigParser):
 
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
+
         Examples:
             >>> config = (
             ...     "interface Ethernet1/1\n"
