@@ -40,7 +40,7 @@
 | ipaddress_address | netutils.ip.ipaddress_address |
 | ipaddress_interface | netutils.ip.ipaddress_interface |
 | ipaddress_network | netutils.ip.ipaddress_network |
-| is_classfull | netutils.ip.is_classfull |
+| is_classful | netutils.ip.is_classful |
 | is_ip | netutils.ip.is_ip |
 | is_netmask | netutils.ip.is_netmask |
 | netmask_to_cidr | netutils.ip.netmask_to_cidr |
