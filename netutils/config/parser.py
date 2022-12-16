@@ -1184,3 +1184,93 @@ class NetscalerConfigParser(BaseSpaceConfigParser):
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
         raise NotImplementedError("Netscaler platform doesn't have a banner.")
+
+
+class ArubaConfigParser(BaseSpaceConfigParser):
+    """Aruba AOS-CX implementation fo ConfigParser Class."""
+
+    banner_end = "!"
+    comment_chars = ["!"]
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(ArubaConfigParser, self).__init__(config)
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None when banner end is the end of the config text.
+
+        Raises:
+            ValueError: When the parser is unable to identify the End of the Banner.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                self._update_config_lines(line)
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+        raise ValueError("Unable to parse banner end.")
+
+    def _parse_out_comments(self, config: str) -> str:
+        """Remove comments while retaining the banner end.
+
+        Args:
+            config (str): full config as a string.
+
+        Returns:
+            The non-comment lines from ``config``.
+        """
+        # Aruba AOS-CX uses "!" as both comments and the banner delimiter.
+        # Even if another delimiter is used while creating the banner, show run changes the delimiter to use "!".
+        # We need to remove comments while retaining the banner delimiter.
+
+        config_lines = []
+        banner_started = False
+        banner_ended = False
+        for line in config.splitlines():
+            if self.is_banner_start(line):
+                banner_started = True
+                banner_ended = False
+            if line and banner_started and not banner_ended:
+                config_lines.append(line.rstrip())
+                if line.lstrip().startswith(self.banner_end):
+                    banner_ended = True
+                    banner_started = False
+            else:
+                if line and not self.is_comment(line):
+                    config_lines.append(line.rstrip())
+        full_config = "\n".join(config_lines)
+        return full_config
+
+    @property
+    def config_lines_only(self) -> str:
+        """Remove spaces and unwanted lines from config lines.
+
+        Returns:
+            The non-space and non-comment lines from ``config``.
+        """
+        if self._config is None:
+            config_lines = []
+            for line in self.config.splitlines():
+                if line and not line.isspace():
+                    config_lines.append(line.rstrip())
+            self._config = self._parse_out_comments("\n".join(config_lines))
+        return self._config
