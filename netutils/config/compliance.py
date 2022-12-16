@@ -18,6 +18,7 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "nokia_sros": parser.NokiaConfigParser,
     "citrix_netscaler": parser.NetscalerConfigParser,
     "aruba_aoscx": parser.ArubaConfigParser,
+    "extreme_netiron": parser.NetironConfigParser,
 }
 
 # TODO: Once support for 3.7 is dropped, there should be a typing.TypedDict for this which should then also be used

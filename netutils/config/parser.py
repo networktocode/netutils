@@ -1375,3 +1375,23 @@ class IOSXRConfigParser(CiscoConfigParser):
 
             self._update_config_lines(line)
         return self.config_lines
+
+
+class NetironConfigParser(BaseSpaceConfigParser):
+    """Extreme Netiron config parser."""
+
+    comment_chars: t.List[str] = ["#", "!"]
+    banner_start: t.List[str] = []
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(NetironConfigParser, self).__init__(config)
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Netiron platform doesn't have a banner.")
