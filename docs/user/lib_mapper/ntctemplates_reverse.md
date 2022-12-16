@@ -8,6 +8,7 @@
 | allied_telesis_awplus | → | allied_telesis_awplus |
 | apresia_aeos | → | apresia_aeos |
 | arista_eos | → | arista_eos |
+| aruba_aoscx | → | aruba_aoscx |
 | aruba_os | → | aruba_os |
 | aruba_osswitch | → | aruba_osswitch |
 | aruba_procurve | → | aruba_procurve |
