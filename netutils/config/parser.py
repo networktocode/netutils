@@ -1377,6 +1377,26 @@ class IOSXRConfigParser(CiscoConfigParser):
         return self.config_lines
 
 
+class OptiswitchConfigParser(BaseSpaceConfigParser):
+    """MRV Optiswitch config parser."""
+
+    comment_chars: t.List[str] = ["#", "!"]
+    banner_start: t.List[str] = []
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(OptiswitchConfigParser, self).__init__(config)
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("MRV Optiswitch platform doesn't have a banner.")
+
+
 class NetironConfigParser(BaseSpaceConfigParser):
     """Extreme Netiron config parser."""
 
