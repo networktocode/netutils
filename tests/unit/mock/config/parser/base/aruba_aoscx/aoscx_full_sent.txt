@@ -1,4 +1,3 @@
-Current configuration:
 !
 !Version ArubaOS-CX GL.10.09.0010
 !export-password: default
