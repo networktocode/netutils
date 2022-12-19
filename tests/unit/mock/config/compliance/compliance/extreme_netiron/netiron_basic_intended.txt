@@ -1,0 +1,49 @@
+!
+management-vrf MGMT
+default-max-frame-size 9216
+no route-only
+aaa authentication web-server default local
+aaa authentication enable default local radius
+aaa authentication login default local radius
+aaa authentication login privilege-mode
+aaa authorization exec default radius
+radius-server host 10.20.30.40 auth-port 1812 acct-port 1813 authentication-only key 0 secret
+radius-server host 10.20.30.40 auth-port 1812 acct-port 1813 authentication-only key 0 secret
+!
+!
+!
+!
+ntp
+ disable serve
+ source-interface loopback 1
+ server 40.30.20.10
+!
+!
+cam-partition profile multi-service
+enable password-display
+enable telnet authentication
+enable aaa console
+logging host 40.30.20.10
+no logging buffered debugging
+logging console
+username root password 8 secret
+username root history secret
+enable-qos-statistics
+!
+!
+!
+snmp-server
+snmp-server community 2 secret ro 1
+snmp-server community 0 secret ro 1
+snmp-server enable mib np-qos-stat
+snmp-server max-ifindex-per-module 64
+snmp-server access-group 1
+hostname NETIRON-ROUTER
+no transceiver-type-check
+sflow enable
+sflow destination 40.30.20.10 2351
+sflow management-vrf-disable
+sflow polling-interval 2
+ssh access-group ipv6 IPV6-BLOCK-ALL
+ssh access-group 1
+!
