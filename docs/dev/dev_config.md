@@ -65,7 +65,7 @@ There are a series of considerations documented below, when developing a new par
 - Create the class name in the format of `{os_name.title()}ConfigParser`.
     - The classes `__init__` method must keep true to the signature or `__init__(self, config)`.
     - The class must provide a `self.config_lines` that is a list of `ConfigLine` named tuples.
-- Build tests for the `tests/unit/mock/config/compliance/{os_name}/*` and `tests/unit/mock/config/parser/{os_name}/*`.
+- Build tests for the `tests/unit/mock/config/compliance/compliance/{os_name}/*` and `tests/unit/mock/config/parser/base/{os_name}/*`.
 - Add to `netutils/config/compliance.py` the `parser_map`, that maps the name of the parser to the Plugin.
 - Fill out docstrings in the class and methods within the class that describe the parameters and an Example that compiles.
 - The following tips will generally be applicable.
