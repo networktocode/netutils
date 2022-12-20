@@ -1414,4 +1414,4 @@ class NetironConfigParser(BaseSpaceConfigParser):
     @property
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
-        raise NotImplementedError("Netiron platform doesn't have a banner.")
+        raise NotImplementedError("Extreme Netiron platform doesn't have a banner.")
