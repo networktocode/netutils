@@ -47,3 +47,17 @@ sflow polling-interval 2
 ssh access-group ipv6 IPV6-BLOCK-ALL
 ssh access-group 1
 !
+!
+router isis
+ net 49.0001.1932.0300.0001.00
+ no hostname
+ is-type level-2
+ log adjacency
+ address-family ipv4 unicast
+  metric-style wide
+  redistribute static route-map DEMO-ROUTE-MAP
+ exit-address-family
+
+ address-family ipv6 unicast
+ exit-address-family
+!

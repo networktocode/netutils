@@ -1,16 +1,32 @@
-{"aaa": {"actual": "aaa authentication web-server default local\naaa authentication enable default local radius\naaa authentication login default local radius\naaa authentication login privilege-mode\naaa authorization exec default radius",
-         "cannot_parse": true,
-         "compliant": true,
-         "extra": "",
-         "intended": "aaa authentication web-server default local\naaa authentication enable default local radius\naaa authentication login default local radius\naaa authentication login privilege-mode\naaa authorization exec default radius",
-         "missing": "",
-         "ordered_compliant": true,
-         "unordered_compliant": true},
- "syslog": {"actual": "logging host 40.30.20.11\nlogging console",
-            "cannot_parse": true,
-            "compliant": false,
-            "extra": "logging host 40.30.20.11",
-            "intended": "logging host 40.30.20.10\nlogging console",
-            "missing": "logging host 40.30.20.10",
-            "ordered_compliant": false,
-            "unordered_compliant": false}}
+{
+  "aaa": {
+    "actual": "aaa authentication web-server default local\naaa authentication enable default local radius\naaa authentication login default local radius\naaa authentication login privilege-mode\naaa authorization exec default radius",
+    "cannot_parse": true,
+    "compliant": true,
+    "extra": "",
+    "intended": "aaa authentication web-server default local\naaa authentication enable default local radius\naaa authentication login default local radius\naaa authentication login privilege-mode\naaa authorization exec default radius",
+    "missing": "",
+    "ordered_compliant": true,
+    "unordered_compliant": true
+  },
+  "isis": {
+    "actual": "router isis\n net 49.0001.1932.0300.0001.00\n no hostname\n is-type level-2\n log adjacency\n address-family ipv4 unicast\n  metric-style wide\n  redistribute static route-map DEMO-ROUTE-MAP\n exit-address-family\n address-family ipv6 unicast\n exit-address-family",
+    "cannot_parse": true,
+    "compliant": true,
+    "extra": "",
+    "intended": "router isis\n net 49.0001.1932.0300.0001.00\n no hostname\n is-type level-2\n log adjacency\n address-family ipv4 unicast\n  metric-style wide\n  redistribute static route-map DEMO-ROUTE-MAP\n exit-address-family\n address-family ipv6 unicast\n exit-address-family",
+    "missing": "",
+    "ordered_compliant": true,
+    "unordered_compliant": true
+  },
+  "syslog": {
+    "actual": "logging host 40.30.20.11\nlogging console",
+    "cannot_parse": true,
+    "compliant": false,
+    "extra": "logging host 40.30.20.11",
+    "intended": "logging host 40.30.20.10\nlogging console",
+    "missing": "logging host 40.30.20.10",
+    "ordered_compliant": false,
+    "unordered_compliant": false
+  }
+}
