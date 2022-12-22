@@ -419,14 +419,6 @@ class BaseBraceConfigParser(BaseConfigParser):
 
     multiline_delimiters: t.List[str] = []
 
-    def __init__(self, config: str):
-        """Create ConfigParser Object.
-
-        Args:
-            config (str): The config text to parse.
-        """
-        super(BaseBraceConfigParser, self).__init__(config)
-
     @property
     def config_lines_only(self) -> str:
         """Remove trailing spaces and empty lines from config lines.
@@ -1116,14 +1108,6 @@ class NokiaConfigParser(BaseSpaceConfigParser):
         """Demarcate End of Banner char(s)."""
         raise NotImplementedError("Nokia SROS platform doesn't have a banner.")
 
-    def __init__(self, config: str):
-        """Create ConfigParser Object.
-
-        Args:
-            config (str): The config text to parse.
-        """
-        super(NokiaConfigParser, self).__init__(config)
-
     def _is_section_title(self, line: str) -> bool:  # pylint: disable=no-self-use
         """Determine if line is a section title in banner.
 
@@ -1191,14 +1175,6 @@ class ArubaConfigParser(BaseSpaceConfigParser):
 
     banner_end = "!"
     comment_chars = ["!"]
-
-    def __init__(self, config: str):
-        """Create ConfigParser Object.
-
-        Args:
-            config (str): The config text to parse.
-        """
-        super(ArubaConfigParser, self).__init__(config)
 
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
