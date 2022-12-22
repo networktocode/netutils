@@ -18,7 +18,7 @@ def test_tcp_ping(data):
     raised = None
     try:
         assert ping.tcp_ping(**data["sent"]) == data["received"]
-    except Exception as ex:
+    except Exception as ex: # pylint: disable=broad-except
         raised = ex
 
     assert isinstance(raised, data.get("raises", None.__class__))
