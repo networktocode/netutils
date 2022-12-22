@@ -9,7 +9,9 @@
 | cisco_iosxr | netutils.config.parser.IOSXRConfigParser |
 | cisco_nxos | netutils.config.parser.NXOSConfigParser |
 | citrix_netscaler | netutils.config.parser.NetscalerConfigParser |
+| extreme_netiron | netutils.config.parser.NetironConfigParser |
 | fortinet_fortios | netutils.config.parser.FortinetConfigParser |
 | juniper_junos | netutils.config.parser.JunosConfigParser |
 | linux | netutils.config.parser.LINUXConfigParser |
+| mrv_optiswitch | netutils.config.parser.OptiswitchConfigParser |
 | nokia_sros | netutils.config.parser.NokiaConfigParser |
