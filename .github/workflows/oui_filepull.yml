@@ -3,10 +3,10 @@ name: "Flat"
 
 on: # yamllint disable-line rule:truthy
   schedule:
-    - cron: "0 13 15 * *"
+    - cron: "0 8 * * 4"
 
 jobs:
-  scheduled:
+  data_gathering:
     runs-on: "ubuntu-latest"
     env:
       BRANCH_NAME: "OUI_Updates"
@@ -36,6 +36,7 @@ jobs:
           postprocess: "./flat_postprocess/oui_postprocess.ts"
   pr_creation:
     runs-on: "ubuntu-latest"
+    needs: "data_gathering"
     steps:
       # Checkout repo
       - name: "Check out code"
@@ -44,6 +45,6 @@ jobs:
           ref: "OUI_Updates"
       # Create PR from branch created above into develop
       - name: "Create a Pull Request"
-        run: "gh pr create -B test_ci_flat -H OUI_Updates --title 'Flatbot OUI File Updates' --body 'Created by Flatbot action'"
+        run: "gh pr create -B develop -H OUI_Updates --title 'Flatbot OUI File Updates' --body 'Created by Flatbot action'"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
