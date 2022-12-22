@@ -15,13 +15,13 @@ jobs:
       - name: "Check out code"
         uses: "actions/checkout@v2"
         with:
-          ref: develop
+          ref: "develop"
       # Create branch for Flatbot
       - name: "Create Flatbot branch"
-        run: git checkout -b $BRANCH_NAME
+        run: "git checkout -b $BRANCH_NAME"
       # Push new branch so Flatbot can make its commit
       - name: "Push Flatbot branch"
-        run: git push --set-upstream origin $BRANCH_NAME
+        run: "git push --set-upstream origin $BRANCH_NAME"
       # This step installs Deno, which is a new Javascript runtime that improves on Node. Can be used for an optional postprocessing step
       - name: "Setup deno"
         uses: "denoland/setup-deno@main"
@@ -41,7 +41,7 @@ jobs:
       - name: "Check out code"
         uses: "actions/checkout@v2"
         with:
-          ref: OUI_Updates
+          ref: "OUI_Updates"
       # Create PR from branch created above into develop
       - name: "Create a Pull Request"
         run: "gh pr create -B test_ci_flat -H OUI_Updates --title 'Flatbot OUI File Updates' --body 'Created by Flatbot action'"
