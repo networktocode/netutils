@@ -1,7 +1,7 @@
 ---
 name: "Flat"
 
-on:  # yamllint disable-line rule:truthy
+on: # yamllint disable-line rule:truthy
   schedule:
     - cron: "0 13 15 * *"
 
@@ -9,20 +9,19 @@ jobs:
   scheduled:
     runs-on: "ubuntu-latest"
     env:
-      BRANCH_NAME: "flatbot_oui_update"
+      BRANCH_NAME: "OUI_Updates"
     steps:
-      # This step creates a branch for the flatbot to propose any changes to the oui file
-      - name: "Create branch for flatbot"
-        uses: "peterjgrainger/action-create-branch@v2.2.0"
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-        with:
-          branch: "${{ env.BRANCH_NAME }}"
-      # Check out the repository so it can read the files inside of it and do other operations
-      - name: "Check out repo"
+      # Checkout repo
+      - name: "Check out code"
         uses: "actions/checkout@v2"
         with:
-          ref: "${{ env.BRANCH_NAME }}"
+          ref: develop
+      # Create branch for Flatbot
+      - name: "Create Flatbot branch"
+        run: git checkout -b $BRANCH_NAME
+      # Push new branch so Flatbot can make its commit
+      - name: "Push Flatbot branch"
+        run: git push --set-upstream origin $BRANCH_NAME
       # This step installs Deno, which is a new Javascript runtime that improves on Node. Can be used for an optional postprocessing step
       - name: "Setup deno"
         uses: "denoland/setup-deno@main"
@@ -35,8 +34,16 @@ jobs:
           http_url: "https://standards-oui.ieee.org"
           downloaded_filename: "./netutils/data_files/oui_mappings.py"
           postprocess: "./flat_postprocess/oui_postprocess.ts"
+  pr_creation:
+    runs-on: "ubuntu-latest"
+    steps:
+      # Checkout repo
+      - name: "Check out code"
+        uses: "actions/checkout@v2"
+        with:
+          ref: OUI_Updates
       # Create PR from branch created above into develop
       - name: "Create a Pull Request"
-        run: "gh pr create -B develop -H $BRANCH_NAME --title 'Flatbot OUI File Updates' --body 'Created by Flatbot action'"
+        run: "gh pr create -B test_ci_flat -H OUI_Updates --title 'Flatbot OUI File Updates' --body 'Created by Flatbot action'"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
