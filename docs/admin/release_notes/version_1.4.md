@@ -12,10 +12,11 @@
 
 ### Added
 
-- [#163](https://github.com/networktocode/netutils/pull/163) Added is_classfull utility function.
+- [#163](https://github.com/networktocode/netutils/pull/163) Added IP `is_classfull` utility function.
 - [#172](https://github.com/networktocode/netutils/pull/172) Added Aruba AOS-CX Parser.
 - [#177](https://github.com/networktocode/netutils/pull/177) Added IOS-XR Parser.
-- [#182](https://github.com/networktocode/netutils/pull/182) Added parsers for mrv_optiswitch and extreme_netiron.
+- [#182](https://github.com/networktocode/netutils/pull/182) Added Mrv Optiswitch Parser.
+- [#182](https://github.com/networktocode/netutils/pull/182) Added Extreme Netiron Parser.
 
 ### Changed
 
@@ -29,4 +30,4 @@
 
 ### Removed
 
-- [#184](https://github.com/networktocode/netutils/pull/184) Remove unneeded init.
+- [#184](https://github.com/networktocode/netutils/pull/184) Removed redundant `__init__` methods on Parser classes.
