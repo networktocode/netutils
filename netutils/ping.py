@@ -25,7 +25,11 @@ def tcp_ping(ip: str, port: int, timeout: int = 1) -> bool:  # pylint: disable=i
     sckt.settimeout(int(timeout))
     try:
         sckt.connect((ip, int(port)))  # pylint: disable=invalid-name
-        sckt.shutdown(int(timeout))
+        sckt.shutdown(socket.SHUT_RDWR)
         return True
-    except socket.error:
+    # We really only want to know if the TCP connection timed out.
+    # If anything else has happened the error should be raised.
+    except socket.timeout:
         return False
+    finally:
+        sckt.close()
