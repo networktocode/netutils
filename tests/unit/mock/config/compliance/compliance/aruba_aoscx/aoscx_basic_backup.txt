@@ -1,0 +1,23 @@
+hostname spine-01
+banner motd !
+test motd banner
+!
+ntp server 10.20.1.9
+ntp server 10.20.1.8
+ntp server 10.20.1.7
+!
+access-list ip test
+    10 deny any 10.10.0.128/255.255.255.128 10.10.0.128/255.255.255.192
+    20 deny any 10.10.0.0/255.255.255.192 10.10.0.0/255.255.255.128
+    30 permit any any any
+!
+router bgp 65533
+    bgp router-id 10.22.0.2
+    maximum-paths 8
+    timers bgp 1 3
+    distance bgp 20 70
+    neighbor 10.20.1.10 remote-as 65533
+    neighbor 10.20.1.10 passive
+    address-family ipv4 unicast
+        neighbor 10.20.1.10 activate
+        neighbor 10.20.1.10 route-map test-01 in

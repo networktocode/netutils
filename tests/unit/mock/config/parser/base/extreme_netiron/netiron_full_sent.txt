@@ -1,0 +1,632 @@
+lag "LAG-NAME" dynamic id 1
+ ports ethernet 2/8 ethernet 2/21 ethernet 2/24
+ primary-port 2/24
+ deploy
+ port-name "TO-OTHER-DEVICE-P1" ethernet 2/8
+ port-name "TO-OTHER-DEVICE-P2" ethernet 2/21
+ port-name "TO-OTHER-DEVICE-P3" ethernet 2/24
+!
+!
+no spanning-tree
+!
+no dual-mode-default-vlan
+!
+!
+vlan 1 name DEFAULT-VLAN
+ no untagged ethe 1/2 to 1/3 ethe 1/6 ethe 1/8 to 1/10 ethe 1/12 to 1/21 ethe 1/24 ethe 2/1 to 2/5 ethe 2/9 to 2/15 ethe 2/18 to 2/24 ethe 3/2 to 3/5 ethe 3/8 to 3/9 ethe 3/12 to 3/13 ethe 3/16 to 3/19 ethe 3/22 to 3/24
+!
+vlan 7 name Office-Temp
+ tagged ethe 1/2 to 1/3
+ router-interface ve 129
+!
+
+!
+!
+system-max vlan 4095
+system-max virtual-interface 4095
+!
+!
+vrf DEMO
+ rd 9999:1191
+ address-family ipv4
+   route-target export 9999:1191
+   route-target import 9999:1191
+ exit-address-family
+exit-vrf
+!
+
+!
+management-vrf MGMT
+default-max-frame-size 9216
+no route-only
+aaa authentication web-server default local
+aaa authentication enable default local radius
+aaa authentication login default local radius
+aaa authentication login privilege-mode
+aaa authorization exec default radius
+radius-server host 10.20.30.40 auth-port 1812 acct-port 1813 authentication-only key 0 secret
+radius-server host 10.20.30.40 auth-port 1812 acct-port 1813 authentication-only key 0 secret
+!
+!
+!
+!
+ntp
+ disable serve
+ source-interface loopback 1
+ server 40.30.20.10
+!
+!
+cam-partition profile multi-service
+enable password-display
+enable telnet authentication
+enable aaa console
+logging host 40.30.20.10
+no logging buffered debugging
+logging console
+username root password 8 secret
+username root history secret
+enable-qos-statistics
+!
+ip community-list DEFAULT-PREF seq 5 permit 9999:12051
+!
+!
+ip extcommunity-list 99 permit SOO 9999:1234567890
+!
+!
+ip prefix-list DEFAULT-ROUTE seq 1 permit 0.0.0.0/0
+!
+ip prefix-list RIPE-TRANS-PREFIX seq 5 permit 193.200.0.0/19
+!
+
+ip route 193.200.0.0/19  null0
+
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip icmp redirects
+!
+!
+ip router-id 193.203.0.1
+ip dns domain-name example.com
+!
+!
+ipv6 prefix-list V6-DEFAULT-ONLY seq 5 permit ::/0
+ipv6 route 2001:0000::/32 null0
+!
+!
+!
+!
+!
+snmp-server
+snmp-server community 2 secret ro 1
+snmp-server community 0 secret ro 1
+snmp-server enable mib np-qos-stat
+snmp-server max-ifindex-per-module 64
+snmp-server access-group 1
+hostname NETIRON-ROUTER
+no transceiver-type-check
+sflow enable
+sflow destination 40.30.20.10 2351
+sflow management-vrf-disable
+sflow polling-interval 2
+ssh access-group ipv6 IPV6-BLOCK-ALL
+ssh access-group 1
+!
+router isis
+ net 49.0001.1932.0300.0001.00
+ no hostname
+ is-type level-2
+ log adjacency
+ address-family ipv4 unicast
+  metric-style wide
+  redistribute static route-map DEMO-ROUTE-MAP
+ exit-address-family
+
+ address-family ipv6 unicast
+ exit-address-family
+
+!
+!
+!
+ipv6 router ospf
+ area 0.0.0.0
+ redistribute connected
+ redistribute static
+!
+!
+!
+!
+interface loopback 1
+ ip router isis
+ ip address 193.203.0.11/32
+ isis point-to-point
+!
+interface loopback 2
+ port-name IPV6-LOOPBACK
+ ip address 193.203.0.12/32
+ ipv6 address 2001:0000:100::3/128
+ ipv6 ospf area 0.0.0.0
+ ipv6 ospf passive
+!
+!
+interface management 1
+ vrf forwarding MGMT
+ ip address 10.0.0.1/24
+ enable
+!
+interface ethernet 1/1
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/2
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/3
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/4
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/5
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/6
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/7
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/8
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/9
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/10
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/11
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/12
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/13
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/14
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/15
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/16
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/17
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/18
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/19
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/20
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/21
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/22
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 1/23
+ port-name ETHERNET
+ sflow forwarding
+!
+interface ethernet 1/24
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/1
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/2
+ port-name ETHERNET
+ enable
+ load-interval 30
+ sflow forwarding
+!
+interface ethernet 2/5
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/6
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/7
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/8
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/9
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/12
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/13
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/14
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/15
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/16
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/17
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/18
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/19
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/20
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/21
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/22
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/23
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 2/24
+ port-name ETHERNET
+ sflow forwarding
+!
+interface ethernet 3/1
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/2
+ port-name ETHERNET
+ sflow forwarding
+!
+interface ethernet 3/3
+ port-name ETHERNET
+ sflow forwarding
+!
+interface ethernet 3/4
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/5
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/6
+ port-name ASPIRE-NIBBLE
+ enable
+ sflow forwarding
+!
+interface ethernet 3/7
+ port-name ETHERNET
+ sflow forwarding
+!
+interface ethernet 3/8
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/9
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/10
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/11
+ port-name ETHERNET
+ enable
+ mon ethernet 3/18 both
+ sflow forwarding
+!
+interface ethernet 3/12
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/13
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/14
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/15
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/16
+ port-name ETHERNET
+ sflow forwarding
+!
+interface ethernet 3/17
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/18
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/19
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/20
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/21
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/22
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/23
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+interface ethernet 3/24
+ port-name ETHERNET
+ enable
+ sflow forwarding
+!
+!
+interface ve 129
+ port-name OFFICE-TEMP-IF
+ ip address 193.203.1.1/27
+ ip access-group STANDARD-IN-ACL in
+!
+!
+!
+!
+router bgp
+ local-as 9999
+ bfd-enable
+ auto-shutdown-new-neighbors
+ cluster-id 99
+ enforce-first-as
+ neighbor MESH-PEERING peer-group
+ neighbor MESH-PEERING remote-as 9999
+ neighbor MESH-PEERING next-hop-self
+ neighbor MESH-PEERING capability as4 enable
+ neighbor MESH-PEERING password 2 secret
+ neighbor MESH-PEERING update-source loopback 1
+ neighbor MESH-PEERING soft-reconfiguration inbound
+ neighbor 46.36.26.9 remote-as 67890
+ neighbor 46.36.26.9 description REMOTE-PEER
+ neighbor 46.36.26.9 soft-reconfiguration inbound
+
+
+ address-family ipv4 unicast
+ graceful-restart
+ redistribute connected route-map BGP1
+ redistribute static route-map BGP1
+ neighbor 46.24.26.99 default-originate
+ neighbor 46.24.26.99 prefix-list ANYCAST-BGP-IN in
+ neighbor 46.24.26.99 prefix-list DEFAULT-ROUTE out
+ exit-address-family
+
+ address-family ipv4 multicast
+ exit-address-family
+
+ address-family ipv6 unicast
+ redistribute connected
+ redistribute static
+ neighbor 2001:1000:400::1 activate
+ neighbor 2001:1000:400::1 route-reflector-client
+ neighbor 2001:1000:400::1 send-community standard
+ neighbor 2001:1000:400::1 send-community extended
+ exit-address-family
+
+ address-family ipv6 multicast
+ exit-address-family
+
+ address-family vpnv4 unicast
+ exit-address-family
+
+ address-family vpnv6 unicast
+ exit-address-family
+
+ address-family l2vpn vpls
+ exit-address-family
+
+!
+router mpls
+
+
+ mpls-interface ve129
+  ldp-enable
+
+
+
+ vll BYPASS 1227
+  vll-peer 193.203.0.13
+  vlan 143
+   tagged e 2/2
+
+
+
+!
+ipv6 access-list IPV6-BLOCK-ALL
+ deny ipv6 any any
+!
+ipv6 access-list IPV6-STANDARD-IN-ACL
+ deny ipv6 any 2001:db8::/32
+ deny ipv6 any 3ffe::/16
+ deny ipv6 any fec0::/10
+ deny ipv6 any fc00::/7
+ deny ipv6 any ::/8
+ deny ipv6 any 200::/7
+ deny ipv6 2001:db8::/32 any
+ deny ipv6 3ffe::/16 any
+ deny ipv6 fec0::/10 any
+ deny ipv6 fc00::/7 any
+ deny ipv6 ::/8 any
+ deny ipv6 200::/7 any
+ permit ipv6 any any
+!
+!
+access-list 1 deny any
+!
+access-list 123 permit ip any 10.0.0.0 0.255.255.255
+access-list 123 permit ip any 192.168.0.0 0.0.255.255
+access-list 123 permit ip any 172.16.0.0 0.15.255.255
+access-list 123 permit ip 10.0.0.0 0.255.255.255 any
+access-list 123 permit ip 192.168.0.0 0.0.255.255 any
+access-list 123 permit ip 172.16.0.0 0.15.255.255 any
+!
+ip access-list extended STANDARD-IN-ACL
+ deny ip any 10.0.0.0 0.255.255.255
+ deny ip any 192.168.0.0 0.0.255.255
+ deny ip any 172.16.0.0 0.15.255.255
+ deny ip 10.0.0.0 0.255.255.255 any
+ deny ip 192.168.0.0 0.0.255.255 any
+ deny ip 172.16.0.0 0.15.255.255 any
+ permit ip any any
+!
+!
+route-map DEMO-ROUTE-MAP permit 10
+ match protocol bgp
+!
+!
+no lldp advertise link-aggregation ports ethe 1/1 to 1/24 ethe 2/1 to 2/2 ethe 2/5 to 2/9 ethe 2/12 to 2/24 ethe 3/1 to 3/24
+no lldp advertise mac-phy-config-status ports ethe 1/1 to 1/24 ethe 2/1 to 2/2 ethe 2/5 to 2/9 ethe 2/12 to 2/24 ethe 3/1 to 3/24
+lldp advertise management-address ipv4 203.0.113.1 ports ethe 1/1 to 1/24 ethe 2/1 to 2/2 ethe 2/5 to 2/9 ethe 2/12 to 2/24 ethe 3/1 to 3/24
+no lldp advertise max-frame-size ports ethe 1/1 to 1/24 ethe 2/1 to 2/2 ethe 2/5 to 2/9 ethe 2/12 to 2/24 ethe 3/1 to 3/24
+no lldp advertise port-vlan-id ports ethe 1/1 to 1/24 ethe 2/1 to 2/2 ethe 2/5 to 2/9 ethe 2/12 to 2/24 ethe 3/1 to 3/24
+no lldp advertise system-capabilities ports ethe 1/1 to 1/24 ethe 2/1 to 2/2 ethe 2/5 to 2/9 ethe 2/12 to 2/24 ethe 3/1 to 3/24
+lldp enable ports ethe 1/1 to 1/24 ethe 2/1 to 2/2 ethe 2/5 to 2/9 ethe 2/12 to 2/24 ethe 3/1 to 3/24
+lldp run
+!
+!
+ip ssh  include-all-vrf
+!
+!
+!
+end

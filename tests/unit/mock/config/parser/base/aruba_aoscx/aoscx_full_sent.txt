@@ -1,0 +1,489 @@
+!
+!Version ArubaOS-CX GL.10.09.0010
+!export-password: default
+hostname spine-01
+banner motd !
+###############################################################################
+This is a test banner
+###############################################################################
+!
+banner exec !
+###############################################################################
+This is a test banner
+###############################################################################
+!
+user admin group administrators password ciphertext xxxxx
+no ip icmp redirect
+profile leaf
+vrf test
+vrf keepalive
+ntp server 10.20.1.7
+ntp server 10.20.1.8
+ntp server 10.20.1.9
+ntp enable
+!
+!
+!
+!
+!
+ssh server vrf test
+ssh server vrf default
+ssh server vrf keepalive
+ssh server vrf mgmt
+access-list ip test
+    10 deny any 10.10.0.0/255.255.255.128 10.10.0.128/255.255.255.192
+    20 deny any 10.10.0.128/255.255.255.192 10.10.0.0/255.255.255.128
+    30 permit any any any
+access-list ip mgmt
+    10 comment ALLOW SSH, HTTPS, AND SNMP ON HMN SUBNET and CMN
+    20 permit tcp 10.40.0.0/255.255.128.0 any eq ssh
+    30 permit tcp 10.40.0.0/255.255.128.0 any eq https
+    40 permit udp 10.40.0.0/255.255.128.0 any eq snmp
+    50 permit udp 10.40.0.0/255.255.128.0 any eq snmp-trap
+    60 permit tcp 10.10.0.0/255.255.255.128 any eq ssh
+    70 permit tcp 10.10.0.0/255.255.255.128 any eq https
+    80 permit udp 10.10.0.0/255.255.255.128 any eq snmp
+    90 permit udp 10.10.0.0/255.255.255.128 any eq snmp-trap
+    100 comment ALLOW SNMP FROM HMN METALLB SUBNET
+    110 permit udp 10.30.100.0/255.255.255.0 any eq snmp
+    120 permit udp 10.30.100.0/255.255.255.0 any eq snmp-trap
+    130 comment BLOCK SSH, HTTPS, AND SNMP FROM EVERYWHERE ELSE
+    140 deny tcp any any eq ssh
+    150 deny tcp any any eq https
+    160 deny udp any any eq snmp
+    170 deny udp any any eq snmp-trap
+    180 comment ALLOW ANYTHING ELSE
+    190 permit any any any
+access-list ip nmn-hmn
+    10 deny any 10.20.0.0/255.255.128.0 10.40.0.0/255.255.128.0
+    20 deny any 10.40.0.0/255.255.128.0 10.20.0.0/255.255.128.0
+    30 permit any any any
+apply access-list ip mgmt control-plane vrf default
+vlan 1
+vlan 2
+    name test_vlan
+    apply access-list ip nmn-hmn in
+    apply access-list ip nmn-hmn out
+vlan 400
+    name HMN
+    apply access-list ip nmn-hmn in
+    apply access-list ip nmn-hmn out
+vlan 15
+    name CAN
+vlan 69
+    name CMN
+vlan 10
+    name SUN
+spanning-tree
+spanning-tree priority 0
+spanning-tree forward-delay 4
+spanning-tree config-name MST0
+spanning-tree config-revision 1
+interface mgmt
+    shutdown
+    ip dhcp
+interface lag 1 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1-2,4,6-7
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 3 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1-2,4,6-7
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 5 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1-2,4,6-7
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 7 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1-2,4,6-7
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 8 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1-2,4,6-7
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 9 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1-2,4,6-7
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 10 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 10
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 11 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1-2,4,6-7
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 12 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 10
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 13 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1-2,4,6-7
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 14 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 10
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 15 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1-2,4,6-7
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 17 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 6-7
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 19 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1-2,4,6-7
+    lacp mode active
+    lacp fallback
+    spanning-tree port-type admin-edge
+interface lag 151 multi-chassis
+    no shutdown
+    no routing
+    vlan trunk native 1
+    vlan trunk allowed 1-2,4,7
+    lacp mode active
+interface lag 256
+    no shutdown
+    no routing
+    vlan trunk native 1 tag
+    vlan trunk allowed all
+    lacp mode active
+interface 1/1/1
+    no shutdown
+    mtu 9198
+    lag 1
+interface 1/1/3
+    no shutdown
+    mtu 9198
+    lag 3
+interface 1/1/5
+    no shutdown
+    mtu 9198
+    lag 5
+interface 1/1/7
+    no shutdown
+    mtu 9198
+    lag 7
+interface 1/1/8
+    no shutdown
+    mtu 9198
+    lag 8
+interface 1/1/9
+    no shutdown
+    mtu 9198
+    lag 9
+interface 1/1/10
+    no shutdown
+    mtu 9198
+    lag 10
+interface 1/1/11
+    no shutdown
+    mtu 9198
+    lag 11
+interface 1/1/12
+    no shutdown
+    mtu 9198
+    lag 12
+interface 1/1/13
+    no shutdown
+    mtu 9198
+    lag 13
+interface 1/1/14
+    no shutdown
+    mtu 9198
+    lag 14
+interface 1/1/15
+    no shutdown
+    mtu 9198
+    lag 15
+interface 1/1/16
+    no shutdown
+    mtu 9198
+    no routing
+    vlan access 2
+    spanning-tree bpdu-guard
+    spanning-tree port-type admin-edge
+interface 1/1/17
+    no shutdown
+    mtu 9198
+    lag 17
+interface 1/1/19
+    no shutdown
+    mtu 9198
+    lag 19
+interface 1/1/47
+    no shutdown
+    vrf attach keepalive
+    description VSX keepalive
+    ip address 192.168.200.0/31
+interface 1/1/48
+    no shutdown
+    mtu 9198
+    lag 151
+interface 1/1/51
+    no shutdown
+    mtu 9198
+    description vsx isl
+    lag 256
+interface 1/1/52
+    no shutdown
+    mtu 9198
+    description vsx isl
+    lag 256
+interface 1/1/55
+    no shutdown
+    vrf attach test
+    ip mtu 9198
+    ip address 192.168.10.5/31
+    ip ospf 2 area 0.0.0.0
+    ip ospf network point-to-point
+interface 1/1/56
+    no shutdown
+    vrf attach test
+    ip mtu 9198
+    ip address 192.168.10.1/31
+    ip ospf 2 area 0.0.0.0
+    ip ospf network point-to-point
+interface loopback 0
+    ip address 10.22.0.2/32
+    ip ospf 1 area 0.0.0.0
+interface vlan 1
+    ip mtu 9198
+    ip address 10.1.0.2/16
+    active-gateway ip mac 12:00:00:00:6b:00
+    active-gateway ip 10.1.0.1
+    ip helper-address 10.50.100.222
+    ip ospf 1 area 0.0.0.0
+    ip ospf passive
+interface vlan 2
+    ip mtu 9198
+    ip address 10.20.0.2/17
+    active-gateway ip mac 12:00:00:00:6b:00
+    active-gateway ip 10.20.0.1
+    ip helper-address 10.50.100.222
+    ip ospf 1 area 0.0.0.0
+interface vlan 400
+    ip mtu 9198
+    ip address 10.40.0.2/17
+    active-gateway ip mac 12:00:00:00:6b:00
+    active-gateway ip 10.40.0.1
+    ip helper-address 10.30.100.222
+    ip ospf 1 area 0.0.0.0
+    ip ospf passive
+interface vlan 15
+    vrf attach test
+    ip mtu 9198
+    ip address 10.10.0.130/26
+    active-gateway ip mac 12:00:00:00:6b:00
+    active-gateway ip 10.10.0.129
+    ip ospf 2 area 0.0.0.0
+interface vlan 69
+    vrf attach test
+    ip mtu 9198
+    ip address 10.10.0.2/25
+    active-gateway ip mac 12:00:00:00:6b:00
+    active-gateway ip 10.10.0.1
+    ip ospf 2 area 0.0.0.0
+vsx
+    system-mac 02:00:00:00:01:00
+    inter-switch-link lag 256
+    role primary
+    keepalive peer 192.168.200.1 source 192.168.200.0 vrf keepalive
+    linkup-delay-timer 600
+    vsx-sync vsx-global
+snmp-server vrf default
+snmpv3 user testuser auth md5 auth-pass ciphertext xxxxx priv des priv-pass ciphertext xxxxx
+ip dns server-address 10.50.100.225
+ip prefix-list pl-test-01 seq 20 permit 10.10.0.128/26 ge 26 
+ip prefix-list pl-cmn seq 10 permit 10.10.0.0/25 ge 25 
+ip prefix-list pl-test-02 seq 30 permit 10.30.100.0/24 ge 24 
+ip prefix-list pl-test-03 seq 40 permit 10.50.100.0/24 ge 24 
+ip prefix-list pl-test-04 seq 10 permit 10.50.100.60/32 ge 32 le 32 
+ip prefix-list pl-test-04 seq 20 permit 10.30.100.60/32 ge 32 le 32 
+!
+!
+!
+!
+route-map test-01 permit seq 10
+     match ip address prefix-list pl-test-04
+     match ip next-hop 10.20.1.7
+     set local-preference 1000
+route-map test-01 permit seq 20
+     match ip address prefix-list pl-test-04
+     match ip next-hop 10.20.1.8
+     set local-preference 1100
+route-map test-01 permit seq 30
+     match ip address prefix-list pl-test-04
+     match ip next-hop 10.20.1.9
+     set local-preference 1200
+route-map test-01 permit seq 40
+     match ip address prefix-list pl-test-02
+     set ip next-hop 10.40.1.14
+route-map test-01 permit seq 50
+     match ip address prefix-list pl-test-03
+     set ip next-hop 10.20.1.9
+route-map test-01-test permit seq 10
+     match ip address prefix-list pl-test-01
+     set ip next-hop 10.10.0.138
+route-map test-01-test permit seq 20
+     match ip address prefix-list pl-cmn
+route-map test-02 permit seq 10
+     match ip address prefix-list pl-test-04
+     match ip next-hop 10.20.1.7
+     set local-preference 1000
+route-map test-02 permit seq 20
+     match ip address prefix-list pl-test-04
+     match ip next-hop 10.20.1.8
+     set local-preference 1100
+route-map test-02 permit seq 30
+     match ip address prefix-list pl-test-04
+     match ip next-hop 10.20.1.9
+     set local-preference 1200
+route-map test-02 permit seq 40
+     match ip address prefix-list pl-test-02
+     set ip next-hop 10.40.1.12
+route-map test-02 permit seq 50
+     match ip address prefix-list pl-test-03
+     set ip next-hop 10.20.1.8
+route-map test-02-test permit seq 10
+     match ip address prefix-list pl-test-01
+     set ip next-hop 10.10.0.137
+route-map test-02-test permit seq 20
+     match ip address prefix-list pl-cmn
+route-map test-03 permit seq 10
+     match ip address prefix-list pl-test-04
+     match ip next-hop 10.20.1.7
+     set local-preference 1000
+route-map test-03 permit seq 20
+     match ip address prefix-list pl-test-04
+     match ip next-hop 10.20.1.8
+     set local-preference 1100
+route-map test-03 permit seq 30
+     match ip address prefix-list pl-test-04
+     match ip next-hop 10.20.1.9
+     set local-preference 1200
+route-map test-03 permit seq 40
+     match ip address prefix-list pl-test-02
+     set ip next-hop 10.40.1.10
+route-map test-03 permit seq 50
+     match ip address prefix-list pl-test-03
+     set ip next-hop 10.20.1.7
+route-map test-03-test permit seq 10
+     match ip address prefix-list pl-test-01
+     set ip next-hop 10.10.0.136
+route-map test-03-test permit seq 20
+     match ip address prefix-list pl-cmn
+!
+router ospf 2 vrf test
+    router-id 10.22.0.2
+    default-information originate
+    area 0.0.0.0
+router ospf 1
+    router-id 10.22.0.2
+    redistribute bgp
+    area 0.0.0.0
+router bgp 65533
+    bgp router-id 10.22.0.2
+    maximum-paths 8
+    timers bgp 1 3
+    distance bgp 20 70
+    neighbor 10.20.0.3 remote-as 65533
+    neighbor 10.20.1.7 remote-as 65533
+    neighbor 10.20.1.7 passive
+    neighbor 10.20.1.8 remote-as 65533
+    neighbor 10.20.1.8 passive
+    neighbor 10.20.1.9 remote-as 65533
+    neighbor 10.20.1.9 passive
+    address-family ipv4 unicast
+        neighbor 10.20.0.3 activate
+        neighbor 10.20.1.7 activate
+        neighbor 10.20.1.7 route-map test-03 in
+        neighbor 10.20.1.8 activate
+        neighbor 10.20.1.8 route-map test-02 in
+        neighbor 10.20.1.9 activate
+        neighbor 10.20.1.9 route-map test-01 in
+    exit-address-family
+!
+    vrf test
+        bgp router-id 10.22.0.2
+        maximum-paths 8
+        timers bgp 1 3
+        distance bgp 20 70
+        neighbor 10.10.0.3 remote-as 65533
+        neighbor 10.10.0.22 remote-as 65532
+        neighbor 10.10.0.22 passive
+        neighbor 10.10.0.23 remote-as 65532
+        neighbor 10.10.0.23 passive
+        neighbor 10.10.0.24 remote-as 65532
+        neighbor 10.10.0.24 passive
+        address-family ipv4 unicast
+            neighbor 10.10.0.3 activate
+            neighbor 10.10.0.22 activate
+            neighbor 10.10.0.22 route-map test-03-test in
+            neighbor 10.10.0.23 activate
+            neighbor 10.10.0.23 route-map test-02-test in
+            neighbor 10.10.0.24 activate
+            neighbor 10.10.0.24 route-map test-01-test in
+        exit-address-family
+!
+https-server vrf test
+https-server vrf default
+https-server vrf mgmt

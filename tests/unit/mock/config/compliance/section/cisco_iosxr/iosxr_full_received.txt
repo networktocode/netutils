@@ -1,0 +1,8 @@
+tacacs source-interface Loopback40302 vrf management
+aaa accounting commands default start-stop group AUTH none
+aaa group server tacacs+ AUTH
+ vrf management
+ server-private 10.44.154.151 port 49
+  key * *
+aaa authorization commands default group AUTH none
+aaa authentication login default group AUTH local

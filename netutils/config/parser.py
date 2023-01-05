@@ -419,14 +419,6 @@ class BaseBraceConfigParser(BaseConfigParser):
 
     multiline_delimiters: t.List[str] = []
 
-    def __init__(self, config: str):
-        """Create ConfigParser Object.
-
-        Args:
-            config (str): The config text to parse.
-        """
-        super(BaseBraceConfigParser, self).__init__(config)
-
     @property
     def config_lines_only(self) -> str:
         """Remove trailing spaces and empty lines from config lines.
@@ -1116,14 +1108,6 @@ class NokiaConfigParser(BaseSpaceConfigParser):
         """Demarcate End of Banner char(s)."""
         raise NotImplementedError("Nokia SROS platform doesn't have a banner.")
 
-    def __init__(self, config: str):
-        """Create ConfigParser Object.
-
-        Args:
-            config (str): The config text to parse.
-        """
-        super(NokiaConfigParser, self).__init__(config)
-
     def _is_section_title(self, line: str) -> bool:  # pylint: disable=no-self-use
         """Determine if line is a section title in banner.
 
@@ -1184,3 +1168,210 @@ class NetscalerConfigParser(BaseSpaceConfigParser):
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
         raise NotImplementedError("Netscaler platform doesn't have a banner.")
+
+
+class ArubaConfigParser(BaseSpaceConfigParser):
+    """Aruba AOS-CX implementation fo ConfigParser Class."""
+
+    banner_end = "!"
+    comment_chars = ["!"]
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None when banner end is the end of the config text.
+
+        Raises:
+            ValueError: When the parser is unable to identify the End of the Banner.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                self._update_config_lines(line)
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+        raise ValueError("Unable to parse banner end.")
+
+    def _parse_out_comments(self, config: str) -> str:
+        """Remove comments while retaining the banner end.
+
+        Args:
+            config (str): full config as a string.
+
+        Returns:
+            The non-comment lines from ``config``.
+        """
+        # Aruba AOS-CX uses "!" as both comments and the banner delimiter.
+        # Even if another delimiter is used while creating the banner, show run changes the delimiter to use "!".
+        # We need to remove comments while retaining the banner delimiter.
+
+        config_lines = []
+        banner_started = False
+        banner_ended = False
+        for line in config.splitlines():
+            if self.is_banner_start(line):
+                banner_started = True
+                banner_ended = False
+            if line and banner_started and not banner_ended:
+                config_lines.append(line.rstrip())
+                if line.lstrip().startswith(self.banner_end):
+                    banner_ended = True
+                    banner_started = False
+            else:
+                if line and not self.is_comment(line):
+                    config_lines.append(line.rstrip())
+        full_config = "\n".join(config_lines)
+        return full_config
+
+    @property
+    def config_lines_only(self) -> str:
+        """Remove spaces and unwanted lines from config lines.
+
+        Returns:
+            The non-space and non-comment lines from ``config``.
+        """
+        if self._config is None:
+            config_lines = []
+            for line in self.config.splitlines():
+                if line and not line.isspace():
+                    config_lines.append(line.rstrip())
+            self._config = self._parse_out_comments("\n".join(config_lines))
+        return self._config
+
+
+class IOSXRConfigParser(CiscoConfigParser):
+    """IOS-XR config parser."""
+
+    comment_chars: t.List[str] = ["!"]
+    banner_start: t.List[str] = ["banner "]
+
+    regex_banner = re.compile(r"^banner\s+\S+\s+(?P<banner_delimiter>\S)")
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        self.delimiter = ""
+        super(IOSXRConfigParser, self).__init__(config)
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None
+
+        Raises:
+            ValueError: When the parser is unable to identify the end of the Banner.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                if line.endswith(self.delimiter):
+                    banner, end, _ = line.rpartition(self.delimiter)
+                    line = banner.rstrip() + end
+                self._update_config_lines(line)
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+
+        raise ValueError("Unable to parse banner end.")
+
+    def set_delimiter(self, config_line: str) -> None:
+        """Find delimiter character in banner and set self.delimiter to be it."""
+        banner_parsed = self.regex_banner.match(config_line)
+        if banner_parsed and "banner_delimiter" in banner_parsed.groupdict():
+            self.delimiter = banner_parsed.groupdict()["banner_delimiter"]
+            return None
+        raise ValueError("Unable to find banner delimiter.")
+
+    def build_config_relationship(self) -> t.List[ConfigLine]:
+        r"""Parse text tree of config lines and their parents.
+
+        Examples:
+            >>> config = (
+            ...     "interface Ethernet1/1\n"
+            ...     "  vlan 10\n"
+            ...     "  no shutdown"
+            ...     "interface Ethernet1/2\n"
+            ...     "  shutdown\n"
+            ... )
+            >>> config_tree = IOSXRConfigParser(config)
+            >>> config_tree.build_config_relationship() == \
+            ... [
+            ...     ConfigLine(config_line='interface Ethernet1/1', parents=()),
+            ...     ConfigLine(config_line='  vlan 10', parents=('interface Ethernet1/1',)),
+            ...     ConfigLine(config_line='  no shutdowninterface Ethernet1/2', parents=('interface Ethernet1/1',)),
+            ...     ConfigLine(config_line='  shutdown', parents=('interface Ethernet1/1',))
+            ... ]
+            True
+        """
+        for line in self.generator_config:
+            if not line[0].isspace():
+                self._current_parents = ()
+                if self.is_banner_start(line):
+                    if not self.delimiter:
+                        self.set_delimiter(line)
+                    line = self._build_banner(line)  # type: ignore
+            else:
+                previous_config = self.config_lines[-1]
+                self._current_parents = (previous_config.config_line,)
+                self.indent_level = self.get_leading_space_count(line)
+                line = self._build_nested_config(line)  # type: ignore
+
+            if line is None:
+                break
+            elif self.is_banner_start(line):
+                line = self._build_banner(line)  # type: ignore
+
+            self._update_config_lines(line)
+        return self.config_lines
+
+
+class OptiswitchConfigParser(BaseSpaceConfigParser):
+    """MRV Optiswitch config parser."""
+
+    comment_chars: t.List[str] = ["#", "!"]
+    banner_start: t.List[str] = []
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("MRV Optiswitch platform doesn't have a banner.")
+
+
+class NetironConfigParser(BaseSpaceConfigParser):
+    """Extreme Netiron config parser."""
+
+    comment_chars: t.List[str] = ["#", "!"]
+    banner_start: t.List[str] = []
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Extreme Netiron platform doesn't have a banner.")
