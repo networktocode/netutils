@@ -23,7 +23,8 @@ def test_tcp_ping(data):
     with mock.patch("netutils.ping.socket.socket") as socket_mock:
         instance = socket_mock.return_value
         instance.connect.side_effect = data.get("raises")
-        if raised := data["received"].get("raised"):
+        raised = data["received"].get("raised")
+        if raised:
             pytest.raises(raised, ping.tcp_ping, **data["sent"])
         else:
             assert ping.tcp_ping(**data["sent"]) == data["received"]["retval"]
