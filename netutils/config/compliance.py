@@ -7,6 +7,7 @@ from . import parser  # pylint: disable=relative-beyond-top-level
 parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "arista_eos": parser.EOSConfigParser,
     "cisco_ios": parser.IOSConfigParser,
+    "cisco_iosxr": parser.IOSXRConfigParser,
     "cisco_nxos": parser.NXOSConfigParser,
     "cisco_aireos": parser.AIREOSConfigParser,
     "linux": parser.LINUXConfigParser,
@@ -16,6 +17,9 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "fortinet_fortios": parser.FortinetConfigParser,
     "nokia_sros": parser.NokiaConfigParser,
     "citrix_netscaler": parser.NetscalerConfigParser,
+    "aruba_aoscx": parser.ArubaConfigParser,
+    "mrv_optiswitch": parser.OptiswitchConfigParser,
+    "extreme_netiron": parser.NetironConfigParser,
 }
 
 # TODO: Once support for 3.7 is dropped, there should be a typing.TypedDict for this which should then also be used
@@ -277,8 +281,8 @@ def diff_network_config(compare_config: str, base_config: str, network_os: str) 
             for parent in line.parents:
                 if parent not in needed_lines:
                     needed_lines.append(parent)
-            needed_lines.append(line.config_line)
-
+            if line.config_line:
+                needed_lines.append(line.config_line)
     return "\n".join(needed_lines)
 
 

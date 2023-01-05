@@ -1,0 +1,77 @@
+! version 2_1_10
+!
+rsyslog 10.1.1.4
+!
+hostname MRV-OS904-1
+!
+service advanced-vty
+service password-encryption
+!
+line vty
+ exec-timeout global 90
+!
+port media-select copper 1-2
+!
+port description 1 TO-CUSTOMER
+port description 2 TO-POP
+port state disable 3-4
+no port advertise speed 1000 duplex half 1
+no port advertise speed 1000 duplex full 1
+port speed 100 1-2
+port duplex full 1-2
+!
+port flood-limiting rate 10m 1
+port flood-limiting unknown-unicast 1
+port flood-limiting multicast 1
+port flood-limiting broadcast 1
+!
+port tag-outbound-mode hybrid 1-2 1737
+!
+interface vlan vif416
+ name CONTROL-VL
+ tag 416
+ ip 10.1.1.91/24
+ ports 2
+ management ssh 10.0.0.0/8
+ management telnet 10.0.0.0/8
+ management tftp 10.0.0.0/8
+ management snmp 10.0.0.0/8
+!
+interface vlan vif1738
+ name SERVICE
+ tag 1738
+ ports 1-2
+!
+ip route 10.0.0.0/8 10.1.1.1
+ip route 19.23.8.25/32 10.1.1.1
+!
+ntp
+ server 10.1.1.2
+ enable
+!
+ingress-counters set1 port 1 tag all
+!
+password long-mode
+!
+radius-server host 10.1.1.2 key ASU4602O551PTV6
+radius-server host 10.1.1.15 key ASU4602O551PTV6
+!
+aaa
+ authentication login default local radius
+!
+snmp
+ location dc1
+ community 10 read-only 10.0.0.0/8 secret
+ authtrap
+ trapsess 10.1.1.2 2 secret
+ trapsess 10.1.1.15 2 secret
+!
+fan temperature 30 27
+!
+lldp
+ port 1 receive
+ port 2 receive
+ port 3 receive
+ port 4 receive
+ enable
+!

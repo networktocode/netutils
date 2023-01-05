@@ -1,0 +1,10 @@
+hostname dfw1-core-01
+clock timezone EST America/NewYork
+logging trap informational
+logging archive
+ device harddisk
+ severity debugging
+ file-size 100
+ frequency daily
+ archive-size 1500
+ archive-length 6
