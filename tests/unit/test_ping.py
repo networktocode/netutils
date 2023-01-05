@@ -1,10 +1,11 @@
 """Test for the ping based functions."""
 
 import socket
+from unittest import mock
+
 import pytest
 
 from netutils import ping
-from unittest import mock
 
 ping_data = [
     {"sent": {"ip": "1.1.1.1", "port": 443}, "received": {"retval": True}},
