@@ -35,6 +35,32 @@ def _get_bytes_mapping() -> t.Dict[str, t.Dict[str, int]]:
 BYTES_MAPPING = _get_bytes_mapping()
 
 
+def _normalize_bw(speed: str) -> str:
+    per_second_mapping = {
+        "b": "bps",
+        "Kb": "Kbps",
+        "Mb": "Mbps",
+        "Gb": "Gbps",
+        "Tb": "Tbps",
+        "Pb": "Pbps",
+        "Eb": "Ebps",
+        "Zb": "Zbps",
+        "B": "Bps",
+        "KB": "KBps",
+        "MB": "MBps",
+        "GB": "GBps",
+        "TB": "TBps",
+        "PB": "PBps",
+        "EB": "EBps",
+        "ZB": "ZBps",
+    }
+    speed = speed.replace(" ", "")
+    tail = speed.lstrip(r"0123456789")
+    head = speed[: -len(tail)].rstrip()
+    tail = per_second_mapping.get(tail, tail)
+    return f"{head}{tail}"
+
+
 def name_to_bits(speed: str) -> int:
     """Method to convert a short bandwidth name to int value in bps.
 
@@ -52,10 +78,12 @@ def name_to_bits(speed: str) -> int:
         33600
         >>> name_to_bits("2.5Gbps")
         2500000000
+        >>> name_to_bits('100 MB')
+        800000000
     """
     if not isinstance(speed, str):
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
-    speed = speed.replace(" ", "")
+    speed = _normalize_bw(speed)
     match = re.match(r"([0-9.]+)([A-Z]?[bB]ps)", speed)
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
@@ -84,10 +112,12 @@ def name_to_bytes(speed: str) -> float:
         12500000.0
         >>> name_to_bytes("100GBps")
         100000000000.0
+        >>> name_to_bytes('100 GB')
+        100000000000.0
     """
     if not isinstance(speed, str):
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
-    speed = speed.replace(" ", "")
+    speed = _normalize_bw(speed)
     match = re.match(r"([0-9.]+)([A-Z]?[bB]ps)", speed)
     if not match:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
