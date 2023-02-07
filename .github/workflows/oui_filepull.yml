@@ -11,6 +11,8 @@ jobs:
     env:
       BRANCH_NAME: "OUI_Updates"
     steps:
+      - name: "Delete existing branch"
+        run: "git branch -D $BRANCH_NAME || true"
       # Checkout repo
       - name: "Check out code"
         uses: "actions/checkout@v2"
