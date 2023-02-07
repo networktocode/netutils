@@ -68,6 +68,7 @@ exclude = '''
     | buck-out
     | build
     | dist
+    | data_files  # This is ran via black within the flatbot process, redundant and slow otherwise
   )/
   | settings.py     # This is where you define files that should not be stylized by black
                      # the root of the project

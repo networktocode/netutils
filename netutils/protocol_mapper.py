@@ -15,9 +15,9 @@ def _number_to_name_mapper(proto: str) -> t.Dict[int, str]:
     """
     proto_num_to_name = {}
 
-    for item in PROTOCOLS:
-        if proto.lower() in PROTOCOLS[item]["protocols"]:
-            proto_num_to_name[PROTOCOLS[item]["port_number"]] = item.upper()
+    for key, value in PROTOCOLS.items():
+        if proto.lower() in value["protocols"]:
+            proto_num_to_name[value["port_number"]] = key.upper()
 
     return proto_num_to_name
 
