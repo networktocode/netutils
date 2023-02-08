@@ -8,6 +8,14 @@
 - Fix and cleanup tests and parser information.
 - Fix tcp_ping behavior.
 
+## [v1.4.1] - 2023-02
+
+### Changed
+
+- [#171](https://github.com/networktocode/netutils/pull/171) Allow protocol mapper to be auto-generated.
+- [#197](https://github.com/networktocode/netutils/pull/197) Prepend OUI Flatbot step to delete existing branch.
+- [#200](https://github.com/networktocode/netutils/pull/200) Allow bandwith to be represented without "ps" in bandwidth.
+
 ## [v1.4.0] - 2023-01
 
 ### Added
