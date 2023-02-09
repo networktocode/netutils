@@ -1,5 +1,5 @@
-# BGP ASNs
+# Passwords
 
-::: netutils.asn
+::: netutils.password
     options:
         show_submodules: True
