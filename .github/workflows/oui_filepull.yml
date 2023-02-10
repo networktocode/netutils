@@ -1,5 +1,5 @@
 ---
-name: "Flat"
+name: "OUI-Updates"
 
 on: # yamllint disable-line rule:truthy
   schedule:
