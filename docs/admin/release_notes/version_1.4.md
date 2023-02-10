@@ -16,6 +16,12 @@
 - [#197](https://github.com/networktocode/netutils/pull/197) Prepend OUI Flatbot step to delete existing branch.
 - [#200](https://github.com/networktocode/netutils/pull/200) Allow bandwith to be represented without "ps" in bandwidth.
 
+### Fixed
+
+- [#206](https://github.com/networktocode/netutils/pull/206) Fix Passwords docs that show ASN details.
+- [#209](https://github.com/networktocode/netutils/pull/209) Fixed interface_range_expansion with trailing constant.
+- [#210](https://github.com/networktocode/netutils/pull/210) Install black into flat environment, change flat action name.
+
 ## [v1.4.0] - 2023-01
 
 ### Added
