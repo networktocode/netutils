@@ -24,6 +24,6 @@ if __name__ == "__main__":
         oui_mappings.write("# pylint: disable=too-many-lines\n")
         oui_mappings.write("import typing\n\n")
         oui_mappings.write("OUI_MAPPINGS: typing.Dict[str, str] = {\n")
-        for mac, company in OUI_MAPPINGS.items():
+        for mac, company in sorted(OUI_MAPPINGS.items()):
             oui_mappings.write(f'    "{mac}": "{company}",\n')
         oui_mappings.write("}\n")

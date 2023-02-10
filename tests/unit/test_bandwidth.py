@@ -11,7 +11,9 @@ name_to_bits = [
     {"sent": "1 Gbps", "received": 1000000000},
     {"sent": "100Gbps", "received": 100000000000},
     {"sent": "100 Gbps", "received": 100000000000},
+    {"sent": "100 Gb", "received": 100000000000},
     {"sent": "10GBps", "received": 80000000000},
+    {"sent": "10GB", "received": 80000000000},
 ]
 
 
@@ -116,7 +118,9 @@ name_to_bytes = [
     {"sent": "100 GBps", "received": 100000000000.0},
     {"sent": "1TBps", "received": 1000000000000.0},
     {"sent": "1 TBps", "received": 1000000000000.0},
+    {"sent": "1 TB", "received": 1000000000000.0},
     {"sent": "10Gbps", "received": 1250000000.0},
+    {"sent": "10Gb", "received": 1250000000.0},
 ]
 
 

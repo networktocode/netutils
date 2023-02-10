@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netutils"
-version = "1.4.0"
+version = "1.4.1"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 license = "Apache-2.0"
@@ -68,6 +68,7 @@ exclude = '''
     | buck-out
     | build
     | dist
+    | data_files  # This is ran via black within the flatbot process, redundant and slow otherwise
   )/
   | settings.py     # This is where you define files that should not be stylized by black
                      # the root of the project

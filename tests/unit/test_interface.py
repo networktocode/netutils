@@ -177,6 +177,8 @@ INTERFACE_EXPANSION = [
     {"sent": "Gi[1,3-5]", "received": ["Gi1", "Gi3", "Gi4", "Gi5"]},
     {"sent": "Gi[1,3-5,8]", "received": ["Gi1", "Gi3", "Gi4", "Gi5", "Gi8"]},
     {"sent": "[1,2]/0/[1-2]", "received": ["1/0/1", "1/0/2", "2/0/1", "2/0/2"]},
+    {"sent": "Gi[1-3]/1", "received": ["Gi1/1", "Gi2/1", "Gi3/1"]},
+    {"sent": "Gi[1-3]/[1]", "received": ["Gi1/1", "Gi2/1", "Gi3/1"]},
 ]
 
 INTERFACE_SORT = [

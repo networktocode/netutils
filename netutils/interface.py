@@ -53,13 +53,20 @@ def interface_range_expansion(interface_pattern: str) -> t.List[str]:
         interface_constant.append(match.end())
         cartesian_list.append(_range_expand(match.group()[1:-1]))
 
+    # accommodate trailing constants
+    if interface_constant[-1] < len(interface_pattern):
+        interface_constant.append(len(interface_pattern))
+
     interface_constant_out = _pairwise(interface_constant)
     expanded_interfaces = []
     for element in itertools.product(*cartesian_list):
         current_interface = ""
         for count, item in enumerate(interface_constant_out):
             current_interface += interface_pattern[item[0] : item[1]]  # noqa: E203
-            current_interface += str(element[count])
+            # only append the next item if the current constant
+            # doesn't fall at the end of the line
+            if count < len(element):
+                current_interface += str(element[count])
         expanded_interfaces.append(current_interface)
 
     return expanded_interfaces
