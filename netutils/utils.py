@@ -57,6 +57,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "decrypt_type7": "password.decrypt_type7",
     "encrypt_type5": "password.encrypt_type5",
     "encrypt_type7": "password.encrypt_type7",
+    "encrypt_type9": "password.encrypt_type9",
     "get_hash_salt": "password.get_hash_salt",
     "tcp_ping": "ping.tcp_ping",
     "longest_prefix_match": "route.longest_prefix_match",
