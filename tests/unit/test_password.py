@@ -43,7 +43,10 @@ COMPARE_TYPE7 = [
 
 COMPARE_TYPE9 = [
     {
-        "sent": {"unencrypted_password": "cisco", "encrypted_password": "$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2"},
+        "sent": {
+            "unencrypted_password": "cisco",
+            "encrypted_password": "$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2",
+        },
         "received": True,
     },
     {
@@ -55,7 +58,10 @@ COMPARE_TYPE9 = [
         "received": "$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2",
     },
     {
-        "sent": {"unencrypted_password": "invalid_password", "encrypted_password": "$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2"},
+        "sent": {
+            "unencrypted_password": "invalid_password",
+            "encrypted_password": "$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2",
+        },
         "received": False,
     },
 ]
@@ -83,8 +89,8 @@ ENCRYPT_TYPE7 = [
 
 ENCRYPT_TYPE9 = [
     {
-        "sent": {"unencrypted_password": "123456", "salt": "cvWdfQlRRDKq/U"},
-        "received": "$9$cvWdfQlRRDKq/U$VFTPha5VHTCbSgSUAo.nPoh50ZiXOw1zmljEjXkaq1g",
+        "sent": {"unencrypted_password": "cisco", "salt": "x2xAAwQ3MBbEnk"},
+        "received": "$9$x2xAAwQ3MBbEnk$JCxr6MnPb.k5ymK72mTypyRJYH5W74ZRvtLTprCj.xQ",
     },
 ]
 
@@ -105,9 +111,11 @@ def test_compare_type5(data):
 def test_compare_type7(data):
     assert password.compare_type7(**data["sent"]) == data["received"]
 
+
 @pytest.mark.parametrize("data", COMPARE_TYPE9)
 def test_compare_type9(data):
     assert password.compare_type9(**data["sent"]) == data["received"]
+
 
 @pytest.mark.parametrize("data", DECRYPT_TYPE7)
 def test_decrypt_type7(data):
@@ -123,9 +131,11 @@ def test_encrypt_type5(data):
 def test_encrypt_type7(data):
     assert password.encrypt_type7(**data["sent"]) == data["received"]
 
+
 @pytest.mark.parametrize("data", ENCRYPT_TYPE9)
 def test_encrypt_type9(data):
     assert password.encrypt_type9(**data["sent"]) == data["received"]
+
 
 @pytest.mark.parametrize("data", GET_HASH_SALT)
 def test_get_hash_salt(data):
