@@ -8,12 +8,37 @@ import sys
 import ast
 import typing as t
 from functools import wraps
+import base64
+
+try:
+    from hashlib import scrypt  # type: ignore
+
+    HAS_SCRYPT = True
+except ImportError:
+    try:
+        from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
+
+        def scrypt(password: bytes, salt: bytes, n: int, r: int, p: int, dklen: int) -> bytes:
+            kdf = Scrypt(
+                salt=salt,
+                length=dklen,
+                n=n,
+                r=r,
+                p=p,
+                backend=None,
+            )
+            return kdf.derive(password)
+
+        HAS_SCRYPT = True
+    except ImportError:
+        HAS_SCRYPT = False
 
 # Code example from Python docs
 ALPHABET = string.ascii_letters + string.digits
 DEFAULT_PASSWORD_CHARS = "".join((string.ascii_letters + string.digits + ".,:-_"))
 DEFAULT_PASSWORD_LENGTH = 20
 ENCRYPT_TYPE7_LENGTH = 25
+ENCRYPT_TYPE9_ENCODING_CHARS = "".join(("./", string.digits, string.ascii_uppercase, string.ascii_lowercase))
 
 XLAT = [
     "0x64",
@@ -141,6 +166,35 @@ def compare_type7(
     return False
 
 
+def compare_type9(
+    unencrypted_password: str, encrypted_password: str, return_original: bool = False
+) -> t.Union[str, bool]:
+    """Given an encrypted and unencrypted password of Cisco Type 7 password, compare if they are a match.
+
+    Args:
+        unencrypted_password: A password that has not been encrypted, and will be compared against.
+        encrypted_password: A password that has been encrypted.
+        return_original: Whether or not to return the original, this is helpful when used to populate the configuration. Defaults to False.
+
+    Returns:
+        Whether or not the password is as compared to.
+
+    Examples:
+        >>> from netutils.password import compare_type9
+        >>> compare_type9("cisco","$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2")
+        True
+        >>> compare_type7("not_cisco","$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2")
+        False
+        >>>
+    """
+    salt = get_hash_salt(encrypted_password)
+    if encrypt_type9(unencrypted_password, salt) == encrypted_password:
+        if return_original is True:
+            return encrypted_password
+        return True
+    return False
+
+
 def decrypt_type7(encrypted_password: str) -> str:
     """Given an unencrypted password of Cisco Type 7 password decrypt it.
 
@@ -231,6 +285,53 @@ def encrypt_type7(unencrypted_password: str, salt: t.Optional[int] = None) -> st
         # The ASCII code of each encrypted character is added as 2 hex digits.
         encrypted_password += format(enc_char, "02X")
     return encrypted_password
+
+
+def encrypt_type9(unencrypted_password: str, salt: t.Optional[str] = None) -> str:
+    """Given an unencrypted password of Cisco Type 9 password, encypt it.
+
+    Args:
+        unencrypted_password: A password that has not been encrypted, and will be compared against.
+        salt: a 14-character string that can be set by the operator. Defaults to random generated one.
+
+    Returns:
+        The encrypted password.
+
+    Examples:
+        >>> from netutils.password import encrypt_type9
+        >>> encrypt_type7("123456")
+        "$9$cvWdfQlRRDKq/U$VFTPha5VHTCbSgSUAo.nPoh50ZiXOw1zmljEjXkaq1g"
+        >>> encrypt_type7("123456", "cvWdfQlRRDKq/U")
+        "$9$cvWdfQlRRDKq/U$VFTPha5VHTCbSgSUAo.nPoh50ZiXOw1zmljEjXkaq1g"
+    """
+    if not HAS_SCRYPT:
+        raise ImportError(
+            "Your version of python does not have scrypt support built in. "
+            "Please install netutils[optionals] to work around this issue."
+        )
+
+    if salt:
+        if len(salt) != 14:
+            raise ValueError("Salt must be 14 characters long.")
+        salt_bytes = salt.encode()
+    else:
+        # salt must always be a 14-byte-long printable string, often includes symbols
+        salt_bytes = "".join(secrets.choice(ENCRYPT_TYPE9_ENCODING_CHARS) for _ in range(14)).encode()
+
+    key = scrypt(unencrypted_password.encode(), salt=salt_bytes, n=2**14, r=1, p=1, dklen=32)
+
+    # Cisco type 9 uses a different base64 encoding than the standard one, so we need to translate from
+    # the standard one to the Cisco one.
+    type9_encoding_translation_table = str.maketrans(
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
+        ENCRYPT_TYPE9_ENCODING_CHARS,
+    )
+    hash = base64.b64encode(key).decode().translate(type9_encoding_translation_table)
+
+    # and strip off the trailing '='
+    hash = hash[:-1]
+
+    return f"$9${salt_bytes.decode()}${hash}"
 
 
 def get_hash_salt(encrypted_password: str) -> str:
