@@ -16,6 +16,9 @@ jobs:
         uses: "actions/checkout@v2"
         with:
           ref: "develop"
+      # Delete old branch if it exists
+      - name: "Delete existing branch"
+        run: "git branch -D $BRANCH_NAME || true"
       # Create branch for Flatbot
       - name: "Create Flatbot branch"
         run: "git checkout -b $BRANCH_NAME"
