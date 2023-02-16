@@ -16,7 +16,6 @@ DEFAULT_PASSWORD_CHARS = "".join((string.ascii_letters + string.digits + ".,:-_"
 DEFAULT_PASSWORD_LENGTH = 20
 ENCRYPT_TYPE7_LENGTH = 25
 ENCRYPT_TYPE9_ENCODING_CHARS = "".join(("./", string.digits, string.ascii_uppercase, string.ascii_lowercase))
-ENCRYPT_TYPE9_SALT_CHARS = "".join((string.punctuation.replace('$', ''), ENCRYPT_TYPE9_ENCODING_CHARS))
 
 XLAT = [
     "0x64",
@@ -319,11 +318,11 @@ def encrypt_type9(unencrypted_password: str, salt: t.Optional[str] = None) -> st
         salt_bytes = salt.encode()
     else:
         # salt must always be a 14-byte-long printable string, often includes symbols
-        salt_bytes = "".join(secrets.choice(ENCRYPT_TYPE9_SALT_CHARS) for _ in range(14)).encode()
+        salt_bytes = "".join(secrets.choice(ENCRYPT_TYPE9_ENCODING_CHARS) for _ in range(14)).encode()
 
     key = hashlib.scrypt(unencrypted_password.encode(), salt=salt_bytes, n=2**14, r=1, p=1, dklen=32)
-
     hash = _wpa_base64_encode(key)
+
     return f"$9${salt_bytes.decode()}${hash}"
 
 
