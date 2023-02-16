@@ -54,6 +54,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_oui": "mac.get_oui",
     "compare_type5": "password.compare_type5",
     "compare_type7": "password.compare_type7",
+    "compare_type9": "password.compare_type9",
     "decrypt_type7": "password.decrypt_type7",
     "encrypt_type5": "password.encrypt_type5",
     "encrypt_type7": "password.encrypt_type7",

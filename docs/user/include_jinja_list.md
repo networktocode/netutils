@@ -53,6 +53,7 @@
 | mac_type | netutils.mac.mac_type |
 | compare_type5 | netutils.password.compare_type5 |
 | compare_type7 | netutils.password.compare_type7 |
+| compare_type9 | netutils.password.compare_type9 |
 | decrypt_type7 | netutils.password.decrypt_type7 |
 | encrypt_type5 | netutils.password.encrypt_type5 |
 | encrypt_type7 | netutils.password.encrypt_type7 |
