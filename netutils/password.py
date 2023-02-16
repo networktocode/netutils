@@ -149,6 +149,35 @@ def compare_type7(
     return False
 
 
+def compare_type9(
+    unencrypted_password: str, encrypted_password: str, return_original: bool = False
+) -> t.Union[str, bool]:
+    """Given an encrypted and unencrypted password of Cisco Type 7 password, compare if they are a match.
+
+    Args:
+        unencrypted_password: A password that has not been encrypted, and will be compared against.
+        encrypted_password: A password that has been encrypted.
+        return_original: Whether or not to return the original, this is helpful when used to populate the configuration. Defaults to False.
+
+    Returns:
+        Whether or not the password is as compared to.
+
+    Examples:
+        >>> from netutils.password import compare_type9
+        >>> compare_type9("cisco","$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2")
+        True
+        >>> compare_type7("not_cisco","$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2")
+        False
+        >>>
+    """
+    salt = get_hash_salt(encrypted_password)
+    if encrypt_type9(unencrypted_password, salt) == encrypted_password:
+        if return_original is True:
+            return encrypted_password
+        return True
+    return False
+
+
 def decrypt_type7(encrypted_password: str) -> str:
     """Given an unencrypted password of Cisco Type 7 password decrypt it.
 
