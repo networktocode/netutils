@@ -318,9 +318,9 @@ def encrypt_type9(unencrypted_password: str, salt: t.Optional[str] = None) -> st
         # salt must always be a 14-byte-long printable string, often includes symbols
         salt_bytes = "".join(secrets.choice(ENCRYPT_TYPE9_ENCODING_CHARS) for _ in range(14)).encode()
 
-    key = scrypt(unencrypted_password.encode(), salt=salt_bytes, n=2 ** 14, r=1, p=1, dklen=32)
+    key = scrypt(unencrypted_password.encode(), salt=salt_bytes, n=2**14, r=1, p=1, dklen=32)
 
-    # Cisco type 9 uses a different base64 encoding than the standard one, so we need to translate from 
+    # Cisco type 9 uses a different base64 encoding than the standard one, so we need to translate from
     # the standard one to the Cisco one.
     type9_encoding_translation_table = str.maketrans(
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
