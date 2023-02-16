@@ -56,6 +56,7 @@
 | decrypt_type7 | netutils.password.decrypt_type7 |
 | encrypt_type5 | netutils.password.encrypt_type5 |
 | encrypt_type7 | netutils.password.encrypt_type7 |
+| encrypt_type9 | netutils.password.encrypt_type9 |
 | get_hash_salt | netutils.password.get_hash_salt |
 | tcp_ping | netutils.ping.tcp_ping |
 | longest_prefix_match | netutils.route.longest_prefix_match |
