@@ -4,12 +4,10 @@ import crypt
 import random
 import secrets
 import string
-import os
 import sys
 import ast
 import typing as t
 from functools import wraps
-import base64
 
 try:
     from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
@@ -23,6 +21,7 @@ DEFAULT_PASSWORD_CHARS = "".join((string.ascii_letters + string.digits + ".,:-_"
 DEFAULT_PASSWORD_LENGTH = 20
 ENCRYPT_TYPE7_LENGTH = 25
 ENCRYPT_TYPE9_ENCODING_CHARS = "".join(("./", string.digits, string.ascii_uppercase, string.ascii_lowercase))
+ENCRYPT_TYPE9_SALT_CHARS = "".join((string.punctuation.replace('$', ''), ENCRYPT_TYPE9_ENCODING_CHARS))
 
 XLAT = [
     "0x64",
@@ -298,9 +297,8 @@ def encrypt_type9(unencrypted_password: str, salt: t.Optional[str] = None) -> st
             raise ValueError("Salt must be 14 characters long.")
         salt_bytes = salt.encode()
     else:
-        # salt must always be a 14-byte-long printable string, often includes symbols like $, @, etc.
-        # if we base85-encode 11 bytes, we get a 14-byte printable string
-        salt_bytes = base64.b85encode(os.urandom(11))
+        # salt must always be a 14-byte-long printable string, often includes symbols
+        salt_bytes = "".join(secrets.choice(ENCRYPT_TYPE9_SALT_CHARS) for _ in range(14)).encode()
 
     kdf = Scrypt(
         salt=salt_bytes,
