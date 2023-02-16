@@ -4,16 +4,25 @@ import crypt
 import random
 import secrets
 import string
+import os
 import sys
 import ast
 import typing as t
 from functools import wraps
+import base64
+
+try:
+    from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
+    HAS_CRYPTOGRAPHY = True
+except ImportError:
+    HAS_CRYPTOGRAPHY = False
 
 # Code example from Python docs
 ALPHABET = string.ascii_letters + string.digits
 DEFAULT_PASSWORD_CHARS = "".join((string.ascii_letters + string.digits + ".,:-_"))
 DEFAULT_PASSWORD_LENGTH = 20
 ENCRYPT_TYPE7_LENGTH = 25
+ENCRYPT_TYPE9_ENCODING_CHARS = "".join(("./", string.digits, string.ascii_uppercase, string.ascii_lowercase))
 
 XLAT = [
     "0x64",
@@ -231,6 +240,79 @@ def encrypt_type7(unencrypted_password: str, salt: t.Optional[int] = None) -> st
         # The ASCII code of each encrypted character is added as 2 hex digits.
         encrypted_password += format(enc_char, "02X")
     return encrypted_password
+
+
+def _wpa_base64_encode(data: bytes):
+    # Adapted with many thanks from https://github.com/skrobul/cisco_scrypt/blob/main/lib/cisco_scrypt.rb
+
+    # Cisco uses non-standard base64 encoding, which happens to be the same
+    # implementation as used for WPA passwords.
+    # this involves encoding 3 bytes at a time.
+
+    # First we need to pad the string with NULs until its length is a multiple of 3
+    modulus = len(data) % 3
+    padding = b"\x00" * (3 - modulus)
+    data += padding
+    result = ""
+
+    # Now we can encode the string in 3-byte chunks
+    for chunk in [data[i:i+3] for i in range(0, len(data), 3)]:
+        # Now we run each chunk through the WPA base64 encoding algorythm
+        # The fiddly bit is that the iteration count depends on the length of the chunk, excluding the padding, +1
+        # so if the chunk is 3 bytes long, we iterate 4 times, if it's 2 bytes long, we iterate 3 times, etc.
+        byte_count = len(chunk.strip(b"\x00"))
+        iterations = byte_count + 1
+        value = int.from_bytes(chunk, byteorder="big")
+        encoded_chunk = ""
+        for _ in range(iterations):
+            position = (value & 0xFC0000) >> 18
+            encoded_chunk += ENCRYPT_TYPE9_ENCODING_CHARS[position]
+            value = value << 6
+        result += encoded_chunk
+
+    return result
+
+
+def encrypt_type9(unencrypted_password: str, salt: t.Optional[str] = None) -> str:
+    """Given an unencrypted password of Cisco Type 9 password, encypt it.
+
+    Args:
+        unencrypted_password: A password that has not been encrypted, and will be compared against.
+        salt: a 14-character string that can be set by the operator. Defaults to random generated one.
+
+    Returns:
+        The encrypted password.
+
+    Examples:
+        >>> from netutils.password import encrypt_type9
+        >>> encrypt_type7("123456")
+        "$9$cvWdfQlRRDKq/U$VFTPha5VHTCbSgSUAo.nPoh50ZiXOw1zmljEjXkaq1g"
+        >>> encrypt_type7("123456", "cvWdfQlRRDKq/U")
+        "$9$cvWdfQlRRDKq/U$VFTPha5VHTCbSgSUAo.nPoh50ZiXOw1zmljEjXkaq1g"
+    """
+    if not HAS_CRYPTOGRAPHY:
+        raise ImportError("The 'cryptography' python package must be installed for encrypt_type9 to function.")
+    
+    if salt:
+        if len(salt) != 14:
+            raise ValueError("Salt must be 14 characters long.")
+        salt_bytes = salt.encode()
+    else:
+        # salt must always be a 14-byte-long printable string, often includes symbols like $, @, etc.
+        # if we base85-encode 11 bytes, we get a 14-byte printable string
+        salt_bytes = base64.b85encode(os.urandom(11))
+
+    kdf = Scrypt(
+        salt=salt_bytes,
+        length=32,
+        n=2**14,
+        r=1,
+        p=1,
+    )
+    key = kdf.derive(unencrypted_password.encode())
+
+    hash = _wpa_base64_encode(key)
+    return f"$9${salt_bytes.decode()}${hash}"
 
 
 def get_hash_salt(encrypted_password: str) -> str:
