@@ -8,7 +8,29 @@ import sys
 import ast
 import typing as t
 from functools import wraps
-import hashlib
+
+try:
+    from hashlib import scrypt  # type: ignore
+
+    HAS_SCRYPT = True
+except ImportError:
+    try:
+        from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
+
+        def scrypt(password: bytes, salt: bytes, n: int, r: int, p: int, dklen: int) -> bytes:
+            kdf = Scrypt(
+                salt=salt,
+                length=dklen,
+                n=n,
+                r=r,
+                p=p,
+                backend=None,
+            )
+            return kdf.derive(password)
+
+        HAS_SCRYPT = True
+    except ImportError:
+        HAS_SCRYPT = False
 
 # Code example from Python docs
 ALPHABET = string.ascii_letters + string.digits
@@ -312,6 +334,12 @@ def encrypt_type9(unencrypted_password: str, salt: t.Optional[str] = None) -> st
         >>> encrypt_type7("123456", "cvWdfQlRRDKq/U")
         "$9$cvWdfQlRRDKq/U$VFTPha5VHTCbSgSUAo.nPoh50ZiXOw1zmljEjXkaq1g"
     """
+    if not HAS_SCRYPT:
+        raise ImportError(
+            "Your version of python does not have scrypt support built in. "
+            "Please install netutils[optionals] to work around this issue."
+        )
+
     if salt:
         if len(salt) != 14:
             raise ValueError("Salt must be 14 characters long.")
@@ -320,8 +348,7 @@ def encrypt_type9(unencrypted_password: str, salt: t.Optional[str] = None) -> st
         # salt must always be a 14-byte-long printable string, often includes symbols
         salt_bytes = "".join(secrets.choice(ENCRYPT_TYPE9_ENCODING_CHARS) for _ in range(14)).encode()
 
-    key = hashlib.scrypt(unencrypted_password.encode(), salt=salt_bytes, n=2**14, r=1, p=1, dklen=32)
-    hash = _wpa_base64_encode(key)
+    key = scrypt(unencrypted_password.encode(), salt=salt_bytes, n=2 ** 14, r=1, p=1, dklen=32)
 
     return f"$9${salt_bytes.decode()}${hash}"
 
