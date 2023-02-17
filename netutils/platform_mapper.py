@@ -10,11 +10,11 @@ custom_nist_platforms = {
 }
 
 
-def create_platform_object(data: t.Dict[str, str]) -> object:
+def create_platform_object(vendor: str, platform: str, version: str) -> object:
     """Creates a platform object relative to its need and definition.
 
     Args:
-        data: Dictionary containing vendor, platform, and version
+        vendor
 
     Returns:
         A platform object
@@ -24,10 +24,11 @@ def create_platform_object(data: t.Dict[str, str]) -> object:
         >>> jp.get_nist_urls("AAA-BBB-CCC-DDD")
         ['https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.1R3:S4.1:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.1R3-S4.1:*:*:*:*:*:*:*']
     """
-    manufacturer = data["vendor"].lower()
-    platform = data["platform"].lower()
-    version = data["version"]
+    manufacturer = vendor.lower()
+    platform = platform.lower()
+    version = version
     platform_obj = None
+
     if platform in custom_nist_platforms.get(manufacturer, {}):
         platform_obj = eval(  # pylint: disable=W0123 # nosec B307
             f"{manufacturer.capitalize()}Platform(platform, version)"
