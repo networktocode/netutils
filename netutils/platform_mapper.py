@@ -20,13 +20,12 @@ def create_platform_object(vendor: str, platform: str, version: str) -> object:
         A platform object
 
     Examples:
-        >>> jp = create_platform_object({"vendor": "juniper", "platform": "junos", "version": "12.1R3-S4.1"})
+        >>> jp = create_platform_object("juniper", "junos", "12.1R3-S4.1")
         >>> jp.get_nist_urls("AAA-BBB-CCC-DDD")
         ['https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.1R3:S4.1:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.1R3-S4.1:*:*:*:*:*:*:*']
     """
     manufacturer = vendor.lower()
     platform = platform.lower()
-    version = version
     platform_obj = None
 
     if platform in custom_nist_platforms.get(manufacturer, {}):
