@@ -127,12 +127,16 @@ platform_nist_urls = [
 # Testing the parsing of a Vendor, Platform, Version into vendor standardized sections
 @pytest.mark.parametrize("data", platform_data)
 def test_platform_parsing(data):
-    platform_obj = platform_mapper.create_platform_object(data["sent"])
+    platform_obj = platform_mapper.create_platform_object(
+        data["sent"]["vendor"], data["sent"]["platform"], data["sent"]["version"]
+    )
     assert platform_obj.get_info() == data["received"]
 
 
 # Testing the composition of the nist url(s) created for a platform
 @pytest.mark.parametrize("data", platform_nist_urls)
 def test_platform_nist(data):
-    platform_obj = platform_mapper.create_platform_object(data["sent"])
+    platform_obj = platform_mapper.create_platform_object(
+        data["sent"]["vendor"], data["sent"]["platform"], data["sent"]["version"]
+    )
     assert platform_obj.get_nist_urls("AAA-BBB-CCC-DDD") == data["received"]
