@@ -185,7 +185,7 @@ REVERSE_MAPPING = {
     "Sync": "Sy",
     "TenGigabitEthernet": "Te",
     "Tunnel": "Tu",
-    "TwoGigabitEthernet": "Two",
+    "TwoGigabitEthernet": "Tw",
     "TwentyFiveGigE": "Twe",
     "Virtual-Access": "Vi",
     "Virtual-Template": "Vt",
