@@ -719,6 +719,8 @@ PROTOCOLS: Dict[str, Any] = {
     "xact-backup": {"port_number": 911, "protocols": ["tcp", "udp"]},
     "apex-mesh": {"port_number": 912, "protocols": ["tcp", "udp"]},
     "apex-edge": {"port_number": 913, "protocols": ["tcp", "udp"]},
+    "rift-lies": {"port_number": 914, "protocols": ["udp"]},
+    "rift-ties": {"port_number": 915, "protocols": ["udp"]},
     "rndc": {"port_number": 953, "protocols": ["tcp"]},
     "ftps-data": {"port_number": 989, "protocols": ["tcp", "udp"]},
     "ftps": {"port_number": 990, "protocols": ["tcp", "udp"]},
