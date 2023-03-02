@@ -71,6 +71,24 @@ XLAT = [
     "0x37",
 ]
 
+JUNIPER_ENCODING = [
+    [1, 4, 32],
+    [1, 16, 32],
+    [1, 8, 32],
+    [1, 64],
+    [1, 32],
+    [1, 4, 16, 128],
+    [1, 32, 64],
+]
+
+JUNIPER_KEYS = ["QzF3n6/9CAtpu0O", "B1IREhcSyrleKvMW8LXx", "7N-dVbwsY2g4oaJZGUDj", "iHkq.mPf5T"]
+JUNIPER_KEYS_STRING = "".join(JUNIPER_KEYS)
+JUNIPER_KEYS_LENGTH = len(JUNIPER_KEYS_STRING)
+JUNIPER_CHARACTER_KEYS: t.Dict[str, int] = {}
+for idx, key in enumerate(JUNIPER_KEYS):
+    for character in key:
+        JUNIPER_CHARACTER_KEYS[character] = 3 - idx
+
 
 def _fail_on_mac(func: t.Callable[..., t.Any]) -> t.Callable[..., t.Any]:
     """There is an issue with Macintosh for encryption."""
@@ -252,3 +270,95 @@ def get_hash_salt(encrypted_password: str) -> str:
     if len(split_password) != 4:
         raise ValueError(f"Could not parse salt out password correctly from {encrypted_password}")
     return split_password[2]
+
+
+def decrypt_juniper(encrypted_password: str) -> str:
+    """Given an encrypted Junos $9$ type password, decrypt it.
+
+    Args:
+        encrypted_password: A password that has been encrypted, and will be decrypted.
+
+    Returns:
+        The unencrypted_password password.
+
+    Examples:
+        >>> from netutils.password import decrypt_juniper
+        >>> decrypt_juniper("$9$7YdwgGDkTz6oJz69A1INdb")
+        'juniper'
+        >>>
+    """
+    # Strip $9$ from start of string
+    password_characters = encrypted_password.split("$9$", 1)[1]
+
+    # Get first character and toss extra characters
+    first_character = password_characters[0]
+    stripped_password_characters = password_characters[JUNIPER_CHARACTER_KEYS[first_character] + 1 :]  # noqa: E203
+
+    previous_char = first_character
+    decrypted_password = ""  # nosec
+    while stripped_password_characters:
+        # Get encoding modulus
+        decode = JUNIPER_ENCODING[len(decrypted_password) % len(JUNIPER_ENCODING)]
+
+        # Get nibble we will decode
+        nibble = stripped_password_characters[0 : len(decode)]  # noqa: E203
+        stripped_password_characters = stripped_password_characters[len(decode) :]  # noqa: E203
+
+        # Decode value for nibble and convert to character, append to decryped password
+        value = 0
+        for index, char in enumerate(nibble):
+            gap = (
+                (JUNIPER_KEYS_STRING.index(char) - JUNIPER_KEYS_STRING.index(previous_char)) % JUNIPER_KEYS_LENGTH
+            ) - 1
+            value += gap * decode[index]
+            previous_char = char
+        decrypted_password += chr(value)
+
+    return decrypted_password
+
+
+def encrypt_juniper(unencrypted_password: str, salt: t.Optional[int] = None) -> str:
+    """Given an unencrypted password, encrypt to Juniper $9$ type password.
+
+    Args:
+        unencrypted_password: A password that has not been encrypted, and will be compared against.
+        salt: A integer that can be set by the operator. Defaults to random generated one.
+
+    Returns:
+        The encrypted password.
+
+    Examples:
+        >>> from netutils.password import encrypt_juniper
+        >>> encrypt_juniper("juniper", 35) # doctest: +SKIP
+        '$9$7YdwgGDkTz6oJz69A1INdb'
+        >>>
+    """
+    if not salt:
+        salt = random.randint(0, JUNIPER_KEYS_LENGTH) - 1  # nosec
+
+    # Use salt to generate start of encrypted password
+    first_character = JUNIPER_KEYS_STRING[salt]
+    random_chars = "".join(
+        [
+            JUNIPER_KEYS_STRING[random.randint(0, JUNIPER_KEYS_LENGTH) - 1]  # nosec
+            for x in range(0, JUNIPER_CHARACTER_KEYS[first_character])
+        ]
+    )
+    encrypted_password = "$9$" + first_character + random_chars
+
+    previous_character = first_character
+    for index, char in enumerate(unencrypted_password):
+        encode = JUNIPER_ENCODING[index % len(JUNIPER_ENCODING)][::-1]  # Get encoding modulus in reverse order
+        char_ord = ord(char)
+        gaps: t.List[int] = []
+        for modulus in encode:
+            gaps = [int(char_ord / modulus)] + gaps
+            char_ord %= modulus
+
+        for gap in gaps:
+            gap += JUNIPER_KEYS_STRING.index(previous_character) + 1
+            new_character = JUNIPER_KEYS_STRING[gap % JUNIPER_KEYS_LENGTH]
+            previous_character = new_character
+            encrypted_password += new_character
+
+    return encrypted_password

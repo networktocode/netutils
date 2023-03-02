@@ -53,7 +53,9 @@
 | mac_type | netutils.mac.mac_type |
 | compare_type5 | netutils.password.compare_type5 |
 | compare_type7 | netutils.password.compare_type7 |
+| decrypt_juniper | netutils.password.decrypt_juniper |
 | decrypt_type7 | netutils.password.decrypt_type7 |
+| encrypt_juniper | netutils.password.encrypt_juniper |
 | encrypt_type5 | netutils.password.encrypt_type5 |
 | encrypt_type7 | netutils.password.encrypt_type7 |
 | get_hash_salt | netutils.password.get_hash_salt |

@@ -58,6 +58,8 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "encrypt_type5": "password.encrypt_type5",
     "encrypt_type7": "password.encrypt_type7",
     "get_hash_salt": "password.get_hash_salt",
+    "encrypt_juniper": "password.encrypt_juniper",
+    "decrypt_juniper": "password.decrypt_juniper",
     "tcp_ping": "ping.tcp_ping",
     "longest_prefix_match": "route.longest_prefix_match",
     "vlanlist_to_config": "vlan.vlanlist_to_config",
