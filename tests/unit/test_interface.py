@@ -1,3 +1,4 @@
+
 """Test for the interface functions."""
 import pytest
 
@@ -19,6 +20,11 @@ CANONICAL_INTERFACE_NAME = [
     },
     {"sent": {"interface": "Gi1/0/1"}, "received": "GigabitEthernet1/0/1"},
     {
+        "sent": {"interface": "TwoGigabitEthernet1/0/1"},
+        "received": "TwoGigabitEthernet1/0/1",
+    },
+    {"sent": {"interface": "Tw1/0/1"}, "received": "TwoGigabitEthernet1/0/1"},
+    {
         "sent": {"interface": "SuperFastEth 1/0/1", "addl_name_map": {"SuperFastEth": "SuperFastEthernet"}},
         "received": "SuperFastEthernet1/0/1",
     },
@@ -35,7 +41,7 @@ CANONICAL_INTERFACE_NAME_LIST = [
         "received": ["GigabitEthernet1/0/1", "Port-channel40", "Loopback10"],
     },
     {
-        "sent": {"interfaces": ["Gi1/0/1", "Gi1/0/3", "Gi1/0/2", "Po40", "Po160", "Lo10"], "order": "alphabetical"},
+        "sent": {"interfaces": ["Tw1/0/1", "Gi1/0/1", "Gi1/0/3", "Gi1/0/2", "Po40", "Po160", "Lo10"], "order": "alphabetical"},
         "received": [
             "GigabitEthernet1/0/1",
             "GigabitEthernet1/0/2",
@@ -43,11 +49,12 @@ CANONICAL_INTERFACE_NAME_LIST = [
             "Loopback10",
             "Port-channel40",
             "Port-channel160",
+            "TwoGigabitEthernet1/0/1"
         ],
     },
     {
         "sent": {
-            "interfaces": ["Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Po40", "Po160", "Lo10"],
+            "interfaces": ["Tw1/0/1", "Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Po40", "Po160", "Lo10"],
             "order": "alphabetical",
         },
         "received": [
@@ -59,15 +66,17 @@ CANONICAL_INTERFACE_NAME_LIST = [
             "Loopback10",
             "Port-channel40",
             "Port-channel160",
+            "TwoGigabitEthernet1/0/1"
         ],
     },
     {
         "sent": {
-            "interfaces": ["Gi1/0/1", "Gi1/0/3", "Gi1/0/2", "Po40", "Po160", "Lo10"],
+            "interfaces": ["Tw1/0/1", "Gi1/0/1", "Gi1/0/3", "Gi1/0/2", "Po40", "Po160", "Lo10"],
             "order": "alphabetical",
             "reverse": True,
         },
         "received": [
+            "TwoGigabitEthernet1/0/1",
             "Port-channel40",
             "Port-channel160",
             "Loopback10",
@@ -78,11 +87,12 @@ CANONICAL_INTERFACE_NAME_LIST = [
     },
     {
         "sent": {
-            "interfaces": ["Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Po40", "Po160", "Lo10"],
+            "interfaces": ["Tw1/0/1", "Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Po40", "Po160", "Lo10"],
             "order": "alphabetical",
             "reverse": True,
         },
         "received": [
+            "TwoGigabitEthernet1/0/1",
             "Port-channel40",
             "Port-channel160",
             "Loopback10",
@@ -112,6 +122,11 @@ ABBREVIATED_INTERFACE_NAME = [
         "received": "Gi1/0/1",
     },
     {"sent": {"interface": "Gi1/0/1"}, "received": "Gi1/0/1"},
+    {
+        "sent": {"interface": "TwoGigabitEthernet1/0/1"},
+        "received": "Tw1/0/1",
+    },
+    {"sent": {"interface": "Tw1/0/1"}, "received": "Tw1/0/1"},
     {
         "sent": {
             "interface": "SuperFastEth 1/0/1",
@@ -227,6 +242,7 @@ INTERFACE_SORT = [
             "Fa1/42",
             "Gi0/0/2",
             "Gi1/0/1",
+            "Tw1/0/1",
             "Te1/0/1",
         ],
         "received": [
@@ -267,6 +283,7 @@ INTERFACE_SORT = [
             "Port-channel160",
             "Te1/0/1",
             "Te/42",
+            "Tw1/0/1",
             "Vlan42",
             "Zf.42",
             "loopback99",
@@ -287,12 +304,13 @@ ABBREVIATED_INTERFACE_NAME_LIST = [
         "received": ["Gi1/0/1", "Gi1/0/2"],
     },
     {
-        "sent": {"interfaces": ["GigabitEthernet1/0/1", "Po40", "Loopback10"]},
-        "received": ["Gi1/0/1", "Po40", "Lo10"],
+        "sent": {"interfaces": ["GigabitEthernet1/0/1", "TwoGigabitEthernet1/0/1", "Po40", "Loopback10"]},
+        "received": ["Gi1/0/1", "Tw1/0/1", "Po40", "Lo10"],
     },
     {
         "sent": {
             "interfaces": [
+                "TwoGigabitEthernet1/0/1",
                 "GigabitEthernet1/0/1",
                 "GigabitEthernet1/0/3",
                 "GigabitEthernet1/0/2",
@@ -302,11 +320,12 @@ ABBREVIATED_INTERFACE_NAME_LIST = [
             ],
             "order": "alphabetical",
         },
-        "received": ["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Lo10", "Po40", "Po160"],
+        "received": ["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Lo10", "Po40", "Po160", "Tw1/0/1"],
     },
     {
         "sent": {
             "interfaces": [
+                "TwoGigabitEthernet1/0/1",
                 "GigabitEthernet1/0/1",
                 "GigabitEthernet1/0/3",
                 "GigabitEthernet1/0/3.100",
@@ -318,11 +337,12 @@ ABBREVIATED_INTERFACE_NAME_LIST = [
             ],
             "order": "alphabetical",
         },
-        "received": ["Gi1/0/1", "Gi1/0/2", "Gi1/0/2.50", "Gi1/0/3", "Gi1/0/3.100", "Lo10", "Po40", "Po160"],
+        "received": ["Gi1/0/1", "Gi1/0/2", "Gi1/0/2.50", "Gi1/0/3", "Gi1/0/3.100", "Lo10", "Po40", "Po160", "Tw1/0/1"],
     },
     {
         "sent": {
             "interfaces": [
+                "TwoGigabitEthernet1/0/1",
                 "GigabitEthernet1/0/1",
                 "GigabitEthernet1/0/3",
                 "GigabitEthernet1/0/2",
@@ -333,11 +353,12 @@ ABBREVIATED_INTERFACE_NAME_LIST = [
             "order": "alphabetical",
             "reverse": True,
         },
-        "received": ["Po40", "Po160", "Lo10", "Gi1/0/1", "Gi1/0/2", "Gi1/0/3"],
+        "received": ["Tw1/0/1", "Po40", "Po160", "Lo10", "Gi1/0/1", "Gi1/0/2", "Gi1/0/3"],
     },
     {
         "sent": {
             "interfaces": [
+                "TwoGigabitEthernet1/0/1",
                 "GigabitEthernet1/0/1",
                 "GigabitEthernet1/0/3",
                 "GigabitEthernet1/0/3.100",
@@ -351,6 +372,7 @@ ABBREVIATED_INTERFACE_NAME_LIST = [
             "reverse": True,
         },
         "received": [
+            "Tw1/0/1",
             "Po40",
             "Po160",
             "Lo10",
