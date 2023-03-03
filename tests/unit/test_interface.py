@@ -1,4 +1,3 @@
-
 """Test for the interface functions."""
 import pytest
 
@@ -41,7 +40,10 @@ CANONICAL_INTERFACE_NAME_LIST = [
         "received": ["GigabitEthernet1/0/1", "Port-channel40", "Loopback10"],
     },
     {
-        "sent": {"interfaces": ["Tw1/0/1", "Gi1/0/1", "Gi1/0/3", "Gi1/0/2", "Po40", "Po160", "Lo10"], "order": "alphabetical"},
+        "sent": {
+            "interfaces": ["Tw1/0/1", "Gi1/0/1", "Gi1/0/3", "Gi1/0/2", "Po40", "Po160", "Lo10"],
+            "order": "alphabetical",
+        },
         "received": [
             "GigabitEthernet1/0/1",
             "GigabitEthernet1/0/2",
@@ -49,12 +51,22 @@ CANONICAL_INTERFACE_NAME_LIST = [
             "Loopback10",
             "Port-channel40",
             "Port-channel160",
-            "TwoGigabitEthernet1/0/1"
+            "TwoGigabitEthernet1/0/1",
         ],
     },
     {
         "sent": {
-            "interfaces": ["Tw1/0/1", "Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Po40", "Po160", "Lo10"],
+            "interfaces": [
+                "Tw1/0/1",
+                "Gi1/0/1",
+                "Gi1/0/3",
+                "Gi1/0/3.100",
+                "Gi1/0/2",
+                "Gi1/0/2.50",
+                "Po40",
+                "Po160",
+                "Lo10",
+            ],
             "order": "alphabetical",
         },
         "received": [
@@ -66,7 +78,7 @@ CANONICAL_INTERFACE_NAME_LIST = [
             "Loopback10",
             "Port-channel40",
             "Port-channel160",
-            "TwoGigabitEthernet1/0/1"
+            "TwoGigabitEthernet1/0/1",
         ],
     },
     {
@@ -87,7 +99,17 @@ CANONICAL_INTERFACE_NAME_LIST = [
     },
     {
         "sent": {
-            "interfaces": ["Tw1/0/1", "Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Po40", "Po160", "Lo10"],
+            "interfaces": [
+                "Tw1/0/1",
+                "Gi1/0/1",
+                "Gi1/0/3",
+                "Gi1/0/3.100",
+                "Gi1/0/2",
+                "Gi1/0/2.50",
+                "Po40",
+                "Po160",
+                "Lo10",
+            ],
             "order": "alphabetical",
             "reverse": True,
         },
