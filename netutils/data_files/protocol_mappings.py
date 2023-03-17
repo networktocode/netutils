@@ -2007,6 +2007,7 @@ PROTOCOLS: Dict[str, Any] = {
     "pcc-mfp": {"port_number": 2256, "protocols": ["tcp", "udp"]},
     "simple-tx-rx": {"port_number": 2257, "protocols": ["tcp", "udp"]},
     "rcts": {"port_number": 2258, "protocols": ["tcp", "udp"]},
+    "bid-serv": {"port_number": 2259, "protocols": ["tcp", "udp"]},
     "apc-2260": {"port_number": 2260, "protocols": ["tcp", "udp"]},
     "comotionmaster": {"port_number": 2261, "protocols": ["tcp", "udp"]},
     "comotionback": {"port_number": 2262, "protocols": ["tcp", "udp"]},
