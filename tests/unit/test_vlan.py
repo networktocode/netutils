@@ -28,6 +28,12 @@ def test_to_config_failure(sent_data):
         vlan.vlanlist_to_config("switchport trunk allowed vlan 1025,1069-1072", min_grouping_size=0)
 
 
+@pytest.mark.parametrize("sent_data", [{"vlan_list": []}])
+def test_to_empty_error(sent_data):
+    with pytest.raises(ValueError, match=r"The `vlan_list` argument provided*"):
+        vlan.vlanlist_to_config(**sent_data)
+
+
 @pytest.mark.parametrize("_file", glob.glob(f"{MOCK_DIR}/to_list/*{TXT_FILE}"))
 def test_to_list_success(_file, get_text_data, get_json_data):
     truncate_file = os.path.join(MOCK_DIR, _file[: -len(TXT_FILE)])
