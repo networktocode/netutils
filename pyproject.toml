@@ -25,7 +25,7 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.11"
 napalm = {version = "^4.0.0", optional = true}
 
 [tool.poetry.extras]
