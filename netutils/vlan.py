@@ -11,6 +11,7 @@ def vlanlist_to_config(
     first_line_len: int = 48,
     other_line_len: int = 44,
     min_grouping_size: int = 3,
+    return_empty: bool = False,
 ) -> t.List[str]:
     """Given a List of VLANs, build the IOS-like vlan list of configurations.
 
@@ -19,6 +20,7 @@ def vlanlist_to_config(
         first_line_len: The maximum length of the line of the first element of within the return list. Defaults to 48.
         other_line_len: The maximum length of the line of all other elements of within the return list. Defaults to 44.
         min_grouping_size: The minimum consecutive VLANs to aggregate with a hyphen. Defaults to Cisco's minimum grouping size of 3.
+        return_empty: Whether or not to return an empty list instead of an `ValueError` when vlan_list is empty. Defaults to False.
 
     Returns:
         Sorted string list of integers according to IOS-like vlan list rules
@@ -57,6 +59,12 @@ def vlanlist_to_config(
         for line in next_lines.findall(vlan_cfg, first_line.end()):
             vlan_cfg_lines.append(line)
         return vlan_cfg_lines
+
+    if len(vlan_list) == 0 and return_empty:
+        return []
+
+    if len(vlan_list) == 0:
+        raise ValueError("The `vlan_list` argument provided is empty, a list of vlans is required, e.g. [10,20,30].")
 
     # Fail if min_grouping_size is less than 1.
     if min_grouping_size < 1:
