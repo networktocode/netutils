@@ -4,6 +4,8 @@ from netutils.data_files.protocol_mappings import PROTOCOLS  # noqa: F401 # pyli
 
 # This variable provides mapping for known interface variants, to the associated long form.
 BASE_INTERFACES = {
+    "Ap": "AppGigabitEthernet",
+    "ap": "AppGigabitEthernet",
     "ATM": "ATM",
     "AT": "ATM",
     "B": "Bdi",
@@ -167,6 +169,7 @@ MAC_REGEX = dict(
 
 # This variable maps a full interface name, to an opinionated shortened name.
 REVERSE_MAPPING = {
+    "AppGigabitEthernet": "Ap",
     "ATM": "At",
     "EOBC": "EO",
     "Ethernet": "Et",
