@@ -140,6 +140,7 @@ NAPALM_LIB_MAPPER = {
     "sros": "nokia_sros",
     "vyos": "brocade_vyos",
     "aoscx": "aruba_aoscx",
+    "ros": "mikrotik_routeros",
 }
 
 PYNTC_LIB_MAPPER = {
@@ -216,6 +217,7 @@ NAPALM_LIB_MAPPER_REVERSE = {
     "paloalto_panos": "panos",
     "nokia_sros": "sros",
     "aruba_aoscx": "aoscx",
+    "mikrotik_routeros": "ros",
 }
 
 PYNTC_LIB_MAPPER_REVERSE = {

@@ -22,7 +22,6 @@
 /system logging action set 3 bsd-syslog=yes remote=172.16.11.1 remote-port=5140
 /user group set full policy=local,telnet,ssh,ftp,reboot,read,write,policy,test,winbox,password,web,sniff,sensitive,api,romon,dude,tikapp
 /user group add name=prom policy=ssh,read,winbox,api,!local,!telnet,!ftp,!reboot,!write,!policy,!test,!password,!web,!sniff,!sensitive,!romon,!dude,!tikapp
-#error exporting /interface bridge calea
 /ip neighbor discovery-settings set discover-interface-list=!dynamic
 /ip address add address=10.0.11.13/24 interface=vlan11-mgmt network=10.0.11.0
 /ip address add address=192.168.69.1/24 interface=ether1 network=192.168.69.0
@@ -32,7 +31,6 @@
 /ip firewall address-list add address=34.157.17.38 list=whitelist
 /ip firewall address-list add address=72.202.79.109 list=google-vpc-acl
 /ip firewall address-list add address=34.157.17.38 list=google-vpc-acl
-#error exporting /ip firewall calea
 /ip firewall filter add action=drop chain=input dst-address=50.106.77.11 src-address-list=!google-vpc-acl
 /ip firewall nat add action=dst-nat chain=dstnat dst-address=50.106.77.11 dst-port=443 protocol=tcp to-addresses=10.1.15.10
 /ip firewall nat add action=masquerade chain=srcnat out-interface=vlan12-Servers
@@ -52,7 +50,7 @@
 /routing filter add action=discard chain=ibgp-no-default-out prefix=10.127.1.0/24
 /routing filter add action=accept chain=ibgp-no-default-out prefix=10.64.0.0/10 prefix-length=22-32
 /routing ospf interface add dead-interval=8s hello-interval=2s interface=vlan3049-Transit-to-85Presidential network-type=point-to-point
-/routing ospf interface add cost=11 dead-interval=8s hello-interval=2s interface=vlan3166-Transit-HalseyCore-Agg1-to-Indigo-5 network-type=point-to-point
+/routing ospf interface add cost=11 dead-interval=8s hello-interval=2s interface=vlan3166-Transit-Core-Agg1-to-SiteXYZ network-type=point-to-point
 /routing ospf network add area=backbone network=10.126.0.16/29
 /routing ospf network add area=backbone network=10.127.1.3/32
 /snmp set enabled=yes trap-community=somestring
