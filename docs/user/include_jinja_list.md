@@ -45,7 +45,6 @@
 | is_netmask | netutils.ip.is_netmask |
 | netmask_to_cidr | netutils.ip.netmask_to_cidr |
 | get_napalm_getters | netutils.lib_helpers.get_napalm_getters |
-| get_panos_upgrade_path | netutils.lib_helpers.get_panos_upgrade_path |
 | get_oui | netutils.mac.get_oui |
 | is_valid_mac | netutils.mac.is_valid_mac |
 | mac_normalize | netutils.mac.mac_normalize |
