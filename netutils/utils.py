@@ -67,6 +67,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "uptime_seconds_to_string": "time.uptime_seconds_to_string",
     "uptime_string_to_seconds": "time.uptime_string_to_seconds",
     "get_napalm_getters": "lib_helpers.get_napalm_getters",
+    "get_panos_upgrade_path": "lib_helpers.get_panos_upgrade_path",
 }
 
 
