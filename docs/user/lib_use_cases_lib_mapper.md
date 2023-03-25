@@ -86,3 +86,8 @@ Another use case could be using an example like the above in an Ansible filter. 
 ## Reverse Scrapli Mapper
 --8<-- "docs/user/lib_mapper/scrapli_reverse.md"
 
+## Hier Config Mapper
+--8<-- "docs/user/lib_mapper/hierconfig.md"
+
+## Reverse Hier Config Mapper
+--8<-- "docs/user/lib_mapper/hierconfig_reverse.md"
