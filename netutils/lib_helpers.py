@@ -14,28 +14,30 @@ except ImportError:
 else:
     HAS_NAPALM = True
 
-PANOS_FIRMWARE_LIST_OFFICIAL = [
-    "8.0.0",
-    "8.0.20",
-    "8.1.0",
-    "8.1.24-h1",
-    "9.0.0",
-    "9.0.16-h3",
-    "9.1.0",
-    "9.1.15-h1",
-    "10.0.0",
-    "10.0.12",
-    "10.1.0",
-    "10.1.9",
-]
-PANOS_FIRMWARE_LIST_MAJOR_ONLY = [
-    "8.0.0",
-    "8.1.0",
-    "9.0.0",
-    "9.1.0",
-    "10.0.0",
-    "10.1.0",
-]
+UPGRADE_PATHS = {
+    "PANOS_FIRMWARE_LIST_OFFICIAL": [
+        "8.0.0",
+        "8.0.20",
+        "8.1.0",
+        "8.1.24-h1",
+        "9.0.0",
+        "9.0.16-h3",
+        "9.1.0",
+        "9.1.15-h1",
+        "10.0.0",
+        "10.0.12",
+        "10.1.0",
+        "10.1.9",
+    ],
+    "PANOS_FIRMWARE_LIST_MAJOR_ONLY": [
+        "8.0.0",
+        "8.1.0",
+        "9.0.0",
+        "9.1.0",
+        "10.0.0",
+        "10.1.0",
+    ],
+}
 
 
 def get_napalm_getters() -> t.Dict[str, t.Dict[str, bool]]:
