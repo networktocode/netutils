@@ -1,7 +1,7 @@
 """Tasks for use with Invoke."""
 import os
 import sys
-from distutils.util import strtobool
+from distutils.util import strtobool  # pylint: disable=W0402
 
 from invoke import task
 
