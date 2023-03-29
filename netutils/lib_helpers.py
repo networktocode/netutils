@@ -14,6 +14,29 @@ except ImportError:
 else:
     HAS_NAPALM = True
 
+PANOS_FIRMWARE_LIST_OFFICIAL = [
+    "8.0.0",
+    "8.0.20",
+    "8.1.0",
+    "8.1.24-h1",
+    "9.0.0",
+    "9.0.16-h3",
+    "9.1.0",
+    "9.1.15-h1",
+    "10.0.0",
+    "10.0.12",
+    "10.1.0",
+    "10.1.9",
+]
+PANOS_FIRMWARE_LIST_MAJOR_ONLY = [
+    "8.0.0",
+    "8.1.0",
+    "9.0.0",
+    "9.1.0",
+    "10.0.0",
+    "10.1.0",
+]
+
 
 def get_napalm_getters() -> t.Dict[str, t.Dict[str, bool]]:
     """Utility to return a dictionary of napalm getters based on install napalm version.
@@ -51,70 +74,30 @@ def get_napalm_getters() -> t.Dict[str, t.Dict[str, bool]]:
     return napalm_dict
 
 
-def get_panos_upgrade_path(
+def get_upgrade_path(
     current_version: str,
     target_version: str,
-    fast_upgrade: bool = False,
-    custom_upgrade_path: t.Union[t.List[str], None] = None,
+    firmware_list: t.List[str],
 ) -> t.List[str]:
-    """Utility to return the upgrade path from the current to target PANOS version.
+    """Utility to return the upgrade path from the current to target firmware version.
 
     Returns:
-        List of PANOS versions to upgrade from current to target.
+        List of firmware versions to upgrade from current to target.
 
     Args:
-        current_version: Current PANOS version.
-        target_version: Target PANOS version.
-        fast_upgrade: If True only major versions will be returned.
-        custom_upgrade_path: List of PANOS versions to use as the upgrade path.
+        current_version: Current firmware version.
+        target_version: Target firmware version.
+        firmware_list: List of firmware versions to use as the upgrade path.
 
     Raises:
         ValueError: If target version is older than current version.
         ValueError: If target version equals current version.
-        ValueError: If fast_upgrade and custom_upgrade_path are both True.
 
     Examples:
-        >>> from netutils.lib_helpers import get_panos_upgrade_path
-        >>> get_panos_upgrade_path("9.1.6", "10.1.9")
-        ['9.1.15-h1', '10.0.0', '10.0.12', '10.1.0', '10.1.9']
-        >>> get_panos_upgrade_path("9.1.6", "10.1.9", fast_upgrade=True)
-        ['10.0.0', '10.1.0', '10.1.9']
-        >>> get_panos_upgrade_path("9.1.6", "10.1.9", custom_upgrade_path=["9.1.10", "9.1.15-h1", "10.0.0", "10.1.9"])
+        >>> from netutils.lib_helpers import get_upgrade_path
+        >>> get_upgrade_path("9.1.6", "10.1.9", ["9.1.10", "9.1.15-h1", "10.0.0", "10.1.9"])
         ['9.1.10', '9.1.15-h1', '10.0.0', '10.1.9']
     """
-    all_palo_versions = [
-        "8.0.0",
-        "8.0.20",
-        "8.1.0",
-        "8.1.24-h1",
-        "9.0.0",
-        "9.0.16-h3",
-        "9.1.0",
-        "9.1.15-h1",
-        "10.0.0",
-        "10.0.12",
-        "10.1.0",
-        "10.1.9",
-    ]
-
-    major_palo_versions = [
-        "8.0.0",
-        "8.1.0",
-        "9.0.0",
-        "9.1.0",
-        "10.0.0",
-        "10.1.0",
-    ]
-
-    if fast_upgrade and custom_upgrade_path:
-        raise ValueError("Cannot use fast_upgrade and custom_upgrade_path together.")
-    if fast_upgrade:
-        palo_versions = major_palo_versions
-    elif custom_upgrade_path:
-        palo_versions = custom_upgrade_path
-    else:
-        palo_versions = all_palo_versions
-
     if LooseVersion(current_version) > LooseVersion(target_version):
         raise ValueError("Target version must be newer than current version.")
 
@@ -123,7 +106,7 @@ def get_panos_upgrade_path(
 
     upgrade_path = [
         version
-        for version in palo_versions
+        for version in firmware_list
         if LooseVersion(version) > LooseVersion(current_version)
         and LooseVersion(version) <= LooseVersion(target_version)
     ]
