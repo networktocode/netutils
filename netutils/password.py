@@ -11,27 +11,12 @@ from functools import wraps
 import base64
 
 try:
-    from hashlib import scrypt  # type: ignore
+    from hashlib import scrypt
 
     HAS_SCRYPT = True
 except ImportError:
-    try:
-        from cryptography.hazmat.primitives.kdf.scrypt import Scrypt
+    HAS_SCRYPT = False
 
-        def scrypt(password: bytes, salt: bytes, n: int, r: int, p: int, dklen: int) -> bytes:
-            kdf = Scrypt(
-                salt=salt,
-                length=dklen,
-                n=n,
-                r=r,
-                p=p,
-                backend=None,
-            )
-            return kdf.derive(password)
-
-        HAS_SCRYPT = True
-    except ImportError:
-        HAS_SCRYPT = False
 
 # Code example from Python docs
 ALPHABET = string.ascii_letters + string.digits
@@ -183,7 +168,7 @@ def compare_type9(
         >>> from netutils.password import compare_type9
         >>> compare_type9("cisco","$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2")
         True
-        >>> compare_type7("not_cisco","$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2")
+        >>> compare_type9("not_cisco","$9$588|P!iWqEx=Wf$nadLmT9snc6V9QAeUuATSOoCAZMQIHqixJfZpQj5EU2")
         False
         >>>
     """
@@ -288,7 +273,12 @@ def encrypt_type7(unencrypted_password: str, salt: t.Optional[int] = None) -> st
 
 
 def encrypt_type9(unencrypted_password: str, salt: t.Optional[str] = None) -> str:
-    """Given an unencrypted password of Cisco Type 9 password, encypt it.
+    """Given an unencrypted password of Cisco Type 9 password, encrypt it.
+
+    Note: This uses the built-in Python `scrypt` function to generate the password
+    hash. However, this function is not available on the default Python installed
+    on MacOS. If MacOS is used, it is recommended to install Python using Homebrew
+    (or similar) which will include `scrypt`.
 
     Args:
         unencrypted_password: A password that has not been encrypted, and will be compared against.
@@ -299,15 +289,16 @@ def encrypt_type9(unencrypted_password: str, salt: t.Optional[str] = None) -> st
 
     Examples:
         >>> from netutils.password import encrypt_type9
-        >>> encrypt_type7("123456")
-        "$9$cvWdfQlRRDKq/U$VFTPha5VHTCbSgSUAo.nPoh50ZiXOw1zmljEjXkaq1g"
-        >>> encrypt_type7("123456", "cvWdfQlRRDKq/U")
-        "$9$cvWdfQlRRDKq/U$VFTPha5VHTCbSgSUAo.nPoh50ZiXOw1zmljEjXkaq1g"
+        >>> encrypt_type9("123456", "cvWdfQlRRDKq/U")
+        '$9$cvWdfQlRRDKq/U$VFTPha5VHTCbSgSUAo.nPoh50ZiXOw1zmljEjXkaq1g'
+
+    Raises:
+        ImportError: If `scrypt` cannot be imported from the system.
     """
     if not HAS_SCRYPT:
         raise ImportError(
             "Your version of python does not have scrypt support built in. "
-            "Please install netutils[optionals] to work around this issue."
+            "Please install a version of python with scrypt."
         )
 
     if salt:
@@ -326,12 +317,12 @@ def encrypt_type9(unencrypted_password: str, salt: t.Optional[str] = None) -> st
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
         ENCRYPT_TYPE9_ENCODING_CHARS,
     )
-    hash = base64.b64encode(key).decode().translate(type9_encoding_translation_table)
+    hashed_password = base64.b64encode(key).decode().translate(type9_encoding_translation_table)
 
     # and strip off the trailing '='
-    hash = hash[:-1]
+    hashed_password = hashed_password[:-1]
 
-    return f"$9${salt_bytes.decode()}${hash}"
+    return f"$9${salt_bytes.decode()}${hashed_password}"
 
 
 def get_hash_salt(encrypted_password: str) -> str:
