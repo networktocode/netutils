@@ -60,3 +60,11 @@
 /system identity set name=ag1.123site.nwk.nj
 /system logging add action=remote topics=error
 /system logging add action=remote topics=info
+/system note set note="This is a \\\"System Note\\\" for a Mikrotik router.\\n\\\
+    \nIt includes double quotes (\\\") and special characters such as:\\n\\\
+    \n@, #, \$, %, ^, &, *, (, ), _, +, [, ], {, }, |, ;, ',', ., /, <, >, and \?.\\n\\\
+    \n\\n\\\
+    \nRemember to escape any special characters with a backslash (\\\\) when necessary.\\n\\\
+    \n\\n\\\
+    \nThis is a multiline note with several lines of text.\\n\\\
+    \nWow, what a great example of a note to ensure proper parsing by NetUtils!"
