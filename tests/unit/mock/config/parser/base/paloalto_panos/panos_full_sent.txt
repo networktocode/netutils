@@ -1,0 +1,333 @@
+
+config {
+  mgt-config {
+    users {
+      admin {
+        phash *;
+        permissions {
+          role-based {
+            superuser yes;
+          }
+        }
+        public-key thisisasuperduperlongbase64encodedstring;
+      }
+      panadmin {
+        permissions {
+          role-based {
+            superuser yes;
+          }
+        }
+        phash passwordhash;
+      }
+    }
+  }
+  shared {
+    botnet {
+      configuration {
+        http {
+          dynamic-dns {
+            enabled yes;
+            threshold 5;
+          }
+          malware-sites {
+            enabled yes;
+            threshold 5;
+          }
+          recent-domains {
+            enabled yes;
+            threshold 5;
+          }
+          ip-domains {
+            enabled yes;
+            threshold 10;
+          }
+          executables-from-unknown-sites {
+            enabled yes;
+            threshold 5;
+          }
+        }
+        other-applications {
+          irc yes;
+        }
+        unknown-applications {
+          unknown-tcp {
+            destinations-per-hour 10;
+            sessions-per-hour 10;
+            session-length {
+              maximum-bytes 100;
+              minimum-bytes 50;
+            }
+          }
+          unknown-udp {
+            destinations-per-hour 10;
+            sessions-per-hour 10;
+            session-length {
+              maximum-bytes 100;
+              minimum-bytes 50;
+            }
+          }
+        }
+      }
+      report {
+        topn 100;
+        scheduled yes;
+      }
+    }
+    application-status {
+      awesun;
+      hikvision-http;
+      notion-base;
+      notion-delete;
+      notion-download;
+      notion-logout;
+      notion-upload;
+    }
+  }
+  devices {
+    localhost.localdomain {
+      network {
+        interface {
+          ethernet {
+            ethernet1/1 {
+              layer3 {
+                ipv6 {
+                  neighbor-discovery {
+                    router-advertisement {
+                      enable no;
+                    }
+                  }
+                }
+                ndp-proxy {
+                  enabled no;
+                }
+                dhcp-client {
+                  create-default-route yes;
+                }
+                lldp {
+                  enable no;
+                }
+              }
+            }
+            ethernet1/2 {
+              layer3 {
+                ipv6 {
+                  neighbor-discovery {
+                    router-advertisement {
+                      enable no;
+                    }
+                  }
+                }
+                ndp-proxy {
+                  enabled no;
+                }
+                dhcp-client {
+                  create-default-route no;
+                }
+                lldp {
+                  enable no;
+                }
+                interface-management-profile mgt;
+              }
+              link-state auto;
+            }
+          }
+        }
+        profiles {
+          monitor-profile {
+            default {
+              interval 3;
+              threshold 5;
+              action wait-recover;
+            }
+          }
+          interface-management-profile;
+        }
+        ike {
+          crypto-profiles {
+            ike-crypto-profiles {
+              default {
+                encryption [ aes-128-cbc 3des];
+                hash sha1;
+                dh-group group2;
+                lifetime {
+                  hours 8;
+                }
+              }
+              Suite-B-GCM-128 {
+                encryption aes-128-cbc;
+                hash sha256;
+                dh-group group19;
+                lifetime {
+                  hours 8;
+                }
+              }
+              Suite-B-GCM-256 {
+                encryption aes-256-cbc;
+                hash sha384;
+                dh-group group20;
+                lifetime {
+                  hours 8;
+                }
+              }
+            }
+            ipsec-crypto-profiles {
+              default {
+                esp {
+                  encryption [ aes-128-cbc 3des];
+                  authentication sha1;
+                }
+                dh-group group2;
+                lifetime {
+                  hours 1;
+                }
+              }
+              Suite-B-GCM-128 {
+                esp {
+                  encryption aes-128-gcm;
+                  authentication none;
+                }
+                dh-group group19;
+                lifetime {
+                  hours 1;
+                }
+              }
+              Suite-B-GCM-256 {
+                esp {
+                  encryption aes-256-gcm;
+                  authentication none;
+                }
+                dh-group group20;
+                lifetime {
+                  hours 1;
+                }
+              }
+            }
+            global-protect-app-crypto-profiles {
+              default {
+                encryption aes-128-cbc;
+                authentication sha1;
+              }
+            }
+          }
+        }
+        qos {
+          profile {
+            default {
+              class-bandwidth-type {
+                mbps {
+                  class {
+                    class1 {
+                      priority real-time;
+                    }
+                    class2 {
+                      priority high;
+                    }
+                    class3 {
+                      priority high;
+                    }
+                    class4 {
+                      priority medium;
+                    }
+                    class5 {
+                      priority medium;
+                    }
+                    class6 {
+                      priority low;
+                    }
+                    class7 {
+                      priority low;
+                    }
+                    class8 {
+                      priority low;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        virtual-router;
+      }
+      deviceconfig {
+        system {
+          type {
+            dhcp-client {
+              send-hostname yes;
+              send-client-id yes;
+              accept-dhcp-hostname no;
+              accept-dhcp-domain yes;
+            }
+          }
+          update-server updates.paloaltonetworks.com;
+          update-schedule;
+          service {
+            disable-telnet yes;
+            disable-http yes;
+          }
+          hostname firewall1;
+          login-banner "
+************************************************************************
+*                        firewall1.example.com                       *                         [PROD VM500  firewalls]
+************************************************************************
+*                               WARNING                                *
+*   Unauthorized access to this device or devices attached to          *
+*   or accessible from this network is strictly prohibited.            *
+*   Possession of passwords or devices enabling access to this         *
+*   device or devices does not constitute authorization. Unauthorized  *
+*   access will be prosecuted to the fullest extent of the law.        *
+*                                                                      *
+************************************************************************
+
+";
+          panorama {
+            local-panorama {
+              panorama-server 10.0.0.1;
+              panorama-server-2 10.0.0.2;
+            }
+          }
+        }
+        setting {
+          config {
+            rematch yes;
+          }
+          management {
+            hostname-type-in-syslog FQDN;
+            initcfg {
+              public-key thisisasuperduperduperlogstring;
+              type {
+                dhcp-client {
+                  send-hostname yes;
+                  send-client-id yes;
+                  accept-dhcp-hostname yes;
+                  accept-dhcp-domain yes;
+                }
+              }
+              dns-primary 8.8.8.8;
+              op-command-modes mgmt-interface-swap;
+            }
+          }
+        }
+      }
+      vsys {
+        vsys1 {
+          zone;
+          import {
+            network {
+              interface [ ethernet1/1 ethernet1/2 vlan loopback tunnel];
+              vlan;
+              virtual-router;
+              virtual-wire;
+            }
+          }
+          address;
+          rulebase {
+            security {
+              rules;
+            }
+          }
+          service;
+        }
+      }
+    }
+  }
+}

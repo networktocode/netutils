@@ -20,6 +20,7 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "aruba_aoscx": parser.ArubaConfigParser,
     "mrv_optiswitch": parser.OptiswitchConfigParser,
     "extreme_netiron": parser.NetironConfigParser,
+    "paloalto_panos": parser.PaloAltoNetworksConfigParser,
 }
 
 # TODO: Once support for 3.7 is dropped, there should be a typing.TypedDict for this which should then also be used
