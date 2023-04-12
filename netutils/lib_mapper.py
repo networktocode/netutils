@@ -203,6 +203,14 @@ SCRAPLI_LIB_MAPPER = {
     "aruba_aoscx": "aruba_aoscx",
 }
 
+HIERCONFIG_LIB_MAPPER = {
+    "ios": "cisco_ios",
+    "iosxe": "cisco_xe",
+    "iosxr": "cisco_xr",
+    "nxos": "cisco_nxos",
+    "eos": "arista_eos",
+}
+
 NAPALM_LIB_MAPPER_REVERSE = {
     "arista_eos": "eos",
     "brocade_vyos": "vyos",
@@ -277,6 +285,14 @@ SCRAPLI_LIB_MAPPER_REVERSE = {
     "arista_eos": "arista_eos",
     "juniper_junos": "juniper_junos",
     "aruba_aoscx": "aruba_aoscx",
+}
+
+HIERCONFIG_LIB_MAPPER_REVERSE = {
+    "cisco_ios": "ios",
+    "cisco_xe": "iosxe",
+    "cisco_xr": "iosxr",
+    "cisco_nxos": "nxos",
+    "arista_eos": "eos",
 }
 
 # Deep copy the reverse, where there is no actual translation happening.
