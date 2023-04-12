@@ -44,6 +44,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_peer_ip": "ip.get_peer_ip",
     "get_usable_range": "ip.get_usable_range",
     "ipaddress_address": "ip.ipaddress_address",
+    "ipaddress_address_type": "ip.ipaddress_address_type",
     "ipaddress_interface": "ip.ipaddress_interface",
     "ipaddress_network": "ip.ipaddress_network",
     "is_valid_mac": "mac.is_valid_mac",

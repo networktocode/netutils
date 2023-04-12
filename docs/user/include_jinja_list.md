@@ -38,6 +38,7 @@
 | ip_to_bin | netutils.ip.ip_to_bin |
 | ip_to_hex | netutils.ip.ip_to_hex |
 | ipaddress_address | netutils.ip.ipaddress_address |
+| ipaddress_address_type | netutils.ip.ipaddress_address_type |
 | ipaddress_interface | netutils.ip.ipaddress_interface |
 | ipaddress_network | netutils.ip.ipaddress_network |
 | is_classful | netutils.ip.is_classful |

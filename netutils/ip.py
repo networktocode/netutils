@@ -33,6 +33,34 @@ def ipaddress_address(ip: str, attr: str) -> t.Any:
     return retrieved_method
 
 
+def ipaddress_address_type(ip_address: str) -> str:
+    """Convenience method to determine the type of address from a string
+
+    Args:
+        ip_address (str): Address to check
+
+    Returns:
+        str: ipv4/ipv6 determined on the type of address / AddressError if not a valid IPv4 or IPv6
+
+    Examples:
+        >>> from netutils.ip import ipaddress_address_type
+        >>> ipaddress_address_type('192.0.2.10')
+        ipv4
+        >>> ipaddress_address_type('2001:0db8:85a3:0000:0000:8a2e:0370:7334')
+        ipv6
+        >>> ipaddress_address_type('256.256.256.256')
+        error(AddressValueError)
+    """
+    try:
+        # Test for an IPv4Address object
+        ipaddress.IPv4Address(ip_address)
+        return "ipv4"
+    except ipaddress.AddressValueError:
+        # Test for IPv6Address object, allow the AddressValueError to be raised if failed.
+        ipaddress.IPv6Address(ip_address)
+        return "ipv6"
+
+
 def ipaddress_interface(ip: str, attr: str) -> t.Any:
     """Convenience function primarily built to expose ipaddress.ip_interface to Jinja.
 

@@ -1,4 +1,6 @@
 """Test for the IP functions."""
+from ipaddress import AddressValueError
+
 import pytest
 
 from netutils import ip
@@ -331,6 +333,26 @@ IS_CLASSFUL = [
     {"sent": {"ip_network": "224.0.0.0/24"}, "received": False},
 ]
 
+ADDRESS_TYPE = [
+    {"sent": "192.0.2.10", "received": "ipv4"},
+    {"sent": "2001:0db8:85a3:0000:0000:8a2e:0370:7334", "received": "ipv6"},
+]
+
+ADDRESS_TYPES_ERROR = [
+    {
+        "sent": "2001:0db8:85a3:0000:0000:8a2e:0370:7334:1234",
+        "error_message": "Exactly 8 parts expected without '::' in '2001:0db8:85a3:0000:0000:8a2e:0370:7334:1234'",
+    },
+    {
+        "sent": "256.256.256.256",
+        "error_message": "At least 3 parts expected in '256.256.256.256'",
+    },
+    {
+        "sent": "hello_world",
+        "error_message": "At least 3 parts expected in 'hello_world'",
+    },
+]
+
 
 @pytest.mark.parametrize("data", IP_TO_HEX)
 def test_ip_to_hex(data):
@@ -450,3 +472,18 @@ def test_ipaddress_network(data):
 @pytest.mark.parametrize("data", IS_CLASSFUL)
 def test_is_classful(data):
     assert ip.is_classful(**data["sent"]) == data["received"]
+
+
+@pytest.mark.parametrize("data", ADDRESS_TYPE)
+def test_address_types(data):
+    assert ip.ipaddress_address_type(data["sent"]) == data["received"]
+
+
+@pytest.mark.parametrize("data", ADDRESS_TYPES_ERROR)
+def test_address_types_error(data):
+    with pytest.raises(AddressValueError) as err:
+        ip.ipaddress_address_type(data["sent"])
+
+    print(dir(err.value))
+
+    assert str(err.value) == data["error_message"]
