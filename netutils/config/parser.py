@@ -1437,9 +1437,9 @@ class FastironConfigParser(BaseSpaceConfigParser):
     @property
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
-        if self._banner_end is None:
+        if self.banner_end is None:
             raise RuntimeError("Banner end not yet set.")
-        return self._banner_end
+        return self.banner_end
 
     @banner_end.setter
     def banner_end(self, banner_start_line: str) -> None:
