@@ -1446,7 +1446,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
         banner_parsed = self.regex_banner.match(banner_start_line)
         if not banner_parsed:
             raise ValueError("There was an error parsing your banner, the end of the banner could not be found")
-        self._banner_end = banner_parsed.groupdict()["banner_delimiter"]
+        self.banner_end = banner_parsed.groupdict()["banner_delimiter"]
 
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
