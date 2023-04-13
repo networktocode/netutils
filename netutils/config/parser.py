@@ -1415,6 +1415,17 @@ class FastironConfigParser(BaseSpaceConfigParser):
                 return True
         return False
 
+    def is_banner_end(self, line: str) -> bool:
+        """Determine if the line is a end of banner config.
+        Args:
+            line: The current config line in iteration.
+        Returns:
+            True if line ends banner, else False.
+        """
+        if line.lstrip().__contains__(self.delimiter):
+                return True
+        return False
+
     @property
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
