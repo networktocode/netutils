@@ -1404,8 +1404,10 @@ class FastironConfigParser(BaseSpaceConfigParser):
 
     def is_banner_start(self, line: str) -> bool:
         """Determine if the line starts a banner config.
+
         Args:
             line: The current config line in iteration.
+
         Returns:
             True if line starts banner, else False.
         """
@@ -1417,8 +1419,10 @@ class FastironConfigParser(BaseSpaceConfigParser):
 
     def is_banner_end(self, line: str) -> bool:
         """Determine if the line is a end of banner config.
+
         Args:
             line: The current config line in iteration.
+
         Returns:
             True if line ends banner, else False.
         """
@@ -1474,7 +1478,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
         raise ValueError("Unable to parse banner end.")
 
     def build_config_relationship(self) -> t.List[ConfigLine]:
-        """Parse text tree of config lines and their parents.
+        r"""Parse text tree of config lines and their parents.
 
         Examples:
             >>> config = (
