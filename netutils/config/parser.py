@@ -1484,7 +1484,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
             >>> config = (
             ...     "interface ethernet1/1/1\n"
             ...     " port-name Unit-111-AP\n"
-            ...     " inline power power-limit 12000"
+            ...     " inline power power-limit 12000\n"
             ...     "vlan 3010 by port\n"
             ...     " tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2\n"
             ... )
