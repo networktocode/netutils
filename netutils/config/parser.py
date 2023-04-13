@@ -1392,7 +1392,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
         """
         self._banner_end: t.Optional[str] = None
         self.delimiter = ""
-        super(BaseSpaceConfigParser, self).__init__(config)
+        super(FastironConfigParser, self).__init__(config)
 
     def set_delimiter(self, config_line: str) -> None:
         """Find delimiter character in banner and set self.delimiter to be it."""
