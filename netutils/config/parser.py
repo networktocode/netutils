@@ -1382,7 +1382,6 @@ class FastironConfigParser(BaseSpaceConfigParser):
 
     comment_chars: t.List[str] = ["!"]
     banner_start: t.List[str] = ["banner "]
-
     regex_banner = re.compile(r"^banner\s+\S+\s+(?P<banner_delimiter>\S)")
 
     def __init__(self, config: str):
@@ -1393,7 +1392,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
         """
         self.delimiter = ""
         super(BaseSpaceConfigParser, self).__init__(config)
-    
+
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
 
@@ -1448,7 +1447,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
         if not banner_parsed:
             raise ValueError("There was an error parsing your banner, the end of the banner could not be found")
         self._banner_end = banner_parsed.groupdict()["banner_delimiter"]
-    
+
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
