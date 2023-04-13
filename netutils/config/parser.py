@@ -1375,3 +1375,105 @@ class NetironConfigParser(BaseSpaceConfigParser):
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
         raise NotImplementedError("Extreme Netiron platform doesn't have a banner.")
+
+
+class FastironConfigParser(BaseSpaceConfigParser):
+    """Ruckus FastIron ICX config parser."""
+
+    comment_chars: t.List[str] = ["!"]
+    banner_start: t.List[str] = ["banner "]
+
+    regex_banner = re.compile(r"^banner\s+\S+\s+(?P<banner_delimiter>\S)")
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        self.delimiter = ""
+        super(BaseSpaceConfigParser, self).__init__(config)
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None
+
+        Raises:
+            ValueError: When the parser is unable to identify the end of the Banner.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                if line.endswith(self.delimiter):
+                    banner, end, _ = line.rpartition(self.delimiter)
+                    line = banner.rstrip() + end
+                self._update_config_lines(line)
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+
+        raise ValueError("Unable to parse banner end.")
+
+    def set_delimiter(self, config_line: str) -> None:
+        """Find delimiter character in banner and set self.delimiter to be it."""
+        banner_parsed = self.regex_banner.match(config_line)
+        if banner_parsed and "banner_delimiter" in banner_parsed.groupdict():
+            self.delimiter = banner_parsed.groupdict()["banner_delimiter"]
+            return None
+        raise ValueError("Unable to find banner delimiter.")
+
+    def build_config_relationship(self) -> t.List[ConfigLine]:
+        r"""Parse text tree of config lines and their parents.
+
+        Examples:
+            >>> config = (
+            ...     "interface ethernet1/1/1\n"
+            ...     " port-name Unit-111-AP\n"
+            ...     " inline power power-limit 12000"
+            ...     "vlan 3010 by port\n"
+            ...     " tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2\n"
+            ... )
+            >>> config_tree = FastironConfigParser(config)
+            >>> config_tree.build_config_relationship() == \
+            ... [
+            ...     ConfigLine(config_line='interface ethernet1/1/1', parents=()),
+            ...     ConfigLine(config_line=' port-name Unit-111-AP', parents=('interface ethernet1/1/1',)),
+            ...     ConfigLine(config_line=' inline power power-limit 12000', parents=('interface ethernet1/1/1',)),
+            ...     ConfigLine(config_line='vlan 3010 by port', parents=()),
+            ...     ConfigLine(config_line=' tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2', parents=('vlan 3010 by port',))
+            ... ]
+            True
+        """
+        for line in self.generator_config:
+            if not line[0].isspace():
+                self._current_parents = ()
+                if self.is_banner_start(line):
+                    if not self.delimiter:
+                        self.set_delimiter(line)
+                    line = self._build_banner(line)  # type: ignore
+            else:
+                previous_config = self.config_lines[-1]
+                self._current_parents = (previous_config.config_line,)
+                self.indent_level = self.get_leading_space_count(line)
+                line = self._build_nested_config(line)  # type: ignore
+
+            if line is None:
+                break
+            elif self.is_banner_start(line):
+                line = self._build_banner(line)  # type: ignore
+
+            self._update_config_lines(line)
+        return self.config_lines
