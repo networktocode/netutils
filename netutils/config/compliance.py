@@ -21,7 +21,6 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "mrv_optiswitch": parser.OptiswitchConfigParser,
     "extreme_netiron": parser.NetironConfigParser,
     "ruckus_fastiron": parser.FastironConfigParser,
-
 }
 
 # TODO: Once support for 3.7 is dropped, there should be a typing.TypedDict for this which should then also be used
