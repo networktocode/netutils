@@ -1391,7 +1391,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
             config (str): The config text to parse.
         """
         self._banner_end: t.Optional[str] = None
-        self.delimiter = ""
+        self.delimiter = "$"
         super(BaseSpaceConfigParser, self).__init__(config)
 
     def _build_banner(self, config_line: str) -> t.Optional[str]:
@@ -1450,7 +1450,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
         self._banner_end = banner_parsed.groupdict()["banner_delimiter"]
 
     def build_config_relationship(self) -> t.List[ConfigLine]:
-        r"""Parse text tree of config lines and their parents.
+        """Parse text tree of config lines and their parents.
 
         Examples:
             >>> config = (
