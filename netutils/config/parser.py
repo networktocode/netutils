@@ -1381,7 +1381,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
     """Ruckus FastIron ICX config parser."""
 
     comment_chars: t.List[str] = ["!"]
-    banner_start: t.List[str] = ["banner "]
+    banner_start: t.List[str] = ["banner", "banner motd"]
     regex_banner = re.compile(r"^banner\s+\S+\s+(?P<banner_delimiter>\S)")
 
     def __init__(self, config: str):
@@ -1391,8 +1391,29 @@ class FastironConfigParser(BaseSpaceConfigParser):
             config (str): The config text to parse.
         """
         self._banner_end: t.Optional[str] = None
-        self.delimiter = "$"
+        self.delimiter = ""
         super(BaseSpaceConfigParser, self).__init__(config)
+
+    def set_delimiter(self, config_line: str) -> None:
+        """Find delimiter character in banner and set self.delimiter to be it."""
+        banner_parsed = self.regex_banner.match(config_line)
+        if banner_parsed and "banner_delimiter" in banner_parsed.groupdict():
+            self.delimiter = banner_parsed.groupdict()["banner_delimiter"]
+            return None
+        raise ValueError("Unable to find banner delimiter.")
+
+    def is_banner_start(self, line: str) -> bool:
+        """Determine if the line starts a banner config.
+        Args:
+            line: The current config line in iteration.
+        Returns:
+            True if line starts banner, else False.
+        """
+        for banner_start in self.banner_start:
+            if line.lstrip().startswith(banner_start):
+                self.set_delimiter(line)
+                return True
+        return False
 
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
@@ -1426,14 +1447,6 @@ class FastironConfigParser(BaseSpaceConfigParser):
                     return None
 
         raise ValueError("Unable to parse banner end.")
-
-    def set_delimiter(self, config_line: str) -> None:
-        """Find delimiter character in banner and set self.delimiter to be it."""
-        banner_parsed = self.regex_banner.match(config_line)
-        if banner_parsed and "banner_delimiter" in banner_parsed.groupdict():
-            self.delimiter = banner_parsed.groupdict()["banner_delimiter"]
-            return None
-        raise ValueError("Unable to find banner delimiter.")
 
     @property
     def banner_end(self) -> str:
