@@ -1382,7 +1382,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
 
     comment_chars: t.List[str] = ["!"]
     banner_start: t.List[str] = ["banner", "banner motd"]
-    regex_banner = re.compile(r"^banner\s+\S+\s+(?P<banner_delimiter>\S)")
+    regex_banner = re.compile(r"^banner\s+(?P<banner_delimiter>\S)")
 
     def __init__(self, config: str):
         """Create ConfigParser Object.
