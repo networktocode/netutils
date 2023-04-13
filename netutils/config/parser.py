@@ -1423,7 +1423,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
             True if line ends banner, else False.
         """
         if line.lstrip().__contains__(self.delimiter):
-                return True
+            return True
         return False
 
     @property
