@@ -1415,6 +1415,20 @@ class FastironConfigParser(BaseSpaceConfigParser):
                 return True
         return False
 
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        if self._banner_end is None:
+            raise RuntimeError("Banner end not yet set.")
+        return self._banner_end
+
+    @banner_end.setter
+    def banner_end(self, banner_start_line: str) -> None:
+        banner_parsed = self.regex_banner.match(banner_start_line)
+        if not banner_parsed:
+            raise ValueError("There was an error parsing your banner, the end of the banner could not be found")
+        self._banner_end = banner_parsed.groupdict()["banner_delimiter"]
+
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
 
@@ -1447,20 +1461,6 @@ class FastironConfigParser(BaseSpaceConfigParser):
                     return None
 
         raise ValueError("Unable to parse banner end.")
-
-    @property
-    def banner_end(self) -> str:
-        """Demarcate End of Banner char(s)."""
-        if self._banner_end is None:
-            raise RuntimeError("Banner end not yet set.")
-        return self._banner_end
-
-    @banner_end.setter
-    def banner_end(self, banner_start_line: str) -> None:
-        banner_parsed = self.regex_banner.match(banner_start_line)
-        if not banner_parsed:
-            raise ValueError("There was an error parsing your banner, the end of the banner could not be found")
-        self._banner_end = banner_parsed.groupdict()["banner_delimiter"]
 
     def build_config_relationship(self) -> t.List[ConfigLine]:
         """Parse text tree of config lines and their parents.
