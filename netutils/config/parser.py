@@ -1381,9 +1381,8 @@ class FastironConfigParser(BaseSpaceConfigParser):
     """Ruckus FastIron ICX config parser."""
 
     comment_chars: t.List[str] = ["!"]
-    banner_start: t.List[str] = ["banner", "banner motd"]
+    banner_start: t.List[str] = ["banner"]
     regex_banner = re.compile(r"^banner\s+(?P<banner_delimiter>\S)")
-    #regex_banner = re.compile(rf"^{('|'.join(banner_start))}\s+(?P<banner_delimiter>\S)")
 
     def __init__(self, config: str):
         """Create ConfigParser Object.
@@ -1425,7 +1424,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
         Returns:
             True if line ends banner, else False.
         """
-        if self.delimiter in line.lstrip():
+        if line.lstrip().__contains__(self.delimiter):
             return True
         return False
 

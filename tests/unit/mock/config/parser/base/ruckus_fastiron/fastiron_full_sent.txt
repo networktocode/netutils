@@ -10,7 +10,7 @@ stack unit 1
   stack-port 1/3/2
 !
 !
-banner motd $
+banner $ 
 +----------------+ WARNING RUCKUS SWITCH +---------------+
 .                                                      
 .   Access to this system is limited to authorized     
@@ -113,10 +113,10 @@ ip address 10.254.220.10 255.255.255.0
 ip default-gateway 10.254.220.1
 !
 no telnet server
-username admin password .....
+username admin password testpass
 !
 !
-snmp-server community ..... rw
+snmp-server community testcomm rw
 !
 !
 !
