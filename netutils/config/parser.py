@@ -1383,6 +1383,11 @@ class RouterOSConfigParser(BaseSpaceConfigParser):
     comment_chars: t.List[str] = ["#"]
     banner_start: t.List[str] = ["/system note set note=", "set note="]
 
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Mikrotik platform uses system note as a banner.")
+
     def is_banner_end(self, line: str) -> bool:
         """Determine if end of banner."""
         if line.endswith('"') or line.startswith("/"):
