@@ -1,1 +1,32 @@
-
+{
+  "aaa": {
+    "actual": "aaa authentication web-server default local\naaa authentication login default local\n",
+    "cannot_parse": true,
+    "compliant": true,
+    "extra": "",
+    "intended": "aaa authentication web-server default local\naaa authentication login default local\n",
+    "missing": "",
+    "ordered_compliant": true,
+    "unordered_compliant": true
+  },
+  "mstp": {
+    "actual": "mstp scope all\nmstp instance 0 vlan 1\nmstp instance 0 vlan 2000\nmstp instance 3000 to 3010\nmstp instance 0 vlan 3995\nmstp start",
+    "cannot_parse": true,
+    "compliant": true,
+    "extra": "",
+    "intended": "mstp scope all\nmstp instance 0 vlan 1\nmstp instance 0 vlan 2000\nmstp instance 3000 to 3010\nmstp instance 0 vlan 3995\nmstp start",
+    "missing": "",
+    "ordered_compliant": true,
+    "unordered_compliant": true
+  },
+  "snmp": {
+    "actual": "snmp-server community testcomm rw",
+    "cannot_parse": true,
+    "compliant": false,
+    "extra": "snmp-server community testcomm rw",
+    "intended": "snmp-server community testcamm rw",
+    "missing": "snmp-server community testcamm rw",
+    "ordered_compliant": false,
+    "unordered_compliant": false
+  }
+}
