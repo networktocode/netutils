@@ -1381,8 +1381,8 @@ class PaloAltoNetworksConfigParser(BaseBraceConfigParser):
     """Palo Alto Networks config parser."""
 
     comment_chars: t.List[str] = []
-    banner_start: t.List[str] = ["          login-banner \""]
-    banner_end: t.List[str] = ["\";"]
+    banner_start: t.List[str] = ['          login-banner "']
+    banner_end: t.List[str] = ['";']
 
     regex_banner = re.compile(r" +login-banner \"")
 
