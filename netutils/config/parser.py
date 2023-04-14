@@ -1382,7 +1382,8 @@ class FastironConfigParser(BaseSpaceConfigParser):
 
     comment_chars: t.List[str] = ["!"]
     banner_start: t.List[str] = ["banner", "banner motd"]
-    regex_banner = re.compile(rf"^{'|'.join(banner_start)}\s+(?P<banner_delimiter>\S)")
+    regex_banner = re.compile(r"^banner\s+(?P<banner_delimiter>\S)")
+    #regex_banner = re.compile(rf"^{('|'.join(banner_start))}\s+(?P<banner_delimiter>\S)")
 
     def __init__(self, config: str):
         """Create ConfigParser Object.
@@ -1390,7 +1391,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
         Args:
             config (str): The config text to parse.
         """
-        self.delimiter = t.Optional[str] = None
+        self.delimiter = None
         super(FastironConfigParser, self).__init__(config)
 
     def set_delimiter(self, config_line: str) -> None:
@@ -1412,7 +1413,6 @@ class FastironConfigParser(BaseSpaceConfigParser):
         """
         for banner_start in self.banner_start:
             if line.lstrip().startswith(banner_start):
-                self.set_delimiter(line)
                 return True
         return False
 
@@ -1425,7 +1425,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
         Returns:
             True if line ends banner, else False.
         """
-        if line.lstrip().__contains__(self.delimiter):
+        if self.delimiter in line.lstrip():
             return True
         return False
 
@@ -1449,6 +1449,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
             ValueError: When the parser is unable to identify the end of the Banner.
         """
         self._update_config_lines(config_line)
+        self.set_delimiter(config_line)
         self._current_parents += (config_line,)
         banner_config = []
         for line in self.generator_config:
