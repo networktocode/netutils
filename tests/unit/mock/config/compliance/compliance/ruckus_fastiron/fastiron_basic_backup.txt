@@ -1,0 +1,190 @@
+Current configuration:
+!
+ver 08.0.95gT211
+!
+stack unit 1
+  module 1 icx7150-c12-poe-port-management-module
+  module 2 icx7150-2-copper-port-2g-module
+  module 3 icx7150-2-sfp-plus-port-20g-module
+  stack-port 1/3/1
+  stack-port 1/3/2
+!
+!
+banner motd $
++----------------+ WARNING RUCKUS SWITCH +---------------+
+.                                                      
+.   Access to this system is limited to authorized     
+.          users and for official purposes only        
+.                                                      
+.       Your activities will be logged and abuse       
+.                     will be reported!                
+.                                                      
++----------------+ WARNING RUCKUS SWITCH +---------------+ $
+!
+!
+vlan 1 name DEFAULT-VLAN by port
+ no spanning-tree
+!
+!
+!
+!
+vlan 2000 name MGMT-VLAN by port
+ tagged ethe 1/2/1 to 1/2/2 ethe 1/3/1 to 1/3/2 
+ untagged ethe 1/1/1 ethe 1/1/3 ethe 1/1/5 ethe 1/1/7 ethe 1/1/9 ethe 1/1/11 to 1/1/12 
+ no spanning-tree
+!
+!
+!
+vlan 3000 name Guest-WiFi by port
+ tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ no spanning-tree
+!
+vlan 3001 by port
+ tagged ethe 1/1/1 ethe 1/1/3 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ untagged ethe 1/1/2 
+ no spanning-tree
+!
+vlan 3002 by port
+ tagged ethe 1/1/1 to 1/1/3 ethe 1/1/5 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ untagged ethe 1/1/4 
+ no spanning-tree
+!
+vlan 3003 by port
+ tagged ethe 1/1/1 to 1/1/5 ethe 1/1/7 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ untagged ethe 1/1/6 
+ no spanning-tree
+!                                                                 
+vlan 3004 by port
+ tagged ethe 1/1/1 to 1/1/7 ethe 1/1/9 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ untagged ethe 1/1/8 
+ no spanning-tree
+!
+vlan 3005 by port
+ tagged ethe 1/1/1 to 1/1/9 ethe 1/1/11 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ untagged ethe 1/1/10 
+ no spanning-tree
+!
+vlan 3006 by port
+ tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ no spanning-tree
+!
+vlan 3007 by port
+ tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ no spanning-tree
+!
+vlan 3008 by port
+ tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ no spanning-tree
+!
+vlan 3009 by port                                                 
+ tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ no spanning-tree
+!
+vlan 3010 by port
+ tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ no spanning-tree
+!
+!
+!
+vlan 3995 name OfficeNetwork by port
+ tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2 
+ no spanning-tree
+!
+!
+!
+mstp scope all
+mstp instance 0 vlan 1
+mstp instance 0 vlan 2000
+mstp instance 0 vlan 3000 to 3010
+mstp instance 0 vlan 3995
+mstp start
+!
+!                                                                 
+!
+!
+errdisable recovery cause all
+aaa authentication web-server default local
+aaa authentication login default local
+enable telnet authentication
+enable aaa console
+hostname NTC-Test-MDF
+ip dhcp snooping vlan 2000 
+ip address 10.254.220.10 255.255.255.0
+ip default-gateway 10.254.220.1
+!
+no telnet server
+username admin password .....
+!
+!
+snmp-server community ..... rw
+!
+!
+!
+!
+manager registrar
+!                                                                 
+manager port-list 987
+!
+!
+interface ethernet 1/1/1
+ port-name Unit-111-AP
+ inline power power-limit 12000
+!
+interface ethernet 1/1/2
+ port-name Unit-111-Wired
+!
+interface ethernet 1/1/3
+ port-name Unit-112-AP
+ inline power power-limit 12000
+!
+interface ethernet 1/1/4
+ port-name Unit-112-Wired
+!
+interface ethernet 1/1/5
+ port-name Unit-113-AP
+ inline power power-limit 12000
+!
+interface ethernet 1/1/6
+ port-name Unit-113-Wired                                         
+!
+interface ethernet 1/1/7
+ port-name Unit-114-AP
+ inline power power-limit 12000
+!
+interface ethernet 1/1/8
+ port-name Unit-114-Wired
+!
+interface ethernet 1/1/9
+ port-name Unit-115-AP
+ inline power power-limit 12000
+!
+interface ethernet 1/1/10
+ port-name Unit-115-Wired
+!
+interface ethernet 1/1/11
+ port-name UPS
+!
+interface ethernet 1/1/12
+ port-name Tech-Test-port
+!
+interface ethernet 1/3/1
+ dhcp snooping trust                                              
+!
+interface ethernet 1/3/2
+ dhcp snooping trust
+!
+!
+!
+!
+!
+!
+!
+no lldp run
+!
+!
+!
+!
+!
+!
+!
+end
