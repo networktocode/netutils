@@ -1381,7 +1381,44 @@ class PaloAltoNetworksConfigParser(BaseBraceConfigParser):
     """Palo Alto Networks config parser."""
 
     comment_chars: t.List[str] = []
-    banner_start: t.List[str] = []
+    banner_start: t.List[str] = ["          login-banner \""]
+    banner_end: t.List[str] = ["\";"]
+
+    regex_banner = re.compile(r" +login-banner \"")
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None
+
+        Raises:
+            ValueError: When the parser is unable to identify the end of the Banner.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                if line.endswith(self.delimiter):
+                    banner, end, _ = line.rpartition(self.delimiter)
+                    line = banner.rstrip() + end
+                self._update_config_lines(line)
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                    print(banner_config)
+                except StopIteration:
+                    return None
+
+        raise ValueError("Unable to parse banner end.")
 
     @property
     def banner_end(self) -> str:
