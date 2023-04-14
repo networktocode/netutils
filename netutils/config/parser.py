@@ -1381,9 +1381,36 @@ class RouterOSConfigParser(BaseSpaceConfigParser):
     """Mikrotik RouterOS config parser."""
 
     comment_chars: t.List[str] = ["#"]
-    banner_start: t.List[str] = []
+    banner_start: t.List[str] = ["/system note set note=", "set note="]
 
-    @property
-    def banner_end(self) -> str:
-        """Demarcate End of Banner char(s)."""
-        raise NotImplementedError("RouterOS platform doesn't have a banner.")
+    def is_banner_end(self, line: str) -> bool:
+        """Determine if end of banner."""
+        if line.endswith('"') or line.startswith("/"):
+            return True
+        return False
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner (system note) config.
+
+        Returns:
+            The next configuration line in the configuration text or None when banner end is the end of the config text.
+
+        Raises:
+            ValueError: When the parser is unable to identify the End of the Banner.
+        """
+        banner_config = [config_line]
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                self._update_config_lines(line)
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+        raise ValueError("Unable to parse banner (system note) end.")

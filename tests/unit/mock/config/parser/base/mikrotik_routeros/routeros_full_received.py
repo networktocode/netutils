@@ -117,35 +117,7 @@ data = [
     ConfigLine(config_line="/system logging add action=remote topics=error", parents=()),
     ConfigLine(config_line="/system logging add action=remote topics=info", parents=()),
     ConfigLine(
-        config_line='/system note set note="This is a \\\\\\"System Note\\\\\\" for a Mikrotik router.\\\\n\\\\\\',
+        config_line='/system note set note="This is a \\\\\\"System Note\\\\\\" for a Mikrotik router.\\\\n\\\\\\\n    \\nIt includes double quotes (\\\\\\") and special characters such as:\\\\n\\\\\\\n    \\n@, #, \\$, %, ^, &, *, (, ), _, +, [, ], {, }, |, ;, \',\', ., /, <, >, and \\?.\\\\n\\\\\\\n    \\n\\\\n\\\\\\\n    \\nRemember to escape any special characters with a backslash (\\\\\\\\) when necessary.\\\\n\\\\\\\n    \\n\\\\n\\\\\\\n    \\nThis is a multiline note with several lines of text.\\\\n\\\\\\\n    \\nWow, what a great example of a note to ensure proper parsing by NetUtils!\n    \\nWe are treating this as a banner."',
         parents=(),
-    ),
-    ConfigLine(
-        config_line='    \\nIt includes double quotes (\\\\\\") and special characters such as:\\\\n\\\\\\',
-        parents=('/system note set note="This is a \\\\\\"System Note\\\\\\" for a Mikrotik router.\\\\n\\\\\\',),
-    ),
-    ConfigLine(
-        config_line="    \\n@, #, \\$, %, ^, &, *, (, ), _, +, [, ], {, }, |, ;, ',', ., /, <, >, and \\?.\\\\n\\\\\\",
-        parents=('/system note set note="This is a \\\\\\"System Note\\\\\\" for a Mikrotik router.\\\\n\\\\\\',),
-    ),
-    ConfigLine(
-        config_line="    \\n\\\\n\\\\\\",
-        parents=('/system note set note="This is a \\\\\\"System Note\\\\\\" for a Mikrotik router.\\\\n\\\\\\',),
-    ),
-    ConfigLine(
-        config_line="    \\nRemember to escape any special characters with a backslash (\\\\\\\\) when necessary.\\\\n\\\\\\",
-        parents=('/system note set note="This is a \\\\\\"System Note\\\\\\" for a Mikrotik router.\\\\n\\\\\\',),
-    ),
-    ConfigLine(
-        config_line="    \\n\\\\n\\\\\\",
-        parents=('/system note set note="This is a \\\\\\"System Note\\\\\\" for a Mikrotik router.\\\\n\\\\\\',),
-    ),
-    ConfigLine(
-        config_line="    \\nThis is a multiline note with several lines of text.\\\\n\\\\\\",
-        parents=('/system note set note="This is a \\\\\\"System Note\\\\\\" for a Mikrotik router.\\\\n\\\\\\',),
-    ),
-    ConfigLine(
-        config_line='    \\nWow, what a great example of a note to ensure proper parsing by NetUtils!"',
-        parents=('/system note set note="This is a \\\\\\"System Note\\\\\\" for a Mikrotik router.\\\\n\\\\\\',),
     ),
 ]

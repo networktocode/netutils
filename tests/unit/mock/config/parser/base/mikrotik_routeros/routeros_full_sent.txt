@@ -67,4 +67,5 @@
     \nRemember to escape any special characters with a backslash (\\\\) when necessary.\\n\\\
     \n\\n\\\
     \nThis is a multiline note with several lines of text.\\n\\\
-    \nWow, what a great example of a note to ensure proper parsing by NetUtils!"
+    \nWow, what a great example of a note to ensure proper parsing by NetUtils!
+    \nWe are treating this as a banner."
