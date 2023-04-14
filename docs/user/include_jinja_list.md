@@ -45,13 +45,13 @@
 | is_netmask | netutils.ip.is_netmask |
 | netmask_to_cidr | netutils.ip.netmask_to_cidr |
 | get_napalm_getters | netutils.lib_helpers.get_napalm_getters |
-| get_upgrade_path | netutils.lib_helpers.get_upgrade_path |
 | get_oui | netutils.mac.get_oui |
 | is_valid_mac | netutils.mac.is_valid_mac |
 | mac_normalize | netutils.mac.mac_normalize |
 | mac_to_format | netutils.mac.mac_to_format |
 | mac_to_int | netutils.mac.mac_to_int |
 | mac_type | netutils.mac.mac_type |
+| get_upgrade_path | netutils.os_version.get_upgrade_path |
 | compare_type5 | netutils.password.compare_type5 |
 | compare_type7 | netutils.password.compare_type7 |
 | decrypt_type7 | netutils.password.decrypt_type7 |
