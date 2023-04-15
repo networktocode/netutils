@@ -95,8 +95,8 @@ JUNIPER_KEYS = ["QzF3n6/9CAtpu0O", "B1IREhcSyrleKvMW8LXx", "7N-dVbwsY2g4oaJZGUDj
 JUNIPER_KEYS_STRING = "".join(JUNIPER_KEYS)
 JUNIPER_KEYS_LENGTH = len(JUNIPER_KEYS_STRING)
 JUNIPER_CHARACTER_KEYS: t.Dict[str, int] = {}
-for idx, key in enumerate(JUNIPER_KEYS):
-    for character in key:
+for idx, jun_key in enumerate(JUNIPER_KEYS):
+    for character in jun_key:
         JUNIPER_CHARACTER_KEYS[character] = 3 - idx
 
 
