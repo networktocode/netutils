@@ -51,6 +51,7 @@
 | mac_to_format | netutils.mac.mac_to_format |
 | mac_to_int | netutils.mac.mac_to_int |
 | mac_type | netutils.mac.mac_type |
+| get_upgrade_path | netutils.os_version.get_upgrade_path |
 | compare_type5 | netutils.password.compare_type5 |
 | compare_type7 | netutils.password.compare_type7 |
 | compare_type9 | netutils.password.compare_type9 |
