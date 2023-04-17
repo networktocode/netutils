@@ -293,7 +293,7 @@ config {
           management {
             hostname-type-in-syslog FQDN;
             initcfg {
-              public-key thisisasuperduperduperlogstring;
+              public-key thisisasuperduperduperlongstring;
               type {
                 dhcp-client {
                   send-hostname yes;
