@@ -1390,7 +1390,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
         Args:
             config (str): The config text to parse.
         """
-        self.delimiter = None
+        self.delimiter = ""
         super(FastironConfigParser, self).__init__(config)
 
     def set_delimiter(self, config_line: str) -> None:
@@ -1431,7 +1431,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
     @property
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
-        if self.delimiter is None:
+        if not self.delimiter:
             raise RuntimeError("Banner end not yet set.")
         return self.delimiter
 
