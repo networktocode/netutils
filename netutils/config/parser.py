@@ -1381,8 +1381,8 @@ class FastironConfigParser(BaseSpaceConfigParser):
     """Ruckus FastIron ICX config parser."""
 
     comment_chars: t.List[str] = ["!"]
-    banner_start: t.List[str] = ["banner"]
-    regex_banner = re.compile(r"^banner\s+(?P<banner_delimiter>\S)")
+    banner_start: t.List[str] = ["banner motd", "banner"]
+    regex_banner = re.compile(r"^banner(\smotd)?\s+(?P<banner_delimiter>\S)")
 
     def __init__(self, config: str):
         """Create ConfigParser Object.
@@ -1390,16 +1390,28 @@ class FastironConfigParser(BaseSpaceConfigParser):
         Args:
             config (str): The config text to parse.
         """
-        self.delimiter = ""
+        self._banner_end = ""
         super(FastironConfigParser, self).__init__(config)
 
-    def set_delimiter(self, config_line: str) -> None:
-        """Find delimiter character in banner and set self.delimiter to be it."""
+    def set_delimiter(self, config_line: str) -> str:
+        """Find delimiter character in banner and set returns value."""
         banner_parsed = self.regex_banner.match(config_line)
         if banner_parsed and "banner_delimiter" in banner_parsed.groupdict():
-            self.delimiter = banner_parsed.groupdict()["banner_delimiter"]
-            return None
+            delimiter = banner_parsed.groupdict()["banner_delimiter"]
+            return delimiter
         raise ValueError("Unable to find banner delimiter.")
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        if not self._banner_end:
+            raise RuntimeError("Banner end not yet set.")
+        return self._banner_end
+
+    @banner_end.setter
+    def banner_end(self, delimiter: str) -> None:
+        """Find delimiter character in banner and set self.banner_end to be it."""
+        self._banner_end = delimiter
 
     def is_banner_start(self, line: str) -> bool:
         """Determine if the line starts a banner config.
@@ -1424,16 +1436,9 @@ class FastironConfigParser(BaseSpaceConfigParser):
         Returns:
             True if line ends banner, else False.
         """
-        if line.lstrip().__contains__(self.delimiter):
+        if line.lstrip().__contains__(self.banner_end):
             return True
         return False
-
-    @property
-    def banner_end(self) -> str:
-        """Demarcate End of Banner char(s)."""
-        if not self.delimiter:
-            raise RuntimeError("Banner end not yet set.")
-        return self.delimiter
 
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
@@ -1448,7 +1453,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
             ValueError: When the parser is unable to identify the end of the Banner.
         """
         self._update_config_lines(config_line)
-        self.set_delimiter(config_line)
+        self.banner_end = self.set_delimiter(config_line)
         self._current_parents += (config_line,)
         banner_config = []
         for line in self.generator_config:
@@ -1457,8 +1462,8 @@ class FastironConfigParser(BaseSpaceConfigParser):
             else:
                 banner_config.append(line)
                 line = "\n".join(banner_config)
-                if line.endswith(self.delimiter):
-                    banner, end, _ = line.rpartition(self.delimiter)
+                if line.endswith(self.banner_end):
+                    banner, end, _ = line.rpartition(self.banner_end)
                     line = banner.rstrip() + end
                 self._update_config_lines(line)
                 self._current_parents = self._current_parents[:-1]
@@ -1495,8 +1500,8 @@ class FastironConfigParser(BaseSpaceConfigParser):
             if not line[0].isspace():
                 self._current_parents = ()
                 if self.is_banner_start(line):
-                    if not self.delimiter:
-                        self.set_delimiter(line)
+                    if not self.banner_end:
+                        self.banner_end = self.set_delimiter(line)
                     line = self._build_banner(line)  # type: ignore
             else:
                 previous_config = self.config_lines[-1]

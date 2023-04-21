@@ -9,10 +9,10 @@ data = [
     ConfigLine(config_line="  module 3 icx7150-2-sfp-plus-port-20g-module", parents=("stack unit 1",)),
     ConfigLine(config_line="  stack-port 1/3/1", parents=("stack unit 1",)),
     ConfigLine(config_line="  stack-port 1/3/2", parents=("stack unit 1",)),
-    ConfigLine(config_line="banner $", parents=()),
+    ConfigLine(config_line="banner motd $", parents=()),
     ConfigLine(
         config_line="+----------------+ WARNING RUCKUS SWITCH +---------------+\n.\n.   Access to this system is limited to authorized\n.          users and for official purposes only\n.\n.       Your activities will be logged and abuse\n.                     will be reported!\n.\n+----------------+ WARNING RUCKUS SWITCH +---------------+$",
-        parents=("banner $",),
+        parents=("banner motd $",),
     ),
     ConfigLine(config_line="vlan 1 name DEFAULT-VLAN by port", parents=()),
     ConfigLine(config_line=" no spanning-tree", parents=("vlan 1 name DEFAULT-VLAN by port",)),
