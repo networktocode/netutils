@@ -1,0 +1,23 @@
+config {
+  mgt-config {
+    users {
+      admin {
+        phash *;
+        permissions {
+          role-based {
+            superuser yes;
+          }
+        }
+        public-key thisisasuperduperlongbase64encodedstring;
+      }
+      panadmin {
+        permissions {
+          role-based {
+            superuser yes;
+          }
+        }
+        phash passwordhash;
+      }
+    }
+  }
+}
