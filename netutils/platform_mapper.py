@@ -38,16 +38,92 @@ def create_platform_object(vendor: str, platform: str, version: str) -> object:
     return platform_obj
 
 
+def juniper_junos_version_parser(version: str) -> t.Dict:
+    """Parses JunOS Version into usable bits matching JunOS Standars.
+
+    Args:
+        version
+
+    Returns:
+        A dictionary containing parsed version information
+
+    Examples:
+        >>> parsed_version = juniper_junos_version_parser("12.3R4")
+    """
+    # Parse out junos into sections that can be used for logic
+    # Juniper junos marks the division between main, minor, type and build from the service build and respin with a -
+    parsed_version = {}
+    split_version = list(filter(None, re.split("-|:", version)))
+
+    # Use regex to group the main, minor, type and build into useable pieces
+    re_main_minor_type_build = re.search(r"^(\d+)\.(\d+)([xXrRsS])?(\d+)?", split_version[0])
+
+    parsed_version.update({"main": re_main_minor_type_build.group(1)})  # type: ignore[union-attr]
+    parsed_version.update({"minor": re_main_minor_type_build.group(2)})  # type: ignore[union-attr]
+    parsed_version.update({"type": re_main_minor_type_build.group(3)})  # type: ignore[union-attr]
+    parsed_version.update({"build": re_main_minor_type_build.group(4)})  # type: ignore[union-attr]
+
+    # Set empty params for service pieces and complete them if a second indice exists from the version split
+    # Define isservice, isfrs, isspecial, ismaintenance
+    parsed_version.update({"isservice": False})
+    parsed_version.update({"ismaintenance": False})
+    parsed_version.update({"isfrs": False})
+    parsed_version.update({"isspecial": False})
+
+    parsed_version.update({"service": None})
+    parsed_version.update({"service_build": None})
+    parsed_version.update({"service_respin": None})
+
+    if len(split_version) > 1:
+        re_service_respin = re.search(r"([sSdD])?(\d+)?(\.)?(\d+)?", split_version[1])
+        parsed_version["service"] = re_service_respin.group(1)  # type: ignore[union-attr]
+        parsed_version["service_build"] = re_service_respin.group(2)  # type: ignore[union-attr]
+        parsed_version["service_respin"] = re_service_respin.group(4)  # type: ignore[union-attr]
+
+        if parsed_version.get("service").lower() == "s":
+            parsed_version["isservice"] = True
+
+        # Juniper looks at the D in special releases like it's the R in normal releases; Use it as the frs identifier
+        elif parsed_version.get("service").lower() == "d":
+            if parsed_version.get("service_build") is None or int(parsed_version.get("service_build")) <= 1:
+                parsed_version["isfrs"] = True
+
+    if parsed_version.get("type"):
+        if parsed_version["type"].lower() == "x":
+            parsed_version["isspecial"] = True
+        elif parsed_version["type"].lower() == "s":
+            parsed_version["isservice"] = True
+
+        if parsed_version["type"].lower() == "r" and hasattr(parsed_version, "build"):
+            if parsed_version.get("build") is None or int(parsed_version.get("build")) <= 1:
+                parsed_version["isfrs"] = True
+            else:
+                parsed_version["ismaintenance"] = True
+
+    return parsed_version
+
+
 class OSPlatform:
     """Class to create a generic platform for identification and manipulation."""
 
     def __init__(self, vendor: str, platform: str, version: str):
         """Initialize OSPlatform Object with vendor, platform, and version."""
-        self.vendor = vendor
-        self.platform = platform
-        self.version = version
+        self._properties = {"vendor": vendor, "platform": platform, "version": version}
 
-    def get_info(self) -> t.Dict[str, str]:
+    @property
+    def vendor(self) -> str:
+        return self._properties.get("vendor")
+
+    @property
+    def platform(self) -> str:
+        return self._properties.get("platform")
+
+    @property
+    def version(self) -> str:
+        return self._properties.get("version")
+
+    @property
+    def info(self) -> t.Dict[str, str]:
         r"""Display Platform Information.
 
         Can be used with any Child class that inits super().
@@ -56,10 +132,10 @@ class OSPlatform:
             Dictionary of platform breakdown
 
         Examples:
-            >>> OSPlatform('cisco','nxos','15.1(7)').get_info()
+            >>> OSPlatform('cisco','nxos','15.1(7)').info
             {'vendor': 'cisco', 'platform': 'nxos', 'version': '15.1(7)'}
 
-            >>> JuniperPlatform('junos','12.1R3-S4.1').get_info()
+            >>> JuniperPlatform('junos','12.1R3-S4.1').info
             {'vendor': 'juniper', 'platform': 'junos', 'version': '12.1R3-S4.1', 'isservice': True, 'ismaintenance': True, 'isfrs': False, 'isspecial': False, 'main': '12', 'minor': '1', 'type': 'R', 'build': '3', 'service': 'S', 'service_build': '4', 'service_respin': '1'}
         """
         return self.__dict__
@@ -99,57 +175,13 @@ class JuniperPlatform(OSPlatform):  # pylint: disable=R0902
 
     def __init__(self, platform: str, version: str):
         """Initialize JuniperPlatform Object with platform, and version."""
-        self.vendor = "juniper"
-        super().__init__(self.vendor, platform, version)
+
+        super().__init__("juniper", platform, version)
 
         # JUNOS BREAKDOWN
         if self.platform == "junos":
-            self.isservice = False
-            self.ismaintenance = False
-            self.isfrs = False
-            self.isspecial = False
-
-            # Juniper marks the division between main, minor, type and build from the service build and respin with a -
-            split_version = list(filter(None, re.split("-|:", version)))
-
-            # Use regex to group the main, minor, type and build into useable pieces
-            re_main_minor_type_build = re.search(r"^(\d+)\.(\d+)([xXrRsS])?(\d+)?", split_version[0])
-
-            self.main = re_main_minor_type_build.group(1)  # type: ignore[union-attr]
-            self.minor = re_main_minor_type_build.group(2)  # type: ignore[union-attr]
-            self.type = re_main_minor_type_build.group(3)  # type: ignore[union-attr]
-            self.build = re_main_minor_type_build.group(4)  # type: ignore[union-attr]
-
-            # Set empty params for service pieces and complete them if a second indice exists from the version split
-            # Define isservice, isfrs, isspecial, ismaintenance
-            self.service = None
-            self.service_build = None
-            self.service_respin = None
-            if len(split_version) > 1:
-                re_service_respin = re.search(r"([sSdD])?(\d+)?(\.)?(\d+)?", split_version[1])
-                self.service = re_service_respin.group(1)  # type: ignore[union-attr]
-                self.service_build = re_service_respin.group(2)  # type: ignore[union-attr]
-                self.service_respin = re_service_respin.group(4)  # type: ignore[union-attr]
-
-                if self.service.lower() == "s":
-                    self.isservice = True
-
-                # Juniper looks at the D in special releases like it's the R in normal releases; Use it as the frs identifier
-                elif self.service.lower() == "d":
-                    if self.service_build is None or int(self.service_build) <= 1:
-                        self.isfrs = True
-
-            if self.type is not None:
-                if self.type.lower() == "x":
-                    self.isspecial = True
-                elif self.type.lower() == "s":
-                    self.isservice = True
-
-                if self.type.lower() == "r" and hasattr(self, "build"):
-                    if self.build is None or int(self.build) <= 1:
-                        self.isfrs = True
-                    else:
-                        self.ismaintenance = True
+            for k, v in juniper_junos_version_parser(version).items():
+                self._properties.update({k: v})
 
     def get_nist_urls(self, api_key: str) -> t.List[str]:
         """Create a list of possible NIST Url strings for JuniperPlatform.
@@ -229,3 +261,13 @@ class JuniperPlatform(OSPlatform):  # pylint: disable=R0902
             return nist_urls
 
         raise EOFError
+
+
+jp = JuniperPlatform("junos", "12.3R4")
+print(jp.info)
+print(vars(jp))
+print(jp._properties)
+print(jp.main)
+jp.main = 13
+print(jp.main)
+print(jp.info)
