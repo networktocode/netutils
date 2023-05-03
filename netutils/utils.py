@@ -94,6 +94,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "hash_data": "hash.hash_data",
     "get_ips_sorted": "ip.get_ips_sorted",
     "create_platform_object": "platform_mapper.create_platform_object",
+    "juniper_junos_version_parser": "platform_mapper.juniper_junos_version_parser",
 }
 
 
