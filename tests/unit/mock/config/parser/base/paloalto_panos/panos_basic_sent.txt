@@ -20,4 +20,32 @@ config {
       }
     }
   }
+  devices {
+    localhost.localdomain {
+      deviceconfig {
+        hostname firewall1;
+        login-banner "
+************************************************************************
+*                        firewall1.example.com                       *                         [PROD VM500  firewalls]
+************************************************************************
+*                               WARNING                                *
+*   Unauthorized access to this device or devices attached to          *
+*   or accessible from this network is strictly prohibited.            *
+*   Possession of passwords or devices enabling access to this         *
+*   device or devices does not constitute authorization. Unauthorized  *
+*   access will be prosecuted to the fullest extent of the law.        *
+*                                                                      *
+************************************************************************
+
+";
+        panorama {
+          local-panorama {
+            panorama-server 10.0.0.1;
+            panorama-server-2 10.0.0.2;
+          }
+        }
+      }
+    }
+  }
 }
+
