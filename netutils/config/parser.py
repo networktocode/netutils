@@ -1382,7 +1382,7 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
     """Palo Alto Networks config parser."""
 
     comment_chars: t.List[str] = []
-    banner_start: t.List[str] = ["set system login-banner \""]
+    banner_start: t.List[str] = ['set system login-banner "']
 
     @property
     def banner_end(self) -> str:
@@ -1411,7 +1411,7 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
         """
 
         # if config is in palo/json format, convert to set
-        if 'config {' in next(self.generator_config):
+        if "config {" in next(self.generator_config):
             converted_config = paloalto_panos_brace_to_set(self.generator_config)
             self.generator_config = (line for line in converted_config)
 
