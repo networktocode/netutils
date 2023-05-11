@@ -1,0 +1,32 @@
+{
+  "bgp": {
+    "actual": "/routing bgp instance set default as=1234 router-id=10.127.1.3",
+    "cannot_parse": true,
+    "compliant": true,
+    "extra": "",
+    "intended": "/routing bgp instance set default as=1234 router-id=10.127.1.3",
+    "missing": "",
+    "ordered_compliant": true,
+    "unordered_compliant": true
+  },
+  "snmp": {
+    "actual": "/snmp community add addresses=::/0 name=somestringa\n/snmp set enabled=yes trap-community=somestring",
+    "cannot_parse": true,
+    "compliant": true,
+    "extra": "",
+    "intended": "/snmp community add addresses=::/0 name=somestringa\n/snmp set enabled=yes trap-community=somestring",
+    "missing": "",
+    "ordered_compliant": true,
+    "unordered_compliant": true
+  },
+  "ospf-networks": {
+    "actual": "/routing ospf network add area=backbone network=10.126.0.16/29",
+    "cannot_parse": true,
+    "compliant": false,
+    "extra": "",
+    "intended": "/routing ospf network add area=backbone network=10.126.0.16/29\n/routing ospf network add area=backbone network=10.127.1.3/32",
+    "missing": "/routing ospf network add area=backbone network=10.127.1.3/32",
+    "ordered_compliant": false,
+    "unordered_compliant": false
+  }
+}
