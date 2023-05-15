@@ -1412,9 +1412,10 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
         """
 
         # if config is in palo/json format, convert to set
-        if "config {" in next(itertools.islice(self.generator_config, 1)):
-            converted_config = paloalto_panos_brace_to_set(self.generator_config)
-            self.generator_config = (line for line in converted_config)
+        if next(itertools.islice(self.generator_config, 1), None) is not None:
+            if "config {" in next(itertools.islice(self.generator_config, 1)):
+                converted_config = paloalto_panos_brace_to_set(self.generator_config)
+                self.generator_config = (line for line in converted_config)
 
         # build config relationships
         for line in self.generator_config:
