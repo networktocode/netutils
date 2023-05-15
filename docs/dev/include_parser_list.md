@@ -15,3 +15,4 @@
 | linux | netutils.config.parser.LINUXConfigParser |
 | mrv_optiswitch | netutils.config.parser.OptiswitchConfigParser |
 | nokia_sros | netutils.config.parser.NokiaConfigParser |
+| paloalto_panos | netutils.config.parser.PaloAltoNetworksConfigParser |
