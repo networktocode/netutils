@@ -23,8 +23,9 @@ config {
   devices {
     localhost.localdomain {
       deviceconfig {
-        hostname firewall1;
-        login-banner "
+        system {
+          hostname firewall1;
+          login-banner "
 ************************************************************************
 *                        firewall1.example.com                       *                         [PROD VM500  firewalls]
 ************************************************************************
