@@ -51,10 +51,13 @@
 | mac_to_format | netutils.mac.mac_to_format |
 | mac_to_int | netutils.mac.mac_to_int |
 | mac_type | netutils.mac.mac_type |
+| get_upgrade_path | netutils.os_version.get_upgrade_path |
 | compare_type5 | netutils.password.compare_type5 |
 | compare_type7 | netutils.password.compare_type7 |
 | compare_type9 | netutils.password.compare_type9 |
+| decrypt_juniper | netutils.password.decrypt_juniper |
 | decrypt_type7 | netutils.password.decrypt_type7 |
+| encrypt_juniper | netutils.password.encrypt_juniper |
 | encrypt_type5 | netutils.password.encrypt_type5 |
 | encrypt_type7 | netutils.password.encrypt_type7 |
 | encrypt_type9 | netutils.password.encrypt_type9 |

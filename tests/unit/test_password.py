@@ -101,6 +101,21 @@ GET_HASH_SALT = [
     },
 ]
 
+ENCRYPT_JUNIPER = [
+    {
+        "sent": {"unencrypted_password": "juniper", "salt": 35},
+        "received_one": "$9$7",
+        "received_two": "gGDkTz6oJz69A1INdb",
+    },
+]
+
+DECRYPT_JUNIPER = [
+    {
+        "sent": {"encrypted_password": "$9$7YdwgGDkTz6oJz69A1INdb"},
+        "received": "juniper",
+    }
+]
+
 
 @pytest.mark.parametrize("data", COMPARE_TYPE5)
 def test_compare_type5(data):
@@ -140,3 +155,16 @@ def test_encrypt_type9(data):
 @pytest.mark.parametrize("data", GET_HASH_SALT)
 def test_get_hash_salt(data):
     assert password.get_hash_salt(**data["sent"]) == data["received"]
+
+
+@pytest.mark.parametrize("data", ENCRYPT_JUNIPER)
+def test_encrypt_juniper(data):
+    # Passwords include random padding, check only the non random sections
+    decrypted_password = password.encrypt_juniper(**data["sent"])
+    assert decrypted_password[0:4] == data["received_one"]
+    assert decrypted_password[7:] == data["received_two"]
+
+
+@pytest.mark.parametrize("data", DECRYPT_JUNIPER)
+def test_decrypt_juniper(data):
+    assert password.decrypt_juniper(**data["sent"]) == data["received"]

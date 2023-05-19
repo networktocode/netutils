@@ -100,6 +100,7 @@ nav:
       - Jinja Filters: "user/lib_use_cases_jinja_filters.md"
       - Library Mapper: "user/lib_use_cases_lib_mapper.md"
       - Protocol Mapper: "user/lib_use_cases_protocol_mappers.md"
+      - Upgrade Paths: "user/lib_upgrade_paths.md"
       - Getting Started: "user/lib_getting_started.md"
       - Frequently Asked Questions: "user/faq.md"
   - Administrator Guide:
