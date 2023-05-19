@@ -1,7 +1,6 @@
 """Parsers for different network operating systems."""
 # pylint: disable=no-member,super-with-arguments,invalid-overridden-method,raise-missing-from,invalid-overridden-method,inconsistent-return-statements,super-with-arguments,redefined-argument-from-local,no-else-break,useless-super-delegation,too-many-lines
 
-import itertools
 import re
 import typing as t
 from collections import namedtuple
@@ -1410,7 +1409,6 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
             ... ]
             True
         """
-
         # if config is in palo/json format, convert to set
         if self.config_lines_only.startswith("config {") and self.config_lines_only is not None:
             converted_config = paloalto_panos_brace_to_set(self.generator_config)
