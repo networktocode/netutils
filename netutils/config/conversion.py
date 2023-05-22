@@ -1,11 +1,13 @@
 """Configuraiton conversion methods for different network operating systems."""
 # pylint: disable=no-member,super-with-arguments,invalid-overridden-method,raise-missing-from,invalid-overridden-method,inconsistent-return-statements,super-with-arguments,redefined-argument-from-local,no-else-break,useless-super-delegation,too-many-lines
 
+from typing import Generator, List
 
-def paloalto_panos_brace_to_set(config: Generator[str, None, None]) -> Generator[str, None, None]:
+
+def paloalto_panos_brace_to_set(config: Generator[str, None, None]) -> List[str]:
     """Convert Palo Alto Brace/JSON format configuration to set format."""
-    stack = []
-    output_lines = []
+    stack: List[str] = []
+    output_lines: List[str] = []
     config_value = ""
 
     for line in config:
