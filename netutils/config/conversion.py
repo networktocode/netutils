@@ -2,7 +2,7 @@
 # pylint: disable=no-member,super-with-arguments,invalid-overridden-method,raise-missing-from,invalid-overridden-method,inconsistent-return-statements,super-with-arguments,redefined-argument-from-local,no-else-break,useless-super-delegation,too-many-lines
 
 
-def paloalto_panos_brace_to_set(config: generator) -> list:
+def paloalto_panos_brace_to_set(config: list) -> list:
     """Convert Palo Alto Brace/JSON format configuration to set format."""
     stack = []
     output_lines = []
