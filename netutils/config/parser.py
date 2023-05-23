@@ -292,7 +292,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
             >>> config = (
             ...     "interface Ethernet1/1\n"
             ...     "  vlan 10\n"
-            ...     "  no shutdown"
+            ...     "  no shutdown\n"
             ...     "interface Ethernet1/2\n"
             ...     "  shutdown\n"
             ... )
@@ -301,8 +301,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
             ... [
             ...     ConfigLine(config_line='interface Ethernet1/1', parents=()),
             ...     ConfigLine(config_line='  vlan 10', parents=('interface Ethernet1/1',)),
-            ...     ConfigLine(config_line='  no shutdown interface Ethernet1/2', parents=('interface Ethernet1/1',)),
-            ...     ConfigLine(config_line='  shutdown', parents=('interface Ethernet1/1',))
+            ...     ConfigLine(config_line='  no shutdown', parents=('interface Ethernet1/1',)),
+            ...     ConfigLine(config_line='interface Ethernet1/2', parents=(),),
+            ...     ConfigLine(config_line='  shutdown', parents=('interface Ethernet1/2',))
             ... ]
             True
         """
