@@ -1443,8 +1443,8 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
             ...     "set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2"
             ...     "set devices localhost.localdomain deviceconfig setting config rematch yes"
             ... )
-            >>> config_tree BaseSpaceConfigParser(config)
-            >>> config_tree.build_config_relationsihp() == \
+            >>> config_tree = PaloAltoNetworksConfigParser(config)
+            >>> config_tree.build_config_relationship() == \
             ... [
             ...     ConfigLine(config_line="set devices localhost.localdomain deviceconfig system hostname firewall1", parents=()),
             ...     ConfigLine(config_line="set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server 10.0.0.1", parents=()),
