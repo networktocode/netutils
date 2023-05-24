@@ -1439,10 +1439,10 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
 
         Examples:
             >>> config = (
-            ...     "set devices localhost.localdomain deviceconfig system hostname firewall1"
-            ...     "set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server 10.0.0.1"
-            ...     "set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2"
-            ...     "set devices localhost.localdomain deviceconfig setting config rematch yes"
+            ...     "set devices localhost.localdomain deviceconfig system hostname firewall1\n"
+            ...     "set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server 10.0.0.1\n"
+            ...     "set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2\n"
+            ...     "set devices localhost.localdomain deviceconfig setting config rematch yes\n"
             ... )
             >>> config_tree = PaloAltoNetworksConfigParser(config)
             >>> config_tree.build_config_relationship() == \
@@ -1458,6 +1458,8 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
         if self.config_lines_only.startswith("config {") and self.config_lines_only is not None:
             converted_config = paloalto_panos_brace_to_set(self.generator_config)
             self.generator_config = (line for line in converted_config)
+
+            print(f"Converted Config: {converted_config}")
 
         # build config relationships
         for line in self.generator_config:

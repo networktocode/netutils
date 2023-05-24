@@ -7,31 +7,30 @@ from typing import Generator, List
 def paloalto_panos_brace_to_set(config: Generator[str, None, None]) -> List[str]:
     """Convert Palo Alto Brace/JSON format configuration to set format."""
     stack: List[str] = []
-    output_lines: List[str] = []
-    config_value = ""
+    config_value: List[str] = []
 
     for line in config:
         line = line.strip()
         if line.endswith(";"):
             line = line.split(";", 1)[0]
-            line = "".join(stack) + line
+            line = "".join(str(s) for s in stack) + line
             line = line.split("config ", 1)[1]
             line = "set " + line
-            output_lines.append(line)
+            config_value.append(line.strip())
         elif line.endswith('login-banner "') or line.endswith('content "'):
-            config_value = "".join(stack) + line
-            config_value = "set " + config_value.split("config ", 1)[1]
-            output_lines.append(config_value)
+            _first_banner_line = "".join(str(s) for s in stack) + line
+            config_value.append("set " + _first_banner_line.split("config ", 1)[1])
 
-            for another_line in config:
-                if '"' in another_line:
-                    another_line = another_line.split(";", 1)[0]
-                    output_lines.append(" " + another_line.strip())
+            for _banner_line in config:
+                if '"' in _banner_line:
+                    _banner_line = _banner_line.split(";", 1)[0]
+                    # yield " " + another_line.strip()
+                    config_value.append(" " + _banner_line.strip())
                     break
-                output_lines.append(" " + another_line.strip())
+                config_value.append(" " + _banner_line)
         elif line.endswith("{"):
             stack.append(line[:-1])
         elif line == "}" and len(stack) > 0:
             stack.pop()
 
-    return output_lines
+    return config_value
