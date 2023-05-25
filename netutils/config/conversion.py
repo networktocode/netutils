@@ -1,12 +1,18 @@
 """Configuraiton conversion methods for different network operating systems."""
 
-from typing import Generator, List
+import typing as t
+
+from netutils.config import parser
+
+parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
+    "paloalto_panos": parser.PaloAltoNetworksConfigParser,
+}
 
 
-def paloalto_panos_brace_to_set(config: Generator[str, None, None]) -> List[str]:
+def paloalto_panos_brace_to_set(config: t.Generator[str, None, None]) -> t.List[str]:
     """Convert Palo Alto Brace/JSON format configuration to set format."""
-    stack: List[str] = []
-    config_value: List[str] = []
+    stack: t.List[str] = []
+    config_value: t.List[str] = []
 
     for line in config:
         line = line.strip()
