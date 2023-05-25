@@ -23,7 +23,6 @@ def paloalto_panos_brace_to_set(config: Generator[str, None, None]) -> List[str]
             for _banner_line in config:
                 if '"' in _banner_line:
                     _banner_line = _banner_line.split(";", 1)[0]
-                    # yield " " + another_line.strip()
                     config_value.append(" " + _banner_line.strip())
                     break
                 config_value.append(" " + _banner_line)
