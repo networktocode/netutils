@@ -1,5 +1,4 @@
 """Configuraiton conversion methods for different network operating systems."""
-# pylint: disable=no-member,super-with-arguments,invalid-overridden-method,raise-missing-from,invalid-overridden-method,inconsistent-return-statements,super-with-arguments,redefined-argument-from-local,no-else-break,useless-super-delegation,too-many-lines
 
 from typing import Generator, List
 

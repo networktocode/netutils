@@ -1459,8 +1459,6 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
             converted_config = paloalto_panos_brace_to_set(self.generator_config)
             self.generator_config = (line for line in converted_config)
 
-            print(f"Converted Config: {converted_config}")
-
         # build config relationships
         for line in self.generator_config:
             if not line[0].isspace():
