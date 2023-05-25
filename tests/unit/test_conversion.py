@@ -3,7 +3,10 @@ import glob
 import os
 
 import pytest
-from netutils.config import conversion
+from netutils.config.conversion import (
+    paloalto_panos_brace_to_set,
+    parser_map,
+)
 
 MOCK_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mock", "config", "conversion")
 
@@ -12,7 +15,7 @@ CONVERTED_FILE = "_converted.txt"
 
 conversion_files = []
 
-for network_os in list(conversion.parser_map.keys()):
+for network_os in list(parser_map.keys()):
     for _file in glob.glob(f"{MOCK_DIR}/config/conversion/{network_os}/*{TXT_FILE}"):
         conversion_files.append([_file, network_os])
 
@@ -22,6 +25,6 @@ def test_config_conversion(_file, get_text_data):  # pylint: disable=redefined-o
     truncate_file = os.path.join(MOCK_DIR, _file[: -len(TXT_FILE)])
 
     sent_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
-    converted_cfg = conversion.paloalto_panos_brace_to_set(sent_cfg)
+    converted_cfg = paloalto_panos_brace_to_set(sent_cfg)
     received_data = get_text_data(truncate_file + "_converted.txt")
     assert converted_cfg == received_data
