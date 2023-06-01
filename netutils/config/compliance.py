@@ -24,6 +24,10 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "mikrotik_routeros": parser.RouterOSConfigParser,
 }
 
+conversion_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
+    "paloalto_panos": parser.PaloAltoNetworksConfigParser,
+}
+
 # TODO: Once support for 3.7 is dropped, there should be a typing.TypedDict for this which should then also be used
 # as the return type for a bunch of the following methods.
 default_feature: t.Dict[str, t.Union[str, bool, None]] = {

@@ -2,12 +2,6 @@
 
 import typing as t
 
-from netutils.config import parser
-
-parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
-    "paloalto_panos": parser.PaloAltoNetworksConfigParser,
-}
-
 
 def paloalto_panos_brace_to_set(config: t.Generator[str, None, None]) -> t.List[str]:
     """Convert Palo Alto Brace/JSON format configuration to set format."""

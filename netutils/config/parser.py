@@ -1466,7 +1466,7 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
                     return None
         raise ValueError("Unable to parse banner end.")
 
-    def build_config_relationship(self) -> t.List[ConfigLine]:
+    def build_config_relationship(self) -> t.List[ConfigLine]:  # pylint: disable=too-many-branches
         r"""Parse text of config lines and find their parents.
 
         Examples:
@@ -1486,8 +1486,15 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
             ... ]
             True
         """
+        # assume configuration does not need conversion
+        _needs_conversion = False
+
         # if config is in palo/json format, convert to set
-        if self.config_lines_only.startswith("config {") and self.config_lines_only is not None:
+        if self.config_lines_only is not None:
+            for line in self.config_lines_only:
+                if line.endswith("{"):
+                    _needs_conversion = True
+        if _needs_conversion:
             converted_config = paloalto_panos_brace_to_set(self.generator_config)
             self.generator_config = (line for line in converted_config)
 
