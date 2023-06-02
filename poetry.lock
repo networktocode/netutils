@@ -1325,18 +1325,6 @@ files = [
 ]
 
 [[package]]
-name = "pan-python"
-version = "0.22.0"
-description = "Multi-tool set for Palo Alto Networks PAN-OS, Panorama, WildFire and AutoFocus"
-category = "main"
-optional = false
-python-versions = ">=3.7"
-files = [
-    {file = "pan-python-0.22.0.tar.gz", hash = "sha256:d98417770fcab5d1dbde11151e22c93b68c3ec44a87cf58cef0e6b1ac9cfdfe9"},
-    {file = "pan_python-0.22.0-py3-none-any.whl", hash = "sha256:7e2e94ec96e1d6001dd66b0073d503bd33b232492f921bb5709d0de235f5c897"},
-]
-
-[[package]]
 name = "paramiko"
 version = "3.2.0"
 description = "SSH2 protocol library"
@@ -2351,4 +2339,4 @@ optionals = ["napalm"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.7"
-content-hash = "f1247d925f7dede244fb759b21a6d2fd5551e9ff9dbcfda27d827532adec6c59"
+content-hash = "007e525065bcc650521ddc3f3babe30e32f02092267bc77ff58565863e615916"
