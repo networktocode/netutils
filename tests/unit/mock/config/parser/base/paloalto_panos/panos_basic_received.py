@@ -30,51 +30,7 @@ data = [
         parents=(),
     ),
     ConfigLine(
-        config_line=" ************************************************************************",
-        parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
-    ),
-    ConfigLine(
-        config_line=" *                        firewall1.example.com                       *                         [PROD VM500  firewalls]",
-        parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
-    ),
-    ConfigLine(
-        config_line=" ************************************************************************",
-        parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
-    ),
-    ConfigLine(
-        config_line=" *                               WARNING                                *",
-        parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
-    ),
-    ConfigLine(
-        config_line=" *   Unauthorized access to this device or devices attached to          *",
-        parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
-    ),
-    ConfigLine(
-        config_line=" *   or accessible from this network is strictly prohibited.            *",
-        parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
-    ),
-    ConfigLine(
-        config_line=" *   Possession of passwords or devices enabling access to this         *",
-        parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
-    ),
-    ConfigLine(
-        config_line=" *   device or devices does not constitute authorization. Unauthorized  *",
-        parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
-    ),
-    ConfigLine(
-        config_line=" *   access will be prosecuted to the fullest extent of the law.        *",
-        parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
-    ),
-    ConfigLine(
-        config_line=" *                                                                      *",
-        parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
-    ),
-    ConfigLine(
-        config_line=" ************************************************************************",
-        parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
-    ),
-    ConfigLine(
-        config_line=' "',
+        config_line=" ************************************************************************\n *                        firewall1.example.com                       *                         [PROD VM500  firewalls]\n ************************************************************************\n *                               WARNING                                *\n *   Unauthorized access to this device or devices attached to          *\n *   or accessible from this network is strictly prohibited.            *\n *   Possession of passwords or devices enabling access to this         *\n *   device or devices does not constitute authorization. Unauthorized  *\n *   access will be prosecuted to the fullest extent of the law.        *\n *                                                                      *\n ************************************************************************^C",
         parents=('set devices localhost.localdomain deviceconfig system login-banner "',),
     ),
     ConfigLine(
