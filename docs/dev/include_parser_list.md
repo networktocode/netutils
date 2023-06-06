@@ -13,6 +13,7 @@
 | fortinet_fortios | netutils.config.parser.FortinetConfigParser |
 | juniper_junos | netutils.config.parser.JunosConfigParser |
 | linux | netutils.config.parser.LINUXConfigParser |
+| mikrotik_routeros | netutils.config.parser.RouterOSConfigParser |
 | mrv_optiswitch | netutils.config.parser.OptiswitchConfigParser |
 | nokia_sros | netutils.config.parser.NokiaConfigParser |
 | ruckus_fastiron | netutils.config.parser.FastironConfigParser |

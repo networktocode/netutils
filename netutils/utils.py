@@ -54,10 +54,14 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_oui": "mac.get_oui",
     "compare_type5": "password.compare_type5",
     "compare_type7": "password.compare_type7",
+    "compare_type9": "password.compare_type9",
     "decrypt_type7": "password.decrypt_type7",
     "encrypt_type5": "password.encrypt_type5",
     "encrypt_type7": "password.encrypt_type7",
+    "encrypt_type9": "password.encrypt_type9",
     "get_hash_salt": "password.get_hash_salt",
+    "encrypt_juniper": "password.encrypt_juniper",
+    "decrypt_juniper": "password.decrypt_juniper",
     "tcp_ping": "ping.tcp_ping",
     "longest_prefix_match": "route.longest_prefix_match",
     "vlanlist_to_config": "vlan.vlanlist_to_config",
@@ -67,6 +71,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "uptime_seconds_to_string": "time.uptime_seconds_to_string",
     "uptime_string_to_seconds": "time.uptime_string_to_seconds",
     "get_napalm_getters": "lib_helpers.get_napalm_getters",
+    "get_upgrade_path": "os_version.get_upgrade_path",
 }
 
 

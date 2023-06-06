@@ -20,6 +20,7 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "aruba_aoscx": parser.ArubaConfigParser,
     "mrv_optiswitch": parser.OptiswitchConfigParser,
     "extreme_netiron": parser.NetironConfigParser,
+    "mikrotik_routeros": parser.RouterOSConfigParser,
     "ruckus_fastiron": parser.FastironConfigParser,
 }
 
