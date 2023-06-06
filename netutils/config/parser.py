@@ -1560,5 +1560,3 @@ class FastironConfigParser(BaseSpaceConfigParser):
 
             self._update_config_lines(line)
         return self.config_lines
-
-                
