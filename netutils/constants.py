@@ -176,6 +176,7 @@ REVERSE_MAPPING = {
     "FastEthernet": "Fa",
     "Fddi": "FD",
     "FortyGigabitEthernet": "Fo",
+    "FourHundredGigabitEthernet": "FH",
     "GigabitEthernet": "Gi",
     "HundredGigabitEthernet": "Hu",
     "Loopback": "Lo",
