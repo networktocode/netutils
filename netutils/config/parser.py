@@ -1463,7 +1463,7 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
         # assume configuration does not need conversion
         _needs_conversion = False
 
-        # if config is in palo/json format, convert to set
+        # if config is in palo brace format, convert to set
         if self.config_lines_only is not None:
             for line in self.config_lines_only:
                 if line.endswith("{"):
