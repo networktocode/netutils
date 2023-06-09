@@ -1,4 +1,4 @@
-"""Configuraiton conversion methods for different network operating systems."""
+"""Configuration conversion methods for different network operating systems."""
 
 import typing as t
 
