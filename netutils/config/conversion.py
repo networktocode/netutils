@@ -4,7 +4,7 @@ import typing as t
 
 
 def paloalto_panos_brace_to_set(config: t.Generator[str, None, None]) -> t.List[str]:
-    """Convert Palo Alto Brace/JSON format configuration to set format."""
+    """Convert Palo Alto Brace format configuration to set format."""
     stack: t.List[str] = []
     config_value: t.List[str] = []
 
