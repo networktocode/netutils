@@ -20,6 +20,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "section_config": "config.compliance.section_config",
     "fqdn_to_ip": "dns.fqdn_to_ip",
     "is_fqdn_resolvable": "dns.is_fqdn_resolvable",
+    "hostname_regex": "hostname.hostname_regex",
     "interface_range_expansion": "interface.interface_range_expansion",
     "interface_range_compress": "interface.interface_range_compress",
     "split_interface": "interface.split_interface",

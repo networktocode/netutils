@@ -19,6 +19,7 @@
 | paloalto_panos_brace_to_set | netutils.config.conversion.paloalto_panos_brace_to_set |
 | fqdn_to_ip | netutils.dns.fqdn_to_ip |
 | is_fqdn_resolvable | netutils.dns.is_fqdn_resolvable |
+| hostname_regex | netutils.hostname.hostname_regex |
 | abbreviated_interface_name | netutils.interface.abbreviated_interface_name |
 | abbreviated_interface_name_list | netutils.interface.abbreviated_interface_name_list |
 | canonical_interface_name | netutils.interface.canonical_interface_name |
