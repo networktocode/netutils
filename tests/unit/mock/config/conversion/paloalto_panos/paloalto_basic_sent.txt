@@ -27,7 +27,7 @@ config {
           hostname firewall1;
           login-banner "
 ************************************************************************
-*                        firewall1.example.com                       *                         [PROD VM500  firewalls]
+*                        firewall1.example.com                         *                         [PROD VM500  firewalls]
 ************************************************************************
 *                               WARNING                                *
 *   Unauthorized access to this device or devices attached to          *

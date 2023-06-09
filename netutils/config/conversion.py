@@ -2,6 +2,10 @@
 
 import typing as t
 
+conversion_map: t.Dict[str, t.List[str]] = {
+    "paloalto_panos": ["paloalto_panos_brace_to_set"],
+}
+
 
 def paloalto_panos_brace_to_set(config: t.Generator[str, None, None]) -> t.List[str]:
     """Convert Palo Alto Brace format configuration to set format."""

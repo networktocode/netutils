@@ -6,7 +6,7 @@ import pytest
 from netutils.config.conversion import (
     paloalto_panos_brace_to_set,
 )
-from netutils.config.compliance import conversion_map
+from netutils.config.conversion import conversion_map
 
 MOCK_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mock", "config", "conversion")
 
@@ -16,15 +16,22 @@ CONVERTED_FILE = "_converted.txt"
 conversion_files = []
 
 for network_os in list(conversion_map.keys()):
-    for _file in glob.glob(f"{MOCK_DIR}/config/conversion/{network_os}/*{TXT_FILE}"):
+    for _file in glob.glob(f"{MOCK_DIR}/{network_os}/*{TXT_FILE}"):
         conversion_files.append([_file, network_os])
 
 
 @pytest.mark.parametrize("_file", conversion_files)
 def test_config_conversion(_file, get_text_data):  # pylint: disable=redefined-outer-name
-    truncate_file = os.path.join(MOCK_DIR, _file[: -len(TXT_FILE)])
+    string_cfg = ""
 
-    sent_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
-    converted_cfg = paloalto_panos_brace_to_set(sent_cfg)
+    truncate_file = os.path.join(MOCK_DIR, _file[0][: -len(TXT_FILE)])
+
+    sent_cfg = get_text_data(os.path.join(MOCK_DIR, _file[0]))
+    line_cfg = (line for line in sent_cfg.split("\n "))
+    converted_cfg = paloalto_panos_brace_to_set(line_cfg)
+    for i, _line in enumerate(converted_cfg):
+        string_cfg += _line
+        if i < len(converted_cfg) - 1:
+            string_cfg += "\n"
     received_data = get_text_data(truncate_file + "_converted.txt")
-    assert converted_cfg == received_data
+    assert string_cfg == received_data
