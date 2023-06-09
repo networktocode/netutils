@@ -3,7 +3,7 @@ import pytest
 
 from netutils import password
 
-COMPARE_TYPE5 = [
+COMPARE_CISCO_TYPE5 = [
     {
         "sent": {"unencrypted_password": "cisco", "encrypted_password": "$1$nTc1$Z28sUTcWfXlvVe2x.3XAa."},
         "received": True,
@@ -22,7 +22,7 @@ COMPARE_TYPE5 = [
     },
 ]
 
-COMPARE_TYPE7 = [
+COMPARE_CISCO_TYPE7 = [
     {
         "sent": {"unencrypted_password": "cisco", "encrypted_password": "070C285F4D06"},
         "received": True,
@@ -41,7 +41,7 @@ COMPARE_TYPE7 = [
     },
 ]
 
-COMPARE_TYPE9 = [
+COMPARE_CISCO_TYPE9 = [
     {
         "sent": {
             "unencrypted_password": "cisco",
@@ -66,28 +66,28 @@ COMPARE_TYPE9 = [
     },
 ]
 
-DECRYPT_TYPE7 = [
+DECRYPT_CISCO_TYPE7 = [
     {
         "sent": {"encrypted_password": "14141B180F0B"},
         "received": "cisco",
     }
 ]
 
-ENCRYPT_TYPE5 = [
+ENCRYPT_CISCO_TYPE5 = [
     {
         "sent": {"unencrypted_password": "cisco", "salt": "nTc1"},
         "received": "$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.",
     },
 ]
 
-ENCRYPT_TYPE7 = [
+ENCRYPT_CISCO_TYPE7 = [
     {
         "sent": {"unencrypted_password": "cisco", "salt": 10},
         "received": "104D000A0618",
     },
 ]
 
-ENCRYPT_TYPE9 = [
+ENCRYPT_CISCO_TYPE9 = [
     {
         "sent": {"unencrypted_password": "cisco", "salt": "x2xAAwQ3MBbEnk"},
         "received": "$9$x2xAAwQ3MBbEnk$JCxr6MnPb.k5ymK72mTypyRJYH5W74ZRvtLTprCj.xQ",
@@ -101,7 +101,7 @@ GET_HASH_SALT = [
     },
 ]
 
-ENCRYPT_JUNIPER = [
+ENCRYPT_JUNIPER_TYPE9 = [
     {
         "sent": {"unencrypted_password": "juniper", "salt": 35},
         "received_one": "$9$7",
@@ -109,7 +109,7 @@ ENCRYPT_JUNIPER = [
     },
 ]
 
-DECRYPT_JUNIPER = [
+DECRYPT_JUNIPER_TYPE9 = [
     {
         "sent": {"encrypted_password": "$9$7YdwgGDkTz6oJz69A1INdb"},
         "received": "juniper",
@@ -117,39 +117,39 @@ DECRYPT_JUNIPER = [
 ]
 
 
-@pytest.mark.parametrize("data", COMPARE_TYPE5)
-def test_compare_type5(data):
-    assert password.compare_type5(**data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", COMPARE_CISCO_TYPE5)
+def test_compare_cisco_type5(data):
+    assert password.compare_cisco_type5(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", COMPARE_TYPE7)
-def test_compare_type7(data):
-    assert password.compare_type7(**data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", COMPARE_CISCO_TYPE7)
+def test_compare_cisco_type7(data):
+    assert password.compare_cisco_type7(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", COMPARE_TYPE9)
-def test_compare_type9(data):
-    assert password.compare_type9(**data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", COMPARE_CISCO_TYPE9)
+def test_compare_cisco_type9(data):
+    assert password.compare_cisco_type9(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", DECRYPT_TYPE7)
-def test_decrypt_type7(data):
-    assert password.decrypt_type7(**data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", DECRYPT_CISCO_TYPE7)
+def test_decrypt_cisco_type7(data):
+    assert password.decrypt_cisco_type7(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", ENCRYPT_TYPE5)
-def test_encrypt_type5(data):
-    assert password.encrypt_type5(**data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", ENCRYPT_CISCO_TYPE5)
+def test_encrypt_cisco_type5(data):
+    assert password.encrypt_cisco_type5(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", ENCRYPT_TYPE7)
-def test_encrypt_type7(data):
-    assert password.encrypt_type7(**data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", ENCRYPT_CISCO_TYPE7)
+def test_encrypt_cisco_type7(data):
+    assert password.encrypt_cisco_type7(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", ENCRYPT_TYPE9)
-def test_encrypt_type9(data):
-    assert password.encrypt_type9(**data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", ENCRYPT_CISCO_TYPE9)
+def test_encrypt_cisco_type9(data):
+    assert password.encrypt_cisco_type9(**data["sent"]) == data["received"]
 
 
 @pytest.mark.parametrize("data", GET_HASH_SALT)
@@ -157,14 +157,14 @@ def test_get_hash_salt(data):
     assert password.get_hash_salt(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", ENCRYPT_JUNIPER)
-def test_encrypt_juniper(data):
+@pytest.mark.parametrize("data", ENCRYPT_JUNIPER_TYPE9)
+def test_encrypt_juniper_type9(data):
     # Passwords include random padding, check only the non random sections
-    decrypted_password = password.encrypt_juniper(**data["sent"])
+    decrypted_password = password.encrypt_juniper_type9(**data["sent"])
     assert decrypted_password[0:4] == data["received_one"]
     assert decrypted_password[7:] == data["received_two"]
 
 
-@pytest.mark.parametrize("data", DECRYPT_JUNIPER)
-def test_decrypt_juniper(data):
-    assert password.decrypt_juniper(**data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", DECRYPT_JUNIPER_TYPE9)
+def test_decrypt_juniper_type9(data):
+    assert password.decrypt_juniper_type9(**data["sent"]) == data["received"]
