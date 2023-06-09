@@ -13,16 +13,16 @@ Influencers
 
 In many instances variables and function names were reused, but the code was built from scratch to avoid any potential licensing issues. Functions that were known to be rewritten and their known origin.
 
-| Function         | Origin  |
-| ---------------- | ------- |
-| asn_to_int       | NAPALM  |
-| is_ip            | IPCal   |
-| ip_to_bin        | IPCal   |
-| get_usable_range | IPCal   |
-| encrypt_type7    | unknown |
-| decrypt_type7    | unknown |
-| vlan_to_list     | Ansible |
-| sanitize_config  | NAPALM  |
+| Function            | Origin  |
+| ------------------- | ------- |
+| asn_to_int          | NAPALM  |
+| is_ip               | IPCal   |
+| ip_to_bin           | IPCal   |
+| get_usable_range    | IPCal   |
+| encrypt_cisco_type7 | unknown |
+| decrypt_cisco_type7 | unknown |
+| vlan_to_list        | Ansible |
+| sanitize_config     | NAPALM  |
 
 Relevant PR's
 
