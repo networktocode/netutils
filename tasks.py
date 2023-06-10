@@ -178,7 +178,7 @@ def pylint(context, local=INVOKE_LOCAL):
         context (obj): Used to run specific commands
         local (bool): Define as `True` to execute locally
     """
-    exec_cmd = 'find . -name "*.py" | grep -v "tests/unit/mock" | xargs pylint'
+    exec_cmd = 'find . -name "*.py" | grep -vE "(tests/unit/mock|netutils/data_files)" | xargs pylint'
     run_cmd(context, exec_cmd, local)
 
 
