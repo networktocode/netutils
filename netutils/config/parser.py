@@ -1504,7 +1504,7 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
                     _needs_conversion = True
         if _needs_conversion:
             converted_config = paloalto_panos_brace_to_set(cfg=self.config, cfg_type="string")
-            list_config: list = converted_config.splitlines()
+            list_config = converted_config.splitlines()
             self.generator_config = (line for line in list_config)
 
         # build config relationships
