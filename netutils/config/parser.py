@@ -1440,6 +1440,40 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
             return True
         return False
 
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None
+
+        Raises:
+            ValueError: When the parser is unable to identify the end of the Banner.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                line = normalise_delimiter_caret_c(self.banner_end, line)
+                banner_config.append(line.strip())
+                line = "\n".join(banner_config)
+                if line.endswith("^C"):
+                    banner, end, _ = line.rpartition("^C")
+                    line = banner.rstrip() + end
+                self._update_config_lines(line.strip())
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+
+        raise ValueError("Unable to parse banner end.")
+
     def build_config_relationship(self) -> t.List[ConfigLine]:  # pylint: disable=too-many-branches
         r"""Parse text of config lines and find their parents.
 
@@ -1469,7 +1503,8 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
                 if line.endswith("{"):
                     _needs_conversion = True
         if _needs_conversion:
-            converted_config = paloalto_panos_brace_to_set(self.generator_config)
+            converted_config = paloalto_panos_brace_to_set(cfg=self.config, cfg_type="string")
+            converted_config = converted_config.splitlines()
             self.generator_config = (line for line in converted_config)
 
         # build config relationships
