@@ -2,6 +2,8 @@
 
 import typing as t
 
+from netutils.config.utils import _open_file_config
+
 from . import parser  # pylint: disable=relative-beyond-top-level
 
 parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
@@ -107,15 +109,6 @@ def _is_feature_ordered_compliant(feature_intended_cfg: str, feature_actual_cfg:
     if feature_intended_cfg == feature_actual_cfg:
         return True
     return False
-
-
-def _open_file_config(cfg_path: str) -> str:
-    """Open config file from local disk."""
-    # This might fail, raising an IOError
-    with open(cfg_path, encoding="utf-8") as filehandler:
-        device_cfg = filehandler.read()
-
-    return device_cfg.strip()
 
 
 def compliance(

@@ -2,7 +2,7 @@
 
 import typing as t
 
-from netutils.config.compliance import _open_file_config
+from netutils.config.utils import _open_file_config
 
 conversion_map: t.Dict[str, t.List[str]] = {
     "paloalto_panos": ["paloalto_panos_brace_to_set"],
@@ -53,7 +53,6 @@ def paloalto_panos_brace_to_set(cfg: str, cfg_type: str = "file") -> str:
             ...     set mgt-config users panadmin phash passwordhash'''
             True
     """
-
     stack: t.List[str] = []
     cfg_value: t.List[str] = []
     cfg_string: str = ""
