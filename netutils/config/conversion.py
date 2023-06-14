@@ -45,12 +45,11 @@ def paloalto_panos_brace_to_set(cfg: str, cfg_type: str = "file") -> str:
             ...            }
             ...         }'''
             >>> paloalto_panos_brace_to_set(cfg=config, cfg_type='string') == \
-            ... '''
-            ...     set mgt-config users admin phash *
-            ...     set mgt-config users admin permissions role-based superuser yes
-            ...     set mgt-config users admin public-key thisisasuperduperlongbase64encodedstring
-            ...     set mgt-config users panadmin permissions role-based superuser yes
-            ...     set mgt-config users panadmin phash passwordhash'''
+            ... '''set mgt-config users admin phash *
+            ... set mgt-config users admin permissions role-based superuser yes
+            ... set mgt-config users admin public-key thisisasuperduperlongbase64encodedstring
+            ... set mgt-config users panadmin permissions role-based superuser yes
+            ... set mgt-config users panadmin phash passwordhash'''
             True
     """
     stack: t.List[str] = []
