@@ -16,3 +16,4 @@
 | mikrotik_routeros | netutils.config.parser.RouterOSConfigParser |
 | mrv_optiswitch | netutils.config.parser.OptiswitchConfigParser |
 | nokia_sros | netutils.config.parser.NokiaConfigParser |
+| paloalto_panos | netutils.config.parser.PaloAltoNetworksConfigParser |

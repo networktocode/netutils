@@ -1,0 +1,4 @@
+{
+  "remaining_cfg": "set deviceconfig system permitted-ip 0.0.0.0/0\nset deviceconfig system domain example.com",
+  "section_not_found": []
+}

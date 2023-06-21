@@ -16,6 +16,7 @@
 | feature_compliance | netutils.config.compliance.feature_compliance |
 | find_unordered_cfg_lines | netutils.config.compliance.find_unordered_cfg_lines |
 | section_config | netutils.config.compliance.section_config |
+| paloalto_panos_brace_to_set | netutils.config.conversion.paloalto_panos_brace_to_set |
 | fqdn_to_ip | netutils.dns.fqdn_to_ip |
 | is_fqdn_resolvable | netutils.dns.is_fqdn_resolvable |
 | abbreviated_interface_name | netutils.interface.abbreviated_interface_name |
