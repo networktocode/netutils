@@ -212,15 +212,6 @@ HIERCONFIG_LIB_MAPPER = {
     "fastiron": "ruckus_fastiron",
 }
 
-HIERCONFIG_LIB_MAPPER_REVERSE = {
-    "cisco_ios": "ios",
-    "cisco_xe": "iosxe",
-    "cisco_xr": "iosxr",
-    "cisco_nxos": "nxos",
-    "arista_eos": "eos",
-    "ruckus_fastiron": "fastiron",
-}
-
 NAPALM_LIB_MAPPER_REVERSE = {
     "arista_eos": "eos",
     "brocade_vyos": "vyos",
@@ -295,6 +286,15 @@ SCRAPLI_LIB_MAPPER_REVERSE = {
     "arista_eos": "arista_eos",
     "juniper_junos": "juniper_junos",
     "aruba_aoscx": "aruba_aoscx",
+}
+
+HIERCONFIG_LIB_MAPPER_REVERSE = {
+    "cisco_ios": "ios",
+    "cisco_xe": "iosxe",
+    "cisco_xr": "iosxr",
+    "cisco_nxos": "nxos",
+    "arista_eos": "eos",
+    "ruckus_fastiron": "fastiron",
 }
 
 # Deep copy the reverse, where there is no actual translation happening.
