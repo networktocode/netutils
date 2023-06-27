@@ -297,14 +297,6 @@ SCRAPLI_LIB_MAPPER_REVERSE = {
     "aruba_aoscx": "aruba_aoscx",
 }
 
-HIERCONFIG_LIB_MAPPER_REVERSE = {
-    "cisco_ios": "ios",
-    "cisco_xe": "iosxe",
-    "cisco_xr": "iosxr",
-    "cisco_nxos": "nxos",
-    "arista_eos": "eos",
-}
-
 # Deep copy the reverse, where there is no actual translation happening.
 NETMIKO_LIB_MAPPER_REVERSE = copy.deepcopy(NETMIKO_LIB_MAPPER)
 NTCTEMPLATES_LIB_MAPPER_REVERSE = copy.deepcopy(NTCTEMPLATES_LIB_MAPPER)
