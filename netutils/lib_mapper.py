@@ -209,6 +209,16 @@ HIERCONFIG_LIB_MAPPER = {
     "iosxr": "cisco_xr",
     "nxos": "cisco_nxos",
     "eos": "arista_eos",
+    "fastiron": "ruckus_fastiron",
+}
+
+HIERCONFIG_LIB_MAPPER_REVERSE = {
+    "cisco_ios": "ios",
+    "cisco_xe": "iosxe",
+    "cisco_xr": "iosxr",
+    "cisco_nxos": "nxos",
+    "arista_eos": "eos",
+    "ruckus_fastiron": "fastiron",
 }
 
 NAPALM_LIB_MAPPER_REVERSE = {
