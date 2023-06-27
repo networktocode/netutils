@@ -209,6 +209,7 @@ HIERCONFIG_LIB_MAPPER = {
     "iosxr": "cisco_xr",
     "nxos": "cisco_nxos",
     "eos": "arista_eos",
+    "fastiron": "ruckus_fastiron",
 }
 
 NAPALM_LIB_MAPPER_REVERSE = {
@@ -293,6 +294,7 @@ HIERCONFIG_LIB_MAPPER_REVERSE = {
     "cisco_xr": "iosxr",
     "cisco_nxos": "nxos",
     "arista_eos": "eos",
+    "ruckus_fastiron": "fastiron",
 }
 
 # Deep copy the reverse, where there is no actual translation happening.
