@@ -5,3 +5,4 @@
 | iosxe | → | cisco_xe |
 | iosxr | → | cisco_xr |
 | nxos | → | cisco_nxos |
+| fastiron | → | ruckus_fastiron |
