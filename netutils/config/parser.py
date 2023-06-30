@@ -1421,7 +1421,7 @@ class RouterOSConfigParser(BaseSpaceConfigParser):
         raise ValueError("Unable to parse banner (system note) end.")
 
 
-class FastironConfigParser(BaseSpaceConfigParser):
+class FastironConfigParser(CiscoConfigParser):
     """Ruckus FastIron ICX config parser."""
 
     comment_chars: t.List[str] = ["!"]
@@ -1434,55 +1434,7 @@ class FastironConfigParser(BaseSpaceConfigParser):
         Args:
             config (str): The config text to parse.
         """
-        self._banner_end = ""
         super(FastironConfigParser, self).__init__(config)
-
-    def set_delimiter(self, config_line: str) -> str:
-        """Find delimiter character in banner and set returns value."""
-        banner_parsed = self.regex_banner.match(config_line)
-        if banner_parsed and "banner_delimiter" in banner_parsed.groupdict():
-            delimiter = banner_parsed.groupdict()["banner_delimiter"]
-            return delimiter
-        raise ValueError("Unable to find banner delimiter.")
-
-    @property
-    def banner_end(self) -> str:
-        """Demarcate End of Banner char(s)."""
-        if not self._banner_end:
-            raise RuntimeError("Banner end not yet set.")
-        return self._banner_end
-
-    @banner_end.setter
-    def banner_end(self, delimiter: str) -> None:
-        """Find delimiter character in banner and set self.banner_end to be it."""
-        self._banner_end = delimiter
-
-    def is_banner_start(self, line: str) -> bool:
-        """Determine if the line starts a banner config.
-
-        Args:
-            line: The current config line in iteration.
-
-        Returns:
-            True if line starts banner, else False.
-        """
-        for banner_start in self.banner_start:
-            if line.lstrip().startswith(banner_start):
-                return True
-        return False
-
-    def is_banner_end(self, line: str) -> bool:
-        """Determine if the line is a end of banner config.
-
-        Args:
-            line: The current config line in iteration.
-
-        Returns:
-            True if line ends banner, else False.
-        """
-        if line.lstrip().__contains__(self.banner_end):
-            return True
-        return False
 
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
@@ -1497,7 +1449,6 @@ class FastironConfigParser(BaseSpaceConfigParser):
             ValueError: When the parser is unable to identify the end of the Banner.
         """
         self._update_config_lines(config_line)
-        self.banner_end = self.set_delimiter(config_line)
         self._current_parents += (config_line,)
         banner_config = []
         for line in self.generator_config:
@@ -1515,48 +1466,4 @@ class FastironConfigParser(BaseSpaceConfigParser):
                     return next(self.generator_config)
                 except StopIteration:
                     return None
-
         raise ValueError("Unable to parse banner end.")
-
-    def build_config_relationship(self) -> t.List[ConfigLine]:
-        r"""Parse text tree of config lines and their parents.
-
-        Examples:
-            >>> config = (
-            ...     "interface ethernet1/1/1\n"
-            ...     " port-name Unit-111-AP\n"
-            ...     " inline power power-limit 12000\n"
-            ...     "vlan 3010 by port\n"
-            ...     " tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2\n"
-            ... )
-            >>> config_tree = FastironConfigParser(config)
-            >>> config_tree.build_config_relationship() == \
-            ... [
-            ...     ConfigLine(config_line='interface ethernet1/1/1', parents=()),
-            ...     ConfigLine(config_line=' port-name Unit-111-AP', parents=('interface ethernet1/1/1',)),
-            ...     ConfigLine(config_line=' inline power power-limit 12000', parents=('interface ethernet1/1/1',)),
-            ...     ConfigLine(config_line='vlan 3010 by port', parents=()),
-            ...     ConfigLine(config_line=' tagged ethe 1/1/1 to 1/1/12 ethe 1/3/1 to 1/3/2', parents=('vlan 3010 by port',))
-            ... ]
-            True
-        """
-        for line in self.generator_config:
-            if not line[0].isspace():
-                self._current_parents = ()
-                if self.is_banner_start(line):
-                    if not self.banner_end:
-                        self.banner_end = self.set_delimiter(line)
-                    line = self._build_banner(line)  # type: ignore
-            else:
-                previous_config = self.config_lines[-1]
-                self._current_parents = (previous_config.config_line,)
-                self.indent_level = self.get_leading_space_count(line)
-                line = self._build_nested_config(line)  # type: ignore
-
-            if line is None:
-                break
-            elif self.is_banner_start(line):
-                line = self._build_banner(line)  # type: ignore
-
-            self._update_config_lines(line)
-        return self.config_lines
