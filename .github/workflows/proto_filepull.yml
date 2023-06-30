@@ -1,7 +1,7 @@
 ---
 name: "Protocol-Updates"
 
-on: # yamllint disable-line rule:truthy
+on:   # yamllint disable-line rule:truthy
   schedule:
     - cron: "0 8 * * 4"
 
@@ -24,7 +24,7 @@ jobs:
         run: "git checkout -b $BRANCH_NAME"
       # Push new branch so Flatbot can make its commit
       - name: "Push Flatbot branch"
-        run: "git push --set-upstream origin $BRANCH_NAME"
+        run: "git push -f --set-upstream origin $BRANCH_NAME"
       # Install Black
       - name: "Install Python Black"
         run: "pip install black"

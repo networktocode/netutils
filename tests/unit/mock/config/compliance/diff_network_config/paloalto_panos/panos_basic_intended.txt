@@ -1,0 +1,9 @@
+set deviceconfig system permitted-ip 10.0.0.0/8
+set deviceconfig system domain example.com
+set deviceconfig system service disable-telnet yes
+set deviceconfig system service disable-http yes
+set deviceconfig system service disable-snmp no
+set mgt-config users readonly permissions role-based vsysreader localhost.localdomain vsys vsys1
+set mgt-config users readonly phash passhash
+set mgt-config users user1 permissions role-based superuser yes
+set mgt-config users user1 phash passhash
