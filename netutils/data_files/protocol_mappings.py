@@ -5860,6 +5860,7 @@ PROTOCOLS: Dict[str, Any] = {
     "dsmcc-download": {"port_number": 13821, "protocols": ["tcp", "udp"]},
     "dsmcc-ccp": {"port_number": 13822, "protocols": ["tcp", "udp"]},
     "bmdss": {"port_number": 13823, "protocols": ["tcp"]},
+    "a-trust-rpc": {"port_number": 13832, "protocols": ["tcp"]},
     "ucontrol": {"port_number": 13894, "protocols": ["tcp", "udp"]},
     "dta-systems": {"port_number": 13929, "protocols": ["tcp", "udp"]},
     "medevolve": {"port_number": 13930, "protocols": ["tcp"]},
