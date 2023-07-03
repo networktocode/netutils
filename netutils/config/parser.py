@@ -1533,3 +1533,51 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
 
             self._update_config_lines(line)
         return self.config_lines
+
+
+class FastironConfigParser(CiscoConfigParser):
+    """Ruckus FastIron ICX config parser."""
+
+    comment_chars: t.List[str] = ["!"]
+    banner_start: t.List[str] = ["banner motd", "banner"]
+    regex_banner = re.compile(r"^banner(\smotd)?\s+(?P<banner_delimiter>\S)")
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(FastironConfigParser, self).__init__(config)
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None
+
+        Raises:
+            ValueError: When the parser is unable to identify the end of the Banner.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                if line.endswith(self.banner_end):
+                    banner, end, _ = line.rpartition(self.banner_end)
+                    line = banner.rstrip() + end
+                self._update_config_lines(line)
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+        raise ValueError("Unable to parse banner end.")
