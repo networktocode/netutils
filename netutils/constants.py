@@ -1,5 +1,7 @@
 """Constant definitions used in project."""
-from netutils.data_files.protocol_mappings import PROTOCOLS  # noqa: F401 # pylint:disable=unused-import
+from netutils.data_files.protocol_mappings import (
+    PROTOCOLS,
+)  # noqa: F401 # pylint:disable=unused-import
 
 
 # This variable provides mapping for known interface variants, to the associated long form.
@@ -144,7 +146,7 @@ BASE_INTERFACES = {
 DEFAULT_MAC_FORMAT = "MAC_DOT_FOUR"
 
 # A dictionary to describe the MAC format to it's characteristics.
-MAC_CREATE = dict(
+MAC_CREATE = dict(  # pylint: disable=use-dict-literal
     MAC_COLON_TWO={"count": 2, "char": ":"},
     MAC_COLON_FOUR={"count": 4, "char": ":"},
     MAC_DASH_TWO={"count": 2, "char": "-"},
@@ -155,7 +157,7 @@ MAC_CREATE = dict(
 )
 
 # A dictionary to describe the MAC format REGEX pattern.
-MAC_REGEX = dict(
+MAC_REGEX = dict(  # pylint: disable=use-dict-literal
     MAC_COLON_TWO=r"([a-fA-F0-9]{2}[:]){5}([a-fA-F0-9]{2})",
     MAC_COLON_FOUR=r"([a-fA-F0-9]{4}[:]){2}([a-fA-F0-9]{4})",
     MAC_DASH_TWO=r"([a-fA-F0-9]{2}[\-]){5}([a-fA-F0-9]{2})",
@@ -208,8 +210,14 @@ _PROVIDED_CLEAN_FILTERS = [
 # These are base level filters to provide documentation of how a SANITIZE_FILTERS can be used, This is a private variable, and subject
 # to change without notice between revisions.
 _PROVIDED_SANITIZE_FILTERS = [
-    {"regex": r"(username\s+\S+\spassword\s+5\s+)\S+(\s+role\s+\S+)", "replace": "\\1<redacted_config>\\2"},
-    {"regex": r"(username\s+\S+\s+privilege\s+15\s+password\s+0\s+)\S+", "replace": "\\1<redacted_config>"},
+    {
+        "regex": r"(username\s+\S+\spassword\s+5\s+)\S+(\s+role\s+\S+)",
+        "replace": "\\1<redacted_config>\\2",
+    },
+    {
+        "regex": r"(username\s+\S+\s+privilege\s+15\s+password\s+0\s+)\S+",
+        "replace": "\\1<redacted_config>",
+    },
 ]
 
 # {0xffffffff ^ ((1 << i) - 1) for i in range(32)}
