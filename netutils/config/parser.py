@@ -411,6 +411,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
 
 class BaseBraceConfigParser(BaseConfigParser):  # pylint: disable=abstract-method
     """Base parser class for config syntax that demarcates using braces."""
+
     multiline_delimiters: t.List[str] = []
 
     @property
