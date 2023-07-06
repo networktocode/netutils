@@ -13,9 +13,6 @@ ConfigLine = namedtuple("ConfigLine", "config_line,parents")
 class BaseConfigParser:
     """Base class for parsers."""
 
-    # pylint: disable=abstract-method
-    # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
-
     comment_chars = ["!"]
     banner_start = ["banner", "vacant-message"]
 
@@ -51,7 +48,6 @@ class BaseSpaceConfigParser(BaseConfigParser):
     """Base parser class for config syntax that demarcates using spaces/indentation."""
 
     # pylint: disable=abstract-method
-    # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
 
     comment_chars = ["!"]
     banner_start = ["banner", "vacant-message"]
@@ -411,12 +407,8 @@ class BaseSpaceConfigParser(BaseConfigParser):
         return config
 
 
-class BaseBraceConfigParser(BaseConfigParser):
+class BaseBraceConfigParser(BaseConfigParser):  # pylint: disable=abstract-method
     """Base parser class for config syntax that demarcates using braces."""
-
-    # pylint: disable=abstract-method
-    # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
-
     multiline_delimiters: t.List[str] = []
 
     @property

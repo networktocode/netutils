@@ -102,7 +102,7 @@ testpaths = "tests/"
 addopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
 
 [tool.mypy]
-python_version = 3.7
+python_version = 3.8
 ignore_errors = false
 disallow_untyped_calls = true
 disallow_untyped_defs = true
