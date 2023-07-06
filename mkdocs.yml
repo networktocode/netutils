@@ -100,6 +100,7 @@ nav:
       - Jinja Filters: "user/lib_use_cases_jinja_filters.md"
       - Library Mapper: "user/lib_use_cases_lib_mapper.md"
       - Protocol Mapper: "user/lib_use_cases_protocol_mappers.md"
+      - Upgrade Paths: "user/lib_upgrade_paths.md"
       - Getting Started: "user/lib_getting_started.md"
       - Frequently Asked Questions: "user/faq.md"
   - Administrator Guide:
@@ -133,6 +134,7 @@ nav:
           - Library Helpers: "dev/code_reference/lib_helpers.md"
           - Library Mapping: "dev/code_reference/lib_mapping.md"
           - Mac Address: "dev/code_reference/mac.md"
+          - OS Version: "dev/code_reference/os_version.md"
           - Password: "dev/code_reference/password.md"
           - Ping: "dev/code_reference/ping.md"
           - Protocol Mapper: "dev/code_reference/protocol_mapper.md"

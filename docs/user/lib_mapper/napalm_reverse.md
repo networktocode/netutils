@@ -11,5 +11,6 @@
 | fortinet | → | fortios |
 | huawei_vrp | → | huawei |
 | juniper_junos | → | junos |
+| mikrotik_routeros | → | ros |
 | nokia_sros | → | sros |
 | paloalto_panos | → | panos |

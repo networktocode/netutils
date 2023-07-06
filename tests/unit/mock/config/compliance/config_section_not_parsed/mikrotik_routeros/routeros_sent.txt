@@ -1,0 +1,10 @@
+/routing filter add action=discard chain=ibgp-no-default-out prefix=10.127.1.0/24
+/routing filter add action=accept chain=ibgp-no-default-out prefix=10.64.0.0/10 prefix-length=22-32
+/routing ospf interface add dead-interval=8s hello-interval=2s interface=vlan3049-Transit-to-85Presidential network-type=point-to-point
+/routing ospf interface add cost=11 dead-interval=8s hello-interval=2s interface=vlan3166-Transit-HalseyCore-Agg1-to-Indigo-5 network-type=point-to-point
+/routing ospf network add area=backbone network=10.126.0.16/29
+/snmp set enabled=yes trap-community=somestring
+/system clock set time-zone-name=America/New_York
+/system identity set name=ag1.123site.nwk.nj
+/system logging add action=remote topics=error
+/system logging add action=remote topics=info

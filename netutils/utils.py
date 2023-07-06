@@ -54,9 +54,18 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_oui": "mac.get_oui",
     "compare_type5": "password.compare_type5",
     "compare_type7": "password.compare_type7",
+    "compare_cisco_type5": "password.compare_cisco_type5",
+    "compare_cisco_type7": "password.compare_cisco_type7",
+    "compare_cisco_type9": "password.compare_cisco_type9",
     "decrypt_type7": "password.decrypt_type7",
+    "decrypt_cisco_type7": "password.decrypt_cisco_type7",
+    "decrypt_juniper_type9": "password.decrypt_juniper_type9",
     "encrypt_type5": "password.encrypt_type5",
     "encrypt_type7": "password.encrypt_type7",
+    "encrypt_cisco_type5": "password.encrypt_cisco_type5",
+    "encrypt_cisco_type7": "password.encrypt_cisco_type7",
+    "encrypt_cisco_type9": "password.encrypt_cisco_type9",
+    "encrypt_juniper_type9": "password.encrypt_juniper_type9",
     "get_hash_salt": "password.get_hash_salt",
     "tcp_ping": "ping.tcp_ping",
     "longest_prefix_match": "route.longest_prefix_match",
@@ -67,6 +76,8 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "uptime_seconds_to_string": "time.uptime_seconds_to_string",
     "uptime_string_to_seconds": "time.uptime_string_to_seconds",
     "get_napalm_getters": "lib_helpers.get_napalm_getters",
+    "paloalto_panos_brace_to_set": "config.conversion.paloalto_panos_brace_to_set",
+    "get_upgrade_path": "os_version.get_upgrade_path",
 }
 
 

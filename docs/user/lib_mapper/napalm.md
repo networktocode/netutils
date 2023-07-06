@@ -12,5 +12,6 @@
 | nxos | → | cisco_nxos |
 | nxos_ssh | → | cisco_nxos |
 | panos | → | paloalto_panos |
+| ros | → | mikrotik_routeros |
 | sros | → | nokia_sros |
 | vyos | → | brocade_vyos |

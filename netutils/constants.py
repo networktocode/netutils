@@ -176,6 +176,7 @@ REVERSE_MAPPING = {
     "FastEthernet": "Fa",
     "Fddi": "FD",
     "FortyGigabitEthernet": "Fo",
+    "FourHundredGigabitEthernet": "FH",
     "GigabitEthernet": "Gi",
     "HundredGigabitEthernet": "Hu",
     "Loopback": "Lo",
@@ -408,3 +409,29 @@ UPTIME_REGEX_PATTERNS = [
         r"((?P<minutes>\d+)m)?((?P<seconds>\d+)s)"
     ),  # pylint: disable=implicit-str-concat
 ]
+
+# Do not modify list, see UPGRADE_PATHS documentation on the versioning of this
+UPGRADE_PATHS = {
+    "PANOS_OFFICIAL_V1": [
+        "8.0.0",
+        "8.0.20",
+        "8.1.0",
+        "8.1.24-h1",
+        "9.0.0",
+        "9.0.16-h3",
+        "9.1.0",
+        "9.1.15-h1",
+        "10.0.0",
+        "10.0.12",
+        "10.1.0",
+        "10.1.9",
+    ],
+    "PANOS_MAJOR_ONLY_V1": [
+        "8.0.0",
+        "8.1.0",
+        "9.0.0",
+        "9.1.0",
+        "10.0.0",
+        "10.1.0",
+    ],
+}
