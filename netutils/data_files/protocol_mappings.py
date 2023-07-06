@@ -2122,6 +2122,7 @@ PROTOCOLS: Dict[str, Any] = {
     "qip-login": {"port_number": 2366, "protocols": ["tcp", "udp"]},
     "service-ctrl": {"port_number": 2367, "protocols": ["tcp", "udp"]},
     "opentable": {"port_number": 2368, "protocols": ["tcp", "udp"]},
+    "bif-p2p": {"port_number": 2369, "protocols": ["tcp", "udp"]},
     "l3-hbmon": {"port_number": 2370, "protocols": ["tcp", "udp"]},
     "rda-secondary": {"port_number": 2371, "protocols": ["tcp"]},
     "lanmessenger": {"port_number": 2372, "protocols": ["tcp", "udp"]},
