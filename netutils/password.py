@@ -277,7 +277,7 @@ def encrypt_cisco_type7(unencrypted_password: str, salt: t.Optional[int] = None)
         salt = random.randint(0, 15)  # nosec
     # Start building the encrypted password - pre-pend the 2 decimal digit offset.
     encrypted_password = format(salt, "02d")
-    for i, _ in enumerate(unencrypted_password): # pylint: disable=unnecessary-list-index-lookup
+    for i, _ in enumerate(unencrypted_password):  # pylint: disable=unnecessary-list-index-lookup
         # Get the next of the plaintext character.
         dec_char = ord(unencrypted_password[i])
         # Get the next character of the key.
