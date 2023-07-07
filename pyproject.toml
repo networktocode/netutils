@@ -84,7 +84,6 @@ good-names="i,ip,j,k,ex,Run,_"
 # Pylint and Black disagree about how to format multi-line arrays; Black wins.
 disable = """,
     line-too-long,
-    bad-continuation,
     consider-iterating-dictionary,
     """
 

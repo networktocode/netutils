@@ -1,6 +1,6 @@
 """Functions for working with OS Versions."""
 import typing as t
-from distutils.version import LooseVersion
+from distutils.version import LooseVersion  # pylint: disable=deprecated-module
 
 
 def get_upgrade_path(
