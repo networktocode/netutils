@@ -1,7 +1,7 @@
 """Constant definitions used in project."""
-from netutils.data_files.protocol_mappings import (
+from netutils.data_files.protocol_mappings import (  # noqa: F401 # pylint:disable=unused-import
     PROTOCOLS,
-)  # noqa: F401 # pylint:disable=unused-import
+)
 
 
 # This variable provides mapping for known interface variants, to the associated long form.
