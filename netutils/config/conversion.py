@@ -92,7 +92,7 @@ def paloalto_panos_brace_to_set(cfg: str, cfg_type: str = "file") -> str:
             cfg_string += "\n"
 
     # Filter out 'devices localhost.local domain' from the entire cfg_string
-    #FIXME: Add flagging capability to disable this behavior
+    # FIXME: Add flagging capability to disable this behavior
     cfg_string = cfg_string.replace("devices localhost.localdomain ", "")
 
     return cfg_string
