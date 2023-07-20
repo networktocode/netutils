@@ -1430,7 +1430,7 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
     banner_start: t.List[str] = [
         'set system login-banner "',
         'login-banner "',
-        'set devices localhost.localdomain deviceconfig system login-banner "',
+        'set deviceconfig system login-banner "',
     ]
     banner_end = '"'
 
@@ -1479,18 +1479,18 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
 
         Examples:
             >>> config = (
-            ...     "set devices localhost.localdomain deviceconfig system hostname firewall1\n"
-            ...     "set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server 10.0.0.1\n"
-            ...     "set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2\n"
-            ...     "set devices localhost.localdomain deviceconfig setting config rematch yes\n"
+            ...     "set deviceconfig system hostname firewall1\n"
+            ...     "set deviceconfig system panorama local-panorama panorama-server 10.0.0.1\n"
+            ...     "set deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2\n"
+            ...     "set deviceconfig setting config rematch yes\n"
             ... )
             >>> config_tree = PaloAltoNetworksConfigParser(config)
             >>> config_tree.build_config_relationship() == \
             ... [
-            ...     ConfigLine(config_line="set devices localhost.localdomain deviceconfig system hostname firewall1", parents=()),
-            ...     ConfigLine(config_line="set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server 10.0.0.1", parents=()),
-            ...     ConfigLine(config_line="set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2", parents=()),
-            ...     ConfigLine(config_line="set devices localhost.localdomain deviceconfig setting config rematch yes", parents=()),
+            ...     ConfigLine(config_line="set deviceconfig system hostname firewall1", parents=()),
+            ...     ConfigLine(config_line="set deviceconfig system panorama local-panorama panorama-server 10.0.0.1", parents=()),
+            ...     ConfigLine(config_line="set deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2", parents=()),
+            ...     ConfigLine(config_line="set deviceconfig setting config rematch yes", parents=()),
             ... ]
             True
         """
