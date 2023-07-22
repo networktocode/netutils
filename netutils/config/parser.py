@@ -14,9 +14,6 @@ ConfigLine = namedtuple("ConfigLine", "config_line,parents")
 class BaseConfigParser:
     """Base class for parsers."""
 
-    # pylint: disable=abstract-method
-    # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
-
     comment_chars = ["!"]
     banner_start = ["banner", "vacant-message"]
 
@@ -51,8 +48,8 @@ class BaseConfigParser:
 class BaseSpaceConfigParser(BaseConfigParser):
     """Base parser class for config syntax that demarcates using spaces/indentation."""
 
+    # TODO: Review if this can be removed
     # pylint: disable=abstract-method
-    # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
 
     comment_chars = ["!"]
     banner_start = ["banner", "vacant-message"]
@@ -413,11 +410,8 @@ class BaseSpaceConfigParser(BaseConfigParser):
         return config
 
 
-class BaseBraceConfigParser(BaseConfigParser):
+class BaseBraceConfigParser(BaseConfigParser):  # pylint: disable=abstract-method
     """Base parser class for config syntax that demarcates using braces."""
-
-    # pylint: disable=abstract-method
-    # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
 
     multiline_delimiters: t.List[str] = []
 
@@ -766,7 +760,7 @@ class F5ConfigParser(BaseBraceConfigParser):
         """
         super().__init__(self._clean_config_f5(config))
 
-    def _clean_config_f5(self, config_text: str) -> str:  # pylint: disable=no-self-use
+    def _clean_config_f5(self, config_text: str) -> str:
         """Removes all configuration items with 'ltm rule'.
 
         iRules are essentially impossible to parse with the lack of uniformity,
@@ -991,7 +985,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         self.uncommon_data = self._get_uncommon_lines(config)
         super(FortinetConfigParser, self).__init__(config)
 
-    def is_end_next(self, line: str) -> bool:  # pylint: disable=no-self-use
+    def is_end_next(self, line: str) -> bool:
         """Determine if line has 'end' or 'next' in it.
 
         Args:
@@ -1012,7 +1006,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
                 return True
         return False
 
-    def _parse_out_offending(self, config: str) -> str:  # pylint: disable=no-self-use
+    def _parse_out_offending(self, config: str) -> str:
         """Preprocess out strings that offend the normal spaced configuration syntax.
 
         Args:
@@ -1042,7 +1036,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
             self._config = "\n".join(config_lines)
         return self._config
 
-    def _get_uncommon_lines(self, config: str) -> t.Dict[str, str]:  # pylint: disable=no-self-use
+    def _get_uncommon_lines(self, config: str) -> t.Dict[str, str]:
         """Regex to find replacemsg lines which can contain html/css data.
 
         Args:
@@ -1110,7 +1104,7 @@ class NokiaConfigParser(BaseSpaceConfigParser):
         """Demarcate End of Banner char(s)."""
         raise NotImplementedError("Nokia SROS platform doesn't have a banner.")
 
-    def _is_section_title(self, line: str) -> bool:  # pylint: disable=no-self-use
+    def _is_section_title(self, line: str) -> bool:
         """Determine if line is a section title in banner.
 
         Args:
@@ -1123,7 +1117,7 @@ class NokiaConfigParser(BaseSpaceConfigParser):
             return True
         return False
 
-    def _get_section_title(self, line: str) -> t.Union[str, bool]:  # pylint: disable=no-self-use
+    def _get_section_title(self, line: str) -> t.Union[str, bool]:
         """Determine section title from banner.
 
         Args:
