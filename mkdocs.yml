@@ -138,6 +138,7 @@ nav:
           - Password: "dev/code_reference/password.md"
           - Ping: "dev/code_reference/ping.md"
           - Protocol Mapper: "dev/code_reference/protocol_mapper.md"
+          - Regex: "dev/code_reference/regex.md"
           - Route: "dev/code_reference/route.md"
           - Time: "dev/code_reference/time.md"
           - Utils: "dev/code_reference/utils.md"

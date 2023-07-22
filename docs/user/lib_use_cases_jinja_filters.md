@@ -108,6 +108,78 @@ When you run `jinja2_environment.py` the output will be:
 The version of 192.168.0.1/24 is IPv4.
 ```
 
+## regex Convenience Functions
+
+When adding the netutils functions to your jinja2 environment, you also gain access to the built-in `re` python library using these Jinja2 filters.
+
+```python
+    "regex_findall": "regex.regex_findall",
+    "regex_match": "regex.regex_match",
+    "regex_search": "regex.regex_search",
+    "regex_split": "regex.regex_split",
+    "regex_sub": "regex.regex_sub",
+```
+
+These functions will always return a json serializable object and not a complex object like `re.Match` or simialr to better serve the primary use case of functions to be used as Jinja2 filters. After all, they are simply small wrappers around Python `re` functions, which should be preferred when not using Jinja2 or similar templating language.
+
+Below is a code in you can drop into your Python shell to help bring to life how these regex functions can be used.
+
+```python
+from jinja2 import Environment, BaseLoader
+from netutils.utils import jinja2_convenience_function
+
+env = Environment(loader=BaseLoader())
+env.filters.update(jinja2_convenience_function())
+
+DATA = {
+    "device": "USSCAMS07", 
+    "comma_seperated_devices": "NYC-RT01,NYC-RT02,SFO-SW01,SFO-RT01"
+}
+
+TEMPLATE_STRING = """
+{% set device_details = '([A-Z]{2})([A-Z]{2})([A-Z]{3})(\d*)' | regex_match(device) %}
+
+Country: {{ ('^([A-Z]{2})([A-Z]{2})([A-Z]{3})(\d*)' | regex_search(device))[0] }}
+STATE: {{ device_details[1] }}
+FUNCTION: {{ device_details[2] }}
+
+ALL DEVICES:
+{% for router in ',' | regex_split(comma_seperated_devices) -%}
+  - {{ router }}
+{% endfor %}
+
+ONLY ROUTERS:
+{% for router in ',' | regex_split(comma_seperated_devices) -%}
+{% if '-RT' | regex_search(router) -%}
+  - {{ router }}
+{% endif -%}
+{% endfor %}
+"""
+
+template = env.from_string(TEMPLATE_STRING, DATA)
+result = template.render()
+print(result)
+```
+
+Which would result in the following output.
+
+```text
+Country: US
+STATE: SC
+FUNCTION: AMS
+
+ALL DEVICES:
+- NYC-RT01
+- NYC-RT02
+- SFO-SW01
+- SFO-RT01
+
+ONLY ROUTERS:
+- NYC-RT01
+- NYC-RT02
+- SFO-RT01
+```
+
 ## Netutils to Jinja2 Filters List
 
 

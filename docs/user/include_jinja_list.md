@@ -19,7 +19,6 @@
 | paloalto_panos_brace_to_set | netutils.config.conversion.paloalto_panos_brace_to_set |
 | fqdn_to_ip | netutils.dns.fqdn_to_ip |
 | is_fqdn_resolvable | netutils.dns.is_fqdn_resolvable |
-| hostname_regex | netutils.hostname.hostname_regex |
 | abbreviated_interface_name | netutils.interface.abbreviated_interface_name |
 | abbreviated_interface_name_list | netutils.interface.abbreviated_interface_name_list |
 | canonical_interface_name | netutils.interface.canonical_interface_name |
@@ -70,6 +69,11 @@
 | encrypt_type7 | netutils.password.encrypt_type7 |
 | get_hash_salt | netutils.password.get_hash_salt |
 | tcp_ping | netutils.ping.tcp_ping |
+| regex_findall | netutils.regex.regex_findall |
+| regex_match | netutils.regex.regex_match |
+| regex_search | netutils.regex.regex_search |
+| regex_split | netutils.regex.regex_split |
+| regex_sub | netutils.regex.regex_sub |
 | longest_prefix_match | netutils.route.longest_prefix_match |
 | uptime_seconds_to_string | netutils.time.uptime_seconds_to_string |
 | uptime_string_to_seconds | netutils.time.uptime_string_to_seconds |

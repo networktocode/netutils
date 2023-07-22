@@ -1,5 +1,5 @@
-# Hostname
+# Regex
 
-::: netutils.hostname
+::: netutils.regex
     options:
         show_submodules: True
