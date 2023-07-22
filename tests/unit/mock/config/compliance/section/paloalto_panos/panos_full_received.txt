@@ -3,5 +3,5 @@ set mgt-config users admin permissions role-based superuser yes
 set mgt-config users admin public-key thisisasuperduperlongbase64encodedstring
 set mgt-config users panadmin permissions role-based superuser yes
 set mgt-config users panadmin phash passwordhash
-set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server 10.0.0.1
-set devices localhost.localdomain deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2
+set deviceconfig system panorama local-panorama panorama-server 10.0.0.1
+set deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2
