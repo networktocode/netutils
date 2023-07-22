@@ -48,6 +48,7 @@ class BaseConfigParser:
 class BaseSpaceConfigParser(BaseConfigParser):
     """Base parser class for config syntax that demarcates using spaces/indentation."""
 
+    # TODO: Review if this can be removed
     # pylint: disable=abstract-method
 
     comment_chars = ["!"]

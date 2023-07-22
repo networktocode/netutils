@@ -1,6 +1,7 @@
 """Functions for working with Passwords."""
 
-import crypt
+# TODO: Swap out crypt prior to py3.13
+import crypt  # pylint: disable=deprecated-module
 import random
 import secrets
 import string
