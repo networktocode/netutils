@@ -1,4 +1,4 @@
-"""Utilities to expose regex functions, primarily for Jinja filters."""
+"""Utilities to expose regex functions, primarily for Jinja2 filters."""
 
 import re
 import typing as t
@@ -17,7 +17,7 @@ def _match_object(match: t.Optional[t.Match[str]]) -> t.Union[t.List[str], str, 
 
 
 def regex_findall(pattern: str, string: str) -> t.List[str]:
-    r"""Given a regex pattern and string, return all non-overlapping matches of pattern in string, as a list of strings matches.
+    r"""Given a regex pattern and string, return all non-overlapping matches of pattern in the string, as a list of strings.
 
     The main purpose of this function is provide a Jinja2 filter as this is simply a wrapper around `re.findall`.
 
