@@ -1104,17 +1104,17 @@ python-legacy = ["mkdocstrings-python-legacy (>=0.2.1)"]
 
 [[package]]
 name = "mkdocstrings-python"
-version = "1.1.2"
+version = "1.2.1"
 description = "A Python handler for mkdocstrings."
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "mkdocstrings_python-1.1.2-py3-none-any.whl", hash = "sha256:c2b652a850fec8e85034a9cdb3b45f8ad1a558686edc20ed1f40b4e17e62070f"},
-    {file = "mkdocstrings_python-1.1.2.tar.gz", hash = "sha256:f28bdcacb9bcdb44b6942a5642c1ea8b36870614d33e29e3c923e204a8d8ed61"},
+    {file = "mkdocstrings_python-1.2.1-py3-none-any.whl", hash = "sha256:7c08f33e9ba7b1655e9cf0608eba3ce7a9513bd8b42a68a8d24ffaf4a6a50cfc"},
+    {file = "mkdocstrings_python-1.2.1.tar.gz", hash = "sha256:ae40825b3b676a94626882901ed9c8fcf9a7f0330e466ffe37ce15c525987aa9"},
 ]
 
 [package.dependencies]
-griffe = ">=0.24"
+griffe = ">=0.30"
 mkdocstrings = ">=0.20"
 
 [[package]]
@@ -2210,4 +2210,4 @@ optionals = ["napalm"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "33c424b51ad569e5ea3394b74c3d46f12ec4c808e52f7e2e56b81adbf323b7f4"
+content-hash = "76da105f8ed4b221d5b58c066877b9422aea9d94ad223db51052127eccb3097d"

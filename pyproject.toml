@@ -48,7 +48,7 @@ mypy = "^0.961"
 mkdocs = "1.4.3"
 mkdocs-material = "8.5.8"
 mkdocstrings = "0.22.0"
-mkdocstrings-python = "1.1.2"
+mkdocstrings-python = "1.2.1"
 mkdocs-version-annotations = "1.0.0"
 
 [tool.black]
