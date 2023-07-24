@@ -260,9 +260,7 @@ def abbreviated_interface_name(
     return interface
 
 
-# Mypy is currently (0.961) unable to handle the combination of ABC and @total_ordering, see here:
-# https://github.com/python/mypy/issues/5374
-@total_ordering  # type: ignore
+@total_ordering
 class CharacterClass(ABC):
     """CharacterClass embodies the state needed to sort interfaces."""
 

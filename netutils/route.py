@@ -38,7 +38,7 @@ def longest_prefix_match(ip_addr: str, routes: t.List[t.Dict[str, str]]) -> str:
     networks = [
         ipaddress.IPv4Network(f'{route["network"]}/{route["mask"]}')
         for route in routes
-        if ip_addr in ipaddress.IPv4Network(f'{route["network"]}/{route["mask"]}')  # type: ignore
+        if ip_addr in ipaddress.IPv4Network(f'{route["network"]}/{route["mask"]}')
     ]
     try:
         return str(sorted(networks)[-1])

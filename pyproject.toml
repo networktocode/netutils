@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netutils"
-version = "1.4.1"
+version = "1.5.0"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 license = "Apache-2.0"
@@ -44,7 +44,7 @@ pydocstyle = "*"
 sphinx-rtd-theme = "*"
 toml = "*"
 yamllint = "*"
-mypy = "^0.961"
+mypy = "*"
 mkdocs = "1.4.3"
 mkdocs-material = "8.5.8"
 mkdocstrings = "0.22.0"
