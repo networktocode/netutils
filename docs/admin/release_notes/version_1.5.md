@@ -6,6 +6,7 @@
 - Added function to allow conversion from Panos curly bracket to set format.
 - Updated Interface mappings for FourHundredGigabitEthernet and TwoGigabitEthernet.
 - Added Encryption/Decryption/Comparison for Cisco & Juniper Type 9.
+- Added Regex functions to primarily be used wihin your Jinja2 environment.
 
 ## Announcements
 
@@ -26,6 +27,7 @@
 - [#262](https://github.com/networktocode/netutils/pull/262) Added Palo Alto brace to set conversion function. 
 - [#264](https://github.com/networktocode/netutils/pull/264) Added Ruckus fastiron parser.
 - [#285](https://github.com/networktocode/netutils/pull/285) Added FourHundredGigabitEthernet to REVERSE_MAPPING.
+- [#318](https://github.com/networktocode/netutils/pull/318) Added Regex functions to primarily be used wihin your Jinja2 environment.
 
 ### Changed
 
