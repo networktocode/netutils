@@ -120,7 +120,7 @@ When adding the netutils functions to your Jinja2 environment, you also gain acc
     "regex_sub": "regex.regex_sub",
 ```
 
-These functions will always return a json serializable object and not a complex object like `re.Match` or simialr to better serve the primary use case of functions to be used as Jinja2 filters. After all, they are simply small wrappers around Python `re` functions, the Python provided `re` functionality should be preferred when not using Jinja2 or similar templating language.
+These functions will always return a json serializable object and not a complex object like `re.Match` or similar to better serve the primary use case of functions to be used as Jinja2 filters. After all, they are simply small wrappers around Python `re` functions, the Python provided `re` functionality should be preferred when not using Jinja2 or similar templating language.
 
 Below is code that you can drop into your Python shell to help bring to life how these regex functions can be used.
 
