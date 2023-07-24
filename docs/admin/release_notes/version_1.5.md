@@ -3,7 +3,7 @@
 ## Release Overview
 
 - Added Mikrotik, fastiron, and Panos parsers.
-- Added function to allow conversion crom Panos curly bracket to set format.
+- Added function to allow conversion from Panos curly bracket to set format.
 - Updated Interface mappings for FourHundredGigabitEthernet and TwoGigabitEthernet.
 - Added Encryption/Decryption/Comparison for Cisco & Juniper Type 9.
 
