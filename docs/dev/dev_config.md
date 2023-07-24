@@ -26,6 +26,10 @@ The section banners have been simplified to extract the section header itself. T
 
 As the NetScaler configuration uses each line to make a specific configuration change there is no support for parent/child relationships in the parser.
 
+### Palo Alto Conversion 
+
+The conversion from curly to set format via the `paloalto_panos_brace_to_set` function strips any usage of `devices localhost.localdomain`. This will be evaluated in the future to be configurable but it is the current intention.
+
 ### Duplicate Line Detection
 
 In some circumstances replacing lines, such as secrets without uniqueness in the replacement, will result in duplicated lines that are invalid configuration, such as::

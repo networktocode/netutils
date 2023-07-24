@@ -140,6 +140,7 @@ NAPALM_LIB_MAPPER = {
     "sros": "nokia_sros",
     "vyos": "brocade_vyos",
     "aoscx": "aruba_aoscx",
+    "ros": "mikrotik_routeros",
 }
 
 PYNTC_LIB_MAPPER = {
@@ -202,6 +203,15 @@ SCRAPLI_LIB_MAPPER = {
     "aruba_aoscx": "aruba_aoscx",
 }
 
+HIERCONFIG_LIB_MAPPER = {
+    "ios": "cisco_ios",
+    "iosxe": "cisco_xe",
+    "iosxr": "cisco_xr",
+    "nxos": "cisco_nxos",
+    "eos": "arista_eos",
+    "fastiron": "ruckus_fastiron",
+}
+
 NAPALM_LIB_MAPPER_REVERSE = {
     "arista_eos": "eos",
     "brocade_vyos": "vyos",
@@ -216,6 +226,7 @@ NAPALM_LIB_MAPPER_REVERSE = {
     "paloalto_panos": "panos",
     "nokia_sros": "sros",
     "aruba_aoscx": "aoscx",
+    "mikrotik_routeros": "ros",
 }
 
 PYNTC_LIB_MAPPER_REVERSE = {
@@ -275,6 +286,15 @@ SCRAPLI_LIB_MAPPER_REVERSE = {
     "arista_eos": "arista_eos",
     "juniper_junos": "juniper_junos",
     "aruba_aoscx": "aruba_aoscx",
+}
+
+HIERCONFIG_LIB_MAPPER_REVERSE = {
+    "cisco_ios": "ios",
+    "cisco_xe": "iosxe",
+    "cisco_xr": "iosxr",
+    "cisco_nxos": "nxos",
+    "arista_eos": "eos",
+    "ruckus_fastiron": "fastiron",
 }
 
 # Deep copy the reverse, where there is no actual translation happening.

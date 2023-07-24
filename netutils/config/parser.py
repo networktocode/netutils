@@ -6,15 +6,13 @@ import typing as t
 from collections import namedtuple
 
 from netutils.banner import normalise_delimiter_caret_c
+from netutils.config.conversion import paloalto_panos_brace_to_set
 
 ConfigLine = namedtuple("ConfigLine", "config_line,parents")
 
 
 class BaseConfigParser:
     """Base class for parsers."""
-
-    # pylint: disable=abstract-method
-    # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
 
     comment_chars = ["!"]
     banner_start = ["banner", "vacant-message"]
@@ -50,8 +48,8 @@ class BaseConfigParser:
 class BaseSpaceConfigParser(BaseConfigParser):
     """Base parser class for config syntax that demarcates using spaces/indentation."""
 
+    # TODO: Review if this can be removed
     # pylint: disable=abstract-method
-    # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
 
     comment_chars = ["!"]
     banner_start = ["banner", "vacant-message"]
@@ -291,7 +289,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
             >>> config = (
             ...     "interface Ethernet1/1\n"
             ...     "  vlan 10\n"
-            ...     "  no shutdown"
+            ...     "  no shutdown\n"
             ...     "interface Ethernet1/2\n"
             ...     "  shutdown\n"
             ... )
@@ -300,8 +298,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
             ... [
             ...     ConfigLine(config_line='interface Ethernet1/1', parents=()),
             ...     ConfigLine(config_line='  vlan 10', parents=('interface Ethernet1/1',)),
-            ...     ConfigLine(config_line='  no shutdowninterface Ethernet1/2', parents=('interface Ethernet1/1',)),
-            ...     ConfigLine(config_line='  shutdown', parents=('interface Ethernet1/1',))
+            ...     ConfigLine(config_line='  no shutdown', parents=('interface Ethernet1/1',)),
+            ...     ConfigLine(config_line='interface Ethernet1/2', parents=(),),
+            ...     ConfigLine(config_line='  shutdown', parents=('interface Ethernet1/2',))
             ... ]
             True
         """
@@ -411,11 +410,8 @@ class BaseSpaceConfigParser(BaseConfigParser):
         return config
 
 
-class BaseBraceConfigParser(BaseConfigParser):
+class BaseBraceConfigParser(BaseConfigParser):  # pylint: disable=abstract-method
     """Base parser class for config syntax that demarcates using braces."""
-
-    # pylint: disable=abstract-method
-    # The pylint disable on the previous line can be removed once support for Python 3.7 is dropped.
 
     multiline_delimiters: t.List[str] = []
 
@@ -764,7 +760,7 @@ class F5ConfigParser(BaseBraceConfigParser):
         """
         super().__init__(self._clean_config_f5(config))
 
-    def _clean_config_f5(self, config_text: str) -> str:  # pylint: disable=no-self-use
+    def _clean_config_f5(self, config_text: str) -> str:
         """Removes all configuration items with 'ltm rule'.
 
         iRules are essentially impossible to parse with the lack of uniformity,
@@ -989,7 +985,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         self.uncommon_data = self._get_uncommon_lines(config)
         super(FortinetConfigParser, self).__init__(config)
 
-    def is_end_next(self, line: str) -> bool:  # pylint: disable=no-self-use
+    def is_end_next(self, line: str) -> bool:
         """Determine if line has 'end' or 'next' in it.
 
         Args:
@@ -1010,7 +1006,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
                 return True
         return False
 
-    def _parse_out_offending(self, config: str) -> str:  # pylint: disable=no-self-use
+    def _parse_out_offending(self, config: str) -> str:
         """Preprocess out strings that offend the normal spaced configuration syntax.
 
         Args:
@@ -1040,7 +1036,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
             self._config = "\n".join(config_lines)
         return self._config
 
-    def _get_uncommon_lines(self, config: str) -> t.Dict[str, str]:  # pylint: disable=no-self-use
+    def _get_uncommon_lines(self, config: str) -> t.Dict[str, str]:
         """Regex to find replacemsg lines which can contain html/css data.
 
         Args:
@@ -1108,7 +1104,7 @@ class NokiaConfigParser(BaseSpaceConfigParser):
         """Demarcate End of Banner char(s)."""
         raise NotImplementedError("Nokia SROS platform doesn't have a banner.")
 
-    def _is_section_title(self, line: str) -> bool:  # pylint: disable=no-self-use
+    def _is_section_title(self, line: str) -> bool:
         """Determine if line is a section title in banner.
 
         Args:
@@ -1121,7 +1117,7 @@ class NokiaConfigParser(BaseSpaceConfigParser):
             return True
         return False
 
-    def _get_section_title(self, line: str) -> t.Union[str, bool]:  # pylint: disable=no-self-use
+    def _get_section_title(self, line: str) -> t.Union[str, bool]:
         """Determine section title from banner.
 
         Args:
@@ -1375,3 +1371,207 @@ class NetironConfigParser(BaseSpaceConfigParser):
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
         raise NotImplementedError("Extreme Netiron platform doesn't have a banner.")
+
+
+class RouterOSConfigParser(BaseSpaceConfigParser):
+    """Mikrotik RouterOS config parser."""
+
+    comment_chars: t.List[str] = ["#"]
+    banner_start: t.List[str] = ["/system note set note=", "set note="]
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Mikrotik platform uses system note as a banner.")
+
+    def is_banner_end(self, line: str) -> bool:
+        """Determine if end of banner."""
+        if line.endswith('"') or line.startswith("/"):
+            return True
+        return False
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner (system note) config.
+
+        Returns:
+            The next configuration line in the configuration text or None when banner end is the end of the config text.
+
+        Raises:
+            ValueError: When the parser is unable to identify the End of the Banner.
+        """
+        banner_config = [config_line]
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                self._update_config_lines(line)
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+        raise ValueError("Unable to parse banner (system note) end.")
+
+
+class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
+    """Palo Alto Networks config parser."""
+
+    comment_chars: t.List[str] = []
+    banner_start: t.List[str] = [
+        'set system login-banner "',
+        'login-banner "',
+        'set deviceconfig system login-banner "',
+    ]
+    banner_end = '"'
+
+    def is_banner_end(self, line: str) -> bool:
+        """Determine if end of banner."""
+        if line.endswith('"') or line.startswith('";') or line.startswith("set") or line.endswith(self.banner_end):
+            return True
+        return False
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None
+
+        Raises:
+            ValueError: When the parser is unable to identify the end of the Banner.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                line = normalise_delimiter_caret_c(self.banner_end, line)
+                banner_config.append(line.strip())
+                line = "\n".join(banner_config)
+                if line.endswith("^C"):
+                    banner, end, _ = line.rpartition("^C")
+                    line = banner.rstrip() + end
+                self._update_config_lines(line.strip())
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+
+        raise ValueError("Unable to parse banner end.")
+
+    def build_config_relationship(self) -> t.List[ConfigLine]:  # pylint: disable=too-many-branches
+        r"""Parse text of config lines and find their parents.
+
+        Examples:
+            >>> config = (
+            ...     "set deviceconfig system hostname firewall1\n"
+            ...     "set deviceconfig system panorama local-panorama panorama-server 10.0.0.1\n"
+            ...     "set deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2\n"
+            ...     "set deviceconfig setting config rematch yes\n"
+            ... )
+            >>> config_tree = PaloAltoNetworksConfigParser(config)
+            >>> config_tree.build_config_relationship() == \
+            ... [
+            ...     ConfigLine(config_line="set deviceconfig system hostname firewall1", parents=()),
+            ...     ConfigLine(config_line="set deviceconfig system panorama local-panorama panorama-server 10.0.0.1", parents=()),
+            ...     ConfigLine(config_line="set deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2", parents=()),
+            ...     ConfigLine(config_line="set deviceconfig setting config rematch yes", parents=()),
+            ... ]
+            True
+        """
+        # assume configuration does not need conversion
+        _needs_conversion = False
+
+        # if config is in palo brace format, convert to set
+        if self.config_lines_only is not None:
+            for line in self.config_lines_only:
+                if line.endswith("{"):
+                    _needs_conversion = True
+        if _needs_conversion:
+            converted_config = paloalto_panos_brace_to_set(cfg=self.config, cfg_type="string")
+            list_config = converted_config.splitlines()
+            self.generator_config = (line for line in list_config)
+
+        # build config relationships
+        for line in self.generator_config:
+            if not line[0].isspace():
+                self._current_parents = ()
+                if self.is_banner_start(line):
+                    line = self._build_banner(line)  # type: ignore
+            else:
+                previous_config = self.config_lines[-1]
+                self._current_parents = (previous_config.config_line,)
+                self.indent_level = self.get_leading_space_count(line)
+                if not self.is_banner_start(line):
+                    line = self._build_nested_config(line)  # type: ignore
+                else:
+                    line = self._build_banner(line)  # type: ignore
+                    if line is not None and line[0].isspace():
+                        line = self._build_nested_config(line)  # type: ignore
+                    else:
+                        self._current_parents = ()
+
+            if line is None:
+                break
+            elif self.is_banner_start(line):
+                line = self._build_banner(line)  # type: ignore
+
+            self._update_config_lines(line)
+        return self.config_lines
+
+
+class FastironConfigParser(CiscoConfigParser):
+    """Ruckus FastIron ICX config parser."""
+
+    comment_chars: t.List[str] = ["!"]
+    banner_start: t.List[str] = ["banner motd", "banner"]
+    regex_banner = re.compile(r"^banner(\smotd)?\s+(?P<banner_delimiter>\S)")
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(FastironConfigParser, self).__init__(config)
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Handle banner config lines.
+
+        Args:
+            config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None
+
+        Raises:
+            ValueError: When the parser is unable to identify the end of the Banner.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                if line.endswith(self.banner_end):
+                    banner, end, _ = line.rpartition(self.banner_end)
+                    line = banner.rstrip() + end
+                self._update_config_lines(line)
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+        raise ValueError("Unable to parse banner end.")

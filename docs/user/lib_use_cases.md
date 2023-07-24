@@ -54,12 +54,12 @@ The following function will help in deploying list of VLANs and match the config
 You may want to compare a known password with a given encrypted password. This can help in verifying if the passwords are as expected for compliance reasons.
 
 ```python
->>> from netutils.password import compare_type5
+>>> from netutils.password import compare_cisco_type5
 >>>
->>> compare_type5("cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")
+>>> compare_cisco_type5("cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")
 True
 >>>
->>> compare_type5("not_cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")
+>>> compare_cisco_type5("not_cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")
 False
 >>>
 ```
