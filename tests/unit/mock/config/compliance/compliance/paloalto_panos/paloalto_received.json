@@ -1,0 +1,12 @@
+{
+  "management": {
+    "actual": "set mgt-config users readonly permissions role-based vsysreader localhost.localdomain vsys vsys1\nset mgt-config users readonly phash passhash\nset mgt-config users user1 permissions role-based superuser yes\nset mgt-config users user1 phash passhash",
+    "cannot_parse": true,
+    "compliant": true,
+    "extra": "",
+    "intended": "set mgt-config users readonly permissions role-based vsysreader localhost.localdomain vsys vsys1\nset mgt-config users readonly phash passhash\nset mgt-config users user1 permissions role-based superuser yes\nset mgt-config users user1 phash passhash",
+    "missing": "",
+    "ordered_compliant": true,
+    "unordered_compliant": true
+  }
+}

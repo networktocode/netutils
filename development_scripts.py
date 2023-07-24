@@ -106,6 +106,18 @@ MAPPER = {
             "_dict": lib_mapper.SCRAPLI_LIB_MAPPER_REVERSE,
             "_file": "docs/user/lib_mapper/scrapli_reverse.md",
         },
+        "hierconfig": {
+            "header_src": "HIERCONFIG",
+            "header_dst": "NORMALIZED",
+            "_dict": lib_mapper.HIERCONFIG_LIB_MAPPER,
+            "_file": "docs/user/lib_mapper/hierconfig.md",
+        },
+        "hierconfig_reverse": {
+            "header_src": "NORMALIZED",
+            "header_dst": "HIERCONFIG",
+            "_dict": lib_mapper.HIERCONFIG_LIB_MAPPER_REVERSE,
+            "_file": "docs/user/lib_mapper/hierconfig_reverse.md",
+        },
     },
     "PARSER_MAPPER_TEMPLATE": {
         "default": {

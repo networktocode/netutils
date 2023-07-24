@@ -1,0 +1,60 @@
+# by RouterOS 6.49.6
+# software id = WZ00-84LP
+#
+# model = CCR1036-8G-2S+
+# serial number = C6CD0BF7A020
+/interface bridge add name=google-vpc-peering-iface
+/interface bridge add name=loopback
+/interface bonding add mode=802.3ad name=Po1 slaves=sfp-sfpplus1,sfp-sfpplus2
+/interface vlan add interface=Po1 name=vlan11-mgmt vlan-id=11
+/interface vlan add interface=vlan2933-Transit-to-CC-NNI name=vlan3049-Transit-to-XXX vlan-id=3049
+/interface vlan add disabled=yes interface=Po1 name=vlan3051-Transit-to-CSW-through-QoE-Disabled vlan-id=3051
+/interface vlan add interface=Po1 mtu=1300 name=vlan3225-Transit-CORE-Agg1-to-COREXXX vlan-id=3225
+/interface wireless security-profiles set [ find default=yes ] supplicant-identity=MikroTik
+/ip ipsec peer add address=50.157.100.38/32 exchange-mode=ike2 local-address=55.106.77.11 name=google-vpc-peer
+/ip pool add name=BNEdgeLiteTest ranges=192.168.69.254
+/ip pool add name=BNEdgeLiteTest2 ranges=192.168.70.254
+/ip dhcp-server add address-pool=BNEdgeLiteTest disabled=no interface=ether1 name=dhcp1
+/ip dhcp-server add address-pool=BNEdgeLiteTest2 disabled=no interface=ether2 name=dhcp2
+/routing bgp instance set default as=1234 router-id=10.127.1.3
+/routing ospf instance set [ find default=yes ] router-id=10.127.1.3
+/snmp community add addresses=::/0 name=somestringa
+/system logging action set 3 bsd-syslog=yes remote=172.16.11.1 remote-port=5140
+/user group set full policy=local,telnet,ssh,ftp,reboot,read,write,policy,test,winbox,password,web,sniff,sensitive,api,romon,dude,tikapp
+/user group add name=prom policy=ssh,read,winbox,api,!local,!telnet,!ftp,!reboot,!write,!policy,!test,!password,!web,!sniff,!sensitive,!romon,!dude,!tikapp
+/ip neighbor discovery-settings set discover-interface-list=!dynamic
+/ip address add address=10.0.11.13/24 interface=vlan11-mgmt network=10.0.11.0
+/ip address add address=192.168.69.1/24 interface=ether1 network=192.168.69.0
+/ip dhcp-server network add address=192.168.69.0/24 gateway=192.168.69.1
+/ip dhcp-server network add address=192.168.70.0/24 gateway=192.168.70.1
+/ip dns set servers=8.8.8.8
+/ip firewall address-list add address=34.157.17.38 list=whitelist
+/ip firewall address-list add address=72.202.79.109 list=google-vpc-acl
+/ip firewall address-list add address=34.157.17.38 list=google-vpc-acl
+/ip firewall filter add action=drop chain=input dst-address=50.106.77.11 src-address-list=!google-vpc-acl
+/ip firewall nat add action=dst-nat chain=dstnat dst-address=50.106.77.11 dst-port=443 protocol=tcp to-addresses=10.1.15.10
+/ip firewall nat add action=masquerade chain=srcnat out-interface=vlan12-Servers
+/ip firewall nat add action=src-nat chain=srcnat src-address=50.64.0.75 to-addresses=55.106.77.11
+/ip ipsec identity add peer=google-vpc-peer secret=*****
+/ip ipsec policy set 0 disabled=yes
+/ip ipsec policy add disabled=yes dst-address=169.254.1.1/32 peer=google-vpc-peer src-address=169.254.1.2/32 tunnel=yes
+/ip ipsec policy add disabled=yes dst-address=10.150.0.0/20 peer=google-vpc-peer src-address=0.0.0.0/0 tunnel=yes
+/ip service set telnet disabled=yes
+/ip service set ftp disabled=yes
+/ip service set www disabled=yes
+/ip service set api address=10.1.15.5/32,10.120.16.0/20,172.16.11.0/24
+/ip service set api-ssl disabled=yes
+/routing bgp network add network=55.106.77.11/32 synchronize=no
+/routing bgp network add network=55.106.77.12/32 synchronize=no
+/routing bgp peer add in-filter=ibgp-allow-default-in name=CSW out-filter=ibgp-no-default-out remote-address=10.127.1.10 remote-as=12345 update-source=loopback
+/routing filter add action=discard chain=ibgp-no-default-out prefix=10.127.1.0/24
+/routing filter add action=accept chain=ibgp-no-default-out prefix=10.64.0.0/10 prefix-length=22-32
+/routing ospf interface add dead-interval=8s hello-interval=2s interface=vlan3049-Transit-to-85Presidential network-type=point-to-point
+/routing ospf interface add cost=11 dead-interval=8s hello-interval=2s interface=vlan3166-Transit-Core-Agg1-to-SiteXYZ network-type=point-to-point
+/routing ospf network add area=backbone network=10.126.0.16/29
+/routing ospf network add area=backbone network=10.127.1.3/32
+/snmp set enabled=yes trap-community=somestring
+/system clock set time-zone-name=America/New_York
+/system identity set name=ag1.123site.nwk.nj
+/system logging add action=remote topics=error
+/system logging add action=remote topics=info

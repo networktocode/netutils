@@ -7,6 +7,7 @@
 - Added first getter feature with Napalm Getter feature.
 - Converted to mkdocs docs.
 - Added Citrix NetScaler Parser.
+- Removed support for Python 3.6.
 
 ## [v1.3.0] - 2022-11
 
@@ -23,3 +24,7 @@
 - [#154](https://github.com/networktocode/netutils/pull/154) Update testing mock strategy for config parsers.
 - [#155](https://github.com/networktocode/netutils/pull/155) Update links to render properly on rtd and pypi.
 - [#159](https://github.com/networktocode/netutils/pull/159) Change how dunder version is created.
+
+### Removed
+
+- [#152](https://github.com/networktocode/netutils/pull/152) Removed support for Python 3.6.

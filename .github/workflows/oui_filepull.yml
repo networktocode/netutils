@@ -1,7 +1,7 @@
 ---
 name: "OUI-Updates"
 
-on: # yamllint disable-line rule:truthy
+on:   # yamllint disable-line rule:truthy
   schedule:
     - cron: "0 8 * * 4"
 
@@ -11,19 +11,20 @@ jobs:
     env:
       BRANCH_NAME: "OUI_Updates"
     steps:
-      - name: "Delete existing branch"
-        run: "git branch -D $BRANCH_NAME || true"
       # Checkout repo
       - name: "Check out code"
         uses: "actions/checkout@v2"
         with:
           ref: "develop"
+      # Delete old branch if it exists
+      - name: "Delete existing branch"
+        run: "git branch -D $BRANCH_NAME || true"
       # Create branch for Flatbot
       - name: "Create Flatbot branch"
         run: "git checkout -b $BRANCH_NAME"
       # Push new branch so Flatbot can make its commit
       - name: "Push Flatbot branch"
-        run: "git push --set-upstream origin $BRANCH_NAME"
+        run: "git push -f --set-upstream origin $BRANCH_NAME"
       # This step installs Deno, which is a new Javascript runtime that improves on Node. Can be used for an optional postprocessing step
       - name: "Setup deno"
         uses: "denoland/setup-deno@main"
