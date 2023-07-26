@@ -2,6 +2,7 @@
 # The intent of this script is to take a given platform, determine the format, and reformat it for another purpose
 # An example of this is a platform being formatted for NIST Database Query
 from dataclasses import make_dataclass, field, asdict
+from functools import partial
 import re
 import typing as t
 
@@ -91,7 +92,7 @@ version_parser_vendor_platform = {
 }
 
 
-def get_nist_urls_juniper_junos(self, api_key: str, platform: type) -> t.List[str]:
+def get_nist_urls_juniper_junos(platform, api_key: str) -> t.List[str]:
     """Create a list of possible NIST Url strings for JuniperPlatform.
 
     Args:
@@ -264,13 +265,14 @@ def create_platform_object(vendor: str, platform: str, version: str) -> object:
     )
 
     platform_obj = make_dataclass(
-        cls_name=class_name, fields=class_fields, namespace={"get_nist_url": get_nist_url_fn, "asdict": asdict}
+        cls_name=class_name, fields=class_fields, namespace={"get_nist_urls": get_nist_url_fn, "asdict": asdict}
     )
     return platform_obj(**field_values)
 
 
 version = "12.3R4"
 jp = create_platform_object("juniper", "junos", version)
+print(jp.get_nist_urls("aaa"))
 print(version, jp.asdict())
 version = "12.1x47:d40"
 jp = create_platform_object("juniper", "junos", version)
