@@ -173,7 +173,7 @@ def get_nist_urls_juniper_junos(platform, api_key: str) -> t.List[str]:
     raise EOFError
 
 
-def get_nist_urls_default(self, api_key: str) -> t.List[str]:
+def get_nist_urls_default(platform, api_key: str) -> t.List[str]:
     r"""Create a list of possible NIST Url strings.
 
     Child models with NIST URL customizations need their own "get_nist_urls" method.
@@ -195,9 +195,9 @@ def get_nist_urls_default(self, api_key: str) -> t.List[str]:
     )
 
     for escape_char in escape_list:
-        if re.search(escape_char, self.version):
-            self.version = re.sub(escape_char, "\\" + escape_char, self.version)
-    nist_urls.append(f"{base_url}{self.vendor}:{self.platform}:{self.version.replace('-', ':')}{':*'*7}")
+        if re.search(escape_char, platform.version):
+            platform.version = re.sub(escape_char, "\\" + escape_char, platform.version)
+    nist_urls.append(f"{base_url}{platform.vendor}:{platform.platform}:{platform.version.replace('-', ':')}{':*'*7}")
 
     return nist_urls
 
