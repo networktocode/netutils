@@ -24,7 +24,13 @@ _EXCLUDED_FILES = [
 
 _EXCLUDED_DECORATOR_FUNCTIONS = ["wraps", "total_ordering", "abstractmethod"]
 
-_EXCLUDED_FUNCTIONS = ["jinja2_convenience_function", "import_module", "get_network_driver"]
+_EXCLUDED_FUNCTIONS = [
+    "jinja2_convenience_function",
+    "import_module",
+    "get_network_driver",
+    "get_nist_urls_default",
+    "get_nist_urls_juniper_junos",
+]
 
 
 @pytest.fixture

@@ -1,7 +1,8 @@
 """Platform Mappers."""
 # The intent of this script is to take a given platform, determine the format, and reformat it for another purpose
 # An example of this is a platform being formatted for NIST Database Query
-from dataclasses import asdict, field, make_dataclass
+## from dataclasses import asdict, field, make_dataclass
+import dataclasses
 
 from netutils.nist import get_nist_url_funcs
 from netutils.os_version_parser import os_version_parsers
@@ -21,10 +22,10 @@ PLATFORM_FIELDS = {
             ("service", str),
             ("service_build", int),
             ("service_respin", str),
-            ("isservice", bool, field(default=False)),
-            ("ismaintenance", bool, field(default=False)),
-            ("isfrs", bool, field(default=False)),
-            ("isspecial", bool, field(default=False)),
+            ("isservice", bool, dataclasses.field(default=False)),
+            ("ismaintenance", bool, dataclasses.field(default=False)),
+            ("isfrs", bool, dataclasses.field(default=False)),
+            ("isspecial", bool, dataclasses.field(default=False)),
         ]
     },
 }
@@ -66,12 +67,12 @@ def create_platform_object(vendor: str, platform: str, version: str) -> object:
     get_item_fn = lambda self, key: getattr(self, key)
     keys_fn = lambda self: self.__annotations__.keys()
 
-    platform_obj = make_dataclass(
+    platform_obj = dataclasses.make_dataclass(
         cls_name=class_name,
         fields=class_fields,
         namespace={
             "get_nist_urls": get_nist_url_fn,
-            "asdict": asdict,
+            "asdict": dataclasses.asdict,
             "__getitem__": get_item_fn,
             "get": get_item_fn,
             "keys": keys_fn,
