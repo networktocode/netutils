@@ -72,9 +72,11 @@ def juniper_junos_version_parser(version: str) -> t.Dict:
     elif parsed_version["type"].lower() == "s":
         parsed_version["isservice"] = True
 
-    if parsed_version["type"].lower() == "r" and (parsed_version.get("build") or int(parsed_version.get("build")) <= 1):
+    if parsed_version["type"].lower() == "r" and (
+        parsed_version.get("build") is None or int(parsed_version.get("build")) <= 1
+    ):
         parsed_version["isfrs"] = True
-    else:
+    elif parsed_version["type"].lower() == "r":
         parsed_version["ismaintenance"] = True
 
     return parsed_version
