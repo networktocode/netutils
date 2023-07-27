@@ -61,6 +61,7 @@
 | compare_cisco_type5 | netutils.password.compare_cisco_type5 |
 | compare_cisco_type7 | netutils.password.compare_cisco_type7 |
 | compare_cisco_type9 | netutils.password.compare_cisco_type9 |
+| juniper_junos_version_parser | netutils.os_version_parser.juniper_junos_version_parser |
 | compare_type5 | netutils.password.compare_type5 |
 | compare_type7 | netutils.password.compare_type7 |
 | decrypt_cisco_type7 | netutils.password.decrypt_cisco_type7 |
@@ -74,15 +75,12 @@
 | encrypt_type7 | netutils.password.encrypt_type7 |
 | get_hash_salt | netutils.password.get_hash_salt |
 | tcp_ping | netutils.ping.tcp_ping |
-<<<<<<< HEAD
 | regex_findall | netutils.regex.regex_findall |
 | regex_match | netutils.regex.regex_match |
 | regex_search | netutils.regex.regex_search |
 | regex_split | netutils.regex.regex_split |
 | regex_sub | netutils.regex.regex_sub |
-=======
 | create_platform_object | netutils.platform_mapper.create_platform_object |
->>>>>>> 5803ea5 (Creating a Platform Mapping utility for breaking down platforms into their bits)
 | longest_prefix_match | netutils.route.longest_prefix_match |
 | uptime_seconds_to_string | netutils.time.uptime_seconds_to_string |
 | uptime_string_to_seconds | netutils.time.uptime_string_to_seconds |

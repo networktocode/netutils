@@ -22,13 +22,13 @@ def get_nist_urls_juniper_junos(os_data: dict, api_key: str) -> t.List[str]:
     base_url = f"""https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey={api_key}&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos"""
 
     url_args = {"base_url": base_url, **os_data}
-    url_args["os_type"] = url_args["os_type"].lower()
     url_args["delim_six"] = ":*" * 6
     url_args["delim_seven"] = ":*" * 7
 
     if os_data.get("isspecial"):
+        url_args["type"] = url_args["type"].lower()
         # juniper:junos:12.1x47
-        base_ext = "{base_url}:{main}.{minor}{os_type}{build}".format(**url_args)
+        base_ext = "{base_url}:{main}.{minor}{type}{build}".format(**url_args)
     else:
         base_ext = "{base_url}:{main}.{minor}".format(**url_args)
 
@@ -48,39 +48,39 @@ def get_nist_urls_juniper_junos(os_data: dict, api_key: str) -> t.List[str]:
             nist_urls.append("{base_ext}-{service}{service_build}{delim_seven}".format(**url_args))
         return nist_urls
 
-    if url_args["os_type"] is None:
+    if url_args["type"] is None:
         # juniper:junos:12.1:-:*:*:*:*:*:*
         nist_urls.append("{base_ext}:-{delim_six}".format(**url_args))
         return nist_urls
 
     if url_args["build"] is None:
         # juniper:junos:10.4s:*:*:*:*:*:*:*
-        nist_urls.append("{base_ext}{os_type}{delim_seven}".format(**url_args))
+        nist_urls.append("{base_ext}{type}{delim_seven}".format(**url_args))
         return nist_urls
 
     if url_args["build"] is not None and url_args["service"] is None:
         # juniper:junos:12.3r12:*:*:*:*:*:*:*
-        nist_urls.append("{base_ext}{os_type}{build}{delim_seven}".format(**url_args))
+        nist_urls.append("{base_ext}{type}{build}{delim_seven}".format(**url_args))
         # juniper:junos:12.2:r1:*:*:*:*:*:*
-        nist_urls.append("{base_ext}:{os_type}{build}{delim_six}".format(**url_args))
+        nist_urls.append("{base_ext}:{type}{build}{delim_six}".format(**url_args))
         return nist_urls
 
     if url_args["service"] is not None and url_args["service_respin"] is not None:
         # juniper:junos:11.4r13:s2.1:*:*:*:*:*:*
         nist_urls.append(
-            "{base_ext}{os_type}{build}:{service}{service_build}.{service_respin}{delim_six}".format(**url_args)
+            "{base_ext}{type}{build}:{service}{service_build}.{service_respin}{delim_six}".format(**url_args)
         )
         # juniper:junos:12.2:r8-s2.1:*:*:*:*:*:*
         nist_urls.append(
-            "{base_ext}{os_type}{build}-{service}{service_build}.{service_respin}{delim_seven}".format(**url_args)
+            "{base_ext}{type}{build}-{service}{service_build}.{service_respin}{delim_seven}".format(**url_args)
         )
         return nist_urls
 
     if url_args["service"] is not None:
         # juniper:junos:11.4r13:s2:*:*:*:*:*:*
-        nist_urls.append("{base_ext}{os_type}{build}:{service}{service_build}{delim_six}".format(**url_args))
+        nist_urls.append("{base_ext}{type}{build}:{service}{service_build}{delim_six}".format(**url_args))
         # juniper:junos:12.2:r8-s2:*:*:*:*:*:*
-        nist_urls.append("{base_ext}{os_type}{build}-{service}{service_build}{delim_seven}".format(**url_args))
+        nist_urls.append("{base_ext}{type}{build}-{service}{service_build}{delim_seven}".format(**url_args))
         return nist_urls
 
     raise []
