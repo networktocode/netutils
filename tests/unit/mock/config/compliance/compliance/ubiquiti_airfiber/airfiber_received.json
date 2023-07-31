@@ -1,0 +1,32 @@
+{
+    "radio_country_code": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "radio.1.countrycode=840",
+        "intended": "radio.1.countrycode=840"
+    },
+    "snmp": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "snmp.community=admin",
+        "intended": "snmp.community=admin"
+    },
+    "radio_mode": {
+        "compliant": false,
+        "missing": "radio.1.mode=master",
+        "extra": "radio.1.mode=slave",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "radio.1.mode=slave",
+        "intended": "radio.1.mode=master"
+    }
+}

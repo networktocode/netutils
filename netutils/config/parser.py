@@ -1575,3 +1575,30 @@ class FastironConfigParser(CiscoConfigParser):
                 except StopIteration:
                     return None
         raise ValueError("Unable to parse banner end.")
+
+
+class UbiquitiAirFiberConfigParser(BaseSpaceConfigParser):
+    """Ubiquiti AirFiber config parser."""
+
+    comment_chars: t.List[str] = ["###"]
+    banner_start: t.List[str] = []
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Ubiquiti AirFiber platform doesn't have a banner.")
+
+    @property
+    def config_lines_only(self) -> str:
+        """Remove spaces and unwanted lines from config lines.
+
+        Returns:
+            The non-space and non-comment lines from ``config``.
+        """
+        config_lines = []
+        config = self.config.strip()
+        for line in config.splitlines():
+            if line and line != "##" and not self.is_comment(line):
+                config_lines.append(line)
+
+        return "\n".join(config_lines)

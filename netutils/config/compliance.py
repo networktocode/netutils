@@ -25,6 +25,7 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "paloalto_panos": parser.PaloAltoNetworksConfigParser,
     "mikrotik_routeros": parser.RouterOSConfigParser,
     "ruckus_fastiron": parser.FastironConfigParser,
+    "ubiquiti_airfiber": parser.UbiquitiAirFiberConfigParser,
 }
 
 

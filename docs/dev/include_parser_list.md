@@ -18,3 +18,4 @@
 | nokia_sros | netutils.config.parser.NokiaConfigParser |
 | paloalto_panos | netutils.config.parser.PaloAltoNetworksConfigParser |
 | ruckus_fastiron | netutils.config.parser.FastironConfigParser |
+| ubiquiti_airfiber | netutils.config.parser.UbiquitiAirFiberConfigParser |
