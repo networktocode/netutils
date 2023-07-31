@@ -1577,8 +1577,8 @@ class FastironConfigParser(CiscoConfigParser):
         raise ValueError("Unable to parse banner end.")
 
 
-class UbiquitiAirFiberConfigParser(BaseSpaceConfigParser):
-    """Ubiquiti AirFiber config parser."""
+class UbiquitiAirOSConfigParser(BaseSpaceConfigParser):
+    """Ubiquiti AirFiber/AirMax config parser."""
 
     comment_chars: t.List[str] = ["###"]
     banner_start: t.List[str] = []
