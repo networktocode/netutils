@@ -1578,7 +1578,7 @@ class FastironConfigParser(CiscoConfigParser):
 
 
 class UbiquitiAirOSConfigParser(BaseSpaceConfigParser):
-    """Ubiquiti AirFiber/AirMax config parser."""
+    """Ubiquiti airOS config parser."""
 
     comment_chars: t.List[str] = ["###"]
     banner_start: t.List[str] = []
@@ -1586,7 +1586,7 @@ class UbiquitiAirOSConfigParser(BaseSpaceConfigParser):
     @property
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
-        raise NotImplementedError("Ubiquiti AirFiber platform doesn't have a banner.")
+        raise NotImplementedError("Ubiquiti airOS platform doesn't have a banner.")
 
     @property
     def config_lines_only(self) -> str:
