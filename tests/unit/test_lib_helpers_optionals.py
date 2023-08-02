@@ -10,22 +10,23 @@ def test_get_napalm_getters_napalm_installed_default():
     with mock.patch("netutils.lib_helpers.get_network_driver"):
         napalm_getters = get_napalm_getters()
         assert napalm_getters == {
-            'aoscx': {},
-            'asa': {},
-            'cisco_wlc_ssh': {},
-            'eos': {},
-            'fortios': {},
-            'huawei': {},
-            'ios': {},
-            'iosxr': {},
-            'junos': {},
-            'nxos': {},
-            'nxos_ssh': {},
-            'panos': {},
-            'ros': {},
-            'sros': {},
-            'vyos': {}
+            "aoscx": {},
+            "asa": {},
+            "cisco_wlc_ssh": {},
+            "eos": {},
+            "fortios": {},
+            "huawei": {},
+            "ios": {},
+            "iosxr": {},
+            "junos": {},
+            "nxos": {},
+            "nxos_ssh": {},
+            "panos": {},
+            "ros": {},
+            "sros": {},
+            "vyos": {},
         }
+
 
 def test_get_napalm_getters_napalm_installed_nxos_keys():
     pytest.importorskip("napalm")
