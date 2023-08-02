@@ -204,8 +204,8 @@ jobs:
         run: "docker image ls"
       - name: "Run Tests"
         run: "poetry run invoke pytest"
-      - name: "Install Napalm"
-        run: "pip install napalm"
+      - name: "Install Optional Dependencies"
+        run: "poetry run poetry install --extras optionals"
       - name: "Run Optional Tests"
         run: "poetry run pytest tests/unit/test_lib_helpers_optionals.py"
     needs:
