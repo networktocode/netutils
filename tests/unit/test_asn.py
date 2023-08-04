@@ -19,6 +19,8 @@ int_to_asn = [
     {"sent": {"asn_int": 65546}, "received": "1.10"},
     {"sent": {"asn_int": 65526}, "received": "65526"},
     {"sent": {"asn_int": "65526"}, "received": "65526"},
+    {"sent": {"asn_int": "65535"}, "received": "65535"},
+    {"sent": {"asn_int": "65536"}, "received": "1.0"},
     {"sent": {"asn_int": "425985111"}, "received": "6500.1111"},
     {"sent": {"asn_int": 4294967295}, "received": "65535.65535"},
 ]
