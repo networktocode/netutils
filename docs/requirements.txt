@@ -1,6 +1,7 @@
 mkdocs==1.4.3
 # Material for MkDocs theme
 mkdocs-material==8.5.8
+mkdocs-python-classy==0.1.2
 # Render custom markdown for version added/changed/remove notes
 mkdocs-version-annotations==1.0.0
 # Automatic documentation from sources, for MkDocs

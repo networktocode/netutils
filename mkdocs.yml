@@ -82,6 +82,12 @@ markdown_extensions:
 plugins:
   - "search"
   - "mkdocs-version-annotations"
+  - "mkdocs-python-classy":
+      classy_strategy: "subclass"
+      classy_modules:
+        - "netutils.config.parser"
+      classy_libraries:
+        - "netutils"
   - "mkdocstrings":
       default_handler: "python"
       handlers:
@@ -144,3 +150,5 @@ nav:
           - Time: "dev/code_reference/time.md"
           - Utils: "dev/code_reference/utils.md"
           - VLAN: "dev/code_reference/vlan.md"
+      - Classy Docs:
+          - Parser: "dev/classy/parser.md"
