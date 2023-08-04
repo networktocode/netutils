@@ -5,6 +5,7 @@ from importlib import import_module
 
 _JINJA2_FUNCTION_MAPPINGS = {
     "asn_to_int": "asn.asn_to_int",
+    "int_to_asn": "asn.int_to_asn",
     "name_to_bits": "bandwidth.name_to_bits",
     "name_to_bytes": "bandwidth.name_to_bytes",
     "bits_to_name": "bandwidth.bits_to_name",
