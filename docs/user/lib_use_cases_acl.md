@@ -1,6 +1,6 @@
 # ACL
 
-The ACL classes are intended to help guide the ACL conversation. It is not intended to solve every ACL challenge you may have. In essence, it provides sane defaults and welcomes you to extend the logic via supported extension mechanisms. Three patterns that heavily make up the capabilities are:
+The ACL classes are intended to help guide the ACL conversation. It is not intended to solve every ACL challenge you may have. In essence, it provides sane defaults and welcomes you to extend the logic via supported extension mechanisms. There are three patterns that heavily make up the capabilities:
 
 - Expanding data to the ["Cartesian product"](#cartesian-product) (or permutations) of each rule, so that each product can be easily evaluated.
 - Providing a `f"{type}_*` method pattern, to dynamically find any `validate_*` or `enforce_*` method you provide.
