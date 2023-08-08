@@ -1,8 +1,9 @@
+"""Functions used for parsing os platform version."""
 import re
 import typing as t
 
 
-def juniper_junos_version_parser(version: str) -> t.Dict:
+def juniper_junos_version_parser(version: str) -> t.Dict[str, t.Any]:
     """Parses JunOS Version into usable bits matching JunOS Standars.
 
     Args:
@@ -16,7 +17,7 @@ def juniper_junos_version_parser(version: str) -> t.Dict:
     """
     # Use regex to group the main, minor, type and build into useable pieces
     # re_main_minor_type_build = re.search(r"^(\d+)\.(\d+)([xXrRsS])?(\d+)?", split_version[0])
-    re_main_minor_type_build = re.compile(
+    re_main_minor_type_build: re.Pattern[str] = re.compile(
         r"""
         ^
         (?P<main>\d+)           # main train
@@ -27,18 +28,18 @@ def juniper_junos_version_parser(version: str) -> t.Dict:
         """,
         re.VERBOSE,
     )
-    re_service_build_respin = re.compile(
+    re_service_build_respin: re.Pattern[str] = re.compile(
         r"""
         (?P<service>[sSdD])?        # service (optional)
         (?P<service_build>\d+)?     # service build (optional)
-        \.?                     
+        \.?
         (?P<service_respin>\d+)?    # service respin (optional)
         """,
         re.VERBOSE,
     )
     # Set empty params for service pieces and complete them if a second indice exists from the version split
     # Define isservice, isfrs, isspecial, ismaintenance
-    parsed_version = {
+    parsed_version: t.Dict[str, t.Any] = {
         "isservice": False,
         "ismaintenance": False,
         "isfrs": False,
@@ -52,14 +53,14 @@ def juniper_junos_version_parser(version: str) -> t.Dict:
     version_core_part, *version_service_part = re.split("-|:", version)
 
     # Parse out junos into sections that can be used for logic
-    parsed_version.update(re_main_minor_type_build.search(version_core_part).groupdict())
+    parsed_version.update(re_main_minor_type_build.search(version_core_part).groupdict())  # type:ignore
 
     if version_service_part:
-        parsed_version.update(re_service_build_respin.search(version_service_part[0]).groupdict())
+        parsed_version.update(re_service_build_respin.search(version_service_part[0]).groupdict())  # type:ignore
         if parsed_version.get("service", "").lower() == "s":
             parsed_version["isservice"] = True
         # Juniper looks at the D in special releases like it's the R in normal releases; Use it as the frs identifier
-        elif parsed_version.get("service").lower() == "d" and (
+        elif parsed_version.get("service").lower() == "d" and (  # type:ignore
             parsed_version.get("service_build") is None or int(parsed_version.get("service_build", 1)) <= 1
         ):
             parsed_version["isfrs"] = True
@@ -73,7 +74,7 @@ def juniper_junos_version_parser(version: str) -> t.Dict:
         parsed_version["isservice"] = True
 
     if parsed_version["type"].lower() == "r" and (
-        parsed_version.get("build") is None or int(parsed_version.get("build")) <= 1
+        parsed_version.get("build") is None or int(parsed_version.get("build")) <= 1  # type:ignore
     ):
         parsed_version["isfrs"] = True
     elif parsed_version["type"].lower() == "r":

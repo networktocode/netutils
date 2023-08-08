@@ -2,11 +2,12 @@
 # The intent of this script is to take a given platform, determine the format, and reformat it for another purpose
 # An example of this is a platform being formatted for NIST Database Query
 import dataclasses
+import typing as t
 
 from netutils.nist import get_nist_url_funcs
 from netutils.os_version_parser import os_version_parsers
 
-PLATFORM_FIELDS = {
+PLATFORM_FIELDS: t.Dict[str, t.Any] = {
     "default": [
         ("vendor", str),
         ("os_type", str),
@@ -32,20 +33,27 @@ PLATFORM_FIELDS = {
 
 @dataclasses.dataclass
 class OsPlatform:
+    """Base class for dynamically generated vendor specific platform data classes."""
+
     @property
-    def asdict(self):
+    def asdict(self) -> t.Dict[str, t.Any]:
+        """Returns dictionary representation of the class attributes."""
         return dataclasses.asdict(self)
 
-    def get_nist_urls(self, api_key):
-        return self.get_nist_urls_fn(api_key)
+    def get_nist_urls(self, api_key: str) -> t.List[str]:
+        """Returns list of NIST URLs for the platform."""
+        return self.get_nist_urls_fn(api_key)  # type: ignore
 
-    def get(self, key):
-        return self.__getitem__(key)
+    def get(self, key: str) -> t.Any:
+        """Return value of the attribute matching provided name or None if no attribute is found."""
+        return getattr(self, key, None)
 
-    def keys(self):
+    def keys(self) -> t.KeysView[t.Any]:
+        """Return attributes and their values as dict keys."""
         return self.__annotations__.keys()
 
-    def __getitem__(self, key):
+    def __getitem__(self, key: str) -> t.Any:
+        """Allow retrieving attributes using subscript notation."""
         return getattr(self, key)
 
 
@@ -81,7 +89,7 @@ def os_platform_object_builder(vendor: str, platform: str, version: str) -> obje
     base_class = OsPlatform
     class_name = f"{vendor.capitalize()}{platform.capitalize()}"
     get_nist_urls_fn = get_nist_url_funcs.get(vendor, {}).get(platform, None) or get_nist_url_funcs["default"]
-    base_class.get_nist_urls_fn = get_nist_urls_fn
+    base_class.get_nist_urls_fn = get_nist_urls_fn  # type: ignore
 
     platform_cls = dataclasses.make_dataclass(
         cls_name=class_name,
