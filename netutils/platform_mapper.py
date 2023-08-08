@@ -1,7 +1,6 @@
 """Platform Mappers."""
 # The intent of this script is to take a given platform, determine the format, and reformat it for another purpose
 # An example of this is a platform being formatted for NIST Database Query
-## from dataclasses import asdict, field, make_dataclass
 import dataclasses
 
 from netutils.nist import get_nist_url_funcs
@@ -31,7 +30,26 @@ PLATFORM_FIELDS = {
 }
 
 
-def create_platform_object(vendor: str, platform: str, version: str) -> object:
+@dataclasses.dataclass
+class OsPlatform:
+    @property
+    def asdict(self):
+        return dataclasses.asdict(self)
+
+    def get_nist_urls(self, api_key):
+        return self.get_nist_urls_fn(api_key)
+
+    def get(self, key):
+        return self.__getitem__(key)
+
+    def keys(self):
+        return self.__annotations__.keys()
+
+    def __getitem__(self, key):
+        return getattr(self, key)
+
+
+def os_platform_object_builder(vendor: str, platform: str, version: str) -> object:
     """Creates a platform object relative to its need and definition.
 
     Args:
@@ -41,15 +59,13 @@ def create_platform_object(vendor: str, platform: str, version: str) -> object:
         A platform object
 
     Examples:
-        >>> jp = create_platform_object("juniper", "junos", "12.1R3-S4.1")
+        >>> jp = os_platform_object_builder("juniper", "junos", "12.1R3-S4.1")
         >>> jp.get_nist_urls("AAA-BBB-CCC-DDD")
         ['https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.1R3:S4.1:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.1R3-S4.1:*:*:*:*:*:*:*']
     """
     platform = platform.lower()
-    platform_obj = None
 
-    class_fields = []
-    class_fields.extend(PLATFORM_FIELDS["default"])
+    class_fields = [*PLATFORM_FIELDS["default"]]
     vendor_platform_fields = PLATFORM_FIELDS.get(vendor, {}).get(platform, [])
     class_fields.extend(vendor_platform_fields)
 
@@ -62,42 +78,15 @@ def create_platform_object(vendor: str, platform: str, version: str) -> object:
     if version_parser:
         field_values.update(version_parser(version))
 
+    base_class = OsPlatform
     class_name = f"{vendor.capitalize()}{platform.capitalize()}"
-    get_nist_url_fn = get_nist_url_funcs.get(vendor, {}).get(platform, None) or get_nist_url_funcs["default"]
-    get_item_fn = lambda self, key: getattr(self, key)
-    keys_fn = lambda self: self.__annotations__.keys()
+    get_nist_urls_fn = get_nist_url_funcs.get(vendor, {}).get(platform, None) or get_nist_url_funcs["default"]
+    base_class.get_nist_urls_fn = get_nist_urls_fn
 
-    platform_obj = dataclasses.make_dataclass(
+    platform_cls = dataclasses.make_dataclass(
         cls_name=class_name,
         fields=class_fields,
-        namespace={
-            "get_nist_urls": get_nist_url_fn,
-            "asdict": dataclasses.asdict,
-            "__getitem__": get_item_fn,
-            "get": get_item_fn,
-            "keys": keys_fn,
-        },
+        bases=(OsPlatform,),
     )
-    return platform_obj(**field_values)
 
-
-version = "12.3R4"
-jp = create_platform_object("juniper", "junos", version)
-print(version, jp.asdict())
-print(jp.get_nist_urls("aaa"))
-version = "12.1x47:d40"
-jp = create_platform_object("juniper", "junos", version)
-print(version, jp.asdict())
-print(jp.get_nist_urls("aa"))
-version = "12.1R3-S4.1"
-jp = create_platform_object("juniper", "junos", version)
-print(version, jp.asdict())
-print(jp.get_nist_urls("aa"))
-version = "12.1"
-jp = create_platform_object("juniper", "junos", version)
-print(version, jp.asdict())
-print(jp.get_nist_urls("aa"))
-version = "16.7md"
-jp = create_platform_object("cisco", "ios", version)
-print(version, jp.asdict())
-print(jp.get_nist_urls("aa"))
+    return platform_cls(**field_values)
