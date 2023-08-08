@@ -2,7 +2,7 @@ import re
 import typing as t
 
 
-def get_nist_urls_juniper_junos(os_data: dict, api_key: str) -> t.List[str]:
+def get_nist_urls_juniper_junos(os_platform_data: dict, api_key: str) -> t.List[str]:
     """Create a list of possible NIST Url strings for JuniperPlatform.
 
     Args:
@@ -10,22 +10,15 @@ def get_nist_urls_juniper_junos(os_data: dict, api_key: str) -> t.List[str]:
 
     Returns:
         List of NIST CPE URLs that may contain platform data.
-
-    Examples:
-        >>> JuniperPlatform('junos','12.1R3-S4.3').get_nist_urls('YOURKEY')
-        ['https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=YOURKEY&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.1R3:S4.3:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=YOURKEY&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.1R3-S4.3:*:*:*:*:*:*:*']
-
-        >>> JuniperPlatform('junos','12.1').get_nist_urls('YOURKEY')
-        ['https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=YOURKEY&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.1:-:*:*:*:*:*:*']
     """
     nist_urls = []
     base_url = f"""https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey={api_key}&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos"""
 
-    url_args = {"base_url": base_url, **os_data}
+    url_args = {"base_url": base_url, **os_platform_data}
     url_args["delim_six"] = ":*" * 6
     url_args["delim_seven"] = ":*" * 7
 
-    if os_data.get("isspecial"):
+    if os_platform_data.get("isspecial"):
         url_args["type"] = url_args["type"].lower()
         # juniper:junos:12.1x47
         base_ext = "{base_url}:{main}.{minor}{type}{build}".format(**url_args)
@@ -86,7 +79,7 @@ def get_nist_urls_juniper_junos(os_data: dict, api_key: str) -> t.List[str]:
     raise []
 
 
-def get_nist_urls_default(os_data: dict, api_key: str) -> t.List[str]:
+def get_nist_urls_default(os_platform_data: dict, api_key: str) -> t.List[str]:
     r"""Create a list of possible NIST Url strings.
 
     Child models with NIST URL customizations need their own "get_nist_urls" method.
@@ -96,17 +89,13 @@ def get_nist_urls_default(os_data: dict, api_key: str) -> t.List[str]:
 
     Returns:
         List of NIST CPE URLs that may contain platform data.
-
-    Examples:
-        >>> OSPlatform('cisco','nxos','15.1(7)').get_nist_urls('YOURKEY')
-        ['https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=YOURKEY&addOns=cves&cpeMatchString=cpe:2.3:o:cisco:nxos:15.1\\(7\\):*:*:*:*:*:*:*']
     """
     nist_urls = []
     escape_list = [r"\(", r"\)"]
     base_url = (
         f"""https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey={api_key}&addOns=cves&cpeMatchString=cpe:2.3:o:"""
     )
-    url_args = {"base_url": base_url, **os_data}
+    url_args = {"base_url": base_url, **os_platform_data}
     url_args["delim_seven"] = ":*" * 7
     url_args["version_string"] = url_args["version_string"].replace("-", ":")
 
