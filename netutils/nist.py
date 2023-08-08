@@ -1,8 +1,9 @@
+"""Functions building NIST URLs from the os platform values."""
 import re
 import typing as t
 
 
-def get_nist_urls_juniper_junos(os_platform_data: dict, api_key: str) -> t.List[str]:
+def get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any], api_key: str) -> t.List[str]:
     """Create a list of possible NIST Url strings for JuniperPlatform.
 
     Args:
@@ -79,7 +80,7 @@ def get_nist_urls_juniper_junos(os_platform_data: dict, api_key: str) -> t.List[
     raise []
 
 
-def get_nist_urls_default(os_platform_data: dict, api_key: str) -> t.List[str]:
+def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any], api_key: str) -> t.List[str]:
     r"""Create a list of possible NIST Url strings.
 
     Child models with NIST URL customizations need their own "get_nist_urls" method.
@@ -107,4 +108,7 @@ def get_nist_urls_default(os_platform_data: dict, api_key: str) -> t.List[str]:
     return nist_urls
 
 
-get_nist_url_funcs = {"default": get_nist_urls_default, "juniper": {"junos": get_nist_urls_juniper_junos}}
+get_nist_url_funcs: t.Dict[str, t.Any] = {
+    "default": get_nist_urls_default,
+    "juniper": {"junos": get_nist_urls_juniper_junos},
+}
