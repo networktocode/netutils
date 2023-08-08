@@ -89,6 +89,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "paloalto_panos_brace_to_set": "config.conversion.paloalto_panos_brace_to_set",
     "get_upgrade_path": "os_version.get_upgrade_path",
     "create_platform_object": "platform_mapper.create_platform_object",
+    "os_platform_object_builder": "platform_mapper.os_platform_object_builder",
     "juniper_junos_version_parser": "os_version_parser.juniper_junos_version_parser",
 }
 
