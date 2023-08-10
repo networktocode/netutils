@@ -8,13 +8,13 @@
 | cisco_ios | netutils.config.parser.IOSConfigParser |
 | cisco_iosxr | netutils.config.parser.IOSXRConfigParser |
 | cisco_nxos | netutils.config.parser.NXOSConfigParser |
-| netscaler | netutils.config.parser.NetscalerConfigParser |
 | extreme_netiron | netutils.config.parser.NetironConfigParser |
 | fortinet_fortios | netutils.config.parser.FortinetConfigParser |
 | juniper_junos | netutils.config.parser.JunosConfigParser |
 | linux | netutils.config.parser.LINUXConfigParser |
 | mikrotik_routeros | netutils.config.parser.RouterOSConfigParser |
 | mrv_optiswitch | netutils.config.parser.OptiswitchConfigParser |
+| netscaler | netutils.config.parser.NetscalerConfigParser |
 | nokia_sros | netutils.config.parser.NokiaConfigParser |
 | paloalto_panos | netutils.config.parser.PaloAltoNetworksConfigParser |
 | ruckus_fastiron | netutils.config.parser.FastironConfigParser |
