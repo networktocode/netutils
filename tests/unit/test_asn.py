@@ -47,4 +47,4 @@ def test_int_to_asdot(data):
 @pytest.mark.parametrize("data", int_to_asdot_exceptions)
 def test_int_to_asdot_exceptions(data):
     with pytest.raises(ValueError):
-        assert asn.int_to_asn(**data)
+        assert asn.int_to_asdot(**data)
