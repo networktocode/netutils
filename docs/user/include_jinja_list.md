@@ -86,6 +86,7 @@
 | regex_split | netutils.regex.regex_split |
 | regex_sub | netutils.regex.regex_sub |
 | create_platform_object | netutils.platform_mapper.create_platform_object |
+| os_platform_object_builder | netutils.platform_mapper.os_platform_object_builder |
 | longest_prefix_match | netutils.route.longest_prefix_match |
 | uptime_seconds_to_string | netutils.time.uptime_seconds_to_string |
 | uptime_string_to_seconds | netutils.time.uptime_string_to_seconds |
