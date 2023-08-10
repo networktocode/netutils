@@ -18,7 +18,7 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "cisco_asa": parser.ASAConfigParser,
     "fortinet_fortios": parser.FortinetConfigParser,
     "nokia_sros": parser.NokiaConfigParser,
-    "citrix_netscaler": parser.NetscalerConfigParser,
+    "netscaler": parser.NetscalerConfigParser,
     "aruba_aoscx": parser.ArubaConfigParser,
     "mrv_optiswitch": parser.OptiswitchConfigParser,
     "extreme_netiron": parser.NetironConfigParser,
