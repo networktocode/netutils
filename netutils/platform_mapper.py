@@ -1,6 +1,7 @@
 """Platform Mappers."""
 # The intent of this script is to take a given platform, determine the format, and reformat it for another purpose
 # An example of this is a platform being formatted for NIST Database Query
+import abc
 import dataclasses
 import typing as t
 
@@ -31,18 +32,16 @@ PLATFORM_FIELDS: t.Dict[str, t.Any] = {
 }
 
 
-@dataclasses.dataclass
-class OsPlatform:
+class OsPlatform(metaclass=abc.ABCMeta):
     """Base class for dynamically generated vendor specific platform data classes."""
 
-    @property
     def asdict(self) -> t.Dict[str, t.Any]:
         """Returns dictionary representation of the class attributes."""
         return dataclasses.asdict(self)
 
+    @abc.abstractmethod
     def get_nist_urls(self, api_key: str) -> t.List[str]:
         """Returns list of NIST URLs for the platform."""
-        return self.get_nist_urls_fn(api_key)  # type: ignore
 
     def get(self, key: str) -> t.Any:
         """Return value of the attribute matching provided name or None if no attribute is found."""
@@ -86,15 +85,11 @@ def os_platform_object_builder(vendor: str, platform: str, version: str) -> obje
     if version_parser:
         field_values.update(version_parser(version))
 
-    base_class = OsPlatform
     class_name = f"{vendor.capitalize()}{platform.capitalize()}"
-    get_nist_urls_fn = get_nist_url_funcs.get(vendor, {}).get(platform, None) or get_nist_url_funcs["default"]
-    base_class.get_nist_urls_fn = get_nist_urls_fn  # type: ignore
+    get_nist_urls_func = get_nist_url_funcs.get(vendor, {}).get(platform, None) or get_nist_url_funcs["default"]
 
     platform_cls = dataclasses.make_dataclass(
-        cls_name=class_name,
-        fields=class_fields,
-        bases=(OsPlatform,),
+        cls_name=class_name, fields=class_fields, bases=(OsPlatform,), namespace={"get_nist_urls": get_nist_urls_func}
     )
 
     return platform_cls(**field_values)
