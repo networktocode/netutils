@@ -5409,6 +5409,7 @@ PROTOCOLS: Dict[str, Any] = {
     "pcsync-http": {"port_number": 8444, "protocols": ["tcp", "udp"]},
     "copy": {"port_number": 8445, "protocols": ["tcp"]},
     "copy-disc": {"port_number": 8445, "protocols": ["udp"]},
+    "matrix-fed": {"port_number": 8448, "protocols": ["tcp"]},
     "npmp": {"port_number": 8450, "protocols": ["tcp", "udp"]},
     "nexentamv": {"port_number": 8457, "protocols": ["tcp"]},
     "cisco-avp": {"port_number": 8470, "protocols": ["tcp"]},
