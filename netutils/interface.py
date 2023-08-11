@@ -147,8 +147,8 @@ def canonical_interface_name_list(
     """Function to return a list of interface's canonical name (fully expanded name).
 
     Use of explicit matches used to indicate a clear understanding on any potential
-    match. Regex and other looser matching methods were not implmented to avoid false
-    positive matches. As an example, it would make sense to do "[P|p][O|o]" which would
+    match. Regex and other looser matching methods were not implemented to avoid false
+    positive matches. As an example, it would make sense to do `[P|p][O|o]` which would
     incorrectly match PO = POS and Po = Port-channel, leading to a false positive, not
     easily troubleshot, found, or known.
 
@@ -420,7 +420,7 @@ def _iter_tree(node: t.Dict[CharacterClass, t.Any], parents: t.List[CharacterCla
     """Walk a tree of interface name parts.
 
     Weights are assigned based on domain logic to produce a
-    'cannonical' ordering of names.
+    'canonical' ordering of names.
     """
     for _, items in itertools.groupby(sorted(node.keys()), lambda t: t.weight):
         for item in sorted(items):
@@ -446,8 +446,8 @@ def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
     Examples:
         >>> sort_interface_list(["Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Gi2/0/2", "Po40", "Po160", "Lo10"])
         ['Gi1/0/1', 'Gi1/0/2', 'Gi1/0/2.50', 'Gi1/0/3', 'Gi1/0/3.100', 'Gi2/0/2', 'Lo10', 'Po40', 'Po160']
-        >>> sort_interface_list(['GigabitEthernet1/0/1', 'GigabitEthernet1/0/3', 'GigabitEthernet1/0/2', "GigabitEthernett3/0/5", 'GigabitEthernet3/0/7', 'GigabitEthernet2/0/8.5',  'Port-channel40', 'Vlan20', 'Loopback10'])
-        ['GigabitEthernet1/0/1', 'GigabitEthernet1/0/2', 'GigabitEthernet1/0/3', 'GigabitEthernet2/0/8.5', 'GigabitEthernet3/0/7', 'GigabitEthernett3/0/5', 'Loopback10', 'Port-channel40', 'Vlan20']
+        >>> sort_interface_list(['GigabitEthernet1/0/1', 'GigabitEthernet1/0/3', 'GigabitEthernet1/0/2', "GigabitEthernet3/0/5", 'GigabitEthernet3/0/7', 'GigabitEthernet2/0/8.5',  'Port-channel40', 'Vlan20', 'Loopback10'])
+        ['GigabitEthernet1/0/1', 'GigabitEthernet1/0/2', 'GigabitEthernet1/0/3', 'GigabitEthernet2/0/8.5', 'GigabitEthernet3/0/5', 'GigabitEthernet3/0/7', 'Loopback10', 'Port-channel40', 'Vlan20']
     """
     root: t.Dict[CharacterClass, t.Any] = {}
     for ifname in interfaces:
