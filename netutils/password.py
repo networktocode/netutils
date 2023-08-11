@@ -250,12 +250,12 @@ def encrypt_cisco_type5(unencrypted_password: str, salt: t.Optional[str] = None,
     if not salt:
         salt = "".join(secrets.choice(ALPHABET) for _ in range(salt_len))
     elif not set(salt) <= set(ALPHABET):
-        raise ValueError(f"type5_pw salt used inproper characters, must be one of {ALPHABET}")
+        raise ValueError(f"type5_pw salt used improper characters, must be one of {ALPHABET}")
     return crypt.crypt(unencrypted_password, f"$1${salt}$")
 
 
 def encrypt_cisco_type7(unencrypted_password: str, salt: t.Optional[int] = None) -> str:
-    """Given an unencrypted password of Cisco Type 7 password, encypt it.
+    """Given an unencrypted password of Cisco Type 7 password, encrypt it.
 
     Args:
         unencrypted_password: A password that has not been encrypted, and will be compared against.
@@ -397,7 +397,7 @@ def decrypt_juniper_type9(encrypted_password: str) -> str:
         nibble = stripped_password_characters[0 : len(decode)]  # noqa: E203
         stripped_password_characters = stripped_password_characters[len(decode) :]  # noqa: E203
 
-        # Decode value for nibble and convert to character, append to decryped password
+        # Decode value for nibble and convert to character, append to decrypted password
         value = 0
         for index, char in enumerate(nibble):
             gap = (
