@@ -1,3 +1,5 @@
+### PART ###
+##
 ##AF.v4.1.0
 #board.sysid=0xaf01
 #board.cpurevision=0x4e840102
@@ -5,7 +7,7 @@
 #board.shortname=AF24
 #board.subtype=
 #board.netmodes=16;
-#board.hwaddr=802AA8CF8DB6
+#board.hwaddr=802AA8CF8DB9
 #board.reboot=130
 #board.upgrade=330
 #board.phycount=1
@@ -36,7 +38,8 @@
 #radio.1.ptp_only=1
 #radio.1.ptp_sta=1
 #radio.1.chanbw=100
-#deac9d0212791db5ede667c016876ba4
+#deac9d0213801db5ede667c016886ba4
+### PART ###
 afnetconf.1.atpctarget=0
 afnetconf.1.autoneg=enabled
 afnetconf.1.carrierdrop=off
@@ -219,7 +222,7 @@ udapi_bridge.callhome.status=disabled
 unms.uri=-
 update.check.status=enabled
 users.1.name=ubnt
-users.1.password=$2$GXWw8TsR$eBl/.jP1ibig7GUV4nn65.
+users.1.password=$1$YSWw8TsR$eBl/.jP1ibig8DUF4nn65.
 users.1.status=enabled
 users.2.status=disabled
 users.status=enabled
