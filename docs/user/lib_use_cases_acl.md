@@ -63,14 +63,14 @@ The methods `process` and `match` both follow this pattern. As an example, the `
 
 The methods `validate` and `enforce` both follow this pattern. As an example, the `validate` method will dynamically find any method that follows `f"process_*` pattern. This allows a Python class that inherits from `ACLRule` to simply add a `validate_ip_in_network` method and that method would be called.
 
-In both methods, ordering can be controlled with `order_validate` and `order_enforce` respectively. The default ordering will be what the Python `dir` function returns, which is in alphabetical.
+In both methods, ordering can be controlled with order_validate and order_enforce respectively. The default ordering will be alphabetical, as returned by the Python dir function.
 
 ## ACLRule
 
 The `ACLRule` class at a high level:
 
 - The class `ACLRule` is used for working with Access Control List (ACL) rules.
-- Is built with extensibility in mind to allow you to customize how your business operates.
+- It is built with extensibility in mind to allow you to customize how your business operates.
 - It contains a list of attributes such as "name," "src_ip," "src_zone," "dst_ip," "dst_port," "dst_zone," and "action" that are commonly used to work with ACLs.
 - Provides the ability for you to expand data such as converting an address-group name into detailed addresses with your custom code.
 - Provides the Cartesian product (or permutations) of the rules to make evaluation simple.
