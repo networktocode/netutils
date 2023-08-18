@@ -438,10 +438,10 @@ def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
     nodes are removed.
 
     Args:
-        interfaces (list[str]): A list of interfaces to be sorted.  The input list is not mutated by this function.
+        interfaces: A list of interfaces to be sorted.  The input list is not mutated by this function.
 
     Returns:
-        list[str]: A **new** sorted, unique list elements from the input.
+        A **new** sorted, unique list elements from the input.
 
     Examples:
         >>> sort_interface_list(["Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Gi2/0/2", "Po40", "Po160", "Lo10"])

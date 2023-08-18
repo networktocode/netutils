@@ -35,10 +35,10 @@ def is_fqdn_resolvable(hostname: str) -> bool:
        from your machine to the DNS server, an upstream DNS issue, etc.
 
     Args:
-        hostname (str): A FQDN that may or may not be resolvable.
+        hostname: A FQDN that may or may not be resolvable.
 
     Returns:
-        bool: The result as to whether or not the domain was valid.
+        The result as to whether or not the domain was valid.
 
     Examples:
         >>> from netutils.dns import is_fqdn_resolvable

@@ -26,7 +26,7 @@ Functions are grouped with like functions, such as IP or MAC address based funct
 - Protocol Mapper - Provides a mapping for protocol names to numbers and vice versa.
 - Regex - Provide convenience methods for regex to be used in Jinja2.
 - Route - Provides the ability to provide a list of routes and an IP Address and return the longest prefix matched route.
-- Time -Provides the ability to convert between integer time and string times.
+- Time - Provides the ability to convert between integer time and string times.
 - VLANs - Provide the ability to convert configuration into lists or lists into configuration.
 
 ## Examples
