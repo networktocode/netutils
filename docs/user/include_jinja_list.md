@@ -34,6 +34,7 @@
 | get_broadcast_address | netutils.ip.get_broadcast_address |
 | get_first_usable | netutils.ip.get_first_usable |
 | get_peer_ip | netutils.ip.get_peer_ip |
+| get_range_ips | netutils.ip.get_range_ips |
 | get_usable_range | netutils.ip.get_usable_range |
 | ip_addition | netutils.ip.ip_addition |
 | ip_subtract | netutils.ip.ip_subtract |
@@ -44,7 +45,10 @@
 | ipaddress_network | netutils.ip.ipaddress_network |
 | is_classful | netutils.ip.is_classful |
 | is_ip | netutils.ip.is_ip |
+| is_ip_range | netutils.ip.is_ip_range |
+| is_ip_within | netutils.ip.is_ip_within |
 | is_netmask | netutils.ip.is_netmask |
+| is_network | netutils.ip.is_network |
 | netmask_to_cidr | netutils.ip.netmask_to_cidr |
 | get_napalm_getters | netutils.lib_helpers.get_napalm_getters |
 | get_oui | netutils.mac.get_oui |
