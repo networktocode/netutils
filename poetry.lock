@@ -605,13 +605,13 @@ gitdb = ">=4.0.1,<5"
 
 [[package]]
 name = "griffe"
-version = "0.32.3"
+version = "0.33.0"
 description = "Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API."
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "griffe-0.32.3-py3-none-any.whl", hash = "sha256:d9471934225818bf8f309822f70451cc6abb4b24e59e0bb27402a45f9412510f"},
-    {file = "griffe-0.32.3.tar.gz", hash = "sha256:14983896ad581f59d5ad7b6c9261ff12bdaa905acccc1129341d13e545da8521"},
+    {file = "griffe-0.33.0-py3-none-any.whl", hash = "sha256:16af15d0140c0a5f0b2628d33235fef91a6d8a832dd7cff5759dfe6b7d7a7a49"},
+    {file = "griffe-0.33.0.tar.gz", hash = "sha256:783bcb7e7f0d346fcb0cb8072667ca8f6ce7ff776bb278fbccf8a3a753a793e4"},
 ]
 
 [package.dependencies]
@@ -1209,17 +1209,17 @@ python-legacy = ["mkdocstrings-python-legacy (>=0.2.1)"]
 
 [[package]]
 name = "mkdocstrings-python"
-version = "1.1.2"
+version = "1.4.0"
 description = "A Python handler for mkdocstrings."
 optional = false
-python-versions = ">=3.7"
+python-versions = ">=3.8"
 files = [
-    {file = "mkdocstrings_python-1.1.2-py3-none-any.whl", hash = "sha256:c2b652a850fec8e85034a9cdb3b45f8ad1a558686edc20ed1f40b4e17e62070f"},
-    {file = "mkdocstrings_python-1.1.2.tar.gz", hash = "sha256:f28bdcacb9bcdb44b6942a5642c1ea8b36870614d33e29e3c923e204a8d8ed61"},
+    {file = "mkdocstrings_python-1.4.0-py3-none-any.whl", hash = "sha256:46f4b0ed8540c6bfd0c3f50471831a7bdb9a1bf35f24400525721d7555aa355c"},
+    {file = "mkdocstrings_python-1.4.0.tar.gz", hash = "sha256:c92304c402928a05c793203dadee7a1a51b5ae56404fd594d0b2db49a7b3957a"},
 ]
 
 [package.dependencies]
-griffe = ">=0.24"
+griffe = ">=0.33"
 mkdocstrings = ">=0.20"
 
 [[package]]
@@ -2465,4 +2465,4 @@ optionals = ["jsonschema", "napalm"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "ba0a3c213ba10e4eedf9c4fdc73090f89d1ac86face85422c546c5db5f1816b2"
+content-hash = "f738c1bfadb7e1d5cc6d9166b372979c83e4c44aec704c781adb9f3375b61b35"
