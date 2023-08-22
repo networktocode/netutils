@@ -132,7 +132,7 @@ def compare_version_strict(current_version: str, comparison: str, target_version
 
 
 def juniper_junos_version_parser(version: str) -> t.Dict[str, t.Any]:
-    """Parses JunOS Version into usable bits matching JunOS Standars.
+    """Parses JunOS Version into usable bits matching JunOS Standards.
 
     Args:
         version
