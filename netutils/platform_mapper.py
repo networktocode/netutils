@@ -6,7 +6,7 @@ import dataclasses
 import typing as t
 
 from netutils.nist import get_nist_url_funcs
-from netutils.os_version_parser import os_version_parsers
+from netutils.os_version import os_version_parsers
 
 PLATFORM_FIELDS: t.Dict[str, t.Any] = {
     "default": [

@@ -77,7 +77,7 @@ def get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any], api_key: s
         nist_urls.append("{base_ext}{type}{build}-{service}{service_build}{delim_seven}".format(**url_args))
         return nist_urls
 
-    raise []
+    raise Exception("Failure parsing Juniper JunOS Version. Format is unknown.")
 
 
 def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any], api_key: str) -> t.List[str]:
