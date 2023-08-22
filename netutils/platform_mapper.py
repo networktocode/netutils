@@ -37,7 +37,7 @@ class OsPlatform(metaclass=abc.ABCMeta):
 
     def asdict(self) -> t.Dict[str, t.Any]:
         """Returns dictionary representation of the class attributes."""
-        return dataclasses.asdict(self)
+        return dataclasses.asdict(self)  # type: ignore
 
     @abc.abstractmethod
     def get_nist_urls(self, api_key: str) -> t.List[str]:
