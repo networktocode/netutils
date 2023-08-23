@@ -1,4 +1,4 @@
-| NORMALIZED | | PYNTC |
+| PYNTC | | NORMALIZED |
 | ---------- | -- | ------ |
 | arista_eos_eapi | → | arista_eos |
 | cisco_aireos_ssh | → | cisco_wlc |
