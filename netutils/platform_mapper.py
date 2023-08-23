@@ -49,7 +49,8 @@ class OsPlatform(metaclass=abc.ABCMeta):
 
     def keys(self) -> t.KeysView[t.Any]:
         """Return attributes and their values as dict keys."""
-        return self.__annotations__.keys()
+        # Disabling pylint no-member due to BUG: https://github.com/pylint-dev/pylint/issues/7126
+        return self.__annotations__.keys()  # pylint: disable=no-member
 
     def __getitem__(self, key: str) -> t.Any:
         """Allow retrieving attributes using subscript notation."""
