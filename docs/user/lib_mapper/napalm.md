@@ -1,4 +1,4 @@
-| NORMALIZED | | NAPALM |
+| NAPALM | | NORMALIZED |
 | ---------- | -- | ------ |
 | aoscx | → | aruba_aoscx |
 | asa | → | cisco_asa |

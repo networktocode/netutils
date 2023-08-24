@@ -1,4 +1,4 @@
-| NAPALM | | NORMALIZED |
+| NORMALIZED | | NAPALM |
 | ---------- | -- | ------ |
 | arista_eos | → | eos |
 | aruba_aoscx | → | aoscx |
