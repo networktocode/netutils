@@ -1,4 +1,4 @@
-| NORMALIZED | | PYATS |
+| PYATS | | NORMALIZED |
 | ---------- | -- | ------ |
 | asa | → | cisco_asa |
 | bigip | → | f5_tmsh |

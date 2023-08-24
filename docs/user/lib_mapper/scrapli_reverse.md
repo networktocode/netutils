@@ -1,4 +1,4 @@
-| SCRAPLI | | NORMALIZED |
+| NORMALIZED | | SCRAPLI |
 | ---------- | -- | ------ |
 | arista_eos | → | arista_eos |
 | aruba_aoscx | → | aruba_aoscx |
