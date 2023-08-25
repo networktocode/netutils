@@ -87,7 +87,7 @@ def os_platform_object_builder(vendor: str, platform: str, version: str) -> obje
         field_values.update(version_parser(version))
 
     class_name = f"{vendor.capitalize()}{platform.capitalize()}"
-    get_nist_urls_func = get_nist_url_funcs.get(vendor, {}).get(platform, None) or get_nist_url_funcs["default"]
+    get_nist_urls_func = get_nist_url_funcs.get(vendor, {}).get(platform) or get_nist_url_funcs["default"]
 
     platform_cls = dataclasses.make_dataclass(
         cls_name=class_name, fields=class_fields, bases=(OsPlatform,), namespace={"get_nist_urls": get_nist_urls_func}
