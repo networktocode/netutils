@@ -26,20 +26,20 @@ def asn_to_int(asplain: str) -> int:
     return int(asplain)
 
 
-def int_to_asn(asn_int: int) -> str:
-    """Convert integer to standardized asplain notation for BGP ASN.
+def int_to_asdot(asn_int: int) -> str:
+    """Convert integer to standardized asdot notation for BGP ASN.
 
     Args:
         asn_int: Integer value of the BGP ASN.
 
     Returns:
-        `asplain` notated BGP ASN as a string.
+        `asdot` notated BGP ASN as a string.
 
     Examples:
-        >>> from netutils.asn import int_to_asn
-        >>> int_to_asn(65000)
+        >>> from netutils.asn import int_to_asdot
+        >>> int_to_asdot(65000)
         '65000'
-        >>> int_to_asn(4259840111)
+        >>> int_to_asdot(4259840111)
         '65000.111'
         >>>
     """

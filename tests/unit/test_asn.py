@@ -12,7 +12,7 @@ asn_to_int = [
     {"sent": {"asplain": "0.65526"}, "received": 65526},
 ]
 
-int_to_asn = [
+int_to_asdot = [
     {"sent": {"asn_int": 6500}, "received": "6500"},
     {"sent": {"asn_int": 425985111}, "received": "6500.1111"},
     {"sent": {"asn_int": 425984001}, "received": "6500.1"},
@@ -25,7 +25,7 @@ int_to_asn = [
     {"sent": {"asn_int": 4294967295}, "received": "65535.65535"},
 ]
 
-int_to_asn_exceptions = [
+int_to_asdot_exceptions = [
     {"asn_int": "one22"},
     {"asn_int": "not_an_int"},
     {"asn_int": "4294967296"},
@@ -39,12 +39,12 @@ def test_asn_to_int(data):
     assert asn.asn_to_int(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", int_to_asn)
-def test_int_to_asn(data):
-    assert asn.int_to_asn(**data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", int_to_asdot)
+def test_int_to_asdot(data):
+    assert asn.int_to_asdot(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", int_to_asn_exceptions)
-def test_int_to_asn_exceptions(data):
+@pytest.mark.parametrize("data", int_to_asdot_exceptions)
+def test_int_to_asdot_exceptions(data):
     with pytest.raises(ValueError):
-        assert asn.int_to_asn(**data)
+        assert asn.int_to_asdot(**data)
