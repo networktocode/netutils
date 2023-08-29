@@ -1,7 +1,7 @@
 | Filter name | Function |
 | ---------- | ------ |
 | asn_to_int | netutils.asn.asn_to_int |
-| int_to_asn | netutils.asn.int_to_asn |
+| int_to_asdot | netutils.asn.int_to_asdot |
 | bits_to_name | netutils.bandwidth.bits_to_name |
 | bytes_to_name | netutils.bandwidth.bytes_to_name |
 | name_to_bits | netutils.bandwidth.name_to_bits |
