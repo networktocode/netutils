@@ -51,7 +51,7 @@ Poetry is used in lieu of the "virtualenv" commands and is leveraged in both env
 The `pyproject.toml` file outlines all of the relevant dependencies for the project:
 
 - `tool.poetry.dependencies` - the main list of dependencies.
-- `tool.poetry.dev-dependencies` - development dependencies, to facilitate linting, testing, and documentation building.
+- `tool.poetry.group.dev.dependencies` - development dependencies, to facilitate linting, testing, and documentation building.
 
 The `poetry shell` command is used to create and enable a virtual environment managed by Poetry, so all commands ran going forward are executed within the virtual environment. This is similar to running the `source venv/bin/activate` command with virtualenvs. To install project dependencies in the virtual environment, you should run `poetry install` - this will install **both** project and development dependencies.
 
