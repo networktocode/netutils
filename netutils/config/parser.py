@@ -1580,7 +1580,7 @@ class FastironConfigParser(CiscoConfigParser):
 class UbiquitiAirOSConfigParser(BaseSpaceConfigParser):
     """Ubiquiti airOS config parser."""
 
-    comment_chars: t.List[str] = ["#","###"]
+    comment_chars: t.List[str] = ["#", "###"]
     banner_start: t.List[str] = []
 
     @property
@@ -1602,5 +1602,5 @@ class UbiquitiAirOSConfigParser(BaseSpaceConfigParser):
                 config_lines.append(line)
             if line and line != "##" and not self.is_comment(line):
                 config_lines.append(line)
-                
+
         return "\n".join(config_lines)

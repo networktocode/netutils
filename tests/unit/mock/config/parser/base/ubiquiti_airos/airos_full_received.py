@@ -184,9 +184,7 @@ data = [
     ConfigLine(config_line="unms.uri=-", parents=()),
     ConfigLine(config_line="update.check.status=enabled", parents=()),
     ConfigLine(config_line="users.1.name=ubnt", parents=()),
-    ConfigLine(
-        config_line="users.1.password=$1$YSWw8TsR$eBl/.jP1ibig8DUF4nn65.", parents=()
-    ),
+    ConfigLine(config_line="users.1.password=$1$YSWw8TsR$eBl/.jP1ibig8DUF4nn65.", parents=()),
     ConfigLine(config_line="users.1.status=enabled", parents=()),
     ConfigLine(config_line="users.2.status=disabled", parents=()),
     ConfigLine(config_line="users.status=enabled", parents=()),
