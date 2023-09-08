@@ -89,7 +89,7 @@ def split_interface(interface: str) -> t.Tuple[str, str]:
         ('Eth', '1')
         >>>
     """
-    head = interface.rstrip(r"/\0123456789. ")
+    head = interface.rstrip(r"/\0123456789.: ")
     tail = interface[len(head) :].lstrip()  # noqa: E203
     return (head, tail)
 

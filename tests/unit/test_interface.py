@@ -10,6 +10,10 @@ SPLIT_INTERFACE = [
         "received": ("GigabitEthernet", "1/0/1"),
     },
     {"sent": {"interface": "Gi1/0/1"}, "received": ("Gi", "1/0/1")},
+    {"sent": {"interface": "Serial0/0/0:0"}, "received": ("Serial", "0/0/0:0")},
+    {"sent": {"interface": "VLAN101"}, "received": ("VLAN", "101")},
+    {"sent": {"interface": "Port-channel40"}, "received": ("Port-channel", "40")},
+    {"sent": {"interface": "Gi1/0/3.100"}, "received": ("Gi", "1/0/3.100")},
 ]
 
 CANONICAL_INTERFACE_NAME = [
@@ -158,6 +162,11 @@ ABBREVIATED_INTERFACE_NAME = [
         "received": "SupE1/0/1",
     },
     {"sent": {"interface": "Noninterface1/0/1"}, "received": "Noninterface1/0/1"},
+    {"sent": {"interface": "Noninterface1/0/1"}, "received": "Noninterface1/0/1"},
+    {"sent": {"interface": "Serial0/0/0:0"}, "received": "Se0/0/0:0"},
+    {"sent": {"interface": "VLAN101"}, "received": "Vl101"},
+    {"sent": {"interface": "Port-channel40"}, "received": "Po40"},
+    {"sent": {"interface": "GigabitEthernet1/0/3.100"}, "received": "Gi1/0/3.100"},
 ]
 
 INTERFACE_EXPANSION = [
