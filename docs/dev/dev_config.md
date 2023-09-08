@@ -32,7 +32,7 @@ The conversion from curly to set format via the `paloalto_panos_brace_to_set` fu
 
 ### Duplicate Line Detection
 
-In some circumstances replacing lines, such as secrets without uniqueness in the replacement, will result in duplicated lines that are invalid configuration, such as::
+In some circumstances replacing lines, such as secrets without uniqueness in the replacement, will result in duplicated lines that are invalid configuration, such as:
 
 ```text
 snmp-server community <<REPLACED>> RO SNMP_ACL_RO
