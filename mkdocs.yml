@@ -125,6 +125,7 @@ nav:
           - v1.3: "admin/release_notes/version_1.3.md"
           - v1.4: "admin/release_notes/version_1.4.md"
           - v1.5: "admin/release_notes/version_1.5.md"
+          - v1.6: "admin/release_notes/version_1.6.md"
   - Developer Guide:
       - Extending the Library: "dev/extending.md"
       - Contributing to the Library: "dev/contributing.md"
