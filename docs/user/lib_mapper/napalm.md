@@ -1,9 +1,10 @@
-| NORMALIZED | | NAPALM |
+| NAPALM | | NORMALIZED |
 | ---------- | -- | ------ |
 | aoscx | → | aruba_aoscx |
 | asa | → | cisco_asa |
 | cisco_wlc_ssh | → | cisco_wlc |
 | eos | → | arista_eos |
+| f5 | → | bigip_f5 |
 | fortios | → | fortinet |
 | huawei | → | huawei_vrp |
 | ios | → | cisco_ios |

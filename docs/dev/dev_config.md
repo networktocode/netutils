@@ -32,7 +32,7 @@ The conversion from curly to set format via the `paloalto_panos_brace_to_set` fu
 
 ### Duplicate Line Detection
 
-In some circumstances replacing lines, such as secrets without uniqueness in the replacement, will result in duplicated lines that are invalid configuration, such as::
+In some circumstances replacing lines, such as secrets without uniqueness in the replacement, will result in duplicated lines that are invalid configuration, such as:
 
 ```text
 snmp-server community <<REPLACED>> RO SNMP_ACL_RO
@@ -71,6 +71,9 @@ There are a series of considerations documented below, when developing a new par
     - The class must provide a `self.config_lines` that is a list of `ConfigLine` named tuples.
 - Build tests for the `tests/unit/mock/config/compliance/compliance/{os_name}/*` and `tests/unit/mock/config/parser/base/{os_name}/*`.
 - Add to `netutils/config/compliance.py` the `parser_map`, that maps the name of the parser to the Plugin.
+    - Ensure that the key name is based on `netutils.lib_mapper.MAIN_LIB_MAPPER_LIB_MAPPER` definitions.
+    - Ensure that it is alpha sorted.
+    - Ensure that it the key is added to `netutils.lib_mapper.NETUTILSPARSER_LIB_MAPPER` and `netutils.lib_mapper.NETUTILSPARSER_LIB_MAPPER_REVERSE`.
 - Fill out docstrings in the class and methods within the class that describe the parameters and an Example that compiles.
 - The following tips will generally be applicable.
     - Generally a class method should provide a `comment_chars` and `banner_start` as well as sometimes `banner_end`.

@@ -14,13 +14,14 @@ theme:
     - "python"
     - "yaml"
   features:
-    - "navigation.tracking"
+    - "content.code.copy"
+    - "navigation.indexes"
     - "navigation.tabs"
     - "navigation.tabs.sticky"
-    - "search.suggest"
+    - "navigation.tracking"
     - "search.highlight"
     - "search.share"
-    - "navigation.indexes"
+    - "search.suggest"
   favicon: "assets/favicon.ico"
   logo: "assets/networktocode_logo.svg"
   palette:
@@ -82,6 +83,12 @@ markdown_extensions:
 plugins:
   - "search"
   - "mkdocs-version-annotations"
+  - "mkdocs-python-classy":
+      classy_strategy: "subclass"
+      classy_modules:
+        - "netutils.config.parser"
+      classy_libraries:
+        - "netutils"
   - "mkdocstrings":
       default_handler: "python"
       handlers:
@@ -100,6 +107,7 @@ nav:
       - Jinja Filters: "user/lib_use_cases_jinja_filters.md"
       - Library Mapper: "user/lib_use_cases_lib_mapper.md"
       - Protocol Mapper: "user/lib_use_cases_protocol_mappers.md"
+      - ACL: "user/lib_use_cases_acl.md"
       - Upgrade Paths: "user/lib_upgrade_paths.md"
       - Getting Started: "user/lib_getting_started.md"
       - Frequently Asked Questions: "user/faq.md"
@@ -116,15 +124,19 @@ nav:
           - v1.2: "admin/release_notes/version_1.2.md"
           - v1.3: "admin/release_notes/version_1.3.md"
           - v1.4: "admin/release_notes/version_1.4.md"
+          - v1.5: "admin/release_notes/version_1.5.md"
+          - v1.6: "admin/release_notes/version_1.6.md"
   - Developer Guide:
       - Extending the Library: "dev/extending.md"
       - Contributing to the Library: "dev/contributing.md"
       - Development Environment: "dev/dev_environment.md"
       - Config Parser Development: "dev/dev_config.md"
+      - Arch Decision Records: "dev/dev_adr.md"
       - Code Attribution to the Library: "dev/attribution.md"
       - Code Reference:
           - "dev/code_reference/index.md"
           - ASN: "dev/code_reference/asn.md"
+          - ACL: "dev/code_reference/acl.md"
           - Bandwidth: "dev/code_reference/bandwidth.md"
           - Banner: "dev/code_reference/banner.md"
           - Configs: "dev/code_reference/configs.md"
@@ -143,3 +155,5 @@ nav:
           - Time: "dev/code_reference/time.md"
           - Utils: "dev/code_reference/utils.md"
           - VLAN: "dev/code_reference/vlan.md"
+      - Classy Docs:
+          - Parser: "dev/classy/parser.md"

@@ -79,11 +79,11 @@ Take the below example.
 |compressnet| 3| tcp| Compression Process |
 |compressnet| 3| udp| Compression Process |
 
-As you can see, the service name and port comboniation is not unique. As such, on the second one, a `-secondary` is appended to the name to accomdate. The resulting structure looks something like:
+As you can see, the service name and port combination is not unique. As such, on the second one, a `-secondary` is appended to the name to accommodate. The resulting structure looks something like:
 
 ```python
     "compressnet": {"port_number": 2, "protocols": ["tcp", "udp"]},
     "compressnet-secondary": {"port_number": 3, "protocols": ["tcp", "udp"]},
 ```
 
-This behaviour is to be expected.
+This behavior is to be expected.

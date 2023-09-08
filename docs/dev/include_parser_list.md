@@ -15,6 +15,8 @@
 | linux | netutils.config.parser.LINUXConfigParser |
 | mikrotik_routeros | netutils.config.parser.RouterOSConfigParser |
 | mrv_optiswitch | netutils.config.parser.OptiswitchConfigParser |
+| netscaler | netutils.config.parser.NetscalerConfigParser |
 | nokia_sros | netutils.config.parser.NokiaConfigParser |
 | paloalto_panos | netutils.config.parser.PaloAltoNetworksConfigParser |
 | ruckus_fastiron | netutils.config.parser.FastironConfigParser |
+| ubiquiti_airos | netutils.config.parser.UbiquitiAirOSConfigParser |

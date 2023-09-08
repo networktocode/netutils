@@ -1,4 +1,4 @@
-| PYATS | | NORMALIZED |
+| NORMALIZED | | PYATS |
 | ---------- | -- | ------ |
 | cisco_asa | → | asa |
 | cisco_dnac | → | dnac |

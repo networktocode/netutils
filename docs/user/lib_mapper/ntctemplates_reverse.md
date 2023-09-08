@@ -1,4 +1,4 @@
-| NTCTEMPLATES | | NORMALIZED |
+| NORMALIZED | | NTCTEMPLATES |
 | ---------- | -- | ------ |
 | a10 | → | a10 |
 | accedian | → | accedian |
