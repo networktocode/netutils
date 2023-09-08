@@ -51,9 +51,13 @@ def is_valid_mac(mac: str) -> bool:
 def mac_to_format(mac: str, frmt: str = "MAC_NO_SPECIAL") -> str:
     """Converts the MAC address to a specific format.
 
+    The `frmt` is a combination delimiter (COLON, DASH, DOT) and number
+    of characters (TWO, FOUR), e.g. f'MAC_{delimiter}_{char_num}' or if no
+    special characters as `MAC_NO_SPECIAL`.
+
     Args:
         mac: A MAC address in string format that matches one of the defined regex patterns.
-        frmt: A format in which the MAC address should be returned in.
+        frmt: A format in which the MAC address should be returned in, one of MAC_COLON_TWO, MAC_COLON_FOUR, MAC_DASH_TWO, MAC_DASH_FOUR, MAC_DOT_TWO, MAC_DOT_FOUR, MAC_NO_SPECIAL.
 
     Returns:
         A MAC address in the specified format.
@@ -65,7 +69,8 @@ def mac_to_format(mac: str, frmt: str = "MAC_NO_SPECIAL") -> str:
         >>>
     """
     if not MAC_CREATE.get(frmt):
-        raise ValueError(f"An invalid mac format was provided in: `{frmt}`")
+        format_choices = ", ".join(MAC_CREATE)
+        raise ValueError(f"An invalid mac format was provided in: `{frmt}`, not one of [{format_choices}]")
     mac = mac_normalize(mac)
     count = MAC_CREATE[frmt]["count"]
     char = MAC_CREATE[frmt]["char"]
