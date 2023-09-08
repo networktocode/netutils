@@ -3,7 +3,7 @@ name: "OUI-Updates"
 
 on:   # yamllint disable-line rule:truthy
   schedule:
-    - cron: "0 8 * * 4"
+    - cron: "0 2 1 * *"
 
 jobs:
   data_gathering:
