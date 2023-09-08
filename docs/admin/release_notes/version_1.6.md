@@ -4,16 +4,21 @@
 
 - Added `ubiquiti_airos` parser.
 - Added `ACLRule` and `ACLRules` classes.
-- Added `is_ip_range`, `is_ip_within`, `is_network`, and `get_range_ips` functions.
+- Added the `ip` functions `is_ip_range`, `is_ip_within`, `is_network`, and `get_range_ips`.
+- Added the `asn` function `int_to_asn` in the function.
 - Added `NETUTILSPARSER_LIB_MAPPER` and `NETUTILSPARSER_LIB_MAPPER_REVERSE` to lib mapper.
+- Added classy docs to view config parser classes.
+
 
 ## [v1.6.0] - 2023-09
 
 ### Added
 
 - [#290](https://github.com/networktocode/netutils/pull/290) Added `ACLRule` and `ACLRules` classes.
-- [#290](https://github.com/networktocode/netutils/pull/290) Added `is_ip_range`, `is_ip_within`, `is_network`, and `get_range_ips` functions.
+- [#290](https://github.com/networktocode/netutils/pull/290) Added the `ip` functions `is_ip_range`, `is_ip_within`, `is_network`, and `get_range_ips`.
+- [#325](https://github.com/networktocode/netutils/pull/325) Added classy docs to view config parser classes.
 - [#329](https://github.com/networktocode/netutils/pull/329) Added `ubiquiti_airos` parser.
+- [#332](https://github.com/networktocode/netutils/pull/332) Added the `asn` function `int_to_asn` in the function.
 - [#352](https://github.com/networktocode/netutils/pull/352) Added `NETUTILSPARSER_LIB_MAPPER` and `NETUTILSPARSER_LIB_MAPPER_REVERSE` to lib mapper.
 
 ### Changed
