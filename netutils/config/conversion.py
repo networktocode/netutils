@@ -20,37 +20,38 @@ def paloalto_panos_brace_to_set(cfg: str, cfg_type: str = "file") -> str:
         str: Converted configuration as a string.
 
     Examples:
-            >>> config = '''
-            ...     config {
-            ...            mgt-config {
-            ...                users {
-            ...                  admin {
-            ...                    phash *;
-            ...                    permissions {
-            ...                      role-based {
-            ...                        superuser yes;
-            ...                      }
-            ...                    }
-            ...                    public-key thisisasuperduperlongbase64encodedstring;
-            ...                }
-            ...                panadmin {
-            ...                    permissions {
-            ...                      role-based {
-            ...                        superuser yes;
-            ...                      }
-            ...                    }
-            ...                    phash passwordhash;
-            ...                }
-            ...              }
-            ...            }
-            ...         }'''
-            >>> paloalto_panos_brace_to_set(cfg=config, cfg_type='string') == \
-            ... '''set mgt-config users admin phash *
-            ... set mgt-config users admin permissions role-based superuser yes
-            ... set mgt-config users admin public-key thisisasuperduperlongbase64encodedstring
-            ... set mgt-config users panadmin permissions role-based superuser yes
-            ... set mgt-config users panadmin phash passwordhash'''
-            True
+        >>> from netutils.config.conversion import paloalto_panos_brace_to_set
+        >>> config = '''
+        ...     config {
+        ...            mgt-config {
+        ...                users {
+        ...                  admin {
+        ...                    phash *;
+        ...                    permissions {
+        ...                      role-based {
+        ...                        superuser yes;
+        ...                      }
+        ...                    }
+        ...                    public-key thisisasuperduperlongbase64encodedstring;
+        ...                }
+        ...                panadmin {
+        ...                    permissions {
+        ...                      role-based {
+        ...                        superuser yes;
+        ...                      }
+        ...                    }
+        ...                    phash passwordhash;
+        ...                }
+        ...              }
+        ...            }
+        ...         }'''
+        >>> paloalto_panos_brace_to_set(cfg=config, cfg_type='string') == \
+        ... '''set mgt-config users admin phash *
+        ... set mgt-config users admin permissions role-based superuser yes
+        ... set mgt-config users admin public-key thisisasuperduperlongbase64encodedstring
+        ... set mgt-config users panadmin permissions role-based superuser yes
+        ... set mgt-config users panadmin phash passwordhash'''
+        True
     """
     stack: t.List[str] = []
     cfg_value: t.List[str] = []
