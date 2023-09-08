@@ -109,7 +109,7 @@ def regex_search(pattern: str, string: str) -> t.Union[t.List[str], str, None]:
 
 
 def regex_split(pattern: str, string: str, maxsplit: int = 0) -> t.List[str]:
-    """Given a regex pattern and string, return the split the object based on the patern a single element or single element of original value if there is no match.
+    """Given a regex pattern and string, return the split the object based on the pattern a single element or single element of original value if there is no match.
 
     The main purpose of this function is provide a Jinja2 filter as this is simply a wrapper around `re.split`.
 

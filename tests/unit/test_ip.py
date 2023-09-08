@@ -1,4 +1,5 @@
 """Test for the IP functions."""
+import ipaddress
 import pytest
 
 from netutils import ip
@@ -155,6 +156,145 @@ IS_IP = [
     {
         "sent": {
             "ip": "255.255.255.256",
+        },
+        "received": False,
+    },
+]
+
+IS_IP_RANGE = [
+    {
+        "sent": {
+            "ip_range": "10.1.1.1",
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip_range": "10.1.100.10-10.1.100.1",
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip_range": "2001::10-2001::1",
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip_range": "10.500.100.10-10.1.100.1",
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip_range": "NOT AN IP",
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip_range": "255.255.255.256",
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip_range": "10.1.100.10-10.1.100.100",
+        },
+        "received": True,
+    },
+    {
+        "sent": {
+            "ip_range": "2001::10-2001::100",
+        },
+        "received": True,
+    },
+]
+
+GET_RANGE_IPS = [
+    {
+        "sent": {
+            "ip_range": "2001::10-2001::100",
+        },
+        "received": (ipaddress.IPv6Address("2001::10"), ipaddress.IPv6Address("2001::100")),
+    },
+    {
+        "sent": {
+            "ip_range": "10.1.100.10-10.1.100.100",
+        },
+        "received": (ipaddress.IPv4Address("10.1.100.10"), ipaddress.IPv4Address("10.1.100.100")),
+    },
+]
+
+IS_IP_WITHIN = [
+    {
+        "sent": {
+            "ip": "192.168.1.10",
+            "ip_compare": "192.168.1.10",
+        },
+        "received": True,
+    },
+    {
+        "sent": {
+            "ip": "192.168.1.10",
+            "ip_compare": "192.168.1.0-192.168.1.20",
+        },
+        "received": True,
+    },
+    {
+        "sent": {
+            "ip": "192.168.1.0/24",
+            "ip_compare": ["192.168.1.0-192.168.1.20", "192.168.2.0-192.168.2.20"],
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip": "192.168.1.10-192.168.1.15",
+            "ip_compare": ["192.168.1.0-192.168.1.20", "192.168.2.0-192.168.2.20"],
+        },
+        "received": True,
+    },
+    {
+        "sent": {
+            "ip": "10.0.0.0/8",
+            "ip_compare": ["192.168.1.0/24", "172.16.0.0/12"],
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip": "192.168.1.10",
+            "ip_compare": "192.168.1.20",
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip": "192.168.1.10",
+            "ip_compare": "192.168.2.0-192.168.2.20",
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip": "192.168.1.0/24",
+            "ip_compare": ["192.168.2.0-192.168.2.20", "192.168.3.0-192.168.3.20"],
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip": "192.168.1.50-192.168.1.60",
+            "ip_compare": ["192.168.2.0-192.168.2.20", "192.168.3.0-192.168.3.20"],
+        },
+        "received": False,
+    },
+    {
+        "sent": {
+            "ip": "192.168.1.10",
+            "ip_compare": "192.168.2.0/24",
         },
         "received": False,
     },
@@ -355,6 +495,33 @@ def test_ip_subtract(data):
 @pytest.mark.parametrize("data", IS_IP)
 def test_is_ip(data):
     assert ip.is_ip(**data["sent"]) == data["received"]
+
+
+@pytest.mark.parametrize("data", IS_IP_RANGE)
+def test_is_ip_range(data):
+    assert ip.is_ip_range(**data["sent"]) == data["received"]
+
+
+@pytest.mark.parametrize("data", GET_RANGE_IPS)
+def test_get_range_ips(data):
+    assert ip.get_range_ips(**data["sent"]) == data["received"]
+
+
+def test_get_range_ips_fail():
+    with pytest.raises(ValueError, match=r"Not a valid IP range format of .*"):
+        data = {"ip_range": "10.1.100.10-10.1.100.1"}
+        ip.get_range_ips(**data)
+
+
+@pytest.mark.parametrize("data", IS_IP_WITHIN)
+def test_is_ip_within(data):
+    assert ip.is_ip_within(**data["sent"]) == data["received"]
+
+
+def test_is_ip_within_fail():
+    with pytest.raises(ValueError):
+        data = {"ip": "10.1.100.100", "ip_compare": "10.1.100.10-2001::1"}
+        ip.is_ip_within(**data)
 
 
 @pytest.mark.parametrize("data", GET_ALL_HOST)

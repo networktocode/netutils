@@ -5,6 +5,8 @@ from operator import attrgetter
 
 from netutils.constants import IPV4_MASKS, IPV6_MASKS
 
+IPAddress = t.Union[ipaddress.IPv4Address, ipaddress.IPv6Address]
+
 
 def ipaddress_address(ip: str, attr: str) -> t.Any:
     """Convenience function primarily built to expose ipaddress.ip_address to Jinja.
@@ -236,6 +238,106 @@ def is_ip(ip: str) -> bool:
         return False
 
 
+def is_ip_range(ip_range: str) -> bool:
+    """Verifies whether or not a string is a valid IP address range.
+
+    An `ip_range` is in the format of `{ip_start}-{ip_end}`, IPs in str format, same IP version, and
+    ip_start is before ip_end.
+
+    Args:
+        ip_range: An IP address range in string format that is properly formatted.
+
+    Returns:
+        The result as to whether or not the string is a valid IP address.
+
+    Examples:
+        >>> from netutils.ip import is_ip_range
+        >>> is_ip_range("10.100.100.255")
+        False
+        >>> is_ip_range("10.100.100.255-10.100.101.1")
+        True
+        >>>
+    """
+    if "-" not in ip_range:
+        return False
+    start_ip, end_ip = ip_range.split("-")
+    if not is_ip(start_ip) or not is_ip(end_ip):
+        return False
+    start_ip_obj = ipaddress.ip_address(start_ip)
+    end_ip_obj = ipaddress.ip_address(end_ip)
+    if not isinstance(start_ip_obj, type(end_ip_obj)):
+        return False
+    # IP version being the same is enforced above, mypy disagrees, can safely ignore
+    if not start_ip_obj < end_ip_obj:  # type: ignore
+        return False
+    return True
+
+
+def is_ip_within(ip: str, ip_compare: t.Union[str, t.List[str]]) -> bool:
+    """
+    Check if an IP address, IP subnet, or IP range is within the range of a list of IP addresses, IP subnets, and IP ranges.
+
+    Args:
+        ip: IP address, IP subnet, or IP range to check.
+        ip_compare: String or list of IP addresses, IP subnets, and IP ranges to compare against.
+
+    Returns:
+        True if the IP is in range, False otherwise.
+
+    Examples:
+        >>> from netutils.ip import is_ip_within
+        >>> is_ip_within("10.100.100.10", "10.100.100.0/24")
+        True
+        >>> is_ip_within("10.100.100.0/25", ["10.100.100.0/24", "10.100.200.0/24"])
+        True
+        >>>
+        >>> is_ip_within("10.100.100.10", ["10.100.100.8-10.100.100.20", "10.100.200.0/24"])
+        True
+        >>> is_ip_within("10.100.100.8-10.100.100.20", ["10.100.100.0/24"])
+        True
+        >>> is_ip_within("1.1.1.1", ["2.2.2.2", "3.3.3.3"])
+        False
+        >>>
+    """
+
+    def _convert_ip(ip: str) -> str:
+        if is_ip(ip):
+            if "." in ip:
+                mask = "32"
+            if ":" in ip:
+                mask = "128"
+            return f"{ip}/{mask}"
+        return ip
+
+    if "-" in ip:
+        ip_obj_start, ip_obj_end = get_range_ips(ip)
+    else:
+        ip_obj = ipaddress.ip_network(_convert_ip(ip))
+        ip_obj_start = ip_obj[0]
+        ip_obj_end = ip_obj[-1]
+
+    if isinstance(ip_compare, str):
+        ip_compare = [ip_compare]
+
+    for item in ip_compare:
+        if "-" in item:
+            item_obj_start, item_obj_end = get_range_ips(item)
+
+        else:
+            item_obj = ipaddress.ip_network(_convert_ip(item))
+            item_obj_start = item_obj[0]
+            item_obj_end = item_obj[-1]
+        if not isinstance(item_obj_start, type(item_obj_end)):
+            raise ValueError(
+                f"IP range start `{item_obj_start}` and end `{item_obj_end}` IPs must both be same IPVersion."
+            )
+        # Use this validation method, since it is consitent with ranges
+        # vs the `.subnet_of` method which is not.
+        if item_obj_start <= ip_obj_start <= ip_obj_end <= item_obj_end:  # type: ignore
+            return True
+    return False
+
+
 def is_netmask(netmask: str) -> bool:
     """Verifies whether or not a string is a valid subnet mask.
 
@@ -256,6 +358,32 @@ def is_netmask(netmask: str) -> bool:
     """
     try:
         return int(ipaddress.ip_address(netmask)) in IPV4_MASKS or int(ipaddress.ip_address(netmask)) in IPV6_MASKS
+    except ValueError:
+        return False
+
+
+def is_network(ip_network: str) -> bool:
+    """Verifies whether or not a string is a valid IP Network with a Mask.
+
+    Args:
+        ip: An IP network in string format that is able to be converted by `ipaddress` library.
+
+    Returns:
+        The result as to whether or not the string is a valid IP network.
+
+    Examples:
+        >>> from netutils.ip import is_network
+        >>> is_network("10.100.100.0")
+        False
+        >>> is_network("10.100.100.0/24")
+        True
+        >>>
+    """
+    if "/" not in ip_network:
+        return False
+    try:
+        ipaddress.ip_network(ip_network)
+        return True
     except ValueError:
         return False
 
@@ -418,6 +546,31 @@ def get_peer_ip(ip_interface: str) -> str:
     val = list(get_all_host(str(ip_obj.network)))
     val.remove(str(ip_obj.ip))
     return val[0]
+
+
+def get_range_ips(ip_range: str) -> t.Tuple[IPAddress, IPAddress]:
+    """Get's the two IPs as a tuple of IPAddress objects.
+
+    Args:
+        ip_range: An IP address range in string format that is properly formatted.
+
+    Returns:
+        The start and end IP address of the range provided.
+
+    Examples:
+        >>> from netutils.ip import get_range_ips
+        >>> get_range_ips("10.100.100.255-10.100.101.1")
+        (IPv4Address('10.100.100.255'), IPv4Address('10.100.101.1'))
+        >>> get_range_ips("2001::1-2001::10")
+        (IPv6Address('2001::1'), IPv6Address('2001::10'))
+        >>>
+    """
+    if not is_ip_range(ip_range):
+        raise ValueError(r"Not a valid IP range format of `{start_ip}-{end_ip}`")
+    start_ip, end_ip = ip_range.split("-")
+    start_ip_obj = ipaddress.ip_address(start_ip)
+    end_ip_obj = ipaddress.ip_address(end_ip)
+    return start_ip_obj, end_ip_obj
 
 
 def get_usable_range(ip_network: str) -> str:

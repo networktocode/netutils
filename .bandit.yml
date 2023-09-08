@@ -3,4 +3,4 @@
 exclude_dirs:
   - "./tests/"
   - "./docs/"
-  - "netutils/oui_mappings.py"
+  - "netutils/data_files/"

@@ -1,4 +1,4 @@
-| NORMALIZED | | ANSIBLE |
+| ANSIBLE | | NORMALIZED |
 | ---------- | -- | ------ |
 | arista.eos.eos | → | arista_eos |
 | arubanetworks.aoscx | → | aruba_aoscx |
