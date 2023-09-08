@@ -233,6 +233,7 @@ NETUTILSPARSER_LIB_MAPPER = {
     "nokia_sros": "nokia_sros",
     "paloalto_panos": "paloalto_panos",
     "ruckus_fastiron": "ruckus_fastiron",
+    "ubiquiti_airos": "ubiquiti_airos",
 }
 
 NAPALM_LIB_MAPPER_REVERSE = {
@@ -342,6 +343,7 @@ NETUTILSPARSER_LIB_MAPPER_REVERSE = {
     "nokia_sros": "nokia_sros",
     "paloalto_panos": "paloalto_panos",
     "ruckus_fastiron": "ruckus_fastiron",
+    "ubiquiti_airos": "ubiquiti_airos",
 }
 
 # Deep copy the reverse, where there is no actual translation happening.

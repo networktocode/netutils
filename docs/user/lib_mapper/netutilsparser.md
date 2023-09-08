@@ -19,3 +19,4 @@
 | nokia_sros | → | nokia_sros |
 | paloalto_panos | → | paloalto_panos |
 | ruckus_fastiron | → | ruckus_fastiron |
+| ubiquiti_airos | → | ubiquiti_airos |
