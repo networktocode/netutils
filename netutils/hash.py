@@ -1,8 +1,9 @@
 """Functions for hashing data."""
 import hashlib
+import typing as t
 
 
-def hash_data(data, algorithm):
+def hash_data(data: bytes, algorithm: str) -> t.Any:
     """Convenience function primarily built to expose hashlib to Jinja.
 
     Args:
