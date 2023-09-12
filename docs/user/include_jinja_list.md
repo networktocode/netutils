@@ -84,3 +84,4 @@
 | uptime_string_to_seconds | netutils.time.uptime_string_to_seconds |
 | vlanconfig_to_list | netutils.vlan.vlanconfig_to_list |
 | vlanlist_to_config | netutils.vlan.vlanlist_to_config |
+| hash_data | netutils.hash.hash_data |
