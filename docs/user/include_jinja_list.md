@@ -20,6 +20,7 @@
 | paloalto_panos_brace_to_set | netutils.config.conversion.paloalto_panos_brace_to_set |
 | fqdn_to_ip | netutils.dns.fqdn_to_ip |
 | is_fqdn_resolvable | netutils.dns.is_fqdn_resolvable |
+| hash_data | netutils.hash.hash_data |
 | abbreviated_interface_name | netutils.interface.abbreviated_interface_name |
 | abbreviated_interface_name_list | netutils.interface.abbreviated_interface_name_list |
 | canonical_interface_name | netutils.interface.canonical_interface_name |
@@ -84,4 +85,3 @@
 | uptime_string_to_seconds | netutils.time.uptime_string_to_seconds |
 | vlanconfig_to_list | netutils.vlan.vlanconfig_to_list |
 | vlanlist_to_config | netutils.vlan.vlanlist_to_config |
-| hash_data | netutils.hash.hash_data |
