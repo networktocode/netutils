@@ -452,6 +452,27 @@ def cidr_to_netmaskv6(cidr: int) -> str:
         return str(ipaddress.IPv6Address(((1 << cidr) - 1) << (128 - cidr)))
     raise ValueError("Parameter must be an integer between 0 and 128.")
 
+def cidr_to_netwildmask(cidr: int) -> str:
+    """Creates a decimal format of a CIDR value in Cisco wild card mask format used in access-lists.
+
+    **IPv4** only.  No IPv6 equivalent.
+
+    Args:
+        cidr: A CIDR value.
+
+    Returns:
+        Decimal format representation of CIDR value in Cisco wildcard mask format.
+
+    Examples:
+        >>> from netutils.ip import cidr_to_netwildmask
+        >>> cidr_to_netwildmask(24)
+        '0.0.0.255'
+        >>> cidr_to_netwildmask(17)
+        '0.0.127.255'
+    """
+    if isinstance(cidr, int) and 0 <= cidr <= 32:
+        return ".".join([str(~(0xFFFFFFFF << (32 - cidr) >> i) & 0xFF) for i in [24, 16, 8, 0]])
+    raise ValueError("Parameter must be an integer between 0 and 32.")
 
 def get_all_host(ip_network: str) -> t.Generator[str, None, None]:
     """Given a network, return the list of usable IP addresses.
