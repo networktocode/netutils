@@ -447,6 +447,13 @@ CIDR_NETMASK = [
     {"sent": {"cidr": 17}, "received": "255.255.128.0"},
 ]
 
+CIDR_wildcardmask = [
+    {"sent": {"cidr": 24}, "received": "0.0.0.255"},
+    {"sent": {"cidr": 28}, "received": "0.0.0.15"},
+    {"sent": {"cidr": 10}, "received": "0.63.255.255"},
+    {"sent": {"cidr": 17}, "received": "0.0.127.255"},
+]
+
 CIDR_NETMASK6 = [
     {"sent": {"cidr": 8}, "received": "ff00::"},
     {"sent": {"cidr": 80}, "received": "ffff:ffff:ffff:ffff:ffff::"},
@@ -565,6 +572,11 @@ def test_cidr_to_netmask(data):
     assert ip.cidr_to_netmask(**data["sent"]) == data["received"]
 
 
+@pytest.mark.parametrize("data", CIDR_wildcardmask)
+def test_cidr_to_wildcardmask(data):
+    assert ip.cidr_to_wildcardmask(**data["sent"]) == data["received"]
+
+
 @pytest.mark.parametrize("data", CIDR_NETMASK6)
 def test_cidr_to_netmaskv6(data):
     assert ip.cidr_to_netmaskv6(**data["sent"]) == data["received"]
@@ -580,6 +592,12 @@ def test_cidr_to_netmask_fail():
     with pytest.raises(ValueError, match=r"Parameter must be an integer between 0 and 32."):
         data = {"cidr": 37}
         ip.cidr_to_netmask(**data)
+
+
+def test_cidr_to_wildcardmask_fail():
+    with pytest.raises(ValueError, match=r"Parameter must be an integer between 0 and 32."):
+        data = {"cidr": 37}
+        ip.cidr_to_wildcardmask(**data)
 
 
 @pytest.mark.parametrize("data", GET_PEER)
