@@ -30,6 +30,7 @@
 | split_interface | netutils.interface.split_interface |
 | cidr_to_netmask | netutils.ip.cidr_to_netmask |
 | cidr_to_netmaskv6 | netutils.ip.cidr_to_netmaskv6 |
+| cidr_to_wildcardmask | netutils.ip.cidr_to_wildcardmask |
 | get_all_host | netutils.ip.get_all_host |
 | get_broadcast_address | netutils.ip.get_broadcast_address |
 | get_first_usable | netutils.ip.get_first_usable |

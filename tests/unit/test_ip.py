@@ -447,7 +447,7 @@ CIDR_NETMASK = [
     {"sent": {"cidr": 17}, "received": "255.255.128.0"},
 ]
 
-CIDR_wildcardmask = [
+CIDR_WILDCARDMASK = [
     {"sent": {"cidr": 24}, "received": "0.0.0.255"},
     {"sent": {"cidr": 28}, "received": "0.0.0.15"},
     {"sent": {"cidr": 10}, "received": "0.63.255.255"},
@@ -572,7 +572,7 @@ def test_cidr_to_netmask(data):
     assert ip.cidr_to_netmask(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", CIDR_wildcardmask)
+@pytest.mark.parametrize("data", CIDR_WILDCARDMASK)
 def test_cidr_to_wildcardmask(data):
     assert ip.cidr_to_wildcardmask(**data["sent"]) == data["received"]
 
