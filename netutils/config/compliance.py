@@ -22,6 +22,7 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "fortinet_fortios": parser.FortinetConfigParser,
     "hp_comware": parser.HPComwareConfigParser,
     "juniper_junos": parser.JunosConfigParser,
+    "procurve": parser.PROCURVEConfigParser,
     "linux": parser.LINUXConfigParser,
     "mikrotik_routeros": parser.RouterOSConfigParser,
     "mrv_optiswitch": parser.OptiswitchConfigParser,

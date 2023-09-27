@@ -764,6 +764,15 @@ class AIREOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
         raise NotImplementedError()
 
 
+class PROCURVEConfigParser(BaseSpaceConfigParser):
+    """Procurve config parser."""
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Procurve platform doesn't have a banner.")
+
+
 class LINUXConfigParser(BaseSpaceConfigParser):
     """Linux config parser."""
 
