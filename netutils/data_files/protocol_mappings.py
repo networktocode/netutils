@@ -5309,6 +5309,7 @@ PROTOCOLS: Dict[str, Any] = {
     "senomix07": {"port_number": 8058, "protocols": ["tcp", "udp"]},
     "senomix08": {"port_number": 8059, "protocols": ["tcp", "udp"]},
     "aero": {"port_number": 8060, "protocols": ["udp"]},
+    "nikatron-dev": {"port_number": 8061, "protocols": ["tcp"]},
     "toad-bi-appsrvr": {"port_number": 8066, "protocols": ["tcp"]},
     "infi-async": {"port_number": 8067, "protocols": ["tcp"]},
     "ucs-isc": {"port_number": 8070, "protocols": ["tcp"]},
