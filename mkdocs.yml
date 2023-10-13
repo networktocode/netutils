@@ -140,6 +140,7 @@ nav:
           - Banner: "dev/code_reference/banner.md"
           - Configs: "dev/code_reference/configs.md"
           - DNS: "dev/code_reference/dns.md"
+          - Hash: "dev/code_reference/hash.md"
           - Interface: "dev/code_reference/interface.md"
           - IP: "dev/code_reference/ip.md"
           - Library Helpers: "dev/code_reference/lib_helpers.md"
