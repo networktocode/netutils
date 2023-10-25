@@ -350,6 +350,18 @@ NETUTILSPARSER_LIB_MAPPER_REVERSE = {
 NETMIKO_LIB_MAPPER_REVERSE = copy.deepcopy(NETMIKO_LIB_MAPPER)
 NTCTEMPLATES_LIB_MAPPER_REVERSE = copy.deepcopy(NTCTEMPLATES_LIB_MAPPER)
 
+NETUTILS_LIBMAPPER_MAPPER = {
+    "netmiko": NETMIKO_LIB_MAPPER,
+    "ntc_templates": NTCTEMPLATES_LIB_MAPPER,
+    "napalm": NAPALM_LIB_MAPPER,
+    "pyntc": PYNTC_LIB_MAPPER,
+    "ansible": ANSIBLE_LIB_MAPPER,
+    "pyats": PYATS_LIB_MAPPER,
+    "scrapli": SCRAPLI_LIB_MAPPER,
+    "hier_config": HIERCONFIG_LIB_MAPPER,
+    "netutils_parser": NETUTILSPARSER_LIB_MAPPER,
+}
+
 # Deep copy the reverse, where there is no actual translation happening with special
 # consideration for OS's not in netmiko.
 _MAIN_LIB_MAPPER = copy.deepcopy(NETMIKO_LIB_MAPPER)
