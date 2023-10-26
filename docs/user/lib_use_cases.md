@@ -15,6 +15,7 @@ Functions are grouped with like functions, such as IP or MAC address based funct
     - Conversion - Provides the ability to convert between different syntax's within the same OS.
     - Parsing - Provides the ability to parse configuration for the minor differences that are there.
 - DNS - Provides the ability to work with DNS, such as validating that a FQDN is resolvable.
+- Hash - Provide a convenience method for hashlib to be used in Jinja2
 - Interface - Provides the ability to work with interface names, expanding, abbreviating, and splitting the names.
 - IP Address - Provides the ability to work with IP addresses, primarily exposing Python `ipaddress` functionality.
 - Library Helpers - Provides helpers to pull useful information, e.g. NAPALM getters.
