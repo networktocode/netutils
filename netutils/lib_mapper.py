@@ -360,6 +360,7 @@ _MAIN_LIB_MAPPER["huawei_vrp"] = "huawei_vrp"
 _MAIN_LIB_MAPPER["lenovo_cnos"] = "lenovo_cnos"
 _MAIN_LIB_MAPPER["lenovo_enos"] = "lenovo_enos"
 _MAIN_LIB_MAPPER["ruckus_icx"] = "ruckus_icx"
+_MAIN_LIB_MAPPER["ruckus_smartzone"] = "ruckus_smartzone"
 _MAIN_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 _MAIN_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
 MAIN_LIB_MAPPER = {key: _MAIN_LIB_MAPPER[key] for key in sorted(_MAIN_LIB_MAPPER)}
