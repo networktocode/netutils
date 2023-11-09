@@ -5436,6 +5436,7 @@ PROTOCOLS: Dict[str, Any] = {
     "imink": {"port_number": 8615, "protocols": ["tcp"]},
     "monetra": {"port_number": 8665, "protocols": ["tcp"]},
     "monetra-admin": {"port_number": 8666, "protocols": ["tcp"]},
+    "spartan": {"port_number": 8668, "protocols": ["tcp"]},
     "msi-cps-rm": {"port_number": 8675, "protocols": ["tcp"]},
     "msi-cps-rm-disc": {"port_number": 8675, "protocols": ["udp"]},
     "sun-as-jmxrmi": {"port_number": 8686, "protocols": ["tcp", "udp"]},
