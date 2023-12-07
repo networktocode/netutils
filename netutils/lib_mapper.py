@@ -124,6 +124,7 @@ _NTCTEMPLATES_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 _NTCTEMPLATES_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
 NTCTEMPLATES_LIB_MAPPER = {key: _NTCTEMPLATES_LIB_MAPPER[key] for key in sorted(_NTCTEMPLATES_LIB_MAPPER)}
 
+# NAPALM | Normalized
 NAPALM_LIB_MAPPER = {
     "aoscx": "aruba_aoscx",
     "asa": "cisco_asa",
@@ -143,6 +144,7 @@ NAPALM_LIB_MAPPER = {
     "vyos": "brocade_vyos",
 }
 
+# PYTNC | Normalized
 PYNTC_LIB_MAPPER = {
     "arista_eos_eapi": "arista_eos",
     "cisco_aireos_ssh": "cisco_wlc",
@@ -153,6 +155,7 @@ PYNTC_LIB_MAPPER = {
     "juniper_junos_netconf": "juniper_junos",
 }
 
+# Ansible | Normalized
 ANSIBLE_LIB_MAPPER = {
     "arista.eos.eos": "arista_eos",
     "arubanetworks.aoscx": "aruba_aoscx",
@@ -181,6 +184,7 @@ ANSIBLE_LIB_MAPPER = {
     "vyos.vyos.vyos": "vyos",
 }
 
+# PYATS | Normalized
 PYATS_LIB_MAPPER = {
     "asa": "cisco_asa",
     "bigip": "f5_tmsh",
@@ -195,6 +199,7 @@ PYATS_LIB_MAPPER = {
     "viptela": "cisco_viptella",
 }
 
+# SCRAPLI | Normalized
 SCRAPLI_LIB_MAPPER = {
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
@@ -204,6 +209,7 @@ SCRAPLI_LIB_MAPPER = {
     "juniper_junos": "juniper_junos",
 }
 
+# HIERCONFIG | Normalized
 HIERCONFIG_LIB_MAPPER = {
     "eos": "arista_eos",
     "fastiron": "ruckus_fastiron",
@@ -213,6 +219,7 @@ HIERCONFIG_LIB_MAPPER = {
     "nxos": "cisco_nxos",
 }
 
+# Netutils Parser | Normalized
 NETUTILSPARSER_LIB_MAPPER = {
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
@@ -236,6 +243,7 @@ NETUTILSPARSER_LIB_MAPPER = {
     "ubiquiti_airos": "ubiquiti_airos",
 }
 
+# Normalized | NAPALM
 NAPALM_LIB_MAPPER_REVERSE = {
     "arista_eos": "eos",
     "aruba_aoscx": "aoscx",
@@ -254,6 +262,7 @@ NAPALM_LIB_MAPPER_REVERSE = {
     "paloalto_panos": "panos",
 }
 
+# Normalized | PYTNC
 PYNTC_LIB_MAPPER_REVERSE = {
     "arista_eos": "arista_eos_eapi",
     "cisco_asa": "cisco_asa_ssh",
@@ -264,6 +273,7 @@ PYNTC_LIB_MAPPER_REVERSE = {
     "juniper_junos": "juniper_junos_netconf",
 }
 
+# Normalized | ANSIBLE
 ANSIBLE_LIB_MAPPER_REVERSE = {
     "arista_eos": "arista.eos.eos",
     "aruba_aoscx": "arubanetworks.aoscx",
@@ -292,6 +302,7 @@ ANSIBLE_LIB_MAPPER_REVERSE = {
     "vyos": "vyos.vyos.vyos",
 }
 
+# Normalized | PYATS
 PYATS_LIB_MAPPER_REVERSE = {
     "cisco_asa": "asa",
     "cisco_dnac": "dnac",
@@ -305,6 +316,7 @@ PYATS_LIB_MAPPER_REVERSE = {
     "nokia_sros": "sros",
 }
 
+# Normalized | Scrapli
 SCRAPLI_LIB_MAPPER_REVERSE = {
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
@@ -314,6 +326,7 @@ SCRAPLI_LIB_MAPPER_REVERSE = {
     "juniper_junos": "juniper_junos",
 }
 
+# Normalized | HIERCONFIG
 HIERCONFIG_LIB_MAPPER_REVERSE = {
     "arista_eos": "eos",
     "cisco_ios": "ios",
@@ -323,6 +336,7 @@ HIERCONFIG_LIB_MAPPER_REVERSE = {
     "ruckus_fastiron": "fastiron",
 }
 
+# Normalized | Netutils Parser
 NETUTILSPARSER_LIB_MAPPER_REVERSE = {
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
