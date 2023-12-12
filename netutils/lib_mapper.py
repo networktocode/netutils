@@ -3,6 +3,67 @@
 import copy
 import typing as t
 
+AERLEON_LIB_MAPPER = {
+    "arista_eos": "arista",
+    "aruba_aoscx": "aruba",
+    "brocade_fastiron": "brocade",
+    "brocade_netiron": "brocade",
+    "cisco_ios": "cisco",
+    "cisco_asa": "ciscoasa",
+    "cisco_nxos": "cisconx",
+    "cisco_iosxr": "ciscoxr",
+    "juniper_junos": "juniper",
+    "juniper_evo": "juniperevo",
+    "juniper_msmpc": "msmpc",
+    "juniper_srx": "srx",
+    "paloalto_panos": "paloalto",
+    "ruckus_fastiron": "brocade",
+    "vmware_nsxv": "nsxv",
+    "vmware_nsxt": "nsxt",
+}
+
+AERLEON_LIB_MAPPER_REVERSE = {
+    "arista": "arista_eos",
+    "aruba": "aruba_aoscx",
+    "brocade": "ruckus_fastiron",
+    "cisco": "cisco_ios",
+    "ciscoasa": "cisco_asa",
+    "cisconx": "cisco_nxos",
+    "ciscoxr": "cisco_iosxr",
+    "juniper": "juniper_junos",
+    "juniperevo": "juniper_evo",
+    "msmpc": "juniper_msmpc",
+    "srx": "juniper_srx",
+    "paloalto": "paloalto_panos",
+    "nsxv": "vmware_nsxv",
+    "nsxt": "vmware_nsxt",
+}
+
+CAPIRCA_LIB_MAPPER = {
+    "arista": "arista_eos",
+    "aruba": "aruba_aoscx",
+    "cisco": "cisco_ios",
+    "ciscoasa": "cisco_asa",
+    "cisconx:": "cisco_nxos",
+    "ciscoxr": "cisco_iosxr",
+    "juniper": "juniper_junos",
+    "nsxv": "vmware_nsxv",
+    "srx": "juniper_srx",
+    "srxlo": "juniper_srx",
+}
+
+CAPIRCA_LIB_MAPPER_REVERSE = {
+    "arista_eos": "arista",
+    "aruba_aoscx": "aruba",
+    "cisco_ios": "cisco",
+    "cisco_asa": "ciscoasa",
+    "cisco_nxos": "cisconx:",
+    "cisco_iosxr": "ciscoxr",
+    "juniper_junos": "juniper",
+    "vmware_nsxv": "nsxv",
+    "juniper_srx": "srxlo",
+}
+
 _NETMIKO_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {
     "a10": {},
     "accedian": {},
@@ -360,6 +421,8 @@ NETUTILS_LIBMAPPER_MAPPER = {
     "scrapli": SCRAPLI_LIB_MAPPER,
     "hier_config": HIERCONFIG_LIB_MAPPER,
     "netutils_parser": NETUTILSPARSER_LIB_MAPPER,
+    "capirca": CAPIRCA_LIB_MAPPER,
+    "aerleon": AERLEON_LIB_MAPPER,
 }
 
 # Deep copy the reverse, where there is no actual translation happening with special
