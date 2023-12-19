@@ -6,7 +6,7 @@
 | cisco_aireos | → | cisco_aireos |
 | cisco_asa | → | cisco_asa |
 | cisco_ios | → | cisco_ios |
-| cisco_iosxr | → | cisco_iosxr |
+| cisco_iosxr | → | cisco_xr |
 | cisco_nxos | → | cisco_nxos |
 | citrix_netscaler | → | citrix_netscaler |
 | extreme_netiron | → | extreme_netiron |
