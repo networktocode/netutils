@@ -8,9 +8,10 @@
 | cisco_ios | → | ios |
 | cisco_nxos | → | nxos |
 | cisco_wlc | → | cisco_wlc_ssh |
+| cisco_xe | → | cisco_ios |
 | cisco_xr | → | iosxr |
 | fortinet | → | fortios |
-| huawei_vrp | → | huawei |
+| huawei | → | huawei_vrp |
 | juniper_junos | → | junos |
 | mikrotik_routeros | → | ros |
 | nokia_sros | → | sros |
