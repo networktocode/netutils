@@ -32,6 +32,8 @@ def test_lib_mapper_reverse(lib):
         _mapper.pop("nxos_ssh")
     mapper = dict((v, k) for k, v in _mapper.items())
     rev_mapper = getattr(lib_mapper, f"{lib}_LIB_MAPPER_REVERSE")
+    if lib in ["ANSIBLE", "NAPALM", "PYATS", "PYNTC"]:
+        rev_mapper.pop("cisco_xe")
     assert mapper == rev_mapper
 
 
@@ -46,6 +48,6 @@ def test_lib_mapper_alpha(lib):
 
 
 def test_netutils_parser():
-    """Test that the paser_map in compliance have been added to NETUTILSPARSER lib mappers."""
+    """Test that the parser_map in compliance have been added to NETUTILSPARSER lib mappers."""
     assert parser_map.keys() == lib_mapper.NETUTILSPARSER_LIB_MAPPER.keys()
     assert list(parser_map.keys()) == sorted(list(lib_mapper.NETUTILSPARSER_LIB_MAPPER.keys()))

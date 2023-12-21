@@ -5,6 +5,7 @@
 | cisco_ios | → | iosxe |
 | cisco_nxos | → | nxos |
 | cisco_viptella | → | viptela |
+| cisco_xe | → | iosxe |
 | cisco_xr | → | iosxr |
 | f5_tmsh | → | bigip |
 | juniper_junos | → | junos |
