@@ -34,6 +34,18 @@ TEMPLATE = {
 
 MAPPER = {
     "LIB_MAPPER_TEMPLATE": {
+        "aerleon": {
+            "header_src": "AERLEON",
+            "header_dst": "NORMALIZED",
+            "_dict": lib_mapper.AERLEON_LIB_MAPPER,
+            "_file": "docs/user/lib_mapper/aerleon.md",
+        },
+        "aerleon_reverse": {
+            "header_src": "NORMALIZED",
+            "header_dst": "AERLEON",
+            "_dict": lib_mapper.AERLEON_LIB_MAPPER_REVERSE,
+            "_file": "docs/user/lib_mapper/aerleon_reverse.md",
+        },
         "ansible": {
             "header_src": "ANSIBLE",
             "header_dst": "NORMALIZED",
@@ -45,6 +57,18 @@ MAPPER = {
             "header_dst": "ANSIBLE",
             "_dict": lib_mapper.ANSIBLE_LIB_MAPPER_REVERSE,
             "_file": "docs/user/lib_mapper/ansible_reverse.md",
+        },
+        "capirca": {
+            "header_src": "CAPIRCA",
+            "header_dst": "NORMALIZED",
+            "_dict": lib_mapper.CAPIRCA_LIB_MAPPER,
+            "_file": "docs/user/lib_mapper/capirca.md",
+        },
+        "capirca_reverse": {
+            "header_src": "NORMALIZED",
+            "header_dst": "CAPIRCA",
+            "_dict": lib_mapper.CAPIRCA_LIB_MAPPER_REVERSE,
+            "_file": "docs/user/lib_mapper/capirca_reverse.md",
         },
         "hierconfig": {
             "header_src": "HIERCONFIG",
