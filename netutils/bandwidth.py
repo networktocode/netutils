@@ -192,11 +192,11 @@ def bytes_to_name(speed: float, nbr_decimal: int = 0) -> str:
 
 
 def name_to_name(speed: str, speed_type: str, nbr_decimal: int = 0) -> str:
-    """Method to convert a short bandwidth name to another bandwdth name.
+    """Method to convert a short bandwidth name to another bandwidth name.
 
     Args:
         speed: Bandwidth to be converted like `100GBps`.
-        speed_type: Name to convert the bandwdth to like `MBps`.
+        speed_type: Name to convert the bandwidth to like `MBps`.
         nbr_decimal: Precision of end result, ie number of decimal points to round to. Defaults to 0.
 
     Returns:
