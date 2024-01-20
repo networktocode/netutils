@@ -1,10 +1,12 @@
 | NORMALIZED | | ANSIBLE |
 | ---------- | -- | ------ |
+| a10 | → | a10.acos_axapi.a10 |
 | arista_eos | → | arista.eos.eos |
 | aruba_aoscx | → | arubanetworks.aoscx |
 | ciena_saos | → | ciena.saos6.saos6 |
 | cisco_asa | → | cisco.asa.asa |
 | cisco_ios | → | cisco.ios.ios |
+| cisco_meraki | → | cisco.meraki.meraki |
 | cisco_nxos | → | cisco.nxos.nxos |
 | cisco_xe | → | cisco.ios.ios |
 | cisco_xr | → | cisco.iosxr.iosxr |
@@ -17,12 +19,15 @@
 | extreme_nos | → | community.network.nos |
 | extreme_slx | → | community.network.slxos |
 | extreme_vsp | → | community.network.voss |
+| fortinet | → | fortinet.fortios.fortios |
 | huawei | → | community.network.ce |
 | juniper_junos | → | junipernetworks.junos.junos |
 | lenovo_cnos | → | community.network.cnos |
 | lenovo_enos | → | community.network.enos |
 | mikrotik_routeros | → | community.network.routeros |
 | nokia_sros | → | community.network.sros |
+| paloalto_panos | → | paloaltonetworks.panos.panos |
 | pluribus | → | community.network.netvisor |
 | ruckus_icx | → | community.network.icx |
+| sonic | → | dellemc.enterprise_sonic.sonic |
 | vyos | → | vyos.vyos.vyos |
