@@ -1,4 +1,4 @@
-"""Test for the tiem functions."""
+"""Test for the time functions."""
 import pytest
 from netutils.time import uptime_string_to_seconds, uptime_seconds_to_string
 
