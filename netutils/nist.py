@@ -21,71 +21,72 @@ def get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any], api_key: s
 
     if os_platform_data.get("isspecial"):
         url_args["type"] = url_args.get("type").lower()  # type: ignore
-        # juniper:junos:12.1x47
+        # e.g. base_ext = juniper:junos:12.1x47
         base_ext = f"{url_args['base_url']}:{url_args.get('main')}.{url_args.get('minor')}{url_args.get('type')}{url_args.get('build')}"
     else:
+        # e.g. base_ext = juniper:junos:12.1
         base_ext = f"{url_args['base_url']}:{url_args.get('main')}.{url_args.get('minor')}"
 
     url_args["base_ext"] = base_ext
 
     # X Series (Special) Examples: 12.1x47:d40, 12.2x50:d41.1
     if url_args["isspecial"]:
-        if url_args["service_respin"] is not None:
-            # juniper:junos:12.2x50:d41.1:*:*:*:*:*:*
+        if url_args["service_respin"]:
+            # nist_urls.append(juniper:junos:12.2x50:d41.1:*:*:*:*:*:*)
             nist_urls.append(
                 f"{url_args['base_ext']}:{url_args.get('service')}{url_args.get('service_build')}.{url_args.get('service_respin')}{url_args['delim_six']}"
             )
-            # juniper:junos:12.2x50-d41.1:*:*:*:*:*:*:*
+            # nist_urls.append(juniper:junos:12.2x50-d41.1:*:*:*:*:*:*:*)
             nist_urls.append(
                 f"{url_args['base_ext']}-{url_args.get('service')}{url_args.get('service_build')}.{url_args.get('service_respin')}{url_args['delim_seven']}"
             )
         else:
-            # juniper:junos:12.1x47:d40:*:*:*:*:*:*
+            # nist_urls.append(juniper:junos:12.1x47:d40:*:*:*:*:*:*)
             nist_urls.append(
                 f"{url_args['base_ext']}:{url_args.get('service')}{url_args.get('service_build')}{url_args['delim_six']}"
             )
-            # juniper:junos:12.1x47-d40:*:*:*:*:*:*:*
+            # nist_urls.append(juniper:junos:12.1x47-d40:*:*:*:*:*:*:*)
             nist_urls.append(
                 f"{url_args['base_ext']}-{url_args.get('service')}{url_args.get('service_build')}{url_args['delim_seven']}"
             )
         return nist_urls
 
-    if url_args.get("type") is None:
-        # juniper:junos:12.1:-:*:*:*:*:*:*
+    if not url_args.get("type"):
+        # nist_urls.append(juniper:junos:12.1:-:*:*:*:*:*:*)
         nist_urls.append(f"{url_args['base_ext']}:-{url_args['delim_six']}")
         return nist_urls
 
-    if url_args.get("build") is None:
-        # juniper:junos:10.4s:*:*:*:*:*:*:*
+    if not url_args.get("build"):
+        # nist_urls.append(juniper:junos:10.4s:*:*:*:*:*:*:*)
         nist_urls.append(f"{url_args['base_ext']}{url_args.get('type')}{url_args['delim_seven']}")
         return nist_urls
 
-    if url_args.get("build") is not None and url_args.get("service") is None:
-        # juniper:junos:12.3r12:*:*:*:*:*:*:*
+    if url_args.get("build") and not url_args.get("service"):
+        # nist_urls.append(juniper:junos:12.3r12:*:*:*:*:*:*:*)
         nist_urls.append(
             f"{url_args['base_ext']}{url_args.get('type')}{url_args.get('build')}{url_args['delim_seven']}"
         )
-        # juniper:junos:12.2:r1:*:*:*:*:*:*
+        # nist_urls.append(juniper:junos:12.2:r1:*:*:*:*:*:*)
         nist_urls.append(f"{url_args['base_ext']}:{url_args.get('type')}{url_args.get('build')}{url_args['delim_six']}")
         return nist_urls
 
-    if url_args.get("service") is not None and url_args.get("service_respin") is not None:
-        # juniper:junos:11.4r13:s2.1:*:*:*:*:*:*
+    if url_args.get("service") and url_args.get("service_respin"):
+        # nist_urls.append(juniper:junos:11.4r13:s2.1:*:*:*:*:*:*)
         nist_urls.append(
             f"{url_args['base_ext']}{url_args.get('type')}{url_args.get('build')}:{url_args.get('service')}{url_args.get('service_build')}.{url_args.get('service_respin')}{url_args['delim_six']}"
         )
-        # juniper:junos:12.2:r8-s2.1:*:*:*:*:*:*
+        # nist_urls.append(juniper:junos:12.2:r8-s2.1:*:*:*:*:*:*)
         nist_urls.append(
             f"{url_args['base_ext']}{url_args.get('type')}{url_args.get('build')}-{url_args.get('service')}{url_args.get('service_build')}.{url_args.get('service_respin')}{url_args['delim_seven']}"
         )
         return nist_urls
 
-    if url_args.get("service") is not None:
-        # juniper:junos:11.4r13:s2:*:*:*:*:*:*
+    if url_args.get("service"):
+        # nist_urls.append(juniper:junos:11.4r13:s2:*:*:*:*:*:*)
         nist_urls.append(
             f"{url_args['base_ext']}{url_args.get('type')}{url_args.get('build')}:{url_args.get('service')}{url_args.get('service_build')}{url_args['delim_six']}"
         )
-        # juniper:junos:12.2:r8-s2:*:*:*:*:*:*
+        # nist_urls.append(juniper:junos:12.2:r8-s2:*:*:*:*:*:*)
         nist_urls.append(
             f"{url_args['base_ext']}{url_args.get('type')}{url_args.get('build')}-{url_args.get('service')}{url_args.get('service_build')}{url_args['delim_seven']}"
         )
