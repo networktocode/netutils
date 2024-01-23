@@ -115,9 +115,12 @@ def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any], api_key: str) ->
     url_args["delim_seven"] = ":*" * 7
     url_args["version_string"] = url_args.get("version_string").replace("-", ":")  # type: ignore
 
+    version_string = url_args.get("version_string", "")
     for escape_char in escape_list:
-        if re.search(escape_char, url_args.get("version_string")):  # type: ignore
-            url_args["version_string"] = re.sub(escape_char, "\\" + escape_char, url_args["version_string"])
+        version_string = re.sub(escape_char, "\\" + escape_char, version_string)
+        
+    url_args["version_string"] = version_string
+
     nist_urls.append(
         f"{url_args['base_url']}{url_args['vendor']}:{url_args['os_type']}:{url_args['version_string']}{url_args['delim_seven']}"
     )
