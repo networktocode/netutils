@@ -3,7 +3,7 @@ import re
 import typing as t
 
 
-def get_nist_urls_juniper_junos(   # pylint: disable=R0911
+def get_nist_urls_juniper_junos(  # pylint: disable=R0911
     os_platform_data: t.Dict[str, t.Any], api_key: str
 ) -> t.List[str]:
     """Create a list of possible NIST Url strings for JuniperPlatform.
