@@ -5,7 +5,7 @@ import typing as t
 
 def get_nist_urls_juniper_junos(
     os_platform_data: t.Dict[str, t.Any], api_key: str
-    ) -> t.List[str]:  # pylint: disable=too-many-return-statements
+) -> t.List[str]:  # pylint: disable=too-many-return-statements
     """Create a list of possible NIST Url strings for JuniperPlatform.
 
     Args:
