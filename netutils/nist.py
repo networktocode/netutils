@@ -3,9 +3,9 @@ import re
 import typing as t
 
 
-def get_nist_urls_juniper_junos(
+def get_nist_urls_juniper_junos(   # pylint: disable=R0911
     os_platform_data: t.Dict[str, t.Any], api_key: str
-) -> t.List[str]:  # pylint: disable=too-many-return-statements
+) -> t.List[str]:
     """Create a list of possible NIST Url strings for JuniperPlatform.
 
     Args:
@@ -32,7 +32,7 @@ def get_nist_urls_juniper_junos(
     url_args["base_ext"] = base_ext
 
     # X Series (Special) Examples: 12.1x47:d40, 12.2x50:d41.1
-    if url_args["isspecial"] and url_args["service_respin"]:  # pylint: disable=no-else-return
+    if url_args["isspecial"] and url_args["service_respin"]:  # pylint: disable=R1705
         # nist_urls.append(juniper:junos:12.2x50:d41.1:*:*:*:*:*:*)
         nist_urls.append(
             f"{url_args['base_ext']}:{url_args['service']}{url_args['service_build']}.{url_args['service_respin']}{url_args['delim_six']}"
