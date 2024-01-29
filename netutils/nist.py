@@ -31,7 +31,6 @@ def get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any], api_key: s
 
     # X Series (Special) Examples: 12.1x47:d40, 12.2x50:d41.1
     if url_args["isspecial"] and url_args["service_respin"]:
-
         # nist_urls.append(juniper:junos:12.2x50:d41.1:*:*:*:*:*:*)
         nist_urls.append(
             f"{url_args['base_ext']}:{url_args['service']}{url_args['service_build']}.{url_args['service_respin']}{url_args['delim_six']}"
@@ -64,9 +63,7 @@ def get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any], api_key: s
 
     if url_args.get("build") and not url_args.get("service"):
         # nist_urls.append(juniper:junos:12.3r12:*:*:*:*:*:*:*)
-        nist_urls.append(
-            f"{url_args['base_ext']}{url_args['type']}{url_args['build']}{url_args['delim_seven']}"
-        )
+        nist_urls.append(f"{url_args['base_ext']}{url_args['type']}{url_args['build']}{url_args['delim_seven']}")
         # nist_urls.append(juniper:junos:12.2:r1:*:*:*:*:*:*)
         nist_urls.append(f"{url_args['base_ext']}:{url_args['type']}{url_args['build']}{url_args['delim_six']}")
         return nist_urls
