@@ -1,0 +1,22 @@
+| NORMALIZED | | NETUTILSPARSER |
+| ---------- | -- | ------ |
+| arista_eos | → | arista_eos |
+| aruba_aoscx | → | aruba_aoscx |
+| bigip_f5 | → | bigip_f5 |
+| cisco_aireos | → | cisco_aireos |
+| cisco_asa | → | cisco_asa |
+| cisco_ios | → | cisco_ios |
+| cisco_nxos | → | cisco_nxos |
+| cisco_xr | → | cisco_iosxr |
+| citrix_netscaler | → | citrix_netscaler |
+| extreme_netiron | → | extreme_netiron |
+| fortinet_fortios | → | fortinet_fortios |
+| juniper_junos | → | juniper_junos |
+| linux | → | linux |
+| mikrotik_routeros | → | mikrotik_routeros |
+| mrv_optiswitch | → | mrv_optiswitch |
+| netscaler | → | netscaler |
+| nokia_sros | → | nokia_sros |
+| paloalto_panos | → | paloalto_panos |
+| ruckus_fastiron | → | ruckus_fastiron |
+| ubiquiti_airos | → | ubiquiti_airos |

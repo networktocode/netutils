@@ -1,7 +1,7 @@
 | Filter name | Function |
 | ---------- | ------ |
 | asn_to_int | netutils.asn.asn_to_int |
-| int_to_asn | netutils.asn.int_to_asn |
+| int_to_asdot | netutils.asn.int_to_asdot |
 | bits_to_name | netutils.bandwidth.bits_to_name |
 | bytes_to_name | netutils.bandwidth.bytes_to_name |
 | name_to_bits | netutils.bandwidth.name_to_bits |
@@ -20,6 +20,7 @@
 | paloalto_panos_brace_to_set | netutils.config.conversion.paloalto_panos_brace_to_set |
 | fqdn_to_ip | netutils.dns.fqdn_to_ip |
 | is_fqdn_resolvable | netutils.dns.is_fqdn_resolvable |
+| hash_data | netutils.hash.hash_data |
 | abbreviated_interface_name | netutils.interface.abbreviated_interface_name |
 | abbreviated_interface_name_list | netutils.interface.abbreviated_interface_name_list |
 | canonical_interface_name | netutils.interface.canonical_interface_name |

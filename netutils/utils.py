@@ -5,7 +5,7 @@ from importlib import import_module
 
 _JINJA2_FUNCTION_MAPPINGS = {
     "asn_to_int": "asn.asn_to_int",
-    "int_to_asn": "asn.int_to_asn",
+    "int_to_asdot": "asn.int_to_asdot",
     "name_to_bits": "bandwidth.name_to_bits",
     "name_to_bytes": "bandwidth.name_to_bytes",
     "bits_to_name": "bandwidth.bits_to_name",
@@ -90,6 +90,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_upgrade_path": "os_version.get_upgrade_path",
     "os_platform_object_builder": "platform_mapper.os_platform_object_builder",
     "juniper_junos_version_parser": "os_version.juniper_junos_version_parser",
+    "hash_data": "hash.hash_data",
 }
 
 

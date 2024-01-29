@@ -8,24 +8,25 @@ from . import parser  # pylint: disable=relative-beyond-top-level
 
 parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "arista_eos": parser.EOSConfigParser,
+    "aruba_aoscx": parser.ArubaConfigParser,
+    "bigip_f5": parser.F5ConfigParser,
+    "cisco_aireos": parser.AIREOSConfigParser,
+    "cisco_asa": parser.ASAConfigParser,
     "cisco_ios": parser.IOSConfigParser,
     "cisco_iosxr": parser.IOSXRConfigParser,
     "cisco_nxos": parser.NXOSConfigParser,
-    "cisco_aireos": parser.AIREOSConfigParser,
     "citrix_netscaler": parser.NetscalerConfigParser,
-    "linux": parser.LINUXConfigParser,
-    "bigip_f5": parser.F5ConfigParser,
-    "juniper_junos": parser.JunosConfigParser,
-    "cisco_asa": parser.ASAConfigParser,
-    "fortinet_fortios": parser.FortinetConfigParser,
-    "nokia_sros": parser.NokiaConfigParser,
-    "netscaler": parser.NetscalerConfigParser,
-    "aruba_aoscx": parser.ArubaConfigParser,
-    "mrv_optiswitch": parser.OptiswitchConfigParser,
     "extreme_netiron": parser.NetironConfigParser,
-    "paloalto_panos": parser.PaloAltoNetworksConfigParser,
+    "fortinet_fortios": parser.FortinetConfigParser,
+    "juniper_junos": parser.JunosConfigParser,
+    "linux": parser.LINUXConfigParser,
     "mikrotik_routeros": parser.RouterOSConfigParser,
+    "mrv_optiswitch": parser.OptiswitchConfigParser,
+    "netscaler": parser.NetscalerConfigParser,
+    "nokia_sros": parser.NokiaConfigParser,
+    "paloalto_panos": parser.PaloAltoNetworksConfigParser,
     "ruckus_fastiron": parser.FastironConfigParser,
+    "ubiquiti_airos": parser.UbiquitiAirOSConfigParser,
 }
 
 
@@ -96,6 +97,7 @@ def _is_feature_ordered_compliant(feature_intended_cfg: str, feature_actual_cfg:
         bool
 
     Examples:
+        >>> from netutils.config.compliance import _is_feature_ordered_compliant
         >>> feature_intended_cfg = '''router bgp 100
         ...   bgp router-id 10.6.6.5'''
         >>>
@@ -133,6 +135,7 @@ def compliance(
         dict: Compliance information per feature.
 
     Examples:
+        >>> from netutils.config.compliance import compliance
         >>> features = [
         ...     {
         ...         "name": "hostname",
@@ -205,6 +208,7 @@ def config_section_not_parsed(
         Config that was not parsed or section not found.
 
     Examples:
+        >>> from netutils.config.compliance import config_section_not_parsed
         >>> features = [{
         ...    "name": "BGP",
         ...    "ordered": True,
@@ -246,6 +250,7 @@ def diff_network_config(compare_config: str, base_config: str, network_os: str) 
         base_config: The string of additional commands in compare_config separated by a newline.
 
     Examples:
+        >>> from netutils.config.compliance import diff_network_config
         >>> compare_config = '''router bgp 100
         ...  bgp router-id 10.6.6.5
         ... !
@@ -299,6 +304,7 @@ def feature_compliance(
         dict: Compliance information of a single feature.
 
     Examples:
+        >>> from netutils.config.compliance import feature_compliance
         >>> feature = {
         ...     "name": "ntp",
         ...     "ordered": True,
@@ -358,6 +364,7 @@ def find_unordered_cfg_lines(intended_cfg: str, actual_cfg: str) -> t.Tuple[bool
         list: List of tuples with unordered_compliant cfg lines.
 
     Examples:
+        >>> from netutils.config.compliance import find_unordered_cfg_lines
         >>> intended_cfg = '''
         ... ntp server 10.10.10.10
         ... ntp server 10.10.10.11
@@ -398,6 +405,7 @@ def section_config(feature: t.Dict[str, t.Union[str, bool, t.List[str]]], device
         The hash report data mapping file hashes to report data.
 
     Examples:
+        >>> from netutils.config.compliance import section_config
         >>> feature =  {
         ...    "name": "BGP",
         ...    "ordered": False,
