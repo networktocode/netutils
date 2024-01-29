@@ -30,25 +30,26 @@ def get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any], api_key: s
     url_args["base_ext"] = base_ext
 
     # X Series (Special) Examples: 12.1x47:d40, 12.2x50:d41.1
-    if url_args["isspecial"]:
-        if url_args["service_respin"]:
-            # nist_urls.append(juniper:junos:12.2x50:d41.1:*:*:*:*:*:*)
-            nist_urls.append(
-                f"{url_args['base_ext']}:{url_args['service']}{url_args['service_build']}.{url_args['service_respin']}{url_args['delim_six']}"
-            )
-            # nist_urls.append(juniper:junos:12.2x50-d41.1:*:*:*:*:*:*:*)
-            nist_urls.append(
-                f"{url_args['base_ext']}-{url_args['service']}{url_args['service_build']}.{url_args['service_respin']}{url_args['delim_seven']}"
-            )
-        else:
-            # nist_urls.append(juniper:junos:12.1x47:d40:*:*:*:*:*:*)
-            nist_urls.append(
-                f"{url_args['base_ext']}:{url_args['service']}{url_args['service_build']}{url_args['delim_six']}"
-            )
-            # nist_urls.append(juniper:junos:12.1x47-d40:*:*:*:*:*:*:*)
-            nist_urls.append(
-                f"{url_args['base_ext']}-{url_args['service']}{url_args['service_build']}{url_args['delim_seven']}"
-            )
+    if url_args["isspecial"] and url_args["service_respin"]:
+
+        # nist_urls.append(juniper:junos:12.2x50:d41.1:*:*:*:*:*:*)
+        nist_urls.append(
+            f"{url_args['base_ext']}:{url_args['service']}{url_args['service_build']}.{url_args['service_respin']}{url_args['delim_six']}"
+        )
+        # nist_urls.append(juniper:junos:12.2x50-d41.1:*:*:*:*:*:*:*)
+        nist_urls.append(
+            f"{url_args['base_ext']}-{url_args['service']}{url_args['service_build']}.{url_args['service_respin']}{url_args['delim_seven']}"
+        )
+        return nist_urls
+    elif url_args["isspecial"]:
+        # nist_urls.append(juniper:junos:12.1x47:d40:*:*:*:*:*:*)
+        nist_urls.append(
+            f"{url_args['base_ext']}:{url_args['service']}{url_args['service_build']}{url_args['delim_six']}"
+        )
+        # nist_urls.append(juniper:junos:12.1x47-d40:*:*:*:*:*:*:*)
+        nist_urls.append(
+            f"{url_args['base_ext']}-{url_args['service']}{url_args['service_build']}{url_args['delim_seven']}"
+        )
         return nist_urls
 
     if not url_args.get("type"):
@@ -118,7 +119,7 @@ def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any], api_key: str) ->
     version_string = url_args.get("version_string", "")
     for escape_char in escape_list:
         version_string = re.sub(escape_char, "\\" + escape_char, version_string)
-        
+
     url_args["version_string"] = version_string
 
     nist_urls.append(
