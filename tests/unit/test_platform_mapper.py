@@ -110,8 +110,8 @@ platform_nist_urls = [
     {
         "sent": {"vendor": "juniper", "platform": "junos", "version": "12.3R12-S15"},
         "received": [
-            "https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.3R12:S15:*:*:*:*:*:*",
-            "https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.3R12-S15:*:*:*:*:*:*:*",
+            "https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.3r12:s15:*:*:*:*:*:*",
+            "https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.3r12-s15:*:*:*:*:*:*:*",
         ],
     },
     {
