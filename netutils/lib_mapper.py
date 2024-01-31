@@ -370,6 +370,26 @@ NETUTILSPARSER_LIB_MAPPER = {
     "ubiquiti_airos": "ubiquiti_airos",
 }
 
+# Forward Networks Parser | Normalized
+FORWARDNETWORKS_LIB_MAPPER = {
+    "ARISTA_EOS": "arista_eos",
+    "ARUBA_SWITCH": "aruba_aoscx",
+    "ASA": "cisco_asa",
+    "EXTREME_NOS": "extreme_netiron",
+    "FORTINET": "fortinet_fortios",
+    "F5": "bigip_f5",
+    "IOS": "cisco_ios",
+    "IOS_XE": "cisco_ios",
+    "IOS_XR": "cisco_iosxr",
+    "JUNOS": "juniper_junos",
+    "LINUX": "linux",
+    "LINUX_OVS_OFCTL": "linux",
+    "NETSCALER": "netscaler",
+    "NXOS": "cisco_nxos",
+    "PAN_OS": "paloalto_panos",
+    "SRX": "juniper_junos",
+}
+
 # Normalized | NAPALM
 NAPALM_LIB_MAPPER_REVERSE = {
     "arista_eos": "eos",
@@ -489,6 +509,23 @@ NETUTILSPARSER_LIB_MAPPER_REVERSE = {
     "paloalto_panos": "paloalto_panos",
     "ruckus_fastiron": "ruckus_fastiron",
     "ubiquiti_airos": "ubiquiti_airos",
+}
+
+# Normalized | Forward Networks Parser
+FORWARDNETWORKS_LIB_MAPPER_REVERSE = {
+    "arista_eos": "ARISTA_EOS",
+    "aruba_aoscx": "ARUBA_SWITCH",
+    "bigip_f5": "F5",
+    "cisco_asa": "ASA",
+    "cisco_ios": "IOS",
+    "cisco_iosxr": "IOS_XR",
+    "cisco_nxos": "NXOS",
+    "extreme_netiron": "EXTREME_NOS",
+    "fortinet_fortios": "FORTINET",
+    "juniper_junos": "JUNOS",
+    "linux": "LINUX",
+    "netscaler": "NETSCALER",
+    "paloalto_panos": "PAN_OS",
 }
 
 # Deep copy the reverse, where there is no actual translation happening.
