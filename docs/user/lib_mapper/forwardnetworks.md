@@ -1,11 +1,11 @@
 | FORWARDNETWORKS | | NORMALIZED |
-| --------------- | -- | ------ |
+| ---------- | -- | ------ |
 | ARISTA_EOS | → | arista_eos |
 | ARUBA_SWITCH | → | aruba_aoscx |
 | ASA | → | cisco_asa |
 | EXTREME_NOS | → | extreme_netiron |
-| FORTINET | → | fortinet_fortios |
 | F5 | → | bigip_f5 |
+| FORTINET | → | fortinet_fortios |
 | IOS | → | cisco_ios |
 | IOS_XE | → | cisco_ios |
 | IOS_XR | → | cisco_iosxr |
