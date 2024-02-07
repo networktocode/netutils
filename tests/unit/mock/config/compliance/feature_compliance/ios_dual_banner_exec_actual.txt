@@ -1,0 +1,14 @@
+hostname dual-banner
+!
+banner exec ^C
+=========
+actual config exec banner
+-========
+^C
+banner motd ^C
+======
+actual config motd banner
+======
+   || ($hostname) ||
+^C
+!
