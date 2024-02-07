@@ -436,6 +436,10 @@ def section_config(feature: t.Dict[str, t.Union[str, bool, t.List[str]]], device
     os_parser = parser_map[network_os]
     config_parsed = os_parser(device_cfg)
     for line in config_parsed.config_lines:
+        # If multiple banners, line after first banner will be None.
+        # This conditional allows multiple banners in config.
+        if not line.config_line:
+            continue
         if match:
             if line.parents:  # pylint: disable=no-else-continue
                 section_config_list.append(line.config_line)
