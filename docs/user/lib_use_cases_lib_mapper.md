@@ -47,6 +47,14 @@ Another use case could be using an example like the above in an Ansible filter. 
 
 --8<-- "docs/user/lib_mapper/ansible_reverse.md"
 
+## Forward Networks Mapper
+
+--8<-- "docs/user/lib_mapper/forwardnetworks.md"
+
+## Reverse Forward Networks Mapper
+
+--8<-- "docs/user/lib_mapper/forwardnetworks_reverse.md"
+
 ## Hier Config Mapper
 
 --8<-- "docs/user/lib_mapper/hierconfig.md"

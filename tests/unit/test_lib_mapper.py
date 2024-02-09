@@ -1,4 +1,5 @@
 """Test for the lib_mapper definitions."""
+
 import pytest
 
 from netutils import lib_mapper
@@ -23,6 +24,8 @@ def test_lib_mapper():
     assert lib_mapper.NAPALM_LIB_MAPPER_REVERSE[lib_mapper.ANSIBLE_LIB_MAPPER["cisco.ios.ios"]] == "ios"
     assert lib_mapper.HIERCONFIG_LIB_MAPPER["ios"] == "cisco_ios"
     assert lib_mapper.HIERCONFIG_LIB_MAPPER_REVERSE[lib_mapper.HIERCONFIG_LIB_MAPPER["ios"]] == "ios"
+    assert lib_mapper.FORWARDNETWORKS_LIB_MAPPER["IOS"] == "cisco_ios"
+    assert lib_mapper.FORWARDNETWORKS_LIB_MAPPER_REVERSE[lib_mapper.FORWARDNETWORKS_LIB_MAPPER["IOS"]] == "IOS"
 
 
 @pytest.mark.parametrize("lib", LIBRARIES)

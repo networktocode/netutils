@@ -70,6 +70,18 @@ MAPPER = {
             "_dict": lib_mapper.CAPIRCA_LIB_MAPPER_REVERSE,
             "_file": "docs/user/lib_mapper/capirca_reverse.md",
         },
+        "forwardnetworks": {
+            "header_src": "FORWARDNETWORKS",
+            "header_dst": "NORMALIZED",
+            "_dict": lib_mapper.FORWARDNETWORKS_LIB_MAPPER,
+            "_file": "docs/user/lib_mapper/forwardnetworks.md",
+        },
+        "forwardnetworks_reverse": {
+            "header_src": "NORMALIZED",
+            "header_dst": "FORWARDNETWORKS",
+            "_dict": lib_mapper.FORWARDNETWORKS_LIB_MAPPER_REVERSE,
+            "_file": "docs/user/lib_mapper/forwardnetworks_reverse.md",
+        },
         "hierconfig": {
             "header_src": "HIERCONFIG",
             "header_dst": "NORMALIZED",
