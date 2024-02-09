@@ -91,7 +91,12 @@ def test_feature_compliance(_file, get_text_data, get_python_data):
     received_data = get_python_data(truncate_file + "_received.py", "data")
     feature = get_python_data(truncate_file + "_feature.py", "feature")
     nos = get_python_data(truncate_file + "_feature.py", "network_os")
-    assert compliance.feature_compliance(feature, actual_config, intended_config, nos) == received_data
+
+    # Parse feature configs from config files
+    backup_str = compliance.section_config(feature, actual_config, nos)
+    intended_str = compliance.section_config(feature, intended_config, nos)
+
+    assert compliance.feature_compliance(feature, backup_str, intended_str, nos) == received_data
 
 
 def test_incorrect_cfg_type():
