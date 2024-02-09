@@ -3,6 +3,7 @@
 import copy
 import typing as t
 
+# AERLEON | Normalized
 AERLEON_LIB_MAPPER = {
     "arista": "arista_eos",
     "aruba": "aruba_aoscx",
@@ -34,6 +35,7 @@ AERLEON_LIB_MAPPER = {
     "windows_advfirewall": "windows_advfirewall",
 }
 
+# Normalized | AERLEON
 AERLEON_LIB_MAPPER_REVERSE = {
     "arista_eos": "arista",
     "aruba_aoscx": "aruba",
@@ -66,6 +68,8 @@ AERLEON_LIB_MAPPER_REVERSE = {
     "windows_advfirewall": "windows_advfirewall",
 }
 
+
+# CAPIRCA | Normalized
 CAPIRCA_LIB_MAPPER = {
     "arista": "arista_eos",
     "aruba": "aruba_aoscx",
@@ -97,6 +101,7 @@ CAPIRCA_LIB_MAPPER = {
     "windows_advfirewall": "windows_advfirewall",
 }
 
+# Normalized | CAPIRCA
 CAPIRCA_LIB_MAPPER_REVERSE = {
     "arista_eos": "arista",
     "aruba_aoscx": "aruba",
@@ -284,12 +289,14 @@ PYNTC_LIB_MAPPER = {
 
 # Ansible | Normalized
 ANSIBLE_LIB_MAPPER = {
+    "a10.acos_axapi.a10": "a10",
     "arista.eos.eos": "arista_eos",
     "arubanetworks.aoscx": "aruba_aoscx",
     "ciena.saos6.saos6": "ciena_saos",
     "cisco.asa.asa": "cisco_asa",
     "cisco.ios.ios": "cisco_ios",
     "cisco.iosxr.iosxr": "cisco_xr",
+    "cisco.meraki.meraki": "cisco_meraki",
     "cisco.nxos.nxos": "cisco_nxos",
     "community.network.ce": "huawei",
     "community.network.cnos": "lenovo_cnos",
@@ -304,10 +311,14 @@ ANSIBLE_LIB_MAPPER = {
     "community.network.slxos": "extreme_slx",
     "community.network.sros": "nokia_sros",
     "community.network.voss": "extreme_vsp",
+    "dellemc.enterprise_sonic.sonic": "sonic",
     "dellemc.os10.0s10": "dell_os10",
     "dellemc.os6.os6": "dell_os6",
     "dellemc.os9.os9": "dell_os9",
+    "f5networks.f5_bigip.bigip": "bigip_f5",
+    "fortinet.fortios.fortios": "fortinet",
     "junipernetworks.junos.junos": "juniper_junos",
+    "paloaltonetworks.panos.panos": "paloalto_panos",
     "vyos.vyos.vyos": "vyos",
 }
 
@@ -404,12 +415,15 @@ PYNTC_LIB_MAPPER_REVERSE = {
 
 # Normalized | ANSIBLE
 ANSIBLE_LIB_MAPPER_REVERSE = {
+    "a10": "a10.acos_axapi.a10",
     "arista_eos": "arista.eos.eos",
     "aruba_aoscx": "arubanetworks.aoscx",
+    "bigip_f5": "f5networks.f5_bigip.bigip",
     "ciena_saos": "ciena.saos6.saos6",
     "cisco_asa": "cisco.asa.asa",
     "cisco_xe": "cisco.ios.ios",
     "cisco_ios": "cisco.ios.ios",
+    "cisco_meraki": "cisco.meraki.meraki",
     "cisco_nxos": "cisco.nxos.nxos",
     "cisco_xr": "cisco.iosxr.iosxr",
     "dell_os10": "dellemc.os10.0s10",
@@ -421,14 +435,17 @@ ANSIBLE_LIB_MAPPER_REVERSE = {
     "extreme_nos": "community.network.nos",
     "extreme_slx": "community.network.slxos",
     "extreme_vsp": "community.network.voss",
+    "fortinet": "fortinet.fortios.fortios",
     "huawei": "community.network.ce",
     "juniper_junos": "junipernetworks.junos.junos",
     "lenovo_cnos": "community.network.cnos",
     "lenovo_enos": "community.network.enos",
     "mikrotik_routeros": "community.network.routeros",
     "nokia_sros": "community.network.sros",
+    "paloalto_panos": "paloaltonetworks.panos.panos",
     "pluribus": "community.network.netvisor",
     "ruckus_icx": "community.network.icx",
+    "sonic": "dellemc.enterprise_sonic.sonic",
     "vyos": "vyos.vyos.vyos",
 }
 
@@ -501,12 +518,14 @@ NTCTEMPLATES_LIB_MAPPER_REVERSE = copy.deepcopy(NTCTEMPLATES_LIB_MAPPER)
 _MAIN_LIB_MAPPER = copy.deepcopy(NETMIKO_LIB_MAPPER)
 _MAIN_LIB_MAPPER["aruba_aoscx"] = "aruba_aoscx"
 _MAIN_LIB_MAPPER["cisco_dnac"] = "cisco_dnac"
+_MAIN_LIB_MAPPER["cisco_meraki"] = "cisco_meraki"
 _MAIN_LIB_MAPPER["cisco_viptella"] = "cisco_viptella"
 _MAIN_LIB_MAPPER["huawei_vrp"] = "huawei_vrp"
 _MAIN_LIB_MAPPER["lenovo_cnos"] = "lenovo_cnos"
 _MAIN_LIB_MAPPER["lenovo_enos"] = "lenovo_enos"
 _MAIN_LIB_MAPPER["ruckus_icx"] = "ruckus_icx"
 _MAIN_LIB_MAPPER["ruckus_smartzone"] = "ruckus_smartzone"
+_MAIN_LIB_MAPPER["sonic"] = "sonic"
 _MAIN_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 _MAIN_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
 MAIN_LIB_MAPPER = {key: _MAIN_LIB_MAPPER[key] for key in sorted(_MAIN_LIB_MAPPER)}
