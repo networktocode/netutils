@@ -149,6 +149,7 @@ nav:
           - Library Helpers: "dev/code_reference/lib_helpers.md"
           - Library Mapping: "dev/code_reference/lib_mapping.md"
           - Mac Address: "dev/code_reference/mac.md"
+          - NIST: "dev/code_reference/nist.md"
           - OS Version: "dev/code_reference/os_version.md"
           - Password: "dev/code_reference/password.md"
           - Ping: "dev/code_reference/ping.md"
