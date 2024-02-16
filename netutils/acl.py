@@ -201,7 +201,7 @@ class ACLRule:
         """Load the data into the rule while verifying input data, result data, and processing data."""
         self.input_data_check()
         for attr in self.attrs:
-            if not self.data.get(attr):
+            if attr not in self.data:
                 continue
             if hasattr(self, f"process_{attr}"):
                 proccessor = getattr(self, f"process_{attr}")
@@ -254,9 +254,10 @@ class ACLRule:
         staying unchanged, but sourced from
         https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv.
         """
-        output = []
         if not self.dst_port_process:
-            return None
+            return dst_port
+
+        output = []
         if not isinstance(dst_port, list):
             dst_port = [dst_port]
         for item in dst_port:
@@ -510,12 +511,12 @@ class ACLRules:
             rule: The `ACLRule` rule to test against the list of `ACLRule`s loaded in initiation.
 
         Returns:
-            The response from the rule that matched, or `deny` by default.
+            A boolean if there was a full match or not.
         """
         for item in self.rules:
-            if item.match(self.class_obj(rule)):
-                return str(item.action)
-        return str(item.deny)  # pylint: disable=undefined-loop-variable
+            if item.match(rule):
+                return True
+        return False  # pylint: disable=undefined-loop-variable
 
     def match_details(self, rule: ACLRule) -> t.Any:
         """Verbosely check the rules loaded in `load_data` match against a new `rule`.
@@ -528,5 +529,5 @@ class ACLRules:
         """
         output = []
         for item in self.rules:
-            output.append(item.match_details(self.class_obj(rule)))
+            output.append(item.match_details(rule))
         return output
