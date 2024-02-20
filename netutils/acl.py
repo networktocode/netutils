@@ -147,30 +147,48 @@ def _check_schema(data: t.Any, schema: t.Any, verify: bool) -> None:
             raise ValueError()
 
 
+def get_attributes(cls):
+    result = {
+        name: attr for name, attr in cls.__dict__.items()
+        if not name.startswith("__")
+           and not callable(attr)
+           and not type(attr) is staticmethod
+    }
+    return result
+
+
 class ACLRule:
     """A class that helps you imagine an acl rule via methodologies."""
 
-    attrs: t.List[str] = ["name", "src_ip", "src_zone", "dst_ip", "dst_port", "dst_zone", "action"]
-    permit: str = "permit"
-    deny: str = "deny"
+    name: t.Any = None
+    src_ip: t.Any = "some def value"
+    src_zone: t.Any = None
+    dst_ip: t.Any = None
+    dst_port: t.Any = None
+    dst_zone: t.Any = None
+    action: t.Any = None
 
-    input_data_verify: bool = False
-    input_data_schema: t.Any = INPUT_SCHEMA
+    class Meta:
+        permit: str = "permit"
+        deny: str = "deny"
 
-    result_data_verify: bool = False
-    result_data_schema: t.Any = RESULT_SCHEMA
+        input_data_verify: bool = False
+        input_data_schema: t.Any = INPUT_SCHEMA
 
-    matrix: t.Any = {}
-    matrix_enforced: bool = False
-    matrix_definition: t.Any = {}
+        result_data_verify: bool = False
+        result_data_schema: t.Any = RESULT_SCHEMA
 
-    dst_port_process: bool = True
+        matrix: t.Any = {}
+        matrix_enforced: bool = False
+        matrix_definition: t.Any = {}
 
-    order_validate: t.List[str] = []
-    order_enforce: t.List[str] = []
-    filter_same_ip: bool = True
+        dst_port_process: bool = True
 
-    def __init__(self, data: t.Any, *args: t.Any, **kwargs: t.Any):  # pylint: disable=unused-argument
+        order_validate: t.List[str] = []
+        order_enforce: t.List[str] = []
+        filter_same_ip: bool = True
+
+    def __init__(self, **kwargs):  # pylint: disable=unused-argument
         """Initialize and load data.
 
         Args:
@@ -179,7 +197,7 @@ class ACLRule:
         Examples:
             >>> from netutils.acl import ACLRule
             >>>
-            >>> acl_data = dict(
+            >>> rule = ACLRule(
             ...     name="Check no match",
             ...     src_ip=["10.1.1.1"],
             ...     dst_ip="172.16.0.10",
@@ -187,42 +205,55 @@ class ACLRule:
             ...     action="permit",
             ... )
             >>>
-            >>> rule = ACLRule(acl_data)
             >>>
             >>> rule.expanded_rules
             [{'name': 'Check no match', 'src_ip': '10.1.1.1', 'dst_ip': '172.16.0.10', 'dst_port': '6/80', 'action': 'permit'}]
             >>>
         """
-        self.processed: t.Dict[str, str] = {}
-        self.data = data
-        self.load_data()
+        self.__load_data(kwargs=kwargs)
 
-    def load_data(self) -> None:
+    def __load_data(self, kwargs) -> None:
         """Load the data into the rule while verifying input data, result data, and processing data."""
-        self.input_data_check()
-        for attr in self.attrs:
-            if not self.data.get(attr):
-                continue
-            if hasattr(self, f"process_{attr}"):
-                proccessor = getattr(self, f"process_{attr}")
-                _attr_data = proccessor(self.data[attr])
+        # # Validate kwargs for class based definitions.
+        # for kk, kv in kwargs.items():
+        #     if kk not in get_attributes(self.__class__):
+        #         raise ValueError("Invalid kwarg specified in init method.")
+
+        # Ensure each class attr is in init kwargs.
+        for attr in get_attributes(self.__class__):
+            if attr not in kwargs:
+                kwargs[attr] = getattr(self, attr)
+
+        # Store the init input
+        self._preprocessed_data = copy.deepcopy(kwargs)
+        self._processed_data = copy.deepcopy(self._preprocessed_data)
+
+        # # Input check
+        # self.input_data_check()
+
+        for attr in get_attributes(self.__class__):
+            processor_func = getattr(self, f"process_{attr}", None)  # TODO(mzb): Consider callable and staticmethod.
+            if processor_func:
+                _attr_data = processor_func(self._processed_data[attr])
             else:
-                _attr_data = self.data[attr]
-            self.processed[attr] = _attr_data
+                _attr_data = self._processed_data[attr]
+
+            self._processed_data[attr] = _attr_data
             setattr(self, attr, _attr_data)
-        self.result_data_check()
-        self.validate()
-        self.expanded_rules = _cartesian_product(self.processed)
-        if self.filter_same_ip:
-            self.expanded_rules = [item for item in self.expanded_rules if item["dst_ip"] != item["src_ip"]]
+
+        # self.result_data_check()
+        # self.validate()
+        # self.expanded_rules = _cartesian_product(self._processed)
+        # if self.filter_same_ip:
+        #     self.expanded_rules = [item for item in self.expanded_rules if item["dst_ip"] != item["src_ip"]]
 
     def input_data_check(self) -> None:
         """Verify the input data against the specified JSONSchema or using a simple dictionary check."""
-        return _check_schema(self.data, self.input_data_schema, self.input_data_verify)
+        return _check_schema(self._preprocessed_data, self.input_data_schema, self.input_data_verify)
 
     def result_data_check(self) -> None:
         """Verify the result data against the specified JSONSchema or using a simple dictionary check."""
-        return _check_schema(self.processed, self.result_data_schema, self.result_data_verify)
+        return _check_schema(self._processed, self.result_data_schema, self.result_data_verify)
 
     def validate(self) -> t.Any:
         """Run through any method that startswith('validate_') and run that method."""
@@ -242,43 +273,43 @@ class ACLRule:
                     results.extend(result)
         return results
 
-    def process_dst_port(
-        self, dst_port: t.Any
-    ) -> t.Union[t.List[str], None]:  # pylint: disable=inconsistent-return-statements
-        """Convert port and protocol information.
-
-        Method supports a single format of `{protocol}/{port}`, and will translate the
-        protocol for all IANA defined protocols. The port will be translated for TCP and
-        UDP ports only. For all other protocols should use port of 0, e.g. `ICMP/0` for ICMP
-        or `50/0` for ESP. Similarly, IANA defines the port mappings, while these are mostly
-        staying unchanged, but sourced from
-        https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv.
-        """
-        output = []
-        if not self.dst_port_process:
-            return None
-        if not isinstance(dst_port, list):
-            dst_port = [dst_port]
-        for item in dst_port:
-            protocol = item.split("/")[0]
-            port = item.split("/")[1]
-            if protocol.isalpha():
-                if not PROTO_NAME_TO_NUM.get(protocol.upper()):
-                    raise ValueError(
-                        f"Protocol {protocol} was not found in netutils.protocol_mapper.PROTO_NAME_TO_NUM."
-                    )
-                protocol = PROTO_NAME_TO_NUM[protocol.upper()]
-            # test port[0] vs port, since dashes do not count, e.g. www-http
-            if int(protocol) == 6 and port[0].isalpha():
-                if not TCP_NAME_TO_NUM.get(port.upper()):
-                    raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.TCP_NAME_TO_NUM.")
-                port = TCP_NAME_TO_NUM[port.upper()]
-            if int(protocol) == 17 and port[0].isalpha():
-                if not UDP_NAME_TO_NUM.get(port.upper()):
-                    raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.UDP_NAME_TO_NUM.")
-                port = UDP_NAME_TO_NUM[port.upper()]
-            output.append(f"{protocol}/{port}")
-        return output
+    # def process_dst_port(
+    #     self, dst_port: t.Any
+    # ) -> t.Union[t.List[str], None]:  # pylint: disable=inconsistent-return-statements
+    #     """Convert port and protocol information.
+    #
+    #     Method supports a single format of `{protocol}/{port}`, and will translate the
+    #     protocol for all IANA defined protocols. The port will be translated for TCP and
+    #     UDP ports only. For all other protocols should use port of 0, e.g. `ICMP/0` for ICMP
+    #     or `50/0` for ESP. Similarly, IANA defines the port mappings, while these are mostly
+    #     staying unchanged, but sourced from
+    #     https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv.
+    #     """
+    #     output = []
+    #     if not self.dst_port_process:
+    #         return None
+    #     if not isinstance(dst_port, list):
+    #         dst_port = [dst_port]
+    #     for item in dst_port:
+    #         protocol = item.split("/")[0]
+    #         port = item.split("/")[1]
+    #         if protocol.isalpha():
+    #             if not PROTO_NAME_TO_NUM.get(protocol.upper()):
+    #                 raise ValueError(
+    #                     f"Protocol {protocol} was not found in netutils.protocol_mapper.PROTO_NAME_TO_NUM."
+    #                 )
+    #             protocol = PROTO_NAME_TO_NUM[protocol.upper()]
+    #         # test port[0] vs port, since dashes do not count, e.g. www-http
+    #         if int(protocol) == 6 and port[0].isalpha():
+    #             if not TCP_NAME_TO_NUM.get(port.upper()):
+    #                 raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.TCP_NAME_TO_NUM.")
+    #             port = TCP_NAME_TO_NUM[port.upper()]
+    #         if int(protocol) == 17 and port[0].isalpha():
+    #             if not UDP_NAME_TO_NUM.get(port.upper()):
+    #                 raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.UDP_NAME_TO_NUM.")
+    #             port = UDP_NAME_TO_NUM[port.upper()]
+    #         output.append(f"{protocol}/{port}")
+    #     return output
 
     def enforce(self) -> t.List[t.Dict[str, t.Any]]:
         """Run through any method that startswith('enforce_') and run that method.
@@ -452,8 +483,8 @@ class ACLRule:
                     break
             detailed_info = {
                 "existing_rule_product": existing_rule,  # pylint: disable=undefined-loop-variable
-                "match_rule": match_rule.processed,
-                "existing_rule": self.processed,
+                "match_rule": match_rule._processed,
+                "existing_rule": self._processed,
             }
             if rules_found[-1]:
                 detailed_info["match_rule_product"] = rule
@@ -474,13 +505,13 @@ class ACLRule:
         details = self.match_details(match_rule)
         return not bool(details["rules_unmatched"])
 
-    def __repr__(self) -> str:
-        """Set repr of the object to be sane."""
-        output = []
-        for attr in self.attrs:
-            if self.processed.get(attr):
-                output.append(f"{attr}: {self.processed[attr]}")
-        return ", ".join(output)
+    # def __repr__(self) -> str:
+    #     """Set repr of the object to be sane."""
+    #     output = []
+    #     for attr in self.attrs:
+    #         if self._processed.get(attr):
+    #             output.append(f"{attr}: {self._processed[attr]}")
+    #     return ", ".join(output)
 
 
 class ACLRules:
