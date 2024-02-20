@@ -214,10 +214,16 @@ class ACLRule:
 
     def __load_data(self, kwargs) -> None:
         """Load the data into the rule while verifying input data, result data, and processing data."""
-        # # Validate kwargs for class based definitions.
-        # for kk, kv in kwargs.items():
-        #     if kk not in get_attributes(self.__class__):
-        #         raise ValueError("Invalid kwarg specified in init method.")
+        # Remaining kwargs stored under ACRule.Meta
+        pop_kwargs = []
+        for key, val in kwargs.items():
+            if key not in get_attributes(self.__class__):
+                self.Meta.key = val
+                pop_kwargs.append(key)
+
+        # Pop unneeded keys
+        for key in pop_kwargs:
+            kwargs.pop(key)
 
         # Ensure each class attr is in init kwargs.
         for attr in get_attributes(self.__class__):
@@ -228,8 +234,8 @@ class ACLRule:
         self._preprocessed_data = copy.deepcopy(kwargs)
         self._processed_data = copy.deepcopy(self._preprocessed_data)
 
-        # # Input check
-        # self.input_data_check()
+        # Input check
+        self.input_data_check()
 
         for attr in get_attributes(self.__class__):
             processor_func = getattr(self, f"process_{attr}", None)  # TODO(mzb): Consider callable and staticmethod.
@@ -241,7 +247,7 @@ class ACLRule:
             self._processed_data[attr] = _attr_data
             setattr(self, attr, _attr_data)
 
-        # self.result_data_check()
+        self.result_data_check()
         # self.validate()
         # self.expanded_rules = _cartesian_product(self._processed)
         # if self.filter_same_ip:
@@ -249,11 +255,11 @@ class ACLRule:
 
     def input_data_check(self) -> None:
         """Verify the input data against the specified JSONSchema or using a simple dictionary check."""
-        return _check_schema(self._preprocessed_data, self.input_data_schema, self.input_data_verify)
+        return _check_schema(self._preprocessed_data, self.Meta.input_data_schema, self.Meta.input_data_verify)
 
     def result_data_check(self) -> None:
         """Verify the result data against the specified JSONSchema or using a simple dictionary check."""
-        return _check_schema(self._processed, self.result_data_schema, self.result_data_verify)
+        return _check_schema(self._processed_data, self.Meta.result_data_schema, self.Meta.result_data_verify)
 
     def validate(self) -> t.Any:
         """Run through any method that startswith('validate_') and run that method."""
