@@ -161,7 +161,7 @@ class ACLRule:
     """A class that helps you imagine an acl rule via methodologies."""
 
     name: t.Any = None
-    src_ip: t.Any = "some def value"
+    src_ip: t.Any = None
     src_zone: t.Any = None
     dst_ip: t.Any = None
     dst_port: t.Any = None
@@ -206,7 +206,7 @@ class ACLRule:
             ... )
             >>>
             >>>
-            >>> rule.expanded_rules
+            >>> rule._expanded_rules
             [{'name': 'Check no match', 'src_ip': '10.1.1.1', 'dst_ip': '172.16.0.10', 'dst_port': '6/80', 'action': 'permit'}]
             >>>
         """
@@ -214,7 +214,7 @@ class ACLRule:
 
     def __load_data(self, kwargs) -> None:
         """Load the data into the rule while verifying input data, result data, and processing data."""
-        # Remaining kwargs stored under ACRule.Meta
+        # Remaining kwargs stored under ACLRule.Meta
         pop_kwargs = []
         for key, val in kwargs.items():
             if key not in get_attributes(self.__class__):
@@ -249,7 +249,7 @@ class ACLRule:
 
         self.result_data_check()
         # self.validate()
-        # self.expanded_rules = _cartesian_product(self._processed)
+        self._expanded_rules = _cartesian_product(self._processed)
         # if self.filter_same_ip:
         #     self.expanded_rules = [item for item in self.expanded_rules if item["dst_ip"] != item["src_ip"]]
 
@@ -263,8 +263,8 @@ class ACLRule:
 
     def validate(self) -> t.Any:
         """Run through any method that startswith('validate_') and run that method."""
-        if self.order_validate:
-            method_order = self.order_validate
+        if self.Meta.order_validate:
+            method_order = self.Meta.order_validate
         else:
             method_order = dir(self)
         results = []
@@ -323,8 +323,8 @@ class ACLRule:
         Returns:
             A list of dictionaries that explains the results of the enforcement.
         """
-        if self.order_enforce:
-            method_order = self.order_enforce
+        if self.Meta.order_enforce:
+            method_order = self.Meta.order_enforce
         else:
             method_order = dir(self)
         results = []
@@ -345,14 +345,14 @@ class ACLRule:
         Returns:
             A list of dictionaries that explains the results of the matrix being enforced.
         """
-        if not self.matrix_enforced:
+        if not self.Meta.matrix_enforced:
             return None
-        if not self.matrix:
+        if not self.Meta.matrix:
             raise ValueError("You must set a matrix dictionary to use the matrix feature.")
-        if not self.matrix_definition:
+        if not self.Meta.matrix_definition:
             raise ValueError("You must set a matrix definition dictionary to use the matrix feature.")
         actions = []
-        for rule in self.expanded_rules:
+        for rule in self._expanded_rules:
             source = rule["src_ip"]
             destination = rule["dst_ip"]
             port = rule["dst_port"]
@@ -466,11 +466,11 @@ class ACLRule:
         rules_unmatched: t.List[t.Dict[str, t.Any]] = []
         rules_matched: t.List[t.Dict[str, t.Any]] = []
 
-        if not match_rule.expanded_rules:
+        if not match_rule._expanded_rules:
             raise ValueError("There is no expanded rules to test against.")
-        for rule in match_rule.expanded_rules:
+        for rule in match_rule._expanded_rules:
             rules_found.append(False)
-            for existing_rule in self.expanded_rules:
+            for existing_rule in self._expanded_rules:
                 missing = False
                 for attr in attrs:
                     # Examples of obj are match_rule.src_ip, match_rule.dst_port

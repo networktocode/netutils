@@ -280,25 +280,31 @@ class ExpandAddrGroups(ACLRule):
 Using the above object, we can test with:
 
 ```python
->>> rule_data = dict(
-...     name="Check allow",
-...     src_ip=["red", "blue", "10.4.4.4"],
-...     dst_ip=["white"],
-...     dst_port="6/www-http",
-...     action="permit",
+>> > rule_data = dict(
+    ...
+name = "Check allow",
+...
+src_ip = ["red", "blue", "10.4.4.4"],
+...
+dst_ip = ["white"],
+...
+dst_port = "6/www-http",
+...
+action = "permit",
 ... )
->>> 
->>> address_object_expanded = ExpandAddrGroups(rule_data)
->>> for item in address_object_expanded.expanded_rules:
-...   print(item)
-... 
+>> >
+>> > address_object_expanded = ExpandAddrGroups(rule_data)
+>> > for item in address_object_expanded._expanded_rules:
+    ...
+print(item)
+...
 {'name': 'Check allow', 'src_ip': '10.1.1.1', 'dst_ip': '10.2.2.2', 'dst_port': '6/80', 'action': 'permit'}
 {'name': 'Check allow', 'src_ip': '10.2.2.2', 'dst_ip': '10.1.1.1', 'dst_port': '6/80', 'action': 'permit'}
 {'name': 'Check allow', 'src_ip': '10.3.3.3', 'dst_ip': '10.1.1.1', 'dst_port': '6/80', 'action': 'permit'}
 {'name': 'Check allow', 'src_ip': '10.3.3.3', 'dst_ip': '10.2.2.2', 'dst_port': '6/80', 'action': 'permit'}
 {'name': 'Check allow', 'src_ip': '10.4.4.4', 'dst_ip': '10.1.1.1', 'dst_port': '6/80', 'action': 'permit'}
 {'name': 'Check allow', 'src_ip': '10.4.4.4', 'dst_ip': '10.2.2.2', 'dst_port': '6/80', 'action': 'permit'}
->>> 
+>> > 
 ```
 
 In that example you can see how we expanded `red` -> 10.1.1.1", "10.2.2.2", "10.3.3.3" as an example.

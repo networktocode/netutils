@@ -372,4 +372,4 @@ add_group_check = [
 @pytest.mark.parametrize("data", add_group_check)
 def test_custom_address_group(data):
     obj = TestAddrGroups(data["sent"])
-    assert obj.expanded_rules == data["received"]
+    assert obj._expanded_rules == data["received"]
