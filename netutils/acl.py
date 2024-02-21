@@ -248,10 +248,10 @@ class ACLRule:
             setattr(self, attr, _attr_data)
 
         self.result_data_check()
-        # self.validate()
+        self.validate()
         self._expanded_rules = _cartesian_product(self._processed)
-        # if self.filter_same_ip:
-        #     self.expanded_rules = [item for item in self.expanded_rules if item["dst_ip"] != item["src_ip"]]
+        if self.Meta.filter_same_ip:
+            self._expanded_rules = [item for item in self._expanded_rules if item["dst_ip"] != item["src_ip"]]
 
     def input_data_check(self) -> None:
         """Verify the input data against the specified JSONSchema or using a simple dictionary check."""
@@ -359,14 +359,14 @@ class ACLRule:
             src_zone = ""
             dst_zone = ""
             as_tuple = (source, destination, port)
-            for zone, ips in self.matrix_definition.items():
+            for zone, ips in self.Meta.matrix_definition.items():
                 if is_ip_within(source, ips):
                     src_zone = zone
                 if is_ip_within(destination, ips):
                     dst_zone = zone
-            if port in self.matrix.get(src_zone, {}).get(dst_zone, {}).get("allow", []):
+            if port in self.Meta.matrix.get(src_zone, {}).get(dst_zone, {}).get("allow", []):
                 actions.append({"obj": as_tuple, "action": "allow"})
-            elif port in self.matrix.get(src_zone, {}).get(dst_zone, {}).get("notify", []):
+            elif port in self.Meta.matrix.get(src_zone, {}).get(dst_zone, {}).get("notify", []):
                 actions.append({"obj": as_tuple, "action": "notify"})
             else:
                 actions.append({"obj": as_tuple, "action": "deny"})
@@ -489,8 +489,8 @@ class ACLRule:
                     break
             detailed_info = {
                 "existing_rule_product": existing_rule,  # pylint: disable=undefined-loop-variable
-                "match_rule": match_rule._processed,
-                "existing_rule": self._processed,
+                "match_rule": match_rule._processed_data,
+                "existing_rule": self._processed_data,
             }
             if rules_found[-1]:
                 detailed_info["match_rule_product"] = rule
