@@ -130,6 +130,8 @@ def _cartesian_product(data: t.Dict[str, str]) -> t.List[t.Dict[str, t.Any]]:
         keys.append(key)
         if isinstance(value, (str, int)):
             values.append([value])
+        elif value is None:
+            values.append([None])
         else:
             values.append(value)
     product = list(itertools.product(*values))
@@ -150,7 +152,7 @@ def _check_schema(data: t.Any, schema: t.Any, verify: bool) -> None:
 def get_attributes(cls):
     result = {
         name: attr for name, attr in cls.__dict__.items()
-        if not name.startswith("__")
+        if not name.startswith("_")
            and not callable(attr)
            and not type(attr) is staticmethod
     }
@@ -218,7 +220,7 @@ class ACLRule:
         pop_kwargs = []
         for key, val in kwargs.items():
             if key not in get_attributes(self.__class__):
-                self.Meta.key = val
+                setattr(self.Meta, key, val)
                 pop_kwargs.append(key)
 
         # Pop unneeded keys
@@ -240,16 +242,14 @@ class ACLRule:
         for attr in get_attributes(self.__class__):
             processor_func = getattr(self, f"process_{attr}", None)  # TODO(mzb): Consider callable and staticmethod.
             if processor_func:
-                _attr_data = processor_func(self._processed_data[attr])
-            else:
-                _attr_data = self._processed_data[attr]
+                self._processed_data[attr] = processor_func(self._processed_data[attr])
 
-            self._processed_data[attr] = _attr_data
-            setattr(self, attr, _attr_data)
+                if self._processed_data[attr] != self.attr:
+                    setattr(self, attr, self._processed_data[attr])
 
         self.result_data_check()
         self.validate()
-        self._expanded_rules = _cartesian_product(self._processed)
+        self._expanded_rules = _cartesian_product(self._processed_data)
         if self.Meta.filter_same_ip:
             self._expanded_rules = [item for item in self._expanded_rules if item["dst_ip"] != item["src_ip"]]
 
@@ -523,7 +523,10 @@ class ACLRule:
 class ACLRules:
     """Class to help match multiple ACLRule objects."""
 
-    class_obj = ACLRule
+    rules: t.List[t.Any] = []
+
+    class Meta:
+        class_obj = ACLRule
 
     def __init__(self, data: t.Any, *args: t.Any, **kwargs: t.Any):  # pylint: disable=unused-argument
         """Class to help match multiple ACLRule.
@@ -531,14 +534,13 @@ class ACLRules:
         Args:
             data: A list of `ACLRule` rules.
         """
-        self.data: t.Any = data
         self.rules: t.List[t.Any] = []
         self.load_data()
 
     def load_data(self) -> None:
         """Load the data for multiple rules."""
         for item in self.data:
-            self.rules.append(self.class_obj(item))
+            self.rules.append(self.Meta.class_obj(item))
 
     def match(self, rule: ACLRule) -> str:
         """Check the rules loaded in `load_data` match against a new `rule`.
@@ -550,9 +552,9 @@ class ACLRules:
             The response from the rule that matched, or `deny` by default.
         """
         for item in self.rules:
-            if item.match(self.class_obj(rule)):
-                return str(item.action)
-        return str(item.deny)  # pylint: disable=undefined-loop-variable
+            if item.match(rule):  # mzb: bugfix
+                return True  # mzb: change to bool
+        return False  # pylint: disable=undefined-loop-variable
 
     def match_details(self, rule: ACLRule) -> t.Any:
         """Verbosely check the rules loaded in `load_data` match against a new `rule`.
@@ -565,5 +567,5 @@ class ACLRules:
         """
         output = []
         for item in self.rules:
-            output.append(item.match_details(self.class_obj(rule)))
+            output.append(item.match_details(rule))  # mzb: bugfix
         return output
