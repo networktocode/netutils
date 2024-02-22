@@ -151,10 +151,9 @@ def _check_schema(data: t.Any, schema: t.Any, verify: bool) -> None:
 
 def get_attributes(cls):
     result = {
-        name: attr for name, attr in cls.__dict__.items()
-        if not name.startswith("_")
-           and not callable(attr)
-           and not type(attr) is staticmethod
+        name: attr
+        for name, attr in cls.__dict__.items()
+        if not name.startswith("_") and not callable(attr) and not type(attr) is staticmethod
     }
     return result
 
