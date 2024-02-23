@@ -248,7 +248,7 @@ class ACLRule:
         self.input_data_check()
 
         for attr in get_attributes(self):
-            processor_func = getattr(self, f"process_{attr}", None)  # TODO(mzb): Consider callable and staticmethod.
+            processor_func = getattr(self, f"process_{attr}", None)
             if processor_func:
                 _attr_data = processor_func(self._processed_data[attr])
             else:
@@ -259,11 +259,8 @@ class ACLRule:
 
         self.result_data_check()
         self.validate()
-        self._expanded_rules = _cartesian_product(self._processed_data)  # todo(mzb): fix nested
+        self._expanded_rules = _cartesian_product(self._processed_data)
         if self.Meta.filter_same_ip:
-            print("mzb")
-            print(self._expanded_rules)
-            print(self)
             self._expanded_rules = [item for item in self._expanded_rules if item["dst_ip"] != item["src_ip"]]
 
     def input_data_check(self) -> None:
