@@ -177,6 +177,7 @@ class ACLRule:
     action: t.Any = None
 
     class Meta:  # pylint: disable=too-few-public-methods
+        """Default meta class."""
         permit: str = "permit"
         deny: str = "deny"
 
@@ -537,6 +538,7 @@ class ACLRules:
     rules: t.List[t.Any] = []
 
     class Meta:  # pylint: disable=too-few-public-methods
+        """Default meta class."""
         class_obj = ACLRule
 
     def __init__(self, data: t.Any, *args: t.Any, **kwargs: t.Any):  # pylint: disable=unused-argument
