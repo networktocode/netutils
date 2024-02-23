@@ -263,7 +263,6 @@ class ACLRule:
     @property
     def expanded_rules(self):
         """Expanded rule property."""
-
         _expanded_rules = _cartesian_product(self._processed_data)
         if self.Meta.filter_same_ip:
             _expanded_rules = [item for item in _expanded_rules if item["dst_ip"] != item["src_ip"]]
