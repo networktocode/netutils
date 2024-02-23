@@ -14,7 +14,7 @@ verify_acl = [
             dst_port="tcp/www-http",
             action="permit",
         ),
-        "received": "permit",
+        "received": True,
     },
     {
         "sent": dict(
@@ -24,7 +24,7 @@ verify_acl = [
             dst_port="6/80",
             action="permit",
         ),
-        "received": "permit",
+        "received": True,
     },
     {
         "sent": dict(
@@ -34,7 +34,7 @@ verify_acl = [
             dst_port="6/80",
             action="permit",
         ),
-        "received": "permit",
+        "received": True,
     },
     {
         "sent": dict(
@@ -44,7 +44,7 @@ verify_acl = [
             dst_port="tcp/80",
             action="permit",
         ),
-        "received": "deny",
+        "received": False,
     },
     {
         "sent": dict(
@@ -54,7 +54,7 @@ verify_acl = [
             dst_port="tcp/80",
             action="permit",
         ),
-        "received": "deny",
+        "received": False,
     },
     {
         "sent": dict(
@@ -64,7 +64,7 @@ verify_acl = [
             dst_port="tcp/443",
             action="permit",
         ),
-        "received": "deny",
+        "received": False,
     },
 ]
 
@@ -216,34 +216,37 @@ MATRIX = {
 }
 
 
-class TestMatrix(acl.ACLRule):
+class TestMatrixRule(acl.ACLRule):
     """ACLRule inherited class to test the matrix."""
 
-    matrix = MATRIX
-    matrix_enforced = True
-    matrix_definition = IP_DEFINITIONS
+    class Meta(acl.ACLRule.Meta):  # pylint: disable=too-few-public-methods
+        matrix = MATRIX
+        matrix_enforced = True
+        matrix_definition = IP_DEFINITIONS
 
 
-class TestSchema(acl.ACLRule):
+class TestSchemaRule(acl.ACLRule):
     """ACLRule inherited class to test the schema."""
 
-    input_data_verify = True
+    class Meta(acl.ACLRule.Meta):  # pylint: disable=too-few-public-methods
+        input_data_verify = True
 
 
-class TestSchema2(acl.ACLRule):
+class TestSchema2Rule(acl.ACLRule):
     """ACLRule inherited class alternate to test the schema."""
 
-    result_data_verify = True
+    class Meta(acl.ACLRule.Meta):  # pylint: disable=too-few-public-methods
+        result_data_verify = True
 
 
 @pytest.mark.parametrize("data", verify_acl)
 def test_verify_acl(data):
-    assert acl.ACLRules(acls).match(data["sent"]) == data["received"]
+    assert acl.ACLRules(acls).match(acl.ACLRule(**data["sent"])) == data["received"]
 
 
 @pytest.mark.parametrize("data", verify_matrix)
 def test_matrix(data):
-    assert TestMatrix(data["sent"]).enforce() == data["received"]
+    assert TestMatrixRule(**data["sent"]).enforce() == data["received"]
 
 
 @pytest.mark.parametrize("data", verify_schema)
@@ -255,19 +258,19 @@ def test_schema(data):
         pass
 
     with pytest.raises(jsonschema.exceptions.ValidationError):
-        TestSchema(data["sent"])
+        TestSchemaRule(**data["sent"])
 
 
 def test_schema_not_enforced_when_option_not_set():
     try:
-        acl.ACLRule(dict(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="tcp/80", action=100))
+        acl.ACLRule(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="tcp/80", action=100)
     except Exception:  # pylint: disable=broad-exception-caught
         assert False, "No error should have been raised"
 
 
 def test_schema_valid():
     try:
-        TestSchema(dict(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="tcp/80", action="permit"))
+        TestSchemaRule(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="tcp/80", action="permit")
     except Exception:  # pylint: disable=broad-exception-caught
         assert False, "No error should have been raised"
 
@@ -281,12 +284,12 @@ def test_schema2(data):
         pass
 
     with pytest.raises(jsonschema.exceptions.ValidationError):
-        TestSchema2(data["sent"]).validate()
+        TestSchema2Rule(**data["sent"]).validate()
 
 
 def test_schema2_valid():
     try:
-        TestSchema2(dict(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="tcp/80", action="permit")).validate()
+        TestSchema2Rule(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="tcp/80", action="permit").validate()
     except Exception:  # pylint: disable=broad-exception-caught
         assert False, "No error should have been raised"
 
@@ -294,13 +297,13 @@ def test_schema2_valid():
 class TestAddrGroups(acl.ACLRule):
     """ACLRule inherited class alternate to test expansions."""
 
-    address_groups = {"red": ["white", "blue"], "blue": ["cyan"], "yellow": ["orange"]}
+    def __init__(self, **kwargs):
+        self._address_groups = {"red": ["white", "blue"], "blue": ["cyan"], "yellow": ["orange"]}
+        self._addresses = {"white": ["10.1.1.1", "10.2.2.2"], "cyan": ["10.3.3.3"], "orange": ["10.4.4.4"]}
 
-    addresses = {"white": ["10.1.1.1", "10.2.2.2"], "cyan": ["10.3.3.3"], "orange": ["10.4.4.4"]}
+        self._flattened_addresses = self.flatten_addresses(self._address_groups, self._addresses)
 
-    def __init__(self, data, *args, **kwargs):
-        self.flattened_addresses = self.flatten_addresses(self.address_groups, self.addresses)
-        super().__init__(data, *args, **kwargs)
+        super().__init__(**kwargs)
 
     def flatten_addresses(self, address_groups, addresses):
         """Go through and get the addresses given potential address groups."""
@@ -320,7 +323,7 @@ class TestAddrGroups(acl.ACLRule):
                         if group != sub_group:
                             flattened_addresses.setdefault(group, []).extend(ips)
 
-        return flattened_addresses
+            return flattened_addresses
 
     def process_ip(self, ip):
         """Test ability to expand IP for both source and destination."""
@@ -331,10 +334,10 @@ class TestAddrGroups(acl.ACLRule):
         for ip_name in ip:
             if not ip_name[0].isalpha():
                 output.append(ip_name)
-            elif self.addresses.get(ip_name):
-                output.extend(self.addresses[ip_name])
-            elif self.flattened_addresses.get(ip_name):
-                output.extend(self.flattened_addresses[ip_name])
+            elif self._addresses.get(ip_name):
+                output.extend(self._addresses[ip_name])
+            elif self._flattened_addresses.get(ip_name):
+                output.extend(self._flattened_addresses[ip_name])
         return sorted(list(set(output)))
 
     def process_src_ip(self, src_ip):
@@ -358,12 +361,66 @@ add_group_check = [
             action="permit",
         ),
         "received": [
-            {"action": "permit", "dst_ip": "10.2.2.2", "dst_port": "6/80", "name": "Check allow", "src_ip": "10.1.1.1"},
-            {"action": "permit", "dst_ip": "10.1.1.1", "dst_port": "6/80", "name": "Check allow", "src_ip": "10.2.2.2"},
-            {"action": "permit", "dst_ip": "10.1.1.1", "dst_port": "6/80", "name": "Check allow", "src_ip": "10.3.3.3"},
-            {"action": "permit", "dst_ip": "10.2.2.2", "dst_port": "6/80", "name": "Check allow", "src_ip": "10.3.3.3"},
-            {"action": "permit", "dst_ip": "10.1.1.1", "dst_port": "6/80", "name": "Check allow", "src_ip": "10.4.4.4"},
-            {"action": "permit", "dst_ip": "10.2.2.2", "dst_port": "6/80", "name": "Check allow", "src_ip": "10.4.4.4"},
+            {
+                "action": "permit",
+                "dst_ip": "10.2.2.2",
+                "dst_port": "6/80",
+                "name": "Check allow",
+                "src_ip": "10.1.1.1",
+                "protocol": None,
+                "src_zone": None,
+                "dst_zone": None,
+            },
+            {
+                "action": "permit",
+                "dst_ip": "10.1.1.1",
+                "dst_port": "6/80",
+                "name": "Check allow",
+                "src_ip": "10.2.2.2",
+                "protocol": None,
+                "src_zone": None,
+                "dst_zone": None,
+            },
+            {
+                "action": "permit",
+                "dst_ip": "10.1.1.1",
+                "dst_port": "6/80",
+                "name": "Check allow",
+                "src_ip": "10.3.3.3",
+                "protocol": None,
+                "src_zone": None,
+                "dst_zone": None,
+            },
+            {
+                "action": "permit",
+                "dst_ip": "10.2.2.2",
+                "dst_port": "6/80",
+                "name": "Check allow",
+                "src_ip": "10.3.3.3",
+                "protocol": None,
+                "src_zone": None,
+                "dst_zone": None,
+            },
+            {
+                "action": "permit",
+                "dst_ip": "10.1.1.1",
+                "dst_port": "6/80",
+                "name": "Check allow",
+                "src_ip": "10.4.4.4",
+                "protocol": None,
+                "src_zone": None,
+                "dst_zone": None,
+            },
+            {
+                "action": "permit",
+                "dst_ip": "10.2.2.2",
+                "dst_port": "6/80",
+                "name": "Check allow",
+                "src_ip": "10.4.4.4",
+                "protocol": None,
+                "src_zone": None,
+                "dst_zone": None,
+            },
         ],
     }
 ]
@@ -371,5 +428,5 @@ add_group_check = [
 
 @pytest.mark.parametrize("data", add_group_check)
 def test_custom_address_group(data):
-    obj = TestAddrGroups(data["sent"])
-    assert obj._expanded_rules == data["received"]
+    obj = TestAddrGroups(**data["sent"])
+    assert obj._expanded_rules == data["received"]  # pylint: disable=protected-access

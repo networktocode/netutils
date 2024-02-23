@@ -4,6 +4,7 @@ import itertools
 import copy
 import types
 import typing as t
+from netutils.protocol_mapper import PROTO_NAME_TO_NUM, TCP_NAME_TO_NUM, UDP_NAME_TO_NUM
 from netutils.ip import is_ip_within
 
 try:
@@ -16,8 +17,8 @@ except ImportError:
 INPUT_SCHEMA = {
     "type": "object",
     "properties": {
-        "name": {"type": "string"},
-        "src_zone": {"type": ["string", "array"]},
+        "name": {"type": ["string", "null"]},
+        "src_zone": {"type": ["string", "array", "null"]},
         "src_ip": {"$ref": "#/definitions/arrayOrIP"},
         "dst_ip": {"$ref": "#/definitions/arrayOrIP"},
         "dst_port": {
@@ -35,8 +36,9 @@ INPUT_SCHEMA = {
                 },
             ],
         },
-        "dst_zone": {"type": ["string", "array"]},
+        "dst_zone": {"type": ["string", "array", "null"]},
         "action": {"type": "string"},
+        "protocol": {"type": ["string", "null"]},
     },
     "definitions": {
         "ipv4": {"type": "string", "pattern": "^(?:\\d{1,3}\\.){3}\\d{1,3}$"},
@@ -149,12 +151,15 @@ def _check_schema(data: t.Any, schema: t.Any, verify: bool) -> None:
             raise ValueError()
 
 
-def get_attributes(cls):
+def get_attributes(obj):
     """Function that describes class attributes."""
     result = {
-        name: attr
-        for name, attr in cls.__dict__.items()
-        if not name.startswith("_") and not callable(attr) and not isinstance(attr, types.FunctionType)
+        # name for name in dir(cls)
+        attr: getattr(obj, attr)
+        for attr in dir(obj)
+        if not attr.startswith("_")
+        and not callable(getattr(obj, attr))
+        and not isinstance(getattr(obj, attr), types.FunctionType)
     }
     return result
 
@@ -168,6 +173,7 @@ class ACLRule:
     dst_ip: t.Any = None
     dst_port: t.Any = None
     dst_zone: t.Any = None
+    protocol: t.Any = None
     action: t.Any = None
 
     class Meta:  # pylint: disable=too-few-public-methods
@@ -219,7 +225,7 @@ class ACLRule:
         # Remaining kwargs stored under ACLRule.Meta
         pop_kwargs = []
         for key, val in kwargs.items():
-            if key not in get_attributes(self.__class__):
+            if key not in get_attributes(self):
                 setattr(self.Meta, key, val)
                 pop_kwargs.append(key)
 
@@ -228,7 +234,7 @@ class ACLRule:
             kwargs.pop(key)
 
         # Ensure each class attr is in init kwargs.
-        for attr in get_attributes(self.__class__):
+        for attr in get_attributes(self):
             if attr not in kwargs:
                 kwargs[attr] = getattr(self, attr)
 
@@ -239,7 +245,7 @@ class ACLRule:
         # Input check
         self.input_data_check()
 
-        for attr in get_attributes(self.__class__):
+        for attr in get_attributes(self):
             processor_func = getattr(self, f"process_{attr}", None)  # TODO(mzb): Consider callable and staticmethod.
             if processor_func:
                 _attr_data = processor_func(self._processed_data[attr])
@@ -251,8 +257,11 @@ class ACLRule:
 
         self.result_data_check()
         self.validate()
-        self._expanded_rules = _cartesian_product(self._processed_data)
+        self._expanded_rules = _cartesian_product(self._processed_data)  # todo(mzb): fix nested
         if self.Meta.filter_same_ip:
+            print("mzb")
+            print(self._expanded_rules)
+            print(self)
             self._expanded_rules = [item for item in self._expanded_rules if item["dst_ip"] != item["src_ip"]]
 
     def input_data_check(self) -> None:
@@ -280,6 +289,44 @@ class ACLRule:
                 elif result and isinstance(result, list):
                     results.extend(result)
         return results
+
+    def process_dst_port(
+        self, dst_port: t.Any
+    ) -> t.Union[t.List[str], None]:  # pylint: disable=inconsistent-return-statements
+        """Convert port and protocol information.
+
+        Method supports a single format of `{protocol}/{port}`, and will translate the
+        protocol for all IANA defined protocols. The port will be translated for TCP and
+        UDP ports only. For all other protocols should use port of 0, e.g. `ICMP/0` for ICMP
+        or `50/0` for ESP. Similarly, IANA defines the port mappings, while these are mostly
+        staying unchanged, but sourced from
+        https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv.
+        """
+        output = []
+        if not self.Meta.dst_port_process:
+            return self.dst_port
+        if not isinstance(dst_port, list):
+            dst_port = [dst_port]
+        for item in dst_port:
+            protocol = item.split("/")[0]
+            port = item.split("/")[1]
+            if protocol.isalpha():
+                if not PROTO_NAME_TO_NUM.get(protocol.upper()):
+                    raise ValueError(
+                        f"Protocol {protocol} was not found in netutils.protocol_mapper.PROTO_NAME_TO_NUM."
+                    )
+                protocol = PROTO_NAME_TO_NUM[protocol.upper()]
+            # test port[0] vs port, since dashes do not count, e.g. www-http
+            if int(protocol) == 6 and port[0].isalpha():
+                if not TCP_NAME_TO_NUM.get(port.upper()):
+                    raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.TCP_NAME_TO_NUM.")
+                port = TCP_NAME_TO_NUM[port.upper()]
+            if int(protocol) == 17 and port[0].isalpha():
+                if not UDP_NAME_TO_NUM.get(port.upper()):
+                    raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.UDP_NAME_TO_NUM.")
+                port = UDP_NAME_TO_NUM[port.upper()]
+            output.append(f"{protocol}/{port}")
+        return output
 
     def enforce(self) -> t.List[t.Dict[str, t.Any]]:
         """Run through any method that startswith('enforce_') and run that method.
