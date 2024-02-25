@@ -15,7 +15,7 @@ def get_nist_urls_juniper_junos(  # pylint: disable=R0911
         List of NIST CPE URLs that may contain platform data.
     """
     nist_urls = []
-    base_url = f"""https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey={api_key}&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos"""
+    base_url = f"""https://services.nvd.nist.gov/rest/json/cpes/2.0?cpeMatchString=cpe:2.3:o:juniper:junos"""
 
     # BASE
     _main = os_platform_data.get("main")
@@ -102,7 +102,7 @@ def get_nist_urls_juniper_junos(  # pylint: disable=R0911
     raise ValueError("Failure creating Juniper JunOS Version. Format is unknown.")
 
 
-def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any], api_key: str) -> t.List[str]:
+def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
     r"""Create a list of possible NIST Url strings.
 
     Child models with NIST URL customizations need their own "get_nist_urls" method.
@@ -116,7 +116,7 @@ def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any], api_key: str) ->
     nist_urls = []
     escape_list = [r"\(", r"\)"]
     base_url = (
-        f"""https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey={api_key}&addOns=cves&cpeMatchString=cpe:2.3:o:"""
+        f"""https://services.nvd.nist.gov/rest/json/cpes/2.0?cpeMatchString=cpe:2.3:o:"""
     )
     os_platform_data = {"base_url": base_url, **os_platform_data}
     delim_seven = ":*" * 7
