@@ -68,8 +68,8 @@ def os_platform_object_builder(vendor: str, platform: str, version: str) -> obje
 
     Examples:
         >>> jp = os_platform_object_builder("juniper", "junos", "12.1R3-S4.1")
-        >>> jp.get_nist_urls("AAA-BBB-CCC-DDD")
-        ['https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.1r3:s4.1:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cpes/1.0?apiKey=AAA-BBB-CCC-DDD&addOns=cves&cpeMatchString=cpe:2.3:o:juniper:junos:12.1r3-s4.1:*:*:*:*:*:*:*']
+        >>> jp.get_nist_urls()
+        ['https://services.nvd.nist.gov/rest/json/cpes/2.0?cpeMatchString=cpe:2.3:o:juniper:junos:12.1r3:s4.1:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cpes/2.0?cpeMatchString=cpe:2.3:o:juniper:junos:12.1r3-s4.1:*:*:*:*:*:*:*']
     """
     platform = platform.lower()
 
