@@ -1612,3 +1612,55 @@ class UbiquitiAirOSConfigParser(BaseSpaceConfigParser):
                 config_lines.append(line)
 
         return "\n".join(config_lines)
+
+
+class HPComwareConfigParser(BaseSpaceConfigParser):
+    """HP Comware config parser."""
+
+    banner_start: t.List[str] = ["header motd"]
+    banner_end = "==#"
+    comment_chars: t.List[str] = ["#"]
+
+    def hp_banner_end(self, line: str) -> bool:
+        """
+        Checks if the given line contains the HP banner end string.
+
+        Args:
+            line (str): The line to check.
+
+        Returns:
+            bool: True if the line contains the HP banner end string, False otherwise.
+        """
+        if line.strip().find(self.banner_end) != -1:
+            return True
+        return False
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """
+        Builds a banner configuration based on the provided config_line.
+
+        Args:
+            config_line (str): The configuration line to build the banner from.
+
+        Returns:
+            str or None: The generated banner configuration, or None if the generator is exhausted.
+
+        Raises:
+            ValueError: If unable to parse the banner end.
+        """
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.hp_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                self._update_config_lines(line)
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+        raise ValueError("Unable to parse banner end.")
