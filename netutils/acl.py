@@ -410,7 +410,10 @@ class ACLRule:
         Returns:
             True if `check_ip` is within the range of `existing_ip`, False otherwise.
         """
-        return is_ip_within(check_ip, existing_ip)
+        if existing_ip == check_ip:  # None cases
+            return True
+        else:
+            is_ip_within(check_ip, existing_ip)
 
     def match_src_zone(self, existing_src_zone: str, check_src_zone: str) -> bool:
         """Match the source zone for equality.
@@ -434,7 +437,10 @@ class ACLRule:
         Returns:
             True if `check_ip` is within the range of `existing_ip`, False otherwise.
         """
-        return is_ip_within(check_ip, existing_ip)
+        if existing_ip == check_ip:  # None cases
+            return True
+        else:
+            return is_ip_within(check_ip, existing_ip)
 
     def match_dst_zone(self, existing_dst_zone: str, check_dst_zone: str) -> bool:
         """Match the destination zone for equality.
@@ -484,6 +490,9 @@ class ACLRule:
 
         if not match_rule._expanded_rules:  # pylint: disable=protected-access
             raise ValueError("There is no expanded rules to test against.")
+        elif not self._expanded_rules:  # pylint: disable=protected-access
+            raise ValueError("There is no expanded rules to test.")
+
         for rule in match_rule._expanded_rules:  # pylint: disable=protected-access
             rules_found.append(False)
             for existing_rule in self._expanded_rules:
