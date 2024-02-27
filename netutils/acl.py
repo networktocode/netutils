@@ -560,6 +560,10 @@ class ACLRules:
         for item in data:
             self.rules.append(self.Meta.class_obj(**item))
 
+    def serialize(self) -> str:
+        """Primitive Serializer."""
+        return [rule.serialize() for rule in self.rules]
+
     def match(self, rule: ACLRule) -> str:
         """Check the rules loaded in `load_data` match against a new `rule`.
 
