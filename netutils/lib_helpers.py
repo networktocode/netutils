@@ -5,14 +5,6 @@ import typing as t
 
 from netutils.lib_mapper import NAPALM_LIB_MAPPER
 
-try:
-    from napalm import get_network_driver
-    from napalm.base.exceptions import ModuleImportError
-except ImportError:
-    HAS_NAPALM = False
-else:
-    HAS_NAPALM = True
-
 
 def get_napalm_getters() -> t.Dict[str, t.Dict[str, bool]]:
     """Utility to return a dictionary of napalm getters based on install napalm version.
@@ -31,8 +23,13 @@ def get_napalm_getters() -> t.Dict[str, t.Dict[str, bool]]:
         >>> napalm_getters["eos"]["get_ipv6_neighbors_table"]  # doctest: +SKIP
         >>> False  # doctest: +SKIP
     """
-    if not HAS_NAPALM:
-        raise ImportError("Napalm must be install for this function to operate.")
+    try:
+        # Import NAPALM here at call time, rather than at import time, as importing NAPALM is rather time consuming
+        # pylint: disable=import-outside-toplevel
+        from napalm import get_network_driver
+        from napalm.base.exceptions import ModuleImportError
+    except ImportError as err:
+        raise ImportError("Napalm must be installed for this function to operate.") from err
 
     napalm_dict: t.Dict[str, t.Dict[str, bool]] = {}
     oses = NAPALM_LIB_MAPPER.keys()
