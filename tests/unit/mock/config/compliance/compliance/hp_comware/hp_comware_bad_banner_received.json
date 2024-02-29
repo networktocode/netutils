@@ -1,0 +1,12 @@
+{
+   "header": {
+      "compliant": false,
+      "missing": "header motd #\n===================================================\n* GOOD DATA LINE 1\n* BAD DATA LINE 2\n==================================================#",
+      "extra": "header motd #\n===================================================\n* GOOD DATA LINE 1\n* GOOD DATA LINE 2\n==================================================#",
+      "cannot_parse": true,
+      "unordered_compliant": false,
+      "ordered_compliant": false,
+      "actual": "header motd #\n===================================================\n* GOOD DATA LINE 1\n* GOOD DATA LINE 2\n==================================================#",
+      "intended": "header motd #\n===================================================\n* GOOD DATA LINE 1\n* BAD DATA LINE 2\n==================================================#"
+   }
+}
