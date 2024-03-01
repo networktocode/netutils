@@ -1,4 +1,5 @@
 """Test for the IP functions."""
+
 import ipaddress
 import pytest
 
@@ -617,3 +618,14 @@ def test_ipaddress_network(data):
 @pytest.mark.parametrize("data", IS_CLASSFUL)
 def test_is_classful(data):
     assert ip.is_classful(**data["sent"]) == data["received"]
+
+
+def test_sort_list_cidrs():
+    sent = "10.0.10.0/24, 10.0.100.0/24, 10.0.12.0/24, 10.0.200.0/24"
+    expected = "10.0.10.0/24,10.0.12.0/24,10.0.100.0/24,10.0.200.0/24"
+    assert expected == ip.sort_list_cidrs(sent)
+
+
+def test_sort_list_cidrs_exception():
+    with pytest.raises(ValueError, match="Not a concatenated list of CIDRs as expected."):
+        ip.sort_list_cidrs("10.1.1.1/24 10.2.2.2/16")

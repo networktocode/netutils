@@ -1,4 +1,5 @@
 """Functions for working with IP addresses."""
+
 import ipaddress
 import typing as t
 from operator import attrgetter
@@ -596,3 +597,22 @@ def get_usable_range(ip_network: str) -> str:
         lower_bound = str(net[1])
         upper_bound = str(net[-2])
     return f"{lower_bound} - {upper_bound}"
+
+
+def sort_list_cidrs(cidr_list: str) -> str:
+    """Given a concatenated list of CIDRs sorts them into the correct order and returns as concatenated string.
+
+    Args:
+        cidr_list (str): Concatenated string list of CIDRs.
+
+    Returns:
+        str: Sorted list of CIDRs.
+    """
+    if "," not in cidr_list:
+        raise ValueError("Not a concatenated list of CIDRs as expected.")
+    return ",".join(
+        [
+            obj.with_prefixlen
+            for obj in sorted([ipaddress.ip_network(cidr) for cidr in cidr_list.replace(" ", "").split(",")])
+        ]
+    )
