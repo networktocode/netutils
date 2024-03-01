@@ -599,20 +599,20 @@ def get_usable_range(ip_network: str) -> str:
     return f"{lower_bound} - {upper_bound}"
 
 
-def sort_list_cidrs(cidr_list: str) -> str:
+def sort_list_cidrs(cidr_list: t.Union[str, t.List[str]]) -> str:
     """Given a concatenated list of CIDRs sorts them into the correct order and returns as concatenated string.
 
     Args:
-        cidr_list (str): Concatenated string list of CIDRs.
+        cidr_list (t.Union[str, t.List[str]]): Concatenated string list of CIDRs or list of CIDR strings.
 
     Returns:
         str: Sorted list of CIDRs.
     """
-    if "," not in cidr_list:
+    cidrs = []
+    if isinstance(cidr_list, list):
+        cidrs = cidr_list
+    elif (isinstance(cidr_list, str) and "," not in cidr_list) or not isinstance(cidr_list, str):
         raise ValueError("Not a concatenated list of CIDRs as expected.")
-    return ",".join(
-        [
-            obj.with_prefixlen
-            for obj in sorted([ipaddress.ip_network(cidr) for cidr in cidr_list.replace(" ", "").split(",")])
-        ]
-    )
+    elif isinstance(cidr_list, str):
+        cidrs = cidr_list.replace(" ", "").split(",")
+    return ",".join([obj.with_prefixlen for obj in sorted([ipaddress.ip_network(cidr) for cidr in cidrs])])
