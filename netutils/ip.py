@@ -599,12 +599,12 @@ def get_usable_range(ip_network: str) -> str:
     return f"{lower_bound} - {upper_bound}"
 
 
-def sort_list_ips(ips: t.Union[t.AnyStr, t.List[t.AnyStr]], sort_type: t.AnyStr = "network") -> str:
+def sort_list_ips(ips: t.Union[str, t.List[str]], sort_type: str = "network") -> str:
     """Given a concatenated list of CIDRs sorts them into the correct order and returns as concatenated string.
 
     Args:
-        ips (t.Union[t.AnyStr, t.List[t.AnyStr]]): Concatenated string list of CIDRs, IPAddresses, or Interfaces or list of the same strings.
-        sort_type (t.AnyStr): Whether the passed list are networks, IP addresses, or interfaces, ie "address", "interface", or "network".
+        ips (t.Union[str, t.List[str]]): Concatenated string list of CIDRs, IPAddresses, or Interfaces or list of the same strings.
+        sort_type (str): Whether the passed list are networks, IP addresses, or interfaces, ie "address", "interface", or "network".
 
     Returns:
         str: Sorted concatenated list of sort_type IPs.
