@@ -617,8 +617,6 @@ def sort_list_ips(ips: t.Union[str, t.List[str]], sort_type: str = "network") ->
         raise ValueError("Not a concatenated list of IPs as expected.")
     elif isinstance(ips, str):
         ips_list = ips.replace(" ", "").split(",")
-    else:
-        ips_list = []
 
     functions = {"address": ipaddress.ip_address, "interface": ipaddress.ip_interface, "network": ipaddress.ip_network}
 
