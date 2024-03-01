@@ -626,6 +626,12 @@ def test_sort_list_cidrs():
     assert expected == ip.sort_list_cidrs(sent)
 
 
+def test_sort_list_cidrs_same_base():
+    sent = "10.0.0.0/24, 10.0.0.0/16, 10.0.0.0/18"
+    expected = "10.0.0.0/16,10.0.0.0/18,10.0.0.0/24"
+    assert expected == ip.sort_list_cidrs(sent)
+
+
 def test_sort_list_cidrs_using_list():
     sent = ["10.0.10.0/24", "10.0.100.0/24", "10.0.12.0/24", "10.0.200.0/24"]
     expected = "10.0.10.0/24,10.0.12.0/24,10.0.100.0/24,10.0.200.0/24"
