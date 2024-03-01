@@ -599,20 +599,33 @@ def get_usable_range(ip_network: str) -> str:
     return f"{lower_bound} - {upper_bound}"
 
 
-def sort_list_cidrs(cidr_list: t.Union[str, t.List[str]]) -> str:
+def sort_list_ips(ips: t.Union[str, t.List[str]], sort_type: str = "network") -> str:
     """Given a concatenated list of CIDRs sorts them into the correct order and returns as concatenated string.
 
     Args:
-        cidr_list (t.Union[str, t.List[str]]): Concatenated string list of CIDRs or list of CIDR strings.
+        ips (t.Union[str, t.List[str]]): Concatenated string list of CIDRs, IPAddresses, or Interfaces or list of the same strings.
+        sort_type (str): Whether the passed list are networks, IP addresses, or interfaces, ie "address", "interface", or "network".
 
     Returns:
-        str: Sorted list of CIDRs.
+        str: Sorted concatenated list of sort_type IPs.
     """
-    cidrs = []
-    if isinstance(cidr_list, list):
-        cidrs = cidr_list
-    elif (isinstance(cidr_list, str) and "," not in cidr_list) or not isinstance(cidr_list, str):
-        raise ValueError("Not a concatenated list of CIDRs as expected.")
-    elif isinstance(cidr_list, str):
-        cidrs = cidr_list.replace(" ", "").split(",")
-    return ",".join([obj.with_prefixlen for obj in sorted([ipaddress.ip_network(cidr) for cidr in cidrs])])
+    if sort_type not in ["address", "interface", "network"]:
+        raise ValueError("Invalid sort type passed. Must be `address`, `interface`, or `network`.")
+    if isinstance(ips, list):
+        ips_list = ips
+    elif (isinstance(ips, str) and "," not in ips) or not isinstance(ips, str):
+        raise ValueError("Not a concatenated list of IPs as expected.")
+    elif isinstance(ips, str):
+        ips_list = ips.replace(" ", "").split(",")
+    else:
+        ips_list = []
+
+    functions = {"address": ipaddress.ip_address, "interface": ipaddress.ip_interface, "network": ipaddress.ip_network}
+
+    try:
+        sorted_list = sorted(functions[sort_type](ip) for ip in ips_list)
+        if sort_type in ["interface", "network"]:
+            return ",".join([cidrs.with_prefixlen for cidrs in sorted_list])
+        return ",".join([str(ip) for ip in sorted_list])
+    except ValueError as err:
+        raise ValueError(f"Invalid IP of {sort_type} input: {err}") from err
