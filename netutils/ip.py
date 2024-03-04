@@ -618,7 +618,11 @@ def sort_list_ips(ips: t.Union[str, t.List[str]], sort_type: str = "network") ->
     elif isinstance(ips, str):
         ips_list = ips.replace(" ", "").split(",")
 
-    functions = {"address": ipaddress.ip_address, "interface": ipaddress.ip_interface, "network": ipaddress.ip_network}
+    functions: t.Dict[str, t.Callable] = {
+        "address": ipaddress.ip_address,
+        "interface": ipaddress.ip_interface,
+        "network": ipaddress.ip_network,
+    }
 
     try:
         sorted_list = sorted(functions[sort_type](ip) for ip in ips_list)
