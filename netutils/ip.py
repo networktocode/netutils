@@ -605,7 +605,7 @@ def sort_list_ips(ips: t.Union[str, t.List[str]], sort_type: str = "network") ->
     Examples:
         >>> from netutils.ip import sort_list_ips
         >>> sort_list_ips("3.3.3.3,2.2.2.2,1.1.1.1")
-        1.1.1.1,2.2.2.2,3.3.3.3
+        '1.1.1.1/32,2.2.2.2/32,3.3.3.3/32'
 
     Args:
         ips (t.Union[str, t.List[str]]): Concatenated string list of CIDRs, IPAddresses, or Interfaces or list of the same strings.
