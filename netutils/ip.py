@@ -602,7 +602,10 @@ def get_usable_range(ip_network: str) -> str:
 def sort_list_ips(ips: t.Union[str, t.List[str]], sort_type: str = "network") -> str:
     """Given a concatenated list of CIDRs sorts them into the correct order and returns as concatenated string.
 
-    Ex: "3.3.3.3,2.2.2.2,1.1.1.1" -> "1.1.1.1,2.2.2.2,3.3.3.3"
+    Examples:
+        >>> from netutils.ip import sort_list_ips
+        >>> sort_list_ips("3.3.3.3,2.2.2.2,1.1.1.1")
+        1.1.1.1,2.2.2.2,3.3.3.3
 
     Args:
         ips (t.Union[str, t.List[str]]): Concatenated string list of CIDRs, IPAddresses, or Interfaces or list of the same strings.
