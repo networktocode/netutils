@@ -618,7 +618,7 @@ def sort_list_ips(ips: t.Union[str, t.List[str]], sort_type: str = "network") ->
     elif isinstance(ips, str):
         ips_list = ips.replace(" ", "").split(",")
 
-    functions: t.Dict[str, t.Callable] = {
+    functions: t.Dict[str, t.Callable[[t.Any], t.Any]] = {
         "address": ipaddress.ip_address,
         "interface": ipaddress.ip_interface,
         "network": ipaddress.ip_network,
