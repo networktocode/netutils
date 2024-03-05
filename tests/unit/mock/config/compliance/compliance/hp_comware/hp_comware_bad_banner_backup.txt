@@ -1,6 +1,5 @@
-header motd #
-===================================================
-* GOOD DATA LINE 1
-* GOOD DATA LINE 2
-==================================================#
+#
+header motd "my banner"
+#
+hwtacacs nas-ip 1.1.1.1
 #

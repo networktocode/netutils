@@ -1,12 +1,12 @@
 {
    "header": {
       "compliant": false,
-      "missing": "header motd #\n===================================================\n* GOOD DATA LINE 1\n* BAD DATA LINE 2\n==================================================#",
-      "extra": "header motd #\n===================================================\n* GOOD DATA LINE 1\n* GOOD DATA LINE 2\n==================================================#",
+      "missing": "header motd ^C\n===================================================\n* GOOD DATA LINE 1\n* BAD DATA LINE 2\n==================================================^C",
+      "extra": "header motd \"my banner\"",
       "cannot_parse": true,
       "unordered_compliant": false,
       "ordered_compliant": false,
-      "actual": "header motd #\n===================================================\n* GOOD DATA LINE 1\n* GOOD DATA LINE 2\n==================================================#",
-      "intended": "header motd #\n===================================================\n* GOOD DATA LINE 1\n* BAD DATA LINE 2\n==================================================#"
+      "actual": "header motd \"my banner\"",
+      "intended": "header motd ^C\n===================================================\n* GOOD DATA LINE 1\n* BAD DATA LINE 2\n==================================================^C"
    }
 }
