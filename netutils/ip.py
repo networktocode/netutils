@@ -606,6 +606,14 @@ def sort_list_ips(ips: t.Union[str, t.List[str]], sort_type: str = "network") ->
         >>> from netutils.ip import sort_list_ips
         >>> sort_list_ips("3.3.3.3,2.2.2.2,1.1.1.1")
         '1.1.1.1/32,2.2.2.2/32,3.3.3.3/32'
+        >>> sort_list_ips("10.0.20.0/24,10.0.20.0/23,10.0.19.0/24")
+        '10.0.19.0/24,10.0.20.0/23,10.0.20.0/24'
+        >>> sort_list_ips("10.0.20.0/24,10.0.20.0/23,10.0.19.0/24", "interface")
+        '10.0.19.0/24,10.0.20.0/23,10.0.20.0/24'
+        >>> sort_list_ips("10.0.20.20/24,10.0.20.1/23,10.0.19.5/24", "interface")
+        '10.0.19.5/24,10.0.20.1/23,10.0.20.20/24'
+        >>> sort_list_ips(["10.0.20.20", "10.0.20.1", "10.0.19.5"], "address")
+        '10.0.19.5,10.0.20.1,10.0.20.20'
 
     Args:
         ips (t.Union[str, t.List[str]]): Concatenated string list of CIDRs, IPAddresses, or Interfaces or list of the same strings.
