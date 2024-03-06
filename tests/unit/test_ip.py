@@ -639,32 +639,32 @@ def test_is_classful(data):
 
 
 @pytest.mark.parametrize("data", SORTED_IPS)
-def test_sort_list_ips(data):
-    assert data["expected"] == ip.sort_list_ips(data["sent"], sort_type=data["sort_type"])
+def test_sort_ips(data):
+    assert data["expected"] == ip.sort_ips(data["sent"], sort_type=data["sort_type"])
 
 
-def test_sort_list_ips_networks_same_base():
+def test_sort_ips_networks_same_base():
     sent = "10.0.0.0/24, 10.0.0.0/16, 10.0.0.0/18"
     expected = "10.0.0.0/16,10.0.0.0/18,10.0.0.0/24"
-    assert expected == ip.sort_list_ips(sent)
+    assert expected == ip.sort_ips(sent)
 
 
-def test_sort_list_ips_using_list():
+def test_sort_ips_using_list():
     sent = ["10.0.10.0/24", "10.0.100.0/24", "10.0.12.0/24", "10.0.200.0/24"]
     expected = "10.0.10.0/24,10.0.12.0/24,10.0.100.0/24,10.0.200.0/24"
-    assert expected == ip.sort_list_ips(sent)
+    assert expected == ip.sort_ips(sent)
 
 
-def test_sort_list_ips_exception_invalid_list():
+def test_sort_ips_exception_invalid_list():
     with pytest.raises(ValueError, match="Not a concatenated list of IPs as expected."):
-        ip.sort_list_ips("10.1.1.1/24 10.2.2.2/16")
+        ip.sort_ips("10.1.1.1/24 10.2.2.2/16")
 
 
-def test_sort_list_ips_exception_invalid_instance_type():
+def test_sort_ips_exception_invalid_instance_type():
     with pytest.raises(ValueError, match="Not a concatenated list of IPs as expected."):
-        ip.sort_list_ips({"10.1.1.1/24", "10.2.2.2/16"})
+        ip.sort_ips({"10.1.1.1/24", "10.2.2.2/16"})
 
 
-def test_sort_list_ips_invalid_sort_type():
+def test_sort_ips_invalid_sort_type():
     with pytest.raises(ValueError, match="Invalid sort type passed. Must be `address`, `interface`, or `network`."):
-        ip.sort_list_ips("10.0.0.0/24,192.168.0.0/16", sort_type="wrong_type")
+        ip.sort_ips("10.0.0.0/24,192.168.0.0/16", sort_type="wrong_type")

@@ -599,20 +599,20 @@ def get_usable_range(ip_network: str) -> str:
     return f"{lower_bound} - {upper_bound}"
 
 
-def sort_list_ips(ips: t.Union[str, t.List[str]], sort_type: str = "network") -> str:
+def sort_ips(ips: t.Union[str, t.List[str]], sort_type: str = "network") -> str:
     """Given a concatenated list of CIDRs sorts them into the correct order and returns as concatenated string.
 
     Examples:
-        >>> from netutils.ip import sort_list_ips
-        >>> sort_list_ips("3.3.3.3,2.2.2.2,1.1.1.1")
+        >>> from netutils.ip import sort_ips
+        >>> sort_ips("3.3.3.3,2.2.2.2,1.1.1.1")
         '1.1.1.1/32,2.2.2.2/32,3.3.3.3/32'
-        >>> sort_list_ips("10.0.20.0/24,10.0.20.0/23,10.0.19.0/24")
+        >>> sort_ips("10.0.20.0/24,10.0.20.0/23,10.0.19.0/24")
         '10.0.19.0/24,10.0.20.0/23,10.0.20.0/24'
-        >>> sort_list_ips("10.0.20.0/24,10.0.20.0/23,10.0.19.0/24", "interface")
+        >>> sort_ips("10.0.20.0/24,10.0.20.0/23,10.0.19.0/24", "interface")
         '10.0.19.0/24,10.0.20.0/23,10.0.20.0/24'
-        >>> sort_list_ips("10.0.20.20/24,10.0.20.1/23,10.0.19.5/24", "interface")
+        >>> sort_ips("10.0.20.20/24,10.0.20.1/23,10.0.19.5/24", "interface")
         '10.0.19.5/24,10.0.20.1/23,10.0.20.20/24'
-        >>> sort_list_ips(["10.0.20.20", "10.0.20.1", "10.0.19.5"], "address")
+        >>> sort_ips(["10.0.20.20", "10.0.20.1", "10.0.19.5"], "address")
         '10.0.19.5,10.0.20.1,10.0.20.20'
 
     Args:
