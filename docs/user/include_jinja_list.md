@@ -34,6 +34,7 @@
 | get_all_host | netutils.ip.get_all_host |
 | get_broadcast_address | netutils.ip.get_broadcast_address |
 | get_first_usable | netutils.ip.get_first_usable |
+| get_ips_sorted | netutils.ip.get_ips_sorted |
 | get_peer_ip | netutils.ip.get_peer_ip |
 | get_range_ips | netutils.ip.get_range_ips |
 | get_usable_range | netutils.ip.get_usable_range |
@@ -51,7 +52,6 @@
 | is_netmask | netutils.ip.is_netmask |
 | is_network | netutils.ip.is_network |
 | netmask_to_cidr | netutils.ip.netmask_to_cidr |
-| get_ips_sorted | netutils.ip.get_ips_sorted |
 | get_napalm_getters | netutils.lib_helpers.get_napalm_getters |
 | get_oui | netutils.mac.get_oui |
 | is_valid_mac | netutils.mac.is_valid_mac |
