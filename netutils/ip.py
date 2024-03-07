@@ -599,7 +599,7 @@ def get_usable_range(ip_network: str) -> str:
     return f"{lower_bound} - {upper_bound}"
 
 
-def get_ips_sorted(ips: t.Union[str, t.List[str]], sort_type: str = "network") -> list:
+def get_ips_sorted(ips: t.Union[str, t.List[str]], sort_type: str = "network") -> t.List[str]:
     """Given a concatenated list of CIDRs sorts them into the correct order and returns as concatenated string.
 
     Examples:
@@ -620,7 +620,7 @@ def get_ips_sorted(ips: t.Union[str, t.List[str]], sort_type: str = "network") -
         sort_type (str): Whether the passed list are networks, IP addresses, or interfaces, ie "address", "interface", or "network".
 
     Returns:
-        list: Sorted list of sort_type IPs.
+        t.List[str]: Sorted list of sort_type IPs.
     """
     if sort_type not in ["address", "interface", "network"]:
         raise ValueError("Invalid sort type passed. Must be `address`, `interface`, or `network`.")
