@@ -51,7 +51,7 @@
 | is_netmask | netutils.ip.is_netmask |
 | is_network | netutils.ip.is_network |
 | netmask_to_cidr | netutils.ip.netmask_to_cidr |
-| sort_ips | netutils.ip.sort_ips |
+| get_ips_sorted | netutils.ip.get_ips_sorted |
 | get_napalm_getters | netutils.lib_helpers.get_napalm_getters |
 | get_oui | netutils.mac.get_oui |
 | is_valid_mac | netutils.mac.is_valid_mac |
