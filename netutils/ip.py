@@ -600,7 +600,7 @@ def get_usable_range(ip_network: str) -> str:
 
 
 def get_ips_sorted(ips: t.Union[str, t.List[str]], sort_type: str = "network") -> t.List[str]:
-    """Given a concatenated list of CIDRs sorts them into the correct order and returns as concatenated string.
+    """Given a concatenated list of CIDRs sorts them into the correct order and returns them as a list.
 
     Examples:
         >>> from netutils.ip import get_ips_sorted
