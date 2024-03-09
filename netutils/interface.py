@@ -223,6 +223,7 @@ def abbreviated_interface_name(
         The name of the interface in the abbreviated form.
 
     Examples:
+        >>> from netutils.interface import abbreviated_interface_name
         >>> abbreviated_interface_name("GigabitEthernet1/0/1")
         'Gi1/0/1'
         >>> abbreviated_interface_name("Eth1")
@@ -444,6 +445,7 @@ def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
         A **new** sorted, unique list elements from the input.
 
     Examples:
+        >>> from netutils.interface import sort_interface_list
         >>> sort_interface_list(["Gi1/0/1", "Gi1/0/3", "Gi1/0/3.100", "Gi1/0/2", "Gi1/0/2.50", "Gi2/0/2", "Po40", "Po160", "Lo10"])
         ['Gi1/0/1', 'Gi1/0/2', 'Gi1/0/2.50', 'Gi1/0/3', 'Gi1/0/3.100', 'Gi2/0/2', 'Lo10', 'Po40', 'Po160']
         >>> sort_interface_list(['GigabitEthernet1/0/1', 'GigabitEthernet1/0/3', 'GigabitEthernet1/0/2', "GigabitEthernet3/0/5", 'GigabitEthernet3/0/7', 'GigabitEthernet2/0/8.5',  'Port-channel40', 'Vlan20', 'Loopback10'])
@@ -557,6 +559,7 @@ def _ranges_in_list(numbers: t.List[int]) -> t.List[t.List[int]]:
     """Find contiguous ranges in a list of numbers.
 
     Examples:
+        >>> from netutils.interface import _ranges_in_list
         >>> _ranges_in_list([1, 2, 3, 5, 6, 8])
         [[1, 2, 3], [5, 6], [8]]
 
@@ -577,6 +580,7 @@ def interface_range_compress(interface_list: t.List[str]) -> t.List[str]:
     E.g. Gi =! GigabitEthernet
 
     Examples:
+        >>> from netutils.interface import interface_range_compress
         >>> interface_range_compress(["Gi1/0/1", "Gi1/0/2", "Gi1/0/3", "Gi1/0/5"])
         ['Gi1/0/1-3', 'Gi1/0/5']
         >>> interface_range_compress(["Gi0/1", "Gi0/2", "Gi0/4", "Gi1/0", "Gi1/1"])

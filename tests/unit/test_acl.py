@@ -8,7 +8,7 @@ from netutils import acl
 verify_acl = [
     {
         "sent": dict(
-            name="Check multiple sources pass. Check convesion of non-alpha tcp, e.g. with a dash",
+            name="Check multiple sources pass. Check conversion of non-alpha tcp, e.g. with a dash",
             src_ip=["192.168.1.10", "192.168.1.11", "192.168.1.15-192.168.1.20"],
             dst_ip="172.16.0.10",
             dst_port="tcp/www-http",

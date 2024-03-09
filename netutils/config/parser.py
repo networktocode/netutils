@@ -109,6 +109,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
             True if line is a comment, else False.
 
         Examples:
+            >>> from netutils.config.parser import BaseSpaceConfigParser
             >>> BaseSpaceConfigParser("interface Ethernet1/1").is_comment("interface Ethernet1/1")
             False
             >>> BaseSpaceConfigParser("!").is_comment("!")
@@ -128,6 +129,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
             The non-space and non-comment lines from ``config``.
 
         Examples:
+            >>> from netutils.config.parser import BaseSpaceConfigParser
             >>> config = '''!
             ... aaa group server tacacs+ auth
             ...  server 10.1.1.1
@@ -162,6 +164,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
             The number of leading spaces.
 
         Examples:
+            >>> from netutils.config.parser import BaseSpaceConfigParser
             >>> config = '''interface GigabitEthernet1\n description link to ISP'''
             >>> config_line = " description link to ISP"
             >>> indent_level = BaseSpaceConfigParser(config).get_leading_space_count(config_line)
@@ -286,6 +289,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         r"""Parse text tree of config lines and their parents.
 
         Examples:
+            >>> from netutils.config.parser import BaseSpaceConfigParser, ConfigLine
             >>> config = (
             ...     "interface Ethernet1/1\n"
             ...     "  vlan 10\n"
@@ -354,6 +358,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
             configuration under that parent pattern.
 
         Examples:
+            >>> from netutils.config.parser import BaseSpaceConfigParser
             >>> config = '''
             ... router bgp 45000
             ...   address-family ipv4 unicast
@@ -388,6 +393,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
             configuration under that parent pattern.
 
         Examples:
+            >>> from netutils.config.parser import BaseSpaceConfigParser
             >>> config = '''
             ... router bgp 45000
             ...   address-family ipv4 unicast
@@ -429,6 +435,7 @@ class BaseBraceConfigParser(BaseConfigParser):  # pylint: disable=abstract-metho
         r"""Parse text tree of config lines and their parents.
 
         Examples:
+            >>> from netutils.config.parser import BaseSpaceConfigParser, ConfigLine
             >>> config = '''auth ldap system-auth {
             ...         port ldaps
             ...         servers { ams-lda01.ntc.com }
@@ -473,6 +480,7 @@ class BaseBraceConfigParser(BaseConfigParser):  # pylint: disable=abstract-metho
             The multiline string text that was added to ``self.config_lines``.
 
         Examples:
+            >>> from netutils.config.parser import BaseSpaceConfigParser, ConfigLine
             >>> config = (
             ...     'sys syslog {\n'
             ...     '    include "\n'
@@ -634,6 +642,7 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
         r"""Parse text tree of config lines and their parents.
 
         Examples:
+            >>> from netutils.config.parser import IOSConfigParser, ConfigLine
             >>> config = '''
             ... interface Ethernet1/1
             ...   vlan 10
@@ -786,6 +795,7 @@ class F5ConfigParser(BaseBraceConfigParser):
         r"""Parse text tree of config lines and their parents.
 
         Examples:
+            >>> from netutils.config.parser import F5ConfigParser, ConfigLine
             >>> config = '''apm resource webtop-link aShare {
             ...     application-uri http://funshare.example.com
             ...     customization-group a_customization_group
@@ -838,13 +848,7 @@ class F5ConfigParser(BaseBraceConfigParser):
             The multiline string text that was added to ``self.config_lines``.
 
         Examples:
-            config = '''apm resource webtop-link aShare {
-                application-uri http://funshare.example.com
-                customization-group a_customization_group
-            }
-            apm sso form-based portal_ext_sso_form_based {
-                form-action /Citrix/Example/ExplicitAuth/LoginAttempt
-            >>>
+            >>> from netutils.config.parser import F5ConfigParser, ConfigLine
             >>> config = '''apm resource webtop-link aShare {
             ...     application-uri http://funshare.example.com
             ...     customization-group a_customization_group
@@ -928,6 +932,7 @@ class ASAConfigParser(CiscoConfigParser):
         r"""Parse text tree of config lines and their parents.
 
         Examples:
+            >>> from netutils.config.parser import ASAConfigParser, ConfigLine
             >>> config = '''
             ... interface Management0/0
             ...  management-only
@@ -995,6 +1000,7 @@ class FortinetConfigParser(BaseSpaceConfigParser):
             True if line has 'end' or 'next', else False.
 
         Examples:
+            >>> from netutils.config.parser import FortinetConfigParser
             >>> FortinetConfigParser("config system virtual-switch").is_end_next("config system virtual-switch")
             False
             >>> FortinetConfigParser("end").is_end_next("end")
@@ -1310,6 +1316,7 @@ class IOSXRConfigParser(CiscoConfigParser):
         r"""Parse text tree of config lines and their parents.
 
         Examples:
+            >>> from netutils.config.parser import IOSXRConfigParser, ConfigLine
             >>> config = (
             ...     "interface Ethernet1/1\n"
             ...     "  vlan 10\n"
@@ -1472,6 +1479,7 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
         r"""Parse text of config lines and find their parents.
 
         Examples:
+            >>> from netutils.config.parser import PaloAltoNetworksConfigParser, ConfigLine
             >>> config = (
             ...     "set deviceconfig system hostname firewall1\n"
             ...     "set deviceconfig system panorama local-panorama panorama-server 10.0.0.1\n"

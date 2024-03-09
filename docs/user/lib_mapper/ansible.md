@@ -1,11 +1,13 @@
 | ANSIBLE | | NORMALIZED |
 | ---------- | -- | ------ |
+| a10.acos_axapi.a10 | → | a10 |
 | arista.eos.eos | → | arista_eos |
 | arubanetworks.aoscx | → | aruba_aoscx |
 | ciena.saos6.saos6 | → | ciena_saos |
 | cisco.asa.asa | → | cisco_asa |
 | cisco.ios.ios | → | cisco_ios |
 | cisco.iosxr.iosxr | → | cisco_xr |
+| cisco.meraki.meraki | → | cisco_meraki |
 | cisco.nxos.nxos | → | cisco_nxos |
 | community.network.ce | → | huawei |
 | community.network.cnos | → | lenovo_cnos |
@@ -20,8 +22,12 @@
 | community.network.slxos | → | extreme_slx |
 | community.network.sros | → | nokia_sros |
 | community.network.voss | → | extreme_vsp |
+| dellemc.enterprise_sonic.sonic | → | sonic |
 | dellemc.os10.0s10 | → | dell_os10 |
 | dellemc.os6.os6 | → | dell_os6 |
 | dellemc.os9.os9 | → | dell_os9 |
+| f5networks.f5_bigip.bigip | → | bigip_f5 |
+| fortinet.fortios.fortios | → | fortinet |
 | junipernetworks.junos.junos | → | juniper_junos |
+| paloaltonetworks.panos.panos | → | paloalto_panos |
 | vyos.vyos.vyos | → | vyos |

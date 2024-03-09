@@ -6,7 +6,7 @@
 | eos | → | arista_eos |
 | f5 | → | bigip_f5 |
 | fortios | → | fortinet |
-| huawei | → | huawei_vrp |
+| huawei_vrp | → | huawei |
 | ios | → | cisco_ios |
 | iosxr | → | cisco_xr |
 | junos | → | juniper_junos |
