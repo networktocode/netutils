@@ -34,6 +34,7 @@
 | get_all_host | netutils.ip.get_all_host |
 | get_broadcast_address | netutils.ip.get_broadcast_address |
 | get_first_usable | netutils.ip.get_first_usable |
+| get_ips_sorted | netutils.ip.get_ips_sorted |
 | get_peer_ip | netutils.ip.get_peer_ip |
 | get_range_ips | netutils.ip.get_range_ips |
 | get_usable_range | netutils.ip.get_usable_range |

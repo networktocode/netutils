@@ -1,4 +1,5 @@
 """Functions for working with IP addresses."""
+
 import ipaddress
 import typing as t
 from operator import attrgetter
@@ -596,3 +597,50 @@ def get_usable_range(ip_network: str) -> str:
         lower_bound = str(net[1])
         upper_bound = str(net[-2])
     return f"{lower_bound} - {upper_bound}"
+
+
+def get_ips_sorted(ips: t.Union[str, t.List[str]], sort_type: str = "network") -> t.List[str]:
+    """Given a concatenated list of CIDRs sorts them into the correct order and returns them as a list.
+
+    Examples:
+        >>> from netutils.ip import get_ips_sorted
+        >>> get_ips_sorted("3.3.3.3,2.2.2.2,1.1.1.1")
+        ['1.1.1.1/32', '2.2.2.2/32', '3.3.3.3/32']
+        >>> get_ips_sorted("10.0.20.0/24,10.0.20.0/23,10.0.19.0/24")
+        ['10.0.19.0/24', '10.0.20.0/23', '10.0.20.0/24']
+        >>> get_ips_sorted("10.0.20.0/24,10.0.20.0/23,10.0.19.0/24", "interface")
+        ['10.0.19.0/24', '10.0.20.0/23', '10.0.20.0/24']
+        >>> get_ips_sorted("10.0.20.20/24,10.0.20.1/23,10.0.19.5/24", "interface")
+        ['10.0.19.5/24', '10.0.20.1/23', '10.0.20.20/24']
+        >>> get_ips_sorted(["10.0.20.20", "10.0.20.1", "10.0.19.5"], "address")
+        ['10.0.19.5', '10.0.20.1', '10.0.20.20']
+
+    Args:
+        ips (t.Union[str, t.List[str]]): Concatenated string list of CIDRs, IPAddresses, or Interfaces or list of the same strings.
+        sort_type (str): Whether the passed list are networks, IP addresses, or interfaces, ie "address", "interface", or "network".
+
+    Returns:
+        t.List[str]: Sorted list of sort_type IPs.
+    """
+    if sort_type not in ["address", "interface", "network"]:
+        raise ValueError("Invalid sort type passed. Must be `address`, `interface`, or `network`.")
+    if isinstance(ips, list):
+        ips_list = ips
+    elif (isinstance(ips, str) and "," not in ips) or not isinstance(ips, str):
+        raise ValueError("Not a concatenated list of IPs as expected.")
+    elif isinstance(ips, str):
+        ips_list = ips.replace(" ", "").split(",")
+
+    functions: t.Dict[str, t.Callable[[t.Any], t.Any]] = {
+        "address": ipaddress.ip_address,
+        "interface": ipaddress.ip_interface,
+        "network": ipaddress.ip_network,
+    }
+
+    try:
+        sorted_list = sorted(functions[sort_type](ip) for ip in ips_list)
+        if sort_type in ["interface", "network"]:
+            return [cidrs.with_prefixlen for cidrs in sorted_list]
+        return [str(ip) for ip in sorted_list]
+    except ValueError as err:
+        raise ValueError(f"Invalid IP of {sort_type} input: {err}") from err
