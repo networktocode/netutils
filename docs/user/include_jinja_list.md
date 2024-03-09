@@ -20,6 +20,7 @@
 | paloalto_panos_brace_to_set | netutils.config.conversion.paloalto_panos_brace_to_set |
 | fqdn_to_ip | netutils.dns.fqdn_to_ip |
 | is_fqdn_resolvable | netutils.dns.is_fqdn_resolvable |
+| hash_data | netutils.hash.hash_data |
 | abbreviated_interface_name | netutils.interface.abbreviated_interface_name |
 | abbreviated_interface_name_list | netutils.interface.abbreviated_interface_name_list |
 | canonical_interface_name | netutils.interface.canonical_interface_name |
@@ -33,6 +34,7 @@
 | get_all_host | netutils.ip.get_all_host |
 | get_broadcast_address | netutils.ip.get_broadcast_address |
 | get_first_usable | netutils.ip.get_first_usable |
+| get_ips_sorted | netutils.ip.get_ips_sorted |
 | get_peer_ip | netutils.ip.get_peer_ip |
 | get_range_ips | netutils.ip.get_range_ips |
 | get_usable_range | netutils.ip.get_usable_range |

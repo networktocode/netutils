@@ -1,4 +1,5 @@
 """Test for the IP functions."""
+
 import ipaddress
 import pytest
 
@@ -471,6 +472,49 @@ IS_CLASSFUL = [
     {"sent": {"ip_network": "224.0.0.0/24"}, "received": False},
 ]
 
+SORTED_IPS = [
+    {
+        "sent": "10.0.10.0/24,10.0.100.0/24,10.0.12.0/24,10.0.200.0/24",
+        "expected": ["10.0.10.0/24", "10.0.12.0/24", "10.0.100.0/24", "10.0.200.0/24"],
+        "sort_type": "network",
+    },
+    {
+        "sent": "10.0.10.0/24, 10.0.100.0/24, 10.0.12.0/24, 10.0.200.0/24",
+        "expected": ["10.0.10.0/24", "10.0.12.0/24", "10.0.100.0/24", "10.0.200.0/24"],
+        "sort_type": "network",
+    },
+    {
+        "sent": "192.168.1.1,10.1.1.2,172.16.10.1",
+        "expected": ["10.1.1.2", "172.16.10.1", "192.168.1.1"],
+        "sort_type": "address",
+    },
+    {
+        "sent": "192.168.1.1/24,10.1.1.2/32,172.16.10.1/16",
+        "expected": ["10.1.1.2/32", "172.16.10.1/16", "192.168.1.1/24"],
+        "sort_type": "interface",
+    },
+    {
+        "sent": "10.0.0.0/24, 10.0.0.0/16, 10.0.0.0/18",
+        "expected": ["10.0.0.0/16", "10.0.0.0/18", "10.0.0.0/24"],
+        "sort_type": "network",
+    },
+    {
+        "sent": ["10.0.10.0/24", "10.0.100.0/24", "10.0.12.0/24", "10.0.200.0/24"],
+        "expected": ["10.0.10.0/24", "10.0.12.0/24", "10.0.100.0/24", "10.0.200.0/24"],
+        "sort_type": "network",
+    },
+    {
+        "sent": ["192.168.1.1", "10.1.1.2", "172.16.10.1"],
+        "expected": ["10.1.1.2", "172.16.10.1", "192.168.1.1"],
+        "sort_type": "address",
+    },
+    {
+        "sent": ["192.168.1.1/24", "10.1.1.2/32", "172.16.10.1/16"],
+        "expected": ["10.1.1.2/32", "172.16.10.1/16", "192.168.1.1/24"],
+        "sort_type": "interface",
+    },
+]
+
 
 @pytest.mark.parametrize("data", IP_TO_HEX)
 def test_ip_to_hex(data):
@@ -617,3 +661,23 @@ def test_ipaddress_network(data):
 @pytest.mark.parametrize("data", IS_CLASSFUL)
 def test_is_classful(data):
     assert ip.is_classful(**data["sent"]) == data["received"]
+
+
+@pytest.mark.parametrize("data", SORTED_IPS)
+def test_get_ips_sorted(data):
+    assert data["expected"] == ip.get_ips_sorted(data["sent"], sort_type=data["sort_type"])
+
+
+def test_get_ips_sorted_exception_invalid_list():
+    with pytest.raises(ValueError, match="Not a concatenated list of IPs as expected."):
+        ip.get_ips_sorted("10.1.1.1/24 10.2.2.2/16")
+
+
+def test_get_ips_sorted_exception_invalid_instance_type():
+    with pytest.raises(ValueError, match="Not a concatenated list of IPs as expected."):
+        ip.get_ips_sorted({"10.1.1.1/24", "10.2.2.2/16"})
+
+
+def test_get_ips_sorted_invalid_sort_type():
+    with pytest.raises(ValueError, match="Invalid sort type passed. Must be `address`, `interface`, or `network`."):
+        ip.get_ips_sorted("10.0.0.0/24,192.168.0.0/16", sort_type="wrong_type")

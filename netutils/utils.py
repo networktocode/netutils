@@ -88,6 +88,8 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_napalm_getters": "lib_helpers.get_napalm_getters",
     "paloalto_panos_brace_to_set": "config.conversion.paloalto_panos_brace_to_set",
     "get_upgrade_path": "os_version.get_upgrade_path",
+    "hash_data": "hash.hash_data",
+    "get_ips_sorted": "ip.get_ips_sorted",
 }
 
 

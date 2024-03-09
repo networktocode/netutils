@@ -1,4 +1,5 @@
 """Dictionary object to store Protocol information."""
+
 # pylint: disable=too-many-lines
 from typing import Any, Dict
 
@@ -273,7 +274,6 @@ PROTOCOLS: Dict[str, Any] = {
     "cloanto-net-1": {"port_number": 356, "protocols": ["tcp", "udp"]},
     "bhevent": {"port_number": 357, "protocols": ["tcp", "udp"]},
     "shrinkwrap": {"port_number": 358, "protocols": ["tcp", "udp"]},
-    "nsrmp": {"port_number": 359, "protocols": ["tcp", "udp"]},
     "scoi2odialog": {"port_number": 360, "protocols": ["tcp", "udp"]},
     "semantix": {"port_number": 361, "protocols": ["tcp", "udp"]},
     "srssend": {"port_number": 362, "protocols": ["tcp", "udp"]},
@@ -4611,6 +4611,7 @@ PROTOCOLS: Dict[str, Any] = {
     "amc": {"port_number": 5506, "protocols": ["tcp", "udp"]},
     "psl-management": {"port_number": 5507, "protocols": ["tcp"]},
     "matter": {"port_number": 5540, "protocols": ["tcp", "udp"]},
+    "qftest-licserve": {"port_number": 5543, "protocols": ["tcp"]},
     "cbus": {"port_number": 5550, "protocols": ["tcp"]},
     "sgi-eventmond": {"port_number": 5553, "protocols": ["tcp", "udp"]},
     "sgi-esphttp": {"port_number": 5554, "protocols": ["tcp", "udp"]},
@@ -5309,11 +5310,11 @@ PROTOCOLS: Dict[str, Any] = {
     "senomix07": {"port_number": 8058, "protocols": ["tcp", "udp"]},
     "senomix08": {"port_number": 8059, "protocols": ["tcp", "udp"]},
     "aero": {"port_number": 8060, "protocols": ["udp"]},
+    "nikatron-dev": {"port_number": 8061, "protocols": ["tcp"]},
     "toad-bi-appsrvr": {"port_number": 8066, "protocols": ["tcp"]},
     "infi-async": {"port_number": 8067, "protocols": ["tcp"]},
     "ucs-isc": {"port_number": 8070, "protocols": ["tcp"]},
     "gadugadu": {"port_number": 8074, "protocols": ["tcp", "udp"]},
-    "mles": {"port_number": 8077, "protocols": ["tcp"]},
     "sunproxyadmin": {"port_number": 8081, "protocols": ["tcp", "udp"]},
     "us-cli": {"port_number": 8082, "protocols": ["tcp", "udp"]},
     "us-srv": {"port_number": 8083, "protocols": ["tcp", "udp"]},
@@ -5435,6 +5436,7 @@ PROTOCOLS: Dict[str, Any] = {
     "imink": {"port_number": 8615, "protocols": ["tcp"]},
     "monetra": {"port_number": 8665, "protocols": ["tcp"]},
     "monetra-admin": {"port_number": 8666, "protocols": ["tcp"]},
+    "spartan": {"port_number": 8668, "protocols": ["tcp"]},
     "msi-cps-rm": {"port_number": 8675, "protocols": ["tcp"]},
     "msi-cps-rm-disc": {"port_number": 8675, "protocols": ["udp"]},
     "sun-as-jmxrmi": {"port_number": 8686, "protocols": ["tcp", "udp"]},
@@ -5747,7 +5749,6 @@ PROTOCOLS: Dict[str, Any] = {
     "axis-wimp-port": {"port_number": 10260, "protocols": ["tcp", "udp"]},
     "tile-ml": {"port_number": 10261, "protocols": ["tcp"]},
     "blocks": {"port_number": 10288, "protocols": ["tcp", "udp"]},
-    "cosir": {"port_number": 10321, "protocols": ["tcp"]},
     "bngsync": {"port_number": 10439, "protocols": ["udp"]},
     "cirrossp": {"port_number": 10443, "protocols": ["tcp"]},
     "hip-nat-t": {"port_number": 10500, "protocols": ["udp"]},
