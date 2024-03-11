@@ -220,9 +220,9 @@ class ACLRule:
             [{'name': 'Check no match', 'src_ip': '10.1.1.1', 'dst_ip': '172.16.0.10', 'dst_port': '6/80', 'action': 'permit'}]
             >>>
         """
-        self.__load_data(kwargs=kwargs)
+        self._load_data(kwargs=kwargs)
 
-    def __load_data(self, kwargs) -> None:
+    def _load_data(self, kwargs) -> None:
         """Load the data into the rule while verifying input data, result data, and processing data."""
         # Remaining kwargs stored under ACLRule.Meta
         pop_kwargs = []
@@ -248,7 +248,7 @@ class ACLRule:
         self.input_data_check()
 
         for attr in get_attributes(self):
-            processor_func = getattr(self, f"process_{attr}", None)
+            processor_func = getattr(self, f"process_{attr}", None)  # todo(mzb): remove special case for dst_port !
             if processor_func:
                 _attr_data = processor_func(self._processed_data[attr])
             else:
@@ -295,43 +295,43 @@ class ACLRule:
                     results.extend(result)
         return results
 
-    def process_dst_port(
-        self, dst_port: t.Any
-    ) -> t.Union[t.List[str], None]:  # pylint: disable=inconsistent-return-statements
-        """Convert port and protocol information.
-
-        Method supports a single format of `{protocol}/{port}`, and will translate the
-        protocol for all IANA defined protocols. The port will be translated for TCP and
-        UDP ports only. For all other protocols should use port of 0, e.g. `ICMP/0` for ICMP
-        or `50/0` for ESP. Similarly, IANA defines the port mappings, while these are mostly
-        staying unchanged, but sourced from
-        https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv.
-        """
-        output = []
-        if not self.Meta.dst_port_process:
-            return self.dst_port
-        if not isinstance(dst_port, list):
-            dst_port = [dst_port]
-        for item in dst_port:
-            protocol = item.split("/")[0]
-            port = item.split("/")[1]
-            if protocol.isalpha():
-                if not PROTO_NAME_TO_NUM.get(protocol.upper()):
-                    raise ValueError(
-                        f"Protocol {protocol} was not found in netutils.protocol_mapper.PROTO_NAME_TO_NUM."
-                    )
-                protocol = PROTO_NAME_TO_NUM[protocol.upper()]
-            # test port[0] vs port, since dashes do not count, e.g. www-http
-            if int(protocol) == 6 and port[0].isalpha():
-                if not TCP_NAME_TO_NUM.get(port.upper()):
-                    raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.TCP_NAME_TO_NUM.")
-                port = TCP_NAME_TO_NUM[port.upper()]
-            if int(protocol) == 17 and port[0].isalpha():
-                if not UDP_NAME_TO_NUM.get(port.upper()):
-                    raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.UDP_NAME_TO_NUM.")
-                port = UDP_NAME_TO_NUM[port.upper()]
-            output.append(f"{protocol}/{port}")
-        return output
+    # def process_dst_port(
+    #     self, dst_port: t.Any
+    # ) -> t.Union[t.List[str], None]:  # pylint: disable=inconsistent-return-statements
+    #     """Convert port and protocol information.
+    #
+    #     Method supports a single format of `{protocol}/{port}`, and will translate the
+    #     protocol for all IANA defined protocols. The port will be translated for TCP and
+    #     UDP ports only. For all other protocols should use port of 0, e.g. `ICMP/0` for ICMP
+    #     or `50/0` for ESP. Similarly, IANA defines the port mappings, while these are mostly
+    #     staying unchanged, but sourced from
+    #     https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv.
+    #     """
+    #     output = []
+    #     if not self.Meta.dst_port_process:
+    #         return self.dst_port
+    #     if not isinstance(dst_port, list):
+    #         dst_port = [dst_port]
+    #     for item in dst_port:
+    #         protocol = item.split("/")[0]
+    #         port = item.split("/")[1]
+    #         if protocol.isalpha():
+    #             if not PROTO_NAME_TO_NUM.get(protocol.upper()):
+    #                 raise ValueError(
+    #                     f"Protocol {protocol} was not found in netutils.protocol_mapper.PROTO_NAME_TO_NUM."
+    #                 )
+    #             protocol = PROTO_NAME_TO_NUM[protocol.upper()]
+    #         # test port[0] vs port, since dashes do not count, e.g. www-http
+    #         if int(protocol) == 6 and port[0].isalpha():
+    #             if not TCP_NAME_TO_NUM.get(port.upper()):
+    #                 raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.TCP_NAME_TO_NUM.")
+    #             port = TCP_NAME_TO_NUM[port.upper()]
+    #         if int(protocol) == 17 and port[0].isalpha():
+    #             if not UDP_NAME_TO_NUM.get(port.upper()):
+    #                 raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.UDP_NAME_TO_NUM.")
+    #             port = UDP_NAME_TO_NUM[port.upper()]
+    #         output.append(f"{protocol}/{port}")
+    #     return output
 
     def enforce(self) -> t.List[t.Dict[str, t.Any]]:
         """Run through any method that startswith('enforce_') and run that method.
@@ -514,15 +514,21 @@ class ACLRule:
                     break
             detailed_info = {
                 "existing_rule_product": existing_rule,  # pylint: disable=undefined-loop-variable
-                "match_rule": match_rule._processed_data,  # pylint: disable=protected-access
-                "existing_rule": self._processed_data,
+                "match_rule": match_rule.serialize(),  # pylint: disable=protected-access
+                "existing_rule": self.serialize(),  # TODO(mzb): property?
+                "match_rule_product": rule,
             }
             if rules_found[-1]:
-                detailed_info["match_rule_product"] = rule
                 rules_matched.append(detailed_info)
             else:
+                detailed_info["existing_rule_product"] = None
                 rules_unmatched.append(detailed_info)
-        return {"rules_matched": rules_matched, "rules_unmatched": rules_unmatched}
+
+        return {
+            "match": True if rules_matched and not rules_unmatched else False,
+            "rules_matched": rules_matched,
+            "rules_unmatched": rules_unmatched,
+        }
 
     def match(self, match_rule: "ACLRule") -> bool:
         """Simple boolean way of verifying match or not.
@@ -540,7 +546,7 @@ class ACLRule:
     #     """Set repr of the object to be sane."""
     #     return {k: v for k, v in self.__dict__.items() if not k.startswith("_")}
 
-    def serialize(self) -> str:
+    def serialize(self) -> dict:
         """Primitive Serializer."""
         return {k: v for k, v in self.__dict__.items() if not k.startswith("_")}
 
@@ -569,7 +575,7 @@ class ACLRules:
         for item in data:
             self.rules.append(self.Meta.class_obj(**item))
 
-    def serialize(self) -> str:
+    def serialize(self) -> list:
         """Primitive Serializer."""
         return [rule.serialize() for rule in self.rules]
 
