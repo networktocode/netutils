@@ -113,14 +113,14 @@ def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
     delim_seven = ":*" * 7
     os_platform_data["version_string"] = os_platform_data.get("version_string").replace("-", ":")  # type: ignore
 
-    version_string = os_platform_data.get("version_string", "")
+    version_string = os_platform_data.get("version_string", "").lower()
     for escape_char in escape_list:
         version_string = re.sub(escape_char, "\\" + escape_char, version_string)
 
     os_platform_data["version_string"] = version_string
 
     nist_urls.append(
-        f"{base_url}{os_platform_data['vendor']}:{os_platform_data['os_type']}:{os_platform_data['version_string']}{delim_seven}"
+        f"{base_url}{os_platform_data['vendor']}:{os_platform_data['os_type']}:{os_platform_data['version_string']}"
     )
 
     return nist_urls
