@@ -120,7 +120,7 @@ def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
     os_platform_data["version_string"] = version_string
 
     nist_urls.append(
-        f"{base_url}{os_platform_data['vendor']}:{os_platform_data['os_type']}:{os_platform_data['version_string']}"
+        f"{base_url}{os_platform_data['vendor']}:{os_platform_data['os_type']}:{os_platform_data['version_string']}{delim_seven}"
     )
 
     return nist_urls
