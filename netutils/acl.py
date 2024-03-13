@@ -482,9 +482,7 @@ class ACLRule:
             for existing_product in self._expanded_rules:
                 comparison_results = []
                 for attr_name, attr_func in _get_match_funcs(self).items():
-                    r= attr_func(existing_product[attr_name], match_product[attr_name])
-                    comparison_results.append(r)
-                    print(f"matched {attr_name} by {attr_func}, with result {r}")
+                    comparison_results.append(rattr_func(existing_product[attr_name], match_product[attr_name]))
                 # We found match_product in existing_product (all matchers returned True)
                 if all(comparison_results):
                     products_matched.append(match_product)
