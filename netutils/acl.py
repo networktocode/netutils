@@ -24,6 +24,9 @@ INPUT_SCHEMA = {
         "dst_port": {
             "oneOf": [
                 {
+                    "type": "null"
+                },
+                {
                     "$ref": "#/definitions/port",
                 },
                 {
@@ -85,14 +88,26 @@ INPUT_SCHEMA = {
                 },
             ],
         },
-        "port": {"type": "string", "pattern": "^\\S+\\/\\S+$"},
+        "port": {
+            "oneOf": [
+                {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 65535,
+                },
+                {
+                    "type": "string",
+                    "pattern": "^\d+$",
+                },
+            ]
+        },
     },
     "required": [],
 }
 
 
 RESULT_SCHEMA = copy.deepcopy(INPUT_SCHEMA)
-RESULT_SCHEMA["definitions"]["port"]["pattern"] = "^\\d+\\/\\d+$"  # type: ignore
+# RESULT_SCHEMA["definitions"]["port"]["pattern"] = "^\\d+\\/\\d+$"  # type: ignore
 
 
 def _cartesian_product(data: t.Dict[str, str]) -> t.List[t.Dict[str, t.Any]]:
@@ -167,13 +182,13 @@ def _get_attributes(obj):
 def _get_match_funcs(obj):
     """Returns {'attr': match_attr_funct, ...} dict."""
     attrs = {}
-    for attr in dir(obj):
-        if attr.startswith("match_"):
-            match_name = attr[len("match_"):]  # noqa: E203
+    for attr_name in dir(obj):
+        if attr_name.startswith("match_") and attr_name not in ["match_details"]:
+            match_name = attr_name[len("match_"):]  # noqa: E203
             # When an attribute is not defined, can skip it
-            if not hasattr(match_rule, obj):
+            if not hasattr(obj, match_name):
                 continue
-            attrs[match_name] = getattr(obj, attr)
+            attrs[match_name] = getattr(obj, attr_name)
 
     return attrs
 
@@ -312,44 +327,6 @@ class ACLRule:
                     results.extend(result)
         return results
 
-    # def process_dst_port(
-    #     self, dst_port: t.Any
-    # ) -> t.Union[t.List[str], None]:  # pylint: disable=inconsistent-return-statements
-    #     """Convert port and protocol information.
-    #
-    #     Method supports a single format of `{protocol}/{port}`, and will translate the
-    #     protocol for all IANA defined protocols. The port will be translated for TCP and
-    #     UDP ports only. For all other protocols should use port of 0, e.g. `ICMP/0` for ICMP
-    #     or `50/0` for ESP. Similarly, IANA defines the port mappings, while these are mostly
-    #     staying unchanged, but sourced from
-    #     https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.csv.
-    #     """
-    #     output = []
-    #     if not self.Meta.dst_port_process:
-    #         return self.dst_port
-    #     if not isinstance(dst_port, list):
-    #         dst_port = [dst_port]
-    #     for item in dst_port:
-    #         protocol = item.split("/")[0]
-    #         port = item.split("/")[1]
-    #         if protocol.isalpha():
-    #             if not PROTO_NAME_TO_NUM.get(protocol.upper()):
-    #                 raise ValueError(
-    #                     f"Protocol {protocol} was not found in netutils.protocol_mapper.PROTO_NAME_TO_NUM."
-    #                 )
-    #             protocol = PROTO_NAME_TO_NUM[protocol.upper()]
-    #         # test port[0] vs port, since dashes do not count, e.g. www-http
-    #         if int(protocol) == 6 and port[0].isalpha():
-    #             if not TCP_NAME_TO_NUM.get(port.upper()):
-    #                 raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.TCP_NAME_TO_NUM.")
-    #             port = TCP_NAME_TO_NUM[port.upper()]
-    #         if int(protocol) == 17 and port[0].isalpha():
-    #             if not UDP_NAME_TO_NUM.get(port.upper()):
-    #                 raise ValueError(f"Port {port} was not found in netutils.protocol_mapper.UDP_NAME_TO_NUM.")
-    #             port = UDP_NAME_TO_NUM[port.upper()]
-    #         output.append(f"{protocol}/{port}")
-    #     return output
-
     def enforce(self) -> t.List[t.Dict[str, t.Any]]:
         """Run through any method that startswith('enforce_') and run that method.
 
@@ -430,7 +407,7 @@ class ACLRule:
         if existing_ip == check_ip:  # None cases
             return True
         else:
-            is_ip_within(check_ip, existing_ip)
+            return is_ip_within(check_ip, existing_ip)
 
     def match_src_zone(self, existing_src_zone: str, check_src_zone: str) -> bool:
         """Match the source zone for equality.
@@ -483,7 +460,7 @@ class ACLRule:
         """
         return existing_port == check_port
 
-    def detailed_match(self, match_rule: "ACLRule") -> t.Dict[str, t.Any]:  # pylint: disable=too-many-locals
+    def match_detail(self, match_rule: "ACLRule") -> t.Dict[str, t.Any]:  # pylint: disable=too-many-locals
         """Verbose way of verifying match details.
 
         Args:
@@ -505,7 +482,9 @@ class ACLRule:
             for existing_product in self._expanded_rules:
                 comparison_results = []
                 for attr_name, attr_func in _get_match_funcs(self).items():
-                    comparison_results.append(attr_func(existing_product[attr_name], match_product[attr_name]))
+                    r= attr_func(existing_product[attr_name], match_product[attr_name])
+                    comparison_results.append(r)
+                    print(f"matched {attr_name} by {attr_func}, with result {r}")
                 # We found match_product in existing_product (all matchers returned True)
                 if all(comparison_results):
                     products_matched.append(match_product)
@@ -521,44 +500,6 @@ class ACLRule:
             "products_unmatched": products_unmatched,
         }
 
-
-        # for match_product in match_rule._expanded_rules:  # pylint: disable=protected-access
-        #     rules_found.append(False)
-        #     for existing_product in self._expanded_rules:
-        #         missing = False
-        #         for attr in attrs:
-        #             # Examples of obj are match_rule.src_ip, match_rule.dst_port
-        #             rule_value = match_product[attr]
-        #             existing_value = existing_product[attr]
-        #             # Examples of getter are self.match_src_ip, self.match_dst_port
-        #             getter = getattr(self, f"match_{attr}")(existing_value, rule_value)
-        #             if not getter and getter is not None:
-        #                 missing = True
-        #                 break
-        #         # If the loop gets through with each existing rule not flagging
-        #         # the `missing` value, we know everything was matched, and the rule has
-        #         # found a complete match, we can break out of the loop at this point.
-        #         if not missing:
-        #             rules_found[-1] = True
-        #             break
-        #     detailed_info = {
-        #         "existing_rule_product": existing_product,  # pylint: disable=undefined-loop-variable
-        #         "match_rule_product": match_product,
-        #     }
-        #     if rules_found[-1]:
-        #         products_matched.append(detailed_info)
-        #     else:
-        #         detailed_info["existing_rule_product"] = None
-        #         products_unmatched.append(detailed_info)
-
-        # return {
-        #     "match": True if products_matched and not products_unmatched else False,
-        #     "existing_rule": self.serialize(),
-        #     "match_rule": match_rule.serialize(),
-        #     "products_matched": products_matched,
-        #     "products_unmatched": products_unmatched,
-        # }
-
     def match(self, match_rule: "ACLRule") -> bool:
         """Simple boolean way of verifying match or not.
 
@@ -568,7 +509,7 @@ class ACLRule:
         Returns:
             A boolean if there was a full match or not.
         """
-        details = self.detailed_match(match_rule)
+        details = self.match_detail(match_rule)
 
         return details["match"]
 
@@ -634,5 +575,5 @@ class ACLRules:
         """
         output = []
         for item in self.rules:
-            output.append(item.detailed_match(rule))  # mzb: bugfix
+            output.append(item.match_detail(rule))  # mzb: bugfix
         return output
