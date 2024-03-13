@@ -164,6 +164,20 @@ def _get_attributes(obj):
     return result
 
 
+def _get_match_funcs(obj):
+    """Returns {'attr': match_attr_funct, ...} dict."""
+    attrs = {}
+    for attr in dir(obj):
+        if attr.startswith("match_"):
+            match_name = attr[len("match_"):]  # noqa: E203
+            # When an attribute is not defined, can skip it
+            if not hasattr(match_rule, obj):
+                continue
+            attrs[match_name] = getattr(obj, attr)
+
+    return attrs
+
+
 class ACLRule:
     """A class that helps you imagine an acl rule via methodologies."""
 
@@ -198,11 +212,6 @@ class ACLRule:
         order_enforce: t.List[str] = []
         filter_same_ip: bool = True
 
-    class Data:  # pylint: disable=too-few-public-methods
-        """Default data class."""
-
-        expanded_rules: t.Any = {}
-
     def __init__(self, **kwargs):  # pylint: disable=unused-argument
         """Initialize and load data.
 
@@ -224,7 +233,7 @@ class ACLRule:
             ... )
             >>>
             >>>
-            >>> rule.Data.expanded_rules
+            >>> rule._expanded_rules
             [{'name': 'Check no match', 'src_ip': '10.1.1.1', 'src_zone': 'internal', 'dst_ip': '172.16.0.10', 'dst_port': '6/80', 'dst_zone': 'external', 'protocol': 'tcp', 'action': 'permit'}]
             >>>
         """
@@ -270,12 +279,12 @@ class ACLRule:
         self._set_expanded_rules()
 
     def _set_expanded_rules(self):
-        """Expanded rule property."""
+        """Expanded rule setter."""
         _expanded_rules = _cartesian_product(self._processed_data)
         if self.Meta.filter_same_ip:
             _expanded_rules = [item for item in _expanded_rules if item["dst_ip"] != item["src_ip"]]
 
-        setattr(self.Data, "expanded_rules", _expanded_rules)
+        self._expanded_rules = _expanded_rules
 
     def input_data_check(self) -> None:
         """Verify the input data against the specified JSONSchema or using a simple dictionary check."""
@@ -376,7 +385,7 @@ class ACLRule:
         if not self.Meta.matrix_definition:
             raise ValueError("You must set a matrix definition dictionary to use the matrix feature.")
         actions = []
-        for rule in self.Data.expanded_rules:
+        for rule in self._expanded_rules:
             source = rule["src_ip"]
             destination = rule["dst_ip"]
             port = rule["dst_port"]
@@ -474,7 +483,7 @@ class ACLRule:
         """
         return existing_port == check_port
 
-    def match_details(self, match_rule: "ACLRule") -> t.Dict[str, t.Any]:  # pylint: disable=too-many-locals
+    def detailed_match(self, match_rule: "ACLRule") -> t.Dict[str, t.Any]:  # pylint: disable=too-many-locals
         """Verbose way of verifying match details.
 
         Args:
@@ -483,60 +492,72 @@ class ACLRule:
         Returns:
             A dictionary with root keys of `rules_matched` and `rules_matched`.
         """
-        attrs = []
-        for name in dir(self):
-            if name.startswith("match_"):
-                obj_name = name[len("match_") :]  # noqa: E203
-                # When an attribute is not defined, can skip it
-                if not hasattr(match_rule, obj_name):
-                    continue
-                attrs.append(obj_name)
 
-        rules_found: t.List[bool] = []
-        rules_unmatched: t.List[t.Dict[str, t.Any]] = []
-        rules_matched: t.List[t.Dict[str, t.Any]] = []
+        products_matched: t.List[t.Dict[str, t.Any]] = []
+        products_unmatched: t.List[t.Dict[str, t.Any]] = []
 
-        if not match_rule.Data.expanded_ruless:  # pylint: disable=protected-access
+        if not match_rule._expanded_rules:  # pylint: disable=protected-access
             raise ValueError("There is no expanded rules to test against.")
-        elif not self.Data.expanded_rules:  # pylint: disable=protected-access
+        elif not self._expanded_rules:  # pylint: disable=protected-access
             raise ValueError("There is no expanded rules to test.")
 
-        for rule in match_rule.Data.expanded_ruless:  # pylint: disable=protected-access
-            rules_found.append(False)
-            for existing_rule in self.Data.expanded_rules:
-                missing = False
-                for attr in attrs:
-                    # Examples of obj are match_rule.src_ip, match_rule.dst_port
-                    rule_value = rule[attr]
-                    existing_value = existing_rule[attr]
-                    # Examples of getter are self.match_src_ip, self.match_dst_port
-                    getter = getattr(self, f"match_{attr}")(existing_value, rule_value)
-                    if not getter and getter is not None:
-                        missing = True
-                        break
-                # If the loop gets through with each existing rule not flagging
-                # the `missing` value, we know everything was matched, and the rule has
-                # found a complete match, we can break out of the loop at this point.
-                if not missing:
-                    rules_found[-1] = True
-                    break
-            detailed_info = {
-                "existing_rule_product": existing_rule,  # pylint: disable=undefined-loop-variable
-                "match_rule_product": rule,
-            }
-            if rules_found[-1]:
-                rules_matched.append(detailed_info)
+        for match_product in match_rule._expanded_rules:  # pylint: disable=protected-access
+            for existing_product in self._expanded_rules:
+                comparison_results = []
+                for attr_name, attr_func in _get_match_funcs(self).items():
+                    comparison_results.append(attr_func(existing_product[attr_name], match_product[attr_name]))
+                # We found match_product in existing_product (all matchers returned True)
+                if all(comparison_results):
+                    products_matched.append(match_product)
+                    break  # No need to compare remaining existing products. Performance improvement.
             else:
-                detailed_info["existing_rule_product"] = None
-                rules_unmatched.append(detailed_info)
+                products_unmatched.append(match_product)
 
         return {
-            "match": True if rules_matched and not rules_unmatched else False,
+            "match": True if products_matched and not products_unmatched else False,
             "existing_rule": self.serialize(),
             "match_rule": match_rule.serialize(),
-            "products_matched": rules_matched,
-            "products_unmatched": rules_unmatched,
+            "products_matched": products_matched,
+            "products_unmatched": products_unmatched,
         }
+
+
+        # for match_product in match_rule._expanded_rules:  # pylint: disable=protected-access
+        #     rules_found.append(False)
+        #     for existing_product in self._expanded_rules:
+        #         missing = False
+        #         for attr in attrs:
+        #             # Examples of obj are match_rule.src_ip, match_rule.dst_port
+        #             rule_value = match_product[attr]
+        #             existing_value = existing_product[attr]
+        #             # Examples of getter are self.match_src_ip, self.match_dst_port
+        #             getter = getattr(self, f"match_{attr}")(existing_value, rule_value)
+        #             if not getter and getter is not None:
+        #                 missing = True
+        #                 break
+        #         # If the loop gets through with each existing rule not flagging
+        #         # the `missing` value, we know everything was matched, and the rule has
+        #         # found a complete match, we can break out of the loop at this point.
+        #         if not missing:
+        #             rules_found[-1] = True
+        #             break
+        #     detailed_info = {
+        #         "existing_rule_product": existing_product,  # pylint: disable=undefined-loop-variable
+        #         "match_rule_product": match_product,
+        #     }
+        #     if rules_found[-1]:
+        #         products_matched.append(detailed_info)
+        #     else:
+        #         detailed_info["existing_rule_product"] = None
+        #         products_unmatched.append(detailed_info)
+
+        # return {
+        #     "match": True if products_matched and not products_unmatched else False,
+        #     "existing_rule": self.serialize(),
+        #     "match_rule": match_rule.serialize(),
+        #     "products_matched": products_matched,
+        #     "products_unmatched": products_unmatched,
+        # }
 
     def match(self, match_rule: "ACLRule") -> bool:
         """Simple boolean way of verifying match or not.
@@ -547,8 +568,9 @@ class ACLRule:
         Returns:
             A boolean if there was a full match or not.
         """
-        details = self.match_details(match_rule)
-        return not bool(details["rules_unmatched"])
+        details = self.detailed_match(match_rule)
+
+        return details["match"]
 
     def __repr__(self) -> str:
         """Set repr of the object to be sane."""
@@ -601,16 +623,16 @@ class ACLRules:
                 return True  # mzb: change to bool
         return False  # pylint: disable=undefined-loop-variable
 
-    def match_details(self, rule: ACLRule) -> t.Any:
+    def detailed_match(self, rule: ACLRule) -> t.Any:
         """Verbosely check the rules loaded in `load_data` match against a new `rule`.
 
         Args:
             rule: The `ACLRule` rule to test against the list of `ACLRule`s loaded in initiation.
 
         Returns:
-            The details from the `ACLRule.match_details` results.
+            The details from the `ACLRule.detailed_match` results.
         """
         output = []
         for item in self.rules:
-            output.append(item.match_details(rule))  # mzb: bugfix
+            output.append(item.detailed_match(rule))  # mzb: bugfix
         return output

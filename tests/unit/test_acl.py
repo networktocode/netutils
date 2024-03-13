@@ -11,7 +11,7 @@ verify_acl = [
             name="Check multiple sources pass. Check conversion of non-alpha tcp, e.g. with a dash",
             src_ip=["192.168.1.10", "192.168.1.11", "192.168.1.15-192.168.1.20"],
             dst_ip="172.16.0.10",
-            dst_port="tcp/www-http",
+            dst_port="80",
             action="permit",
         ),
         "received": True,
@@ -21,7 +21,7 @@ verify_acl = [
             name="Check with number in port definition",
             src_ip="192.168.0.10",
             dst_ip="192.168.250.11",
-            dst_port="6/80",
+            dst_port="80",
             action="permit",
         ),
         "received": True,
@@ -31,7 +31,7 @@ verify_acl = [
             name="Check with subnets",
             src_ip="192.168.0.0/25",
             dst_ip="172.16.0.0/24",
-            dst_port="6/80",
+            dst_port="80",
             action="permit",
         ),
         "received": True,
@@ -41,7 +41,7 @@ verify_acl = [
             name="Test partial match on Source IP",
             src_ip=["192.168.1.10", "192.168.2.10"],
             dst_ip="172.16.0.11",
-            dst_port="tcp/80",
+            dst_port="80",
             action="permit",
         ),
         "received": False,
@@ -51,7 +51,7 @@ verify_acl = [
             name="Test an entry that is not found",
             src_ip="192.168.1.10",
             dst_ip="192.168.240.1",
-            dst_port="tcp/80",
+            dst_port="80",
             action="permit",
         ),
         "received": False,
@@ -73,14 +73,14 @@ acls = [
         name="Allow to internal web",
         src_ip=["192.168.0.0/24", "10.0.0.0/16"],
         dst_ip=["172.16.0.0/16", "192.168.250.10-192.168.250.20"],
-        dst_port=["tcp/80", "udp/53"],
+        dst_port=["80", "53"],
         action="permit",
     ),
     dict(
         name="Allow to internal dns",
         src_ip=["192.168.1.0/24"],
         dst_ip=["172.16.0.0/16"],
-        dst_port=["tcp/80", "udp/53"],
+        dst_port=["80", "53"],
         action="permit",
     ),
     dict(
@@ -115,7 +115,7 @@ verify_matrix = [
             dst_port="tcp/www-http",
             action="permit",
         ),
-        "received": [{"obj": ("10.1.100.5", "10.1.200.0", "6/80"), "action": "allow"}],
+        "received": [{"obj": ("10.1.100.5", "10.1.200.0", "80"), "action": "allow"}],
     },
     {
         "sent": dict(
@@ -142,12 +142,12 @@ verify_matrix = [
             name="Check not found and denied",
             src_ip=["10.1.100.5", "10.1.100.6"],
             dst_ip="10.1.200.0",
-            dst_port="tcp/80",
+            dst_port="80",
             action="permit",
         ),
         "received": [
-            {"obj": ("10.1.100.5", "10.1.200.0", "6/80"), "action": "allow"},
-            {"obj": ("10.1.100.6", "10.1.200.0", "6/80"), "action": "allow"},
+            {"obj": ("10.1.100.5", "10.1.200.0", "80"), "action": "allow"},
+            {"obj": ("10.1.100.6", "10.1.200.0", "80"), "action": "allow"},
         ],
     },
     {
@@ -211,8 +211,8 @@ IP_DEFINITIONS = {
 }
 
 MATRIX = {
-    "red": {"blue": {"allow": ["6/80", "6/443"], "notify": ["6/25"]}, "orange": {"allow": ["6/80"]}},
-    "blue": {"red": {"allow": ["6/80"]}},
+    "red": {"blue": {"allow": ["80", "443"], "notify": ["25"]}, "orange": {"allow": ["80"]}},
+    "blue": {"red": {"allow": ["80"]}},
 }
 
 
@@ -263,14 +263,14 @@ def test_schema(data):
 
 def test_schema_not_enforced_when_option_not_set():
     try:
-        acl.ACLRule(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="tcp/80", action=100)
+        acl.ACLRule(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="80", action=100)
     except Exception:  # pylint: disable=broad-exception-caught
         assert False, "No error should have been raised"
 
 
 def test_schema_valid():
     try:
-        TestSchemaRule(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="tcp/80", action="permit")
+        TestSchemaRule(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="80", action="permit")
     except Exception:  # pylint: disable=broad-exception-caught
         assert False, "No error should have been raised"
 
@@ -289,7 +289,7 @@ def test_schema2(data):
 
 def test_schema2_valid():
     try:
-        TestSchema2Rule(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="tcp/80", action="permit").validate()
+        TestSchema2Rule(src_ip="10.1.1.1", dst_ip="10.2.2.2", dst_port="80", action="permit").validate()
     except Exception:  # pylint: disable=broad-exception-caught
         assert False, "No error should have been raised"
 
@@ -364,7 +364,7 @@ add_group_check = [
             {
                 "action": "permit",
                 "dst_ip": "10.2.2.2",
-                "dst_port": "6/80",
+                "dst_port": "80",
                 "name": "Check allow",
                 "src_ip": "10.1.1.1",
                 "protocol": None,
@@ -374,7 +374,7 @@ add_group_check = [
             {
                 "action": "permit",
                 "dst_ip": "10.1.1.1",
-                "dst_port": "6/80",
+                "dst_port": "80",
                 "name": "Check allow",
                 "src_ip": "10.2.2.2",
                 "protocol": None,
@@ -384,7 +384,7 @@ add_group_check = [
             {
                 "action": "permit",
                 "dst_ip": "10.1.1.1",
-                "dst_port": "6/80",
+                "dst_port": "80",
                 "name": "Check allow",
                 "src_ip": "10.3.3.3",
                 "protocol": None,
@@ -394,7 +394,7 @@ add_group_check = [
             {
                 "action": "permit",
                 "dst_ip": "10.2.2.2",
-                "dst_port": "6/80",
+                "dst_port": "80",
                 "name": "Check allow",
                 "src_ip": "10.3.3.3",
                 "protocol": None,
@@ -404,7 +404,7 @@ add_group_check = [
             {
                 "action": "permit",
                 "dst_ip": "10.1.1.1",
-                "dst_port": "6/80",
+                "dst_port": "80",
                 "name": "Check allow",
                 "src_ip": "10.4.4.4",
                 "protocol": None,
@@ -414,7 +414,7 @@ add_group_check = [
             {
                 "action": "permit",
                 "dst_ip": "10.2.2.2",
-                "dst_port": "6/80",
+                "dst_port": "80",
                 "name": "Check allow",
                 "src_ip": "10.4.4.4",
                 "protocol": None,
