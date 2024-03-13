@@ -216,7 +216,7 @@ class ACLRule:
             ... )
             >>>
             >>>
-            >>> rule._expanded_rules
+            >>> rule.expanded_rules
             [{'name': 'Check no match', 'src_ip': '10.1.1.1', 'dst_ip': '172.16.0.10', 'dst_port': '6/80', 'action': 'permit'}]
             >>>
         """
@@ -261,7 +261,7 @@ class ACLRule:
         self.validate()
 
     @property
-    def _expanded_rules(self):
+    def expanded_rules(self):
         """Expanded rule property."""
         _expanded_rules = _cartesian_product(self._processed_data)
         if self.Meta.filter_same_ip:
@@ -368,7 +368,7 @@ class ACLRule:
         if not self.Meta.matrix_definition:
             raise ValueError("You must set a matrix definition dictionary to use the matrix feature.")
         actions = []
-        for rule in self._expanded_rules:
+        for rule in self.expanded_rules:
             source = rule["src_ip"]
             destination = rule["dst_ip"]
             port = rule["dst_port"]
@@ -488,14 +488,14 @@ class ACLRule:
         rules_unmatched: t.List[t.Dict[str, t.Any]] = []
         rules_matched: t.List[t.Dict[str, t.Any]] = []
 
-        if not match_rule._expanded_rules:  # pylint: disable=protected-access
+        if not match_rule.expanded_rules:  # pylint: disable=protected-access
             raise ValueError("There is no expanded rules to test against.")
-        elif not self._expanded_rules:  # pylint: disable=protected-access
+        elif not self.expanded_rules:  # pylint: disable=protected-access
             raise ValueError("There is no expanded rules to test.")
 
-        for rule in match_rule._expanded_rules:  # pylint: disable=protected-access
+        for rule in match_rule.expanded_rules:  # pylint: disable=protected-access
             rules_found.append(False)
-            for existing_rule in self._expanded_rules:
+            for existing_rule in self.expanded_rules:
                 missing = False
                 for attr in attrs:
                     # Examples of obj are match_rule.src_ip, match_rule.dst_port
