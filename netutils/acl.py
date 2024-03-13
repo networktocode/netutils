@@ -151,7 +151,7 @@ def _check_schema(data: t.Any, schema: t.Any, verify: bool) -> None:
             raise ValueError()
 
 
-def get_attributes(obj):
+def _get_attributes(obj):
     """Function that describes class attributes."""
     result = {
         # name for name in dir(cls)
@@ -227,7 +227,7 @@ class ACLRule:
         # Remaining kwargs stored under ACLRule.Meta
         pop_kwargs = []
         for key, val in kwargs.items():
-            if key not in get_attributes(self):
+            if key not in _get_attributes(self):
                 setattr(self.Meta, key, val)
                 pop_kwargs.append(key)
 
@@ -236,7 +236,7 @@ class ACLRule:
             kwargs.pop(key)
 
         # Ensure each class attr is in init kwargs.
-        for attr in get_attributes(self):
+        for attr in _get_attributes(self):
             if attr not in kwargs:
                 kwargs[attr] = getattr(self, attr)
 
@@ -247,7 +247,7 @@ class ACLRule:
         # Input check
         self.input_data_check()
 
-        for attr in get_attributes(self):
+        for attr in _get_attributes(self):
             processor_func = getattr(self, f"process_{attr}", None)  # todo(mzb): remove special case for dst_port !
             if processor_func:
                 _attr_data = processor_func(self._processed_data[attr])
@@ -514,8 +514,8 @@ class ACLRule:
                     break
             detailed_info = {
                 "existing_rule_product": existing_rule,  # pylint: disable=undefined-loop-variable
-                "match_rule": match_rule.serialize(),  # pylint: disable=protected-access
-                "existing_rule": self.serialize(),  # TODO(mzb): property?
+                # "match_rule": match_rule.serialize(),  # pylint: disable=protected-access
+                # "existing_rule": self.serialize(),  # TODO(mzb): property?
                 "match_rule_product": rule,
             }
             if rules_found[-1]:
@@ -526,8 +526,10 @@ class ACLRule:
 
         return {
             "match": True if rules_matched and not rules_unmatched else False,
-            "rules_matched": rules_matched,
-            "rules_unmatched": rules_unmatched,
+            "existing_rule": self.serialize(),
+            "match_rule": match_rule.serialize(),
+            "products_matched": rules_matched,
+            "products_unmatched": rules_unmatched,
         }
 
     def match(self, match_rule: "ACLRule") -> bool:
