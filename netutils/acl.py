@@ -514,8 +514,6 @@ class ACLRule:
                     break
             detailed_info = {
                 "existing_rule_product": existing_rule,  # pylint: disable=undefined-loop-variable
-                # "match_rule": match_rule.serialize(),  # pylint: disable=protected-access
-                # "existing_rule": self.serialize(),  # TODO(mzb): property?
                 "match_rule_product": rule,
             }
             if rules_found[-1]:
@@ -544,9 +542,9 @@ class ACLRule:
         details = self.match_details(match_rule)
         return not bool(details["rules_unmatched"])
 
-    # def __repr__(self) -> str:
-    #     """Set repr of the object to be sane."""
-    #     return {k: v for k, v in self.__dict__.items() if not k.startswith("_")}
+    def __repr__(self) -> str:
+        """Set repr of the object to be sane."""
+        return self.name
 
     def serialize(self) -> dict:
         """Primitive Serializer."""
