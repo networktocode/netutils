@@ -1,7 +1,6 @@
 """Tasks for use with Invoke."""
 import os
 import sys
-from distutils.util import strtobool  # pylint: disable=W0402
 
 from invoke import task
 
@@ -24,14 +23,20 @@ def is_truthy(arg):
     """
     if isinstance(arg, bool):
         return arg
-    return bool(strtobool(arg))
+
+    val = str(arg).lower()
+    if val in ("y", "yes", "t", "true", "on", "1"):
+        return True
+    if val in ("n", "no", "f", "false", "off", "0"):
+        return False
+    raise ValueError(f"Invalid truthy value: `{arg}`")
 
 
 PYPROJECT_CONFIG = toml.load("pyproject.toml")
 TOOL_CONFIG = PYPROJECT_CONFIG["tool"]["poetry"]
 
 # Can be set to a separate Python version to be used for launching or building image
-PYTHON_VER = os.getenv("PYTHON_VER", "3.11")
+PYTHON_VER = os.getenv("PYTHON_VER", "3.12")
 # Name of the docker image/image
 IMAGE_NAME = os.getenv("IMAGE_NAME", TOOL_CONFIG["name"])
 # Tag for the image
@@ -264,7 +269,7 @@ def tests(context, local=INVOKE_LOCAL):
 @task
 def clean_container(context):
     """Remove stopped containers that source for image `netutils:`."""
-    exec_cmd = """docker container rm $(docker container ls -a | grep -E "^\S+\s+netutils:" | awk 'NR>1 {print $1}')"""  # noqa: W605 # pylint:disable=anomalous-backslash-in-string
+    exec_cmd = r"""docker container rm $(docker container ls -a | grep -E "^\S+\s+netutils:" | awk 'NR>1 {print $1}')"""
     run_cmd(context, exec_cmd, local=True)
 
 
