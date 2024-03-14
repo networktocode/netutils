@@ -455,7 +455,7 @@ class ACLRule:
         """
         return existing_port == check_port
 
-    def match_detail(self, match_rule: "ACLRule") -> t.Dict[str, t.Any]:  # pylint: disable=too-many-locals
+    def match_details(self, match_rule: "ACLRule") -> t.Dict[str, t.Any]:  # pylint: disable=too-many-locals
         """Verbose way of verifying match details.
 
         Args:
@@ -502,7 +502,7 @@ class ACLRule:
         Returns:
             A boolean if there was a full match or not.
         """
-        details = self.match_detail(match_rule)
+        details = self.match_details(match_rule)
 
         return details["match"]  # type: ignore
 
@@ -569,5 +569,5 @@ class ACLRules:
         """
         output = []
         for item in self.rules:
-            output.append(item.match_detail(rule))
+            output.append(item.match_details(rule))
         return output
