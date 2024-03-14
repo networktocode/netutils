@@ -4,7 +4,6 @@ import itertools
 import copy
 import types
 import typing as t
-from netutils.protocol_mapper import PROTO_NAME_TO_NUM, TCP_NAME_TO_NUM, UDP_NAME_TO_NUM
 from netutils.ip import is_ip_within
 
 try:
@@ -23,9 +22,7 @@ INPUT_SCHEMA = {
         "dst_ip": {"$ref": "#/definitions/arrayOrIP"},
         "dst_port": {
             "oneOf": [
-                {
-                    "type": "null"
-                },
+                {"type": "null"},
                 {
                     "$ref": "#/definitions/port",
                 },
@@ -97,7 +94,7 @@ INPUT_SCHEMA = {
                 },
                 {
                     "type": "string",
-                    "pattern": "^\d+$",
+                    "pattern": "^\\d+$",
                 },
             ]
         },
@@ -107,7 +104,6 @@ INPUT_SCHEMA = {
 
 
 RESULT_SCHEMA = copy.deepcopy(INPUT_SCHEMA)
-# RESULT_SCHEMA["definitions"]["port"]["pattern"] = "^\\d+\\/\\d+$"  # type: ignore
 
 
 def _cartesian_product(data: t.Dict[str, str]) -> t.List[t.Dict[str, t.Any]]:
@@ -166,10 +162,9 @@ def _check_schema(data: t.Any, schema: t.Any, verify: bool) -> None:
             raise ValueError()
 
 
-def _get_attributes(obj):
+def _get_attributes(obj: t.Any) -> dict[str, t.Any]:
     """Function that describes class attributes."""
     result = {
-        # name for name in dir(cls)
         attr: getattr(obj, attr)
         for attr in dir(obj)
         if not attr.startswith("_")
@@ -179,12 +174,12 @@ def _get_attributes(obj):
     return result
 
 
-def _get_match_funcs(obj):
+def _get_match_funcs(obj: t.Any) -> dict[str, t.Any]:
     """Returns {'attr': match_attr_funct, ...} dict."""
     attrs = {}
     for attr_name in dir(obj):
         if attr_name.startswith("match_") and attr_name not in ["match_details"]:
-            match_name = attr_name[len("match_"):]  # noqa: E203
+            match_name = attr_name[len("match_") :]  # noqa: E203
             # When an attribute is not defined, can skip it
             if not hasattr(obj, match_name):
                 continue
@@ -227,7 +222,7 @@ class ACLRule:
         order_enforce: t.List[str] = []
         filter_same_ip: bool = True
 
-    def __init__(self, **kwargs):  # pylint: disable=unused-argument
+    def __init__(self, **kwargs: t.Any) -> None:  # pylint: disable=unused-argument
         """Initialize and load data.
 
         Args:
@@ -254,7 +249,7 @@ class ACLRule:
         """
         self._load_data(kwargs=kwargs)
 
-    def _load_data(self, kwargs) -> None:
+    def _load_data(self, kwargs: dict[str, t.Any]) -> None:
         """Load the data into the rule while verifying input data, result data, and processing data."""
         # Remaining kwargs stored under ACLRule.Meta
         pop_kwargs = []
@@ -280,7 +275,7 @@ class ACLRule:
         self.input_data_check()
 
         for attr in _get_attributes(self):
-            processor_func = getattr(self, f"process_{attr}", None)  # todo(mzb): remove special case for dst_port !
+            processor_func = getattr(self, f"process_{attr}", None)
             if processor_func:
                 _attr_data = processor_func(self._processed_data[attr])
             else:
@@ -293,13 +288,13 @@ class ACLRule:
         self.validate()
         self._set_expanded_rules()
 
-    def _set_expanded_rules(self):
+    def _set_expanded_rules(self) -> None:
         """Expanded rule setter."""
         _expanded_rules = _cartesian_product(self._processed_data)
         if self.Meta.filter_same_ip:
             _expanded_rules = [item for item in _expanded_rules if item["dst_ip"] != item["src_ip"]]
 
-        self._expanded_rules = _expanded_rules
+        self._expanded_rules = _expanded_rules  # pylint: disable=attribute-defined-outside-init
 
     def input_data_check(self) -> None:
         """Verify the input data against the specified JSONSchema or using a simple dictionary check."""
@@ -406,8 +401,8 @@ class ACLRule:
         """
         if existing_ip == check_ip:  # None cases
             return True
-        else:
-            return is_ip_within(check_ip, existing_ip)
+
+        return is_ip_within(check_ip, existing_ip)
 
     def match_src_zone(self, existing_src_zone: str, check_src_zone: str) -> bool:
         """Match the source zone for equality.
@@ -433,8 +428,8 @@ class ACLRule:
         """
         if existing_ip == check_ip:  # None cases
             return True
-        else:
-            return is_ip_within(check_ip, existing_ip)
+
+        return is_ip_within(check_ip, existing_ip)
 
     def match_dst_zone(self, existing_dst_zone: str, check_dst_zone: str) -> bool:
         """Match the destination zone for equality.
@@ -469,27 +464,29 @@ class ACLRule:
         Returns:
             A dictionary with root keys of `rules_matched` and `rules_matched`.
         """
-
         products_matched: t.List[t.Dict[str, t.Any]] = []
         products_unmatched: t.List[t.Dict[str, t.Any]] = []
 
         if not match_rule._expanded_rules:  # pylint: disable=protected-access
             raise ValueError("There is no expanded rules to test against.")
-        elif not self._expanded_rules:  # pylint: disable=protected-access
+
+        if not self._expanded_rules:  # pylint: disable=protected-access
             raise ValueError("There is no expanded rules to test.")
 
         for match_product in match_rule._expanded_rules:  # pylint: disable=protected-access
             for existing_product in self._expanded_rules:
                 # Break if we find match_product in existing_product (all matchers returned True)
-                if all([attr_func(existing_product[attr_name], match_product[attr_name]) for
-                                      attr_name, attr_func in _get_match_funcs(self).items()]):
+                if all(
+                    attr_func(existing_product[attr_name], match_product[attr_name])
+                    for attr_name, attr_func in _get_match_funcs(self).items()
+                ):
                     products_matched.append(match_product)
                     break  # Do not compare remaining existing products.
             else:
                 products_unmatched.append(match_product)
 
         return {
-            "match": True if products_matched and not products_unmatched else False,
+            "match": not bool(products_unmatched),
             "existing_rule": self.serialize(),
             "match_rule": match_rule.serialize(),
             "products_matched": products_matched,
@@ -507,13 +504,13 @@ class ACLRule:
         """
         details = self.match_detail(match_rule)
 
-        return details["match"]
+        return details["match"]  # type: ignore
 
     def __repr__(self) -> str:
         """Set repr of the object to be sane."""
-        return self.name
+        return self.name or "Name is not set"
 
-    def serialize(self) -> dict:
+    def serialize(self) -> dict[str, t.Any]:
         """Primitive Serializer."""
         return {k: v for k, v in self.__dict__.items() if not k.startswith("_")}
 
@@ -537,16 +534,16 @@ class ACLRules:
         self.rules: t.List[t.Any] = []
         self.load_data(data=data)
 
-    def load_data(self, data) -> None:
+    def load_data(self, data: t.Any) -> None:
         """Load the data for multiple rules."""
         for item in data:
             self.rules.append(self.Meta.class_obj(**item))
 
-    def serialize(self) -> list:
+    def serialize(self) -> list[t.Any]:
         """Primitive Serializer."""
         return [rule.serialize() for rule in self.rules]
 
-    def match(self, rule: ACLRule) -> str:
+    def match(self, rule: ACLRule) -> bool:
         """Check the rules loaded in `load_data` match against a new `rule`.
 
         Args:
@@ -556,9 +553,10 @@ class ACLRules:
             The response from the rule that matched, or `deny` by default.
         """
         for item in self.rules:
-            if item.match(rule):  # mzb: bugfix
-                return True  # mzb: change to bool
-        return False  # pylint: disable=undefined-loop-variable
+            if item.match(rule):
+                return True
+
+        return False
 
     def detailed_match(self, rule: ACLRule) -> t.Any:
         """Verbosely check the rules loaded in `load_data` match against a new `rule`.
@@ -571,5 +569,5 @@ class ACLRules:
         """
         output = []
         for item in self.rules:
-            output.append(item.match_detail(rule))  # mzb: bugfix
+            output.append(item.match_detail(rule))
         return output
