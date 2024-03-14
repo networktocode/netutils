@@ -557,6 +557,18 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "paloalto_panos": "PAN_OS",
 }
 
+# Normalized | NIST Parser
+NIST_LIB_MAPPER = {
+    "cisco_nxos": "nx-os",
+    "cisco_xr": "ios_xr",
+    "cisco_xe": "ios_xe",
+}
+
+# Deep copy the reverse, where there is no actual translation happening.
+NETMIKO_LIB_MAPPER_REVERSE = copy.deepcopy(NETMIKO_LIB_MAPPER)
+NTCTEMPLATES_LIB_MAPPER_REVERSE = copy.deepcopy(NTCTEMPLATES_LIB_MAPPER)
+
+
 # Deep copy the reverse, where there is no actual translation happening with special
 # consideration for OS's not in netmiko.
 _MAIN_LIB_MAPPER = copy.deepcopy(NETMIKO_LIB_MAPPER)
