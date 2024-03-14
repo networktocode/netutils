@@ -480,13 +480,11 @@ class ACLRule:
 
         for match_product in match_rule._expanded_rules:  # pylint: disable=protected-access
             for existing_product in self._expanded_rules:
-                comparison_results = []
-                for attr_name, attr_func in _get_match_funcs(self).items():
-                    comparison_results.append(rattr_func(existing_product[attr_name], match_product[attr_name]))
-                # We found match_product in existing_product (all matchers returned True)
-                if all(comparison_results):
+                # Break if we find match_product in existing_product (all matchers returned True)
+                if all([attr_func(existing_product[attr_name], match_product[attr_name]) for
+                                      attr_name, attr_func in _get_match_funcs(self).items()]):
                     products_matched.append(match_product)
-                    break  # No need to compare remaining existing products. Performance improvement.
+                    break  # Do not compare remaining existing products.
             else:
                 products_unmatched.append(match_product)
 
