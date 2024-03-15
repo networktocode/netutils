@@ -562,14 +562,14 @@ class ACLRules:
 
         return False
 
-    def detailed_match(self, rule: ACLRule) -> t.Any:
+    def match_details(self, rule: ACLRule) -> t.Any:
         """Verbosely check the rules loaded in `load_data` match against a new `rule`.
 
         Args:
             rule: The `ACLRule` rule to test against the list of `ACLRule`s loaded in initiation.
 
         Returns:
-            The details from the `ACLRule.detailed_match` results.
+            The details from the `ACLRule.match_detail` results.
         """
         output = []
         for item in self.rules:
