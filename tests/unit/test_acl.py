@@ -177,7 +177,7 @@ verify_schema = [
             name="Bad port",
             src_ip="10.1.100.5",
             dst_ip="10.1.200.0",
-            dst_port="25",
+            dst_port="5o0",
             action="permit",
         ),
     },
@@ -429,4 +429,4 @@ add_group_check = [
 @pytest.mark.parametrize("data", add_group_check)
 def test_custom_address_group(data):
     obj = TestAddrGroups(**data["sent"])
-    assert obj._expanded_rules == data["received"]  # pylint: disable=protected-access
+    assert obj.expanded_rules == data["received"]  # pylint: disable=protected-access

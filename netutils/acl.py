@@ -162,7 +162,7 @@ def _check_schema(data: t.Any, schema: t.Any, verify: bool) -> None:
             raise ValueError()
 
 
-def _get_attributes(obj: t.Any) -> dict[str, t.Any]:
+def _get_attributes(obj: t.Any) -> t.Dict[str, t.Any]:
     """Function that describes class attributes."""
     result = {
         attr: getattr(obj, attr)
@@ -174,7 +174,7 @@ def _get_attributes(obj: t.Any) -> dict[str, t.Any]:
     return result
 
 
-def _get_match_funcs(obj: t.Any) -> dict[str, t.Any]:
+def _get_match_funcs(obj: t.Any) -> t.Dict[str, t.Any]:
     """Returns {'attr': match_attr_funct, ...} dict."""
     attrs = {}
     for attr_name in dir(obj):
@@ -243,13 +243,13 @@ class ACLRule:
             ... )
             >>>
             >>>
-            >>> rule._expanded_rules
+            >>> rule.expanded_rules
             [{'name': 'Check no match', 'src_ip': '10.1.1.1', 'src_zone': 'internal', 'dst_ip': '172.16.0.10', 'dst_port': '6/80', 'dst_zone': 'external', 'protocol': 'tcp', 'action': 'permit'}]
             >>>
         """
         self._load_data(kwargs=kwargs)
 
-    def _load_data(self, kwargs: dict[str, t.Any]) -> None:
+    def _load_data(self, kwargs: t.Dict[str, t.Any]) -> None:
         """Load the data into the rule while verifying input data, result data, and processing data."""
         # Remaining kwargs stored under ACLRule.Meta
         pop_kwargs = []
@@ -292,9 +292,13 @@ class ACLRule:
         """Expanded rule setter."""
         _expanded_rules = _cartesian_product(self._processed_data)
         if self.Meta.filter_same_ip:
-            _expanded_rules = [item for item in _expanded_rules if item["dst_ip"] != item["src_ip"]]
+            _expanded_rules = [
+                item
+                for item in _expanded_rules
+                if (item["dst_ip"] != item["src_ip"]) or (item["dst_ip"] is None and item["src_ip"] is None)
+            ]
 
-        self._expanded_rules = _expanded_rules  # pylint: disable=attribute-defined-outside-init
+        self.expanded_rules = _expanded_rules  # pylint: disable=attribute-defined-outside-init
 
     def input_data_check(self) -> None:
         """Verify the input data against the specified JSONSchema or using a simple dictionary check."""
@@ -357,7 +361,7 @@ class ACLRule:
         if not self.Meta.matrix_definition:
             raise ValueError("You must set a matrix definition dictionary to use the matrix feature.")
         actions = []
-        for rule in self._expanded_rules:
+        for rule in self.expanded_rules:
             source = rule["src_ip"]
             destination = rule["dst_ip"]
             port = rule["dst_port"]
@@ -467,14 +471,14 @@ class ACLRule:
         products_matched: t.List[t.Dict[str, t.Any]] = []
         products_unmatched: t.List[t.Dict[str, t.Any]] = []
 
-        if not match_rule._expanded_rules:  # pylint: disable=protected-access
+        if not match_rule.expanded_rules:  # pylint: disable=protected-access
             raise ValueError("There is no expanded rules to test against.")
 
-        if not self._expanded_rules:  # pylint: disable=protected-access
+        if not self.expanded_rules:  # pylint: disable=protected-access
             raise ValueError("There is no expanded rules to test.")
 
-        for match_product in match_rule._expanded_rules:  # pylint: disable=protected-access
-            for existing_product in self._expanded_rules:
+        for match_product in match_rule.expanded_rules:  # pylint: disable=protected-access
+            for existing_product in self.expanded_rules:
                 # Break if we find match_product in existing_product (all matchers returned True)
                 if all(
                     attr_func(existing_product[attr_name], match_product[attr_name])
@@ -510,9 +514,9 @@ class ACLRule:
         """Set repr of the object to be sane."""
         return self.name or "Name is not set"
 
-    def serialize(self) -> dict[str, t.Any]:
+    def serialize(self) -> t.Dict[str, t.Any]:
         """Primitive Serializer."""
-        return {k: v for k, v in self.__dict__.items() if not k.startswith("_")}
+        return {k: v for k, v in self.__dict__.items() if not (k.startswith("_") or k == "expanded_rules")}
 
 
 class ACLRules:
@@ -539,7 +543,7 @@ class ACLRules:
         for item in data:
             self.rules.append(self.Meta.class_obj(**item))
 
-    def serialize(self) -> list[t.Any]:
+    def serialize(self) -> t.List[t.Any]:
         """Primitive Serializer."""
         return [rule.serialize() for rule in self.rules]
 
