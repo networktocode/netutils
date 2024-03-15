@@ -236,7 +236,7 @@ class ACLRule:
             ...     src_ip=["10.1.1.1"],
             ...     src_zone="internal",
             ...     dst_ip="172.16.0.10",
-            ...     dst_port="6/80",
+            ...     dst_port="80",
             ...     dst_zone="external",
             ...     protocol='tcp',
             ...     action="permit",
@@ -244,7 +244,7 @@ class ACLRule:
             >>>
             >>>
             >>> rule.expanded_rules
-            [{'name': 'Check no match', 'src_ip': '10.1.1.1', 'src_zone': 'internal', 'dst_ip': '172.16.0.10', 'dst_port': '6/80', 'dst_zone': 'external', 'protocol': 'tcp', 'action': 'permit'}]
+            [{'name': 'Check no match', 'src_ip': '10.1.1.1', 'src_zone': 'internal', 'dst_ip': '172.16.0.10', 'dst_port': '80', 'dst_zone': 'external', 'protocol': 'tcp', 'action': 'permit'}]
             >>>
         """
         self._load_data(kwargs=kwargs)
@@ -569,7 +569,7 @@ class ACLRules:
             rule: The `ACLRule` rule to test against the list of `ACLRule`s loaded in initiation.
 
         Returns:
-            The details from the `ACLRule.match_detail` results.
+            The details from the `ACLRule.match_details` results.
         """
         output = []
         for item in self.rules:
