@@ -1,13 +1,10 @@
 """Functions for working with OS Versions."""
 import typing as t
-from distutils.version import LooseVersion  # pylint: disable=deprecated-module
+
+from netutils._private.version import LooseVersion, StrictVersion  # type: ignore
 
 
-def get_upgrade_path(
-    current_version: str,
-    target_version: str,
-    firmware_list: t.List[str],
-) -> t.List[str]:
+def get_upgrade_path(current_version: str, target_version: str, firmware_list: t.List[str]) -> t.List[str]:
     """Utility to return the upgrade path from the current to target firmware version.
 
     Returns:
@@ -47,3 +44,86 @@ def get_upgrade_path(
         upgrade_path.append(target_version)
 
     return upgrade_path
+
+
+def _compare_version(current_version: str, comparison: str, target_version: str, version_type: str) -> bool:
+    # Convert version strings to Version objects for comparison
+    if version_type == "loose":
+        current_ver_obj = LooseVersion(current_version)
+        target_ver_obj = LooseVersion(target_version)
+    elif version_type == "strict":
+        current_ver_obj = StrictVersion(current_version)
+        target_ver_obj = StrictVersion(target_version)
+
+    # Perform the comparison based on the comparison operation
+    if comparison == "<":
+        return bool(current_ver_obj < target_ver_obj)
+    if comparison == "<=":
+        return bool(current_ver_obj <= target_ver_obj)
+    if comparison == "==":
+        return bool(current_ver_obj == target_ver_obj)
+    if comparison == "!=":
+        return bool(current_ver_obj != target_ver_obj)
+    if comparison == ">":
+        return bool(current_ver_obj > target_ver_obj)
+    if comparison == ">=":
+        return bool(current_ver_obj >= target_ver_obj)
+    raise ValueError(f"Invalid comparison operator: {comparison}")
+
+
+def compare_version_loose(current_version: str, comparison: str, target_version: str) -> bool:
+    """
+    Compares two version strings using the specified comparison operation, based on LooseVersion.
+
+    Args:
+        current_version (str): The current version string to compare.
+        comparison (str): The comparison operation as a string (<, <=, ==, !=, >, >=).
+        target_version (str): The target version string to compare against.
+
+    Returns:
+        bool: The result of the comparison.
+
+    Raises:
+        ValueError: If there is an invalid comparison.
+        TypeError: If not a valid version.
+
+    Example:
+        >>> from netutils.os_version import compare_version_loose
+        >>> compare_version_loose("3.3.3a", "==", "3.3.3a")
+        True
+        >>> compare_version_loose("3.3.2", "<=", "3.3.3")
+        True
+        >>> compare_version_loose("3.3.2", ">=", "3.3.3")
+        False
+        >>>
+    """
+    return _compare_version(current_version, comparison, target_version, "loose")
+
+
+def compare_version_strict(current_version: str, comparison: str, target_version: str) -> bool:
+    """
+    Compares two version strings using the specified comparison operation, based on LooseVersion.
+
+    Args:
+        current_version (str): The current version string to compare.
+        comparison (str): The comparison operation as a string (<, <=, ==, !=, >, >=).
+        target_version (str): The target version string to compare against.
+
+    Returns:
+        bool: The result of the comparison.
+
+    Raises:
+        ValueError: If there is an invalid comparison.
+        ValueError: If not a valid version.
+
+    Example:
+        >>> from netutils.os_version import compare_version_strict
+        >>> compare_version_strict("3.3.3", "==", "3.3.3")
+        True
+        >>> compare_version_strict("3.3.2", "<=", "3.3.3")
+        True
+        >>> compare_version_strict("3.3.2", ">=", "3.3.3")
+        False
+        >>>
+    """
+    return _compare_version(current_version, comparison, target_version, "strict")
