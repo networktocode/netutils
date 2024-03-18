@@ -185,10 +185,10 @@ def juniper_junos_version_parser(version: str) -> t.Dict[str, t.Any]:
 
     if version_service_part:
         parsed_version.update(re_service_build_respin.search(version_service_part[0]).groupdict())  # type:ignore
-        if parsed_version.get("service", "").lower() == "s":
+        if parsed_version.get("service") is not None and parsed_version.get("service", "").lower() == "s":
             parsed_version["isservice"] = True
         # Juniper looks at the D in special releases like it's the R in normal releases; Use it as the frs identifier
-        elif parsed_version.get("service").lower() == "d" and (  # type:ignore
+        elif parsed_version.get("service") is not None and parsed_version.get("service").lower() == "d" and (  # type:ignore
             parsed_version.get("service_build") is None or int(parsed_version.get("service_build", 1)) <= 1
         ):
             parsed_version["isfrs"] = True
