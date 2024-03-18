@@ -563,8 +563,9 @@ NIST_LIB_MAPPER = {
     "cisco_xr": "ios_xr",
     "cisco_xe": "ios_xe",
     "arista_eos": "eos",
-    "cisco_asa": "asa",  # TODO: Needs additional parser in platform_mapper
+    "cisco_asa": "asa",  # TODO: Needs additional parser in platform_mapper; Device type will need to be in play
     "cisco_ios": "ios",
+    "cisco_meraki": "meraki",  # TODO: Needs additional parser in platform_mapper; Device type will need to be in play
     "nokia_sros": "service_router_operating_system",
     "juniper_junos": "junos",
     "juniper_screenos": "netscreen_screenos",
