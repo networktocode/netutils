@@ -562,6 +562,12 @@ NIST_LIB_MAPPER = {
     "cisco_nxos": "nx-os",
     "cisco_xr": "ios_xr",
     "cisco_xe": "ios_xe",
+    "arista_eos": "eos",
+    "cisco_asa": "asa",  # TODO: Needs additional parser in platform_mapper
+    "cisco_ios": "ios",
+    "nokia_sros": "service_router_operating_system",
+    "juniper_junos": "junos",
+    "juniper_screenos": "netscreen_screenos",
 }
 
 # Deep copy the reverse, where there is no actual translation happening.
