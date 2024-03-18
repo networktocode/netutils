@@ -571,7 +571,7 @@ NIST_LIB_MAPPER_SUPPORTED = {
 
 NIST_LIB_MAPPER_UNSUPPORTED = {
     "cisco_asa": "asa",  # TODO: Needs additional parser in platform_mapper; Device type will need to be in play
-    "cisco_meraki": "meraki",  # TODO: Needs additional parser in platform_mapper; Device type will need to be in play
+    "meraki": "meraki",  # TODO: Needs additional parser in platform_mapper; Device type will need to be in play
 }
 
 # Deep copy the reverse, where there is no actual translation happening.
