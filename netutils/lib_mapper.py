@@ -564,15 +564,9 @@ NIST_LIB_MAPPER_SUPPORTED = {
     "cisco_xe": "ios_xe",
     "arista_eos": "eos",
     "cisco_ios": "ios",
-    "nokia_sros": "service_router_operating_system",
     "juniper_junos": "junos",
-    "juniper_screenos": "netscreen_screenos",
 }
 
-NIST_LIB_MAPPER_UNSUPPORTED = {
-    "cisco_asa": "asa",  # TODO: Needs additional parser in platform_mapper; Device type will need to be in play
-    "meraki": "meraki",  # TODO: Needs additional parser in platform_mapper; Device type will need to be in play
-}
 
 # Deep copy the reverse, where there is no actual translation happening.
 NETMIKO_LIB_MAPPER_REVERSE = copy.deepcopy(NETMIKO_LIB_MAPPER)
