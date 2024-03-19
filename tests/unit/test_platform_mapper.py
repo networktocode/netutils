@@ -97,13 +97,13 @@ platform_nist_urls = [
     {
         "sent": {"vendor": "cisco", "platform": "ios", "version": "15.5"},
         "received": [
-            "https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:cisco:ios:15.5:*:*:*:*:*:*:*"
+            "https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:cisco:ios:15.5:*"
         ],
     },
     {
         "sent": {"vendor": "arista", "platform": "eos", "version": "4.15.3f"},
         "received": [
-            "https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:arista:eos:4.15.3f:*:*:*:*:*:*:*"
+            "https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:arista:eos:4.15.3f:*"
         ],
     },
     # Juniper platforms receive multiple URLs to try as they are not very standardized and some return info on both
