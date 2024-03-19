@@ -23,10 +23,10 @@ PLATFORM_FIELDS: t.Dict[str, t.Any] = {
             ("service", str),
             ("service_build", int),
             ("service_respin", str),
-            ("isservice", bool, dataclasses.field(default=False)),
-            ("ismaintenance", bool, dataclasses.field(default=False)),
-            ("isfrs", bool, dataclasses.field(default=False)),
-            ("isspecial", bool, dataclasses.field(default=False)),
+            ("isservice", bool, dataclasses.field(default=False)),  # pylint: disable=[E3701]
+            ("ismaintenance", bool, dataclasses.field(default=False)),  # pylint: disable=[E3701]
+            ("isfrs", bool, dataclasses.field(default=False)),  # pylint: disable=[E3701]
+            ("isspecial", bool, dataclasses.field(default=False)),  # pylint: disable=[E3701]
         ]
     },
 }
