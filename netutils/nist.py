@@ -110,7 +110,6 @@ def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
     base_url = f'{"https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:"}'
 
     os_platform_data = {"base_url": base_url, **os_platform_data}
-    delim_seven = ":*" * 7
     os_platform_data["version_string"] = os_platform_data.get("version_string").replace("-", ":")  # type: ignore
 
     version_string = os_platform_data.get("version_string", "").lower()
