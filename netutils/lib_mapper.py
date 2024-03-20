@@ -254,7 +254,9 @@ _NTCTEMPLATES_LIB_MAPPER["aruba_aoscx"] = "aruba_aoscx"
 _NTCTEMPLATES_LIB_MAPPER["huawei_vrp"] = "huawei_vrp"
 _NTCTEMPLATES_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 _NTCTEMPLATES_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
-NTCTEMPLATES_LIB_MAPPER = {key: _NTCTEMPLATES_LIB_MAPPER[key] for key in sorted(_NTCTEMPLATES_LIB_MAPPER)}
+NTCTEMPLATES_LIB_MAPPER = {
+    key: _NTCTEMPLATES_LIB_MAPPER[key] for key in sorted(_NTCTEMPLATES_LIB_MAPPER)
+}
 
 # NAPALM | Normalized
 NAPALM_LIB_MAPPER = {
@@ -499,13 +501,13 @@ SCRAPLI_LIB_MAPPER_REVERSE = {
 # Normalized | HIERCONFIG
 HIERCONFIG_LIB_MAPPER_REVERSE = {
     "arista_eos": "eos",
+    "brocade_vyos": "vyos",
     "cisco_ios": "ios",
     "cisco_nxos": "nxos",
     "cisco_xe": "iosxe",
     "cisco_xr": "iosxr",
     "juniper_junos": "junos",
     "ruckus_fastiron": "fastiron",
-    "brocade_vyos": "vyos",
 }
 
 # Normalized | Netutils Parser
