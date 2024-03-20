@@ -407,6 +407,16 @@ FORWARDNETWORKS_LIB_MAPPER: t.Dict[str, str] = {
     "SRX": "juniper_junos",  # no reverse
 }
 
+# NIST | Normalized
+NIST_LIB_MAPPER = {
+    "nx-os": "cisco_nxos",
+    "ios_xr": "cisco_xr",
+    "ios_xe": "cisco_xe",
+    "eos": "arista_eos",
+    "ios": "cisco_ios",
+    "junos": "juniper_junos",
+}
+
 # Normalized | NAPALM
 NAPALM_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "eos",
@@ -557,8 +567,8 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "paloalto_panos": "PAN_OS",
 }
 
-# Normalized | NIST Parser
-NIST_LIB_MAPPER_SUPPORTED = {
+# Normalized | NIST
+NIST_LIB_MAPPER_REVERSE = {
     "cisco_nxos": "nx-os",
     "cisco_xr": "ios_xr",
     "cisco_xe": "ios_xe",
