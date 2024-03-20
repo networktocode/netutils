@@ -254,9 +254,7 @@ _NTCTEMPLATES_LIB_MAPPER["aruba_aoscx"] = "aruba_aoscx"
 _NTCTEMPLATES_LIB_MAPPER["huawei_vrp"] = "huawei_vrp"
 _NTCTEMPLATES_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 _NTCTEMPLATES_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
-NTCTEMPLATES_LIB_MAPPER = {
-    key: _NTCTEMPLATES_LIB_MAPPER[key] for key in sorted(_NTCTEMPLATES_LIB_MAPPER)
-}
+NTCTEMPLATES_LIB_MAPPER = {key: _NTCTEMPLATES_LIB_MAPPER[key] for key in sorted(_NTCTEMPLATES_LIB_MAPPER)}
 
 # NAPALM | Normalized
 NAPALM_LIB_MAPPER = {
