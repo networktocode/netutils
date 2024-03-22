@@ -1,0 +1,56 @@
+---
+name: "Protocol-Number-Updates"
+
+on:   # yamllint disable-line rule:truthy
+  schedule:
+    - cron: "0 2 1 * *"
+
+jobs:
+  data_gathering:
+    runs-on: "ubuntu-latest"
+    env:
+      BRANCH_NAME: "PROTO_NUM_Updates"
+    steps:
+      # Checkout repo
+      - name: "Check out code"
+        uses: "actions/checkout@v2"
+        with:
+          ref: "develop"
+      # Delete old branch if it exists
+      - name: "Delete existing branch"
+        run: "git branch -D $BRANCH_NAME || true"
+      # Create branch for Flatbot
+      - name: "Create Flatbot branch"
+        run: "git checkout -b $BRANCH_NAME"
+      # Push new branch so Flatbot can make its commit
+      - name: "Push Flatbot branch"
+        run: "git push -f --set-upstream origin $BRANCH_NAME"
+      # Install Black
+      - name: "Install Python Black"
+        run: "pip install black"
+      # This step installs Deno, which is a new Javascript runtime that improves on Node. Can be used for an optional postprocessing step
+      - name: "Setup deno"
+        uses: "denoland/setup-deno@main"
+        with:
+          deno-version: "v1.10.x"
+      # The Flat Action step. We fetch the data in the http_url and save it as downloaded_filename
+      - name: "Fetch data"
+        uses: "githubocto/flat@v3"
+        with:
+          http_url: "https://www.iana.org/assignments/protocol-numbers/protocol-numbers-1.csv"
+          downloaded_filename: "./netutils/data_files/protocol_number_mappings.py"
+          postprocess: "./flat_postprocess/protocol_number_postprocess.ts"
+  pr_creation:
+    runs-on: "ubuntu-latest"
+    needs: "data_gathering"
+    steps:
+      # Checkout repo
+      - name: "Check out code"
+        uses: "actions/checkout@v2"
+        with:
+          ref: "PROTO_NUM_Updates"
+      # Create PR from branch created above into develop
+      - name: "Create a Pull Request"
+        run: "gh pr create -B develop -H PROTO_NUM_Updates --title 'Flatbot PROTOCOL Number File Updates' --body 'Created by Flatbot action'"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
