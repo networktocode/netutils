@@ -14,6 +14,7 @@
 | aruba_procurve | → | aruba_procurve |
 | avaya_ers | → | avaya_ers |
 | avaya_vsp | → | avaya_vsp |
+| bigip_f5 | → | bigip_f5 |
 | broadcom_icos | → | broadcom_icos |
 | brocade_fastiron | → | brocade_fastiron |
 | brocade_fos | → | brocade_fos |
@@ -58,9 +59,6 @@
 | extreme_vdx | → | extreme_vdx |
 | extreme_vsp | → | extreme_vsp |
 | extreme_wing | → | extreme_wing |
-| f5_linux | → | f5_linux |
-| f5_ltm | → | f5_ltm |
-| f5_tmsh | → | f5_tmsh |
 | flexvnf | → | flexvnf |
 | fortinet | → | fortinet |
 | generic | → | generic |
