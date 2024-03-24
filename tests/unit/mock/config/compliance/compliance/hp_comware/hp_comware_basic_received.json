@@ -1,0 +1,52 @@
+{
+   "bgp": {
+      "compliant": true,
+      "missing": "",
+      "extra": "",
+      "cannot_parse": true,
+      "unordered_compliant": true,
+      "ordered_compliant": true,
+      "actual": "bgp 65330\n router-id 10.10.10.254\n graceful-restart\n graceful-restart timer restart 120\n graceful-restart timer wait-for-rib 360\n peer 10.20.240.1 description ***Point to Point Connection**\n peer 10.20.240.1 ebgp-max-hop 10\n peer 10.30.240.1 password cipher $x$x$xxxxxxxxxxxxxxxxxxxxxxxxxxxx/xxxxxxxxxxxx==\n  address-family ipv4 unicast\n  balance 4\n  peer 10.30.240.1 enable\n  peer 10.30.240.1 route-policy P2P-FirstTry import\n  peer 10.30.240.1 route-policy P2P-FirstTry export",
+      "intended": "bgp 65330\n router-id 10.10.10.254\n graceful-restart\n graceful-restart timer restart 120\n graceful-restart timer wait-for-rib 360\n peer 10.20.240.1 description ***Point to Point Connection**\n peer 10.20.240.1 ebgp-max-hop 10\n peer 10.30.240.1 password cipher $x$x$xxxxxxxxxxxxxxxxxxxxxxxxxxxx/xxxxxxxxxxxx==\n  address-family ipv4 unicast\n  balance 4\n  peer 10.30.240.1 enable\n  peer 10.30.240.1 route-policy P2P-FirstTry import\n  peer 10.30.240.1 route-policy P2P-FirstTry export"
+   },
+   "snmp-agent": {
+      "compliant": true,
+      "missing": "",
+      "extra": "",
+      "cannot_parse": true,
+      "unordered_compliant": true,
+      "ordered_compliant": true,
+      "actual": "",
+      "intended": ""
+   },
+   "dhcp": {
+      "compliant": true,
+      "missing": "",
+      "extra": "",
+      "cannot_parse": true,
+      "unordered_compliant": true,
+      "ordered_compliant": true,
+      "actual": "dhcp enable\ndhcp server forbidden-ip 10.10.10.1 10.10.10.100\ndhcp server always-broadcast\ndhcp server ip-pool CKP\n gateway-list 10.10.10.1\n domain-name intra.data.co.id\n expired day 30\n netbios-type b-node",
+      "intended": "dhcp enable\ndhcp server forbidden-ip 10.10.10.1 10.10.10.100\ndhcp server always-broadcast\ndhcp server ip-pool CKP\n gateway-list 10.10.10.1\n domain-name intra.data.co.id\n expired day 30\n netbios-type b-node"
+   },
+   "header": {
+      "compliant": true,
+      "missing": "",
+      "extra": "",
+      "cannot_parse": true,
+      "unordered_compliant": true,
+      "ordered_compliant": true,
+      "actual": "header motd #\n===================================================\n!!! WARNING !!!\nsystem monitoring for law enforcement and other\npurpose. Unauthorized use of this machine may\nsubject you to criminal prosecution and penalties\n==================================================#",
+      "intended": "header motd #\n===================================================\n!!! WARNING !!!\nsystem monitoring for law enforcement and other\npurpose. Unauthorized use of this machine may\nsubject you to criminal prosecution and penalties\n==================================================#"
+   },
+   "acl": {
+      "compliant": false,
+      "missing": "acl advanced name HPE\n rule 1 permit source 10.180.60.254 0 destination 10.1.0.249 0\n rule 2 permit source 10.180.60.0 0.0.0.127 destination 10.1.4.62 0\n rule 3 permit source 10.180.60.0 0.0.0.127 destination 10.2.4.62 0",
+      "extra": "acl advanced name HPE\n rule 1 permit source 10.180.50.254 0 destination 10.1.0.249 0\n rule 2 permit source 10.180.50.0 0.0.0.127 destination 10.1.4.62 0\n rule 3 permit source 10.180.50.0 0.0.0.127 destination 10.2.4.62 0",
+      "cannot_parse": true,
+      "unordered_compliant": false,
+      "ordered_compliant": false,
+      "actual": "acl advanced name HPE\n rule 1 permit source 10.180.50.254 0 destination 10.1.0.249 0\n rule 2 permit source 10.180.50.0 0.0.0.127 destination 10.1.4.62 0\n rule 3 permit source 10.180.50.0 0.0.0.127 destination 10.2.4.62 0",
+      "intended": "acl advanced name HPE\n rule 1 permit source 10.180.60.254 0 destination 10.1.0.249 0\n rule 2 permit source 10.180.60.0 0.0.0.127 destination 10.1.4.62 0\n rule 3 permit source 10.180.60.0 0.0.0.127 destination 10.2.4.62 0"
+   }
+}

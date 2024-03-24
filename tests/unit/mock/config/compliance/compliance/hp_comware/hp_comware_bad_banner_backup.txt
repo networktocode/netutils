@@ -1,0 +1,5 @@
+#
+header motd "my banner"
+#
+hwtacacs nas-ip 1.1.1.1
+#

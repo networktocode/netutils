@@ -1612,3 +1612,102 @@ class UbiquitiAirOSConfigParser(BaseSpaceConfigParser):
                 config_lines.append(line)
 
         return "\n".join(config_lines)
+
+
+class HPEConfigParser(BaseSpaceConfigParser):
+    """HPE Implementation of ConfigParser Class."""
+
+    regex_banner = re.compile(r"^header\s(\w+)\s+(?P<banner_delimiter>\^C|\S?)")
+
+    def __init__(self, config: str):
+        """Initialize the HPEConfigParser object."""
+        self.delimiter = ""
+        self._banner_end: t.Optional[str] = None
+        super(HPEConfigParser, self).__init__(config)
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """
+        Builds a banner configuration based on the given config_line.
+
+        Args:
+            config_line (str): The configuration line to process.
+
+        Returns:
+            Optional[str]: The next configuration line, or None if there are no more lines.
+
+        Raises:
+            ValueError: If the banner end cannot be parsed.
+        """
+        if self.is_banner_one_line(config_line):
+            self._update_config_lines(config_line)
+            try:
+                return next(self.generator_config)
+            except StopIteration:
+                return None
+        self._update_config_lines(config_line)
+        self._current_parents += (config_line,)
+        banner_config = []
+        for line in self.generator_config:
+            if not self.is_banner_end(line):
+                banner_config.append(line)
+            else:
+                banner_config.append(line)
+                line = "\n".join(banner_config)
+                if line.endswith(self.delimiter):
+                    banner, end, _ = line.rpartition(self.delimiter)
+                    line = banner.rstrip() + end
+                self._update_config_lines(line)
+                self._current_parents = self._current_parents[:-1]
+                try:
+                    return next(self.generator_config)
+                except StopIteration:
+                    return None
+        raise ValueError("Unable to parse banner end.")
+
+    def set_delimiter(self, config_line: str) -> None:
+        """Find delimiter character in banner and set self.delimiter to be it."""
+        banner_parsed = self.regex_banner.match(config_line)
+        if banner_parsed and "banner_delimiter" in banner_parsed.groupdict():
+            self.delimiter = banner_parsed.groupdict()["banner_delimiter"]
+            return None
+        raise ValueError("Unable to find banner delimiter.")
+
+    def is_banner_one_line(self, config_line: str) -> bool:
+        """Checks if the given configuration line represents a one-line banner."""
+        self.set_delimiter(config_line.strip())
+        _, _delimeter, banner = config_line.partition(self.delimiter)
+        banner_config_start = banner.lstrip(_delimeter)
+        if _delimeter not in banner_config_start:
+            return False
+        return True
+
+    def is_banner_start(self, line: str) -> bool:
+        """Checks if the given line is the start of a banner."""
+        state = super(HPEConfigParser, self).is_banner_start(line)
+        if state:
+            self.banner_end = line
+        return state
+
+    @property
+    def banner_end(self) -> str:
+        """Get the banner end."""
+        if self._banner_end is None:
+            raise RuntimeError("Banner end not yet set.")
+        return self._banner_end
+
+    @banner_end.setter
+    def banner_end(self, banner_start_line: str) -> None:
+        """Sets the delimiter for the end of the banner."""
+        self.set_delimiter(banner_start_line.strip())
+        self._banner_end = self.delimiter
+
+
+class HPComwareConfigParser(HPEConfigParser, BaseSpaceConfigParser):
+    """HP Comware Implementation of ConfigParser Class."""
+
+    banner_start: t.List[str] = ["header "]
+    comment_chars: t.List[str] = ["#"]
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Build a banner from the given config line."""
+        return super(HPComwareConfigParser, self)._build_banner(config_line)
