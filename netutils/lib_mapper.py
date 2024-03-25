@@ -401,6 +401,16 @@ FORWARDNETWORKS_LIB_MAPPER = {
     "SRX": "juniper_junos",
 }
 
+# NIST | Normalized
+NIST_LIB_MAPPER = {
+    "nx-os": "cisco_nxos",
+    "ios_xr": "cisco_xr",
+    "ios_xe": "cisco_xe",
+    "eos": "arista_eos",
+    "ios": "cisco_ios",
+    "junos": "juniper_junos",
+}
+
 # Normalized | NAPALM
 NAPALM_LIB_MAPPER_REVERSE = {
     "arista_eos": "eos",
@@ -544,6 +554,17 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE = {
     "netscaler": "NETSCALER",
     "paloalto_panos": "PAN_OS",
 }
+
+# Normalized | NIST
+NIST_LIB_MAPPER_REVERSE = {
+    "cisco_nxos": "nx-os",
+    "cisco_xr": "ios_xr",
+    "cisco_xe": "ios_xe",
+    "arista_eos": "eos",
+    "cisco_ios": "ios",
+    "juniper_junos": "junos",
+}
+
 
 # Deep copy the reverse, where there is no actual translation happening.
 NETMIKO_LIB_MAPPER_REVERSE = copy.deepcopy(NETMIKO_LIB_MAPPER)
