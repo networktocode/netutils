@@ -141,7 +141,8 @@ def juniper_junos_version_parser(version: str) -> t.Dict[str, t.Any]:
         A dictionary containing parsed version information
 
     Examples:
-        >>> parsed_version = juniper_junos_version_parser("12.3R4")
+        >>> juniper_junos_version_parser("12.3R4")
+        {'isservice': False, 'ismaintenance': True, 'isfrs': False, 'isspecial': False, 'service': None, 'service_build': None, 'service_respin': None, 'main': '12', 'minor': '3', 'type': 'R', 'build': '4'}
     """
     # Use regex to group the main, minor, type and build into useable pieces
     # re_main_minor_type_build = re.search(r"^(\d+)\.(\d+)([xXrRsS])?(\d+)?", split_version[0])

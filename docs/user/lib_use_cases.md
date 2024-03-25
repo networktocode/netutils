@@ -21,9 +21,11 @@ Functions are grouped with like functions, such as IP or MAC address based funct
 - Library Helpers - Provides helpers to pull useful information, e.g. NAPALM getters.
 - Library Mapper - Provides mappings in expected vendor names between Netmiko, NAPALM, pyntc, ntc-templates, pyats, and scrapli.
 - MAC Address - Provides the ability to work with MAC addresses such as validating or converting to integer.
+- NIST - Provides the ability to obtain a URL formatted for NIST CPE Query.
 - OS Version - Provides the ability to work with OS version, such as defining an upgrade path.
 - Password - Provides the ability to compare and encrypt common password schemas such as type5 and type7 Cisco passwords.
 - Ping - Provides the ability to ping, currently only tcp ping.
+- Platform Mapper - Provides custom parsers for breakdown of OS Software Versions/Revisions.
 - Protocol Mapper - Provides a mapping for protocol names to numbers and vice versa.
 - Regex - Provide convenience methods for regex to be used in Jinja2.
 - Route - Provides the ability to provide a list of routes and an IP Address and return the longest prefix matched route.
