@@ -4,7 +4,7 @@ import os
 
 import pytest
 from netutils.config import compliance
-from netutils.config.conversion import palo_alto_clean_newlines
+from netutils.config.conversion import paloalto_panos_clean_newlines
 
 MOCK_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mock", "config", "sanitize")
 
@@ -23,6 +23,6 @@ def test_panos_newline_character(_file, get_text_data):
     truncate_file = os.path.join(MOCK_DIR, _file[0][: -len(TXT_FILE)])
 
     sent_cfg = get_text_data(os.path.join(MOCK_DIR, _file[0]))
-    sanitized_cfg = palo_alto_clean_newlines(cfg=sent_cfg)
+    sanitized_cfg = paloalto_panos_clean_newlines(cfg=sent_cfg)
     received_data = get_text_data(truncate_file + "_sanitized.txt")
     assert sanitized_cfg == received_data

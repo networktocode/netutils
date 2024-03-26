@@ -86,7 +86,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "uptime_seconds_to_string": "time.uptime_seconds_to_string",
     "uptime_string_to_seconds": "time.uptime_string_to_seconds",
     "get_napalm_getters": "lib_helpers.get_napalm_getters",
-    "palo_alto_clean_newlines": "config.conversion.palo_alto_clean_newlines",
+    "paloalto_panos_clean_newlines": "config.conversion.paloalto_panos_clean_newlines",
     "paloalto_panos_brace_to_set": "config.conversion.paloalto_panos_brace_to_set",
     "compare_version_loose": "os_version.compare_version_loose",
     "compare_version_strict": "os_version.compare_version_strict",

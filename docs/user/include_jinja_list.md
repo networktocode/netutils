@@ -17,8 +17,8 @@
 | feature_compliance | netutils.config.compliance.feature_compliance |
 | find_unordered_cfg_lines | netutils.config.compliance.find_unordered_cfg_lines |
 | section_config | netutils.config.compliance.section_config |
-| palo_alto_clean_newlines | netutils.config.conversion.palo_alto_clean_newlines |
 | paloalto_panos_brace_to_set | netutils.config.conversion.paloalto_panos_brace_to_set |
+| paloalto_panos_clean_newlines | netutils.config.conversion.paloalto_panos_clean_newlines |
 | fqdn_to_ip | netutils.dns.fqdn_to_ip |
 | is_fqdn_resolvable | netutils.dns.is_fqdn_resolvable |
 | hash_data | netutils.hash.hash_data |

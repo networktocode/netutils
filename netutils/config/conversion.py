@@ -10,7 +10,7 @@ conversion_map: t.Dict[str, t.List[str]] = {
 }
 
 
-def palo_alto_clean_newlines(cfg: str) -> str:
+def paloalto_panos_clean_newlines(cfg: str) -> str:
     r"""Takes in the configuration and replaces any inappropriate newline characters with a space.
 
     Args:
@@ -20,7 +20,7 @@ def palo_alto_clean_newlines(cfg: str) -> str:
         str: Cleaned configuration as a string
 
     Examples:
-        >>> from netutils.config.conversion import palo_alto_clean_newlines
+        >>> from netutils.config.conversion import paloalto_panos_clean_newlines
         >>> config = '''
         ... config {
         ...     syslog {
@@ -64,7 +64,7 @@ def palo_alto_clean_newlines(cfg: str) -> str:
         ...         }
         ...         }
         ... }'''
-        >>> palo_alto_clean_newlines(cfg=config) == \
+        >>> paloalto_panos_clean_newlines(cfg=config) == \
         ... '''
         ... config {
         ...     syslog {
@@ -108,14 +108,14 @@ def palo_alto_clean_newlines(cfg: str) -> str:
         ... }'''
         True
     """
-    palo_alto_no_newline_cleanup_match = ["private-key", "public-key", "login-banner"]
-    palo_alto_newline_regex = re.compile(
+    paloalto_panos_no_newline_cleanup_match = ["private-key", "public-key", "login-banner"]
+    paloalto_panos_newline_regex = re.compile(
         r"\w+?-?\w+\s\"(?:[^\"\\]|\\.)*\n(?:[^\"\\]|\\.)*\";$", re.MULTILINE | re.DOTALL
     )
 
-    newlines_cleaned_cfg = palo_alto_newline_regex.sub(
+    newlines_cleaned_cfg = paloalto_panos_newline_regex.sub(
         lambda match: match.group().replace("\n", " ")
-        if not any(substring in match.group() for substring in palo_alto_no_newline_cleanup_match)
+        if not any(substring in match.group() for substring in paloalto_panos_no_newline_cleanup_match)
         else match.group(),
         cfg,
     )
@@ -175,9 +175,9 @@ def paloalto_panos_brace_to_set(cfg: str, cfg_type: str = "file") -> str:
         raise ValueError("The variable `cfg_type` must be either `file` or `string`.")
     if cfg_type == "file":
         cfg_raw = _open_file_config(cfg)
-        cfg_list = palo_alto_clean_newlines(cfg=cfg_raw).splitlines()
+        cfg_list = paloalto_panos_clean_newlines(cfg=cfg_raw).splitlines()
     else:
-        cfg_raw = palo_alto_clean_newlines(cfg=cfg)
+        cfg_raw = paloalto_panos_clean_newlines(cfg=cfg)
         cfg_list = cfg_raw.splitlines()
 
     for i, line in enumerate(cfg_list):
