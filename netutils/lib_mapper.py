@@ -409,6 +409,7 @@ FORWARDNETWORKS_LIB_MAPPER: t.Dict[str, str] = {
 
 # NIST | Normalized
 NIST_LIB_MAPPER = {
+    "adaptive_security_appliance_software": "cisco_asa",
     "nx-os": "cisco_nxos",
     "ios_xr": "cisco_xr",
     "ios_xe": "cisco_xe",
@@ -569,6 +570,7 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 
 # Normalized | NIST
 NIST_LIB_MAPPER_REVERSE = {
+    "cisco_asa": "adaptive_security_appliance_software",
     "cisco_nxos": "nx-os",
     "cisco_xr": "ios_xr",
     "cisco_xe": "ios_xe",
