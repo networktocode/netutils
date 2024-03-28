@@ -214,8 +214,34 @@ def juniper_junos_version_parser(version: str) -> t.Dict[str, t.Any]:
     return parsed_version
 
 
-os_version_parsers = {
+CUSTOM_VERSION_PARSERS = {
     "juniper": {
         "junos": juniper_junos_version_parser,
     }
 }
+
+def vendorize_version(vendor: str, os_type: str, version: str) -> dict:
+    """If a custom version parser is avaialable, use it.
+
+    Args:
+        vendor (str): Vendor name (Ex: "Juniper")
+        os_type (str): OS Type (Ex: "JunOS")
+        version (str): OS Version (Ex: "12.4R")
+
+    Returns:
+        dict: Dict of broken down version into vendor standards.
+
+    Example:
+        >>> from os_version import vendorize_version
+        >>> vendorize_version("Cisco", "IOS", "15.5")
+        {'vendor': 'Cisco', 'os_type': 'IOS', 'version': '15.5', 'vendorized': False}
+        >>> vendorize_version("juniper", "junos", "12.4R")
+        {'isservice': False, 'ismaintenance': False, 'isfrs': True, 'isspecial': False, 'service': None, 'service_build': None, 'service_respin': None, 'main': '12', 'minor': '4', 'type': 'R', 'build': None, 'vendorized': True}
+    """
+    try:
+        parsed_version = CUSTOM_VERSION_PARSERS[vendor][os_type](version)
+        parsed_version.update({"vendorized": True})
+    except KeyError:
+        parsed_version = {"vendor": vendor, "os_type": os_type, "version": version, "vendorized": False}
+
+    return parsed_version

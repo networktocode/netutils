@@ -95,6 +95,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_ips_sorted": "ip.get_ips_sorted",
     "os_platform_object_builder": "platform_mapper.os_platform_object_builder",
     "juniper_junos_version_parser": "os_version.juniper_junos_version_parser",
+    "vendorize_version": "os.version.vendorize_version",
 }
 
 
