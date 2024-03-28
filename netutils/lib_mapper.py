@@ -411,7 +411,6 @@ NAPALM_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "eos",
     "aruba_aoscx": "aoscx",
     "bigip_f5": "f5",
-    "vyos": "vyos",
     "cisco_asa": "asa",
     "cisco_ios": "ios",
     "cisco_nxos": "nxos",
@@ -424,6 +423,7 @@ NAPALM_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "mikrotik_routeros": "ros",
     "nokia_sros": "sros",
     "paloalto_panos": "panos",
+    "vyos": "vyos",
 }
 
 # Normalized | PYTNC
@@ -503,13 +503,13 @@ SCRAPLI_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 # Normalized | HIERCONFIG
 HIERCONFIG_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "eos",
-    "vyos": "vyos",
     "cisco_ios": "ios",
     "cisco_nxos": "nxos",
     "cisco_xe": "ios",
     "cisco_xr": "iosxr",
     "juniper_junos": "junos",
     "ruckus_fastiron": "fastiron",
+    "vyos": "vyos",
 }
 
 # Normalized | Netutils Parser
