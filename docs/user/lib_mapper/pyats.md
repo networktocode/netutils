@@ -1,7 +1,7 @@
 | PYATS | | NORMALIZED |
 | ---------- | -- | ------ |
 | asa | → | cisco_asa |
-| bigip | → | f5_tmsh |
+| bigip | → | bigip_f5 |
 | dnac | → | cisco_dnac |
 | ios | → | cisco_ios |
 | iosxe | → | cisco_ios |

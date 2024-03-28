@@ -5,7 +5,20 @@ import pytest
 from netutils import lib_mapper
 from netutils.config.compliance import parser_map
 
-LIBRARIES = ["ANSIBLE", "NETMIKO", "NTCTEMPLATES", "NAPALM", "PYATS", "PYNTC", "HIERCONFIG", "NETUTILSPARSER"]
+LIBRARIES = [
+    "AERLEON",
+    "ANSIBLE",
+    "CAPIRCA",
+    "FORWARDNETWORKS",
+    "HIERCONFIG",
+    "NETMIKO",
+    "NETUTILSPARSER",
+    "NTCTEMPLATES",
+    "NAPALM",
+    "PYATS",
+    "PYNTC",
+    "SCRAPLI",
+]
 
 
 def test_lib_mapper():
@@ -30,13 +43,42 @@ def test_lib_mapper():
 
 @pytest.mark.parametrize("lib", LIBRARIES)
 def test_lib_mapper_reverse(lib):
+    """Test that the forward is same as reverse, some accommodations must be made."""
+    rev_mapper = getattr(lib_mapper, f"{lib}_LIB_MAPPER_REVERSE").copy()
     _mapper = getattr(lib_mapper, f"{lib}_LIB_MAPPER").copy()
     if lib == "NAPALM":
         _mapper.pop("nxos_ssh")
-    mapper = dict((v, k) for k, v in _mapper.items())
-    rev_mapper = getattr(lib_mapper, f"{lib}_LIB_MAPPER_REVERSE")
-    if lib in ["ANSIBLE", "NAPALM", "PYATS", "PYNTC"]:
+    if lib in ["NETMIKO", "NTCTEMPLATES"]:
+        _mapper.pop("f5_ltm")
+        _mapper.pop("f5_tmsh")
+        _mapper.pop("f5_linux")
+    if lib in [
+        "AERLEON",
+        "ANSIBLE",
+        "CAPIRCA",
+        "FORWARDNETWORKS",
+        "HIERCONFIG",
+        "NETUTILSPARSER",
+        "NAPALM",
+        "PYATS",
+        "PYNTC",
+        "SCRAPLI",
+    ]:
         rev_mapper.pop("cisco_xe")
+    if lib in ["HIERCONFIG"]:
+        _mapper.pop("iosxe")
+    if lib in ["FORWARDNETWORKS"]:
+        _mapper.pop("LINUX_OVS_OFCTL")
+        _mapper.pop("IOS_XE")
+        _mapper.pop("SRX")
+    if lib in ["AERLEON", "CAPIRCA"]:
+        _mapper.pop("juniperevo")
+        _mapper.pop("srx")
+        _mapper.pop("srxlo")
+        _mapper.pop("msmpc")
+        _mapper.pop("windows_advfirewall")
+    mapper = dict((v, k) for k, v in _mapper.items())
+
     assert mapper == rev_mapper
 
 
@@ -54,3 +96,12 @@ def test_netutils_parser():
     """Test that the parser_map in compliance have been added to NETUTILSPARSER lib mappers."""
     assert parser_map.keys() == lib_mapper.NETUTILSPARSER_LIB_MAPPER.keys()
     assert list(parser_map.keys()) == sorted(list(lib_mapper.NETUTILSPARSER_LIB_MAPPER.keys()))
+
+
+@pytest.mark.parametrize("lib", LIBRARIES)
+def test_lib_mapper_normalized_name(lib):
+    """Ensure that MAIN_LIB_MAPPER is kept up to date."""
+    for key in getattr(lib_mapper, f"{lib}_LIB_MAPPER_REVERSE").keys():
+        assert key in lib_mapper.MAIN_LIB_MAPPER
+    for value in getattr(lib_mapper, f"{lib}_LIB_MAPPER").values():
+        assert value in lib_mapper.MAIN_LIB_MAPPER
