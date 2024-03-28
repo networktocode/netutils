@@ -8,7 +8,7 @@
 | cisco_ios | → | ios |
 | cisco_nxos | → | nxos |
 | cisco_wlc | → | cisco_wlc_ssh |
-| cisco_xe | → | cisco_ios |
+| cisco_xe | → | ios |
 | cisco_xr | → | iosxr |
 | fortinet | → | fortios |
 | huawei | → | huawei_vrp |
