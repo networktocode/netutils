@@ -7,7 +7,7 @@ from netutils.lib_helpers import get_napalm_getters
 
 def test_get_napalm_getters_napalm_installed_default():
     pytest.importorskip("napalm")
-    with mock.patch("netutils.lib_helpers.get_network_driver"):
+    with mock.patch("napalm.get_network_driver"):
         napalm_getters = get_napalm_getters()
         assert all(item in napalm_getters.keys() for item in ["asa", "eos", "fortios"])
 

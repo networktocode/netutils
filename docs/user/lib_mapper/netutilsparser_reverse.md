@@ -7,10 +7,11 @@
 | cisco_asa | → | cisco_asa |
 | cisco_ios | → | cisco_ios |
 | cisco_nxos | → | cisco_nxos |
+| cisco_xe | → | cisco_ios |
 | cisco_xr | → | cisco_iosxr |
 | citrix_netscaler | → | citrix_netscaler |
 | extreme_netiron | → | extreme_netiron |
-| fortinet_fortios | → | fortinet_fortios |
+| fortinet | → | fortinet_fortios |
 | hp_comware | → | hp_comware |
 | juniper_junos | → | juniper_junos |
 | linux | → | linux |

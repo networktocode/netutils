@@ -18,6 +18,7 @@
 | find_unordered_cfg_lines | netutils.config.compliance.find_unordered_cfg_lines |
 | section_config | netutils.config.compliance.section_config |
 | paloalto_panos_brace_to_set | netutils.config.conversion.paloalto_panos_brace_to_set |
+| paloalto_panos_clean_newlines | netutils.config.conversion.paloalto_panos_clean_newlines |
 | fqdn_to_ip | netutils.dns.fqdn_to_ip |
 | is_fqdn_resolvable | netutils.dns.is_fqdn_resolvable |
 | hash_data | netutils.hash.hash_data |
@@ -34,6 +35,7 @@
 | get_all_host | netutils.ip.get_all_host |
 | get_broadcast_address | netutils.ip.get_broadcast_address |
 | get_first_usable | netutils.ip.get_first_usable |
+| get_ips_sorted | netutils.ip.get_ips_sorted |
 | get_peer_ip | netutils.ip.get_peer_ip |
 | get_range_ips | netutils.ip.get_range_ips |
 | get_usable_range | netutils.ip.get_usable_range |
@@ -58,8 +60,9 @@
 | mac_to_format | netutils.mac.mac_to_format |
 | mac_to_int | netutils.mac.mac_to_int |
 | mac_type | netutils.mac.mac_type |
+| compare_version_loose | netutils.os_version.compare_version_loose |
+| compare_version_strict | netutils.os_version.compare_version_strict |
 | get_upgrade_path | netutils.os_version.get_upgrade_path |
-| juniper_junos_version_parser | netutils.os_version.juniper_junos_version_parser |
 | compare_cisco_type5 | netutils.password.compare_cisco_type5 |
 | compare_cisco_type7 | netutils.password.compare_cisco_type7 |
 | compare_cisco_type9 | netutils.password.compare_cisco_type9 |
@@ -76,7 +79,6 @@
 | encrypt_type7 | netutils.password.encrypt_type7 |
 | get_hash_salt | netutils.password.get_hash_salt |
 | tcp_ping | netutils.ping.tcp_ping |
-| os_platform_object_builder | netutils.platform_mapper.os_platform_object_builder |
 | regex_findall | netutils.regex.regex_findall |
 | regex_match | netutils.regex.regex_match |
 | regex_search | netutils.regex.regex_search |

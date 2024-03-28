@@ -3,6 +3,8 @@
 | eos | → | arista_eos |
 | fastiron | → | ruckus_fastiron |
 | ios | → | cisco_ios |
-| iosxe | → | cisco_xe |
+| iosxe | → | cisco_ios |
 | iosxr | → | cisco_xr |
+| junos | → | juniper_junos |
 | nxos | → | cisco_nxos |
+| vyos | → | vyos |

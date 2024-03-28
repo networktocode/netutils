@@ -10,7 +10,7 @@
 | cisco_nxos | → | cisco_nxos |
 | citrix_netscaler | → | citrix_netscaler |
 | extreme_netiron | → | extreme_netiron |
-| fortinet_fortios | → | fortinet_fortios |
+| fortinet_fortios | → | fortinet |
 | hp_comware | → | hp_comware |
 | juniper_junos | → | juniper_junos |
 | linux | → | linux |

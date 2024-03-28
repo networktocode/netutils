@@ -86,11 +86,13 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "uptime_seconds_to_string": "time.uptime_seconds_to_string",
     "uptime_string_to_seconds": "time.uptime_string_to_seconds",
     "get_napalm_getters": "lib_helpers.get_napalm_getters",
+    "paloalto_panos_clean_newlines": "config.conversion.paloalto_panos_clean_newlines",
     "paloalto_panos_brace_to_set": "config.conversion.paloalto_panos_brace_to_set",
+    "compare_version_loose": "os_version.compare_version_loose",
+    "compare_version_strict": "os_version.compare_version_strict",
     "get_upgrade_path": "os_version.get_upgrade_path",
-    "os_platform_object_builder": "platform_mapper.os_platform_object_builder",
-    "juniper_junos_version_parser": "os_version.juniper_junos_version_parser",
     "hash_data": "hash.hash_data",
+    "get_ips_sorted": "ip.get_ips_sorted",
 }
 
 
