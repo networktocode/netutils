@@ -1,0 +1,48 @@
+sysname HP-JKT-01
+#
+dhcp enable
+dhcp server forbidden-ip 10.10.10.1 10.10.10.100
+dhcp server always-broadcast
+#
+dhcp server ip-pool CKP
+ gateway-list 10.10.10.1
+ domain-name intra.data.co.id
+ expired day 30
+ netbios-type b-node
+#
+bgp 65330
+ router-id 10.10.10.254
+ graceful-restart
+ graceful-restart timer restart 120
+ graceful-restart timer wait-for-rib 360
+ peer 10.20.240.1 description ***Point to Point Connection**
+ peer 10.20.240.1 ebgp-max-hop 10
+ peer 10.30.240.1 password cipher $x$x$xxxxxxxxxxxxxxxxxxxxxxxxxxxx/xxxxxxxxxxxx==
+  address-family ipv4 unicast
+  balance 4
+  peer 10.30.240.1 enable
+  peer 10.30.240.1 route-policy P2P-FirstTry import
+  peer 10.30.240.1 route-policy P2P-FirstTry export
+#
+snmp-agent
+snmp-agent local-engineid 8000XXX123456789AB503C00000001
+snmp-agent community read RO
+snmp-agent community read read
+snmp-agent community read ro
+#
+acl advanced name HPE
+ rule 1 permit source 10.180.50.254 0 destination 10.1.0.249 0
+ rule 2 permit source 10.180.50.0 0.0.0.127 destination 10.1.4.62 0
+ rule 3 permit source 10.180.50.0 0.0.0.127 destination 10.2.4.62 0
+#
+header motd #
+===================================================
+
+!!! WARNING !!!
+system monitoring for law enforcement and other
+purpose. Unauthorized use of this machine may
+subject you to criminal prosecution and penalties
+
+==================================================#
+#
+return
