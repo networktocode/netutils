@@ -354,7 +354,9 @@ HIERCONFIG_LIB_MAPPER = {
     "ios": "cisco_ios",
     "iosxe": "cisco_xe",
     "iosxr": "cisco_xr",
+    "junos": "juniper_junos",
     "nxos": "cisco_nxos",
+    "vyos": "brocade_vyos",
 }
 
 # Netutils Parser | Normalized
@@ -497,10 +499,12 @@ SCRAPLI_LIB_MAPPER_REVERSE = {
 # Normalized | HIERCONFIG
 HIERCONFIG_LIB_MAPPER_REVERSE = {
     "arista_eos": "eos",
+    "brocade_vyos": "vyos",
     "cisco_ios": "ios",
     "cisco_nxos": "nxos",
     "cisco_xe": "iosxe",
     "cisco_xr": "iosxr",
+    "juniper_junos": "junos",
     "ruckus_fastiron": "fastiron",
 }
 
