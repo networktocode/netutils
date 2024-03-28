@@ -374,7 +374,7 @@ NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
     "cisco_nxos": "cisco_nxos",
     "citrix_netscaler": "citrix_netscaler",
     "extreme_netiron": "extreme_netiron",
-    "fortinet_fortios": "fortios",
+    "fortinet_fortios": "fortinet",
     "hp_comware": "hp_comware",
     "juniper_junos": "juniper_junos",
     "linux": "linux",
