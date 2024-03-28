@@ -1,5 +1,6 @@
 | NIST | | NORMALIZED |
 | ---------- | -- | ------ |
+| adaptive_security_appliance_software | → | cisco_asa |
 | eos | → | arista_eos |
 | ios | → | cisco_ios |
 | ios_xe | → | cisco_xe |
