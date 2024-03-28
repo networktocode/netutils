@@ -12,6 +12,7 @@
 | citrix_netscaler | → | citrix_netscaler |
 | extreme_netiron | → | extreme_netiron |
 | fortinet | → | fortinet_fortios |
+| hp_comware | → | hp_comware |
 | juniper_junos | → | juniper_junos |
 | linux | → | linux |
 | mikrotik_routeros | → | mikrotik_routeros |
