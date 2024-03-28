@@ -15,4 +15,4 @@
 | panos | → | paloalto_panos |
 | ros | → | mikrotik_routeros |
 | sros | → | nokia_sros |
-| vyos | → | brocade_vyos |
+| vyos | → | vyos |
