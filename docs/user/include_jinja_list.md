@@ -63,8 +63,8 @@
 | compare_version_loose | netutils.os_version.compare_version_loose |
 | compare_version_strict | netutils.os_version.compare_version_strict |
 | get_upgrade_path | netutils.os_version.get_upgrade_path |
-| juniper_junos_version_parser | netutils.os_version.juniper_junos_version_parser |
-| vendorize_version | netutils.os_version.vendorize_version |
+| juniper_junos_metadata | netutils.os_version.juniper_junos_metadata |
+| version_metadata | netutils.os_version.version_metadata |
 | compare_cisco_type5 | netutils.password.compare_cisco_type5 |
 | compare_cisco_type7 | netutils.password.compare_cisco_type7 |
 | compare_cisco_type9 | netutils.password.compare_cisco_type9 |

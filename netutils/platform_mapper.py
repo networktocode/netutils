@@ -1,12 +1,13 @@
-"""Platform Mappers."""
-# The intent of this script is to take a given platform, determine the format, and reformat it for another purpose
-# An example of this is a platform being formatted for NIST Database Query
+"""Unified Services."""
+# The intent of this module is to offer common services for consumption by multiple platforms.
+# An example of this is an os platform/version being set up for NIST NVD Query.
+
 import abc
 import dataclasses
 import typing as t
 
 from netutils.nist import get_nist_url_funcs
-from netutils.os_version import os_version_parsers
+from netutils.os_version import version_metadata_parsers
 
 PLATFORM_FIELDS: t.Dict[str, t.Any] = {
     "default": [
@@ -61,16 +62,19 @@ def os_platform_object_builder(vendor: str, platform: str, version: str) -> obje
     """Creates a platform object relative to its need and definition.
 
     Args:
-        vendor
+        vendor (str): Name of vendor
+        platform (str): Name of os/other platform
+        version (str): Version value
 
     Returns:
-        A platform object
+        object: Platform object
 
     Examples:
         >>> jp = os_platform_object_builder("juniper", "junos", "12.1R3-S4.1")
         >>> jp.get_nist_urls()
         ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:12.1r3:s4.1:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:12.1r3-s4.1:*:*:*:*:*:*:*']
     """
+
     platform = platform.lower()
     vendor = vendor.lower()
 
@@ -78,7 +82,7 @@ def os_platform_object_builder(vendor: str, platform: str, version: str) -> obje
     vendor_platform_fields = PLATFORM_FIELDS.get(vendor, {}).get(platform, [])
     class_fields.extend(vendor_platform_fields)
 
-    version_parser = os_version_parsers.get(vendor, {}).get(platform, None)
+    version_parser = version_metadata_parsers.get(vendor, {}).get(platform, None)
     field_values = {
         "vendor": vendor,
         "os_type": platform,

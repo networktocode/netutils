@@ -131,7 +131,7 @@ def compare_version_strict(current_version: str, comparison: str, target_version
     return _compare_version(current_version, comparison, target_version, "strict")
 
 
-def juniper_junos_version_parser(version: str) -> t.Dict[str, t.Any]:
+def juniper_junos_metadata(version: str) -> t.Dict[str, t.Any]:
     """Parses JunOS Version into usable bits matching JunOS Standards.
 
     Args:
@@ -141,7 +141,7 @@ def juniper_junos_version_parser(version: str) -> t.Dict[str, t.Any]:
         A dictionary containing parsed version information
 
     Examples:
-        >>> juniper_junos_version_parser("12.3R4")
+        >>> juniper_junos_metadata("12.3R4")
         {'isservice': False, 'ismaintenance': True, 'isfrs': False, 'isspecial': False, 'service': None, 'service_build': None, 'service_respin': None, 'main': '12', 'minor': '3', 'type': 'R', 'build': '4'}
     """
     # Use regex to group the main, minor, type and build into useable pieces
@@ -214,14 +214,14 @@ def juniper_junos_version_parser(version: str) -> t.Dict[str, t.Any]:
     return parsed_version
 
 
-os_version_parsers = {
+version_metadata_parsers = {
     "juniper": {
-        "junos": juniper_junos_version_parser,
+        "junos": juniper_junos_metadata,
     }
 }
 
 
-def vendorize_version(vendor: str, os_type: str, version: str) -> t.Dict[str, t.Any]:
+def version_metadata(vendor: str, os_type: str, version: str) -> t.Dict[str, t.Any]:
     """If a custom version parser is avaialable, use it.
 
     Args:
@@ -232,17 +232,17 @@ def vendorize_version(vendor: str, os_type: str, version: str) -> t.Dict[str, t.
     Returns:
         dict: Dict of broken down version into vendor standards.
 
-    Example:
-        >>> from netutils.os_version import vendorize_version
-        >>> vendorize_version("Cisco", "IOS", "15.5")
-        {'vendor': 'Cisco', 'os_type': 'IOS', 'version': '15.5', 'vendorized': False}
-        >>> vendorize_version("juniper", "junos", "12.4R")
-        {'isservice': False, 'ismaintenance': False, 'isfrs': True, 'isspecial': False, 'service': None, 'service_build': None, 'service_respin': None, 'main': '12', 'minor': '4', 'type': 'R', 'build': None, 'vendorized': True}
+    Examples:
+        >>> from netutils.os_version import version_metadata
+        >>> version_metadata("Cisco", "IOS", "15.5")
+        {'vendor': 'Cisco', 'os_type': 'IOS', 'version': '15.5', 'metadata': False}
+        >>> version_metadata("juniper", "junos", "12.4R")
+        {'isservice': False, 'ismaintenance': False, 'isfrs': True, 'isspecial': False, 'service': None, 'service_build': None, 'service_respin': None, 'main': '12', 'minor': '4', 'type': 'R', 'build': None, 'metadata': True}
     """
     try:
-        parsed_version = os_version_parsers[vendor][os_type](version)
-        parsed_version.update({"vendorized": True})
+        parsed_version = version_metadata_parsers[vendor][os_type](version)
+        parsed_version.update({"metadata": True})
     except KeyError:
-        parsed_version = {"vendor": vendor, "os_type": os_type, "version": version, "vendorized": False}
+        parsed_version = {"vendor": vendor, "os_type": os_type, "version": version, "metadata": False}
 
     return parsed_version
