@@ -10,6 +10,7 @@ Influencers
 - [IPCal](https://github.com/ammyblabla/ipcal)
 - [StackOverflow](https://stackoverflow.com/)
 - [Python 3 Docs](https://docs.python.org/3/library/)
+- [Python distutils version](https://github.com/python/cpython/blob/3.11/Lib/distutils/version.py)
 
 In many instances variables and function names were reused, but the code was built from scratch to avoid any potential licensing issues. Functions that were known to be rewritten and their known origin.
 
