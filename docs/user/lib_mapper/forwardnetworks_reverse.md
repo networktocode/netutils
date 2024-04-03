@@ -5,10 +5,11 @@
 | bigip_f5 | → | F5 |
 | cisco_asa | → | ASA |
 | cisco_ios | → | IOS |
-| cisco_iosxr | → | IOS_XR |
 | cisco_nxos | → | NXOS |
+| cisco_xe | → | IOS |
+| cisco_xr | → | IOS_XR |
 | extreme_netiron | → | EXTREME_NOS |
-| fortinet_fortios | → | FORTINET |
+| fortinet | → | FORTINET |
 | juniper_junos | → | JUNOS |
 | linux | → | LINUX |
 | netscaler | → | NETSCALER |

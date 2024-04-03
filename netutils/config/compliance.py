@@ -18,6 +18,7 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "citrix_netscaler": parser.NetscalerConfigParser,
     "extreme_netiron": parser.NetironConfigParser,
     "fortinet_fortios": parser.FortinetConfigParser,
+    "hp_comware": parser.HPComwareConfigParser,
     "juniper_junos": parser.JunosConfigParser,
     "linux": parser.LINUXConfigParser,
     "mikrotik_routeros": parser.RouterOSConfigParser,
