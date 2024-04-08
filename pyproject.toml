@@ -49,7 +49,7 @@ mypy = "*"
 mkdocs = "1.5.2"
 mkdocs-material = "9.2.4"
 mkdocs-version-annotations = "1.0.0"
-mkdocstrings = "0.22.0"
+mkdocstrings = "0.24.3"
 mkdocstrings-python = "1.6.0"
 mkdocs-python-classy = "0.1.3"
 
