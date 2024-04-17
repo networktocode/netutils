@@ -334,11 +334,10 @@ class BaseSpaceConfigParser(BaseConfigParser):
             elif self.is_banner_start(line):
                 line = self._build_banner(line)  # type: ignore
                 # line can potentially be another banner start therefore we do a secondary check.
-                print(line)
-                if self.is_banner_start(line):  # type: ignore
+                if self.is_banner_start(line):
                     line = self._build_banner(line)  # type: ignore
 
-            self._update_config_lines(line)  # type: ignore
+            self._update_config_lines(line)
         return self.config_lines
 
     @staticmethod
