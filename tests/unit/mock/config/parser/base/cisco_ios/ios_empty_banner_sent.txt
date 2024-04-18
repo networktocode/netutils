@@ -1,0 +1,7 @@
+hostname emptybanner
+!
+banner motd ^C^C
+!
+line vty 0 4
+ transport ssh
+!
