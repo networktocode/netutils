@@ -1,4 +1,5 @@
 """Parsers for different network operating systems."""
+
 # pylint: disable=no-member,super-with-arguments,invalid-overridden-method,raise-missing-from,invalid-overridden-method,inconsistent-return-statements,super-with-arguments,redefined-argument-from-local,no-else-break,useless-super-delegation,too-many-lines
 
 import re
@@ -95,6 +96,8 @@ class BaseSpaceConfigParser(BaseConfigParser):
             True if line starts banner, else False.
         """
         for banner_start in self.banner_start:
+            if not line:
+                return False
             if line.lstrip().startswith(banner_start):
                 return True
         return False
@@ -330,6 +333,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
                 break
             elif self.is_banner_start(line):
                 line = self._build_banner(line)  # type: ignore
+                # line can potentially be another banner start therefore we do a secondary check.
+                if self.is_banner_start(line):
+                    line = self._build_banner(line)  # type: ignore
 
             self._update_config_lines(line)
         return self.config_lines
@@ -551,6 +557,9 @@ class CiscoConfigParser(BaseSpaceConfigParser):
     def is_banner_one_line(config_line: str) -> bool:
         """Determine if all banner config is on one line."""
         _, delimeter, banner = config_line.partition("^C")
+        # if the banner is the delimeter is a single line empty banner. e.g banner motd ^C^C which ios allows.
+        if banner == "^C":
+            return True
         # Based on NXOS configs, the banner delimeter is ignored until another char is used
         banner_config_start = banner.lstrip(delimeter)
         if delimeter not in banner_config_start:
