@@ -1,4 +1,5 @@
 """Constant definitions used in project."""
+
 from netutils.data_files.protocol_mappings import (  # noqa: F401 # pylint:disable=unused-import
     PROTOCOLS,
 )

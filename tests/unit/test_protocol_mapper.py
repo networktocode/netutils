@@ -1,4 +1,5 @@
 """Test for the lib_mapper definitions."""
+
 import pytest
 
 from netutils.protocol_mapper import (

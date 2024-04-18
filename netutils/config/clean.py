@@ -1,4 +1,5 @@
 """Functions for working with configuration to clean the config."""
+
 # pylint: disable=anomalous-backslash-in-string
 
 import re

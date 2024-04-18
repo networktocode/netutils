@@ -1,4 +1,5 @@
 """Test for the MAC address functions."""
+
 import pytest
 
 from netutils import mac

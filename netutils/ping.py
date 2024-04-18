@@ -1,4 +1,5 @@
 """Functions to create a ping via pure Python."""
+
 import socket
 
 

@@ -1,4 +1,5 @@
 """Test for the lib_helpers definitions."""
+
 import pytest
 from netutils import os_version
 from netutils.constants import UPGRADE_PATHS
