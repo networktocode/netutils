@@ -556,7 +556,6 @@ class CiscoConfigParser(BaseSpaceConfigParser):
     @staticmethod
     def is_banner_one_line(config_line: str) -> bool:
         """Determine if all banner config is on one line."""
-        print(config_line)
         _, delimeter, banner = config_line.partition("^C")
         # if the banner is the delimeter is a single line empty banner. e.g banner motd ^C^C which ios allows.
         if banner == "^C":
