@@ -1,4 +1,5 @@
 """Basic tests that do not require netutils."""
+
 import os
 import unittest
 import toml

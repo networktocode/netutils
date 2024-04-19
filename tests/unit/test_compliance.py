@@ -1,4 +1,5 @@
 """Test for the config compliance functions."""
+
 import glob
 import os
 

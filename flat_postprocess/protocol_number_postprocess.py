@@ -1,4 +1,5 @@
 """Python code used to postprocess Flat github action data related to Protocol mappings."""
+
 import csv
 import os
 import sys
