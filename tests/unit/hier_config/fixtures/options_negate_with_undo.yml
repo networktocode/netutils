@@ -1,0 +1,21 @@
+---
+# Indicates the style of the configuration
+style: comware5
+
+# negation prefix
+negation: 'undo'
+
+syntax_style: "cisco"
+
+sectional_overwrite: []
+sectional_overwrite_no_negate: []
+ordering: []
+indent_adjust: []
+parent_allows_duplicate_child: []
+sectional_exiting: []
+full_text_sub: []
+per_line_sub: []
+idempotent_commands_blacklist: []
+idempotent_commands: []
+negation_default_when: []
+negation_negate_with: []
