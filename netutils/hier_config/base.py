@@ -341,7 +341,7 @@ class HConfigBase(ABC):  # pylint: disable=too-many-public-methods
                 negated_or_recursed.add(config_child.text)
             # config_child is being negated
             elif config_child.text.startswith(self._negation_prefix):
-                unnegated_command = config_child.text[len(self._negation_prefix) :]
+                unnegated_command = config_child.text[len(self._negation_prefix) :]  # noqa: E203
                 if self.get_child("equals", unnegated_command):
                     negated_or_recursed.add(unnegated_command)
                 # Account for "no ..." commands in the running config
@@ -406,8 +406,10 @@ class HConfigBase(ABC):  # pylint: disable=too-many-public-methods
 
             if in_acl:
                 # Ignore ACL sequence numbers
-                assert isinstance(target_acl_children, dict)
-                target_child = target_acl_children.get(self._strip_acl_sequence_number(self_child))
+                if not isinstance(target_acl_children, dict):
+                    raise TypeError(f"{target_acl_children} is not a dict.")
+                else:
+                    target_child = target_acl_children.get(self._strip_acl_sequence_number(self_child))
             else:
                 target_child = target.get_child("equals", self_child.text)
 

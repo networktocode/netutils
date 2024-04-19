@@ -364,7 +364,7 @@ class HConfigChild(HConfigBase):
             # we really only need to do this on the last one
             if strip_negation:
                 if section.text.startswith(self._negation_prefix):
-                    text = section.text[len(self._negation_prefix) :]
+                    text = section.text[len(self._negation_prefix) :]  # noqa: E203
                 elif section.text.startswith("default "):
                     text = section.text[8:]
                 else:
@@ -382,7 +382,7 @@ class HConfigChild(HConfigBase):
     def _swap_negation(self) -> HConfigChild:
         """Swap negation of a self.text"""
         if self.text.startswith(self._negation_prefix):
-            self.text = self.text[len(self._negation_prefix) :]
+            self.text = self.text[len(self._negation_prefix) :]  # noqa: E203
         else:
             self.text = self._negation_prefix + self.text
 
@@ -391,7 +391,7 @@ class HConfigChild(HConfigBase):
     def _default(self) -> HConfigChild:
         """Default self.text"""
         if self.text.startswith(self._negation_prefix):
-            self.text = "default " + self.text[len(self._negation_prefix) :]
+            self.text = "default " + self.text[len(self._negation_prefix) :]  # noqa: E203
         else:
             self.text = "default " + self.text
         return self

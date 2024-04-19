@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Optional, Set, Union, Iterator, List, TYPE_CHECKING, Tuple, Type
 from logging import getLogger
 
+from netutils.hier_config.exceptions import HostAttrError, HierConfigError
 from netutils.hier_config.base import HConfigBase
 from netutils.hier_config.child import HConfigChild
 
@@ -15,7 +16,6 @@ logger = getLogger(__name__)
 
 
 class HConfig(HConfigBase):  # pylint: disable=too-many-public-methods
-
     """
     A class for representing and comparing Cisco configurations in a
     hierarchical tree data structure.
@@ -58,9 +58,9 @@ class HConfig(HConfigBase):  # pylint: disable=too-many-public-methods
 
     def __init__(self, host: Host):
         super().__init__()
-        assert hasattr(host, "hostname")
-        assert hasattr(host, "os")
-        assert hasattr(host, "hconfig_options")
+        if not all([hasattr(host, "hostname"), hasattr(host, "os"), hasattr(host, "hconfig_options")]):
+            raise HostAttrError(host, "Missing attributes - hostname, os, hconfig_options.")
+
         self.host = host
         self.parent = self
         self.real_indent_level = -1
@@ -392,7 +392,9 @@ class HConfig(HConfigBase):  # pylint: disable=too-many-public-methods
             if end_indent_adjust and re.search(end_indent_adjust[0], line):
                 indent_adjust -= 1
                 del end_indent_adjust[0]
-        assert not in_banner, "we are still in a banner for some reason"
+
+        if in_banner:
+            raise HierConfigError("we are still in a banner for some reason.")
 
     def _add_acl_sequence_numbers(self) -> None:
         """
