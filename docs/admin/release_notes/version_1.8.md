@@ -34,3 +34,4 @@
 
 ### Fixed
 - [#509](https://github.com/networktocode/netutils/pull/509) Fixed parsing of empty banner, and dual banner for Cisco platforms.
+
