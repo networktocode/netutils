@@ -5,4 +5,4 @@ from netutils.hier_config.host import Host
 from netutils.hier_config import text_match
 
 
-__all__ = ["HConfigBase", "HConfigChild", "HConfig", "Host", "text_match"]
+__all__ = [HConfigBase, HConfigChild, HConfig, Host, text_match]
