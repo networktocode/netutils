@@ -1,4 +1,5 @@
 """Functions for working with DNS."""
+
 import socket
 
 

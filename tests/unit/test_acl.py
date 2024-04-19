@@ -1,4 +1,5 @@
 """Test for the BGP ASN functions."""
+
 # pylint: disable=use-dict-literal
 
 import pytest

@@ -1,4 +1,5 @@
 """Functions for performing bandwidth calculations."""
+
 import re
 import typing as t
 

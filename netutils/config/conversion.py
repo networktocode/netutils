@@ -114,9 +114,11 @@ def paloalto_panos_clean_newlines(cfg: str) -> str:
     )
 
     newlines_cleaned_cfg = paloalto_panos_newline_regex.sub(
-        lambda match: match.group().replace("\n", " ")
-        if not any(substring in match.group() for substring in paloalto_panos_no_newline_cleanup_match)
-        else match.group(),
+        lambda match: (
+            match.group().replace("\n", " ")
+            if not any(substring in match.group() for substring in paloalto_panos_no_newline_cleanup_match)
+            else match.group()
+        ),
         cfg,
     )
 

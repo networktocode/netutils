@@ -1,4 +1,5 @@
 """Test for the longest_prefix_match definitions."""
+
 from ipaddress import AddressValueError, NetmaskValueError
 
 import pytest

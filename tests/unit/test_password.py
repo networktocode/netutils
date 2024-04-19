@@ -1,4 +1,5 @@
 """Test for the password functions."""
+
 import pytest
 
 from netutils import password
