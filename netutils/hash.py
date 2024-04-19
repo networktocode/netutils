@@ -1,4 +1,5 @@
 """Functions for hashing data."""
+
 import hashlib
 import typing as t
 

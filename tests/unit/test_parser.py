@@ -1,4 +1,5 @@
 """Test for the network os parser functions."""
+
 import glob
 import os
 

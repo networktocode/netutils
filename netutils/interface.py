@@ -1,4 +1,5 @@
 """Functions for working with interface."""
+
 import itertools
 import re
 import typing as t

@@ -1,4 +1,5 @@
 """Functions for working with the banner configuration."""
+
 import re
 
 from netutils.constants import CARET_C

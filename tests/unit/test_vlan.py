@@ -1,4 +1,5 @@
 """Test for the VLAN functions."""
+
 import os
 import glob
 

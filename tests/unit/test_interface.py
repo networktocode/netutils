@@ -1,4 +1,5 @@
 """Test for the interface functions."""
+
 import pytest
 
 from netutils import interface

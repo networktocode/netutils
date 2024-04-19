@@ -1,4 +1,5 @@
 """Developer script to generate markdown tables."""
+
 from jinja2 import Environment, BaseLoader, select_autoescape
 from netutils.utils import _JINJA2_FUNCTION_MAPPINGS
 from netutils import lib_mapper

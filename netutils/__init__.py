@@ -1,6 +1,5 @@
 """Initialization file for library."""
 
-
 from importlib import metadata
 
 

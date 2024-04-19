@@ -29,3 +29,9 @@
 
 - [#496](https://github.com/networktocode/netutils/pull/496) Fixed vyos lib_mapper.
 - [#416](https://github.com/networktocode/netutils/pull/416) Fixed for `\n` characters in parsing bug in palo parser.
+
+## [v1.8.1] 2024-04
+
+### Fixed
+- [#509](https://github.com/networktocode/netutils/pull/509) Fixed parsing of empty banner, and dual banner for Cisco platforms.
+

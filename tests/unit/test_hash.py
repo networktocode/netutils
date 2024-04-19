@@ -1,4 +1,5 @@
 """Tests for the hash functions."""
+
 import pytest
 
 from netutils.hash import hash_data

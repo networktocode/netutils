@@ -1,4 +1,5 @@
 """Functions for working with OS Versions."""
+
 import typing as t
 
 from netutils._private.version import LooseVersion, StrictVersion  # type: ignore

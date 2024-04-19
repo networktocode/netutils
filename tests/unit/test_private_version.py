@@ -1,4 +1,5 @@
 """Tests for distutils.version."""
+
 # pylint: disable=deprecated-module,missing-class-docstring,invalid-name,protected-access,consider-using-f-string,no-else-continue,raise-missing-from
 
 # Taken from https://github.com/python/cpython/blob/3.11/Lib/distutils/tests/test_version.py
