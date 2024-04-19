@@ -1,4 +1,5 @@
 """Dictionary object to store Protocol Number."""
+
 from typing import Dict
 
 PROTO_NAME_TO_NUM: Dict[str, int] = {
@@ -145,7 +146,6 @@ PROTO_NAME_TO_NUM: Dict[str, int] = {
     "NSH": 145,
     "Reserved": 255,
 }
-
 PROTO_NUM_TO_NAME: Dict[int, str] = {
     0: "HOPOPT",
     1: "ICMP",

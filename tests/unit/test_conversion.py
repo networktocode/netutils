@@ -1,4 +1,5 @@
 """Test that configurations properly convert from undesired format to desired"""
+
 import glob
 import os
 

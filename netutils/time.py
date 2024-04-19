@@ -1,4 +1,5 @@
 """Functions for working with time."""
+
 import re
 import typing as t
 

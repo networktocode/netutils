@@ -1,4 +1,5 @@
 """Test for the network os sanitize functions."""
+
 import glob
 import os
 

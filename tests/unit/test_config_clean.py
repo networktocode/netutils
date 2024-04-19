@@ -1,4 +1,5 @@
 """Test for the config cleaning functions."""
+
 import glob
 import os
 

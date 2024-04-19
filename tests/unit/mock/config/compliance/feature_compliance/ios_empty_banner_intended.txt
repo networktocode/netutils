@@ -1,0 +1,9 @@
+hostname emptybanner
+!
+banner motd ^C
+actual banner example
+^C
+!
+line vty 0 4
+ transport ssh
+!

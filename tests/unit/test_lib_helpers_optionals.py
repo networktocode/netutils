@@ -1,4 +1,5 @@
 """Test for the lib_helpers definitions when optional packages are installed."""
+
 from unittest import mock
 
 import pytest
