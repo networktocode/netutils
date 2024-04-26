@@ -7,13 +7,21 @@ Version parsing takes the software version given as a string, and deconstructs t
 
 Current Version Parsers:
 
+- Default Parser
 - Juniper JunOS
 
-**See the following Juniper JunOS parsed version:**
+**See the following Default and Juniper JunOS parsed versions:**
 
 ```python
->>> from os_version import juniper_junos_version_parser
->>> juniper_junos_version_parser("12.2x50:d41.1")
+>>> from os_version import default_os_metadata, juniper_junos_metadata
+
+>>> default_os_metadata("cisco", "ios", "15.5")
+{
+    "major": "15",
+    "minor": "5",
+    "patch": None,
+}
+>>> juniper_junos_metadata("juniper", "junos", "12.2x50:d41.1")
 {
     "isservice": false,
     "ismaintenance": false,
@@ -23,8 +31,10 @@ Current Version Parsers:
     "service_build": "41",
     "service_respin": "1",
     "main": "12",
+    "major": "12",
     "minor": "2",
     "type": "x",
-    "build": "50"
+    "build": "50",
+    "patch": "50"
 }
 ```

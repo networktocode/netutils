@@ -183,6 +183,9 @@ def juniper_junos_metadata(version: str) -> t.Dict[str, t.Any]:
 
     # Parse out junos into sections that can be used for logic
     parsed_version.update(re_main_minor_type_build.search(version_core_part).groupdict())  # type:ignore
+    
+    # Adding additional keys for standard major/minor/patch references
+    parsed_version.update({"major": parsed_version["main"], "patch": parsed_version.get("build")})
 
     if version_service_part:
         parsed_version.update(re_service_build_respin.search(version_service_part[0]).groupdict())  # type:ignore
@@ -214,7 +217,64 @@ def juniper_junos_metadata(version: str) -> t.Dict[str, t.Any]:
     return parsed_version
 
 
+def default_metadata(vendor: str, os_platform: str, version: str) -> t.Dict[str, t.Any]:
+    """Parses version value using SemVer 2.0.0 standards. https://semver.org/spec/v2.0.0.html
+
+    Args:
+        version (str): String representation of version
+
+    Returns:
+        A dictionary containing parsed version information
+
+    Examples:
+        >>> default_metadata("10.20.30").groupdict()
+        {'major': '10', 'minor': '20', 'patch': '30', 'prerelease': None, 'buildmetadata': None}
+
+        >>> default_metadata("1.0.0-alpha.beta.1").groupdict()
+        {'major': '1', 'minor': '0', 'patch': '0', 'prerelease': 'alpha.beta.1', 'buildmetadata': None}
+
+        >>> default_metadata("1.0.0-alpha-a.b-c-somethinglong+build.1-aef.1-its-okay").groupdict()
+        {'major': '1', 'minor': '0', 'patch': '0', 'prerelease': 'alpha-a.b-c-somethinglong', 'buildmetadata': 'build.1-aef.1-its-okay'}
+
+    """
+    # Use regex with named groups.  REGEX Pattern Provided by SemVer https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string
+    semver_regex: re.Pattern[str] = re.compile(
+        r"""
+        ^
+        (?P<major>0|[1-9]\d*)
+        \.
+        (?P<minor>0|[1-9]\d*)
+        \.
+        (?P<patch>0|[1-9]\d*)
+        (?:-(?P<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?
+        (?:\+(?P<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$
+        """,
+        re.VERBOSE
+    )
+
+    # If version is not SemVer 2.0.0, attempt to find major/minor only.
+    basic_regex: re.Pattern[str] = re.compile(
+        r"""
+        ^
+        (?P<major>0|[1-9]\d*)
+        \.
+        (?P<minor>0|[1-9]\d*)?
+        .*$
+        """,
+        re.VERBOSE
+    )
+
+    # Perform regex match against provided version string
+    parsed_version = semver_regex.match(version)
+    
+    if not parsed_version:
+        parsed_version = basic_regex.match(version)
+
+    return parsed_version.groupdict()
+
+
 version_metadata_parsers = {
+    "default": default_metadata,
     "juniper": {
         "junos": juniper_junos_metadata,
     }
@@ -235,14 +295,19 @@ def version_metadata(vendor: str, os_type: str, version: str) -> t.Dict[str, t.A
     Examples:
         >>> from netutils.os_version import version_metadata
         >>> version_metadata("Cisco", "IOS", "15.5")
-        {'vendor': 'Cisco', 'os_type': 'IOS', 'version': '15.5', 'metadata': False}
+        {'vendor': 'Cisco', 'os_type': 'IOS', 'version': '15.5', 'vendor_metadata': False}
         >>> version_metadata("juniper", "junos", "12.4R")
-        {'isservice': False, 'ismaintenance': False, 'isfrs': True, 'isspecial': False, 'service': None, 'service_build': None, 'service_respin': None, 'main': '12', 'minor': '4', 'type': 'R', 'build': None, 'metadata': True}
+        {'isservice': False, 'ismaintenance': False, 'isfrs': True, 'isspecial': False, 'service': None, 'service_build': None, 'service_respin': None, 'main': '12', 'minor': '4', 'type': 'R', 'build': None, 'vendor_metadata': True}
     """
-    try:
-        parsed_version = version_metadata_parsers[vendor][os_type](version)
-        parsed_version.update({"metadata": True})
-    except KeyError:
-        parsed_version = {"vendor": vendor, "os_type": os_type, "version": version, "metadata": False}
+    if vendor in version_metadata_parsers:
+        try:
+            parsed_version = version_metadata_parsers[vendor][os_type](version)
+            parsed_version.update({"vendor_metadata": True})
+        except KeyError:
+            parsed_version = version_metadata_parsers['default'](vendor, os_type, version)
+            parsed_version.update({"vendor_metadata": False})
+    else:
+        parsed_version = version_metadata_parsers['default'](vendor, os_type, version)
+        parsed_version.update({"vendor_metadata": False})
 
     return parsed_version

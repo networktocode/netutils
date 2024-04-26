@@ -1,6 +1,64 @@
-"""Functions building NIST URLs from the os platform values."""
+"""Classes and functions used for building NIST URLs from the os platform values."""
+import abc
+import dataclasses
 import re
 import typing as t
+
+from netutils.os_version import version_metadata
+
+# Setting up the dataclass values for specific parsers
+PLATFORM_FIELDS: t.Dict[str, t.Any] = {
+    "default": [
+        ("vendor", str),
+        ("os_type", str),
+        ("version_string", str),
+        ("major", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
+        ("minor", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
+        ("patch", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
+        ("prerelease", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
+        ("buildmetadata", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
+        ("vendor_metadata", bool, dataclasses.field(default=False)),  # pylint: disable=[E3701]
+    ],
+    "juniper": {
+        "junos": [
+            ("main", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
+            ("type", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
+            ("build", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
+            ("service", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
+            ("service_build", int, dataclasses.field(default=None)),  # pylint: disable=[E3701]
+            ("service_respin", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
+            ("isservice", bool, dataclasses.field(default=False)),  # pylint: disable=[E3701]
+            ("ismaintenance", bool, dataclasses.field(default=False)),  # pylint: disable=[E3701]
+            ("isfrs", bool, dataclasses.field(default=False)),  # pylint: disable=[E3701]
+            ("isspecial", bool, dataclasses.field(default=False)),  # pylint: disable=[E3701]
+        ]
+    },
+}
+
+
+class OsPlatform(metaclass=abc.ABCMeta):
+    """Base class for dynamically generated vendor specific platform data classes."""
+
+    def asdict(self) -> t.Dict[str, t.Any]:
+        """Returns dictionary representation of the class attributes."""
+        return dataclasses.asdict(self)  # type: ignore
+
+    @abc.abstractmethod
+    def get_nist_urls(self) -> t.List[str]:
+        """Returns list of NIST URLs for the platform."""
+
+    def get(self, key: str) -> t.Any:
+        """Return value of the attribute matching provided name or None if no attribute is found."""
+        return getattr(self, key, None)
+
+    def keys(self) -> t.KeysView[t.Any]:
+        """Return attributes and their values as dict keys."""
+        # Disabling pylint no-member due to BUG: https://github.com/pylint-dev/pylint/issues/7126
+        return self.__annotations__.keys()  # pylint: disable=no-member
+
+    def __getitem__(self, key: str) -> t.Any:
+        """Allow retrieving attributes using subscript notation."""
+        return getattr(self, key)
 
 
 def get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:  # pylint: disable=R0911
@@ -129,3 +187,48 @@ get_nist_url_funcs: t.Dict[str, t.Any] = {
     "default": get_nist_urls_default,
     "juniper": {"junos": get_nist_urls_juniper_junos},
 }
+
+
+def os_platform_object_builder(vendor: str, platform: str, version: str) -> object:
+    """Creates a platform object relative to its need and definition.
+
+    Args:
+        vendor (str): Name of vendor
+        platform (str): Name of os/other platform
+        version (str): Version value
+
+    Returns:
+        object: Platform object
+
+    Examples:
+        >>> jp = os_platform_object_builder("juniper", "junos", "12.1R3-S4.1")
+        >>> jp.get_nist_urls()
+        ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:12.1r3:s4.1:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:12.1r3-s4.1:*:*:*:*:*:*:*']
+    """
+
+    platform = platform.lower()
+    vendor = vendor.lower()
+
+    class_fields = [*PLATFORM_FIELDS["default"]]
+    vendor_platform_fields = PLATFORM_FIELDS.get(vendor, {}).get(platform, [])
+    class_fields.extend(vendor_platform_fields)
+
+    version_parser = version_metadata(vendor, platform, version)
+
+    field_values = {
+        "vendor": vendor,
+        "os_type": platform,
+        "version_string": version,
+    }
+
+    if version_parser:
+        field_values.update(version_parser)
+
+    class_name = f"{vendor.capitalize()}{platform.capitalize()}"
+    get_nist_urls_func = get_nist_url_funcs.get(vendor, {}).get(platform) or get_nist_url_funcs["default"]
+
+    platform_cls = dataclasses.make_dataclass(
+        cls_name=class_name, fields=class_fields, bases=(OsPlatform,), namespace={"get_nist_urls": get_nist_urls_func}
+    )
+
+    return platform_cls(**field_values)
