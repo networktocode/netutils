@@ -1,8 +1,8 @@
-"""Test functions for platform_mapper"""
+"""Test functions for NIST URL Utility"""
 
 import pytest
 
-from netutils import platform_mapper
+from netutils.nist import os_platform_object_builder
 
 platform_data = [
     # Cisco and Arista use the generic parsing
@@ -125,16 +125,12 @@ platform_nist_urls = [
 # Testing the parsing of a Vendor, Platform, Version into vendor standardized sections
 @pytest.mark.parametrize("data", platform_data)
 def test_platform_parsing(data):
-    platform_obj = platform_mapper.os_platform_object_builder(
-        data["sent"]["vendor"], data["sent"]["platform"], data["sent"]["version"]
-    )
+    platform_obj = os_platform_object_builder(data["sent"]["vendor"], data["sent"]["platform"], data["sent"]["version"])
     assert platform_obj.asdict() == data["received"]
 
 
 # Testing the composition of the nist url(s) created for a platform
 @pytest.mark.parametrize("data", platform_nist_urls)
 def test_platform_nist(data):
-    platform_obj = platform_mapper.os_platform_object_builder(
-        data["sent"]["vendor"], data["sent"]["platform"], data["sent"]["version"]
-    )
+    platform_obj = os_platform_object_builder(data["sent"]["vendor"], data["sent"]["platform"], data["sent"]["version"])
     assert platform_obj.get_nist_urls() == data["received"]

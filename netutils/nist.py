@@ -1,4 +1,5 @@
 """Classes and functions used for building NIST URLs from the os platform values."""
+
 import abc
 import dataclasses
 import re
@@ -205,7 +206,6 @@ def os_platform_object_builder(vendor: str, platform: str, version: str) -> obje
         >>> jp.get_nist_urls()
         ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:12.1r3:s4.1:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:12.1r3-s4.1:*:*:*:*:*:*:*']
     """
-
     platform = platform.lower()
     vendor = vendor.lower()
 
