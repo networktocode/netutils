@@ -93,9 +93,10 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_upgrade_path": "os_version.get_upgrade_path",
     "hash_data": "hash.hash_data",
     "get_ips_sorted": "ip.get_ips_sorted",
-    "os_platform_object_builder": "platform_mapper.os_platform_object_builder",
+    "os_platform_object_builder": "nist.os_platform_object_builder",
     "juniper_junos_metadata": "os_version.juniper_junos_metadata",
     "version_metadata": "os_version.version_metadata",
+    "default_metadata": "os_version.default_metadata",
 }
 
 

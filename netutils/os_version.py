@@ -142,7 +142,7 @@ def juniper_junos_metadata(version: str) -> t.Dict[str, t.Any]:
 
     Examples:
         >>> juniper_junos_metadata("12.3R4")
-        {'isservice': False, 'ismaintenance': True, 'isfrs': False, 'isspecial': False, 'service': None, 'service_build': None, 'service_respin': None, 'main': '12', 'minor': '3', 'type': 'R', 'build': '4'}
+        {'isservice': False, 'ismaintenance': True, 'isfrs': False, 'isspecial': False, 'service': None, 'service_build': None, 'service_respin': None, 'main': '12', 'minor': '3', 'type': 'R', 'build': '4', 'major': '12', 'patch': '4'}
     """
     # Use regex to group the main, minor, type and build into useable pieces
     # re_main_minor_type_build = re.search(r"^(\d+)\.(\d+)([xXrRsS])?(\d+)?", split_version[0])

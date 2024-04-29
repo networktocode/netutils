@@ -8,11 +8,31 @@ platform_data = [
     # Cisco and Arista use the generic parsing
     {
         "sent": {"vendor": "cisco", "platform": "ios", "version": "15.7(2.0z)M"},
-        "received": {"vendor": "cisco", "os_type": "ios", "version_string": "15.7(2.0z)M"},
+        "received": {
+            "vendor": "cisco",
+            "os_type": "ios",
+            "version_string": "15.7(2.0z)M",
+            "major": "15",
+            "minor": "7",
+            "patch": None,
+            "prerelease": None,
+            "buildmetadata": None,
+            "vendor_metadata": False,
+        },
     },
     {
         "sent": {"vendor": "arista", "platform": "eos", "version": "4.15.3f"},
-        "received": {"vendor": "arista", "os_type": "eos", "version_string": "4.15.3f"},
+        "received": {
+            "vendor": "arista",
+            "os_type": "eos",
+            "version_string": "4.15.3f",
+            "major": "4",
+            "minor": "15",
+            "patch": None,
+            "prerelease": None,
+            "buildmetadata": None,
+            "vendor_metadata": False,
+        },
     },
     # Juniper Junos uses a custom parser
     {
@@ -32,6 +52,11 @@ platform_data = [
             "service": None,
             "service_build": None,
             "service_respin": None,
+            "buildmetadata": None,
+            "vendor_metadata": True,
+            "prerelease": None,
+            "major": "12",
+            "patch": None,
         },
     },
     {
@@ -51,6 +76,11 @@ platform_data = [
             "service": "d",
             "service_build": "80",
             "service_respin": None,
+            "buildmetadata": None,
+            "vendor_metadata": True,
+            "prerelease": None,
+            "major": "12",
+            "patch": "48",
         },
     },
     {
@@ -70,6 +100,11 @@ platform_data = [
             "service": "d",
             "service_build": "80",
             "service_respin": None,
+            "buildmetadata": None,
+            "vendor_metadata": True,
+            "prerelease": None,
+            "major": "12",
+            "patch": "48",
         },
     },
     {
@@ -89,6 +124,11 @@ platform_data = [
             "service": "S",
             "service_build": "15",
             "service_respin": None,
+            "buildmetadata": None,
+            "vendor_metadata": True,
+            "prerelease": None,
+            "major": "12",
+            "patch": "12",
         },
     },
 ]
