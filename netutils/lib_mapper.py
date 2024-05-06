@@ -124,6 +124,22 @@ CAPIRCA_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "windows": "windows",
 }
 
+# DNA Center | Normalized
+DNA_CENTER_LIB_MAPPER = {
+    "IOS": "cisco_ios",
+    "IOS-XE": "cisco_ios",
+    "NX-OS": "cisco_nxos",
+    "IOS-XR": "cisco_xr",
+}
+
+# DNA Center | Normalized
+DNA_CENTER_LIB_MAPPER_REVERSE = {
+    "cisco_ios": "IOS",
+    "cisco_xe": "IOS-XE",
+    "cisco_nxos": "NX-OS",
+    "cisco_xr": "IOS-XR",
+}
+
 # Normalized | Netmiko
 NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "a10": "a10",
