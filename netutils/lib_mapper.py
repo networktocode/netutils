@@ -132,10 +132,9 @@ DNA_CENTER_LIB_MAPPER = {
     "IOS-XR": "cisco_xr",
 }
 
-# DNA Center | Normalized
+# Normalized | DNA Center
 DNA_CENTER_LIB_MAPPER_REVERSE = {
     "cisco_ios": "IOS",
-    "cisco_xe": "IOS-XE",
     "cisco_nxos": "NX-OS",
     "cisco_xr": "IOS-XR",
 }
