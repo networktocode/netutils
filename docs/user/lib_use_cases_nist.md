@@ -22,35 +22,20 @@ For this reason, for certain Vendor/OS combinations, a custom URL needs to be bu
 
 
 ## Examples
-
-The easiest way to access this utility is by using the `os_platform_object_builder`, and providing arguments for Vendor, OS/Other Platform, and Version.
 Here are a few examples showing how to use this in your python code.
 
 ```python
 
-from netutils.nist import os_platform_object_builder
-
-# Create the platform objects to get NIST query URL(s) for.
-cisco_ios = os_platform_object_builder("Cisco", "IOS", "15.5(2)S1c")
-juniper_junos = os_platform_object_builder("Juniper", "JunOS", "10.2R2.11")
+from netutils.nist import get_nist_urls
 
 # Get NIST URL for the Cisco IOS object
-cisco_ios.get_nist_urls()
+get_nist_urls("Cisco", "IOS", "15.5(2)S1c")
 # ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:cisco:ios:15.5\\(2\\)s1c:*']
 
 # Get NIST URL(s) for the Juniper JunOS object
-juniper_junos.get_nist_urls()
+get_nist_urls("Juniper", "JunOS", "10.2R2.11")
 # ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:10.2r2:*:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:10.2:r2:*:*:*:*:*:*']
 ```
-
-The NIST URL utility can also be used as a standalone module to create defined custom NIST URLs.  This would only be useful if you have defined your own custom URL builders based on a custom input dictionary and defined in `get_nist_url_funcs`.  See below:
-```python
-from netutils.nist import get_nist_url_funcs
-
-# The below example is using the JunOS custom builder.
-juniper_junos = get_nist_url_funcs['juniper']['junos']({'isservice': False, 'ismaintenance': False, 'isfrs': True, 'isspecial': False, 'service': None, 'service_build': None, 'service_respin': None, 'main': '12', 'minor': '4', 'type': 'R', 'build': None})
-# ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:12.4r:*:*:*:*:*:*:*']
-``` 
 
 Currently known OS/Other Platform types that require a custom NIST URL:
 

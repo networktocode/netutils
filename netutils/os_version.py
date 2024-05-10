@@ -131,7 +131,7 @@ def compare_version_strict(current_version: str, comparison: str, target_version
     return _compare_version(current_version, comparison, target_version, "strict")
 
 
-def juniper_junos_metadata(version: str) -> t.Dict[str, t.Any]:
+def _juniper_junos_version_metadata(version: str) -> t.Dict[str, t.Any]:
     """Parses JunOS Version into usable bits matching JunOS Standards.
 
     Args:
@@ -141,7 +141,7 @@ def juniper_junos_metadata(version: str) -> t.Dict[str, t.Any]:
         A dictionary containing parsed version information
 
     Examples:
-        >>> juniper_junos_metadata("12.3R4")
+        >>> _juniper_junos_version_metadata("12.3R4")
         {'isservice': False, 'ismaintenance': True, 'isfrs': False, 'isspecial': False, 'service': None, 'service_build': None, 'service_respin': None, 'main': '12', 'minor': '3', 'type': 'R', 'build': '4', 'major': '12', 'patch': '4'}
     """
     # Use regex to group the main, minor, type and build into useable pieces
@@ -217,7 +217,7 @@ def juniper_junos_metadata(version: str) -> t.Dict[str, t.Any]:
     return parsed_version
 
 
-def default_metadata(version: str) -> t.Dict[str, t.Any]:
+def _default_version_metadata(version: str) -> t.Dict[str, t.Any]:
     """Parses version value using SemVer 2.0.0 standards. https://semver.org/spec/v2.0.0.html.
 
     Args:
@@ -227,13 +227,13 @@ def default_metadata(version: str) -> t.Dict[str, t.Any]:
         A dictionary containing parsed version information
 
     Examples:
-        >>> default_metadata("10.20.30")
+        >>> _default_version_metadata("10.20.30")
         {'major': '10', 'minor': '20', 'patch': '30', 'prerelease': None, 'buildmetadata': None}
 
-        >>> default_metadata("1.0.0-alpha.beta.1")
+        >>> _default_version_metadata("1.0.0-alpha.beta.1")
         {'major': '1', 'minor': '0', 'patch': '0', 'prerelease': 'alpha.beta.1', 'buildmetadata': None}
 
-        >>> default_metadata("1.0.0-alpha-a.b-c-somethinglong+build.1-aef.1-its-okay")
+        >>> _default_version_metadata("1.0.0-alpha-a.b-c-somethinglong+build.1-aef.1-its-okay")
         {'major': '1', 'minor': '0', 'patch': '0', 'prerelease': 'alpha-a.b-c-somethinglong', 'buildmetadata': 'build.1-aef.1-its-okay'}
 
     """
@@ -280,9 +280,9 @@ def default_metadata(version: str) -> t.Dict[str, t.Any]:
 
 
 version_metadata_parsers = {
-    "default": default_metadata,
+    "default": _default_version_metadata,
     "juniper": {
-        "junos": juniper_junos_metadata,
+        "junos": _juniper_junos_version_metadata,
     },
 }
 

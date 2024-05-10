@@ -62,7 +62,7 @@ class OsPlatform(metaclass=abc.ABCMeta):
         return getattr(self, key)
 
 
-def get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:  # pylint: disable=R0911
+def _get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:  # pylint: disable=R0911
     """Create a list of possible NIST Url strings for JuniperPlatform.
 
     Returns:
@@ -156,7 +156,7 @@ def get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any]) -> t.List[
     raise ValueError("Failure creating Juniper JunOS Version. Format is unknown.")
 
 
-def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
+def _get_nist_urls_default(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
     r"""Create a list of possible NIST Url strings.
 
     Child models with NIST URL customizations need their own "get_nist_urls" method.
@@ -184,13 +184,7 @@ def get_nist_urls_default(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
     return nist_urls
 
 
-get_nist_url_funcs: t.Dict[str, t.Any] = {
-    "default": get_nist_urls_default,
-    "juniper": {"junos": get_nist_urls_juniper_junos},
-}
-
-
-def os_platform_object_builder(vendor: str, platform: str, version: str) -> object:
+def _os_platform_object_builder(vendor: str, platform: str, version: str) -> object:
     """Creates a platform object relative to its need and definition.
 
     Args:
@@ -202,7 +196,7 @@ def os_platform_object_builder(vendor: str, platform: str, version: str) -> obje
         object: Platform object
 
     Examples:
-        >>> jp = os_platform_object_builder("juniper", "junos", "12.1R3-S4.1")
+        >>> jp = _os_platform_object_builder("juniper", "junos", "12.1R3-S4.1")
         >>> jp.get_nist_urls()
         ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:12.1r3:s4.1:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:12.1r3-s4.1:*:*:*:*:*:*:*']
     """
@@ -232,3 +226,27 @@ def os_platform_object_builder(vendor: str, platform: str, version: str) -> obje
     )
 
     return platform_cls(**field_values)
+
+
+get_nist_url_funcs: t.Dict[str, t.Any] = {
+    "default": _get_nist_urls_default,
+    "juniper": {"junos": _get_nist_urls_juniper_junos},
+}
+
+
+def get_nist_urls(vendor: str, platform: str, version: str) -> t.List[str]:
+    """Generate list of possible NIST URLs for the Vendor, OS Platform, and Version.
+
+    Args:
+        vendor (str): OS Software Platform Vendor/Manufacturer
+        platform (str): OS Software Platform Name
+        version (str): OS Software Platform Version
+
+    Returns:
+        t.List[str]: NIST URLs to search for possible CVE matches
+    """
+    platform_data = _os_platform_object_builder(vendor, platform, version).__dict__
+
+    if vendor.lower() == "juniper" and platform.lower() == "junos":
+        return _get_nist_urls_juniper_junos(platform_data)
+    return _get_nist_urls_default(platform_data)
