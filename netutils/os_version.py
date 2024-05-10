@@ -217,7 +217,7 @@ def _juniper_junos_version_metadata(version: str) -> t.Dict[str, t.Any]:
     return parsed_version
 
 
-def _default_version_metadata(version: str) -> t.Dict[str, t.Any]:
+def _basic_version_metadata(version: str) -> t.Dict[str, t.Any]:
     """Parses version value using SemVer 2.0.0 standards. https://semver.org/spec/v2.0.0.html.
 
     Args:
@@ -227,13 +227,13 @@ def _default_version_metadata(version: str) -> t.Dict[str, t.Any]:
         A dictionary containing parsed version information
 
     Examples:
-        >>> _default_version_metadata("10.20.30")
+        >>> _basic_version_metadata("10.20.30")
         {'major': '10', 'minor': '20', 'patch': '30', 'prerelease': None, 'buildmetadata': None}
 
-        >>> _default_version_metadata("1.0.0-alpha.beta.1")
+        >>> _basic_version_metadata("1.0.0-alpha.beta.1")
         {'major': '1', 'minor': '0', 'patch': '0', 'prerelease': 'alpha.beta.1', 'buildmetadata': None}
 
-        >>> _default_version_metadata("1.0.0-alpha-a.b-c-somethinglong+build.1-aef.1-its-okay")
+        >>> _basic_version_metadata("1.0.0-alpha-a.b-c-somethinglong+build.1-aef.1-its-okay")
         {'major': '1', 'minor': '0', 'patch': '0', 'prerelease': 'alpha-a.b-c-somethinglong', 'buildmetadata': 'build.1-aef.1-its-okay'}
 
     """
@@ -280,7 +280,7 @@ def _default_version_metadata(version: str) -> t.Dict[str, t.Any]:
 
 
 version_metadata_parsers = {
-    "default": _default_version_metadata,
+    "default": _basic_version_metadata,
     "juniper": {
         "junos": _juniper_junos_version_metadata,
     },
