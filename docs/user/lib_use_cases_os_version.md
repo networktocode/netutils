@@ -13,28 +13,29 @@ Current Version Parsers:
 **See the following Default and Juniper JunOS parsed versions:**
 
 ```python
->>> from os_version import default_os_metadata, juniper_junos_metadata
+>>> from netutils.os_version import version_metadata
 
->>> default_os_metadata("cisco", "ios", "15.5")
+>>> version_metadata("Cisco", "IOS", "15.5")
 {
     "major": "15",
     "minor": "5",
-    "patch": None,
+    "vendor_metadata": False,
 }
->>> juniper_junos_metadata("juniper", "junos", "12.2x50:d41.1")
+>>> version_metadata("juniper", "junos", "12.4R")
 {
-    "isservice": false,
-    "ismaintenance": false,
-    "isfrs": false,
-    "isspecial": true,
-    "service": "d",
-    "service_build": "41",
-    "service_respin": "1",
+    "isservice": False,
+    "ismaintenance": False,
+    "isfrs": True,
+    "isspecial": False,
+    "service": None,
+    "service_build": None,
+    "service_respin": None,
     "main": "12",
+    "minor": "4",
+    "type": "R",
+    "build": None,
     "major": "12",
-    "minor": "2",
-    "type": "x",
-    "build": "50",
-    "patch": "50"
+    "patch": None,
+    "vendor_metadata": True,
 }
 ```

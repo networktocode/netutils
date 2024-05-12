@@ -28,8 +28,6 @@ _EXCLUDED_FUNCTIONS = [
     "jinja2_convenience_function",
     "import_module",
     "get_network_driver",
-    "get_nist_urls_default",
-    "get_nist_urls_juniper_junos",
 ]
 
 
