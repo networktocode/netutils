@@ -234,7 +234,7 @@ get_nist_url_funcs: t.Dict[str, t.Any] = {
 }
 
 
-def get_nist_urls(vendor: str, platform: str, version: str) -> t.List[str]:
+def get_nist_vendor_platform_urls(vendor: str, platform: str, version: str) -> t.List[str]:
     """Generate list of possible NIST URLs for the Vendor, OS Platform, and Version.
 
     Args:
@@ -250,3 +250,29 @@ def get_nist_urls(vendor: str, platform: str, version: str) -> t.List[str]:
     if vendor.lower() == "juniper" and platform.lower() == "junos":
         return _get_nist_urls_juniper_junos(platform_data)
     return _get_nist_urls_default(platform_data)
+
+
+def get_nist_urls(network_driver: str, version: str) -> t.List[str]:
+    """Generate list of possible NIST URLs for the Network Driver, and Version.
+
+    Args:
+        network_driver (str): Value of device network_driver (Ex: cisco_ios, arista_eos)
+        version (str): OS Software Platform Version
+
+    Returns:
+        t.List[str]: NIST URLs to search for possible CVE matches
+    """
+    # DICTIONARY FOR VENDOR/PLATFORM TO NETWORK_DRIVER; UPDATE AS NEEDED
+    network_driver_mappings = {
+        "arista_eos": {"vendor": "arista", "os_name": "eos"},
+        "cisco_ios": {"vendor": "cisco", "os_name": "ios"},
+        "cisco_nxos": {"vendor": "cisco", "os_name": "nxos"},
+        "cisco_xe": {"vendor": "cisco", "os_name": "xe"},
+        "cisco_xr": {"vendor": "cisco", "os_name": "xr"},
+        "cisco_asa": {"vendor": "cisco", "os_name": "asa"},
+        "juniper_junos": {"vendor": "juniper", "os_name": "junos"},
+    }
+
+    vendor_os = network_driver_mappings[network_driver]
+
+    return get_nist_vendor_platform_urls(vendor_os["vendor"], vendor_os["os_name"], version)

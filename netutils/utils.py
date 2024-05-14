@@ -95,6 +95,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_ips_sorted": "ip.get_ips_sorted",
     "version_metadata": "os_version.version_metadata",
     "get_nist_urls": "nist.get_nist_urls",
+    "get_nist_vendor_platform_urls": "nist.get_nist_vendor_platform_urls",
 }
 
 
