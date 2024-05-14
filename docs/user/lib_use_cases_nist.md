@@ -29,11 +29,11 @@ Here are a few examples showing how to use this in your python code.
 from netutils.nist import get_nist_urls
 
 # Get NIST URL for the Cisco IOS object
-get_nist_urls("Cisco", "IOS", "15.5(2)S1c")
+get_nist_urls("cisco_ios", "15.5(2)S1c")
 # ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:cisco:ios:15.5\\(2\\)s1c:*']
 
 # Get NIST URL(s) for the Juniper JunOS object
-get_nist_urls("Juniper", "JunOS", "10.2R2.11")
+get_nist_urls("juniper_junos", "10.2R2.11")
 # ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:10.2r2:*:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:10.2:r2:*:*:*:*:*:*']
 ```
 
