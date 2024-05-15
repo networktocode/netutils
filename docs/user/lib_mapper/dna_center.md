@@ -1,5 +1,6 @@
-| NORMALIZED | | DNA_CENTER |
+| DNA_CENTER | | NORMALIZED |
 | ---------- | -- | ------ |
-| cisco_ios | → | IOS |
-| cisco_nxos | → | NX-OS |
-| cisco_xr | → | IOS-XR |
+| IOS | → | cisco_ios |
+| IOS-XE | → | cisco_ios |
+| IOS-XR | → | cisco_xr |
+| NX-OS | → | cisco_nxos |
