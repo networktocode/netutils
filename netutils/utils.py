@@ -93,6 +93,9 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "get_upgrade_path": "os_version.get_upgrade_path",
     "hash_data": "hash.hash_data",
     "get_ips_sorted": "ip.get_ips_sorted",
+    "version_metadata": "os_version.version_metadata",
+    "get_nist_urls": "nist.get_nist_urls",
+    "get_nist_vendor_platform_urls": "nist.get_nist_vendor_platform_urls",
 }
 
 
