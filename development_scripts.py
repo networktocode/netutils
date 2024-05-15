@@ -81,7 +81,7 @@ MAPPER = {
             "header_src": "NORMALIZED",
             "header_dst": "DNA_CENTER",
             "_dict": lib_mapper.DNA_CENTER_LIB_MAPPER_REVERSE,
-            "_file": "docs/user/lib_mapper/dna_center.md",
+            "_file": "docs/user/lib_mapper/dna_center_reverse.md",
         },
         "forwardnetworks": {
             "header_src": "FORWARDNETWORKS",
