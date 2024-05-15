@@ -407,6 +407,17 @@ FORWARDNETWORKS_LIB_MAPPER: t.Dict[str, str] = {
     "SRX": "juniper_junos",  # no reverse
 }
 
+# NIST | Normalized
+NIST_LIB_MAPPER = {
+    "adaptive_security_appliance_software": "cisco_asa",
+    "nx-os": "cisco_nxos",
+    "ios_xr": "cisco_xr",
+    "ios_xe": "cisco_xe",
+    "eos": "arista_eos",
+    "ios": "cisco_ios",
+    "junos": "juniper_junos",
+}
+
 # Normalized | NAPALM
 NAPALM_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "eos",
@@ -556,6 +567,18 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "netscaler": "NETSCALER",
     "paloalto_panos": "PAN_OS",
 }
+
+# Normalized | NIST
+NIST_LIB_MAPPER_REVERSE = {
+    "cisco_asa": "adaptive_security_appliance_software",
+    "cisco_nxos": "nx-os",
+    "cisco_xr": "ios_xr",
+    "cisco_xe": "ios_xe",
+    "arista_eos": "eos",
+    "cisco_ios": "ios",
+    "juniper_junos": "junos",
+}
+
 
 # Deep copy the reverse, where there is no actual translation happening with special
 # consideration for OS's not in netmiko.

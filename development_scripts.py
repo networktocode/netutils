@@ -131,6 +131,18 @@ MAPPER = {
             "_dict": lib_mapper.NETUTILSPARSER_LIB_MAPPER_REVERSE,
             "_file": "docs/user/lib_mapper/netutilsparser_reverse.md",
         },
+        "nist": {
+            "header_src": "NIST",
+            "header_dst": "NORMALIZED",
+            "_dict": lib_mapper.NIST_LIB_MAPPER,
+            "_file": "docs/user/lib_mapper/nist.md",
+        },
+        "nist_reverse": {
+            "header_src": "NORMALIZED",
+            "header_dst": "NIST",
+            "_dict": lib_mapper.NIST_LIB_MAPPER_REVERSE,
+            "_file": "docs/user/lib_mapper/nist_reverse.md",
+        },
         "ntctemplates": {
             "header_src": "NTCTEMPLATES",
             "header_dst": "NORMALIZED",

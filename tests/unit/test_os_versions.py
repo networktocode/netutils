@@ -32,6 +32,103 @@ STRICT_VERSION = [
     {"sent": {"current_version": "1.0.0", "comparison": "!=", "target_version": "2.0.0"}, "received": True},
 ]
 
+PLATFORM_VERSION_METADATA = [
+    # Cisco and Arista use the generic parsing
+    {
+        "sent": {"vendor": "cisco", "platform": "ios", "version": "15.7(2.0z)M"},
+        "received": {
+            "major": "15",
+            "minor": "7",
+            "vendor_metadata": False,
+        },
+    },
+    {
+        "sent": {"vendor": "arista", "platform": "eos", "version": "4.15.3f"},
+        "received": {
+            "major": "4",
+            "minor": "15",
+            "vendor_metadata": False,
+        },
+    },
+    # Juniper Junos uses a custom parser
+    {
+        "sent": {"vendor": "juniper", "platform": "junos", "version": "12.4R"},
+        "received": {
+            "isservice": False,
+            "ismaintenance": False,
+            "isfrs": True,
+            "isspecial": False,
+            "main": "12",
+            "minor": "4",
+            "type": "R",
+            "build": None,
+            "service": None,
+            "service_build": None,
+            "service_respin": None,
+            "vendor_metadata": True,
+            "major": "12",
+            "patch": None,
+        },
+    },
+    {
+        "sent": {"vendor": "juniper", "platform": "junos", "version": "12.3x48-d80"},
+        "received": {
+            "isservice": False,
+            "ismaintenance": False,
+            "isfrs": False,
+            "isspecial": True,
+            "main": "12",
+            "minor": "3",
+            "type": "x",
+            "build": "48",
+            "service": "d",
+            "service_build": "80",
+            "service_respin": None,
+            "vendor_metadata": True,
+            "major": "12",
+            "patch": "48",
+        },
+    },
+    {
+        "sent": {"vendor": "juniper", "platform": "junos", "version": "12.3x48:d80"},
+        "received": {
+            "isservice": False,
+            "ismaintenance": False,
+            "isfrs": False,
+            "isspecial": True,
+            "main": "12",
+            "minor": "3",
+            "type": "x",
+            "build": "48",
+            "service": "d",
+            "service_build": "80",
+            "service_respin": None,
+            "vendor_metadata": True,
+            "major": "12",
+            "patch": "48",
+        },
+    },
+    {
+        "sent": {"vendor": "juniper", "platform": "junos", "version": "12.3R12-S15"},
+        "received": {
+            "isservice": True,
+            "ismaintenance": True,
+            "isfrs": False,
+            "isspecial": False,
+            "main": "12",
+            "minor": "3",
+            "type": "R",
+            "build": "12",
+            "service": "S",
+            "service_build": "15",
+            "service_respin": None,
+            "vendor_metadata": True,
+            "major": "12",
+            "patch": "12",
+        },
+    },
+]
+
 
 def test_get_upgrade_path():
     return_values = ["9.1.15-h1", "10.0.0", "10.0.12", "10.1.0", "10.1.9"]
@@ -68,3 +165,12 @@ def test_compare_strict_bad_version():
         os_version.compare_version_strict("3.3.3b", "==", "3.3.3b")
     with pytest.raises(ValueError, match="Invalid comparison operator:"):
         os_version.compare_version_strict("3.3.3", "not-an-operator", "3.3.3")
+
+
+# Testing the parsing of a Vendor, Platform, Version into vendor standardized sections
+@pytest.mark.parametrize("data", PLATFORM_VERSION_METADATA)
+def test_platform_parsing(data):
+    assert (
+        os_version.version_metadata(data["sent"]["vendor"], data["sent"]["platform"], data["sent"]["version"])
+        == data["received"]
+    )
