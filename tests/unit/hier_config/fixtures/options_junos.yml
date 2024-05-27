@@ -1,0 +1,64 @@
+---
+# Indicates the style of the configuration
+style: junos
+
+# negation prefix
+negation: "delete"
+
+syntax_style: "juniper"
+
+# if there is a delta, negate the parents and re-write the parents with children
+sectional_overwrite: []
+
+# if there is a delta, overwrite these parents instead of one of their children
+sectional_overwrite_no_negate: []
+
+# The default order value is 500, with a range between 1 - 999.
+# Commands with smaller order values float to the top in the order of execution.
+# Commands with larger order values float to the bottom in the order of execution.
+# Syntax Example:
+# - lineage:
+#   - startswith:
+#     - no route-map
+#   order: 600
+ordering: []
+
+# adds +1 indent to lines following start_expression and removes the +1 indent for lines following end_expression
+indent_adjust: []
+
+parent_allows_duplicate_child: []
+
+sectional_exiting: []
+# This rule is used in the hierarchical_configuration unit test for .add_section_exiting()
+
+# substitions against the full multi-line config text
+full_text_sub: []
+#- search: 'banner\s(exec|motd)\s(\S)\n(.*\n){1,}(\2)'
+#  replace: ''
+#- search: 'banner\s(exec|motd)\s(\S.).+\n(.*\n){1,}.*(\2)'
+#  replace: ''
+#- search: 'banner\s(exec|motd)\s(\S.)\n(.*\n){1,}(\2)'
+#  replace: ''
+
+# substitions against each line of the config text
+per_line_sub: []
+
+idempotent_commands_blacklist: []
+
+# These commands do not require negation, they simply overwrite themselves
+# Example Syntax
+# - lineage:
+#   - startswith: interface
+#   - startswith: description
+idempotent_commands: []
+
+# Default when expression: list of expressions
+negation_default_when: []
+
+# Negate substitutions: expression -> negate with
+# Example Syntax:
+# - lineage:
+#   - startswith: route-map
+#   - startswith: description
+#   use: no description
+negation_negate_with: []
