@@ -668,9 +668,11 @@ def test_ipaddress_interface(data):
 def test_ipaddress_network(data):
     assert ip.ipaddress_network(**data["sent"]) == data["received"]
 
+
 @pytest.mark.parametrize("data", IP_NETWORK_WITH_KWARGS)
 def test_ipaddress_network_with_kwargs(data):
     assert str(list(ip.ipaddress_network(**data["sent"]))) == data["received"]
+
 
 @pytest.mark.parametrize("data", IS_CLASSFUL)
 def test_is_classful(data):
