@@ -43,6 +43,17 @@ IP_INTERFACE = [
     },
 ]
 
+IP_NETWORK_WITH_KWARGS = [
+    {
+        "sent": {"ip": "10.1.1.0/28", "attr": "subnets", "new_prefix": 30},
+        "received": "[IPv4Network('10.1.1.0/30'), IPv4Network('10.1.1.4/30'), IPv4Network('10.1.1.8/30'), IPv4Network('10.1.1.12/30')]",
+    },
+    {
+        "sent": {"ip": "10.1.1.0/28", "attr": "subnets"},
+        "received": "[IPv4Network('10.1.1.0/29'), IPv4Network('10.1.1.8/29')]",
+    },
+]
+
 IP_NETWORK = [
     {
         "sent": {"ip": "10.1.1.0/24", "attr": "hostmask.__str__"},
@@ -657,6 +668,9 @@ def test_ipaddress_interface(data):
 def test_ipaddress_network(data):
     assert ip.ipaddress_network(**data["sent"]) == data["received"]
 
+@pytest.mark.parametrize("data", IP_NETWORK_WITH_KWARGS)
+def test_ipaddress_network_with_kwargs(data):
+    assert str(list(ip.ipaddress_network(**data["sent"]))) == data["received"]
 
 @pytest.mark.parametrize("data", IS_CLASSFUL)
 def test_is_classful(data):

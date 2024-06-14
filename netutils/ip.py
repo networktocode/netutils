@@ -2,7 +2,7 @@
 
 import ipaddress
 import typing as t
-from operator import attrgetter
+from operator import attrgetter, methodcaller
 
 from netutils.constants import IPV4_MASKS, IPV6_MASKS
 
@@ -60,12 +60,13 @@ def ipaddress_interface(ip: str, attr: str) -> t.Any:
     return retrieved_method
 
 
-def ipaddress_network(ip: str, attr: str) -> t.Any:
+def ipaddress_network(ip: str, attr: str, **kwargs: t.Any) -> t.Any:
     """Convenience function primarily built to expose ipaddress.ip_network to Jinja.
 
     Args:
         ip: IP network str compliant with ipaddress.ip_network inputs.
         attr: An attribute in string dotted format.
+        kwargs: If called a method allows for passing kwargs to resulting method call.
 
     Returns:
         Returns the value provided by the ipaddress.ip_network attribute provided.
@@ -76,9 +77,14 @@ def ipaddress_network(ip: str, attr: str) -> t.Any:
         4
         >>> ipaddress_network('10.1.1.0/24', '__str__')
         '10.1.1.0/24'
-        >>>
+        >>> list(ipaddress_network('192.168.1.0/28', 'subnets', new_prefix=30))
+        [IPv4Network('192.168.1.0/30'), IPv4Network('192.168.1.4/30'), IPv4Network('192.168.1.8/30'), IPv4Network('192.168.1.12/30')]
     """
-    retriever = attrgetter(attr)
+    retriever: t.Callable[[t.Union[ipaddress.IPv4Network, ipaddress.IPv6Network]], t.Any]
+    if kwargs:
+        retriever = methodcaller(attr, **kwargs)
+    else:
+        retriever = attrgetter(attr)
     retrieved_method = retriever(ipaddress.ip_network(ip))
     if callable(retrieved_method):
         return retrieved_method()
