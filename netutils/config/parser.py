@@ -621,7 +621,14 @@ class IOSConfigParser(CiscoConfigParser, BaseSpaceConfigParser):
         new_config_lines: t.List[ConfigLine] = []
         for line in self.config_lines:
             if line in self.same_line_children:
-                previous_line = new_config_lines[-1]
+                try:
+                    previous_line = new_config_lines[-1]
+                except IndexError as error:
+                    raise IndexError(
+                        f"This error is likely from a duplicate line detected at the line `{line.config_line}`, "
+                        "see https://netutils.readthedocs.io/en/latest/dev/dev_config/#duplicate-line-detection "
+                        f"for more details.\nOriginal Error: {error}"
+                    )
                 previous_config_line = previous_line.config_line
                 current_parents = previous_line.parents + (previous_config_line,)
                 line = ConfigLine(line.config_line, current_parents)
