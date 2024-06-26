@@ -55,6 +55,44 @@ def test_find_children_w_parents(
     assert "\n".join(os_parser(device_cfg).find_children_w_parents(**kwargs)) == received_data
 
 
+def test_bad_parsing_of_duplicate_line():
+    """This is a test to show an issue, this should raise and Index error, but the issue is the
+    Parents calculation is off, here is an example of what it returns:
+    [
+
+       ConfigLine(config_line='logging host one.two.three.one', parents=()),
+       ConfigLine(config_line='logging host one.two.three.two', parents=('logging host one.two.three.one',)),
+       ConfigLine(config_line='logging host one.two.three.two', parents=('logging host one.two.three.one', 'logging host one.two.three.two')),
+       ConfigLine(config_line='logging host one.two.three.four', parents=())
+    ]
+    We see that the parents of `parents=('logging host one.two.three.one',` shows up, which is wrong.
+    The key behaviour I have seen, is when there is 3 dots e.g. `.` in the config, so `logging host 10.1.1` would work
+    but not `logging host 10.1.1.1`.
+    When this tests pass, everything should be good, but the underlying code to be checked in is `_update_same_line_children_configs` method.
+    ."""
+    logging = (
+        "!\n"
+        "logging host one.two.three.one\n"
+        "logging host one.two.three.two\n"
+        "logging host one.two.three.two\n"
+        "logging host one.two.three.four\n"
+    )
+    with pytest.raises(IndexError, match=r".*This error is from likely a duplicate line detected.*"):
+        compliance.parser_map["cisco_ios"](logging).config_lines  # pylint: disable=expression-not-assigned
+    logging = (
+        "!\n"
+        "logging host 10.1.1.1\n"
+        "logging host 10.1.1.2\n"
+        "logging host 10.1.1.2\n"
+        "logging host 10.1.1.4\n"
+        "!\n"
+        "!\n"
+        "!\n"
+    )
+    with pytest.raises(IndexError, match=r".*This error is from likely a duplicate line detected.*"):
+        compliance.parser_map["cisco_ios"](logging).config_lines  # pylint: disable=expression-not-assigned
+
+
 def test_incorrect_banner_ios():
     banner_cfg = (
         "aaa new-model\n"
