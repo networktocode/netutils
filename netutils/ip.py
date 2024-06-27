@@ -66,7 +66,7 @@ def ipaddress_network(ip: str, attr: str, **kwargs: t.Any) -> t.Any:
     Args:
         ip: IP network str compliant with ipaddress.ip_network inputs.
         attr: An attribute in string dotted format.
-        kwargs: If called a method allows for passing kwargs to resulting method call.
+        kwargs: Keyword arguments to pass along to the given method of ipaddress.ip_network.
 
     Returns:
         Returns the value provided by the ipaddress.ip_network attribute provided.
