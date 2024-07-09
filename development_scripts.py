@@ -71,6 +71,18 @@ MAPPER = {
             "_dict": lib_mapper.CAPIRCA_LIB_MAPPER_REVERSE,
             "_file": "docs/user/lib_mapper/capirca_reverse.md",
         },
+        "dna_center": {
+            "header_src": "DNA_CENTER",
+            "header_dst": "NORMALIZED",
+            "_dict": lib_mapper.DNA_CENTER_LIB_MAPPER,
+            "_file": "docs/user/lib_mapper/dna_center.md",
+        },
+        "dna_center_reverse": {
+            "header_src": "NORMALIZED",
+            "header_dst": "DNA_CENTER",
+            "_dict": lib_mapper.DNA_CENTER_LIB_MAPPER_REVERSE,
+            "_file": "docs/user/lib_mapper/dna_center_reverse.md",
+        },
         "forwardnetworks": {
             "header_src": "FORWARDNETWORKS",
             "header_dst": "NORMALIZED",
@@ -130,6 +142,18 @@ MAPPER = {
             "header_dst": "NETUTILSPARSER",
             "_dict": lib_mapper.NETUTILSPARSER_LIB_MAPPER_REVERSE,
             "_file": "docs/user/lib_mapper/netutilsparser_reverse.md",
+        },
+        "nist": {
+            "header_src": "NIST",
+            "header_dst": "NORMALIZED",
+            "_dict": lib_mapper.NIST_LIB_MAPPER,
+            "_file": "docs/user/lib_mapper/nist.md",
+        },
+        "nist_reverse": {
+            "header_src": "NORMALIZED",
+            "header_dst": "NIST",
+            "_dict": lib_mapper.NIST_LIB_MAPPER_REVERSE,
+            "_file": "docs/user/lib_mapper/nist_reverse.md",
         },
         "ntctemplates": {
             "header_src": "NTCTEMPLATES",
