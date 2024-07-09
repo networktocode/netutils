@@ -68,3 +68,14 @@ def test_incorrect_banner_ios():
     )
     with pytest.raises(ValueError):
         compliance.parser_map["cisco_ios"](banner_cfg).config_lines  # pylint: disable=expression-not-assigned
+
+
+def test_duplicate_line():
+    logging = (
+        "!\n"
+        "snmp-server community <<REPLACED>> RO SNMP_ACL_RO\n"
+        "snmp-server community <<REPLACED>> RO SNMP_ACL_RO\n"
+        "snmp-server community <<REPLACED>> RW SNMP_ACL_RW\n"
+    )
+    with pytest.raises(IndexError, match=r".*This error is likely from a duplicate line detected.*"):
+        compliance.parser_map["cisco_ios"](logging).config_lines  # pylint: disable=expression-not-assigned

@@ -60,9 +60,12 @@
 | mac_to_format | netutils.mac.mac_to_format |
 | mac_to_int | netutils.mac.mac_to_int |
 | mac_type | netutils.mac.mac_type |
+| get_nist_urls | netutils.nist.get_nist_urls |
+| get_nist_vendor_platform_urls | netutils.nist.get_nist_vendor_platform_urls |
 | compare_version_loose | netutils.os_version.compare_version_loose |
 | compare_version_strict | netutils.os_version.compare_version_strict |
 | get_upgrade_path | netutils.os_version.get_upgrade_path |
+| version_metadata | netutils.os_version.version_metadata |
 | compare_cisco_type5 | netutils.password.compare_cisco_type5 |
 | compare_cisco_type7 | netutils.password.compare_cisco_type7 |
 | compare_cisco_type9 | netutils.password.compare_cisco_type9 |
