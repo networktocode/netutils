@@ -28,7 +28,7 @@
 | ciena_saos | → | ciena_saos |
 | cisco_asa | → | cisco_asa |
 | cisco_ftd | → | cisco_ftd |
-| cisco_ios | → | cisco_xe |
+| cisco_ios | → | cisco_ios |
 | cisco_nxos | → | cisco_nxos |
 | cisco_s300 | → | cisco_s300 |
 | cisco_tp | → | cisco_tp |
