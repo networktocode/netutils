@@ -4863,6 +4863,7 @@ PROTOCOLS: Dict[str, Any] = {
     "abb-escp": {"port_number": 6316, "protocols": ["tcp", "udp"]},
     "nav-data-cmd": {"port_number": 6317, "protocols": ["tcp"]},
     "nav-data": {"port_number": 6317, "protocols": ["udp"]},
+    "iona-data": {"port_number": 6318, "protocols": ["tcp"]},
     "repsvc": {"port_number": 6320, "protocols": ["tcp", "udp"]},
     "emp-server1": {"port_number": 6321, "protocols": ["tcp", "udp"]},
     "emp-server2": {"port_number": 6322, "protocols": ["tcp", "udp"]},
