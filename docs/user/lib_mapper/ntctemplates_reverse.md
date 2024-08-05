@@ -33,7 +33,6 @@
 | cisco_s300 | → | cisco_s300 |
 | cisco_tp | → | cisco_tp |
 | cisco_wlc | → | cisco_wlc |
-| cisco_xe | → | cisco_xe |
 | cisco_xr | → | cisco_xr |
 | cloudgenix_ion | → | cloudgenix_ion |
 | coriant | → | coriant |
