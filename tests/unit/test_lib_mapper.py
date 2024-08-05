@@ -48,10 +48,15 @@ def test_lib_mapper_reverse(lib):
     _mapper = getattr(lib_mapper, f"{lib}_LIB_MAPPER").copy()
     if lib == "NAPALM":
         _mapper.pop("nxos_ssh")
-    if lib in ["NETMIKO", "NTCTEMPLATES"]:
+    if lib == "NETMIKO":
         _mapper.pop("f5_ltm")
         _mapper.pop("f5_tmsh")
         _mapper.pop("f5_linux")
+    if lib == "NTCTEMPLATES":
+        _mapper.pop("f5_ltm")
+        _mapper.pop("f5_tmsh")
+        _mapper.pop("f5_linux")
+        _mapper.pop("cisco_xe")
     if lib in [
         "AERLEON",
         "ANSIBLE",
