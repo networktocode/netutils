@@ -6,6 +6,17 @@
 - Added DNA Center platform mappings.
 - Improved error message when duplicate line is parsed.
 
+## [v1.9.1] 2024-08
+
+### Changed
+
+- [557](https://github.com/networktocode/netutils/pull/557) OUI File Updates.
+- [558](https://github.com/networktocode/netutils/pull/558) PROTOCOL File Updates.
+
+### Fixed
+
+- [553](https://github.com/networktocode/netutils/pull/553) Fixes incorrect cisco_xe to ntc-templates library mapping.
+
 ## [v1.9.0] 2024-07
 
 ### Added
