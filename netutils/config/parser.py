@@ -223,7 +223,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
                 line = "\n".join(banner_config)
                 if line.endswith("^C"):
                     banner, end, _ = line.rpartition("^C")
-                    line = banner.rstrip() + end
+                    line = banner.rstrip(" ") + end
                 self._update_config_lines(line)
                 self._current_parents = self._current_parents[:-1]
                 try:
