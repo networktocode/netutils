@@ -64,6 +64,7 @@ def test_lib_mapper_reverse(lib):
         "FORWARDNETWORKS",
         "HIERCONFIG",
         "NETUTILSPARSER",
+        "NTCTEMPLATES",
         "NAPALM",
         "PYATS",
         "PYNTC",
@@ -85,6 +86,14 @@ def test_lib_mapper_reverse(lib):
     mapper = dict((v, k) for k, v in _mapper.items())
 
     assert mapper == rev_mapper
+
+
+def test_lib_mapper_ntctemplates_reverse_only():
+    """Cisco XE is the only one that has a reverse ONLY mapping."""
+    assert lib_mapper.NTCTEMPLATES_LIB_MAPPER_REVERSE["cisco_xe"] == "cisco_ios"
+    assert lib_mapper.NTCTEMPLATES_LIB_MAPPER_REVERSE["cisco_ios"] == "cisco_ios"
+    assert lib_mapper.NTCTEMPLATES_LIB_MAPPER["cisco_ios"] == "cisco_ios"
+    assert lib_mapper.NTCTEMPLATES_LIB_MAPPER["cisco_xe"] == "cisco_xe"
 
 
 @pytest.mark.parametrize("lib", LIBRARIES)
