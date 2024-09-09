@@ -223,7 +223,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
                 line = "\n".join(banner_config)
                 if line.endswith("^C"):
                     banner, end, _ = line.rpartition("^C")
-                    line = banner.rstrip(" ") + end
+                    line = banner + end
                 self._update_config_lines(line)
                 self._current_parents = self._current_parents[:-1]
                 try:
@@ -1303,7 +1303,7 @@ class IOSXRConfigParser(CiscoConfigParser):
                 line = "\n".join(banner_config)
                 if line.endswith(self.delimiter):
                     banner, end, _ = line.rpartition(self.delimiter)
-                    line = banner.rstrip() + end
+                    line = banner + end
                 self._update_config_lines(line)
                 self._current_parents = self._current_parents[:-1]
                 try:
@@ -1474,7 +1474,7 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
                 line = "\n".join(banner_config)
                 if line.endswith("^C"):
                     banner, end, _ = line.rpartition("^C")
-                    line = banner.rstrip() + end
+                    line = banner + end
                 self._update_config_lines(line.strip())
                 self._current_parents = self._current_parents[:-1]
                 try:
@@ -1584,7 +1584,7 @@ class FastironConfigParser(CiscoConfigParser):
                 line = "\n".join(banner_config)
                 if line.endswith(self.banner_end):
                     banner, end, _ = line.rpartition(self.banner_end)
-                    line = banner.rstrip() + end
+                    line = banner + end
                 self._update_config_lines(line)
                 self._current_parents = self._current_parents[:-1]
                 try:
@@ -1664,7 +1664,7 @@ class HPEConfigParser(BaseSpaceConfigParser):
                 line = "\n".join(banner_config)
                 if line.endswith(self.delimiter):
                     banner, end, _ = line.rpartition(self.delimiter)
-                    line = banner.rstrip() + end
+                    line = banner + end
                 self._update_config_lines(line)
                 self._current_parents = self._current_parents[:-1]
                 try:
