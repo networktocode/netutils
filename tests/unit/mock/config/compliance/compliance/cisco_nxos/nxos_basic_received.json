@@ -10,11 +10,11 @@
       "unordered_compliant": true
    },
    "banner": {
-      "actual": "banner motd ^C\nThis is a test,\nbanner message.^C",
+      "actual": "banner motd ^C\nThis is a test,\nbanner message.\n^C",
       "cannot_parse": true,
       "compliant": true,
       "extra": "",
-      "intended": "banner motd ^C\nThis is a test,\nbanner message.^C",
+      "intended": "banner motd ^C\nThis is a test,\nbanner message.\n^C",
       "missing": "",
       "ordered_compliant": true,
       "unordered_compliant": true
