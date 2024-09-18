@@ -1,0 +1,13 @@
+hostname banner_with_newline
+!
+banner login ^C
+****************************************************
+WARNING TO UNAUTHORIZED USERS:
+This system is for use by authorized users only.
+****************************************************
+
+^C
+!
+line vty 0 4
+ transport ssh
+!

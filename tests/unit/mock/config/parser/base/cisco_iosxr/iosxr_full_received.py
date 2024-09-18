@@ -40,12 +40,12 @@ data = [
     ConfigLine(config_line="aaa authentication login default group AUTH local", parents=()),
     ConfigLine(config_line="banner exec ~", parents=()),
     ConfigLine(
-        config_line="****************\nNetwork to Code\nNew York City, New York\n****************~",
+        config_line="****************\nNetwork to Code\nNew York City, New York\n****************\n~",
         parents=("banner exec ~",),
     ),
     ConfigLine(config_line="banner motd ~", parents=()),
     ConfigLine(
-        config_line="*********************!!!IMPORTANT NOTICE!!!************************\n*  This is a restricted system. All connections are logged.       *\n*  If you are not authorized to connect to this system, log       *\n*  off now.                                                       *\n*                                                                 *\n*  Violators will be prosecuted to the full extent of the law.    *\n*******************************************************************\n*                                                                 *\n**********************!!!AVIS IMPORTANT!!!*************************\n*  L'acces au present systeme est limite et tous ses acces sont   *\n*  actuellement utilises. Si vous n'etes pas autorise a vous y    *\n*  raccorder, veuillez quitter ce systeme immediatement.          *\n*                                                                 *\n*  Tout contrevenant sera poursuivi en vertu des mesures prevues  *\n*  par la loi.                                                    *\n*******************************************************************~",
+        config_line="*********************!!!IMPORTANT NOTICE!!!************************\n*  This is a restricted system. All connections are logged.       *\n*  If you are not authorized to connect to this system, log       *\n*  off now.                                                       *\n*                                                                 *\n*  Violators will be prosecuted to the full extent of the law.    *\n*******************************************************************\n*                                                                 *\n**********************!!!AVIS IMPORTANT!!!*************************\n*  L'acces au present systeme est limite et tous ses acces sont   *\n*  actuellement utilises. Si vous n'etes pas autorise a vous y    *\n*  raccorder, veuillez quitter ce systeme immediatement.          *\n*                                                                 *\n*  Tout contrevenant sera poursuivi en vertu des mesures prevues  *\n*  par la loi.                                                    *\n*******************************************************************\n~",
         parents=("banner motd ~",),
     ),
     ConfigLine(config_line="vrf internet", parents=()),
