@@ -6125,6 +6125,7 @@ PROTOCOLS: Dict[str, Any] = {
     "exoconfig": {"port_number": 26487, "protocols": ["tcp", "udp"]},
     "exonet": {"port_number": 26489, "protocols": ["tcp", "udp"]},
     "flex-lmadmin": {"port_number": 27010, "protocols": ["tcp"]},
+    "chlenix": {"port_number": 27016, "protocols": ["tcp"]},
     "mongodb": {"port_number": 27017, "protocols": ["tcp"]},
     "imagepump": {"port_number": 27345, "protocols": ["tcp", "udp"]},
     "jesmsjc": {"port_number": 27442, "protocols": ["tcp", "udp"]},
