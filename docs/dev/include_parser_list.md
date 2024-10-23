@@ -2,6 +2,7 @@
 | ---------- | ------ |
 | arista_eos | netutils.config.parser.EOSConfigParser |
 | aruba_aoscx | netutils.config.parser.ArubaConfigParser |
+| aruba_os | netutils.config.parser.ArubaConfigParser |
 | bigip_f5 | netutils.config.parser.F5ConfigParser |
 | cisco_aireos | netutils.config.parser.AIREOSConfigParser |
 | cisco_asa | netutils.config.parser.ASAConfigParser |
