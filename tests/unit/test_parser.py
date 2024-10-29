@@ -2,6 +2,8 @@
 
 import glob
 import os
+import re
+from pathlib import Path
 
 import pytest
 from netutils.config import compliance
@@ -79,3 +81,29 @@ def test_duplicate_line():
     )
     with pytest.raises(IndexError, match=r".*This error is likely from a duplicate line detected.*"):
         compliance.parser_map["cisco_ios"](logging).config_lines  # pylint: disable=expression-not-assigned
+
+
+def test_cisco_nested_banner():
+    """Test Cisco ASA config parser with nested banner."""
+    current_dir = Path(__file__).parent
+    path_to_mock = "mock/config/parser/base/cisco_asa/"
+    mock_file_name = "asa_nested_banner.txt"
+    mock_file_full_path = Path.joinpath(current_dir, path_to_mock, mock_file_name)
+
+    with open(file=mock_file_full_path, mode="r", encoding="utf-8") as mock_file:
+        mock_content = mock_file.read()
+
+    asa_parser = compliance.parser_map["cisco_asa"](mock_content)
+    banner_lines = []
+    non_banner_lines = []
+    for line in mock_content.splitlines():
+        if re.match(pattern=r"^\s*banner", string=line):
+            banner_lines.append(line)
+        else:
+            non_banner_lines.append(line)
+
+    for line in banner_lines:
+        assert asa_parser.is_banner_start(line=line) is True
+
+    for line in non_banner_lines:
+        assert asa_parser.is_banner_start(line=line) is False

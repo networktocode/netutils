@@ -1,0 +1,3 @@
+group-policy PolicyName attribute
+ banner value If you are not authorized to use this system, disconnect now
+ banner value This system may be monitored or recorded
