@@ -53,7 +53,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
     # pylint: disable=abstract-method
 
     comment_chars = ["!"]
-    banner_start = ["banner", "vacant-message"]
+    banner_start = ["banner", "vacant-message", " banner", "  banner"]
 
     def __init__(self, config: str):
         """Create ConfigParser Object.
@@ -522,7 +522,7 @@ class BaseBraceConfigParser(BaseConfigParser):  # pylint: disable=abstract-metho
 class CiscoConfigParser(BaseSpaceConfigParser):
     """Cisco Implementation of ConfigParser Class."""
 
-    regex_banner = re.compile(r"^(banner\s+\S+|\s*vacant-message)\s+(?P<banner_delimiter>\^C|.)")
+    regex_banner = re.compile(r"^(banner\s+\S+|\s*vacant-message|\s*banner)\s+(?P<banner_delimiter>\^C|.)")
 
     def __init__(self, config: str):
         """Create ConfigParser Object.
