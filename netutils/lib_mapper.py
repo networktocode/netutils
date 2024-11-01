@@ -228,8 +228,8 @@ NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "netapp_cdot": "netapp_cdot",
     "netgear_prosafe": "netgear_prosafe",
     "netscaler": "netscaler",
-    "nokia_sros": "nokia_sros",
     "nokia_srl": "nokia_srl",
+    "nokia_sros": "nokia_sros",
     "oneaccess_oneos": "oneaccess_oneos",
     "ovs_linux": "ovs_linux",
     "paloalto_panos": "paloalto_panos",
@@ -294,8 +294,8 @@ NAPALM_LIB_MAPPER: t.Dict[str, str] = {
     "nxos_ssh": "cisco_nxos",  # no reverse
     "panos": "paloalto_panos",
     "ros": "mikrotik_routeros",
-    "sros": "nokia_sros",
     "srl": "nokia_srl",
+    "sros": "nokia_sros",
     "vyos": "vyos",
 }
 
@@ -369,6 +369,7 @@ SCRAPLI_LIB_MAPPER: t.Dict[str, str] = {
     "cisco_iosxr": "cisco_xr",
     "cisco_nxos": "cisco_nxos",
     "juniper_junos": "juniper_junos",
+    "nokia_srlinux": "nokia_srl",
 }
 
 # HIERCONFIG | Normalized
@@ -403,7 +404,6 @@ NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
     "mrv_optiswitch": "mrv_optiswitch",
     "netscaler": "netscaler",
     "nokia_sros": "nokia_sros",
-    "nokia_srl": "nokia_srl",
     "paloalto_panos": "paloalto_panos",
     "ruckus_fastiron": "ruckus_fastiron",
     "ubiquiti_airos": "ubiquiti_airos",
@@ -455,8 +455,8 @@ NAPALM_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "huawei": "huawei_vrp",
     "juniper_junos": "junos",
     "mikrotik_routeros": "ros",
-    "nokia_sros": "sros",
     "nokia_srl": "srl",
+    "nokia_sros": "sros",
     "paloalto_panos": "panos",
     "vyos": "vyos",
 }
@@ -501,8 +501,8 @@ ANSIBLE_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "lenovo_cnos": "community.network.cnos",
     "lenovo_enos": "community.network.enos",
     "mikrotik_routeros": "community.network.routeros",
-    "nokia_sros": "community.network.sros",
     "nokia_srl": "nokia.srl",
+    "nokia_sros": "community.network.sros",
     "paloalto_panos": "paloaltonetworks.panos.panos",
     "pluribus": "community.network.netvisor",
     "ruckus_icx": "community.network.icx",
@@ -534,6 +534,7 @@ SCRAPLI_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "cisco_xe": "cisco_iosxe",
     "cisco_xr": "cisco_iosxr",
     "juniper_junos": "juniper_junos",
+    "nokia_srl": "nokia_srlinux",
 }
 
 # Normalized | HIERCONFIG
@@ -569,7 +570,6 @@ NETUTILSPARSER_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "mrv_optiswitch": "mrv_optiswitch",
     "netscaler": "netscaler",
     "nokia_sros": "nokia_sros",
-    "nokia_srl": "nokia_srl",
     "paloalto_panos": "paloalto_panos",
     "ruckus_fastiron": "ruckus_fastiron",
     "ubiquiti_airos": "ubiquiti_airos",

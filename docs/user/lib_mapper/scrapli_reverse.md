@@ -7,3 +7,4 @@
 | cisco_xe | → | cisco_iosxe |
 | cisco_xr | → | cisco_iosxr |
 | juniper_junos | → | juniper_junos |
+| nokia_srl | → | nokia_srlinux |
