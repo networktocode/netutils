@@ -229,6 +229,7 @@ NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "netgear_prosafe": "netgear_prosafe",
     "netscaler": "netscaler",
     "nokia_sros": "nokia_sros",
+    "nokia_srl": "nokia_srl",
     "oneaccess_oneos": "oneaccess_oneos",
     "ovs_linux": "ovs_linux",
     "paloalto_panos": "paloalto_panos",
@@ -294,6 +295,7 @@ NAPALM_LIB_MAPPER: t.Dict[str, str] = {
     "panos": "paloalto_panos",
     "ros": "mikrotik_routeros",
     "sros": "nokia_sros",
+    "srl": "nokia_srl",
     "vyos": "vyos",
 }
 
@@ -339,6 +341,7 @@ ANSIBLE_LIB_MAPPER: t.Dict[str, str] = {
     "f5networks.f5_bigip.bigip": "bigip_f5",
     "fortinet.fortios.fortios": "fortinet",
     "junipernetworks.junos.junos": "juniper_junos",
+    "nokia.srl": "nokia_srl",
     "paloaltonetworks.panos.panos": "paloalto_panos",
     "vyos.vyos.vyos": "vyos",
 }
@@ -400,6 +403,7 @@ NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
     "mrv_optiswitch": "mrv_optiswitch",
     "netscaler": "netscaler",
     "nokia_sros": "nokia_sros",
+    "nokia_srl": "nokia_srl",
     "paloalto_panos": "paloalto_panos",
     "ruckus_fastiron": "ruckus_fastiron",
     "ubiquiti_airos": "ubiquiti_airos",
@@ -452,6 +456,7 @@ NAPALM_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "juniper_junos": "junos",
     "mikrotik_routeros": "ros",
     "nokia_sros": "sros",
+    "nokia_srl": "srl",
     "paloalto_panos": "panos",
     "vyos": "vyos",
 }
@@ -497,6 +502,7 @@ ANSIBLE_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "lenovo_enos": "community.network.enos",
     "mikrotik_routeros": "community.network.routeros",
     "nokia_sros": "community.network.sros",
+    "nokia_srl": "nokia.srl",
     "paloalto_panos": "paloaltonetworks.panos.panos",
     "pluribus": "community.network.netvisor",
     "ruckus_icx": "community.network.icx",
@@ -563,6 +569,7 @@ NETUTILSPARSER_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "mrv_optiswitch": "mrv_optiswitch",
     "netscaler": "netscaler",
     "nokia_sros": "nokia_sros",
+    "nokia_srl": "nokia_srl",
     "paloalto_panos": "paloalto_panos",
     "ruckus_fastiron": "ruckus_fastiron",
     "ubiquiti_airos": "ubiquiti_airos",

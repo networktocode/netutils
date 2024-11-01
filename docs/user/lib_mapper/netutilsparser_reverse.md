@@ -18,6 +18,7 @@
 | mikrotik_routeros | → | mikrotik_routeros |
 | mrv_optiswitch | → | mrv_optiswitch |
 | netscaler | → | netscaler |
+| nokia_srl | → | nokia_srl |
 | nokia_sros | → | nokia_sros |
 | paloalto_panos | → | paloalto_panos |
 | ruckus_fastiron | → | ruckus_fastiron |
