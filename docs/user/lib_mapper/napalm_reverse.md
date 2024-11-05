@@ -13,6 +13,7 @@
 | huawei | → | huawei_vrp |
 | juniper_junos | → | junos |
 | mikrotik_routeros | → | ros |
+| nokia_srl | → | srl |
 | nokia_sros | → | sros |
 | paloalto_panos | → | panos |
 | vyos | → | vyos |

@@ -29,5 +29,6 @@
 | f5networks.f5_bigip.bigip | → | bigip_f5 |
 | fortinet.fortios.fortios | → | fortinet |
 | junipernetworks.junos.junos | → | juniper_junos |
+| nokia.srl | → | nokia_srl |
 | paloaltonetworks.panos.panos | → | paloalto_panos |
 | vyos.vyos.vyos | → | vyos |
