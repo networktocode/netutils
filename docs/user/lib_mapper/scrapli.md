@@ -6,3 +6,4 @@
 | cisco_iosxr | → | cisco_xr |
 | cisco_nxos | → | cisco_nxos |
 | juniper_junos | → | juniper_junos |
+| nokia_srlinux | → | nokia_srl |
