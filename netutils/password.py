@@ -1,7 +1,5 @@
 """Functions for working with Passwords."""
 
-# TODO: Swap out crypt prior to py3.13
-import crypt  # pylint: disable=deprecated-module
 import random
 import secrets
 import string
@@ -247,6 +245,13 @@ def encrypt_cisco_type5(unencrypted_password: str, salt: t.Optional[str] = None,
         '$1$MHkb$v2MFmDkQX66TTxLkFF50K/'
         >>>
     """
+    try:
+        import crypt  # pylint: disable=deprecated-module
+    except ModuleNotFoundError:
+        try:
+            import legacycrypt as crypt
+        except ModuleNotFoundError:
+            raise ValueError("Crypt module not available")
     if not salt:
         salt = "".join(secrets.choice(ALPHABET) for _ in range(salt_len))
     elif not set(salt) <= set(ALPHABET):
