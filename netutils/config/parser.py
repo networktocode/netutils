@@ -195,7 +195,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
                 previous_parent = self._current_parents[-deindent_level]
                 previous_indent = self.get_leading_space_count(previous_parent)
         except IndexError:
-            raise IndexError(f"\nValidate the first line does not begin with a space\n{line}\n")
+            raise IndexError(
+                f"\nValidate the first line does not begin with a space\n{line}\n"
+            )
         parents = self._current_parents[:-deindent_level] or (self._current_parents[0],)
         return parents
 
@@ -417,7 +419,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
         ]
         for cfg_line in self.build_config_relationship():
             parents = cfg_line.parents[0] if cfg_line.parents else None
-            if parents in potential_parents and self._match_type_check(parents, parent_pattern, match_type):
+            if parents in potential_parents and self._match_type_check(
+                parents, parent_pattern, match_type
+            ):
                 config.append(cfg_line.config_line)
         return config
 
@@ -434,7 +438,11 @@ class BaseBraceConfigParser(BaseConfigParser):  # pylint: disable=abstract-metho
         Returns:
             The non-space lines from ``config``.
         """
-        config_lines = [line.rstrip() for line in self.config.splitlines() if line and not line.isspace()]
+        config_lines = [
+            line.rstrip()
+            for line in self.config.splitlines()
+            if line and not line.isspace()
+        ]
         return "\n".join(config_lines)
 
     def build_config_relationship(self) -> t.List[ConfigLine]:
@@ -512,7 +520,9 @@ class BaseBraceConfigParser(BaseConfigParser):  # pylint: disable=abstract-metho
         for line in self.generator_config:
             multiline_config.append(line)
             if line.lstrip() == delimiter:
-                multiline_entry = ConfigLine("\n".join(multiline_config), self._current_parents)
+                multiline_entry = ConfigLine(
+                    "\n".join(multiline_config), self._current_parents
+                )
                 self.config_lines.append(multiline_entry)
                 self._current_parents = self._current_parents[:-1]
                 return multiline_entry
@@ -522,7 +532,9 @@ class BaseBraceConfigParser(BaseConfigParser):  # pylint: disable=abstract-metho
 class CiscoConfigParser(BaseSpaceConfigParser):
     """Cisco Implementation of ConfigParser Class."""
 
-    regex_banner = re.compile(r"^(banner\s+\S+|\s*vacant-message)\s+(?P<banner_delimiter>\^C|.)")
+    regex_banner = re.compile(
+        r"^(banner\s+\S+|\s*vacant-message)\s+(?P<banner_delimiter>\^C|.)"
+    )
 
     def __init__(self, config: str):
         """Create ConfigParser Object.
@@ -584,7 +596,9 @@ class CiscoConfigParser(BaseSpaceConfigParser):
     def banner_end(self, banner_start_line: str) -> None:
         banner_parsed = self.regex_banner.match(banner_start_line)
         if not banner_parsed:
-            raise ValueError("There was an error parsing your banner, the end of the banner could not be found")
+            raise ValueError(
+                "There was an error parsing your banner, the end of the banner could not be found"
+            )
         self._banner_end = banner_parsed.groupdict()["banner_delimiter"]
 
 
@@ -853,7 +867,9 @@ class F5ConfigParser(BaseBraceConfigParser):
 
         return self.config_lines
 
-    def _build_multiline_single_configuration_line(self, delimiter: str, prev_line: str) -> t.Optional[ConfigLine]:
+    def _build_multiline_single_configuration_line(
+        self, delimiter: str, prev_line: str
+    ) -> t.Optional[ConfigLine]:
         r"""Concatenate Multiline strings between delimiter when newlines causes string to traverse multiple lines.
 
         Args:
@@ -891,7 +907,9 @@ class F5ConfigParser(BaseBraceConfigParser):
         for line in self.generator_config:
             multiline_config.append(line)
             if line.endswith(delimiter):
-                multiline_entry = ConfigLine("\n".join(multiline_config), self._current_parents)
+                multiline_entry = ConfigLine(
+                    "\n".join(multiline_config), self._current_parents
+                )
                 self.config_lines[-1] = multiline_entry
                 self._current_parents = self._current_parents[:-1]
                 return multiline_entry
@@ -924,6 +942,22 @@ class ASAConfigParser(CiscoConfigParser):
         self.unique_config_lines: t.Set[ConfigLine] = set()
         self.same_line_children: t.Set[ConfigLine] = set()
         super(ASAConfigParser, self).__init__(config)
+
+    def is_banner_start(self, line: str) -> bool:
+        """Determine if the line starts a banner config.
+
+        Args:
+            line: The current config line in iteration.
+
+        Returns:
+            True if line starts banner, else False.
+        """
+        for banner_start in self.banner_start:
+            if not line:
+                return False
+            if line.startswith(banner_start):
+                return True
+        return False
 
     def _update_config_lines(self, config_line: str) -> None:
         """Add a ``ConfigLine`` object to ``self.config_lines``.
@@ -1037,7 +1071,9 @@ class FortinetConfigParser(BaseSpaceConfigParser):
         # This will grab everything between quotes after the 'set buffer' sub-command.
         # Its explicitly looking for "\n to end the captured data.  This is to support html
         # data that is supported in Fortinet config with double quotes within the html.
-        pattern = r"(config system replacemsg.*(\".*\")\n)(\s{4}set\sbuffer\s\"[\S\s]*?\"\n)"
+        pattern = (
+            r"(config system replacemsg.*(\".*\")\n)(\s{4}set\sbuffer\s\"[\S\s]*?\"\n)"
+        )
         return re.sub(pattern, r"\1    [\2]\n", config)
 
     @property
@@ -1053,7 +1089,10 @@ class FortinetConfigParser(BaseSpaceConfigParser):
             config_lines = (
                 line.rstrip()
                 for line in self.config.splitlines()
-                if line and not self.is_comment(line) and not line.isspace() and not self.is_end_next(line)
+                if line
+                and not self.is_comment(line)
+                and not line.isspace()
+                and not self.is_end_next(line)
             )
             self._config = "\n".join(config_lines)
         return self._config
@@ -1453,7 +1492,12 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
 
     def is_banner_end(self, line: str) -> bool:
         """Determine if end of banner."""
-        if line.endswith('"') or line.startswith('";') or line.startswith("set") or line.endswith(self.banner_end):
+        if (
+            line.endswith('"')
+            or line.startswith('";')
+            or line.startswith("set")
+            or line.endswith(self.banner_end)
+        ):
             return True
         return False
 
@@ -1521,7 +1565,9 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
                 if line.endswith("{"):
                     _needs_conversion = True
         if _needs_conversion:
-            converted_config = paloalto_panos_brace_to_set(cfg=self.config, cfg_type="string")
+            converted_config = paloalto_panos_brace_to_set(
+                cfg=self.config, cfg_type="string"
+            )
             list_config = converted_config.splitlines()
             self.generator_config = (line for line in list_config)
 
