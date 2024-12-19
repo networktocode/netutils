@@ -4,7 +4,9 @@ import glob
 import os
 
 import pytest
+
 from netutils.config import compliance
+from netutils.config.parser import ConfigLine
 
 MOCK_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mock", "config", "parser")
 TXT_FILE = "_sent.txt"
@@ -79,3 +81,21 @@ def test_duplicate_line():
     )
     with pytest.raises(IndexError, match=r".*This error is likely from a duplicate line detected.*"):
         compliance.parser_map["cisco_ios"](logging).config_lines  # pylint: disable=expression-not-assigned
+
+
+def test_nested_banner():
+    banner: str = (
+        "group-policy Grs-POLICY attributes\n" " banner value This is an\n" " banner value example nested banner.\n"
+    )
+
+    generated_config_lines: list[ConfigLine] = compliance.parser_map["cisco_asa"](
+        banner,
+    ).config_lines
+
+    parent: str = "group-policy Grs-POLICY attributes"
+    mock_config_lines: list[ConfigLine] = [
+        ConfigLine(config_line=parent, parents=()),
+        ConfigLine(config_line=" banner value This is an", parents=(parent,)),
+        ConfigLine(config_line=" banner value example nested banner.", parents=(parent,)),
+    ]
+    assert generated_config_lines == mock_config_lines
