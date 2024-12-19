@@ -1,0 +1,3 @@
+group-policy Grs-POLICY attributes
+ banner value This is an
+ banner value example nested banner
