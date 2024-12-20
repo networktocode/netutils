@@ -913,6 +913,7 @@ class JunosConfigParser(BaseSpaceConfigParser):
 class ASAConfigParser(CiscoConfigParser):
     """Cisco ASA implementation of ConfigParser Class."""
 
+    banner_start: t.List[str] = ["banner"]
     comment_chars: t.List[str] = ["!", ":"]
 
     def __init__(self, config: str):
@@ -924,6 +925,22 @@ class ASAConfigParser(CiscoConfigParser):
         self.unique_config_lines: t.Set[ConfigLine] = set()
         self.same_line_children: t.Set[ConfigLine] = set()
         super(ASAConfigParser, self).__init__(config)
+
+    def is_banner_start(self, line: str) -> bool:
+        """Determine if the line starts a banner config.
+
+        Args:
+            line: The current config line in iteration.
+
+        Returns:
+            True if line starts banner, else False.
+        """
+        for banner_start in self.banner_start:
+            if not line:
+                return False
+            if line.startswith(banner_start):
+                return True
+        return False
 
     def _update_config_lines(self, config_line: str) -> None:
         """Add a ``ConfigLine`` object to ``self.config_lines``.
