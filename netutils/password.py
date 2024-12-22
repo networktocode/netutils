@@ -17,6 +17,19 @@ except ImportError:
     HAS_SCRYPT = False
 
 
+try:
+    import crypt  # pylint: disable=deprecated-module
+
+    HAS_CRYPT = True
+except ModuleNotFoundError:
+    try:
+        import legacycrypt as crypt  # type: ignore[no-redef]
+
+        HAS_CRYPT = True
+    except ModuleNotFoundError:
+        HAS_CRYPT = False
+
+
 # Code example from Python docs
 ALPHABET = string.ascii_letters + string.digits
 DEFAULT_PASSWORD_CHARS = "".join((string.ascii_letters + string.digits + ".,:-_"))
@@ -126,9 +139,9 @@ def compare_cisco_type5(
 
     Examples:
         >>> from netutils.password import compare_cisco_type5
-        >>> compare_cisco_type5("cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")
+        >>> compare_cisco_type5("cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")  # doctest: +SKIP
         True
-        >>> compare_cisco_type5("not_cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")
+        >>> compare_cisco_type5("not_cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")  # doctest: +SKIP
         False
         >>>
     """
@@ -245,13 +258,13 @@ def encrypt_cisco_type5(unencrypted_password: str, salt: t.Optional[str] = None,
         '$1$MHkb$v2MFmDkQX66TTxLkFF50K/'
         >>>
     """
-    try:
-        import crypt  # pylint: disable=deprecated-module
-    except ModuleNotFoundError:
-        try:
-            import legacycrypt as crypt
-        except ModuleNotFoundError:
-            raise ValueError("Crypt module not available")
+    if not HAS_CRYPT:
+        raise ImportError(
+            "Your version of Python does not have crypt support built in. "
+            "Please install legacycrypt, such as `pip install legacycrypt` when "
+            "adding to your install or `pip install netutils[legacycrypt]` when installing fresh."
+        )
+
     if not salt:
         salt = "".join(secrets.choice(ALPHABET) for _ in range(salt_len))
     elif not set(salt) <= set(ALPHABET):

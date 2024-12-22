@@ -74,11 +74,13 @@ def _get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any]) -> t.List
     # BASE
     _main = os_platform_data.get("main")
     _minor = os_platform_data.get("minor")
+    _type = ""  # Check if this is an issue as used below with potentially no definition
     if os_platform_data["type"]:
         _type = os_platform_data["type"].lower()
     _build = os_platform_data.get("build")
 
     # SERVICE
+    _service = ""  # Check if this is an issue as used below with potentially no definition
     if os_platform_data["service"]:
         _service = os_platform_data["service"].lower()
     _service_build = os_platform_data.get("service_build")

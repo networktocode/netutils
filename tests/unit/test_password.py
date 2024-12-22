@@ -119,6 +119,7 @@ DECRYPT_JUNIPER_TYPE9 = [
 
 
 @pytest.mark.parametrize("data", COMPARE_CISCO_TYPE5)
+@pytest.mark.skipif(password.HAS_CRYPT is False, reason="Requires crypt / legacycrypt library.")
 def test_compare_cisco_type5(data):
     assert password.compare_cisco_type5(**data["sent"]) == data["received"]
 
@@ -139,6 +140,7 @@ def test_decrypt_cisco_type7(data):
 
 
 @pytest.mark.parametrize("data", ENCRYPT_CISCO_TYPE5)
+@pytest.mark.skipif(password.HAS_CRYPT is False, reason="Requires crypt / legacycrypt library.")
 def test_encrypt_cisco_type5(data):
     assert password.encrypt_cisco_type5(**data["sent"]) == data["received"]
 
