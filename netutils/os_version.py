@@ -50,10 +50,12 @@ def get_upgrade_path(current_version: str, target_version: str, firmware_list: t
 
 def _compare_version(current_version: str, comparison: str, target_version: str, version_type: str) -> bool:
     # Convert version strings to Version objects for comparison
+    if version_type not in ["loose", "strict"]:
+        raise ValueError(f"Invalid version type: {version_type}, must be 'loose' or 'strict'")
     if version_type == "loose":
         current_ver_obj = LooseVersion(current_version)
         target_ver_obj = LooseVersion(target_version)
-    elif version_type == "strict":
+    else:
         current_ver_obj = StrictVersion(current_version)
         target_ver_obj = StrictVersion(target_version)
 
