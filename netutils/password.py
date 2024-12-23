@@ -23,7 +23,7 @@ try:
     HAS_CRYPT = True
 except ModuleNotFoundError:
     try:
-        import legacycrypt as crypt  # type: ignore[no-redef]
+        import legacycrypt as crypt
 
         HAS_CRYPT = True
     except ModuleNotFoundError:
@@ -269,7 +269,7 @@ def encrypt_cisco_type5(unencrypted_password: str, salt: t.Optional[str] = None,
         salt = "".join(secrets.choice(ALPHABET) for _ in range(salt_len))
     elif not set(salt) <= set(ALPHABET):
         raise ValueError(f"type5_pw salt used improper characters, must be one of {ALPHABET}")
-    return crypt.crypt(unencrypted_password, f"$1${salt}$")
+    return str(crypt.crypt(unencrypted_password, f"$1${salt}$"))
 
 
 def encrypt_cisco_type7(unencrypted_password: str, salt: t.Optional[int] = None) -> str:
