@@ -13,11 +13,11 @@ classifiers = [
     "Intended Audience :: Developers",
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
 include = [
     "LICENSE",
@@ -106,7 +106,7 @@ testpaths = "tests/"
 addopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
 
 [tool.mypy]
-python_version = 3.12
+python_version = 3.13
 ignore_errors = false
 disallow_untyped_calls = true
 disallow_untyped_defs = true
