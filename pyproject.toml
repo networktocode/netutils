@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netutils"
-version = "1.10.0"
+version = "1.11.0"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 license = "Apache-2.0"
@@ -56,7 +56,7 @@ mkdocs-python-classy = "0.1.3"
 
 [tool.black]
 line-length = 120
-target-version = ['py38', 'py39', 'py310', 'py311', 'py312']
+target-version = ['py39', 'py310', 'py311', 'py312', 'py313']
 include = '\.pyi?$'
 exclude = '''
 (
