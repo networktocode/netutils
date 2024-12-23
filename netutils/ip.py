@@ -311,7 +311,7 @@ def is_ip_within(ip: str, ip_compare: t.Union[str, t.List[str]]) -> bool:
         if is_ip(ip):
             if "." in ip:
                 mask = "32"
-            if ":" in ip:
+            else:
                 mask = "128"
             return f"{ip}/{mask}"
         return ip

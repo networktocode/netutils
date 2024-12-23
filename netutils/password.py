@@ -1,7 +1,5 @@
 """Functions for working with Passwords."""
 
-# TODO: Swap out crypt prior to py3.13
-import crypt  # pylint: disable=deprecated-module
 import random
 import secrets
 import string
@@ -17,6 +15,19 @@ try:
     HAS_SCRYPT = True
 except ImportError:
     HAS_SCRYPT = False
+
+
+try:
+    import crypt  # pylint: disable=deprecated-module
+
+    HAS_CRYPT = True
+except ModuleNotFoundError:
+    try:
+        import legacycrypt as crypt
+
+        HAS_CRYPT = True
+    except ModuleNotFoundError:
+        HAS_CRYPT = False
 
 
 # Code example from Python docs
@@ -128,9 +139,9 @@ def compare_cisco_type5(
 
     Examples:
         >>> from netutils.password import compare_cisco_type5
-        >>> compare_cisco_type5("cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")
+        >>> compare_cisco_type5("cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")  # doctest: +SKIP
         True
-        >>> compare_cisco_type5("not_cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")
+        >>> compare_cisco_type5("not_cisco","$1$nTc1$Z28sUTcWfXlvVe2x.3XAa.")  # doctest: +SKIP
         False
         >>>
     """
@@ -247,11 +258,18 @@ def encrypt_cisco_type5(unencrypted_password: str, salt: t.Optional[str] = None,
         '$1$MHkb$v2MFmDkQX66TTxLkFF50K/'
         >>>
     """
+    if not HAS_CRYPT:
+        raise ImportError(
+            "Your version of Python does not have crypt support built in. "
+            "Please install legacycrypt, such as `pip install legacycrypt` when "
+            "adding to your install or `pip install netutils[legacycrypt]` when installing fresh."
+        )
+
     if not salt:
         salt = "".join(secrets.choice(ALPHABET) for _ in range(salt_len))
     elif not set(salt) <= set(ALPHABET):
         raise ValueError(f"type5_pw salt used improper characters, must be one of {ALPHABET}")
-    return crypt.crypt(unencrypted_password, f"$1${salt}$")
+    return str(crypt.crypt(unencrypted_password, f"$1${salt}$"))
 
 
 def encrypt_cisco_type7(unencrypted_password: str, salt: t.Optional[int] = None) -> str:

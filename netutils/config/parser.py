@@ -417,7 +417,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         ]
         for cfg_line in self.build_config_relationship():
             parents = cfg_line.parents[0] if cfg_line.parents else None
-            if parents in potential_parents and self._match_type_check(parents, parent_pattern, match_type):
+            if parents in potential_parents and self._match_type_check(parents, parent_pattern, match_type):  # type: ignore[arg-type]
                 config.append(cfg_line.config_line)
         return config
 
