@@ -84,6 +84,7 @@
 | netapp_cdot | → | netapp_cdot |
 | netgear_prosafe | → | netgear_prosafe |
 | netscaler | → | netscaler |
+| nokia_srl | → | nokia_srl |
 | nokia_sros | → | nokia_sros |
 | oneaccess_oneos | → | oneaccess_oneos |
 | ovs_linux | → | ovs_linux |
