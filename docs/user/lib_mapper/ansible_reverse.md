@@ -26,6 +26,7 @@
 | lenovo_cnos | → | community.network.cnos |
 | lenovo_enos | → | community.network.enos |
 | mikrotik_routeros | → | community.network.routeros |
+| nokia_srl | → | nokia.srl |
 | nokia_sros | → | community.network.sros |
 | paloalto_panos | → | paloaltonetworks.panos.panos |
 | pluribus | → | community.network.netvisor |
