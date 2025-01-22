@@ -444,6 +444,14 @@ IS_NETMASK = [
     {"sent": {"netmask": "ffff:ffff:ffff:ffff:ffff::"}, "received": True},
 ]
 
+IS_WILDCARDMASK = [
+    {"sent": {"wildcardmask": "0.0.0.255"}, "received": True},
+    {"sent": {"wildcardmask": "0.0.0.0"}, "received": True},
+    {"sent": {"wildcardmask": "0.0.0.1"}, "received": True},
+    {"sent": {"wildcardmask": "0.0.0.2"}, "received": False},
+    {"sent": {"wildcardmask": "0.0.255.0"}, "received": False},
+]
+
 NETMASK_CIDR = [
     {"sent": {"netmask": "255.255.255.0"}, "received": 24},
     {"sent": {"netmask": "255.192.0.0"}, "received": 10},
@@ -466,29 +474,23 @@ CIDR_NETMASK6 = [
 
 NETMASK_WILDCARDMASK = [
     {"sent": {"netmask": "255.255.255.254"}, "received": "0.0.0.1"},
-    {"sent": {"netmask": "255.255.255.253"}, "received": "0.0.0.2"},
     {"sent": {"netmask": "255.255.255.252"}, "received": "0.0.0.3"},
     {"sent": {"netmask": "255.255.255.0"}, "received": "0.0.0.255"},
     {"sent": {"netmask": "255.255.254.0"}, "received": "0.0.1.255"},
-    {"sent": {"netmask": "255.255.253.0"}, "received": "0.0.2.255"},
     {"sent": {"netmask": "255.255.252.0"}, "received": "0.0.3.255"},
     {"sent": {"netmask": "255.255.0.0"}, "received": "0.0.255.255"},
     {"sent": {"netmask": "255.254.0.0"}, "received": "0.1.255.255"},
-    {"sent": {"netmask": "255.253.0.0"}, "received": "0.2.255.255"},
     {"sent": {"netmask": "255.0.0.0"}, "received": "0.255.255.255"},
 ]
 
 WILDCARDMASK_NETMASK = [
     {"sent": {"wildcardmask": "0.0.0.1"}, "received": "255.255.255.254"},
-    {"sent": {"wildcardmask": "0.0.0.2"}, "received": "255.255.255.253"},
     {"sent": {"wildcardmask": "0.0.0.3"}, "received": "255.255.255.252"},
     {"sent": {"wildcardmask": "0.0.0.255"}, "received": "255.255.255.0"},
     {"sent": {"wildcardmask": "0.0.1.255"}, "received": "255.255.254.0"},
-    {"sent": {"wildcardmask": "0.0.2.255"}, "received": "255.255.253.0"},
     {"sent": {"wildcardmask": "0.0.3.255"}, "received": "255.255.252.0"},
     {"sent": {"wildcardmask": "0.0.255.255"}, "received": "255.255.0.0"},
     {"sent": {"wildcardmask": "0.1.255.255"}, "received": "255.254.0.0"},
-    {"sent": {"wildcardmask": "0.2.255.255"}, "received": "255.253.0.0"},
     {"sent": {"wildcardmask": "0.255.255.255"}, "received": "255.0.0.0"},
 ]
 
@@ -632,6 +634,11 @@ def test_is_netmask(data):
     assert ip.is_netmask(**data["sent"]) == data["received"]
 
 
+@pytest.mark.parametrize("data", IS_WILDCARDMASK)
+def test_is_wildcardmask(data):
+    assert ip.is_wildcardmask(**data["sent"]) == data["received"]
+
+
 @pytest.mark.parametrize("data", NETMASK_CIDR)
 def test_netmask_to_cidr(data):
     assert ip.netmask_to_cidr(**data["sent"]) == data["received"]
@@ -673,6 +680,11 @@ def test_netmask_to_wildcardmask(data):
 @pytest.mark.parametrize("data", WILDCARDMASK_NETMASK)
 def test_wildcardmask_to_netmask(data):
     assert ip.wildcardmask_to_netmask(**data["sent"]) == data["received"]
+
+
+def test_wildcardmask_to_netmask_invalid():
+    with pytest.raises(ValueError, match="Wildcard mask is not valid."):
+        ip.wildcardmask_to_netmask("0.0.255.0")
 
 
 @pytest.mark.parametrize("data", GET_PEER)
