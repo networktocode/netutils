@@ -671,7 +671,7 @@ def test_netmask_to_wildcardmask(data):
 
 
 @pytest.mark.parametrize("data", WILDCARDMASK_NETMASK)
-def test_wildcardmask_to_wildcardmask(data):
+def test_wildcardmask_to_netmask(data):
     assert ip.wildcardmask_to_netmask(**data["sent"]) == data["received"]
 
 
