@@ -479,16 +479,16 @@ NETMASK_WILDCARDMASK = [
 ]
 
 WILDCARDMASK_NETMASK = [
-    {"sent": {"wildcardmask": "0.0.0.1"},    "received": "255.255.255.254"},
-    {"sent": {"wildcardmask": "0.0.0.2"},    "received": "255.255.255.253"},
-    {"sent": {"wildcardmask": "0.0.0.3"},    "received": "255.255.255.252"},
-    {"sent": {"wildcardmask": "0.0.0.255"},  "received": "255.255.255.0"},
-    {"sent": {"wildcardmask": "0.0.1.255"},  "received": "255.255.254.0"},
-    {"sent": {"wildcardmask": "0.0.2.255"},  "received": "255.255.253.0"},
-    {"sent": {"wildcardmask": "0.0.3.255"},  "received": "255.255.252.0"},
-    {"sent": {"wildcardmask": "0.0.255.255"},"received": "255.255.0.0"},
-    {"sent": {"wildcardmask": "0.1.255.255"},"received": "255.254.0.0"},
-    {"sent": {"wildcardmask": "0.2.255.255"},"received": "255.253.0.0"},
+    {"sent": {"wildcardmask": "0.0.0.1"}, "received": "255.255.255.254"},
+    {"sent": {"wildcardmask": "0.0.0.2"}, "received": "255.255.255.253"},
+    {"sent": {"wildcardmask": "0.0.0.3"}, "received": "255.255.255.252"},
+    {"sent": {"wildcardmask": "0.0.0.255"}, "received": "255.255.255.0"},
+    {"sent": {"wildcardmask": "0.0.1.255"}, "received": "255.255.254.0"},
+    {"sent": {"wildcardmask": "0.0.2.255"}, "received": "255.255.253.0"},
+    {"sent": {"wildcardmask": "0.0.3.255"}, "received": "255.255.252.0"},
+    {"sent": {"wildcardmask": "0.0.255.255"}, "received": "255.255.0.0"},
+    {"sent": {"wildcardmask": "0.1.255.255"}, "received": "255.254.0.0"},
+    {"sent": {"wildcardmask": "0.2.255.255"}, "received": "255.253.0.0"},
     {"sent": {"wildcardmask": "0.255.255.255"}, "received": "255.0.0.0"},
 ]
 
@@ -664,13 +664,16 @@ def test_cidr_to_netmask_fail():
         data = {"cidr": 37}
         ip.cidr_to_netmask(**data)
 
+
 @pytest.mark.parametrize("data", NETMASK_WILDCARDMASK)
 def test_netmask_to_wildcardmask(data):
     assert ip.netmask_to_wildcardmask(**data["sent"]) == data["received"]
 
+
 @pytest.mark.parametrize("data", WILDCARDMASK_NETMASK)
 def test_wildcardmask_to_wildcardmask(data):
     assert ip.wildcardmask_to_netmask(**data["sent"]) == data["received"]
+
 
 @pytest.mark.parametrize("data", GET_PEER)
 def test_get_peer_ip(data):
