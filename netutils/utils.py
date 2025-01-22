@@ -42,6 +42,8 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "netmask_to_cidr": "ip.netmask_to_cidr",
     "cidr_to_netmask": "ip.cidr_to_netmask",
     "cidr_to_netmaskv6": "ip.cidr_to_netmaskv6",
+    "netmask_to_wildcardmask": "ip.netmask_to_wildcardmask",
+    "wildcardmask_to_netmask": "ip.wildcardmask_to_netmask",
     "get_all_host": "ip.get_all_host",
     "get_broadcast_address": "ip.get_broadcast_address",
     "get_first_usable": "ip.get_first_usable",

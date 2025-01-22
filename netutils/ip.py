@@ -650,3 +650,47 @@ def get_ips_sorted(ips: t.Union[str, t.List[str]], sort_type: str = "network") -
         return [str(ip) for ip in sorted_list]
     except ValueError as err:
         raise ValueError(f"Invalid IP of {sort_type} input: {err}") from err
+
+
+def netmask_to_wildcardmask(netmask: str) -> str:
+    """
+    Convert a standard IPv4 netmask to its wildcardmask.
+
+    Args:
+        netmask (str): The IPv4 netmask (e.g. "255.255.255.0").
+
+    Returns:
+        str: The corresponding wildcardmask (e.g. "0.0.0.255").
+
+    Examples:
+        >>> netmask_to_wildcardmask("255.255.255.0")
+        '0.0.0.255'
+
+        >>> netmask_to_wildcardmask("255.255.0.0")
+        '0.0.255.255'
+    """
+    octets: t.List[int] = [int(o) for o in netmask.split(".")]
+    inverted = [255 - octet for octet in octets]
+    return ".".join(str(i) for i in inverted)
+
+
+def wildcardmask_to_netmask(wildcardmask: str) -> str:
+    """
+    Convert a wildcardmask to its corresponding IPv4 netmask.
+
+    Args:
+        wildcardmask (str): The IPv4 wildcardmask (e.g. "0.0.0.255").
+
+    Returns:
+        str: The corresponding netmask (e.g. "255.255.255.0").
+
+    Examples:
+        >>> wildcardmask_to_netmask("0.0.0.255")
+        '255.255.255.0'
+
+        >>> wildcardmask_to_netmask("0.0.255.255")
+        '255.255.0.0'
+    """
+    octets: t.List[int] = [int(o) for o in wildcardmask.split(".")]
+    inverted = [255 - octet for octet in octets]
+    return ".".join(str(i) for i in inverted)
