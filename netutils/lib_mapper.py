@@ -388,6 +388,7 @@ HIERCONFIG_LIB_MAPPER: t.Dict[str, str] = {
 NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
+    "aruba_os": "aruba_os",
     "bigip_f5": "bigip_f5",
     "cisco_aireos": "cisco_aireos",
     "cisco_asa": "cisco_asa",
@@ -553,6 +554,7 @@ HIERCONFIG_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 NETUTILSPARSER_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
+    "aruba_os": "aruba_os",
     "bigip_f5": "bigip_f5",
     "cisco_aireos": "cisco_aireos",
     "cisco_asa": "cisco_asa",
