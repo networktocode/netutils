@@ -52,7 +52,7 @@
 | is_ip_within | netutils.ip.is_ip_within |
 | is_netmask | netutils.ip.is_netmask |
 | is_network | netutils.ip.is_network |
-| is_wildcardmask | netutils.ip.is_wildcardmask |
+| is_reversible_wildcardmask | netutils.ip.is_reversible_wildcardmask |
 | netmask_to_cidr | netutils.ip.netmask_to_cidr |
 | netmask_to_wildcardmask | netutils.ip.netmask_to_wildcardmask |
 | wildcardmask_to_netmask | netutils.ip.wildcardmask_to_netmask |

@@ -444,7 +444,7 @@ IS_NETMASK = [
     {"sent": {"netmask": "ffff:ffff:ffff:ffff:ffff::"}, "received": True},
 ]
 
-IS_WILDCARDMASK = [
+IS_REVSERSIBLE_WILDCARDMASK = [
     {"sent": {"wildcardmask": "0.0.0.255"}, "received": True},
     {"sent": {"wildcardmask": "0.0.0.0"}, "received": True},
     {"sent": {"wildcardmask": "0.0.0.1"}, "received": True},
@@ -634,9 +634,9 @@ def test_is_netmask(data):
     assert ip.is_netmask(**data["sent"]) == data["received"]
 
 
-@pytest.mark.parametrize("data", IS_WILDCARDMASK)
-def test_is_wildcardmask(data):
-    assert ip.is_wildcardmask(**data["sent"]) == data["received"]
+@pytest.mark.parametrize("data", IS_REVERSIBLE_WILDCARDMASK)
+def test_is_reversible_wildcardmask(data):
+    assert ip.is_reversible_wildcardmask(**data["sent"]) == data["received"]
 
 
 @pytest.mark.parametrize("data", NETMASK_CIDR)

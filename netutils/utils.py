@@ -38,7 +38,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "is_ip_range": "ip.is_ip_range",
     "is_ip_within": "ip.is_ip_within",
     "is_netmask": "ip.is_netmask",
-    "is_wildcardmask": "ip.is_wildcardmask",
+    "is_reversible_wildcardmask": "ip.is_reversible_wildcardmask",
     "is_network": "ip.is_network",
     "netmask_to_cidr": "ip.netmask_to_cidr",
     "cidr_to_netmask": "ip.cidr_to_netmask",

@@ -369,7 +369,7 @@ def is_netmask(netmask: str) -> bool:
         return False
 
 
-def is_wildcardmask(wildcardmask: str) -> bool:
+def is_reversible_wildcardmask(wildcardmask: str) -> bool:
     """Verifies whether a wildcard mask is valid or not.
 
     Args:
@@ -379,10 +379,10 @@ def is_wildcardmask(wildcardmask: str) -> bool:
         True if the wildcard mask is valid. Otherwise false.
 
     Examples:
-        >>> from netutils.ip import is_wildcardmask
-        >>> is_wildcardmask('0.0.0.255')
+        >>> from netutils.ip import is_reversible_wildcardmask
+        >>> is_reversible_wildcardmask('0.0.0.255')
         True
-        >>> is_wildcardmask('0.0.255.0')
+        >>> is_reversible_wildcardmask('0.0.255.0')
         False
     """
     try:
@@ -724,7 +724,7 @@ def wildcardmask_to_netmask(wildcardmask: str) -> str:
         >>> wildcardmask_to_netmask("0.0.255.255")
         '255.255.0.0'
     """
-    if is_wildcardmask(wildcardmask):
+    if is_reversible_wildcardmask(wildcardmask):
         octets: t.List[int] = [int(o) for o in wildcardmask.split(".")]
         inverted = [255 - octet for octet in octets]
         return ".".join(str(i) for i in inverted)
