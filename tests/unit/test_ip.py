@@ -444,7 +444,7 @@ IS_NETMASK = [
     {"sent": {"netmask": "ffff:ffff:ffff:ffff:ffff::"}, "received": True},
 ]
 
-IS_REVSERSIBLE_WILDCARDMASK = [
+IS_REVERSIBLE_WILDCARDMASK = [
     {"sent": {"wildcardmask": "0.0.0.255"}, "received": True},
     {"sent": {"wildcardmask": "0.0.0.0"}, "received": True},
     {"sent": {"wildcardmask": "0.0.0.1"}, "received": True},
