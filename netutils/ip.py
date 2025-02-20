@@ -369,6 +369,37 @@ def is_netmask(netmask: str) -> bool:
         return False
 
 
+def is_reversible_wildcardmask(wildcardmask: str) -> bool:
+    """Verifies whether a wildcard mask is valid or not.
+
+    Args:
+        wildcardmask: A wildcard mask
+
+    Returns:
+        True if the wildcard mask is valid. Otherwise false.
+
+    Examples:
+        >>> from netutils.ip import is_reversible_wildcardmask
+        >>> is_reversible_wildcardmask('0.0.0.255')
+        True
+        >>> is_reversible_wildcardmask('0.0.255.0')
+        False
+    """
+    try:
+        parts = wildcardmask.split(".")
+        if len(parts) != 4 or any(not p.isdigit() for p in parts):
+            return False
+        octets = [int(p) for p in parts]
+        if any(o < 0 or o > 255 for o in octets):
+            return False
+    except ValueError:
+        return False
+
+    inverted_octets = [255 - o for o in octets]
+    inverted_str = ".".join(str(i) for i in inverted_octets)
+    return is_netmask(inverted_str)
+
+
 def is_network(ip_network: str) -> bool:
     """Verifies whether or not a string is a valid IP Network with a Mask.
 
@@ -650,3 +681,51 @@ def get_ips_sorted(ips: t.Union[str, t.List[str]], sort_type: str = "network") -
         return [str(ip) for ip in sorted_list]
     except ValueError as err:
         raise ValueError(f"Invalid IP of {sort_type} input: {err}") from err
+
+
+def netmask_to_wildcardmask(netmask: str) -> str:
+    """
+    Convert a standard IPv4 netmask to its wildcardmask.
+
+    Args:
+        netmask (str): The IPv4 netmask (e.g. "255.255.255.0").
+
+    Returns:
+        str: The corresponding wildcardmask (e.g. "0.0.0.255").
+
+    Examples:
+        >>> from netutils.ip import netmask_to_wildcardmask
+        >>> netmask_to_wildcardmask("255.255.255.0")
+        '0.0.0.255'
+        >>> netmask_to_wildcardmask("255.255.0.0")
+        '0.0.255.255'
+    """
+    if is_netmask(netmask):
+        octets: t.List[int] = [int(o) for o in netmask.split(".")]
+        inverted = [255 - octet for octet in octets]
+        return ".".join(str(i) for i in inverted)
+    raise ValueError("Subnet mask is not valid.")
+
+
+def wildcardmask_to_netmask(wildcardmask: str) -> str:
+    """
+    Convert a wildcardmask to its corresponding IPv4 netmask.
+
+    Args:
+        wildcardmask (str): The IPv4 wildcardmask (e.g. "0.0.0.255").
+
+    Returns:
+        str: The corresponding netmask (e.g. "255.255.255.0").
+
+    Examples:
+        >>> from netutils.ip import wildcardmask_to_netmask
+        >>> wildcardmask_to_netmask("0.0.0.255")
+        '255.255.255.0'
+        >>> wildcardmask_to_netmask("0.0.255.255")
+        '255.255.0.0'
+    """
+    if is_reversible_wildcardmask(wildcardmask):
+        octets: t.List[int] = [int(o) for o in wildcardmask.split(".")]
+        inverted = [255 - octet for octet in octets]
+        return ".".join(str(i) for i in inverted)
+    raise ValueError("Wildcard mask is not valid.")
