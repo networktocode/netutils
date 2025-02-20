@@ -13,7 +13,7 @@ jobs:
     steps:
       # Checkout repo
       - name: "Check out code"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v4"
         with:
           ref: "develop"
       # Delete old branch if it exists
@@ -43,7 +43,7 @@ jobs:
     steps:
       # Checkout repo
       - name: "Check out code"
-        uses: "actions/checkout@v2"
+        uses: "actions/checkout@v4"
         with:
           ref: "OUI_Updates"
       # Create PR from branch created above into develop
