@@ -1288,7 +1288,7 @@ class ArubaConfigParser(BaseSpaceConfigParser):
 
 
 class ArubaOSConfigParser(BaseSpaceConfigParser):
-    """Aruba OS implementation fo ConfigParser Class."""
+    """Aruba OS (AOS) implementation fo ConfigParser Class."""
 
     banner_end = "!"
     comment_chars = ["!"]
