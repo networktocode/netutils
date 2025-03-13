@@ -8,7 +8,9 @@ from . import parser  # pylint: disable=relative-beyond-top-level
 
 parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "arista_eos": parser.EOSConfigParser,
-    "aruba_aoscx": parser.ArubaConfigParser,
+    "aruba_aoscx": parser.ArubaConfigCXParser,
+    "aruba_os": parser.ArubaConfigOSParser,
+    "aruba_osswitch": parser.ArubaConfigOSParser,
     "bigip_f5": parser.F5ConfigParser,
     "cisco_aireos": parser.AIREOSConfigParser,
     "cisco_asa": parser.ASAConfigParser,
@@ -196,7 +198,9 @@ def compliance(
 
 
 def config_section_not_parsed(
-    features: t.List[t.Dict[str, t.Union[str, bool, t.List[str]]]], device_cfg: str, network_os: str
+    features: t.List[t.Dict[str, t.Union[str, bool, t.List[str]]]],
+    device_cfg: str,
+    network_os: str,
 ) -> t.Dict[str, t.Union[str, t.List[str]]]:
     r"""Return device config section that is not checked by compliance.
 
@@ -291,7 +295,10 @@ def diff_network_config(compare_config: str, base_config: str, network_os: str) 
 
 
 def feature_compliance(
-    feature: t.Dict[str, t.Union[str, bool, t.List[str]]], backup_cfg: str, intended_cfg: str, network_os: str
+    feature: t.Dict[str, t.Union[str, bool, t.List[str]]],
+    backup_cfg: str,
+    intended_cfg: str,
+    network_os: str,
 ) -> t.Dict[str, t.Union[str, bool]]:
     r"""Report compliance for all features provided as input.
 
@@ -391,7 +398,11 @@ def find_unordered_cfg_lines(intended_cfg: str, actual_cfg: str) -> t.Tuple[bool
     return (False, unordered_lines)
 
 
-def section_config(feature: t.Dict[str, t.Union[str, bool, t.List[str]]], device_cfg: str, network_os: str) -> str:
+def section_config(
+    feature: t.Dict[str, t.Union[str, bool, t.List[str]]],
+    device_cfg: str,
+    network_os: str,
+) -> str:
     """Parse feature section config from device cfg.
 
         In case section attribute of the the feature is not provided

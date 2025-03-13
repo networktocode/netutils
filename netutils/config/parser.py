@@ -417,7 +417,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
         ]
         for cfg_line in self.build_config_relationship():
             parents = cfg_line.parents[0] if cfg_line.parents else None
-            if parents in potential_parents and self._match_type_check(parents, parent_pattern, match_type):  # type: ignore[arg-type]
+            if parents in potential_parents and self._match_type_check(
+                parents, parent_pattern, match_type  # type: ignore[arg-type]
+            ):
                 config.append(cfg_line.config_line)
         return config
 
@@ -1205,8 +1207,8 @@ class NetscalerConfigParser(BaseSpaceConfigParser):
         raise NotImplementedError("Netscaler platform doesn't have a banner.")
 
 
-class ArubaConfigParser(BaseSpaceConfigParser):
-    """Aruba AOS-CX implementation fo ConfigParser Class."""
+class _ArubaBaseConfigParser(BaseSpaceConfigParser):
+    """Aruba Base implementation fo ConfigParser Class."""
 
     banner_end = "!"
     comment_chars = ["!"]
@@ -1285,6 +1287,20 @@ class ArubaConfigParser(BaseSpaceConfigParser):
                     config_lines.append(line.rstrip())
             self._config = self._parse_out_comments("\n".join(config_lines))
         return self._config
+
+
+class ArubaConfigCXParser(_ArubaBaseConfigParser):
+    """Aruba AOS-CX implementation fo ConfigParser Class."""
+
+
+class ArubaConfigOSParser(_ArubaBaseConfigParser):
+    """Aruba OS / OSSWITCH implementation fo ConfigParser Class."""
+
+
+class ArubaConfigParser(_ArubaBaseConfigParser):
+    """Aruba Config implementation fo ConfigParser Class."""
+
+    # Remove on next major release.
 
 
 class IOSXRConfigParser(CiscoConfigParser):
