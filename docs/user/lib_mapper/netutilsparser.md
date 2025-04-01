@@ -2,6 +2,8 @@
 | ---------- | -- | ------ |
 | arista_eos | → | arista_eos |
 | aruba_aoscx | → | aruba_aoscx |
+| aruba_os | → | aruba_os |
+| aruba_osswitch | → | aruba_osswitch |
 | bigip_f5 | → | bigip_f5 |
 | cisco_aireos | → | cisco_aireos |
 | cisco_asa | → | cisco_asa |

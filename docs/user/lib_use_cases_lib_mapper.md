@@ -39,6 +39,14 @@ net_con = NTC(host=device.name, username="demo", password="secret", device_type=
 Another use case could be using an example like the above in an Ansible filter. That would allow you to write a filter utilizing whichever automation library you needed without having to store the driver for each one in your Source of Truth.
 
 
+## Aerleon Mapper
+
+--8<-- "docs/user/lib_mapper/aerleon.md
+
+## Reverse Aerleon Mapper
+
+--8<-- "docs/user/lib_mapper/aerleon_reverse.md
+
 ## Ansible Mapper
 
 --8<-- "docs/user/lib_mapper/ansible.md"
@@ -46,6 +54,22 @@ Another use case could be using an example like the above in an Ansible filter. 
 ## Reverse Ansible Mapper
 
 --8<-- "docs/user/lib_mapper/ansible_reverse.md"
+
+## Capirca Mapper
+
+--8<-- "docs/user/lib_mapper/capirca.md
+
+## Reverse Capirca Mapper
+
+--8<-- "docs/user/lib_mapper/capirca_reverse.md
+
+## DNA Center Mapper
+
+--8<-- "docs/user/lib_mapper/dna_center.md
+
+## Reverse DNA Center Mapper
+
+--8<-- "docs/user/lib_mapper/dna_center_reverse.md
 
 ## Forward Networks Mapper
 
@@ -95,6 +119,14 @@ Another use case could be using an example like the above in an Ansible filter. 
 ## Reverse NTC Templates Mapper
 
 --8<-- "docs/user/lib_mapper/ntctemplates_reverse.md"
+
+## NIST Mapper
+
+--8<-- "docs/user/lib_mapper/nist.md
+
+## Reverse NIST Mapper
+
+--8<-- "docs/user/lib_mapper/nist_reverse.md
 
 ## PyATS Mapper
 

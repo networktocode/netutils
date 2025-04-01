@@ -261,6 +261,7 @@ NETMIKO_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 # ntc templates is primarily based on netmiko, so a copy is in order
 _NTCTEMPLATES_LIB_MAPPER = copy.deepcopy(NETMIKO_LIB_MAPPER)
 _NTCTEMPLATES_LIB_MAPPER["aruba_aoscx"] = "aruba_aoscx"
+_NTCTEMPLATES_LIB_MAPPER["cisco_wlc_ssh"] = "cisco_wlc"
 _NTCTEMPLATES_LIB_MAPPER["huawei_vrp"] = "huawei_vrp"
 _NTCTEMPLATES_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 _NTCTEMPLATES_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
@@ -388,6 +389,8 @@ HIERCONFIG_LIB_MAPPER: t.Dict[str, str] = {
 NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
+    "aruba_os": "aruba_os",
+    "aruba_osswitch": "aruba_osswitch",
     "bigip_f5": "bigip_f5",
     "cisco_aireos": "cisco_aireos",
     "cisco_asa": "cisco_asa",
@@ -553,6 +556,8 @@ HIERCONFIG_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 NETUTILSPARSER_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
+    "aruba_os": "aruba_os",
+    "aruba_osswitch": "aruba_osswitch",
     "bigip_f5": "bigip_f5",
     "cisco_aireos": "cisco_aireos",
     "cisco_asa": "cisco_asa",
