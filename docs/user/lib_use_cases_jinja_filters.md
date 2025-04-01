@@ -6,15 +6,15 @@ Here is the current folder structure.
 ```bash
 .
 ├── jinja2_environment.py
-├── templates
-└── test.j2
+└── templates
+    └── test.j2
 ```
 
 Below is the code in the `test.j2` file.
 
 ```jinja
 
-IP Address + 200 = {{ "192.168.0.1/10" | ip_addition(200) }}
+IP Address + 200 = {{ "192.168.0.1" | ip_addition(200) }}
 
 ```
 Below is a code in the `jinja2_environment.py` folder.
@@ -70,9 +70,10 @@ When using these filters, you must specify an attribute of that given class. Her
 
 ```bash
 .
+.
 ├── jinja2_environment.py
-├── templates
-└── test.j2
+└── templates
+    └── test.j2
 ```
 
 Below is the code in the `test.j2` file.
