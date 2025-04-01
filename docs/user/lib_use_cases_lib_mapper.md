@@ -41,11 +41,11 @@ Another use case could be using an example like the above in an Ansible filter. 
 
 ## Aerleon Mapper
 
---8<-- "docs/user/lib_mapper/aerleon.md
+--8<-- "docs/user/lib_mapper/aerleon.md"
 
 ## Reverse Aerleon Mapper
 
---8<-- "docs/user/lib_mapper/aerleon_reverse.md
+--8<-- "docs/user/lib_mapper/aerleon_reverse.md"
 
 ## Ansible Mapper
 
@@ -57,19 +57,19 @@ Another use case could be using an example like the above in an Ansible filter. 
 
 ## Capirca Mapper
 
---8<-- "docs/user/lib_mapper/capirca.md
+--8<-- "docs/user/lib_mapper/capirca.md"
 
 ## Reverse Capirca Mapper
 
---8<-- "docs/user/lib_mapper/capirca_reverse.md
+--8<-- "docs/user/lib_mapper/capirca_reverse.md"
 
 ## DNA Center Mapper
 
---8<-- "docs/user/lib_mapper/dna_center.md
+--8<-- "docs/user/lib_mapper/dna_center.md"
 
 ## Reverse DNA Center Mapper
 
---8<-- "docs/user/lib_mapper/dna_center_reverse.md
+--8<-- "docs/user/lib_mapper/dna_center_reverse.md"
 
 ## Forward Networks Mapper
 
@@ -122,11 +122,11 @@ Another use case could be using an example like the above in an Ansible filter. 
 
 ## NIST Mapper
 
---8<-- "docs/user/lib_mapper/nist.md
+--8<-- "docs/user/lib_mapper/nist.md"
 
 ## Reverse NIST Mapper
 
---8<-- "docs/user/lib_mapper/nist_reverse.md
+--8<-- "docs/user/lib_mapper/nist_reverse.md"
 
 ## PyATS Mapper
 
