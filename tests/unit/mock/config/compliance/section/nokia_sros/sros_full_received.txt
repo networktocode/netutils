@@ -1,0 +1,5 @@
+configure system security radius operator-policy name:RADIUS
+configure system security radius auth-server RADIUS1 router-instance base ip-address 1.2.3.4 secret encrypted:al:d6:2f:b8:0a:85:7e:f1:f8:5a:bd:8f:55:83:l3:ad
+configure system security radius acc-server RADIUS1 router-instance base ip-address 5.6.7.8 secret encrypted:su:f2:1e:c5:5a:65:1b:d1:e0:2f:db:0a:71:56:f6:bf
+configure system security radius policy RADIUS nas-id PKB7J0VH77 nas-ip-address 126.65.111.173
+configure system security radius policy RADIUS servers 1 auth-server name:RADIUS1 auth-router-inst base priority 1 acc-server name:RADIUS1
