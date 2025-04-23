@@ -15,6 +15,7 @@ BASE_INTERFACES = {
     "Bd": "Bdi",
     "Bdi": "Bdi",
     "Bridge-Aggregation": "Port-channel",
+    "Di": "Dialer",
     "EOBC": "EOBC",
     "EO": "EOBC",
     "Ethernet": "Ethernet",
@@ -174,6 +175,7 @@ MAC_REGEX = dict(  # pylint: disable=use-dict-literal
 REVERSE_MAPPING = {
     "AppGigabitEthernet": "Ap",
     "ATM": "At",
+    "Dialer": "Di",
     "EOBC": "EO",
     "Ethernet": "Et",
     "FastEthernet": "Fa",
