@@ -15,6 +15,7 @@ BASE_INTERFACES = {
     "Bd": "Bdi",
     "Bdi": "Bdi",
     "Bridge-Aggregation": "Port-channel",
+    "Dialer": "Dialer",
     "Di": "Dialer",
     "EOBC": "EOBC",
     "EO": "EOBC",
