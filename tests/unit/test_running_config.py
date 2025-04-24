@@ -22,6 +22,6 @@ def test_get_running_config_command_known_platforms(platform, expected_command):
 
 
 def test_get_running_config_command_unknown_platform():
-    """Test get_running_config_command returns 'UNKNOWN' for unsupported platform."""
-    assert get_running_config_command("totally_unknown_platform") == "UNKNOWN"
-    assert get_running_config_command("ArIsTa_EoZ") == "UNKNOWN"
+    """Test get_running_config_command returns default 'show run' for unknown platforms."""
+    assert get_running_config_command("unknown_platform") == "show run"
+    assert get_running_config_command("checkpoint_gaiAA") == "show run"
