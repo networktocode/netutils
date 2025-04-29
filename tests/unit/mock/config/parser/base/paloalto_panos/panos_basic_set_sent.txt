@@ -1,0 +1,22 @@
+set mgt-config users admin phash *
+set mgt-config users admin permissions role-based superuser yes
+set mgt-config users admin public-key thisisasuperduperlongbase64encodedstring
+set mgt-config users panadmin permissions role-based superuser yes
+set mgt-config users panadmin phash passwordhash
+set deviceconfig system hostname firewall1
+set deviceconfig system login-banner "
+************************************************************************
+*                        firewall1.example.com                       *                         [PROD VM500  firewalls]
+************************************************************************
+*                               WARNING                                *
+*   Unauthorized access to this device or devices attached to          *
+*   or accessible from this network is strictly prohibited.            *
+*   Possession of passwords or devices enabling access to this         *
+*   device or devices does not constitute authorization. Unauthorized  *
+*   access will be prosecuted to the fullest extent of the law.        *
+*                                                                      *
+************************************************************************"
+
+set deviceconfig system panorama local-panorama panorama-server 10.0.0.1
+set deviceconfig system panorama local-panorama panorama-server-2 10.0.0.2
+set network interface ethernet ethernet1/15 comment "test curly braces {REMOTE DEVICE}, {REMOTE PORT}"
