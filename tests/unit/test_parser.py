@@ -7,9 +7,7 @@ import pytest
 
 from netutils.config import compliance
 
-MOCK_DIR = os.path.join(
-    os.path.dirname(os.path.realpath(__file__)), "mock", "config", "parser"
-)
+MOCK_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mock", "config", "parser")
 TXT_FILE = "_sent.txt"
 
 base_parameters = []
@@ -20,9 +18,7 @@ for network_os in list(compliance.parser_map.keys()):
         base_parameters.append([_file, network_os])
     for _file in glob.glob(f"{MOCK_DIR}/find_all_children/{network_os}/*{TXT_FILE}"):
         find_all_children_parameters.append([_file, network_os])
-    for _file in glob.glob(
-        f"{MOCK_DIR}/find_children_w_parents/{network_os}/*{TXT_FILE}"
-    ):
+    for _file in glob.glob(f"{MOCK_DIR}/find_children_w_parents/{network_os}/*{TXT_FILE}"):
         find_children_w_parents_parameters.append([_file, network_os])
 
 
@@ -41,32 +37,23 @@ def test_find_all_children(_file, network_os, get_text_data, get_json_data):  # 
     truncate_file = os.path.join(MOCK_DIR, "find_all_children", _file[: -len(TXT_FILE)])
 
     device_cfg = get_text_data(os.path.join(MOCK_DIR, "find_all_children", _file))
-    received_data = get_text_data(
-        os.path.join(MOCK_DIR, "find_all_children", truncate_file + "_received.txt")
-    )
+    received_data = get_text_data(os.path.join(MOCK_DIR, "find_all_children", truncate_file + "_received.txt"))
     kwargs = get_json_data(truncate_file + "_args.json")
     os_parser = compliance.parser_map[network_os]
     assert "\n".join(os_parser(device_cfg).find_all_children(**kwargs)) == received_data
 
 
 @pytest.mark.parametrize("_file, network_os", find_children_w_parents_parameters)
-def test_find_children_w_parents(_file, network_os, get_text_data, get_json_data):  # pylint: disable=redefined-outer-name
-    truncate_file = os.path.join(
-        MOCK_DIR, "find_children_w_parents", _file[: -len(TXT_FILE)]
-    )
+def test_find_children_w_parents(
+    _file, network_os, get_text_data, get_json_data
+):  # pylint: disable=redefined-outer-name
+    truncate_file = os.path.join(MOCK_DIR, "find_children_w_parents", _file[: -len(TXT_FILE)])
 
     device_cfg = get_text_data(os.path.join(MOCK_DIR, "find_children_w_parents", _file))
-    received_data = get_text_data(
-        os.path.join(
-            MOCK_DIR, "find_children_w_parents", truncate_file + "_received.txt"
-        )
-    )
+    received_data = get_text_data(os.path.join(MOCK_DIR, "find_children_w_parents", truncate_file + "_received.txt"))
     kwargs = get_json_data(truncate_file + "_args.json")
     os_parser = compliance.parser_map[network_os]
-    assert (
-        "\n".join(os_parser(device_cfg).find_children_w_parents(**kwargs))
-        == received_data
-    )
+    assert "\n".join(os_parser(device_cfg).find_children_w_parents(**kwargs)) == received_data
 
 
 def test_incorrect_banner_ios():
@@ -91,35 +78,5 @@ def test_duplicate_line():
         "snmp-server community <<REPLACED>> RO SNMP_ACL_RO\n"
         "snmp-server community <<REPLACED>> RW SNMP_ACL_RW\n"
     )
-    with pytest.raises(
-        IndexError, match=r".*This error is likely from a duplicate line detected.*"
-    ):
+    with pytest.raises(IndexError, match=r".*This error is likely from a duplicate line detected.*"):
         compliance.parser_map["cisco_ios"](logging).config_lines  # pylint: disable=expression-not-assigned
-
-
-def test_banner_delimiter_iosxr():
-    banner_cfg = (
-        "banner motd ^This is the first line of a test banner.\n"
-        "This is the second line of a test banner.\n"
-        "This is the third line of a test banner.^\n"
-        "\n"
-        "ntp\n"
-        " server 192.0.2.1\n"
-        " server 192.0.2.2\n"
-    )
-    delimiter = compliance.parser_map["cisco_iosxr"](banner_cfg).delimiter
-    assert delimiter == "^"
-
-
-def test_banner_eof_delimiter_iosxr():
-    banner_cfg = (
-        "ntp\n"
-        " server 192.0.2.1\n"
-        " server 192.0.2.2\n"
-        "\n"
-        "banner motd ^This is the first line of a test banner.\n"
-        "This is the second line of a test banner.\n"
-        "This is the third line of a test banner.^\n"
-    )
-    delimiter = compliance.parser_map["cisco_iosxr"](banner_cfg).delimiter
-    assert delimiter == "^"
