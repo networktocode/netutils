@@ -7,10 +7,7 @@ from netutils.running_config import get_running_config_command
 
 def test_running_config_mapper_keys_are_known():
     """Ensure all keys in RUNNING_CONFIG_MAPPER are in MAIN_LIB_MAPPER values."""
-    unknown_keys = [
-        key for key in lib_mapper.RUNNING_CONFIG_MAPPER
-        if key not in lib_mapper.MAIN_LIB_MAPPER.values()
-    ]
+    unknown_keys = [key for key in lib_mapper.RUNNING_CONFIG_MAPPER if key not in lib_mapper.MAIN_LIB_MAPPER.values()]
     assert not unknown_keys, f"Unexpected keys in RUNNING_CONFIG_MAPPER: {unknown_keys}"
 
 
