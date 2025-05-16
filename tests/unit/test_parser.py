@@ -80,6 +80,8 @@ def test_duplicate_line():
     )
     with pytest.raises(IndexError, match=r".*This error is likely from a duplicate line detected.*"):
         compliance.parser_map["cisco_ios"](logging).config_lines  # pylint: disable=expression-not-assigned
+        
+        
 def test_leading_spaces_config_start():
     logging = (            
         "! Command: show running-config\n"
