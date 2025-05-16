@@ -1389,12 +1389,12 @@ class IOSXRConfigParser(CiscoConfigParser):
             ... ]
             True
         """
-        
+
         for index, line in enumerate(self.generator_config):
             current_spaces = self.get_leading_space_count(line) if line[0].isspace() else 0
-            
+
             if index == 0 and line[0].isspace():
-               line = self._remove_parents(line, current_spaces) 
+                line = self._remove_parents(line, current_spaces)
             if not line[0].isspace():
                 self._current_parents = ()
                 if self.is_banner_start(line):
