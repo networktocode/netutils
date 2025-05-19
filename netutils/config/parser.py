@@ -1399,6 +1399,7 @@ class IOSXRConfigParser(CiscoConfigParser):
             if line is None:
                 break
             elif self.is_banner_start(line):
+                # if line at this position is identified as a banner start, we also need to set the delimiter
                 if not self.delimiter:
                     self.set_delimiter(line)
                 line = self._build_banner(line)  # type: ignore
