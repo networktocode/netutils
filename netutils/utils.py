@@ -99,6 +99,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "version_metadata": "os_version.version_metadata",
     "get_nist_urls": "nist.get_nist_urls",
     "get_nist_vendor_platform_urls": "nist.get_nist_vendor_platform_urls",
+    "get_running_config_command": "running_config.get_running_config_command",
 }
 
 
