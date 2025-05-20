@@ -300,6 +300,16 @@ NAPALM_LIB_MAPPER: t.Dict[str, str] = {
     "vyos": "vyos",
 }
 
+# Running config command
+RUNNING_CONFIG_MAPPER: t.Dict[str, str] = {
+    "cisco_ios": "show run",
+    "cisco_nxos": "show run",
+    "cisco_xr": "show run",
+    "juniper_junos": "show configuration | display set",
+    "arista_eos": "show run",
+    "checkpoint_gaia": 'clish -c "show configuration"',
+}
+
 # PYTNC | Normalized
 PYNTC_LIB_MAPPER: t.Dict[str, str] = {
     "arista_eos_eapi": "arista_eos",
