@@ -1816,7 +1816,7 @@ class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-meth
         return "\n".join(self._config_lines_only())
 
     def build_config_relationship(self) -> t.List[ConfigLine]:
-        r"""Parse text tree of config lines and their parents.
+        r"""Parse text config lines and banners.
 
         Examples:
             >>> from netutils.config.parser import BaseSpaceConfigParser, ConfigLine
@@ -1834,7 +1834,7 @@ class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-meth
             ...        banner login "
             ...
             ...        MULTILINE BANNER"'''
-            >>> config_tree = BaseBraceConfigParser(config)
+            >>> config_tree = NvidiaOnyxConfigParser(config)
             >>> config_tree.build_config_relationship() == \
             ... [
             ...     ConfigLine(config_line='vlan 1', parents=()),
