@@ -4119,6 +4119,7 @@ PROTOCOLS: Dict[str, Any] = {
     "awacs-ice": {"port_number": 4488, "protocols": ["tcp", "udp"]},
     "ipsec-nat-t": {"port_number": 4500, "protocols": ["tcp", "udp"]},
     "a25-fap-fgw": {"port_number": 4502, "protocols": ["sctp"]},
+    "m-bus-oms": {"port_number": 4503, "protocols": ["udp"]},
     "armagetronad": {"port_number": 4534, "protocols": ["udp"]},
     "ehs": {"port_number": 4535, "protocols": ["tcp", "udp"]},
     "ehs-ssl": {"port_number": 4536, "protocols": ["tcp", "udp"]},
