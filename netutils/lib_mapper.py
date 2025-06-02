@@ -125,19 +125,25 @@ CAPIRCA_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # DNA Center | Normalized
-DNA_CENTER_LIB_MAPPER = {
+DNACENTER_LIB_MAPPER = {
     "IOS": "cisco_ios",
     "IOS-XE": "cisco_ios",
     "NX-OS": "cisco_nxos",
     "IOS-XR": "cisco_xr",
 }
 
+# REMOVE IN 2.X, kept for backward compatibility
+DNA_CENTER_LIB_MAPPER = copy.deepcopy(DNACENTER_LIB_MAPPER)
+
 # Normalized | DNA Center
-DNA_CENTER_LIB_MAPPER_REVERSE = {
+DNACENTER_LIB_MAPPER_REVERSE = {
     "cisco_ios": "IOS",
     "cisco_nxos": "NX-OS",
     "cisco_xr": "IOS-XR",
 }
+
+# REMOVE IN 2.X, kept for backward compatibility
+DNA_CENTER_LIB_MAPPER_REVERSE = copy.deepcopy(DNACENTER_LIB_MAPPER_REVERSE)
 
 # Normalized | Netmiko
 NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
@@ -651,3 +657,56 @@ _MAIN_LIB_MAPPER["vmware_nsxt"] = "vmware_nsxt"
 _MAIN_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
 _MAIN_LIB_MAPPER["windows"] = "windows"
 MAIN_LIB_MAPPER: t.Dict[str, str] = {key: _MAIN_LIB_MAPPER[key] for key in sorted(_MAIN_LIB_MAPPER)}
+
+NAME_TO_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {
+    "aerleon": AERLEON_LIB_MAPPER,
+    "ansible": ANSIBLE_LIB_MAPPER,
+    "capirca": CAPIRCA_LIB_MAPPER,
+    "dna_center": DNACENTER_LIB_MAPPER,
+    "forward_networks": FORWARDNETWORKS_LIB_MAPPER,
+    "hier_config": HIERCONFIG_LIB_MAPPER,
+    "napalm": NAPALM_LIB_MAPPER,
+    "netmiko": NETMIKO_LIB_MAPPER,
+    "netutils_parser": NETUTILSPARSER_LIB_MAPPER,
+    "nist": NIST_LIB_MAPPER,
+    "ntc_templates": NTCTEMPLATES_LIB_MAPPER,
+    "pyats": PYATS_LIB_MAPPER,
+    "pyntc": PYNTC_LIB_MAPPER,
+    "scrapli": SCRAPLI_LIB_MAPPER,
+}
+
+
+NAME_TO_LIB_MAPPER_REVERSE: t.Dict[str, t.Dict[str, str]] = {
+    "aerleon": AERLEON_LIB_MAPPER_REVERSE,
+    "ansible": ANSIBLE_LIB_MAPPER_REVERSE,
+    "capirca": CAPIRCA_LIB_MAPPER_REVERSE,
+    "dna_center": DNACENTER_LIB_MAPPER_REVERSE,
+    "forward_networks": FORWARDNETWORKS_LIB_MAPPER_REVERSE,
+    "hier_config": HIERCONFIG_LIB_MAPPER_REVERSE,
+    "napalm": NAPALM_LIB_MAPPER_REVERSE,
+    "netmiko": NETMIKO_LIB_MAPPER_REVERSE,
+    "netutils_parser": NETUTILSPARSER_LIB_MAPPER_REVERSE,
+    "nist": NIST_LIB_MAPPER_REVERSE,
+    "ntc_templates": NTCTEMPLATES_LIB_MAPPER_REVERSE,
+    "pyats": PYATS_LIB_MAPPER_REVERSE,
+    "pyntc": PYNTC_LIB_MAPPER_REVERSE,
+    "scrapli": SCRAPLI_LIB_MAPPER_REVERSE,
+}
+
+
+# Creates a structure like this:
+# {
+#     "cisco_ios": {
+#         "ansible": "cisco.ios.ios",
+#         "napalm": "ios",
+#     },
+#     "cisco_nxos": {
+#         "ansible": "cisco.nxos.nxos",
+#         "napalm": "nxos",
+#     },
+NAME_TO_ALL_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {}
+
+for tool_name, mappings in NAME_TO_LIB_MAPPER_REVERSE.items():
+    for normalized_name, mapped_name in mappings.items():
+        NAME_TO_ALL_LIB_MAPPER.setdefault(normalized_name, {})
+        NAME_TO_ALL_LIB_MAPPER[normalized_name][tool_name] = mapped_name
