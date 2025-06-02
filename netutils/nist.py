@@ -69,7 +69,7 @@ def _get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any]) -> t.List
         List of NIST CPE URLs that may contain platform data.
     """
     nist_urls = []
-    base_url = f'{"https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos"}'
+    base_url = f'{"https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:juniper:junos"}'
 
     # BASE
     _main = os_platform_data.get("main")
@@ -168,7 +168,7 @@ def _get_nist_urls_default(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
     """
     nist_urls = []
     escape_list = [r"\(", r"\)"]
-    base_url = f'{"https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:"}'
+    base_url = f'{"https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:"}'
 
     os_platform_data = {"base_url": base_url, **os_platform_data}
     os_platform_data["version_string"] = os_platform_data.get("version_string").replace("-", ":")  # type: ignore
@@ -200,7 +200,7 @@ def _os_platform_object_builder(vendor: str, platform: str, version: str) -> obj
     Examples:
         >>> jp = _os_platform_object_builder("juniper", "junos", "12.1R3-S4.1")
         >>> jp.get_nist_urls()
-        ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:12.1r3:s4.1:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:12.1r3-s4.1:*:*:*:*:*:*:*']
+        ['https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:juniper:junos:12.1r3:s4.1:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:juniper:junos:12.1r3-s4.1:*:*:*:*:*:*:*']
     """
     platform = platform.lower()
     vendor = vendor.lower()
