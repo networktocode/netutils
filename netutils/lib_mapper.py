@@ -452,6 +452,10 @@ FORWARDNETWORKS_LIB_MAPPER: t.Dict[str, str] = {
 NIST_LIB_MAPPER = {
     "adaptive_security_appliance_software": "cisco_asa",
     "arubaos": "aruba_os",
+    "nx-os": "cisco_nxos",
+    "pan-os": "paloalto_panos",
+    "ios_xr": "cisco_xr",
+    "ios_xe": "cisco_xe",
     "eos": "arista_eos",
     "ios": "cisco_ios",
     "ios_xe": "cisco_xe",
@@ -617,7 +621,13 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # Normalized | NIST
+# TODO: This should be deprecated in next major release
 NIST_LIB_MAPPER_REVERSE = {
+    "aruba_os": "arubaos",
+    "cisco_asa": "adaptive_security_appliance_software",
+    "cisco_nxos": "nx-os",
+    "cisco_xr": "ios_xr",
+    "cisco_xe": "ios_xe",
     "arista_eos": "eos",
     "aruba_os": "arubaos",
     "cisco_asa": "adaptive_security_appliance_software",
@@ -630,14 +640,14 @@ NIST_LIB_MAPPER_REVERSE = {
 }
 
 # Normalized | NIST reverse dictionary parser for NIST URL generation.
-NIST_TO_VENDOR = {
+NIST_LIB_MAPPER_REVERSE_DICT = {
     "arista_eos": {"vendor": "arista", "os_name": "eos"},
     "aruba_os": {"vendor": "arubanetworks", "os_name": "arubaos"},
-    "cisco_asa": {"vendor": "cisco", "os_name": "adaptive_security_appliance_software"},
     "cisco_ios": {"vendor": "cisco", "os_name": "ios"},
     "cisco_nxos": {"vendor": "cisco", "os_name": "nx-os"},
-    "cisco_xe": {"vendor": "cisco", "os_name": "ios_xe"},
-    "cisco_xr": {"vendor": "cisco", "os_name": "ios_xr"},
+    "cisco_xe": {"vendor": "cisco", "os_name": "xe"},
+    "cisco_xr": {"vendor": "cisco", "os_name": "xr"},
+    "cisco_asa": {"vendor": "cisco", "os_name": "adaptive_security_appliance_software"},
     "juniper_junos": {"vendor": "juniper", "os_name": "junos"},
     "paloalto_panos": {"vendor": "paloaltonetworks", "os_name": "pan-os"},
 }
