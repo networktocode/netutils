@@ -20,6 +20,7 @@
 | mrv_optiswitch | → | mrv_optiswitch |
 | netscaler | → | netscaler |
 | nokia_sros | → | nokia_sros |
+| nvidia_onyx | → | nvidia_onyx |
 | paloalto_panos | → | paloalto_panos |
 | ruckus_fastiron | → | ruckus_fastiron |
 | ubiquiti_airos | → | ubiquiti_airos |
