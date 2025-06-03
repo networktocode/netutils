@@ -633,11 +633,11 @@ NIST_LIB_MAPPER_REVERSE = {
 NIST_LIB_MAPPER_REVERSE_DICT = {
     "arista_eos": {"vendor": "arista", "os_name": "eos"},
     "aruba_os": {"vendor": "arubanetworks", "os_name": "arubaos"},
+    "cisco_asa": {"vendor": "cisco", "os_name": "asa"},
     "cisco_ios": {"vendor": "cisco", "os_name": "ios"},
     "cisco_nxos": {"vendor": "cisco", "os_name": "nx-os"},
     "cisco_xe": {"vendor": "cisco", "os_name": "xe"},
     "cisco_xr": {"vendor": "cisco", "os_name": "xr"},
-    "cisco_asa": {"vendor": "cisco", "os_name": "adaptive_security_appliance_software"},
     "juniper_junos": {"vendor": "juniper", "os_name": "junos"},
     "paloalto_panos": {"vendor": "paloaltonetworks", "os_name": "pan-os"},
 }
