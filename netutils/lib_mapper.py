@@ -452,13 +452,13 @@ FORWARDNETWORKS_LIB_MAPPER: t.Dict[str, str] = {
 NIST_LIB_MAPPER = {
     "adaptive_security_appliance_software": "cisco_asa",
     "arubaos": "aruba_os",
-    "nx-os": "cisco_nxos",
-    "pan-os": "paloalto_panos",
-    "ios_xr": "cisco_xr",
-    "ios_xe": "cisco_xe",
     "eos": "arista_eos",
     "ios": "cisco_ios",
+    "ios_xe": "cisco_xe",
+    "ios_xr": "cisco_xr",
+    "nx-os": "cisco_nxos",
     "junos": "juniper_junos",
+    "pan-os": "paloalto_panos",
 }
 
 # Normalized | NAPALM
@@ -618,14 +618,15 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 
 # Normalized | NIST
 NIST_LIB_MAPPER_REVERSE = {
+    "arista_eos": "eos",
     "aruba_os": "arubaos",
     "cisco_asa": "adaptive_security_appliance_software",
-    "cisco_nxos": "nx-os",
-    "cisco_xr": "ios_xr",
-    "cisco_xe": "ios_xe",
-    "arista_eos": "eos",
     "cisco_ios": "ios",
+    "cisco_nxos": "nx-os",
+    "cisco_xe": "ios_xe",
+    "cisco_xr": "ios_xr",
     "juniper_junos": "junos",
+    "paloalto_panos": "pan-os",
 }
 
 # Normalized | NIST reverse dictionary parser for NIST URL generation.
