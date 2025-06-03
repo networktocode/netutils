@@ -5,7 +5,7 @@ import dataclasses
 import re
 import typing as t
 
-from netutils.lib_mapper import NIST_LIB_MAPPER_REVERSE_DICT
+from netutils.lib_mapper import NIST_TO_VENDOR
 from netutils.os_version import version_metadata
 
 # Setting up the dataclass values for specific parsers
@@ -266,7 +266,7 @@ def get_nist_urls(network_driver: str, version: str) -> t.List[str]:
         t.List[str]: NIST URLs to search for possible CVE matches
     """
     # DICTIONARY FOR VENDOR/PLATFORM TO NETWORK_DRIVER; UPDATE AS NEEDED
-    network_driver_mappings = NIST_LIB_MAPPER_REVERSE_DICT
+    network_driver_mappings = NIST_TO_VENDOR
 
     vendor_os = network_driver_mappings[network_driver]
 

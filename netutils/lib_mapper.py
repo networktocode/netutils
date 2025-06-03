@@ -630,7 +630,7 @@ NIST_LIB_MAPPER_REVERSE = {
 }
 
 # Normalized | NIST reverse dictionary parser for NIST URL generation.
-NIST_LIB_MAPPER_REVERSE_DICT = {
+NIST_TO_VENDOR = {
     "arista_eos": {"vendor": "arista", "os_name": "eos"},
     "aruba_os": {"vendor": "arubanetworks", "os_name": "arubaos"},
     "cisco_asa": {"vendor": "cisco", "os_name": "asa"},
