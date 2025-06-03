@@ -617,7 +617,6 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # Normalized | NIST
-# TODO: This should be deprecated in next major release
 NIST_LIB_MAPPER_REVERSE = {
     "aruba_os": "arubaos",
     "cisco_asa": "adaptive_security_appliance_software",
