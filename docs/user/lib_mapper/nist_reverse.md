@@ -8,3 +8,4 @@
 | cisco_xe | → | ios_xe |
 | cisco_xr | → | ios_xr |
 | juniper_junos | → | junos |
+| paloalto_panos | → | pan-os |
