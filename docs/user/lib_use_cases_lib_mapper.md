@@ -20,7 +20,7 @@ sot_driver = device.platform.napalm_driver
 
 
 # Connect to device via Napalm
-driver = napalm.get_network_driver("ios")
+driver = napalm.get_network_driver(sot_driver)
 
 device = driver(
     hostname="device.name",
@@ -38,6 +38,20 @@ net_con = NTC(host=device.name, username="demo", password="secret", device_type=
 
 Another use case could be using an example like the above in an Ansible filter. That would allow you to write a filter utilizing whichever automation library you needed without having to store the driver for each one in your Source of Truth.
 
+There is also a dynamically built mapping that gives you all of the libraries given a normalized name, here is a condensed snippet to understand the data structure of `NAME_TO_ALL_LIB_MAPPER`:
+
+```python
+{
+    "cisco_ios": {
+        "ansible": "cisco.ios.ios",
+        "napalm": "ios",
+    },
+    "cisco_nxos": {
+        "ansible": "cisco.nxos.nxos",
+        "napalm": "nxos",
+    }
+}
+```
 
 ## Aerleon Mapper
 
