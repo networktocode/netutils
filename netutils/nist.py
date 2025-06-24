@@ -273,6 +273,7 @@ def get_nist_urls(network_driver: str, version: str) -> t.List[str]:
         "cisco_xr": {"vendor": "cisco", "os_name": "xr"},
         "cisco_asa": {"vendor": "cisco", "os_name": "asa"},
         "juniper_junos": {"vendor": "juniper", "os_name": "junos"},
+        "paloalto_panos": {"vendor": "paloaltonetworks", "os_name": "pan-os"},
     }
 
     vendor_os = network_driver_mappings[network_driver]
