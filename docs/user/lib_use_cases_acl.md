@@ -82,7 +82,7 @@ The `ACLRule` class at a high level:
 
 ### Initialization & Loading Data
 
-The initialization process calls on the `load_data` method. This on a high level verifies schema of initial data, allows you to process data (e.g. convert tcp/https -> 80/443), expand data, determine Cartesian product (or permutations) of the firewall rule (traditionally 5-tuple), and verifies schema of result data.
+`ACLRule` initialization process calls on the `__init__` method. This on a high level verifies schema of initial data, allows you to process data (e.g. convert tcp/https -> 80/443), expand data, determine Cartesian product (or permutations) of the firewall rule (traditionally 5-tuple), and verifies schema of result data.
 
 The Cartesian product (or permutations) is key to the functionality of other steps, this allows you to evaluate each rule based on the smallest view of the data, so pay close attention to those steps, as it is important to other methods as well.
 
@@ -100,14 +100,13 @@ Many of validations will be based on IPs, but not all.
 
 Here you will find a written understanding of what is happening in the code:
 
-- The init method takes in data and calls `load_data`.
-- The method `load_data` processes the input data.
+- The init method takes in data as key-value arguments and calls `_load_data`.
+- The method `_load_data` processes the input data.
     - The `input_data_check` method is called and verifies the input data based on the specified JSON schema.
         - This is controlled by the `input_data_verify` attribute and schema defined in `input_data_schema`.
-    - For each `self.attrs`, a method name matching `f"process_{attr}"`, (e.g. `process_src_ip()`) is called.
+    - For each `self.attrs`, a method name matching `f"process_{attr}"`, (e.g. `process_src_ip()`) is called for `src_ip` attribute.
         - This allows you to inherit from and provide your own custom processes to convert, expand, or otherwise modify data before being evaluated.
-        - The `process_dst_port` method processes the `dst_port` attribute by converting the protocol and port information, it is enabled by default but controlled with the `dst_port_process` attribute.
-        - Both a dictionary `self.processed` and attributes (e.g. self.action, self.src_ip, etc.) are created.
+        - Dictionaries `self._preprocessed_data`, `self._processed_data` and attributes (e.g. `self.action`, `self.src_ip`, etc.) are created.
     - The `result_data_check` method verifies the processed data based on the specified JSON schema.
         - This is controlled by the `result_data_verify` attribute which is disabled by default.
     - The `validate` method validating the rule using a series of custom methods starting with `validate_` prefixes.
@@ -146,7 +145,7 @@ While not accurate in all use cases it would be best practice to run any of your
 
 ### Match & Match Details
 
-The `match_details` method provides a verbose way of verifying match details between two ACL rule's, the `match` method uses `match_details` and provides a boolean if there are any rules in `rules_unmatched` which would tell you if you had a full match or not. We will only review in detail the `match_details`.
+The `match_details` method provides a verbose way of verifying match details between two ACL rule's, the `match` method uses `match_details` and provides a boolean if there are any rules in `products_unmatched` which would tell you if you had a full match or not. We will only review in detail the `match_details`.
 
 Here you will find a written understanding of what is happening in the code:
 
@@ -155,13 +154,13 @@ Here you will find a written understanding of what is happening in the code:
         - This allows you to inherit from and provide your own custom equality check or verify with your business logic.
         - You do not need to have a `f"match_{attr}"` method for every attr, description as example would not be a good candidate to match on.
         - Equality checks are done on `src_zone`, `dst_zone`, `action`, and `port` by default.
-        - An `is_ip_within` check is done with for `src_ip` and `dst_ip` by default.
+        - Equality checks and an `is_ip_within` check is done with for `src_ip` and `dst_ip` by default.
 - In the process, details are provided for and returned:
-    - `rules_matched` - Root key that is a list of dictionaries of rules that matched.
-    - `rules_unmatched` - Root key that is a list of dictionaries of rules that did not match.
-    - `existing_rule_product` - The original expanded_rule that existed in this item.
+    - `match` - Root key, of type `bool`, that indicates whether a rule was matched.
     - `existing_rule` - The full original rule (not expanded_rule) that existed.
-    - `match_rule` - The full original rule that tested against, only shown in `rules_matched` root key.
+    - `match_rule` - The full original rule that tested against.
+    - `products_matched` - Root key that is a list of dictionaries of match products that matched.
+    - `products_unmatched` - Root key that is a list of dictionaries of match products that did not match.
 
 This data could help you to understand what matched, why it matched, and other metadata. This detail data can be used to in `ACLRules` to aggregate and ask more interesting questions.
 
@@ -183,21 +182,21 @@ Here we can test if a rule is matched via the existing ruleset. We can leverage 
 **Simple Example**
 
 ```python
->>> from netutils.acl import ACLRules
+>>> from netutils.acl import ACLRules, ACLRule
 >>> 
 >>> existing_acls = [
 ...     dict(
 ...         name="Allow to internal web",
 ...         src_ip=["192.168.0.0/24", "10.0.0.0/16"],
 ...         dst_ip=["172.16.0.0/16", "192.168.250.10-192.168.250.20"],
-...         dst_port=["tcp/80", "udp/53"],
+...         dst_port=["80", "53"],
 ...         action="permit",
 ...     ),
 ...     dict(
 ...         name="Allow to internal dns",
 ...         src_ip=["192.168.1.0/24"],
 ...         dst_ip=["172.16.0.0/16"],
-...         dst_port=["tcp/80", "udp/53"],
+...         dst_port=["80", "53"],
 ...         action="permit",
 ...     )
 ... ]
@@ -206,24 +205,24 @@ Here we can test if a rule is matched via the existing ruleset. We can leverage 
 ...     name="Check multiple sources pass",
 ...     src_ip=["192.168.1.10", "192.168.1.11", "192.168.1.15-192.168.1.20"],
 ...     dst_ip="172.16.0.10",
-...     dst_port="tcp/www-http",
+...     dst_port="80",
 ...     action="permit",
 ... )
 >>> 
->>> ACLRules(existing_acls).match(new_acl_match)
-'permit'
+>>> ACLRules(existing_acls).match(ACLRule(**new_acl_match))
+True
 >>> 
 >>> 
 >>> new_acl_non_match = dict(
 ...     name="Check no match",
 ...     src_ip=["10.1.1.1"],
 ...     dst_ip="172.16.0.10",
-...     dst_port="tcp/www-http",
+...     dst_port="80",
 ...     action="permit",
 ... )
 >>> 
->>> ACLRules(existing_acls).match(new_acl_non_match)
-'deny'
+>>> ACLRules(existing_acls).match(ACLRule(**new_acl_non_match))
+False
 >>> 
 ```
 
