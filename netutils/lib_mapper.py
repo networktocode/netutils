@@ -633,7 +633,7 @@ NIST_LIB_MAPPER_REVERSE = {
 NIST_TO_VENDOR = {
     "arista_eos": {"vendor": "arista", "os_name": "eos"},
     "aruba_os": {"vendor": "arubanetworks", "os_name": "arubaos"},
-    "cisco_asa": {"vendor": "cisco", "os_name": "asa"},
+    "cisco_asa": {"vendor": "cisco", "os_name": "adaptive_security_appliance_software"},
     "cisco_ios": {"vendor": "cisco", "os_name": "ios"},
     "cisco_nxos": {"vendor": "cisco", "os_name": "nx-os"},
     "cisco_xe": {"vendor": "cisco", "os_name": "xe"},
