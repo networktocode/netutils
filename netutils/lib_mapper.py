@@ -636,8 +636,8 @@ NIST_TO_VENDOR = {
     "cisco_asa": {"vendor": "cisco", "os_name": "adaptive_security_appliance_software"},
     "cisco_ios": {"vendor": "cisco", "os_name": "ios"},
     "cisco_nxos": {"vendor": "cisco", "os_name": "nx-os"},
-    "cisco_xe": {"vendor": "cisco", "os_name": "xe"},
-    "cisco_xr": {"vendor": "cisco", "os_name": "xr"},
+    "cisco_xe": {"vendor": "cisco", "os_name": "ios_xe"},
+    "cisco_xr": {"vendor": "cisco", "os_name": "ios_xr"},
     "juniper_junos": {"vendor": "juniper", "os_name": "junos"},
     "paloalto_panos": {"vendor": "paloaltonetworks", "os_name": "pan-os"},
 }
