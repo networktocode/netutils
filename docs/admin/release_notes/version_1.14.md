@@ -26,3 +26,9 @@
 - [640](https://github.com/networktocode/netutils/pull/640) Fix documentation issues.
 - [641](https://github.com/networktocode/netutils/pull/641) Fix documentation for Jinja examples.
 - [651](https://github.com/networktocode/netutils/pull/651) Fix Palo set format config parsing for curly brace.
+
+## [v1.14.1] 2025-07
+
+### Changed
+
+- [672](https://github.com/networktocode/netutils/pull/672) Update running configuration commands to be full versions. Flatbot OUI and PROTOCOL file updates.
