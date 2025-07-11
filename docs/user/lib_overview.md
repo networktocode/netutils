@@ -26,4 +26,3 @@ The intended audience is those who are programming network automation tasks with
 - @itdependsnetworks
 - @jeffkala
 - @qduk
-- @abates

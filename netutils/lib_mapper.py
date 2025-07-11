@@ -308,11 +308,11 @@ NAPALM_LIB_MAPPER: t.Dict[str, str] = {
 
 # Running config command
 RUNNING_CONFIG_MAPPER: t.Dict[str, str] = {
-    "cisco_ios": "show run",
-    "cisco_nxos": "show run",
-    "cisco_xr": "show run",
+    "cisco_ios": "show running-config",
+    "cisco_nxos": "show running-config",
+    "cisco_xr": "show running-config",
     "juniper_junos": "show configuration | display set",
-    "arista_eos": "show run",
+    "arista_eos": "show running-config",
     "checkpoint_gaia": 'clish -c "show configuration"',
 }
 
