@@ -5,8 +5,6 @@ from typing import Any, Dict
 
 PROTOCOLS: Dict[str, Any] = {
     "tcpmux": {"port_number": 1, "protocols": ["tcp", "udp"]},
-    "compressnet": {"port_number": 2, "protocols": ["tcp", "udp"]},
-    "compressnet-secondary": {"port_number": 3, "protocols": ["tcp", "udp"]},
     "rje": {"port_number": 5, "protocols": ["tcp", "udp"]},
     "echo": {"port_number": 7, "protocols": ["tcp", "udp"]},
     "discard": {"port_number": 9, "protocols": ["tcp", "udp", "sctp", "dccp"]},
@@ -4121,6 +4119,7 @@ PROTOCOLS: Dict[str, Any] = {
     "awacs-ice": {"port_number": 4488, "protocols": ["tcp", "udp"]},
     "ipsec-nat-t": {"port_number": 4500, "protocols": ["tcp", "udp"]},
     "a25-fap-fgw": {"port_number": 4502, "protocols": ["sctp"]},
+    "m-bus-oms": {"port_number": 4503, "protocols": ["udp"]},
     "armagetronad": {"port_number": 4534, "protocols": ["udp"]},
     "ehs": {"port_number": 4535, "protocols": ["tcp", "udp"]},
     "ehs-ssl": {"port_number": 4536, "protocols": ["tcp", "udp"]},
@@ -5201,6 +5200,7 @@ PROTOCOLS: Dict[str, Any] = {
     "pmdfmgt": {"port_number": 7633, "protocols": ["tcp", "udp"]},
     "cuseeme": {"port_number": 7648, "protocols": ["tcp", "udp"]},
     "rome": {"port_number": 7663, "protocols": ["tcp", "udp"]},
+    "authoritygate": {"port_number": 7668, "protocols": ["tcp"]},
     "imqstomp": {"port_number": 7672, "protocols": ["tcp"]},
     "imqstomps": {"port_number": 7673, "protocols": ["tcp"]},
     "imqtunnels": {"port_number": 7674, "protocols": ["tcp", "udp"]},
@@ -6313,6 +6313,7 @@ PROTOCOLS: Dict[str, Any] = {
     "rs-status": {"port_number": 45002, "protocols": ["tcp"]},
     "synctest": {"port_number": 45045, "protocols": ["tcp"]},
     "invision-ag": {"port_number": 45054, "protocols": ["tcp", "udp"]},
+    "witsnet": {"port_number": 45185, "protocols": ["tcp", "udp"]},
     "cloudcheck": {"port_number": 45514, "protocols": ["tcp"]},
     "cloudcheck-ping": {"port_number": 45514, "protocols": ["udp"]},
     "eba": {"port_number": 45678, "protocols": ["tcp", "udp"]},
