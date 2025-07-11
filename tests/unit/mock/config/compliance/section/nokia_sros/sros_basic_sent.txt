@@ -1,0 +1,18 @@
+exit all
+configure
+#--------------------------------------------------
+echo "System Configuration"
+#--------------------------------------------------
+    system
+        name "sros-r1"
+        netconf
+            auto-config-save
+            no shutdown
+        exit
+        time
+            sntp
+                shutdown
+            exit
+            zone UTC
+        exit
+    exit

@@ -20,6 +20,24 @@ LIBRARIES = [
     "SCRAPLI",
 ]
 
+MAPPERS = {}
+REVERSE_MAPPERS = {}
+
+# Collect all variables ending with _LIB_MAPPER and _LIB_MAPPER_REVERSE
+for name in dir(lib_mapper):
+    value = getattr(lib_mapper, name)
+
+    if not isinstance(value, dict) or any(
+        name.startswith(prefix) for prefix in ["NAME_TO", "KEY_TO", "_", "MAIN", "DNA_CENTER"]
+    ):
+        continue
+    if name.endswith("_LIB_MAPPER") and isinstance(value, dict):
+        lib_name = name.replace("_LIB_MAPPER", "").lower()
+        MAPPERS[lib_name] = value
+    elif name.endswith("_LIB_MAPPER_REVERSE") and isinstance(value, dict):
+        lib_name = name.replace("_LIB_MAPPER_REVERSE", "").lower()
+        REVERSE_MAPPERS[lib_name] = value
+
 
 def test_lib_mapper():
     assert len(lib_mapper.MAIN_LIB_MAPPER.keys()) > 40
@@ -96,6 +114,13 @@ def test_lib_mapper_ntctemplates_reverse_only():
     assert lib_mapper.NTCTEMPLATES_LIB_MAPPER["cisco_xe"] == "cisco_xe"
 
 
+def test_name_to_all_lib_mapper():
+    """Test that the data structure returns as expected in NAME_TO_ALL_LIB_MAPPER."""
+    assert lib_mapper.NAME_TO_ALL_LIB_MAPPER["arista_eos"]["ansible"] == "arista.eos.eos"
+    assert lib_mapper.NAME_TO_ALL_LIB_MAPPER["arista_eos"]["pyntc"] == "arista_eos_eapi"
+    assert lib_mapper.NAME_TO_ALL_LIB_MAPPER["cisco_ios"]["dna_center"] == "IOS"
+
+
 @pytest.mark.parametrize("lib", LIBRARIES)
 def test_lib_mapper_alpha(lib):
     original = list(getattr(lib_mapper, f"{lib}_LIB_MAPPER").keys())
@@ -117,5 +142,25 @@ def test_lib_mapper_normalized_name(lib):
     """Ensure that MAIN_LIB_MAPPER is kept up to date."""
     for key in getattr(lib_mapper, f"{lib}_LIB_MAPPER_REVERSE").keys():
         assert key in lib_mapper.MAIN_LIB_MAPPER
-    for value in getattr(lib_mapper, f"{lib}_LIB_MAPPER").values():
-        assert value in lib_mapper.MAIN_LIB_MAPPER
+    for attr in getattr(lib_mapper, f"{lib}_LIB_MAPPER").values():
+        assert attr in lib_mapper.MAIN_LIB_MAPPER
+
+
+def test_all_mappers_included():
+    """Ensure NAME_TO_LIB_MAPPER includes all _LIB_MAPPER dictionaries."""
+    expected_libs = set(MAPPERS.keys())
+    actual_libs = {lib.replace("_", "") for lib in lib_mapper.NAME_TO_LIB_MAPPER.keys()}
+
+    # Check for missing libraries
+    missing = expected_libs - actual_libs
+    assert len(missing) == 0, f"NAME_TO_LIB_MAPPER is missing libraries: {missing}"
+
+
+def test_all_reverse_mappers_included():
+    """Ensure NAME_TO_LIB_MAPPER_REVERSE includes all _LIB_MAPPER_REVERSE dictionaries."""
+    expected_libs = set(MAPPERS.keys())
+    actual_libs = {lib.replace("_", "") for lib in lib_mapper.NAME_TO_LIB_MAPPER_REVERSE.keys()}
+
+    # Check for missing libraries
+    missing = expected_libs - actual_libs
+    assert len(missing) == 0, f"NAME_TO_LIB_MAPPER_REVERSE is missing libraries: {missing}"
