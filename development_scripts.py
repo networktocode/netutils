@@ -9,7 +9,7 @@ from netutils.utils import _JINJA2_FUNCTION_MAPPINGS
 LIB_MAPPER_TEMPLATE = """| {{ header_src }} | | {{ header_dst }} |
 | ---------- | -- | ------ |
 {%- for key, val in _dict|dictsort %}
-| {{ key }} | → | {{ val }} |
+| {{ key }} | → | {{ val|safe }} |
 {%- endfor %}
 """
 
