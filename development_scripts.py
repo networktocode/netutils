@@ -1,9 +1,10 @@
 """Developer script to generate markdown tables."""
 
-from jinja2 import Environment, BaseLoader, select_autoescape
-from netutils.utils import _JINJA2_FUNCTION_MAPPINGS
+from jinja2 import BaseLoader, Environment, select_autoescape
+
 from netutils import lib_mapper
 from netutils.config.compliance import parser_map
+from netutils.utils import _JINJA2_FUNCTION_MAPPINGS
 
 LIB_MAPPER_TEMPLATE = """| {{ header_src }} | | {{ header_dst }} |
 | ---------- | -- | ------ |
@@ -190,6 +191,12 @@ MAPPER = {
             "header_dst": "PYNTC",
             "_dict": lib_mapper.PYNTC_LIB_MAPPER_REVERSE,
             "_file": "docs/user/lib_mapper/pyntc_reverse.md",
+        },
+        "running_config_mapper": {
+            "header_src": "NORMALIZED",
+            "header_dst": "RUNNING_CONFIG_COMMAND",
+            "_dict": lib_mapper.RUNNING_CONFIG_MAPPER,
+            "_file": "docs/user/lib_mapper/running_config.md",
         },
         "scrapli": {
             "header_src": "SCRAPLI",
