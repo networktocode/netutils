@@ -82,7 +82,8 @@ def test_duplicate_line():
         compliance.parser_map["cisco_ios"](logging).config_lines  # pylint: disable=expression-not-assigned
 
 
-def test_leading_spaces_config_start():
+@pytest.mark.parametrize("parser_key", ["cisco_ios", "arista_eos", "cisco_iosxr"])
+def test_leading_spaces_config_start(parser_key):
     logging = (
         "! Command: show running-config\n"
         " 24.1.4\n"
@@ -95,6 +96,4 @@ def test_leading_spaces_config_start():
         "transceiver qsfp default-mode 4x10G\n"
     )
     with pytest.raises(IndexError, match=r".*Validate the first line does not begin with a space.*"):
-        compliance.parser_map["cisco_ios"](logging).config_lines  # pylint: disable=expression-not-assigned
-        compliance.parser_map["arista_eos"](logging).config_lines  # pylint: disable=expression-not-assigned
-        compliance.parser_map["cisco_xr"](logging).config_lines  # pylint: disable=expression-not-assigned
+        compliance.parser_map[parser_key](logging).config_lines  # pylint: disable=expression-not-assigned
