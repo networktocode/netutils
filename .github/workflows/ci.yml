@@ -46,7 +46,7 @@ jobs:
   mypy:
     runs-on: "ubuntu-24.04"
     env:
-      INVOKE_LOCAL: "True"
+      INVOKE_NETUTILS_LOCAL: "True"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"
