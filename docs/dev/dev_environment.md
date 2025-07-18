@@ -32,7 +32,6 @@ Once you have Poetry and Docker installed you can run the following commands (in
 ```shell
 poetry shell
 poetry install
-cp development/creds.example.env development/creds.env
 invoke build
 invoke start
 ```
@@ -82,21 +81,19 @@ Each command can be executed with `invoke <command>`. Each command also has its 
 ### Utility
 
 ```
-  cli                Enter the image to perform troubleshooting or dev work.
-  clean-container    Remove stopped containers that source for image `netutils:`
+  cli                       Enter the image to perform troubleshooting or dev work.
+  clean                     Remove stopped containers that source for image `netutils:`
+  generate-release-notes    Generate Release Notes using Towncrier.
 ```
 
 ### Testing
 
 ```
-  bandit             Run bandit to validate basic static code security analysis.
-  black              Run black to check that Python files adhere to its style standards.
-  coverage           Run the coverage report against pytest.
-  flake8             Run flake8 to check that Python files adhere to its style standards.
-  mypy               Run mypy to validate typing-hints.
-  pylint             Run pylint code analysis.
-  pydocstyle         Run pydocstyle to validate docstring formatting adheres to NTC defined standards.
-  pytest             Run pytest for the specified name and Python version.
-  tests              Run all tests for the specified name and Python version.
-  yamllint           Run yamllint to validate formatting adheres to NTC defined YAML standards.
+  autoformat (a)    Run code autoformatting.
+  pylint            Run pylint for the specified name and Python version.
+  mypy              Run mypy to validate typing-hints.
+  ruff              Run ruff to perform code formatting and/or linting.
+  pytest            Run pytest for the specified name and Python version.
+  tests             Run all tests for the specified name and Python version.
+  yamllint          Run yamllint to validate formatting adheres to NTC defined YAML standards.
 ```

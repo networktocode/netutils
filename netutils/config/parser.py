@@ -181,7 +181,8 @@ class BaseSpaceConfigParser(BaseConfigParser):
         """Remove parents from ``self._curent_parents`` based on indent levels.
 
         Args:
-            config_line: A line of text in the config.
+            line: A line of text in the config.
+            current_spaces: The number of spaces the current line is indented.
 
         Returns:
             The config lines parent config lines.
@@ -418,7 +419,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
         for cfg_line in self.build_config_relationship():
             parents = cfg_line.parents[0] if cfg_line.parents else None
             if parents in potential_parents and self._match_type_check(
-                parents, parent_pattern, match_type  # type: ignore[arg-type]
+                parents,
+                parent_pattern,
+                match_type,  # type: ignore[arg-type]
             ):
                 config.append(cfg_line.config_line)
         return config
@@ -1187,7 +1190,7 @@ class NokiaConfigParser(BaseSpaceConfigParser):
                         section_title = self._get_section_title(line)
                         # At this point it is safe to assume that self._get_section_title returns a string, not a bool.
                         # The following line passes this assumption to Mypy.
-                        assert isinstance(section_title, str)  # nosec
+                        assert isinstance(section_title, str)  # noqa: S101
                         config_lines.append(section_title)
                     else:
                         config_lines.append(line.rstrip())

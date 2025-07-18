@@ -137,7 +137,7 @@ def _juniper_junos_version_metadata(version: str) -> t.Dict[str, t.Any]:
     """Parses JunOS Version into usable bits matching JunOS Standards.
 
     Args:
-        version
+        version (str): String representation of version
 
     Returns:
         A dictionary containing parsed version information

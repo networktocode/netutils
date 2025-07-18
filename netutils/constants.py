@@ -4,7 +4,6 @@ from netutils.data_files.protocol_mappings import (  # noqa: F401 # pylint:disab
     PROTOCOLS,
 )
 
-
 # This variable provides mapping for known interface variants, to the associated long form.
 BASE_INTERFACES = {
     "Ap": "AppGigabitEthernet",
