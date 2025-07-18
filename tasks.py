@@ -260,6 +260,7 @@ def tests(context):
     ruff(context)
     pylint(context)
     yamllint(context)
+    mypy(context)
     pytest(context)
 
     print("All tests have passed!")
