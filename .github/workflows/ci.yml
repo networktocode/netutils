@@ -89,6 +89,8 @@ jobs:
     needs:
       - "ruff-format"
       - "ruff-lint"
+      - "mypy"
+      - "yamllint"
   yamllint:
     runs-on: "ubuntu-24.04"
     env:
