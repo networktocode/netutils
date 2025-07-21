@@ -83,7 +83,7 @@ def test_duplicate_line():
 
 
 @pytest.mark.parametrize("network_os", ["cisco_ios", "arista_eos", "cisco_iosxr"])
-def test_leading_spaces_config_start(network_os): # pylint: disable=redefined-outer-name
+def test_leading_spaces_config_start(network_os):  # pylint: disable=redefined-outer-name
     logging = (
         "! Command: show running-config\n"
         " 24.1.4\n"
