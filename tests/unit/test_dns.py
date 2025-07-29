@@ -1,10 +1,10 @@
 """Test for the DNS based functions."""
 
 import socket
+
 import pytest
 
 from netutils import dns, ip
-
 
 test_is_fqdn = [
     {"sent": "google.com", "received": True},

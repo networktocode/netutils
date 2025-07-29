@@ -1,8 +1,8 @@
 """Test for the Bandwidth functions."""
 
 import pytest
-from netutils import bandwidth
 
+from netutils import bandwidth
 
 name_to_bits = [
     {"sent": "10Mbps", "received": 10000000},

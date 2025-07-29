@@ -1,6 +1,7 @@
 """Test for the IP functions."""
 
 import ipaddress
+
 import pytest
 
 from netutils import ip

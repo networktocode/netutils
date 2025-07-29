@@ -4,6 +4,7 @@ import glob
 import os
 
 import pytest
+
 from netutils.config import compliance
 
 MOCK_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mock", "config", "compliance")
@@ -39,9 +40,7 @@ def test_section_config(_file, network_os, get_text_data, get_python_data):  # p
 
 
 @pytest.mark.parametrize("_file, network_os", compliance_parameters)
-def test_compliance(
-    _file, network_os, get_json_data, get_text_data, get_python_data
-):  # pylint: disable=redefined-outer-name
+def test_compliance(_file, network_os, get_json_data, get_text_data, get_python_data):  # pylint: disable=redefined-outer-name
     truncate_file = os.path.join(MOCK_DIR, _file[: -len(INTEND_FILE)])
 
     intended_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
@@ -72,9 +71,7 @@ def test_find_unordered_cfg_lines(_file, get_text_data, get_python_data):
 
 
 @pytest.mark.parametrize("_file, network_os", config_section_not_parsed_parameters)
-def test_config_section_not_parsed(
-    _file, network_os, get_json_data, get_text_data, get_python_data
-):  # pylint: disable=redefined-outer-name
+def test_config_section_not_parsed(_file, network_os, get_json_data, get_text_data, get_python_data):  # pylint: disable=redefined-outer-name
     truncate_file = os.path.join(MOCK_DIR, _file[: -len(TXT_FILE)])
 
     device_cfg = get_text_data(os.path.join(MOCK_DIR, _file))
