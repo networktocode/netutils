@@ -1,10 +1,11 @@
 """Classes to help manage ACLs ."""
 
-import itertools
 import copy
+import itertools
 import typing as t
-from netutils.protocol_mapper import PROTO_NAME_TO_NUM, TCP_NAME_TO_NUM, UDP_NAME_TO_NUM
+
 from netutils.ip import is_ip_within
+from netutils.protocol_mapper import PROTO_NAME_TO_NUM, TCP_NAME_TO_NUM, UDP_NAME_TO_NUM
 
 try:
     import jsonschema
@@ -175,6 +176,8 @@ class ACLRule:
 
         Args:
             data: A dictionary with string keys and either string or list of string values
+            args: Additional positional arguments.
+            kwargs: Additional keyword arguments.
 
         Examples:
             >>> from netutils.acl import ACLRule
@@ -242,9 +245,7 @@ class ACLRule:
                     results.extend(result)
         return results
 
-    def process_dst_port(
-        self, dst_port: t.Any
-    ) -> t.Union[t.List[str], None]:  # pylint: disable=inconsistent-return-statements
+    def process_dst_port(self, dst_port: t.Any) -> t.Union[t.List[str], None]:  # pylint: disable=inconsistent-return-statements
         """Convert port and protocol information.
 
         Method supports a single format of `{protocol}/{port}`, and will translate the
@@ -493,6 +494,8 @@ class ACLRules:
 
         Args:
             data: A list of `ACLRule` rules.
+            args: Additional positional arguments.
+            kwargs: Additional keyword arguments.
         """
         self.data: t.Any = data
         self.rules: t.List[t.Any] = []

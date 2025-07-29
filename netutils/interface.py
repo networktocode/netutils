@@ -366,7 +366,7 @@ def _split_interface_tuple(interface: str) -> t.Tuple[CharacterClass, ...]:
         for regex, cls in regexes:
             # Hint for Mypy to realize that both the classes and the function on the right side of the regexes tuples
             # are in fact callable.
-            assert callable(cls)  # nosec
+            assert callable(cls)  # noqa: S101
             part = ""
             while idx < len(interface) and re.match(regex, interface[idx]):
                 part += interface[idx]

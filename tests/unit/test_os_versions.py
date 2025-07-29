@@ -1,9 +1,9 @@
 """Test for the lib_helpers definitions."""
 
 import pytest
+
 from netutils import os_version
 from netutils.constants import UPGRADE_PATHS
-
 
 LOOSE_VERSION = [
     {"sent": {"current_version": "10.1", "comparison": ">=", "target_version": "10.2"}, "received": False},

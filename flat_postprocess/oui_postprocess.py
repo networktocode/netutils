@@ -1,7 +1,7 @@
 """Python code used to postprocess Flat github action data related to OUI mappings."""
 
-import sys
 import re
+import sys
 from urllib.request import urlopen
 
 HEX_RE = r"^(?P<hex>[A-Fa-f0-9]{6})\s+\(.*\)[^a-zA-Z0-9]+(?P<company>.*)$"
