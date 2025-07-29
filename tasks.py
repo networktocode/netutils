@@ -273,13 +273,6 @@ def docs(context):
     run_command(context, exec_cmd, port="8001:8001")
 
 
-@task
-def clean_container(context):
-    """Remove stopped containers that source for image `netutils:`."""
-    exec_cmd = r"""docker container rm $(docker container ls -a | grep -E "^\S+\s+netutils:" | awk 'NR>1 {print $1}')"""
-    run_command(context, exec_cmd)
-
-
 @task(
     help={
         "version": "Version of netutils to generate the release notes for.",

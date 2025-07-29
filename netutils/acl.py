@@ -176,8 +176,8 @@ class ACLRule:
 
         Args:
             data: A dictionary with string keys and either string or list of string values
-            args: Additional positional arguments (not used).
-            kwargs: Additional keyword arguments (not used).
+            args: Additional positional arguments.
+            kwargs: Additional keyword arguments.
 
         Examples:
             >>> from netutils.acl import ACLRule
@@ -494,8 +494,8 @@ class ACLRules:
 
         Args:
             data: A list of `ACLRule` rules.
-            args: Additional positional arguments (not used).
-            kwargs: Additional keyword arguments (not used).
+            args: Additional positional arguments.
+            kwargs: Additional keyword arguments.
         """
         self.data: t.Any = data
         self.rules: t.List[t.Any] = []
