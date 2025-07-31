@@ -1771,7 +1771,7 @@ class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-meth
     comment_char = "#"
     section_char = "##"
 
-    def __init__(self, config: str):
+    def __init__(self, config: str):  # pylint: disable=super-init-not-called
         """Create ConfigParser Object.
 
         Args:
@@ -1780,11 +1780,11 @@ class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-meth
         self.config = config
         self._config: t.Optional[str] = None
         self._current_parents: t.Tuple[str, ...] = ()
-        self.generator_config = tuple(self._config_lines_only())
+        self.generator_config = (line for line in (self._config_lines_only()))
         self.config_lines: t.List[ConfigLine] = []
         self.build_config_relationship()
 
-    def _config_lines_only(self) -> [str]:
+    def _config_lines_only(self) -> t.List[str]:
         """Remove spaces and unwanted lines from config lines.
 
         Returns:
@@ -1796,12 +1796,12 @@ class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-meth
             if line.startswith(self.section_char):
                 continue
             stripped = line.strip()
-            if re.match(r'banner \w+ (?!\".+\")', stripped):
+            if re.match(r"banner \w+ (?!\".+\")", stripped):
                 banner_text += line.lstrip()
             elif banner_text and not stripped.endswith('"'):
-                banner_text += '\n' + line
+                banner_text += "\n" + line
             elif banner_text and stripped.endswith('"'):
-                banner_text += '\n' + line
+                banner_text += "\n" + line
                 config_lines.append(banner_text)
                 banner_text = ""
             elif stripped:
@@ -1843,7 +1843,7 @@ class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-meth
             ...     ConfigLine(config_line='vlan 1', parents=()),
             ...     ConfigLine(config_line='vlan 2', parents=()),
             ...     ConfigLine(config_line='vlan 3', parents=()),
-            ...     ConfigLine(config_line='banner login "\n\nMULTILINE BANNER"', parents=()),
+            ...     ConfigLine(config_line='banner login "\n\n       MULTILINE BANNER"', parents=()),
             ... ]
             True
         """
