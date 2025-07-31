@@ -1,7 +1,7 @@
 """Test for the VLAN functions."""
 
-import os
 import glob
+import os
 
 import pytest
 

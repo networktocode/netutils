@@ -125,19 +125,25 @@ CAPIRCA_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # DNA Center | Normalized
-DNA_CENTER_LIB_MAPPER = {
+DNACENTER_LIB_MAPPER = {
     "IOS": "cisco_ios",
     "IOS-XE": "cisco_ios",
     "NX-OS": "cisco_nxos",
     "IOS-XR": "cisco_xr",
 }
 
+# REMOVE IN 2.X, kept for backward compatibility
+DNA_CENTER_LIB_MAPPER = copy.deepcopy(DNACENTER_LIB_MAPPER)
+
 # Normalized | DNA Center
-DNA_CENTER_LIB_MAPPER_REVERSE = {
+DNACENTER_LIB_MAPPER_REVERSE = {
     "cisco_ios": "IOS",
     "cisco_nxos": "NX-OS",
     "cisco_xr": "IOS-XR",
 }
+
+# REMOVE IN 2.X, kept for backward compatibility
+DNA_CENTER_LIB_MAPPER_REVERSE = copy.deepcopy(DNACENTER_LIB_MAPPER_REVERSE)
 
 # Normalized | Netmiko
 NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
@@ -300,6 +306,16 @@ NAPALM_LIB_MAPPER: t.Dict[str, str] = {
     "vyos": "vyos",
 }
 
+# Running config command
+RUNNING_CONFIG_MAPPER: t.Dict[str, str] = {
+    "cisco_ios": "show running-config",
+    "cisco_nxos": "show running-config",
+    "cisco_xr": "show running-config",
+    "juniper_junos": "show configuration | display set",
+    "arista_eos": "show running-config",
+    "checkpoint_gaia": 'clish -c "show configuration"',
+}
+
 # PYTNC | Normalized
 PYNTC_LIB_MAPPER: t.Dict[str, str] = {
     "arista_eos_eapi": "arista_eos",
@@ -407,6 +423,7 @@ NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
     "mrv_optiswitch": "mrv_optiswitch",
     "netscaler": "netscaler",
     "nokia_sros": "nokia_sros",
+    "nvidia_onyx": "nvidia_onyx",
     "paloalto_panos": "paloalto_panos",
     "ruckus_fastiron": "ruckus_fastiron",
     "ubiquiti_airos": "ubiquiti_airos",
@@ -435,12 +452,14 @@ FORWARDNETWORKS_LIB_MAPPER: t.Dict[str, str] = {
 # NIST | Normalized
 NIST_LIB_MAPPER = {
     "adaptive_security_appliance_software": "cisco_asa",
-    "nx-os": "cisco_nxos",
-    "ios_xr": "cisco_xr",
-    "ios_xe": "cisco_xe",
+    "arubaos": "aruba_os",
     "eos": "arista_eos",
     "ios": "cisco_ios",
+    "ios_xe": "cisco_xe",
+    "ios_xr": "cisco_xr",
+    "nx-os": "cisco_nxos",
     "junos": "juniper_junos",
+    "pan-os": "paloalto_panos",
 }
 
 # Normalized | NAPALM
@@ -575,6 +594,7 @@ NETUTILSPARSER_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "mrv_optiswitch": "mrv_optiswitch",
     "netscaler": "netscaler",
     "nokia_sros": "nokia_sros",
+    "nvidia_onyx": "nvidia_onyx",
     "paloalto_panos": "paloalto_panos",
     "ruckus_fastiron": "ruckus_fastiron",
     "ubiquiti_airos": "ubiquiti_airos",
@@ -600,15 +620,29 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 
 # Normalized | NIST
 NIST_LIB_MAPPER_REVERSE = {
-    "cisco_asa": "adaptive_security_appliance_software",
-    "cisco_nxos": "nx-os",
-    "cisco_xr": "ios_xr",
-    "cisco_xe": "ios_xe",
     "arista_eos": "eos",
+    "aruba_os": "arubaos",
+    "cisco_asa": "adaptive_security_appliance_software",
     "cisco_ios": "ios",
+    "cisco_nxos": "nx-os",
+    "cisco_xe": "ios_xe",
+    "cisco_xr": "ios_xr",
     "juniper_junos": "junos",
+    "paloalto_panos": "pan-os",
 }
 
+# Normalized | NIST reverse dictionary parser for NIST URL generation.
+NIST_TO_VENDOR = {
+    "arista_eos": {"vendor": "arista", "os_name": "eos"},
+    "aruba_os": {"vendor": "arubanetworks", "os_name": "arubaos"},
+    "cisco_asa": {"vendor": "cisco", "os_name": "adaptive_security_appliance_software"},
+    "cisco_ios": {"vendor": "cisco", "os_name": "ios"},
+    "cisco_nxos": {"vendor": "cisco", "os_name": "nx-os"},
+    "cisco_xe": {"vendor": "cisco", "os_name": "ios_xe"},
+    "cisco_xr": {"vendor": "cisco", "os_name": "ios_xr"},
+    "juniper_junos": {"vendor": "juniper", "os_name": "junos"},
+    "paloalto_panos": {"vendor": "paloaltonetworks", "os_name": "pan-os"},
+}
 
 # Deep copy the reverse, where there is no actual translation happening with special
 # consideration for OS's not in netmiko.
@@ -628,6 +662,7 @@ _MAIN_LIB_MAPPER["iptables"] = "iptables"
 _MAIN_LIB_MAPPER["k8s"] = "k8s"
 _MAIN_LIB_MAPPER["lenovo_cnos"] = "lenovo_cnos"
 _MAIN_LIB_MAPPER["lenovo_enos"] = "lenovo_enos"
+_MAIN_LIB_MAPPER["nvidia_onyx"] = "nvidia_onyx"
 _MAIN_LIB_MAPPER["openconfig"] = "openconfig"
 _MAIN_LIB_MAPPER["packetfilter"] = "packetfilter"
 _MAIN_LIB_MAPPER["pcap"] = "pcap"
@@ -641,3 +676,56 @@ _MAIN_LIB_MAPPER["vmware_nsxt"] = "vmware_nsxt"
 _MAIN_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
 _MAIN_LIB_MAPPER["windows"] = "windows"
 MAIN_LIB_MAPPER: t.Dict[str, str] = {key: _MAIN_LIB_MAPPER[key] for key in sorted(_MAIN_LIB_MAPPER)}
+
+NAME_TO_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {
+    "aerleon": AERLEON_LIB_MAPPER,
+    "ansible": ANSIBLE_LIB_MAPPER,
+    "capirca": CAPIRCA_LIB_MAPPER,
+    "dna_center": DNACENTER_LIB_MAPPER,
+    "forward_networks": FORWARDNETWORKS_LIB_MAPPER,
+    "hier_config": HIERCONFIG_LIB_MAPPER,
+    "napalm": NAPALM_LIB_MAPPER,
+    "netmiko": NETMIKO_LIB_MAPPER,
+    "netutils_parser": NETUTILSPARSER_LIB_MAPPER,
+    "nist": NIST_LIB_MAPPER,
+    "ntc_templates": NTCTEMPLATES_LIB_MAPPER,
+    "pyats": PYATS_LIB_MAPPER,
+    "pyntc": PYNTC_LIB_MAPPER,
+    "scrapli": SCRAPLI_LIB_MAPPER,
+}
+
+
+NAME_TO_LIB_MAPPER_REVERSE: t.Dict[str, t.Dict[str, str]] = {
+    "aerleon": AERLEON_LIB_MAPPER_REVERSE,
+    "ansible": ANSIBLE_LIB_MAPPER_REVERSE,
+    "capirca": CAPIRCA_LIB_MAPPER_REVERSE,
+    "dna_center": DNACENTER_LIB_MAPPER_REVERSE,
+    "forward_networks": FORWARDNETWORKS_LIB_MAPPER_REVERSE,
+    "hier_config": HIERCONFIG_LIB_MAPPER_REVERSE,
+    "napalm": NAPALM_LIB_MAPPER_REVERSE,
+    "netmiko": NETMIKO_LIB_MAPPER_REVERSE,
+    "netutils_parser": NETUTILSPARSER_LIB_MAPPER_REVERSE,
+    "nist": NIST_LIB_MAPPER_REVERSE,
+    "ntc_templates": NTCTEMPLATES_LIB_MAPPER_REVERSE,
+    "pyats": PYATS_LIB_MAPPER_REVERSE,
+    "pyntc": PYNTC_LIB_MAPPER_REVERSE,
+    "scrapli": SCRAPLI_LIB_MAPPER_REVERSE,
+}
+
+
+# Creates a structure like this:
+# {
+#     "cisco_ios": {
+#         "ansible": "cisco.ios.ios",
+#         "napalm": "ios",
+#     },
+#     "cisco_nxos": {
+#         "ansible": "cisco.nxos.nxos",
+#         "napalm": "nxos",
+#     },
+NAME_TO_ALL_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {}
+
+for tool_name, mappings in NAME_TO_LIB_MAPPER_REVERSE.items():
+    for normalized_name, mapped_name in mappings.items():
+        NAME_TO_ALL_LIB_MAPPER.setdefault(normalized_name, {})
+        NAME_TO_ALL_LIB_MAPPER[normalized_name][tool_name] = mapped_name

@@ -44,9 +44,7 @@ def test_find_all_children(_file, network_os, get_text_data, get_json_data):  # 
 
 
 @pytest.mark.parametrize("_file, network_os", find_children_w_parents_parameters)
-def test_find_children_w_parents(
-    _file, network_os, get_text_data, get_json_data
-):  # pylint: disable=redefined-outer-name
+def test_find_children_w_parents(_file, network_os, get_text_data, get_json_data):  # pylint: disable=redefined-outer-name
     truncate_file = os.path.join(MOCK_DIR, "find_children_w_parents", _file[: -len(TXT_FILE)])
 
     device_cfg = get_text_data(os.path.join(MOCK_DIR, "find_children_w_parents", _file))

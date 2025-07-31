@@ -1,7 +1,8 @@
 """Test for the time functions."""
 
 import pytest
-from netutils.time import uptime_string_to_seconds, uptime_seconds_to_string
+
+from netutils.time import uptime_seconds_to_string, uptime_string_to_seconds
 
 UPTIME_TO_STRING = [
     {

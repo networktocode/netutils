@@ -4,7 +4,6 @@ import pytest
 
 from netutils.hash import hash_data
 
-
 EXPECTED_HASHES = [
     (
         "md5",

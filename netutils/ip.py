@@ -404,7 +404,7 @@ def is_network(ip_network: str) -> bool:
     """Verifies whether or not a string is a valid IP Network with a Mask.
 
     Args:
-        ip: An IP network in string format that is able to be converted by `ipaddress` library.
+        ip_network: An IP network in string format that is able to be converted by `ipaddress` library.
 
     Returns:
         The result as to whether or not the string is a valid IP network.
