@@ -266,9 +266,9 @@ def get_nist_urls(network_driver: str, version: str) -> t.List[str]:
         t.List[str]: NIST URLs to search for possible CVE matches
     """
     # DICTIONARY FOR VENDOR/PLATFORM TO NETWORK_DRIVER; UPDATE AS NEEDED
-    network_driver_mappings = NIST_LIB_MAPPER_REVERSE
-
-    vendor_os = network_driver_mappings[network_driver]
+    vendor_os = NIST_LIB_MAPPER_REVERSE.get(network_driver, {})
+    if not vendor_os:
+        raise ValueError(f"The network driver {network_driver} has no associated mapping, current supported in {NIST_LIB_MAPPER_REVERSE.keys()}.")
     vendor, os_name = vendor_os.split(":")
 
     return get_nist_vendor_platform_urls(vendor, os_name, version)
