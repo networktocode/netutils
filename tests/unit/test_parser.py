@@ -78,3 +78,31 @@ def test_duplicate_line():
     )
     with pytest.raises(IndexError, match=r".*This error is likely from a duplicate line detected.*"):
         compliance.parser_map["cisco_ios"](logging).config_lines  # pylint: disable=expression-not-assigned
+
+
+def test_banner_delimiter_iosxr():
+    banner_cfg = (
+        "banner motd ^This is the first line of a test banner.\n"
+        "This is the second line of a test banner.\n"
+        "This is the third line of a test banner.^\n"
+        "\n"
+        "ntp\n"
+        " server 192.0.2.1\n"
+        " server 192.0.2.2\n"
+    )
+    delimiter = compliance.parser_map["cisco_iosxr"](banner_cfg).delimiter
+    assert delimiter == "^"
+
+
+def test_banner_eof_delimiter_iosxr():
+    banner_cfg = (
+        "ntp\n"
+        " server 192.0.2.1\n"
+        " server 192.0.2.2\n"
+        "\n"
+        "banner motd ^This is the first line of a test banner.\n"
+        "This is the second line of a test banner.\n"
+        "This is the third line of a test banner.^\n"
+    )
+    delimiter = compliance.parser_map["cisco_iosxr"](banner_cfg).delimiter
+    assert delimiter == "^"
