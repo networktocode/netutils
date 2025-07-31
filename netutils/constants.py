@@ -11,6 +11,7 @@ BASE_INTERFACES = {
     "ap": "AppGigabitEthernet",
     "ATM": "ATM",
     "AT": "ATM",
+    "B": "Bdi",
     "Bd": "Bdi",
     "Bdi": "Bdi",
     "Bv": "BVI",
