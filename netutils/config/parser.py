@@ -312,8 +312,11 @@ class BaseSpaceConfigParser(BaseConfigParser):
             ... ]
             True
         """
-        for line in self.generator_config:
-            if not line[0].isspace():
+        for index, line in enumerate(self.generator_config):
+            current_spaces = self.get_leading_space_count(line) if line[0].isspace() else 0
+            if index == 0 and line[0].isspace():
+                self._current_parents = self._remove_parents(line, current_spaces)
+            elif not line[0].isspace():
                 self._current_parents = ()
                 if self.is_banner_start(line):
                     line = self._build_banner(line)  # type: ignore
@@ -988,8 +991,11 @@ class ASAConfigParser(CiscoConfigParser):
             ... ]
             True
         """
-        for line in self.generator_config:
-            if not line[0].isspace():
+        for index, line in enumerate(self.generator_config):
+            current_spaces = self.get_leading_space_count(line) if line[0].isspace() else 0
+            if index == 0 and line[0].isspace():
+                self._current_parents = self._remove_parents(line, current_spaces)
+            elif not line[0].isspace():
                 self._current_parents = ()
             else:
                 previous_config = self.config_lines[-1]
@@ -1386,7 +1392,11 @@ class IOSXRConfigParser(CiscoConfigParser):
             ... ]
             True
         """
-        for line in self.generator_config:
+        for index, line in enumerate(self.generator_config):
+            current_spaces = self.get_leading_space_count(line) if line[0].isspace() else 0
+
+            if index == 0 and line[0].isspace():
+                self._current_parents = self._remove_parents(line, current_spaces)
             if not line[0].isspace():
                 self._current_parents = ()
                 if self.is_banner_start(line):
