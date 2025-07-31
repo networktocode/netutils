@@ -78,3 +78,20 @@ def test_duplicate_line():
     )
     with pytest.raises(IndexError, match=r".*This error is likely from a duplicate line detected.*"):
         compliance.parser_map["cisco_ios"](logging).config_lines  # pylint: disable=expression-not-assigned
+
+
+@pytest.mark.parametrize("network_os", ["cisco_ios", "arista_eos", "cisco_iosxr"])
+def test_leading_spaces_config_start(network_os):  # pylint: disable=redefined-outer-name
+    logging = (
+        "! Command: show running-config\n"
+        " 24.1.4\n"
+        "!\n"
+        "no aaa root\n"
+        "!\n"
+        "management api http-commands\n"
+        "   no shutdown\n"
+        "no service interface inactive port-id allocation disabled\n"
+        "transceiver qsfp default-mode 4x10G\n"
+    )
+    with pytest.raises(IndexError, match=r".*Validate the first line does not begin with a space.*"):
+        compliance.parser_map[network_os](logging).config_lines  # pylint: disable=expression-not-assigned
