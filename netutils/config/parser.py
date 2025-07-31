@@ -1796,12 +1796,12 @@ class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-meth
             if line.startswith(self.section_char):
                 continue
             stripped = line.strip()
-            if re.match(r'banner \w+ (?!\".+\")', stripped):
+            if re.match(r"banner \w+ (?!\".+\")", stripped):
                 banner_text += line.lstrip()
             elif banner_text and not stripped.endswith('"'):
-                banner_text += '\n' + line
+                banner_text += "\n" + line
             elif banner_text and stripped.endswith('"'):
-                banner_text += '\n' + line
+                banner_text += "\n" + line
                 config_lines.append(banner_text)
                 banner_text = ""
             elif stripped:
