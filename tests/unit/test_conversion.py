@@ -4,9 +4,10 @@ import glob
 import os
 
 import pytest
+
 from netutils.config.conversion import (
-    paloalto_panos_brace_to_set,
     conversion_map,
+    paloalto_panos_brace_to_set,
 )
 
 MOCK_DIR = os.path.join(os.path.dirname(os.path.realpath(__file__)), "mock", "config", "conversion")

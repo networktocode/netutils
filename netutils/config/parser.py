@@ -181,7 +181,8 @@ class BaseSpaceConfigParser(BaseConfigParser):
         """Remove parents from ``self._curent_parents`` based on indent levels.
 
         Args:
-            config_line: A line of text in the config.
+            line: A line of text in the config.
+            current_spaces: The number of spaces the current line is indented.
 
         Returns:
             The config lines parent config lines.
@@ -418,7 +419,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
         for cfg_line in self.build_config_relationship():
             parents = cfg_line.parents[0] if cfg_line.parents else None
             if parents in potential_parents and self._match_type_check(
-                parents, parent_pattern, match_type  # type: ignore[arg-type]
+                parents,  # type: ignore[arg-type]
+                parent_pattern,
+                match_type,
             ):
                 config.append(cfg_line.config_line)
         return config
@@ -1187,7 +1190,7 @@ class NokiaConfigParser(BaseSpaceConfigParser):
                         section_title = self._get_section_title(line)
                         # At this point it is safe to assume that self._get_section_title returns a string, not a bool.
                         # The following line passes this assumption to Mypy.
-                        assert isinstance(section_title, str)  # nosec
+                        assert isinstance(section_title, str)  # noqa: S101
                         config_lines.append(section_title)
                     else:
                         config_lines.append(line.rstrip())
@@ -1763,3 +1766,92 @@ class HPComwareConfigParser(HPEConfigParser, BaseSpaceConfigParser):
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Build a banner from the given config line."""
         return super(HPComwareConfigParser, self)._build_banner(config_line)
+
+
+class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-method
+    """Nvidia Onyx config parser."""
+
+    comment_char = "#"
+    section_char = "##"
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config: The config text to parse.
+        """
+        self.config = config
+        self._config: t.Optional[str] = None
+        self._current_parents: t.Tuple[str, ...] = ()
+        self.generator_config = tuple(self._config_lines_only())
+        self.config_lines: t.List[ConfigLine] = []
+        self.build_config_relationship()
+
+    def _config_lines_only(self) -> [str]:
+        """Remove spaces and unwanted lines from config lines.
+
+        Returns:
+            An array with non-space and non-comment lines from ``config``.
+        """
+        banner_text = ""
+        config_lines = []
+        for line in self.config.splitlines():
+            if line.startswith(self.section_char):
+                continue
+            stripped = line.strip()
+            if re.match(r'banner \w+ (?!\".+\")', stripped):
+                banner_text += line.lstrip()
+            elif banner_text and not stripped.endswith('"'):
+                banner_text += '\n' + line
+            elif banner_text and stripped.endswith('"'):
+                banner_text += '\n' + line
+                config_lines.append(banner_text)
+                banner_text = ""
+            elif stripped:
+                config_lines.append(stripped)
+
+        return config_lines
+
+    @property
+    def config_lines_only(self) -> str:
+        """Remove spaces and unwanted lines from config lines.
+
+        Returns:
+            The non-space and non-comment lines from ``config``.
+        """
+        return "\n".join(self._config_lines_only())
+
+    def build_config_relationship(self) -> t.List[ConfigLine]:
+        r"""Parse text config lines and banners.
+
+        Examples:
+            >>> from netutils.config.parser import BaseSpaceConfigParser, ConfigLine
+            >>> config = '''
+            ...     ##
+            ...     ## VLAN configuration
+            ...     ##
+            ...        vlan 1
+            ...        vlan 2
+            ...        vlan 3
+            ...
+            ...     ##
+            ...     ## Network management configuration
+            ...     ##
+            ...        banner login "
+            ...
+            ...        MULTILINE BANNER"'''
+            >>> config_tree = NvidiaOnyxConfigParser(config)
+            >>> config_tree.build_config_relationship() == \
+            ... [
+            ...     ConfigLine(config_line='vlan 1', parents=()),
+            ...     ConfigLine(config_line='vlan 2', parents=()),
+            ...     ConfigLine(config_line='vlan 3', parents=()),
+            ...     ConfigLine(config_line='banner login "\n\nMULTILINE BANNER"', parents=()),
+            ... ]
+            True
+        """
+        for line in self.generator_config:
+            if not line.startswith(self.comment_char):
+                self.config_lines.append(ConfigLine(line, ()))
+
+        return self.config_lines

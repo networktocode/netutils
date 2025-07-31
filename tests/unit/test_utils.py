@@ -8,6 +8,7 @@ from inspect import getmembers, isfunction
 import pytest
 from jinja2 import Environment, select_autoescape
 from jinja2.loaders import FileSystemLoader
+
 from netutils.utils import _JINJA2_FUNCTION_MAPPINGS, jinja2_convenience_function
 
 _EXCLUDED_FILES = [

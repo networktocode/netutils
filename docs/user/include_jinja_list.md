@@ -91,6 +91,7 @@
 | regex_split | netutils.regex.regex_split |
 | regex_sub | netutils.regex.regex_sub |
 | longest_prefix_match | netutils.route.longest_prefix_match |
+| get_running_config_command | netutils.running_config.get_running_config_command |
 | uptime_seconds_to_string | netutils.time.uptime_seconds_to_string |
 | uptime_string_to_seconds | netutils.time.uptime_string_to_seconds |
 | vlanconfig_to_list | netutils.vlan.vlanconfig_to_list |

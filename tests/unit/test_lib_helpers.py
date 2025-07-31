@@ -3,6 +3,7 @@
 from unittest import mock
 
 import pytest
+
 from netutils.lib_helpers import get_napalm_getters
 
 

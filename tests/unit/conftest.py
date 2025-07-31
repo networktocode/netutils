@@ -1,8 +1,8 @@
 """Used to setup fixtures to be used through tests"""
 
+import importlib.util
 import json
 import os
-import importlib.util
 
 import pytest
 
