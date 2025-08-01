@@ -269,7 +269,7 @@ def get_nist_urls(network_driver: str, version: str) -> t.List[str]:
     vendor_os: str = NIST_LIB_MAPPER_REVERSE.get(network_driver, "")
     if not vendor_os:
         raise ValueError(
-            f"The network driver {network_driver} has no associated mapping, current supported in {NIST_LIB_MAPPER_REVERSE.keys()}."
+            f"The network driver {network_driver} has no associated mapping, the supported drivers are {NIST_LIB_MAPPER_REVERSE.keys()}."
         )
     vendor, os_name = vendor_os.split(":")
 
