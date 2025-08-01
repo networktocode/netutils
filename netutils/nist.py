@@ -5,7 +5,7 @@ import dataclasses
 import re
 import typing as t
 
-from netutils.lib_mapper import NIST_TO_VENDOR
+from netutils.lib_mapper import NIST_LIB_MAPPER_REVERSE
 from netutils.os_version import version_metadata
 
 # Setting up the dataclass values for specific parsers
@@ -247,6 +247,12 @@ def get_nist_vendor_platform_urls(vendor: str, platform: str, version: str) -> t
 
     Returns:
         t.List[str]: NIST URLs to search for possible CVE matches
+
+    Examples:
+        >>> from netutils.nist import get_nist_vendor_platform_urls
+        >>> get_nist_vendor_platform_urls('cisco', 'ios', '15.3')
+        ['https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:cisco:ios:15.3:*']
+        >>>
     """
     platform_data = _os_platform_object_builder(vendor, platform, version).__dict__
 
@@ -264,10 +270,19 @@ def get_nist_urls(network_driver: str, version: str) -> t.List[str]:
 
     Returns:
         t.List[str]: NIST URLs to search for possible CVE matches
+
+    Examples:
+        >>> from netutils.nist import get_nist_urls
+        >>> get_nist_urls('cisco_ios', '15.3')
+        ['https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:cisco:ios:15.3:*']
+        >>>
     """
     # DICTIONARY FOR VENDOR/PLATFORM TO NETWORK_DRIVER; UPDATE AS NEEDED
-    network_driver_mappings = NIST_TO_VENDOR
+    vendor_os: str = NIST_LIB_MAPPER_REVERSE.get(network_driver, "")
+    if not vendor_os:
+        raise ValueError(
+            f"The network driver `{network_driver}` has no associated mapping, the supported drivers are {list(NIST_LIB_MAPPER_REVERSE.keys())}."
+        )
+    vendor, os_name = vendor_os.split(":")
 
-    vendor_os = network_driver_mappings[network_driver]
-
-    return get_nist_vendor_platform_urls(vendor_os["vendor"], vendor_os["os_name"], version)
+    return get_nist_vendor_platform_urls(vendor, os_name, version)
