@@ -37,9 +37,13 @@ def test_get_nist_urls(data):
     platform_obj = nist.get_nist_urls(data["sent"]["network_driver"], data["sent"]["version"])
     assert platform_obj == data["received"]
 
+
 def test_get_nist_urls_failed():
-    with pytest.raises(ValueError, match=r"The network driver `fakeos` has no associated mapping, the supported drivers are*"):
+    with pytest.raises(
+        ValueError, match=r"The network driver `fakeos` has no associated mapping, the supported drivers are*"
+    ):
         nist.get_nist_urls("fakeos", "15.5")
+
 
 def test_get_nist_vendor_platform_urls():
     platform_obj = nist.get_nist_vendor_platform_urls("cisco", "ios", "15.5")
