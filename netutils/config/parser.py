@@ -1870,6 +1870,11 @@ class RadEtxConfigParser(BaseSpaceConfigParser):
     comment_chars: t.List[str] = ["#", "!"]
     banner_start: t.List[str] = []
 
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Rad ETX platform doesn't have a banner.")
+
     def __init__(self, config: str):
         """Create ConfigParser Object.
 
@@ -1895,8 +1900,8 @@ class RadEtxConfigParser(BaseSpaceConfigParser):
             True
             >>>
         """
-        for exit in ["exit", "exit all"]:
-            if line.lstrip().lower() == exit:
+        for exit_command in ["exit", "exit all"]:
+            if line.lstrip().lower() == exit_command:
                 return True
         return False
 
