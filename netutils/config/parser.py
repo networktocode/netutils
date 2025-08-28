@@ -1862,3 +1862,56 @@ class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-meth
                 self.config_lines.append(ConfigLine(line, ()))
 
         return self.config_lines
+
+
+class RadEtxConfigParser(BaseSpaceConfigParser):
+    """Rad ETX config parser."""
+
+    comment_chars: t.List[str] = ["#", "!"]
+    banner_start: t.List[str] = []
+
+    def __init__(self, config: str):
+        """Create ConfigParser Object.
+
+        Args:
+            config (str): The config text to parse.
+        """
+        super(RadEtxConfigParser, self).__init__(config)
+
+    def is_exit_or_exit_all(self, line: str) -> bool:
+        """Determine if line has 'exit' or 'exit all' in it.
+
+        Args:
+            line: A config line from the device.
+
+        Returns:
+            True if line has 'exit' or 'exit all', else False.
+
+        Examples:
+            >>> from netutils.config.parser import RadEtxConfigParser
+            >>> RadEtxConfigParser("config system virtual-switch").is_exit_or_exit_all("config system virtual-switch")
+            False
+            >>> RadEtxConfigParser("exit").is_exit_or_exit_all("exit")
+            True
+            >>>
+        """
+        for exit in ["exit", "exit all"]:
+            if line.lstrip().lower() == exit:
+                return True
+        return False
+
+    @property
+    def config_lines_only(self) -> str:
+        """Remove spaces and comments from config lines.
+
+        Returns:
+            The non-space and non-comment lines from ``config``.
+        """
+        if self._config is None:
+            config_lines = (
+                line.rstrip()
+                for line in self.config.splitlines()
+                if line and not self.is_comment(line) and not line.isspace() and not self.is_exit_or_exit_all(line)
+            )
+            self._config = "\n".join(config_lines)
+        return self._config

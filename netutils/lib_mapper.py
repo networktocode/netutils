@@ -425,6 +425,7 @@ NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
     "nokia_sros": "nokia_sros",
     "nvidia_onyx": "nvidia_onyx",
     "paloalto_panos": "paloalto_panos",
+    "rad_etx": "rad_etx",
     "ruckus_fastiron": "ruckus_fastiron",
     "ubiquiti_airos": "ubiquiti_airos",
 }
@@ -596,6 +597,7 @@ NETUTILSPARSER_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "nokia_sros": "nokia_sros",
     "nvidia_onyx": "nvidia_onyx",
     "paloalto_panos": "paloalto_panos",
+    "rad_etx": "rad_etx",
     "ruckus_fastiron": "ruckus_fastiron",
     "ubiquiti_airos": "ubiquiti_airos",
 }
