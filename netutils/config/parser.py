@@ -1867,21 +1867,13 @@ class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-meth
 class RadEtxConfigParser(BaseSpaceConfigParser):
     """Rad ETX config parser."""
 
-    comment_chars: t.List[str] = ["#", "!"]
+    comment_chars: t.List[str] = ["#", "configure", "admin", "file"]
     banner_start: t.List[str] = []
 
     @property
     def banner_end(self) -> str:
         """Demarcate End of Banner char(s)."""
         raise NotImplementedError("Rad ETX platform doesn't have a banner.")
-
-    def __init__(self, config: str):
-        """Create ConfigParser Object.
-
-        Args:
-            config (str): The config text to parse.
-        """
-        super(RadEtxConfigParser, self).__init__(config)
 
     def is_exit_or_exit_all(self, line: str) -> bool:
         """Determine if line has 'exit' or 'exit all' in it.
@@ -1914,7 +1906,7 @@ class RadEtxConfigParser(BaseSpaceConfigParser):
         """
         if self._config is None:
             config_lines = (
-                line.rstrip()
+                line.removeprefix("        ")  # Rad ETX uses 8 spaces for initial indentation
                 for line in self.config.splitlines()
                 if line and not self.is_comment(line) and not line.isspace() and not self.is_exit_or_exit_all(line)
             )

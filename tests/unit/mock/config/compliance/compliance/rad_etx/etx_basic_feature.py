@@ -1,3 +1,3 @@
 features = [
-    {"name": "flow", "ordered": False, "section": ["config flows"]},
+    {"name": "terminal", "ordered": False, "section": ["terminal"]},
 ]

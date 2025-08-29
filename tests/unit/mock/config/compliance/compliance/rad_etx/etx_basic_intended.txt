@@ -1,84 +1,732 @@
-exit all
-config flows	
-    classifier-profile "all" match-any
-        match all
+    configure
+        echo "Terminal Configuration"
+    #       Terminal Configuration
+        terminal
+            timeout soon
+        exit
+        echo "System Configuration"
+    #       System Configuration
+        system
+            name "ETX001"
+            echo "LLDP Configuration"
+    #           LLDP Configuration
+            lldp
+                no shutdown
+            exit
+        exit
+        echo "Management configuration"
+    #       Management configuration
+        management
+            login-user "net-creds-1"
+                level su
+                password "abcdefghijklmnopqrstuvwxyz123456789abcde" hash
+                no shutdown
+            exit
+            login-user "net-creds-2"
+                level oper
+                password "abcdefghijklmnopqrstuvwxyz123456789zyxwv" hash
+                no shutdown
+            exit
+            echo "SNMP Configuration"
+    #           SNMP Configuration
+            snmp
+                user "snmpv2" none-auth
+                    no shutdown
+                exit
+                access-group "snmpv2" snmpv2c no-auth-no-priv
+                    read-view "ntc"
+                    write-view "ntc"
+                    notify-view "ntc"
+                    no shutdown
+                exit
+                access-group "v2_read" snmpv2c no-auth-no-priv
+                    write-view "ntc"
+                exit
+                security-to-group snmpv2c sec-name "snmpv2"
+                    group-name "snmpv2"
+                    no shutdown
+                exit
+                community "ntccommunity"
+                    name "ntccommunity"
+                    sec-name "v2_write"
+                    no shutdown
+                exit
+                community "public"
+                    name "public"
+                    sec-name "v2_read"
+                    no shutdown
+                exit
+                community "read"
+                    name "private"
+                    sec-name "v2_read"
+                    no shutdown
+                exit
+                community "trap"
+                    name "private"
+                    sec-name "v2_trap"
+                    no shutdown
+                exit
+                community "trapCommunity"
+                    name "trapCommunity"
+                    sec-name "v2_trap"
+                    no shutdown
+                exit
+                community "write"
+                    name "private"
+                    sec-name "v2_write"
+                    no shutdown
+                exit
+                target-params "example1"
+                    message-processing-model snmpv2c
+                    version snmpv2c
+                    security name "v2_trap" level no-auth-no-priv
+                    no shutdown
+                exit
+                target-params "example2"
+                    message-processing-model snmpv2c
+                    version snmpv2c
+                    security name "v2_trap" level no-auth-no-priv
+                    no shutdown
+                exit
+                config-change-notification
+            exit
+        exit
+        echo "Port Configuration"
+    #       Port Configuration
+        port
+            l2cp-profile "network"
+                mac "01-80-c2-00-00-02" peer
+                mac "01-80-c2-00-00-0e" peer
+            exit
+            l2cp-profile "EXAMPLE-ONE"
+                mac "01-80-c2-00-00-01" discard
+            exit
+            l2cp-profile "EXAMPLE-TWO"
+                mac "01-80-c2-00-00-02" peer
+                mac "01-80-c2-00-00-0e" peer
+            exit
+            l2cp-profile "EXAMPLE-THREE"
+                mac "01-80-c2-00-00-00" discard
+                mac "01-80-c2-00-00-01" discard
+                mac "01-80-c2-00-00-02" discard
+                mac "01-80-c2-00-00-03" discard
+                mac "01-80-c2-00-00-04" discard
+                mac "01-80-c2-00-00-05" discard
+                mac "01-80-c2-00-00-06" discard
+                mac "01-80-c2-00-00-07" discard
+                mac "01-80-c2-00-00-08" discard
+                mac "01-80-c2-00-00-09" discard
+                mac "01-80-c2-00-00-0a" discard
+                mac "01-80-c2-00-00-0b" discard
+                mac "01-80-c2-00-00-0c" discard
+                mac "01-80-c2-00-00-0d" discard
+                mac "01-80-c2-00-00-0e" discard
+                mac "01-80-c2-00-00-0f" discard
+                mac "01-80-c2-00-00-10" discard
+                mac "01-80-c2-00-00-20" discard
+                mac "01-80-c2-00-00-21" discard
+                mac "01-80-c2-00-00-22" discard
+                mac "01-80-c2-00-00-23" discard
+                mac "01-80-c2-00-00-24" discard
+                mac "01-80-c2-00-00-25" discard
+                mac "01-80-c2-00-00-26" discard
+                mac "01-80-c2-00-00-27" discard
+                mac "01-80-c2-00-00-28" discard
+                mac "01-80-c2-00-00-29" discard
+                mac "01-80-c2-00-00-2a" discard
+                mac "01-80-c2-00-00-2b" discard
+                mac "01-80-c2-00-00-2c" discard
+                mac "01-80-c2-00-00-2d" discard
+                mac "01-80-c2-00-00-2e" discard
+                mac "01-80-c2-00-00-2f" discard
+                mac "01-00-0c-cc-cc-cc" discard
+                mac "01-00-0c-cc-cc-cd" discard
+                default discard
+            exit
+            l2cp-profile "EXAMPLE-FOUR"
+            exit
+            ethernet 1/1
+                shutdown
+                no auto-negotiation
+                speed-duplex 1000-full-duplex
+                egress-mtu 9200
+                l2cp profile "network"
+                lldp
+                    nearest-bridge-mode tx-rx
+                    nearest-bridge-basic-management port-description sys-name sys-description sys-capabilities management-address
+                    nearest-bridge-802.3 max-frame-size
+                exit
+            exit
+            ethernet 1/2
+                shutdown
+                name "description for eth1/2"
+                egress-mtu 9000
+            exit
+            ethernet 1/3
+                name "description for eth1/3"
+                speed-duplex 1000-full-duplex
+                egress-mtu 12000
+                l2cp profile "network"
+                lldp
+                    nearest-bridge-mode tx-rx
+                    nearest-bridge-basic-management port-description sys-name sys-description sys-capabilities management-address
+                    nearest-bridge-802.3 max-frame-size
+                exit
+            exit
+            ethernet 1/4
+                name "description for eth1/4"
+                tag-ethernet-type 0x88a8
+                egress-mtu 12000
+                l2cp profile "EXAMPLE-THREE"
+            exit
+            ethernet 1/5
+                name "description for eth1/5"
+                egress-mtu 12000
+                l2cp profile "EXAMPLE-ONE"
+            exit
+            ethernet 1/6
+                name "description for eth1/6"
+                egress-mtu 9000
+            exit
+            ethernet 1/7
+                name "description for eth1/7"
+                egress-mtu 12000
+                l2cp profile "EXAMPLE-ONE"
+            exit
+            ethernet 1/8
+                name "description for eth1/8"
+                egress-mtu 9008
+                l2cp profile "EXAMPLE-THREE"
+                lldp
+                    nearest-bridge-mode tx-rx
+                    nearest-bridge-basic-management port-description sys-name sys-description sys-capabilities management-address
+                    nearest-bridge-802.3 max-frame-size
+                exit
+            exit
+            ethernet 1/10
+                name "description for eth1/9"
+                egress-mtu 12000
+                l2cp profile "EXAMPLE-ONE"
+            exit
+            ethernet 3/1
+                shutdown
+            exit
+            ethernet 3/2
+                name "description for eth3/2"
+                egress-mtu 12000
+                l2cp profile "EXAMPLE-ONE"
+            exit
+            ethernet 4/1
+                name "description for eth4/1"
+                egress-mtu 12000
+                l2cp profile "network"
+                lldp
+                    nearest-bridge-mode tx-rx
+                    nearest-bridge-basic-management port-description sys-name sys-description sys-capabilities management-address
+                    nearest-bridge-802.3 max-frame-size
+                exit
+            exit
+            ethernet 4/2
+                name "description for eth4/2"
+            exit
+            echo "Service Virtual Interface- Port Configuration"
+    #           Service Virtual Interface- Port Configuration
+            svi 1
+                name "1"
+                no shutdown
+            exit
+            svi 3
+                name "3"
+            exit
+            echo "LAG - Port Configuration"
+    #           LAG - Port Configuration
+            lag 1
+                shutdown
+                bind ethernet 1/1
+                bind ethernet 1/2
+                anchor-port ethernet 1/1
+            exit
+            lag 7
+                shutdown
+                no anchor-port
+            exit
+        exit
+        echo "Bridge Configuration"
+    #       Bridge Configuration
+        bridge 1
+            name "MGMT"
+            echo "Bridge Port Configuration"
+    #           Bridge Port Configuration
+            port 1
+                name "svi 1"
+                no shutdown
+            exit
+            port 2
+                name "example"
+                no shutdown
+            exit
+            port 3
+                name "example"
+                no shutdown
+            exit
+            port 4
+                name "example"
+                no shutdown
+            exit
+            port 5
+                name "example"
+                no shutdown
+            exit
+            echo "VLAN Configuration"
+    #           VLAN Configuration
+            vlan 99
+            exit
+        exit
+        echo "Flows Configuration"
+    #       Flows Configuration
+        flows
+            rate-sampling-window 1
+            echo "Classifier Profile Configuration"
+    #           Classifier Profile Configuration
+            classifier-profile "mgmt" match-any
+                match untagged
+            exit
+            classifier-profile "CP-ONE" match-any
+                match vlan 1103
+            exit
+            classifier-profile "CP-TWO" match-any
+                match vlan 1103
+            exit
+            classifier-profile "CP-THREE" match-any
+                match vlan 1201
+            exit
+            classifier-profile "CP-FOUR" match-any
+                match vlan 1201
+            exit
+            classifier-profile "CP-FIVE" match-any
+                match vlan 1103
+            exit
+            classifier-profile "CP-SIX" match-any
+                match vlan 1103
+            exit
+            classifier-profile "CP-SEVEN" match-any
+                match vlan 1155 dst-ip 192.168.192.2 to-dst-ip 192.168.192.2
+            exit
+            classifier-profile "CP-EIGHT" match-any
+                match all
+            exit
+            classifier-profile "CP-NINE" match-any
+                match all
+            exit
+            classifier-profile "CP-TEN" match-any
+                match vlan 1155
+            exit
+            classifier-profile "CP-ELEVEN" match-any
+                match vlan 1202
+            exit
+            classifier-profile "CP-TWELVE" match-any
+                match all
+            exit
+            classifier-profile "CP-A" match-any
+                match vlan 22
+            exit
+            classifier-profile "CP-B" match-any
+                match all
+            exit
+            classifier-profile "CP-C" match-any
+                match vlan 777
+            exit
+            classifier-profile "CP-D" match-any
+                match all
+            exit
+            classifier-profile "CP-E" match-any
+                match vlan 1102
+            exit
+            classifier-profile "CP-F" match-any
+                match vlan 88
+            exit
+            classifier-profile "CP-G" match-any
+                match vlan 88
+            exit
+            echo "Flow Configuration"
+    #           Flow Configuration
+            flow "flow1"
+                classifier "mgmt"
+                policer profile "mgmt_policer"
+                vlan-tag push vlan 99 p-bit fixed 7
+                ingress-port svi 1
+                egress-port bridge-port 1 1
+                reverse-direction
+                no shutdown
+            exit
+            flow "flow2"
+                classifier "CP-THREE"
+                policer profile "50m"
+                mark all
+                    vlan 1201
+                    p-bit 1
+                exit
+                ingress-port ethernet 3/1
+                egress-port ethernet 4/1 queue 1 block 0/1
+                service-name "R"
+                no shutdown
+            exit
+            flow "flow3"
+                classifier "mgmt"
+                policer profile "mgmt_policer"
+                vlan-tag push vlan 99 p-bit fixed 7
+                ingress-port ethernet 4/1
+                egress-port bridge-port 1 2
+                reverse-direction block 0/1
+                no shutdown
+            exit
+            flow "flow4"
+                classifier "mgmt"
+                policer profile "mgmt_policer"
+                vlan-tag push vlan 99 p-bit fixed 7
+                ingress-port ethernet 1/1
+                egress-port bridge-port 1 4
+                reverse-direction block 0/1
+                no shutdown
+            exit
+            flow "flow5"
+                classifier "CP-ONE"
+                no policer
+                ingress-port ethernet 1/3
+                egress-port ethernet 4/1 queue-map-profile "MTU" block 0/1
+                service-name "Q"
+                no shutdown
+            exit
+            flow "flow6"
+                classifier "CP-TWO"
+                no policer
+                ingress-port ethernet 4/1
+                egress-port ethernet 1/3 queue-map-profile "MTU" block 0/1
+                service-name "P"
+                no shutdown
+            exit
+            flow "flow7"
+                classifier "CP-FOUR"
+                no policer
+                mark all
+                    vlan 1201
+                exit
+                ingress-port ethernet 4/1
+                egress-port ethernet 3/1 queue 1 block 0/1
+                service-name "O"
+                no shutdown
+            exit
+            flow "flow8"
+                classifier "mgmt"
+                policer profile "mgmt_policer"
+                vlan-tag push vlan 99 p-bit fixed 7
+                ingress-port ethernet 1/8
+                egress-port bridge-port 1 5
+                reverse-direction block 0/1
+                no shutdown
+            exit
+            flow "flow9"
+                shutdown
+                classifier "mgmt"
+                policer profile "Policer1"
+                vlan-tag push vlan 1111 p-bit fixed 4
+                ingress-port ethernet 3/1
+                egress-port ethernet 4/2 queue 1 block 0/1
+                service-name "N"
+                pm-collection interval 300
+            exit
+            flow "flow10"
+                classifier "CP-EIGHT"
+                policer profile "10m"
+                vlan-tag push vlan 1202 p-bit fixed 3
+                ingress-port ethernet 3/2
+                egress-port ethernet 4/1 queue 1 block 0/1
+                service-name "M"
+                no shutdown
+            exit
+            flow "flow11"
+                classifier "CP-ELEVEN"
+                no policer
+                vlan-tag pop vlan
+                ingress-port ethernet 4/1
+                egress-port ethernet 3/2 queue 1 block 0/1
+                service-name "L"
+                no shutdown
+            exit
+            flow "flow12"
+                shutdown
+                classifier "CP-FIVE"
+                no policer
+                ingress-port ethernet 1/3
+                egress-port ethernet 4/1 queue-map-profile "MTU" block 0/1
+                service-name "K"
+            exit
+            flow "flow13"
+                classifier "CP-SEVEN"
+                policer profile "2g"
+                mark all
+                    mac swap
+                    ip swap
+                exit
+                ingress-port ethernet 4/1
+                egress-port ethernet 4/1 queue 0 block 0/1
+                no shutdown
+            exit
+            flow "flow14"
+                shutdown
+                classifier "CP-SIX"
+                no policer
+                ingress-port ethernet 4/1
+                egress-port ethernet 1/3 queue-map-profile "MTU" block 0/1
+                service-name "J"
+            exit
+            flow "flow15"
+                classifier "CP-NINE"
+                policer profile "2g"
+                vlan-tag push vlan 1155 p-bit fixed 1
+                ingress-port ethernet 1/5
+                egress-port ethernet 4/1 queue 1 block 0/1
+                service-name "I"
+                no shutdown
+            exit
+            flow "flow16"
+                classifier "CP-TEN"
+                no policer
+                vlan-tag pop vlan
+                ingress-port ethernet 4/1
+                egress-port ethernet 1/5 queue 1 block 0/1
+                service-name "H"
+                no shutdown
+            exit
+            flow "flow17"
+                classifier "CP-D"
+                policer profile "100m"
+                vlan-tag push vlan 1102 p-bit fixed 1
+                ingress-port ethernet 1/7
+                egress-port ethernet 4/1 queue 1 block 0/1
+                service-name "G"
+                no shutdown
+            exit
+            flow "flow18"
+                classifier "CP-TWELVE"
+                policer profile "50m"
+                vlan-tag push vlan 22 p-bit fixed 3
+                ingress-port ethernet 1/8
+                egress-port ethernet 4/1 queue 1 block 0/1
+                service-name "F"
+                no shutdown
+            exit
+            flow "flow19"
+                classifier "CP-A"
+                no policer
+                vlan-tag pop vlan
+                ingress-port ethernet 4/1
+                egress-port ethernet 1/8 queue 1 block 0/1
+                service-name "E"
+                no shutdown
+            exit
+            flow "flow20"
+                classifier "CP-E"
+                no policer
+                vlan-tag pop vlan
+                ingress-port ethernet 4/1
+                egress-port ethernet 1/7 queue 1 block 0/1
+                service-name "D"
+                no shutdown
+            exit
+            flow "flow21"
+                classifier "CP-B"
+                policer profile "100_Mbps"
+                vlan-tag push vlan 777 p-bit fixed 3
+                ingress-port ethernet 1/10
+                egress-port ethernet 4/1 queue 1 block 0/1
+                service-name "C"
+                no shutdown
+            exit
+            flow "flow22"
+                classifier "CP-C"
+                no policer
+                vlan-tag pop vlan
+                ingress-port ethernet 4/1
+                egress-port ethernet 1/10 queue 1 block 0/1
+                service-name "B"
+                no shutdown
+            exit
+            flow "flow23"
+                classifier "CP-F"
+                no policer
+                ingress-port ethernet 1/3
+                egress-port ethernet 4/1 queue 1 block 0/1
+                service-name "A"
+                no shutdown
+            exit
+            flow "flow24"
+                classifier "CP-G"
+                no policer
+                ingress-port ethernet 4/1
+                egress-port ethernet 1/3 queue 1 block 0/1
+                service-name "A"
+                no shutdown
+            exit
+        exit
+        router 1
+            name "Router#1"
+            interface 1
+                name "ROUTER:DESCRIPTION"
+                bind svi 1
+                dhcp
+                dhcp-client
+                    client-id mac
+                exit
+                no shutdown
+            exit
+            static-route 0.0.0.0/0 address 1.1.1.1 metric 1
+        exit
     exit
-
-    flow "1__1_2"
-        classifier "all"
-        ingress-port ethernet 1/1
-        egress-port ethernet 1/3 queue 0 block 0/1
-        no shutdown
+    configure
+        oam
+            echo "OAM CFM Configuration"
+    #           OAM CFM Configuration
+            cfm
+                md-level-mip 2
+                measurement-bin-profile "cfm1"
+                    thresholds 8000,10000,11200,14000
+                exit
+                measurement-bin-profile "cfm2"
+                    thresholds 1600,2000,2400,3000
+                exit
+                measurement-bin-profile "cfm3"
+                    thresholds 20000,25000,28000,35000
+                exit
+                measurement-bin-profile "cfm4"
+                    thresholds 3200,4000,6400,8000
+                exit
+                measurement-bin-profile "cfm5"
+                    thresholds 61600,77000,110400,138000
+                exit
+                measurement-bin-profile "cfm5"
+                    thresholds 8000,10000
+                exit
+                measurement-bin-profile "cfm6"
+                    thresholds 16000,20000,32000,40000
+                exit
+                measurement-bin-profile "cfm7"
+                    thresholds 6400,8000
+                exit
+                measurement-bin-profile "cfm8"
+                    thresholds 60000,75000,120000,150000
+                exit
+                measurement-bin-profile "cfm9"
+                    thresholds 32000,40000
+                exit
+                measurement-bin-profile "cfma"
+                    thresholds 92000,115000,184000,230000
+                exit
+                measurement-bin-profile "cfmb"
+                    thresholds 32000,40000
+                exit
+                measurement-bin-profile "cfmc"
+                    thresholds 29600,37000,59200,74000
+                exit
+                measurement-bin-profile "cfmd"
+                    thresholds 100000,110400,125000,138000
+                exit
+                measurement-bin-profile "cfme"
+                    thresholds 184000,230000,368000,460000
+                exit
+                measurement-bin-profile "cfmf"
+                    thresholds 8000,10000,40000,50000
+                exit
+                measurement-bin-profile "cfmg"
+                    thresholds 9600,12000
+                exit
+                measurement-bin-profile "cfmh"
+                    thresholds 40000,50000
+                exit
+                measurement-bin-profile "cfmi"
+                    thresholds 59200,74000
+                exit
+                measurement-bin-profile "cfmj"
+                    thresholds 9600,12000
+                exit
+                measurement-bin-profile "cfmk"
+                    thresholds 200000,250000
+                exit
+                measurement-bin-profile "cfml"
+                    thresholds 40000,50000
+                exit
+                measurement-bin-profile "cfmm"
+                    thresholds 368000,460000
+                exit
+                measurement-bin-profile "cfmn"
+                    thresholds 40000,50000
+                exit
+                maintenance-domain 1
+                    name string "MD1"
+                    maintenance-association 1
+                        name string "MA1"
+                        mep 1
+                            no bind
+                            client-md-level 4
+                        exit
+                    exit
+                exit
+                maintenance-domain 2
+                    md-level 2
+                    name string "ABC-DEF"
+                    maintenance-association 2
+                        name string "MA2"
+                        mep 1
+                            bind ethernet 1/8
+                            flow uni-direction rx "MA2-out"
+                            flow uni-direction tx "MA2-in"
+                            remote-mep 2
+                            direction up
+                            customer-tags-excluded
+                            client-md-level 3
+                            no shutdown
+                            service 1
+                                classification priority-bit 3
+                                lmm-interval 100ms
+                                dest-ne 1
+                                    no delay
+                                    no loss
+                                    remote mep-id 2
+                                exit
+                                no shutdown
+                            exit
+                        exit
+                    exit
+                exit
+                maintenance-domain 3
+                    name string "ABC-DEF"
+                    maintenance-association 2
+                        name string "MD3"
+                        mep 2
+                            bind ethernet 1/10
+                            flow uni-direction rx "MD3-out"
+                            flow uni-direction tx "MD3-in"
+                            remote-mep 1
+                            ccm-priority 3
+                            direction up
+                            customer-tags-excluded
+                            client-md-level 4
+                            no shutdown
+                            service 1
+                                delay-threshold 26000
+                                delay-var-threshold 8000
+                                classification priority-bit 3
+                                dest-ne 1
+                                    loss single-ended slm
+                                    remote mep-id 1
+                                    delay-measurement-bin profile "cfm1"
+                                    delay-var-measurement-bin profile "cfm2"
+                                exit
+                                no shutdown
+                            exit
+                        exit
+                    exit
+                exit
+            exit
+        exit
     exit
-    flow "1__2_1"
-        classifier "all"
-        ingress-port ethernet 1/3
-        egress-port ethernet 1/1 queue 0 block 0/1
-        no shutdown
-    exit
-    flow "1__3_4"
-        classifier "all"
-        ingress-port ethernet 1/4
-        egress-port ethernet 1/5 queue 0 block 0/1
-        no shutdown
-    exit
-    flow "1__4_3"
-        classifier "all"
-        ingress-port ethernet 1/5
-        egress-port ethernet 1/4 queue 0 block 0/1
-        no shutdown
-    exit
-    flow "1__5_6"
-        classifier "all"
-        ingress-port ethernet 1/6
-        egress-port ethernet 1/7 queue 0 block 0/1
-        no shutdown
-    exit
-    flow "1__6_5"
-        classifier "all"
-        ingress-port ethernet 1/7
-        egress-port ethernet 1/6 queue 0 block 0/1
-        no shutdown
-    exit
-    flow "1__7_8"
-        classifier "all"
-        ingress-port ethernet 1/8
-        egress-port ethernet 1/2 queue 0 block 0/1
-        no shutdown
-    exit
-    flow "1__8_7"
-        classifier "all"
-        ingress-port ethernet 1/2
-        egress-port ethernet 1/8 queue 0 block 0/1
-        no shutdown
-    exit
-    flow "1_9__3_1"
-        classifier "all"
-        ingress-port ethernet 1/9
-        egress-port ethernet 3/1 queue 0 block 0/1
-        no shutdown
-    exit
-    flow "3_1__1_9"
-        classifier "all"
-        ingress-port ethernet 3/1
-        egress-port ethernet 1/9 queue 0 block 0/1
-        no shutdown
-    exit
-        flow "1_10__4_1"
-        classifier "all"
-        ingress-port ethernet 1/10
-        egress-port ethernet 4/1 queue 0 block 0/1
-        no shutdown
-    exit
-    flow "4_1__1_10"
-        classifier "all"
-        ingress-port ethernet 4/1
-        egress-port ethernet 1/10 queue 0 block 0/1
-        no shutdown
-    exit
-	
-    exit all
-    config port ethernet 4/2
-    loopback remote
-
-exit all
