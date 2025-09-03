@@ -18,12 +18,12 @@
     #       Management configuration
         management
             login-user "net-creds-1"
-                level su
+                level oper
                 password "abcdefghijklmnopqrstuvwxyz123456789abcde" hash
                 no shutdown
             exit
             login-user "net-creds-2"
-                level oper
+                level su
                 password "abcdefghijklmnopqrstuvwxyz123456789zyxwv" hash
                 no shutdown
             exit
@@ -34,13 +34,13 @@
                     no shutdown
                 exit
                 access-group "snmpv2" snmpv2c no-auth-no-priv
-                    read-view "ntc"
-                    write-view "ntc"
-                    notify-view "ntc"
+                    read-view "ntc2"
+                    write-view "ntc2"
+                    notify-view "ntc2"
                     no shutdown
                 exit
                 access-group "v2_read" snmpv2c no-auth-no-priv
-                    write-view "ntc"
+                    write-view "ntc2"
                 exit
                 security-to-group snmpv2c sec-name "snmpv2"
                     group-name "snmpv2"
@@ -572,8 +572,8 @@
         router 1
             name "Router#1"
             interface 1
-                name "ROUTER:DESCRIPTION"
-                bind svi 1
+                name "ROUTER:DESCRIPTION:INTENDED"
+                bind svi 11
                 dhcp
                 dhcp-client
                     client-id mac
