@@ -1892,10 +1892,7 @@ class RadEtxConfigParser(BaseSpaceConfigParser):
             True
             >>>
         """
-        for exit_command in ["exit", "exit all"]:
-            if line.lstrip().lower() == exit_command:
-                return True
-        return False
+        return line.lstrip().lower() in ["exit", "exit all"]
 
     @property
     def config_lines_only(self) -> str:
