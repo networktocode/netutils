@@ -1875,25 +1875,6 @@ class RadEtxConfigParser(BaseSpaceConfigParser):
         """Demarcate End of Banner char(s)."""
         raise NotImplementedError("Rad ETX platform doesn't have a banner.")
 
-    def is_exit_or_exit_all(self, line: str) -> bool:
-        """Determine if line has 'exit' or 'exit all' in it.
-
-        Args:
-            line: A config line from the device.
-
-        Returns:
-            True if line has 'exit' or 'exit all', else False.
-
-        Examples:
-            >>> from netutils.config.parser import RadEtxConfigParser
-            >>> RadEtxConfigParser("config system virtual-switch").is_exit_or_exit_all("config system virtual-switch")
-            False
-            >>> RadEtxConfigParser("exit").is_exit_or_exit_all("exit")
-            True
-            >>>
-        """
-        return line.lstrip().lower() in ["exit", "exit all"]
-
     @property
     def config_lines_only(self) -> str:
         """Remove spaces and comments from config lines.
@@ -1905,7 +1886,8 @@ class RadEtxConfigParser(BaseSpaceConfigParser):
             config_lines = (
                 line.removeprefix("        ")  # Rad ETX uses 8 spaces for initial indentation
                 for line in self.config.splitlines()
-                if line and not self.is_comment(line) and not line.isspace() and not self.is_exit_or_exit_all(line)
+                # if line and not self.is_comment(line) and not line.isspace() and not self.is_exit_or_exit_all(line)
+                if line and not self.is_comment(line) and not line.isspace()
             )
             self._config = "\n".join(config_lines)
         return self._config
