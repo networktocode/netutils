@@ -1,3 +1,0 @@
-Replaced black, bandit, flake8 and pydocstyle with ruff.
-Updated tasks.py with newest task list.
-Updated to using pyinvoke for development environment definition.
