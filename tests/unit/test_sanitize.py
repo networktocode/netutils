@@ -4,6 +4,7 @@ import glob
 import os
 
 import pytest
+
 from netutils.config import compliance
 from netutils.config.conversion import paloalto_panos_clean_newlines
 

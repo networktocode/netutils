@@ -108,6 +108,9 @@ nav:
       - Jinja Filters: "user/lib_use_cases_jinja_filters.md"
       - Library Mapper: "user/lib_use_cases_lib_mapper.md"
       - Protocol Mapper: "user/lib_use_cases_protocol_mappers.md"
+      - Config Parsers: "dev/include_parser_list.md"
+      - NIST Utility: "user/lib_use_cases_nist.md"
+      - OS Software Version Utility: "user/lib_use_cases_os_version.md"
       - ACL: "user/lib_use_cases_acl.md"
       - Upgrade Paths: "user/lib_upgrade_paths.md"
       - Getting Started: "user/lib_getting_started.md"
@@ -118,6 +121,8 @@ nav:
       - Uninstall: "admin/uninstall.md"
       - Release Notes:
           - "admin/release_notes/index.md"
+          - v1.15: "admin/release_notes/version_1.15.md"
+          - v1.14: "admin/release_notes/version_1.14.md"
           - v1.13: "admin/release_notes/version_1.13.md"
           - v1.12: "admin/release_notes/version_1.12.md"
           - v1.11: "admin/release_notes/version_1.11.md"
@@ -138,6 +143,7 @@ nav:
       - Extending the Library: "dev/extending.md"
       - Contributing to the Library: "dev/contributing.md"
       - Development Environment: "dev/dev_environment.md"
+      - Release Checklist: "dev/release_checklist.md"
       - Config Parser Development: "dev/dev_config.md"
       - Arch Decision Records: "dev/dev_adr.md"
       - Code Attribution to the Library: "dev/attribution.md"
@@ -167,3 +173,7 @@ nav:
           - VLAN: "dev/code_reference/vlan.md"
       - Classy Docs:
           - Parser: "dev/classy/parser.md"
+
+not_in_nav: |
+  - "user/include_jinja_list.md"
+  - "user/lib_mapper/*.md"

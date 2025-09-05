@@ -6,10 +6,11 @@ Except for unit tests, testing is only supported on Python 3.13.
 
 The project is packaged with a light development environment based on `Docker` to help with the local development of the project and to run tests within  GitHub Actions.
 
-The project is following Network to Code software development guidelines and are leveraging the following:
+The project is following Network to Code software development guidelines and is leveraging the following:
 
-- Black, Pylint, Bandit, Mypy, flake8, and pydocstyle for Python linting and formatting.
-- pytest, coverage, and unittest for unit tests.
+- Python linting and formatting: `pylint` and `ruff`.
+- YAML linting is done with `yamllint`.
+- Typing is done with `mypy`.
 
 There are a number of things that are required in order to have a successful PR.
 

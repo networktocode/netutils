@@ -1,6 +1,7 @@
 """Tests for the running configuration command mapping."""
 
 import pytest
+
 from netutils import lib_mapper
 from netutils.running_config import get_running_config_command
 

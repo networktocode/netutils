@@ -102,7 +102,7 @@ def canonical_interface_name(
 
     Use of explicit matches used to indicate a clear understanding on any potential
     match. Regex and other looser matching methods were not implemented to avoid false
-    positive matches. As an example, it would make sense to do "[P|p][O|o]" which would
+    positive matches. As an example, it would make sense to do `[P|p][O|o]` which would
     incorrectly match PO = POS and Po = Port-channel, leading to a false positive, not
     easily troubleshot, found, or known.
 
@@ -366,7 +366,7 @@ def _split_interface_tuple(interface: str) -> t.Tuple[CharacterClass, ...]:
         for regex, cls in regexes:
             # Hint for Mypy to realize that both the classes and the function on the right side of the regexes tuples
             # are in fact callable.
-            assert callable(cls)  # nosec
+            assert callable(cls)  # noqa: S101
             part = ""
             while idx < len(interface) and re.match(regex, interface[idx]):
                 part += interface[idx]

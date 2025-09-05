@@ -423,7 +423,9 @@ NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
     "mrv_optiswitch": "mrv_optiswitch",
     "netscaler": "netscaler",
     "nokia_sros": "nokia_sros",
+    "nvidia_onyx": "nvidia_onyx",
     "paloalto_panos": "paloalto_panos",
+    "rad_etx": "rad_etx",
     "ruckus_fastiron": "ruckus_fastiron",
     "ubiquiti_airos": "ubiquiti_airos",
 }
@@ -449,16 +451,16 @@ FORWARDNETWORKS_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # NIST | Normalized
-NIST_LIB_MAPPER = {
-    "adaptive_security_appliance_software": "cisco_asa",
-    "arubaos": "aruba_os",
-    "eos": "arista_eos",
-    "ios": "cisco_ios",
-    "ios_xe": "cisco_xe",
-    "ios_xr": "cisco_xr",
-    "nx-os": "cisco_nxos",
-    "junos": "juniper_junos",
-    "pan-os": "paloalto_panos",
+NIST_LIB_MAPPER: t.Dict[str, str] = {
+    "arista:eos": "arista_eos",
+    "arubanetworks:arubaos": "aruba_os",
+    "cisco:adaptive_security_appliance_software": "cisco_asa",
+    "cisco:ios": "cisco_ios",
+    "cisco:nx-os": "cisco_nxos",
+    "cisco:ios_xe": "cisco_xe",
+    "cisco:ios_xr": "cisco_xr",
+    "juniper:junos": "juniper_junos",
+    "paloaltonetworks:pan-os": "paloalto_panos",
 }
 
 # Normalized | NAPALM
@@ -593,7 +595,9 @@ NETUTILSPARSER_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "mrv_optiswitch": "mrv_optiswitch",
     "netscaler": "netscaler",
     "nokia_sros": "nokia_sros",
+    "nvidia_onyx": "nvidia_onyx",
     "paloalto_panos": "paloalto_panos",
+    "rad_etx": "rad_etx",
     "ruckus_fastiron": "ruckus_fastiron",
     "ubiquiti_airos": "ubiquiti_airos",
 }
@@ -617,29 +621,16 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # Normalized | NIST
-NIST_LIB_MAPPER_REVERSE = {
-    "arista_eos": "eos",
-    "aruba_os": "arubaos",
-    "cisco_asa": "adaptive_security_appliance_software",
-    "cisco_ios": "ios",
-    "cisco_nxos": "nx-os",
-    "cisco_xe": "ios_xe",
-    "cisco_xr": "ios_xr",
-    "juniper_junos": "junos",
-    "paloalto_panos": "pan-os",
-}
-
-# Normalized | NIST reverse dictionary parser for NIST URL generation.
-NIST_TO_VENDOR = {
-    "arista_eos": {"vendor": "arista", "os_name": "eos"},
-    "aruba_os": {"vendor": "arubanetworks", "os_name": "arubaos"},
-    "cisco_asa": {"vendor": "cisco", "os_name": "adaptive_security_appliance_software"},
-    "cisco_ios": {"vendor": "cisco", "os_name": "ios"},
-    "cisco_nxos": {"vendor": "cisco", "os_name": "nx-os"},
-    "cisco_xe": {"vendor": "cisco", "os_name": "ios_xe"},
-    "cisco_xr": {"vendor": "cisco", "os_name": "ios_xr"},
-    "juniper_junos": {"vendor": "juniper", "os_name": "junos"},
-    "paloalto_panos": {"vendor": "paloaltonetworks", "os_name": "pan-os"},
+NIST_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+    "arista_eos": "arista:eos",
+    "aruba_os": "arubanetworks:arubaos",
+    "cisco_asa": "cisco:adaptive_security_appliance_software",
+    "cisco_ios": "cisco:ios",
+    "cisco_nxos": "cisco:nx-os",
+    "cisco_xe": "cisco:ios_xe",
+    "cisco_xr": "cisco:ios_xr",
+    "juniper_junos": "juniper:junos",
+    "paloalto_panos": "paloaltonetworks:pan-os",
 }
 
 # Deep copy the reverse, where there is no actual translation happening with special
@@ -660,6 +651,7 @@ _MAIN_LIB_MAPPER["iptables"] = "iptables"
 _MAIN_LIB_MAPPER["k8s"] = "k8s"
 _MAIN_LIB_MAPPER["lenovo_cnos"] = "lenovo_cnos"
 _MAIN_LIB_MAPPER["lenovo_enos"] = "lenovo_enos"
+_MAIN_LIB_MAPPER["nvidia_onyx"] = "nvidia_onyx"
 _MAIN_LIB_MAPPER["openconfig"] = "openconfig"
 _MAIN_LIB_MAPPER["packetfilter"] = "packetfilter"
 _MAIN_LIB_MAPPER["pcap"] = "pcap"

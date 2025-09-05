@@ -5,7 +5,7 @@ import dataclasses
 import re
 import typing as t
 
-from netutils.lib_mapper import NIST_TO_VENDOR
+from netutils.lib_mapper import NIST_LIB_MAPPER_REVERSE
 from netutils.os_version import version_metadata
 
 # Setting up the dataclass values for specific parsers
@@ -70,7 +70,7 @@ def _get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any]) -> t.List
         List of NIST CPE URLs that may contain platform data.
     """
     nist_urls = []
-    base_url = f'{"https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:juniper:junos"}'
+    base_url = f"{'https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:juniper:junos'}"
 
     # BASE
     _main = os_platform_data.get("main")
@@ -169,7 +169,7 @@ def _get_nist_urls_default(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
     """
     nist_urls = []
     escape_list = [r"\(", r"\)"]
-    base_url = f'{"https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:"}'
+    base_url = f"{'https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:'}"
 
     os_platform_data = {"base_url": base_url, **os_platform_data}
     os_platform_data["version_string"] = os_platform_data.get("version_string").replace("-", ":")  # type: ignore
@@ -247,6 +247,12 @@ def get_nist_vendor_platform_urls(vendor: str, platform: str, version: str) -> t
 
     Returns:
         t.List[str]: NIST URLs to search for possible CVE matches
+
+    Examples:
+        >>> from netutils.nist import get_nist_vendor_platform_urls
+        >>> get_nist_vendor_platform_urls('cisco', 'ios', '15.3')
+        ['https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:cisco:ios:15.3:*']
+        >>>
     """
     platform_data = _os_platform_object_builder(vendor, platform, version).__dict__
 
@@ -264,10 +270,19 @@ def get_nist_urls(network_driver: str, version: str) -> t.List[str]:
 
     Returns:
         t.List[str]: NIST URLs to search for possible CVE matches
+
+    Examples:
+        >>> from netutils.nist import get_nist_urls
+        >>> get_nist_urls('cisco_ios', '15.3')
+        ['https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:cisco:ios:15.3:*']
+        >>>
     """
     # DICTIONARY FOR VENDOR/PLATFORM TO NETWORK_DRIVER; UPDATE AS NEEDED
-    network_driver_mappings = NIST_TO_VENDOR
+    vendor_os: str = NIST_LIB_MAPPER_REVERSE.get(network_driver, "")
+    if not vendor_os:
+        raise ValueError(
+            f"The network driver `{network_driver}` has no associated mapping, the supported drivers are {list(NIST_LIB_MAPPER_REVERSE.keys())}."
+        )
+    vendor, os_name = vendor_os.split(":")
 
-    vendor_os = network_driver_mappings[network_driver]
-
-    return get_nist_vendor_platform_urls(vendor_os["vendor"], vendor_os["os_name"], version)
+    return get_nist_vendor_platform_urls(vendor, os_name, version)

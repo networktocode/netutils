@@ -5,11 +5,10 @@ import os
 import sys
 from urllib.request import urlopen
 
-
 if __name__ == "__main__":
     if len(sys.argv) == 2:
         URL = "https://www.iana.org/assignments/protocol-numbers/protocol-numbers-1.csv"
-        oui_textfile = urlopen(URL).read().decode("utf-8")  # nosec: pylint: disable=consider-using-with
+        oui_textfile = urlopen(URL).read().decode("utf-8")  # noqa: S310 pylint: disable=consider-using-with
         with open(sys.argv[1], "w", encoding="utf-8") as proto_mappings:
             proto_mappings.write(oui_textfile)
 
@@ -36,4 +35,4 @@ if __name__ == "__main__":
         proto_mappings.write("\n")
         proto_mappings.write(f"PROTO_NUM_TO_NAME: Dict[int, str] = {reverse_mapping}")
 
-    os.system(f"black {sys.argv[1]}")  # nosec
+    os.system(f"ruff format {sys.argv[1]}")  # noqa: S605

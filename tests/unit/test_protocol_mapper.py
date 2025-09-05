@@ -3,16 +3,16 @@
 import pytest
 
 from netutils.protocol_mapper import (
+    DCCP_NAME_TO_NUM,
+    DCCP_NUM_TO_NAME,
     PROTO_NAME_TO_NUM,
     PROTO_NUM_TO_NAME,
+    SCTP_NAME_TO_NUM,
+    SCTP_NUM_TO_NAME,
     TCP_NAME_TO_NUM,
     TCP_NUM_TO_NAME,
     UDP_NAME_TO_NUM,
     UDP_NUM_TO_NAME,
-    SCTP_NAME_TO_NUM,
-    SCTP_NUM_TO_NAME,
-    DCCP_NAME_TO_NUM,
-    DCCP_NUM_TO_NAME,
 )
 
 

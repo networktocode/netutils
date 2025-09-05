@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netutils"
-version = "1.14.1"
+version = "1.15.0"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 license = "Apache-2.0"
@@ -35,18 +35,17 @@ legacycrypt = {version = "0.3", optional = true}
 optionals = ["jsonschema", "napalm", "legacycrypt"]
 
 [tool.poetry.group.dev.dependencies]
-bandit = "*"
-black = "*"
 coverage = "*"
 invoke = "*"
-flake8 = {version = "^7.0", python = ">=3.8.1,<4.0"}
-pylint = "^3.0.0"
+pylint = "^3.1.0"
 pytest = "*"
 pyyaml = "*"
 pydocstyle = "*"
 toml = "*"
 yamllint = "*"
 mypy = "*"
+towncrier = "^24.8.0"
+ruff = "*"
 Markdown = "*"
 # Render custom markdown for version added/changed/remove notes
 markdown-version-annotations = "1.0.1"
@@ -59,34 +58,46 @@ mkdocstrings = "0.25.2"
 mkdocstrings-python = "1.10.8"
 mkdocs-autorefs = "1.2.0"
 griffe = "1.1.1"
-
 mkdocs-python-classy = "0.1.3"
 
-[tool.black]
+[tool.ruff]
 line-length = 120
-target-version = ['py39', 'py310', 'py311', 'py312', 'py313']
-include = '\.pyi?$'
-exclude = '''
-(
-  /(
-      \.eggs         # exclude a few common directories in the
-    | \.git          # root of the project
-    | \.hg
-    | \.mypy_cache
-    | \.tox
-    | \.venv
-    | _build
-    | buck-out
-    | build
-    | dist
-    | data_files  # This is ran via black within the flatbot process, redundant and slow otherwise
-  )/
-  | sros_full_received.py  # TODO: Taking very long, should look to fix
-  | iosxr_full_received.py  # TODO: Taking very long, should look to fix
-  | settings.py     # This is where you define files that should not be stylized by black
-                     # the root of the project
-)
-'''
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+    "D",  # pydocstyle
+    "F", "E", "W",  # flake8
+    "S",  # bandit
+    "I",  # isort
+]
+ignore = [
+    # warning: `one-blank-line-before-class` (D203) and `no-blank-line-before-class` (D211) are incompatible.
+    "D203", # 1 blank line required before class docstring
+
+    # D212 is enabled by default in google convention, and complains if we have a docstring like:
+    # """
+    # My docstring is on the line after the opening quotes instead of on the same line as them.
+    # """
+    # We've discussed and concluded that we consider this to be a valid style choice.
+    "D212", # Multi-line docstring summary should start at the first line
+    "D213", # Multi-line docstring summary should start at the second line
+
+    # Produces a lot of issues in the current codebase.
+    "D401", # First line of docstring should be in imperative mood
+    "D407", # Missing dashed underline after section
+    "D416", # Section name ends in colon
+    "E501", # Line too long
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+    "D",
+    "S"
+]
 
 [tool.pylint.basic]
 # No docstrings required for private methods (Pylint default), or for test_ functions, or for inner Meta classes.
@@ -107,6 +118,10 @@ notes = """,
     FIXME,
     XXX,
     """
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 python_paths = "./"
@@ -135,6 +150,55 @@ strict_equality = true
 exclude = ["tests/", "tasks.py"]
 show_error_codes = true
 
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+[tool.towncrier]
+package = "netutils"
+directory = "changes"
+filename = "docs/admin/release_notes/version_X.Y.md"
+template = "towncrier_template.j2"
+start_string = "<!-- towncrier release notes start -->"
+issue_format = "[#{issue}](https://github.com/networktocode/netutils/issues/{issue})"
+
+[[tool.towncrier.type]]
+directory = "security"
+name = "Security"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecated"
+name = "Deprecated"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "removed"
+name = "Removed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "dependencies"
+name = "Dependencies"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "documentation"
+name = "Documentation"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "housekeeping"
+name = "Housekeeping"
+showcontent = true
