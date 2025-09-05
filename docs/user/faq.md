@@ -2,13 +2,13 @@
 
 ## Which OS Config types have Parsers?
 
-The documentation is provided in the [development docs](../../dev/dev_config/#current-included-parsers).
+The documentation is provided in the [development docs](../dev/dev_config.md#current-included-parsers)
 
-For creating new Parsers, see the [new parsers](../../dev/dev_config/#new-parsers) docs.
+For creating new Parsers, see the [new parsers](../dev/dev_config.md#new-parsers) docs.
 
 ## Can you provide an example of how to use the functions?
 
-The documentation is always provided in the function for [code docs](../../dev/code_reference/) for each function. There is additional documentation in [Use Cases](../lib_use_cases/) and subsequent sections.
+The documentation is always provided in the function for [code docs](../dev/code_reference/index.md) for each function. There is additional documentation in [Use Cases](../user/lib_use_cases.md) and subsequent sections.
 
 ## Optional Dependencies
 One of the requirements of this library is to avoid having dependencies; however, including a few optional dependencies in an opt in fashion allows `netutils` to remain lean while offering some powerful addons.

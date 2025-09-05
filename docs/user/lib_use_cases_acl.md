@@ -15,7 +15,7 @@ Here you can see how the Python classes work together. There is a lot going on, 
 !!! info
     It may be helpful to open the diagram in a new tab to view the full size, as an example, in Chrome you can right-click on the image and select "Open Image on New Tab".
 
-The intention of this page is not to cover every attribute and it's behavior, but a more human (although highly technical) understanding of what is going on. For more detailed information, please see the [test](https://github.com/networktocode/netutils/blob/develop/tests/unit/test_acl.py) and [code docs](../../dev/code_reference/acl/).
+The intention of this page is not to cover every attribute and it's behavior, but a more human (although highly technical) understanding of what is going on. For more detailed information, please see the [test](https://github.com/networktocode/netutils/blob/develop/tests/unit/test_acl.py) and [code docs](../dev/code_reference/acl.md).
 
 !!! info
     In the future the intention is to add features such as better de-duplication, partial match, and path analysis.
