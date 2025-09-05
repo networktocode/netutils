@@ -29,6 +29,7 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "nokia_sros": parser.NokiaConfigParser,
     "nvidia_onyx": parser.NvidiaOnyxConfigParser,
     "paloalto_panos": parser.PaloAltoNetworksConfigParser,
+    "rad_etx": parser.RadEtxConfigParser,
     "ruckus_fastiron": parser.FastironConfigParser,
     "ubiquiti_airos": parser.UbiquitiAirOSConfigParser,
 }

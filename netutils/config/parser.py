@@ -1862,3 +1862,32 @@ class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-meth
                 self.config_lines.append(ConfigLine(line, ()))
 
         return self.config_lines
+
+
+class RadEtxConfigParser(BaseSpaceConfigParser):
+    """Rad ETX config parser."""
+
+    comment_chars: t.List[str] = ["#", "configure", "admin", "file"]
+    banner_start: t.List[str] = []
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Rad ETX platform doesn't have a banner.")
+
+    @property
+    def config_lines_only(self) -> str:
+        """Remove spaces and comments from config lines.
+
+        Returns:
+            The non-space and non-comment lines from ``config``.
+        """
+        if self._config is None:
+            config_lines = (
+                line.removeprefix("        ")  # Rad ETX uses 8 spaces for initial indentation
+                for line in self.config.splitlines()
+                # if line and not self.is_comment(line) and not line.isspace() and not self.is_exit_or_exit_all(line)
+                if line and not self.is_comment(line) and not line.isspace()
+            )
+            self._config = "\n".join(config_lines)
+        return self._config
