@@ -45,7 +45,7 @@ To either stop or destroy the development environment use the following options.
 
 ## Poetry
 
-Poetry is used in lieu of the "virtualenv" commands and is leveraged in both environments. The virtual environment will provide all of the Python packages required to manage the development environment such as **Invoke**. See the [Local Development Environment](#local-poetry-development-environment) section to see how to install Netutils if you're going to be developing locally (i.e. not using the Docker container).
+Poetry is used in lieu of the "virtualenv" commands and is leveraged in both environments. The virtual environment will provide all of the Python packages required to manage the development environment such as **Invoke**. See the [Local Development Environment](#full-docker-development-environment) section to see how to install Netutils if you're going to be developing locally (i.e. not using the Docker container).
 
 The `pyproject.toml` file outlines all of the relevant dependencies for the project:
 

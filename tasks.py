@@ -1,5 +1,8 @@
 """Tasks for use with Invoke."""
 
+import re
+from pathlib import Path
+
 from invoke import Collection, Exit
 from invoke import task as invoke_task
 
@@ -264,6 +267,24 @@ def tests(context):
     pytest(context)
 
     print("All tests have passed!")
+
+
+@task
+def build_and_check_docs(context):
+    """Build documentation to be available within Docs Sites."""
+    command = "mkdocs build --no-directory-urls --strict"
+    run_command(context, command)
+
+    # Check for the existence of a release notes file for the current version if it's not a prerelease.
+    version = context.run("poetry version --short", hide=True)
+    match = re.match(r"^(\d+)\.(\d+)\.\d+$", version.stdout.strip())
+    if match:
+        major = match.group(1)
+        minor = match.group(2)
+        release_notes_file = Path(__file__).parent / "docs" / "admin" / "release_notes" / f"version_{major}.{minor}.md"
+        if not release_notes_file.exists():
+            print(f"Release notes file `version_{major}.{minor}.md` does not exist.")
+            raise Exit(code=1)
 
 
 @task
