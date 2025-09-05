@@ -20,6 +20,8 @@
 | mrv_optiswitch | netutils.config.parser.OptiswitchConfigParser |
 | netscaler | netutils.config.parser.NetscalerConfigParser |
 | nokia_sros | netutils.config.parser.NokiaConfigParser |
+| nvidia_onyx | netutils.config.parser.NvidiaOnyxConfigParser |
 | paloalto_panos | netutils.config.parser.PaloAltoNetworksConfigParser |
+| rad_etx | netutils.config.parser.RadEtxConfigParser |
 | ruckus_fastiron | netutils.config.parser.FastironConfigParser |
 | ubiquiti_airos | netutils.config.parser.UbiquitiAirOSConfigParser |

@@ -4,7 +4,6 @@ from netutils.data_files.protocol_mappings import (  # noqa: F401 # pylint:disab
     PROTOCOLS,
 )
 
-
 # This variable provides mapping for known interface variants, to the associated long form.
 BASE_INTERFACES = {
     "Ap": "AppGigabitEthernet",
@@ -14,7 +13,11 @@ BASE_INTERFACES = {
     "B": "Bdi",
     "Bd": "Bdi",
     "Bdi": "Bdi",
+    "Bv": "BVI",
+    "Bvi": "BVI",
     "Bridge-Aggregation": "Port-channel",
+    "Dialer": "Dialer",
+    "Di": "Dialer",
     "EOBC": "EOBC",
     "EO": "EOBC",
     "Ethernet": "Ethernet",
@@ -174,6 +177,8 @@ MAC_REGEX = dict(  # pylint: disable=use-dict-literal
 REVERSE_MAPPING = {
     "AppGigabitEthernet": "Ap",
     "ATM": "At",
+    "BVI": "Bv",
+    "Dialer": "Di",
     "EOBC": "EO",
     "Ethernet": "Et",
     "FastEthernet": "Fa",

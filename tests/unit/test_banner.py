@@ -1,8 +1,8 @@
 """Test for the banner functions."""
 
 import pytest
-from netutils import banner
 
+from netutils import banner
 
 BANNER_CARET_C = "banner login ^C\n******************\n    TEST BANNER\n******************\n^C"
 

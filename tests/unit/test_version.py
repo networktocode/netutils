@@ -1,7 +1,8 @@
 """Basic test for version check."""
 
-import unittest
 import os
+import unittest
+
 import toml
 
 from netutils import __version__ as project_version

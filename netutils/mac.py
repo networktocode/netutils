@@ -16,7 +16,7 @@ def _valid_mac(func: t.Callable[..., t.Any]) -> t.Callable[..., t.Any]:
             mac = kwargs.get("mac")
         else:
             mac = args[0]
-        assert isinstance(mac, str)  # nosec
+        assert isinstance(mac, str)  # noqa: S101
         if not is_valid_mac(mac):
             raise ValueError(f"There was not a valid mac address in: `{mac}`")
         return func(*args, **kwargs)

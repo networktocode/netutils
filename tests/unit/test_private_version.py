@@ -5,8 +5,8 @@
 # Taken from https://github.com/python/cpython/blob/3.11/Lib/distutils/tests/test_version.py
 
 import unittest
-from netutils._private.version import LooseVersion
-from netutils._private.version import StrictVersion
+
+from netutils._private.version import LooseVersion, StrictVersion
 
 
 class VersionTestCase(unittest.TestCase):
@@ -45,7 +45,7 @@ class VersionTestCase(unittest.TestCase):
                 if wanted is ValueError:
                     continue
                 else:
-                    raise AssertionError(("cmp(%s, %s) " "shouldn't raise ValueError") % (v1, v2))
+                    raise AssertionError(("cmp(%s, %s) shouldn't raise ValueError") % (v1, v2))
             self.assertEqual(res, wanted, "cmp(%s, %s) should be %s, got %s" % (v1, v2, wanted, res))
             res = StrictVersion(v1)._cmp(v2)
             self.assertEqual(res, wanted, "cmp(%s, %s) should be %s, got %s" % (v1, v2, wanted, res))

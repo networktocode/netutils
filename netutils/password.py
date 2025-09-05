@@ -1,13 +1,13 @@
 """Functions for working with Passwords."""
 
+import ast
+import base64
 import random
 import secrets
 import string
 import sys
-import ast
 import typing as t
 from functools import wraps
-import base64
 
 try:
     from hashlib import scrypt
@@ -289,11 +289,11 @@ def encrypt_cisco_type7(unencrypted_password: str, salt: t.Optional[int] = None)
         >>>
     """
     # max length of password for encrypt t7 is 25
-    if len(unencrypted_password) > ENCRYPT_TYPE7_LENGTH:  # nosec
+    if len(unencrypted_password) > ENCRYPT_TYPE7_LENGTH:
         raise ValueError("Password must not exceed 25 characters.")
 
     if not salt:
-        salt = random.randint(0, 15)  # nosec
+        salt = random.randint(0, 15)  # noqa: S311
     # Start building the encrypted password - pre-pend the 2 decimal digit offset.
     encrypted_password = format(salt, "02d")
     for i, _ in enumerate(unencrypted_password):
@@ -406,7 +406,7 @@ def decrypt_juniper_type9(encrypted_password: str) -> str:
     stripped_password_characters = password_characters[JUNIPER_CHARACTER_KEYS[first_character] + 1 :]  # noqa: E203
 
     previous_char = first_character
-    decrypted_password = ""  # nosec
+    decrypted_password = ""
     while stripped_password_characters:
         # Get encoding modulus
         decode = JUNIPER_ENCODING[len(decrypted_password) % len(JUNIPER_ENCODING)]
@@ -445,13 +445,13 @@ def encrypt_juniper_type9(unencrypted_password: str, salt: t.Optional[int] = Non
         >>>
     """
     if not salt:
-        salt = random.randint(0, JUNIPER_KEYS_LENGTH) - 1  # nosec
+        salt = random.randint(0, JUNIPER_KEYS_LENGTH) - 1  # noqa: S311
 
     # Use salt to generate start of encrypted password
     first_character = JUNIPER_KEYS_STRING[salt]
     random_chars = "".join(
         [
-            JUNIPER_KEYS_STRING[random.randint(0, JUNIPER_KEYS_LENGTH) - 1]  # nosec
+            JUNIPER_KEYS_STRING[random.randint(0, JUNIPER_KEYS_LENGTH) - 1]  # noqa: S311
             for x in range(0, JUNIPER_CHARACTER_KEYS[first_character])
         ]
     )
