@@ -156,6 +156,7 @@ NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "apresia_aeos": "apresia_aeos",
     "arista_eos": "arista_eos",
     "aruba_os": "aruba_os",
+    "aruba_aoscx":"aruba_aoscx",
     "aruba_osswitch": "aruba_osswitch",
     "aruba_procurve": "aruba_procurve",
     "avaya_ers": "avaya_ers",
@@ -288,6 +289,7 @@ NTCTEMPLATES_LIB_MAPPER_REVERSE = copy.deepcopy(_NTCTEMPLATES_LIB_MAPPER_REVERSE
 # NAPALM | Normalized
 NAPALM_LIB_MAPPER: t.Dict[str, str] = {
     "aoscx": "aruba_aoscx",
+    "arubaoss":"aruba_os",
     "asa": "cisco_asa",
     "cisco_wlc_ssh": "cisco_wlc",
     "eos": "arista_eos",
@@ -331,6 +333,7 @@ PYNTC_LIB_MAPPER: t.Dict[str, str] = {
 ANSIBLE_LIB_MAPPER: t.Dict[str, str] = {
     "a10.acos_axapi.a10": "a10",
     "arista.eos.eos": "arista_eos",
+    "arubanetworks.aos_switch":"aruba_os",
     "arubanetworks.aoscx": "aruba_aoscx",
     "ciena.saos6.saos6": "ciena_saos",
     "cisco.asa.asa": "cisco_asa",
