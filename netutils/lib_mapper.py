@@ -470,6 +470,7 @@ NIST_LIB_MAPPER: t.Dict[str, str] = {
 NAPALM_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "eos",
     "aruba_aoscx": "aoscx",
+    "aruba_os":"arubaoss",
     "bigip_f5": "f5",
     "cisco_asa": "asa",
     "cisco_ios": "ios",
@@ -503,6 +504,7 @@ PYNTC_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 ANSIBLE_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "a10": "a10.acos_axapi.a10",
     "arista_eos": "arista.eos.eos",
+    "aruba_os":"arubanetworks.aos_switch",
     "aruba_aoscx": "arubanetworks.aoscx",
     "bigip_f5": "f5networks.f5_bigip.bigip",
     "ciena_saos": "ciena.saos6.saos6",
