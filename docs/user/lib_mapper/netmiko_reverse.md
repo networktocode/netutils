@@ -9,6 +9,7 @@
 | apresia_aeos | → | apresia_aeos |
 | arista_eos | → | arista_eos |
 | aruba_os | → | aruba_os |
+| aruba_aoscx| → | aruba_aoscx |
 | aruba_osswitch | → | aruba_osswitch |
 | aruba_procurve | → | aruba_procurve |
 | avaya_ers | → | avaya_ers |

@@ -1,6 +1,7 @@
 | NORMALIZED | | NAPALM |
 | ---------- | -- | ------ |
 | arista_eos | → | eos |
+| aruba_os | → | arubaoss |
 | aruba_aoscx | → | aoscx |
 | bigip_f5 | → | f5 |
 | cisco_asa | → | asa |
