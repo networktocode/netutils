@@ -4,5 +4,6 @@
 | checkpoint_gaia | → | clish -c "show configuration" |
 | cisco_ios | → | show running-config |
 | cisco_nxos | → | show running-config |
+| cisco_wlc | → | show run-config commands |
 | cisco_xr | → | show running-config |
 | juniper_junos | → | show configuration | display set |
