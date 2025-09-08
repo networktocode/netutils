@@ -310,6 +310,7 @@ NAPALM_LIB_MAPPER: t.Dict[str, str] = {
 RUNNING_CONFIG_MAPPER: t.Dict[str, str] = {
     "cisco_ios": "show running-config",
     "cisco_nxos": "show running-config",
+    "cisco_wlc": "show run-config commands",
     "cisco_xr": "show running-config",
     "juniper_junos": "show configuration | display set",
     "arista_eos": "show running-config",
