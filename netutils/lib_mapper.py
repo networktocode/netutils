@@ -308,12 +308,33 @@ NAPALM_LIB_MAPPER: t.Dict[str, str] = {
 
 # Running config command
 RUNNING_CONFIG_MAPPER: t.Dict[str, str] = {
+    "arista_eos": "show running-config",
+    "aruba_os": "show running-configuration",
+    "aruba_osswitch": "show running-config",
+    "aruba_procurve": "show running-config",
+    "checkpoint_gaia": 'clish -c "show configuration"',
     "cisco_ios": "show running-config",
     "cisco_nxos": "show running-config",
     "cisco_xr": "show running-config",
+    "dell_os10": "show running-config",
+    "dell_os9": "show running-config",
+    "extreme_exos": "show configuration",
+    "extreme_slx": "show running-config",
+    "extreme_vsp": "show running-config",
+    "f5_tmsh": "show /",
+    "fortinet": "show full-configuration",
+    "hp_procurve": "show running-config",
+    "huawei_huawei_vrpv8": "display current-configuration",
     "juniper_junos": "show configuration | display set",
-    "arista_eos": "show running-config",
-    "checkpoint_gaia": 'clish -c "show configuration"',
+    "mikrotik_routeros": "/export",
+    "nokia_srl": "info",
+    "nokia_sros": "admin display-config",
+    "paloalto_panos": "show config running",
+    "rad_etx": "info",
+    "ubiquiti_edge": "show configuration",
+    "ubiquiti_edgerouter": "show configuration",
+    "ubiquiti_edgeswitch": "show configuration",
+    "vyos": "show configuration",
 }
 
 # PYTNC | Normalized
