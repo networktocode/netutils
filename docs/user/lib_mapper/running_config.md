@@ -6,3 +6,4 @@
 | cisco_nxos | → | show running-config |
 | cisco_xr | → | show running-config |
 | juniper_junos | → | show configuration | display set |
+| ruckus_fastiron | → | show running-config |
