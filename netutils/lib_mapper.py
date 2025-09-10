@@ -314,7 +314,7 @@ RUNNING_CONFIG_MAPPER: t.Dict[str, str] = {
     "juniper_junos": "show configuration | display set",
     "arista_eos": "show running-config",
     "checkpoint_gaia": 'clish -c "show configuration"',
-    "ruckus_fastiron": "show running-config"
+    "ruckus_fastiron": "show running-config",
 }
 
 # PYTNC | Normalized
