@@ -52,7 +52,7 @@ markdown-version-annotations = "1.0.1"
 # Rendering docs to HTML
 mkdocs = "1.6.0"
 # Material for MkDocs theme
-mkdocs-material = "9.5.32"
+mkdocs-material = "9.6.22"
 # Automatic documentation from sources, for MkDocs
 mkdocstrings = "0.25.2"
 mkdocstrings-python = "1.10.8"
