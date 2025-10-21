@@ -8,6 +8,12 @@ This document describes all new features and changes in the release. The format 
 - Add parser support for Rad ETX.
 - Update the library to the NTC 2025 development standards.
 
+## [v1.15.1 (2025-10-20)](https://github.com/networktocode/netutils/releases/tag/v1.15.1)
+
+### Added
+
+- [#704](https://github.com/networktocode/netutils/issues/704) - Added show running config mapper for 22 additional operating systems.
+
 ## [v1.15.0 (2025-09-05)](https://github.com/networktocode/netutils/releases/tag/v1.15.0)
 
 ### Added
