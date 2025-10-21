@@ -1,5 +1,6 @@
 """Used to setup fixtures to be used through tests"""
 
+<<<<<<< HEAD
 import importlib.util
 import json
 import os
@@ -68,3 +69,13 @@ def get_python_data():
         return getattr(module, attr)
 
     return _method
+=======
+import pytest
+from click.testing import CliRunner
+
+
+@pytest.fixture
+def cli_runner():
+    """Provide CLI runner for Click tests."""
+    return CliRunner()
+>>>>>>> c52d641 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)

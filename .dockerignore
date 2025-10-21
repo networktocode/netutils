@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 **/*.pyc
 **/*.pyo
 **/*.log
@@ -8,3 +9,32 @@ docker-compose.yml
 .env
 docs/_build
 **/__pycache__
+=======
+# Docker related
+development/Dockerfile
+development/docker-compose*.yml
+development/*.env
+*.env
+environments/
+
+# Python
+**/*.pyc
+**/*.pyo
+**/__pycache__/
+**/.pytest_cache/
+**/.venv/
+
+
+# Other
+docs/_build
+FAQ.md
+.git/
+.gitignore
+.github
+tasks.py
+LICENSE
+**/*.log
+**/.vscode/
+invoke*.yml
+tasks.py
+>>>>>>> c52d641 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)

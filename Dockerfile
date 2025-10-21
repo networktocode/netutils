@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ARG PYTHON_VER=3.11
+=======
+ARG PYTHON_VER="3.8"
+>>>>>>> c52d641 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 
 FROM python:${PYTHON_VER}-slim
 
@@ -23,4 +27,8 @@ WORKDIR /local
 COPY . /local
 
 # Install the app
+<<<<<<< HEAD
 RUN poetry install --with dev
+=======
+RUN poetry install --with dev --all-extras
+>>>>>>> c52d641 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)

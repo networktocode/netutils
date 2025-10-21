@@ -5,7 +5,11 @@ about: Propose a new feature or enhancement
 ---
 
 ### Environment
+<<<<<<< HEAD
 * netutils version:  <!-- Example: 1.14.0 -->
+=======
+* netutils version:  <!-- Example: 1.0.0 -->
+>>>>>>> c52d641 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 
 <!--
     Describe in detail the new functionality you are proposing.
