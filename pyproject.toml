@@ -1,0 +1,202 @@
+[tool.poetry]
+name = "netutils"
+version = "1.15.1"
+description = "Common helper functions useful in network automation."
+authors = ["Network to Code, LLC <info@networktocode.com>"]
+readme = "README.md"
+license = "Apache-2.0"
+classifiers = [
+    "Intended Audience :: Developers",
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+include = [
+    "LICENSE",
+    "README.md",
+]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+click = "*"
+
+[tool.poetry.group.dev.dependencies]
+requests_mock = "*"
+pytest = "*"
+mock = "*"
+pyyaml = "^6.0.1"
+pylint = "^3.1.0"
+yamllint = "^1.35.1"
+invoke = "^2.2.0"
+toml = "^0.10.2"
+attrs = "^23.2.0"
+towncrier = ">=23.6.0,<=24.8.0"
+ruff = "*"
+Markdown = "*"
+
+[tool.poetry.group.docs.dependencies]
+# Rendering docs to HTML
+mkdocs = "1.6.1"
+# Embedding YAML files into Markdown documents as tables
+markdown-data-tables = "1.0.0"
+# Render custom markdown for version added/changed/remove notes
+markdown-version-annotations = "1.0.1"
+# Automatically generate some files as part of mkdocs build
+mkdocs-gen-files = "0.5.0"
+# Image lightboxing in mkdocs
+mkdocs-glightbox = "0.4.0"
+# Use Jinja2 templating in docs - see settings.md
+mkdocs-macros-plugin = "1.3.7"
+# Material for mkdocs theme
+mkdocs-material = "9.6.15"
+# Handle docs redirections
+mkdocs-redirects = "1.2.2"
+# Automatically handle index pages for docs sections
+mkdocs-section-index = "0.3.10"
+# Automatic documentation from sources, for MkDocs
+mkdocstrings = "0.27.0"
+# Python-specific extension to mkdocstrings
+mkdocstrings-python = "1.13.0"
+griffe = "1.1.1"
+
+[tool.poetry.scripts]
+netutils = 'netutils.cli:main'
+
+[tool.netutils]
+string_required = "some string"
+array_default = ["a", "b", "c"]
+url_default = "http://localhost"
+ip_address = "192.168.0.1"
+ip_network = "2001:db8:3c4d:15::/64"
+file = "README.md"
+
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = [
+    "D",  # pydocstyle
+    "F", "E", "W",  # flake8
+    "S",  # bandit
+    "I",  # isort
+]
+ignore = [
+    # warning: `one-blank-line-before-class` (D203) and `no-blank-line-before-class` (D211) are incompatible.
+    "D203", # 1 blank line required before class docstring
+
+    # D212 is enabled by default in google convention, and complains if we have a docstring like:
+    # """
+    # My docstring is on the line after the opening quotes instead of on the same line as them.
+    # """
+    # We've discussed and concluded that we consider this to be a valid style choice.
+    "D212", # Multi-line docstring summary should start at the first line
+    "D213", # Multi-line docstring summary should start at the second line
+
+    # Produces a lot of issues in the current codebase.
+    "D401", # First line of docstring should be in imperative mood
+    "D407", # Missing dashed underline after section
+    "D416", # Section name ends in colon
+    "E501", # Line too long
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+    "D",
+    "S"
+]
+
+
+[tool.pylint.master]
+ignore=[".venv", "tests"]
+
+[tool.pylint.basic]
+# No docstrings required for private methods (Pylint default), or for test_ functions, or for inner Meta classes.
+no-docstring-rgx = "^(_|test_|Meta$)"
+
+
+[tool.pylint.messages_control]
+disable = [
+    "line-too-long",
+    "duplicate-code",
+    "cyclic-import",
+    ]
+
+[tool.pylint.miscellaneous]
+# Don't flag TODO as a failure, let us commit with things that still need to be done in the code
+notes = """,
+    FIXME,
+    XXX,
+    """
+
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+python_paths = "./"
+testpaths = [
+    "tests/"
+]
+addopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
+
+[tool.towncrier]
+package = "netutils"
+directory = "changes"
+filename = "docs/admin/release_notes/version_X.Y.md"
+template = "towncrier_template.j2"
+start_string = "<!-- towncrier release notes start -->"
+issue_format = "[#{issue}](https://github.com/networktocode/netutils/issues/{issue})"
+
+[[tool.towncrier.type]]
+directory = "security"
+name = "Security"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "added"
+name = "Added"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "changed"
+name = "Changed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "deprecated"
+name = "Deprecated"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "removed"
+name = "Removed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "fixed"
+name = "Fixed"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "dependencies"
+name = "Dependencies"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "documentation"
+name = "Documentation"
+showcontent = true
+
+[[tool.towncrier.type]]
+directory = "housekeeping"
+name = "Housekeeping"
+showcontent = true

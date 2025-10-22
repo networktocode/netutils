@@ -1,0 +1,27 @@
+---
+# .readthedocs.yaml
+# Read the Docs configuration file
+# See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
+
+# Required
+version: 2
+
+# Setup the build environment.
+build:
+  os: "ubuntu-lts-latest"
+  tools:
+    python: "3.12"
+  jobs:
+    post_install:
+      # Install poetry
+      # https://python-poetry.org/docs/#installing-manually
+      - "pip install poetry"
+      # Install dependencies 'docs' dependency group
+      # https://python-poetry.org/docs/managing-dependencies/#dependency-groups
+      # VIRTUAL_ENV needs to be set manually for now.
+      # See https://github.com/readthedocs/readthedocs.org/pull/11152/
+      - "VIRTUAL_ENV=$READTHEDOCS_VIRTUALENV_PATH poetry install --only docs"
+
+mkdocs:
+  configuration: "mkdocs.yml"
+  fail_on_warning: true
