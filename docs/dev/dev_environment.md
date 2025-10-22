@@ -4,7 +4,11 @@
 
 The development environment can be used in two ways:
 
+<<<<<<< HEAD
 1. `Recommended` All services are spun up using Docker and a local mount so you can develop locally, but Netutils is spun up within the Docker container.
+=======
+1. `Recommended` All services are spun up using Docker and a local mount so you can develop locally, but netutils is spun up within the Docker container.
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 2. With a local poetry environment if you wish to develop outside of Docker.
 
 This is a quick reference guide if you're already familiar with the development environment provided, which you can read more about later in this document.
@@ -45,7 +49,11 @@ To either stop or destroy the development environment use the following options.
 
 ## Poetry
 
+<<<<<<< HEAD
 Poetry is used in lieu of the "virtualenv" commands and is leveraged in both environments. The virtual environment will provide all of the Python packages required to manage the development environment such as **Invoke**. See the [Local Development Environment](#full-docker-development-environment) section to see how to install Netutils if you're going to be developing locally (i.e. not using the Docker container).
+=======
+Poetry is used in lieu of the "virtualenv" commands and is leveraged in both environments. The virtual environment will provide all of the Python packages required to manage the development environment such as **Invoke**. See the [Local Development Environment](#full-docker-development-environment) section to see how to install netutils if you're going to be developing locally (i.e. not using the Docker container).
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 
 The `pyproject.toml` file outlines all of the relevant dependencies for the project:
 
@@ -91,9 +99,16 @@ Each command can be executed with `invoke <command>`. Each command also has its 
 ```
   autoformat (a)    Run code autoformatting.
   pylint            Run pylint for the specified name and Python version.
+<<<<<<< HEAD
   mypy              Run mypy to validate typing-hints.
+=======
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
   ruff              Run ruff to perform code formatting and/or linting.
   pytest            Run pytest for the specified name and Python version.
   tests             Run all tests for the specified name and Python version.
   yamllint          Run yamllint to validate formatting adheres to NTC defined YAML standards.
+<<<<<<< HEAD
 ```
+=======
+```
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)

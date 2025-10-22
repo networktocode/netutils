@@ -1,10 +1,18 @@
 ---
 dev_addr: "127.0.0.1:8001"
+<<<<<<< HEAD
 edit_uri: "edit/develop/docs"
 site_dir: "netutils/static/netutils/docs"
 site_name: "Netutils Documentation"
 site_url: "https://netutils.readthedocs.io/en/latest/"
 repo_url: "https://github.com/networktocode/netutils"
+=======
+edit_uri: "edit/main/netutils/docs"
+site_dir: "netutils/static/netutils/docs"
+site_name: "netutils Documentation"
+site_url: "https://netutils.readthedocs.io/"
+repo_url: "https://github.com/networktocode-llc/netutils"
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 copyright: "Copyright &copy; The Authors"
 theme:
   name: "material"
@@ -14,7 +22,14 @@ theme:
     - "python"
     - "yaml"
   features:
+<<<<<<< HEAD
     - "content.code.copy"
+=======
+    - "content.action.edit"
+    - "content.action.view"
+    - "content.code.copy"
+    - "navigation.footer"
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
     - "navigation.indexes"
     - "navigation.tabs"
     - "navigation.tabs.sticky"
@@ -43,12 +58,15 @@ theme:
 extra_css:
   - "assets/extra.css"
 
+<<<<<<< HEAD
 # needed for RTD version flyout menu
 # jquery is not (yet) injected by RTD automatically and it might be dropped
 # as a dependency in the future
 extra_javascript:
   - "https://code.jquery.com/jquery-3.6.0.min.js"
 
+=======
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 extra:
   generator: false
   ntc_sponsor: true
@@ -76,10 +94,21 @@ markdown_extensions:
       permalink: true
   - "attr_list"
   - "md_in_html"
+<<<<<<< HEAD
+=======
+  - "markdown_data_tables":
+      base_path: "docs"
+  - "pymdownx.details"
+  # Need pymdownx.emoji for Grid icon search
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
   - "pymdownx.highlight":
       anchor_linenums: true
   - "pymdownx.inlinehilite"
   - "pymdownx.snippets"
+<<<<<<< HEAD
   - "pymdownx.superfences"
   - "footnotes"
 plugins:
@@ -90,20 +119,53 @@ plugins:
         - "netutils.config.parser"
       classy_libraries:
         - "netutils"
+=======
+  - "pymdownx.superfences":
+      custom_fences:
+        - name: "mermaid"
+          class: "mermaid"
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - "pymdownx.tabbed":
+      "alternate_style": true
+  - "pymdownx.tilde"
+
+plugins:
+  - "search"
+  - "gen-files":
+      scripts:
+        - "docs/generate_code_reference_pages.py"
+  - "glightbox":
+      manual: true # See https://blueswen.github.io/mkdocs-glightbox/flexibility/enable-by-image-or-page/
+  - "section-index"
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
   - "mkdocstrings":
       default_handler: "python"
       handlers:
         python:
           paths: ["."]
           options:
+<<<<<<< HEAD
             show_root_heading: true
 watch:
   - "README.md"
+=======
+            heading_level: 1
+            show_root_heading: true
+            show_root_members_full_path: true
+            show_source: false
+
+validation:
+  absolute_links: "warn"
+  anchors: "warn"
+  omitted_files: "warn"
+  unrecognized_links: "warn"
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 
 nav:
   - Overview: "index.md"
   - User Guide:
       - Library Overview: "user/lib_overview.md"
+<<<<<<< HEAD
       - Using the Library: "user/lib_use_cases.md"
       - Jinja Filters: "user/lib_use_cases_jinja_filters.md"
       - Library Mapper: "user/lib_use_cases_lib_mapper.md"
@@ -114,6 +176,10 @@ nav:
       - ACL: "user/lib_use_cases_acl.md"
       - Upgrade Paths: "user/lib_upgrade_paths.md"
       - Getting Started: "user/lib_getting_started.md"
+=======
+      - Getting Started: "user/lib_getting_started.md"
+      - Using the Library: "user/lib_use_cases.md"
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
       - Frequently Asked Questions: "user/faq.md"
   - Administrator Guide:
       - Install and Configure: "admin/install.md"
@@ -121,6 +187,7 @@ nav:
       - Uninstall: "admin/uninstall.md"
       - Release Notes:
           - "admin/release_notes/index.md"
+<<<<<<< HEAD
           - v1.15: "admin/release_notes/version_1.15.md"
           - v1.14: "admin/release_notes/version_1.14.md"
           - v1.13: "admin/release_notes/version_1.13.md"
@@ -139,11 +206,15 @@ nav:
           - v1.0: "admin/release_notes/version_1.0.md"
           - v0.2: "admin/release_notes/version_0.2.md"
           - v0.1: "admin/release_notes/version_0.1.md"
+=======
+          - v1.0: "admin/release_notes/version_1.0.md"
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
   - Developer Guide:
       - Extending the Library: "dev/extending.md"
       - Contributing to the Library: "dev/contributing.md"
       - Development Environment: "dev/dev_environment.md"
       - Release Checklist: "dev/release_checklist.md"
+<<<<<<< HEAD
       - Config Parser Development: "dev/dev_config.md"
       - Arch Decision Records: "dev/dev_adr.md"
       - Code Attribution to the Library: "dev/attribution.md"
@@ -177,3 +248,6 @@ nav:
 not_in_nav: |
   - "user/include_jinja_list.md"
   - "user/lib_mapper/*.md"
+=======
+      - Architecture Design Records: "dev/arch_decision.md"
+>>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
