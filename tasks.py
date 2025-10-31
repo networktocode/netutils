@@ -161,9 +161,18 @@ def rebuild(context):
 
 
 @task
-def pytest(context, args=""):
+def coverage(context):
+    """Run the coverage report against pytest."""
+    exec_cmd = "coverage run --source=netutils -m pytest"
+    run_command(context, exec_cmd)
+    run_command(context, "coverage report")
+    run_command(context, "coverage html")
+
+
+@task
+def pytest(context):
     """Run pytest test cases."""
-    exec_cmd = f"pytest {args}"
+    exec_cmd = "pytest -vv --doctest-modules netutils/ && coverage run --source=netutils -m pytest && coverage report"
     run_command(context, exec_cmd)
 
 

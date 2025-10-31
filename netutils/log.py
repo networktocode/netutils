@@ -1,30 +1,20 @@
-"""
-Logging utilities for netutils.
-
-This module contains helpers and wrappers for making logging more consistent across applications.
-
-How to use me:
-
-    >>> from netutils.log import initialize_logging
-    >>> log = initialize_logging(level="debug")
-    2021-12-07T10:51:49-0700 [DEBUG] [log] [initialize_logging] cookiecutter_project: Logging initialized.
-    >>> log.info("NTC")
-    2021-12-07T10:51:49-0700 [INFO] [cli] [main] cookiecutter_project.cli: Entrypoint of the CLI app.
-"""
+"""Logging utilities for netutils."""
 
 import logging.config
+from typing import Any, Dict, Optional
 
 APP = "netutils"
 
 
-def initialize_logging(config=None, level="INFO", filename=None):
+def initialize_logging(
+    config: Optional[Dict[str, Any]] = None, level: str = "INFO", filename: Optional[str] = None
+) -> None:
     """Initialize logging using sensible defaults.
 
     Args:
         config (dict): User provided configuration dictionary.
         level (str): The level of logging for STDOUT logging.
         filename (str): Where to output debug logging to file.
-
     """
     if not config:
         config = {

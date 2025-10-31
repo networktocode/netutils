@@ -9,7 +9,6 @@ docker-compose.yml
 .env
 
 # Python
-**/*.log
 **/*.pyc
 **/*.pyo
 **/__pycache__/

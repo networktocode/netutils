@@ -37,6 +37,7 @@ optionals = ["jsonschema", "napalm", "legacycrypt"]
 requests_mock = "*"
 pytest = "*"
 mock = "*"
+mypy = "*"
 pyyaml = "^6.0.1"
 pylint = "^3.1.0"
 yamllint = "^1.35.1"
@@ -71,6 +72,7 @@ mkdocstrings = "0.27.0"
 # Python-specific extension to mkdocstrings
 mkdocstrings-python = "1.13.0"
 griffe = "1.1.1"
+mkdocs-python-classy = "0.1.3"
 
 [tool.ruff]
 line-length = 120
@@ -135,7 +137,7 @@ notes = """,
     """
 
 [build-system]
-requires = ["poetry_core>=1.0.0"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
@@ -165,10 +167,6 @@ strict_equality = true
 exclude = ["tests/", "tasks.py"]
 show_error_codes = true
 
-testpaths = [
-    "tests/"
-]
-adopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
 
 [tool.towncrier]
 package = "netutils"
