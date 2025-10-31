@@ -37,7 +37,7 @@ namespace.configure(
         "netutils": {
             "project_name": "netutils",
             "python_ver": "3.9",
-            "local": is_truthy(os.getenv("INVOKE_NETUTILS_IMAGE_NAME", "false")),
+            "local": is_truthy(os.getenv("INVOKE_NETUTILS_LOCAL", "false")),
             "image_name": "netutils",
             "image_ver": os.getenv("INVOKE_PARSER_IMAGE_VER", "latest"),
             "pwd": Path(__file__).parent,
