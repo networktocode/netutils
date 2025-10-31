@@ -60,7 +60,7 @@ jobs:
       - "ruff-format"
       - "ruff-lint"
   check-docs-build:
-    runs-on: "ubuntu-24.04"
+    runs-on: "ubuntu-latest"
     env:
       INVOKE_NETUTILS_LOCAL: "True"
     steps:
