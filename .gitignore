@@ -308,3 +308,4 @@ docs/CHANGELOG.md
 public
 /compose.yaml
 /dump.sql
+/netutils/static/*
