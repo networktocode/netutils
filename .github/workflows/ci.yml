@@ -1,9 +1,9 @@
 ---
 name: "CI"
-concurrency: # Cancel any existing runs of this workflow for this same PR
+concurrency:  # Cancel any existing runs of this workflow for this same PR
   group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
-on: # yamllint disable-line rule:truthy rule:comments
+on:  # yamllint disable-line rule:truthy rule:comments
   push:
     branches:
       - "main"
