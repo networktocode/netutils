@@ -13,7 +13,9 @@ def test_initialize_logging_default(get_logger, basic_cfg):
 
     basic_cfg.assert_called_once()
     initial_call = basic_cfg.mock_calls[0].args[0]
-    assert set(initial_call.keys()) == set(["version", "disable_existing_loggers", "formatters", "handlers", "loggers"])
+    assert set(initial_call.keys()) == set(
+        ["version", "disable_existing_loggers", "formatters", "handlers", "loggers"]
+    )
     assert initial_call["handlers"]["standard"]["level"] == "INFO"
 
     get_logger.assert_called_once()
@@ -45,7 +47,9 @@ def test_initialize_logging_filename(get_logger, basic_cfg):
 
     basic_cfg.assert_called_once()
     initial_call = basic_cfg.mock_calls[0].args[0]
-    assert set(initial_call.keys()) == set(["version", "disable_existing_loggers", "formatters", "handlers", "loggers"])
+    assert set(initial_call.keys()) == set(
+        ["version", "disable_existing_loggers", "formatters", "handlers", "loggers"]
+    )
     assert initial_call["handlers"]["standard"]["level"] == "INFO"
     assert initial_call["handlers"]["file_output"]["filename"] == "output.log"
     assert initial_call["handlers"]["file_output"]["level"] == "DEBUG"

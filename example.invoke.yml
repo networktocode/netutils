@@ -1,6 +1,6 @@
 ---
 "netutils":
-  python_ver: "3.8"
+  python_ver: "3.9"
   local: false
   # image_name: "netutils"
   # image_ver: "latest"

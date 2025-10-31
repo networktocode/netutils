@@ -1,6 +1,5 @@
 # Using the Library
 
-<<<<<<< HEAD
 As the Python library is intended to be a low-level implementation, the primary use case is within Code. On this page as well as subsequent pages we will provide an overview on the type of functions and examples.
 
 # Function Groupings
@@ -85,15 +84,3 @@ Often times interfaces will come in various different shortened names, and it is
 
 !!! tip
     These are just some examples of the many functions provided by this library. Please review the Developer code for Examples on every public function
-=======
-This document describes common use-cases and scenarios for this library.
-
-## General Usage
-
-## Use-cases and common workflows
-
-## Screenshots
-
-!!! warning "Developer Note - Remove Me!"
-    Ideally captures every view exposed by the Library. Should include a relevant dataset.
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)

@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-**/*.pyc
-**/*.pyo
-**/*.log
-.git/
-.gitignore
-Dockerfile
-docker-compose.yml
-.env
-docs/_build
-**/__pycache__
-=======
 # Docker related
 development/Dockerfile
 development/docker-compose*.yml
@@ -37,4 +25,3 @@ LICENSE
 **/.vscode/
 invoke*.yml
 tasks.py
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)

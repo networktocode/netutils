@@ -10,7 +10,7 @@
         "repo_url": "https://github.com/networktocode/netutils",
         "base_url": "netutils",
         "project_python_name": "netutils",
-        "project_python_base_version": "3.8",
+        "project_python_base_version": "3.9",
         "project_with_config_settings": "no",
         "generate_docs": "yes",
         "version": "1.15.1",

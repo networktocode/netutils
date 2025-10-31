@@ -192,9 +192,6 @@ $RECYCLE.BIN/
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
-<<<<<<< HEAD
-.idea/
-=======
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -230,17 +227,13 @@ $RECYCLE.BIN/
 # .idea/modules
 # *.iml
 # *.ipr
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 
 # CMake
 cmake-build-*/
 
-<<<<<<< HEAD
-=======
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
 
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 # File-based project format
 *.iws
 
@@ -253,23 +246,15 @@ out/
 # JIRA plugin
 atlassian-ide-plugin.xml
 
-<<<<<<< HEAD
-=======
 # Cursive Clojure plugin
 .idea/replstate.xml
 
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 # Crashlytics plugin (for Android Studio and IntelliJ)
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
-<<<<<<< HEAD
-### vscode ###
-.vscode/*
-*.code-workspace
-=======
 # Editor-based Rest Client
 .idea/httpRequests
 
@@ -323,4 +308,3 @@ docs/CHANGELOG.md
 public
 /compose.yaml
 /dump.sql
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)

@@ -2,21 +2,14 @@
 
 Pull requests are welcomed and automatically built and tested against multiple versions of Python through GitHub Actions. 
 
-<<<<<<< HEAD
-Except for unit tests, testing is only supported on Python 3.13.
-
-The project is packaged with a light development environment based on `Docker` to help with the local development of the project and to run tests within  GitHub Actions.
-=======
 Except for unit tests, testing is only supported on Python 3.9.
 
 The project is packaged with a light development environment based on `Docker` to help with the local development of the project and to run tests within GitHub Actions.
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 
 The project is following Network to Code software development guidelines and is leveraging the following:
 
 - Python linting and formatting: `pylint` and `ruff`.
 - YAML linting is done with `yamllint`.
-<<<<<<< HEAD
 - Typing is done with `mypy`.
 
 There are a number of things that are required in order to have a successful PR.
@@ -74,7 +67,6 @@ When adding to any of these features, you must run the `development_scripts` fro
 
 To add a new function to the jinja2 filter, add a new entry to the `_JINJA2_FUNCTION_MAPPINGS` located in the `utils.py` file. When adding an entry, the key corresponds with the name to call the function and the value to the path to find the function.
 
-=======
 
 Documentation is built using [mkdocs](https://www.mkdocs.org/). The [Docker based development environment](dev_environment.md#docker-development-environment) can be started by running `invoke docs` [http://localhost:8001](http://localhost:8001) that auto-refreshes when you make any changes to your local files.
 
@@ -106,7 +98,6 @@ All pull requests to `next` or `develop` must include a changelog fragment file 
     ```plaintext title="changes/1234.changed"
     Changed release notes generation.
     ```
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 
 ## Branching Policy
 
@@ -118,19 +109,11 @@ The branching policy includes the following tenets:
 - PRs intended to address bug fixes and security patches should be sourced from the develop branch.
 - PRs intended to add new features that break backward compatibility should be discussed before a PR is created.
 
-<<<<<<< HEAD
-Netutils will observe semantic versioning, as of 1.0. This may result in an quick turn around in minor versions to keep pace with an ever growing feature set.
-
-## Release Policy
-
-Netutils has currently no intended scheduled release schedule, and will release new features in minor versions.
-=======
 netutils will observe semantic versioning, as of 1.0. This may result in an quick turn around in minor versions to keep pace with an ever growing feature set.
 
 ## Release Policy
 
 netutils has currently no intended scheduled release schedule, and will release new features in minor versions.
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 
 When a new release is created the following should happen.
 
@@ -148,8 +131,4 @@ When a new release is created the following should happen.
 - A post release PR is created with.
     - Change the version from `<major>.<minor>.<patch>` to `<major>.<minor>.<patch + 1>-beta` pyproject.toml.
     - Set the PR to the `develop`.
-<<<<<<< HEAD
     - Once tests pass, merge.
-=======
-    - Once tests pass, merge.
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)

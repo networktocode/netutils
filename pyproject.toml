@@ -1,6 +1,5 @@
 [tool.poetry]
 name = "netutils"
-<<<<<<< HEAD
 version = "1.15.2a0"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
@@ -10,74 +9,29 @@ repository = "https://github.com/networktocode/netutils"
 documentation = "https://netutils.readthedocs.io"
 readme = "README.md"
 keywords = ["netutils", "network utils", "network utilities", "net-utils"]
-=======
-version = "1.15.1"
-description = "Common helper functions useful in network automation."
-authors = ["Network to Code, LLC <info@networktocode.com>"]
-readme = "README.md"
-license = "Apache-2.0"
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 classifiers = [
     "Intended Audience :: Developers",
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
-<<<<<<< HEAD
     "Programming Language :: Python :: 3.13",
 ]
 include = [
     "LICENSE",
     "README.md",
     "netutils/protocols.json"
-=======
-]
-
-include = [
-    "LICENSE",
-    "README.md",
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
-<<<<<<< HEAD
+python = ">=3.9,<3.14"
 napalm = {version = "^4.0.0", optional = true}
 jsonschema = {version = "^4.17.3", optional = true}
 legacycrypt = {version = "0.3", optional = true}
 
 [tool.poetry.extras]
 optionals = ["jsonschema", "napalm", "legacycrypt"]
-
-[tool.poetry.group.dev.dependencies]
-coverage = "*"
-invoke = "*"
-pylint = "^3.1.0"
-pytest = "*"
-pyyaml = "*"
-pydocstyle = "*"
-toml = "*"
-yamllint = "*"
-mypy = "*"
-towncrier = "^24.8.0"
-ruff = "*"
-Markdown = "*"
-# Render custom markdown for version added/changed/remove notes
-markdown-version-annotations = "1.0.1"
-# Rendering docs to HTML
-mkdocs = "1.6.0"
-# Material for MkDocs theme
-mkdocs-material = "9.5.32"
-# Automatic documentation from sources, for MkDocs
-mkdocstrings = "0.25.2"
-mkdocstrings-python = "1.10.8"
-mkdocs-autorefs = "1.2.0"
-griffe = "1.1.1"
-mkdocs-python-classy = "0.1.3"
-=======
-click = "*"
 
 [tool.poetry.group.dev.dependencies]
 requests_mock = "*"
@@ -118,19 +72,6 @@ mkdocstrings = "0.27.0"
 mkdocstrings-python = "1.13.0"
 griffe = "1.1.1"
 
-[tool.poetry.scripts]
-netutils = 'netutils.cli:main'
-
-[tool.netutils]
-string_required = "some string"
-array_default = ["a", "b", "c"]
-url_default = "http://localhost"
-ip_address = "192.168.0.1"
-ip_network = "2001:db8:3c4d:15::/64"
-file = "README.md"
-
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
-
 [tool.ruff]
 line-length = 120
 target-version = "py39"
@@ -170,7 +111,9 @@ convention = "google"
     "S"
 ]
 
-<<<<<<< HEAD
+[tool.pylint.master]
+ignore=[".venv", "tests"]
+
 [tool.pylint.basic]
 # No docstrings required for private methods (Pylint default), or for test_ functions, or for inner Meta classes.
 no-docstring-rgx="^(_|test_|Meta$)"
@@ -183,23 +126,6 @@ disable = """,
     line-too-long,
     consider-iterating-dictionary,
     """
-=======
-
-[tool.pylint.master]
-ignore=[".venv", "tests"]
-
-[tool.pylint.basic]
-# No docstrings required for private methods (Pylint default), or for test_ functions, or for inner Meta classes.
-no-docstring-rgx = "^(_|test_|Meta$)"
-
-
-[tool.pylint.messages_control]
-disable = [
-    "line-too-long",
-    "duplicate-code",
-    "cyclic-import",
-    ]
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 
 [tool.pylint.miscellaneous]
 # Don't flag TODO as a failure, let us commit with things that still need to be done in the code
@@ -209,16 +135,11 @@ notes = """,
     """
 
 [build-system]
-<<<<<<< HEAD
-requires = ["poetry-core>=1.0.0"]
-=======
 requires = ["poetry_core>=1.0.0"]
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 python_paths = "./"
-<<<<<<< HEAD
 testpaths = "tests/"
 addopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
 
@@ -244,13 +165,11 @@ strict_equality = true
 exclude = ["tests/", "tasks.py"]
 show_error_codes = true
 
-=======
 testpaths = [
     "tests/"
 ]
-addopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
+adopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
 
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
 [tool.towncrier]
 package = "netutils"
 directory = "changes"

@@ -6,24 +6,6 @@
 # Required
 version: 2
 
-<<<<<<< HEAD
-# Set the version of Python in the build environment.
-build:
-  os: "ubuntu-22.04"
-  tools:
-    python: "3.10"
-
-mkdocs:
-  configuration: "mkdocs.yml"
-  # fail_on_warning: true
-
-# Use our docs/requirements.txt during installation.
-python:
-  install:
-    - requirements: "docs/requirements.txt"
-    - method: "pip"
-      path: "."
-=======
 # Setup the build environment.
 build:
   os: "ubuntu-lts-latest"
@@ -43,4 +25,3 @@ build:
 mkdocs:
   configuration: "mkdocs.yml"
   fail_on_warning: true
->>>>>>> 30a66f3 (Cookie initialy baked by NetworkToCode Cookie Drift Manager Tool)
