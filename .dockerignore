@@ -4,8 +4,12 @@ development/docker-compose*.yml
 development/*.env
 *.env
 environments/
+Dockerfile
+docker-compose.yml
+.env
 
 # Python
+**/*.log
 **/*.pyc
 **/*.pyo
 **/__pycache__/
