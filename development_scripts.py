@@ -108,6 +108,18 @@ MAPPER = {
             "_dict": lib_mapper.HIERCONFIG_LIB_MAPPER_REVERSE,
             "_file": "docs/user/lib_mapper/hierconfig_reverse.md",
         },
+        "librenms": {
+            "header_src": "LIBRENMS",
+            "header_dst": "NORMALIZED",
+            "_dict": lib_mapper.LIBRENMS_LIB_MAPPER,
+            "_file": "docs/user/lib_mapper/librenms.md",
+        },
+        "librenms_reverse": {
+            "header_src": "NORMALIZED",
+            "header_dst": "LIBRENMS",
+            "_dict": lib_mapper.LIBRENMS_LIB_MAPPER_REVERSE,
+            "_file": "docs/user/lib_mapper/librenms_reverse.md",
+        },
         "napalm": {
             "header_src": "NAPALM",
             "header_dst": "NORMALIZED",
