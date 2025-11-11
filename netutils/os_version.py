@@ -319,4 +319,4 @@ def version_metadata(vendor: str, os_type: str, version: str) -> t.Dict[str, t.A
         parsed_version = version_metadata_parsers["default"](version)  # type:ignore
         parsed_version.update({"vendor_metadata": False})
 
-    return parsed_version
+    return parsed_version  # type:ignore

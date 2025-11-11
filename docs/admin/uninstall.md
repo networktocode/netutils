@@ -3,5 +3,5 @@
 Uninstall from environment.
 
 ```bash
-$ pip uninstall netutils
+pip uninstall netutils
 ```

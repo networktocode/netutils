@@ -26,7 +26,7 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.9,<3.14"
 napalm = {version = "^4.0.0", optional = true}
 jsonschema = {version = "^4.17.3", optional = true}
 legacycrypt = {version = "0.3", optional = true}
@@ -37,26 +37,41 @@ optionals = ["jsonschema", "napalm", "legacycrypt"]
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
 invoke = "*"
-pylint = "^3.1.0"
 pytest = "*"
-pyyaml = "*"
-pydocstyle = "*"
-toml = "*"
-yamllint = "*"
+mock = "*"
 mypy = "*"
-towncrier = "^24.8.0"
-ruff = "*"
+pyyaml = "^6.0.1"
+pylint = "*"
+yamllint = "*"
+toml = "^0.10.2"
+attrs = "^23.2.0"
+towncrier = ">=23.6.0,<=24.8.0"
+ruff = "0.5.5"
 Markdown = "*"
+
+[tool.poetry.group.docs.dependencies]
+# Rendering docs to HTML
+mkdocs = "1.6.1"
+# Embedding YAML files into Markdown documents as tables
+markdown-data-tables = "1.0.0"
 # Render custom markdown for version added/changed/remove notes
 markdown-version-annotations = "1.0.1"
-# Rendering docs to HTML
-mkdocs = "1.6.0"
-# Material for MkDocs theme
-mkdocs-material = "9.5.32"
+# Automatically generate some files as part of mkdocs build
+mkdocs-gen-files = "0.5.0"
+# Image lightboxing in mkdocs
+mkdocs-glightbox = "0.4.0"
+# Use Jinja2 templating in docs - see settings.md
+mkdocs-macros-plugin = "1.3.7"
+# Material for mkdocs theme
+mkdocs-material = "9.6.15"
+# Handle docs redirections
+mkdocs-redirects = "1.2.2"
+# Automatically handle index pages for docs sections
+mkdocs-section-index = "0.3.10"
 # Automatic documentation from sources, for MkDocs
-mkdocstrings = "0.25.2"
-mkdocstrings-python = "1.10.8"
-mkdocs-autorefs = "1.2.0"
+mkdocstrings = "0.27.0"
+# Python-specific extension to mkdocstrings
+mkdocstrings-python = "1.13.0"
 griffe = "1.1.1"
 mkdocs-python-classy = "0.1.3"
 
@@ -99,6 +114,9 @@ convention = "google"
     "S"
 ]
 
+[tool.pylint.master]
+ignore=[".venv", "tests"]
+
 [tool.pylint.basic]
 # No docstrings required for private methods (Pylint default), or for test_ functions, or for inner Meta classes.
 no-docstring-rgx="^(_|test_|Meta$)"
@@ -120,7 +138,7 @@ notes = """,
     """
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
@@ -149,6 +167,7 @@ implicit_reexport = true
 strict_equality = true
 exclude = ["tests/", "tasks.py"]
 show_error_codes = true
+
 
 [tool.towncrier]
 package = "netutils"

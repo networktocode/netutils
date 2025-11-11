@@ -3,5 +3,5 @@
 Upgrade from PyPI.
 
 ```bash
-$ pip install netutils --upgrade
+pip install netutils --upgrade
 ```
