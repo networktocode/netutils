@@ -46,7 +46,7 @@ yamllint = "*"
 toml = "^0.10.2"
 attrs = "^23.2.0"
 towncrier = ">=23.6.0,<=24.8.0"
-ruff = "0.5.5"
+ruff = "0.14.4"
 Markdown = "*"
 
 [tool.poetry.group.docs.dependencies]
