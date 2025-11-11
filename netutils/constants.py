@@ -1,8 +1,6 @@
 """Constant definitions used in project."""
 
-from netutils.data_files.protocol_mappings import (  # noqa: F401 # pylint:disable=unused-import
-    PROTOCOLS,
-)
+from netutils.data_files.protocol_mappings import PROTOCOLS  # noqa: F401 # pylint:disable=unused-import
 
 # This variable provides mapping for known interface variants, to the associated long form.
 BASE_INTERFACES = {
@@ -415,8 +413,7 @@ UPTIME_REGEX_PATTERNS = [
         r"hour(s)?,\s+)?((?P<minutes>\d+) minute(s)?)"
     ),
     (
-        r"((?P<days>\d+) day(s)?,\s+)?"
-        r"((?P<hours>\d+)):((?P<minutes>\d+)):((?P<seconds>\d+))"  # pylint: disable=implicit-str-concat
+        r"((?P<days>\d+) day(s)?,\s+)?" r"((?P<hours>\d+)):((?P<minutes>\d+)):((?P<seconds>\d+))"  # pylint: disable=implicit-str-concat
     ),
     (
         r"(((?P<years>\d+)y)?(?P<weeks>\d+)w)?((?P<days>\d+)d)?((?P<hours>\d+)h)?"

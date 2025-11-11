@@ -1,5 +1,6 @@
 """Tasks for use with Invoke."""
 
+import os
 import re
 from pathlib import Path
 
@@ -10,8 +11,7 @@ from invoke import task as invoke_task
 def is_truthy(arg):
     """Convert "truthy" strings into Booleans.
 
-    Examples
-    --------
+    Examples:
         >>> is_truthy('yes')
         True
     Args:
@@ -30,17 +30,17 @@ def is_truthy(arg):
 
 
 # Use pyinvoke configuration for default values, see http://docs.pyinvoke.org/en/stable/concepts/configuration.html
-# Variables may be overwritten in invoke.yml or by the environment variables INVOKE_PYNTC_xxx
+# Variables may be overwritten in invoke.yml or by the environment variables INVOKE_NETUTILS_xxx
 namespace = Collection("netutils")
 namespace.configure(
     {
         "netutils": {
             "project_name": "netutils",
-            "python_ver": "3.13",
-            "local": False,
+            "python_ver": "3.9",
+            "local": is_truthy(os.getenv("INVOKE_NETUTILS_LOCAL", "false")),
             "image_name": "netutils",
-            "image_ver": "latest",
-            "pwd": ".",
+            "image_ver": os.getenv("INVOKE_PARSER_IMAGE_VER", "latest"),
+            "pwd": Path(__file__).parent,
         }
     }
 )
@@ -98,6 +98,9 @@ def run_command(context, exec_cmd, port=None):
     return result
 
 
+# ------------------------------------------------------------------------------
+# BUILD
+# ------------------------------------------------------------------------------
 @task(
     help={
         "cache": "Whether to use Docker's cache when building images (default enabled)",
@@ -123,6 +126,26 @@ def build(context, cache=True, force_rm=False, hide=False):
 
 
 @task
+def generate_packages(context):
+    """Generate all Python packages inside docker and copy the file locally under dist/."""
+    command = "poetry build"
+    run_command(context, command)
+
+
+@task(
+    help={
+        "check": (
+            "If enabled, check for outdated dependencies in the poetry.lock file, "
+            "instead of generating a new one. (default: disabled)"
+        )
+    }
+)
+def lock(context, check=False):
+    """Generate poetry.lock inside the library container."""
+    run_command(context, f"poetry {'check' if check else 'lock --no-update'}")
+
+
+@task
 def clean(context):
     """Remove the project specific image."""
     print(f"Attempting to forcefully remove image {context.netutils.image_name}:{context.netutils.image_ver}")
@@ -139,11 +162,7 @@ def rebuild(context):
 
 @task
 def coverage(context):
-    """Run the coverage report against pytest.
-
-    Args:
-        context (obj): Used to run specific commands
-    """
+    """Run the coverage report against pytest."""
     exec_cmd = "coverage run --source=netutils -m pytest"
     run_command(context, exec_cmd)
     run_command(context, "coverage report")
@@ -152,11 +171,7 @@ def coverage(context):
 
 @task
 def pytest(context):
-    """Run pytest for the specified name and Python version.
-
-    Args:
-        context (obj): Used to run specific commands
-    """
+    """Run pytest test cases."""
     exec_cmd = "pytest -vv --doctest-modules netutils/ && coverage run --source=netutils -m pytest && coverage report"
     run_command(context, exec_cmd)
 
@@ -236,7 +251,6 @@ def yamllint(context):
 
     Args:
         context (obj): Used to run specific commands
-        local (bool): Define as `True` to execute locally
     """
     exec_cmd = "yamllint ."
     run_command(context, exec_cmd)
@@ -253,25 +267,41 @@ def cli(context):
     context.run(f"{dev}", pty=True)
 
 
-@task
-def tests(context):
+@task(
+    help={
+        "lint-only": "Only run linters; unit tests will be excluded. (default: False)",
+    }
+)
+def tests(context, lint_only=False):
     """Run all tests for the specified name and Python version.
 
     Args:
         context (obj): Used to run specific commands
+        lint_only (bool): If True, only run linters and skip unit tests.
     """
+    # If we are not running locally, start the docker containers so we don't have to for each test
+    # Sorted loosely from fastest to slowest
+    print("Running ruff...")
     ruff(context)
-    pylint(context)
+    print("Running yamllint...")
     yamllint(context)
+    print("Running mypy...")
     mypy(context)
-    pytest(context)
-
+    print("Running poetry check...")
+    lock(context, check=True)
+    print("Running pylint...")
+    pylint(context)
+    print("Running mkdocs...")
+    build_and_check_docs(context)
+    if not lint_only:
+        print("Running unit tests...")
+        pytest(context)
     print("All tests have passed!")
 
 
 @task
 def build_and_check_docs(context):
-    """Build documentation to be available within Docs Sites."""
+    """Build documentation and test the configuration."""
     command = "mkdocs build --no-directory-urls --strict"
     run_command(context, command)
 
@@ -290,7 +320,7 @@ def build_and_check_docs(context):
 @task
 def docs(context):
     """Build and serve docs locally for development."""
-    exec_cmd = "mkdocs serve -v --dev-addr=0.0.0.0:8001"
+    exec_cmd = "mkdocs serve -v"
     run_command(context, exec_cmd, port="8001:8001")
 
 

@@ -10,9 +10,19 @@ Option 2: Install from PyPI with optional requirements.
 
 ```bash
 $ pip install netutils[napalm]
+pip install netutils
 ```
 
-Option 3: Install from a GitHub branch, such as develop as shown below.
+Option 3: Manually install via Poetry.
+
+```bash
+git clone https://github.com/networktocode/netutils.git
+cd netutils
+curl -sSL https://install.python-poetry.org | python3 -
+poetry install
+```
+
+Option 4: Install from a GitHub branch, such as develop as shown below.
 
 ```bash
 $ pip install git+https://github.com/networktocode/netutils.git@develop
