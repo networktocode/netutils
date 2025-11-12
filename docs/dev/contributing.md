@@ -2,7 +2,7 @@
 
 Pull requests are welcomed and automatically built and tested against multiple versions of Python through GitHub Actions. 
 
-Except for unit tests, testing is only supported on Python 3.9.
+Except for unit tests, testing is only supported on Python 3.13.
 
 The project is packaged with a light development environment based on `Docker` to help with the local development of the project and to run tests within GitHub Actions.
 
@@ -52,7 +52,7 @@ The branching policy includes the following tenets:
 - PRs intended to address bug fixes and security patches should be sourced from the develop branch.
 - PRs intended to add new features that break backward compatibility should be discussed before a PR is created.
 
-netutils will observe semantic versioning, as of 1.0. This may result in an quick turn around in minor versions to keep pace with an ever growing feature set.
+netutils will observe Semantic Versioning, as of 1.0. This may result in an quick turn around in minor versions to keep pace with an ever growing feature set.
 
 ## Release Policy
 

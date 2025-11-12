@@ -29,7 +29,7 @@ This document describes all new features and changes in the release `1.0`. The f
 - Achieved in this `x.y` release
 - Changes to compatibility with Nautobot and/or other apps, libraries etc.
 
-## [v1.0.1] - 2025-05-17
+## [v1.0.0] - 2025-11-11
 
 ### Added
 
@@ -37,12 +37,4 @@ This document describes all new features and changes in the release `1.0`. The f
 
 ### Fixed
 
-- [#123](https://github.com/networktocode-llc/"netutils"/issues/123) Fixed Tag filtering not working in job launch form
-
-## [v1.0.0] - 2025-07-17
-
-### Added
-
-### Changed
-
-### Fixed
+- [#123](https://github.com/networktocode/netutils/issues/123) Fixed Tag filtering not working in job launch form.

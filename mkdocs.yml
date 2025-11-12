@@ -4,7 +4,7 @@ edit_uri: "edit/main/netutils/docs"
 site_dir: "netutils/static/netutils/docs"
 site_name: "netutils Documentation"
 site_url: "https://netutils.readthedocs.io/"
-repo_url: "https://github.com/networktocode-llc/netutils"
+repo_url: "https://github.com/networktocode/netutils"
 copyright: "Copyright &copy; The Authors"
 theme:
   name: "material"
@@ -99,7 +99,7 @@ plugins:
       scripts:
         - "docs/generate_code_reference_pages.py"
   - "glightbox":
-      manual: true # See https://blueswen.github.io/mkdocs-glightbox/flexibility/enable-by-image-or-page/
+      manual: true  # See https://blueswen.github.io/mkdocs-glightbox/flexibility/enable-by-image-or-page/
   - "section-index"
   - "mkdocstrings":
       default_handler: "python"

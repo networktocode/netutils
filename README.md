@@ -1,49 +1,47 @@
 # netutils
 
+<!--
+Developer Note - Remove Me!
+
+The README will have certain links/images broken until the PR is merged into `develop`. Update the GitHub links with whichever branch you're using (main etc.) if different.
+
+The logo of the project is a placeholder (docs/images/icon-netutils.png) - please replace it with your app icon, making sure it's at least 200x200px and has a transparent background!
+
+To avoid extra work and temporary links, make sure that publishing docs (or merging a PR) is done at the same time as setting up the docs site on RTD, then test everything.
+-->
+
+<p align="center">
+  <img src="https://raw.githubusercontent.com/networktocode/netutils/develop/docs/images/icon-netutils.png" class="logo" height="200px">
+  <br>
+  <a href="https://github.com/networktocode/netutils/actions"><img src="https://github.com/networktocode/netutils/actions/workflows/ci.yml/badge.svg?branch=main"></a>
+  <a href="https://netutils.readthedocs.io/"><img src="https://readthedocs.org/projects/netutils/badge/"></a>
+  <a href="https://pypi.org/project/netutils/"><img src="https://img.shields.io/pypi/v/netutils"></a>
+  <a href="https://pypi.org/project/netutils/"><img src="https://img.shields.io/pypi/dm/netutils"></a>
+  <br>
+</p>
+
+## Overview
+
+> Developer Note: Add a long (2-3 paragraphs) description of what the library does, what problems it solves, etc.
+
 ## Documentation
 
-The documentation of each repo and its APIs can be found in the [netutils Page](https://https://networktocode-llc.github.io/netutils). It is created and published by Github actions every time you cut a new release, as long as all tests are passing. The action name is `pages` and can be found in `.github/workflows/ci.yml`.
+Full documentation for this library can be found over on [Read the Docs](https://netutils.readthedocs.io/) website:
 
-### Requirements
+- [User Guide](https://netutils.readthedocs.io/user/app_overview/) - Overview, Using the Library, Getting Started.
+- [Administrator Guide](https://netutils.readthedocs.io/admin/install/) - How to Install, Configure, Upgrade, or Uninstall the Library.
+- [Developer Guide](https://netutils.readthedocs.io/dev/contributing/) - Extending the Library, Code Reference, Contribution Guide.
+- [Release Notes / Changelog](https://netutils.readthedocs.io/admin/release_notes/).
+- [Frequently Asked Questions](https://netutils.readthedocs.io/user/faq/).
 
-If you want to build the documentation on a GitHub page:
+### Contributing to the Documentation
 
-1. Ensure that all tests are passing.
+You can find all the Markdown source for the App documentation under the [`docs`](https://github.com/networktocode/netutils/tree/develop/docs) folder in this repository. For simple edits, a Markdown capable editor is sufficient: clone the repository and edit away.
 
-2. Follow the release and tagging process.
+If you need to view the fully-generated documentation site, you can build it with [MkDocs](https://www.mkdocs.org/). A container hosting the documentation can be started using the `invoke` commands (details in the [Development Environment Guide](https://netutils/dev/dev_environment/#docker-development-environment)) on [http://localhost:8001](http://localhost:8001). Using this container, as your changes to the documentation are saved, they will be automatically rebuilt and any pages currently being viewed will be reloaded in your browser.
 
-3. Go to the repository "Settings", then go to "Pages", and select the source branch: `ntc-pages`.
+Any PRs with fixes or improvements are very welcome!
 
----
-**NOTE**
+## Questions
 
-The page url uses the repository name to formulate the url: `https://https://networktocode-llc.github.io/{ repo_name }`. For consistency, we recommend that the repository name should be the same as the project slug from the cookie cutter template: `https://https://networktocode-llc.github.io/netutils`
-
----
-
-
-### Local Doc Build
-
-If you want to build the documentation locally, follow these steps:
-
-1. Run poetry to install all necessary packages: 
-
-```bash
-$ poetry install
-$ poetry shell
-```
-
-2. Create local docs:
-
-```bash
-$ sphinx-build -vvv -b html ./docs public
-``
-
-3. Run a local python server to check your documentation rendering:
-
-```bash
-cd public
-python -m http.server &
-```
-
-
+For any questions or comments, please check the [FAQ](https://netutils.readthedocs.io/en/latest/user/faq/) first. Feel free to also swing by the [Network to Code Slack](https://networktocode.slack.com/) (channel `#networktocode`), sign up [here](http://slack.networktocode.com/) if you don't have an account.

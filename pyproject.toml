@@ -4,28 +4,31 @@ version = "1.15.1"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <info@networktocode.com>"]
 readme = "README.md"
+homepage = "https://netutils.readthedocs.io/"
+repository = "https://github.com/networktocode/netutils"
+documentation = "https://netutils.readthedocs.io/"
+keywords = ["network automation", "Network to Code", "networking"]
 license = "Apache-2.0"
 classifiers = [
     "Intended Audience :: Developers",
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
 ]
-
 include = [
     "LICENSE",
     "README.md",
 ]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = ">=3.10,<3.14"
 click = "*"
 
 [tool.poetry.group.dev.dependencies]
-requests_mock = "*"
+coverage = "*"
 pytest = "*"
 mock = "*"
 pyyaml = "^6.0.1"
@@ -66,18 +69,11 @@ griffe = "1.1.1"
 [tool.poetry.scripts]
 netutils = 'netutils.cli:main'
 
-[tool.netutils]
-string_required = "some string"
-array_default = ["a", "b", "c"]
-url_default = "http://localhost"
-ip_address = "192.168.0.1"
-ip_network = "2001:db8:3c4d:15::/64"
-file = "README.md"
 
 
 [tool.ruff]
 line-length = 120
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = [
@@ -138,7 +134,7 @@ notes = """,
     """
 
 [build-system]
-requires = ["poetry_core>=1.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
@@ -155,6 +151,11 @@ filename = "docs/admin/release_notes/version_X.Y.md"
 template = "towncrier_template.j2"
 start_string = "<!-- towncrier release notes start -->"
 issue_format = "[#{issue}](https://github.com/networktocode/netutils/issues/{issue})"
+
+[[tool.towncrier.type]]
+directory = "breaking"
+name = "Breaking Changes"
+showcontent = true
 
 [[tool.towncrier.type]]
 directory = "security"

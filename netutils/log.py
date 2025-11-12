@@ -7,9 +7,6 @@ How to use me:
 
     >>> from netutils.log import initialize_logging
     >>> log = initialize_logging(level="debug")
-    2021-12-07T10:51:49-0700 [DEBUG] [log] [initialize_logging] cookiecutter_project: Logging initialized.
-    >>> log.info("NTC")
-    2021-12-07T10:51:49-0700 [INFO] [cli] [main] cookiecutter_project.cli: Entrypoint of the CLI app.
 """
 
 import logging.config
