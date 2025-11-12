@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 """Basic tests that do not require netutils."""
+=======
+"""Basic tests that do not require Netutils."""
+>>>>>>> f4d378c (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
 
 import os
 import re

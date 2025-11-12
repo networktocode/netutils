@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ARG PYTHON_VER="3.9"
+=======
+ARG PYTHON_VER="3.10"
+>>>>>>> f4d378c (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
 
 FROM python:${PYTHON_VER}-slim
 

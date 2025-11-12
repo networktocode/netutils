@@ -4,7 +4,7 @@ about: Report a reproducible bug in the current release of netutils
 ---
 
 ### Environment
-* Python version:  <!-- Example: 3.9 -->
+* Python version:  <!-- Example: 3.10 -->
 * netutils version:  <!-- Example: 1.0.0 -->
 
 <!-- What did you expect to happen? -->
