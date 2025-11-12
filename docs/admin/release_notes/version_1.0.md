@@ -6,15 +6,7 @@
 - Commit to SemVer
 - F5 fixes
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 ## v1.0.0 - 2021-11
-=======
-## [v1.0.0] - 2025-11-12
->>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
-=======
-## [v1.0.0] - 2025-11-12
->>>>>>> 9ebf36e (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
 
 ### Added
 
@@ -22,16 +14,8 @@
 
 ### Fixed
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 - [#79](https://github.com/networktocode/netutils/issues/79) F5 parser fix for irules with multiline single command lines.
 
 ### Removed
 
 - [#83](https://github.com/networktocode/netutils/issues/83) Remove support for old function 'is_fqdn_valid' as prep for 1.0.0.
-=======
-- [#123](https://github.com/networktocode/netutils/issues/123) Fixed Tag filtering not working in job launch form.
->>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
-=======
-- [#123](https://github.com/networktocode/netutils/issues/123) Fixed Tag filtering not working in job launch form.
->>>>>>> 9ebf36e (Cookie updated by NetworkToCode Cookie Drift Manager Tool)

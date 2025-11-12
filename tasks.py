@@ -36,15 +36,7 @@ namespace.configure(
     {
         "netutils": {
             "project_name": "netutils",
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "python_ver": "3.9",
-=======
             "python_ver": "3.10",
->>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
-=======
-            "python_ver": "3.9",
->>>>>>> 9ebf36e (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
             "local": is_truthy(os.getenv("INVOKE_NETUTILS_LOCAL", "false")),
             "image_name": "netutils",
             "image_ver": os.getenv("INVOKE_PARSER_IMAGE_VER", "latest"),
@@ -156,9 +148,15 @@ def lock(context, check=False):
 @task
 def clean(context):
     """Remove the project specific image."""
-    print(f"Attempting to forcefully remove image {context.netutils.image_name}:{context.netutils.image_ver}")
-    context.run(f"docker rmi {context.netutils.image_name}:{context.netutils.image_ver} --force")
-    print(f"Successfully removed image {context.netutils.image_name}:{context.netutils.image_ver}")
+    print(
+        f"Attempting to forcefully remove image {context.netutils.image_name}:{context.netutils.image_ver}"
+    )
+    context.run(
+        f"docker rmi {context.netutils.image_name}:{context.netutils.image_ver} --force"
+    )
+    print(
+        f"Successfully removed image {context.netutils.image_name}:{context.netutils.image_ver}"
+    )
 
 
 @task
@@ -319,7 +317,13 @@ def build_and_check_docs(context):
     if match:
         major = match.group(1)
         minor = match.group(2)
-        release_notes_file = Path(__file__).parent / "docs" / "admin" / "release_notes" / f"version_{major}.{minor}.md"
+        release_notes_file = (
+            Path(__file__).parent
+            / "docs"
+            / "admin"
+            / "release_notes"
+            / f"version_{major}.{minor}.md"
+        )
         if not release_notes_file.exists():
             print(f"Release notes file `version_{major}.{minor}.md` does not exist.")
             raise Exit(code=1)
