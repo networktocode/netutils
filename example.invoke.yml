@@ -1,10 +1,14 @@
 ---
 "netutils":
 <<<<<<< HEAD
+<<<<<<< HEAD
   python_ver: "3.9"
 =======
   python_ver: "3.10"
 >>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
+=======
+  python_ver: "3.9"
+>>>>>>> 9ebf36e (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
   local: false
   # image_name: "netutils"
   # image_ver: "latest"

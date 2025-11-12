@@ -108,10 +108,14 @@ jobs:
       fail-fast: true
       matrix:
 <<<<<<< HEAD
+<<<<<<< HEAD
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 =======
         python-version: ["3.10", "3.13"]
 >>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
+=======
+        python-version: ["3.10", "3.13"]
+>>>>>>> 9ebf36e (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
     env:
       INVOKE_NETUTILS_PYTHON_VER: "${{ matrix.python-version }}"
     steps:
@@ -148,10 +152,14 @@ jobs:
       fail-fast: true
       matrix:
 <<<<<<< HEAD
+<<<<<<< HEAD
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 =======
         python-version: ["3.10", "3.11", "3.12", "3.13"]
 >>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
+=======
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+>>>>>>> 9ebf36e (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
     runs-on: "ubuntu-latest"
     env:
       INVOKE_NETUTILS_PYTHON_VER: "${{ matrix.python-version }}"
@@ -200,6 +208,7 @@ jobs:
         run: |
           git fetch --no-tags origin +refs/heads/${{ github.base_ref }}:refs/remotes/origin/${{ github.base_ref }}
           poetry run towncrier check --compare-with origin/${{ github.base_ref }}
+<<<<<<< HEAD
 <<<<<<< HEAD
   publish_gh:
     name: "Publish to GitHub"
@@ -299,3 +308,5 @@ jobs:
           SLACK_WEBHOOK_TYPE: "INCOMING_WEBHOOK"
 =======
 >>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
+=======
+>>>>>>> 9ebf36e (Cookie updated by NetworkToCode Cookie Drift Manager Tool)

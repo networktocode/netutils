@@ -1,8 +1,12 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 ARG PYTHON_VER="3.9"
 =======
 ARG PYTHON_VER="3.10"
 >>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
+=======
+ARG PYTHON_VER="3.9"
+>>>>>>> 9ebf36e (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
 
 FROM python:${PYTHON_VER}-slim
 

@@ -11,6 +11,7 @@
         "base_url": "netutils",
         "project_python_name": "netutils",
 <<<<<<< HEAD
+<<<<<<< HEAD
         "project_python_base_version": "3.9",
 =======
         "project_python_base_version": "3.10",
@@ -19,20 +20,31 @@
         "generate_docs": "yes",
         "version": "1.15.1",
         "original_publish_year": "2021",
+=======
+        "project_python_base_version": "3.9",
+        "project_with_config_settings": "no",
+        "generate_docs": "yes",
+        "version": "1.15.1",
+        "original_publish_year": "2025",
+>>>>>>> 9ebf36e (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
         "_drift_manager": {
             "template": "https://github.com/networktocode-llc/cookiecutter-ntc.git",
             "template_dir": "python",
             "template_ref": "main",
             "cookie_dir": "",
             "branch_prefix": "drift-manager",
-            "pull_request_strategy": "create",
+            "pull_request_strategy": "update-or-create",
             "post_actions": [],
             "draft": false,
+<<<<<<< HEAD
 <<<<<<< HEAD
             "baked_commit_ref": "cb8b5e31dece5ab2663d2ffd218a96ca1ae794c5"
 =======
             "baked_commit_ref": "a9772e1a48d3ff17371da29d817541ecf9cd9e4c"
 >>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
+=======
+            "baked_commit_ref": "6e903d3c14d2fd9a9e73ac9725d2eb2efdc315e7"
+>>>>>>> 9ebf36e (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
         }
     }
 }
