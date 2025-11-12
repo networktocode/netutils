@@ -36,7 +36,11 @@ namespace.configure(
     {
         "netutils": {
             "project_name": "netutils",
+<<<<<<< HEAD
             "python_ver": "3.9",
+=======
+            "python_ver": "3.10",
+>>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
             "local": is_truthy(os.getenv("INVOKE_NETUTILS_LOCAL", "false")),
             "image_name": "netutils",
             "image_ver": os.getenv("INVOKE_PARSER_IMAGE_VER", "latest"),

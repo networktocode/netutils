@@ -2,7 +2,7 @@
     "cookiecutter": {
         "codeowner_github_usernames": "@itdependsnetworks @jeffkala @qduk",
         "full_name": "Network to Code, LLC",
-        "email": "info@networktocode.com",
+        "email": "opensource@networktocode.com",
         "github_org": "networktocode",
         "description": "Common helper functions useful in network automation.",
         "project_name": "netutils",
@@ -10,10 +10,15 @@
         "repo_url": "https://github.com/networktocode/netutils",
         "base_url": "netutils",
         "project_python_name": "netutils",
+<<<<<<< HEAD
         "project_python_base_version": "3.9",
+=======
+        "project_python_base_version": "3.10",
+>>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
         "project_with_config_settings": "no",
         "generate_docs": "yes",
         "version": "1.15.1",
+        "original_publish_year": "2021",
         "_drift_manager": {
             "template": "https://github.com/networktocode-llc/cookiecutter-ntc.git",
             "template_dir": "python",
@@ -23,7 +28,11 @@
             "pull_request_strategy": "create",
             "post_actions": [],
             "draft": false,
+<<<<<<< HEAD
             "baked_commit_ref": "cb8b5e31dece5ab2663d2ffd218a96ca1ae794c5"
+=======
+            "baked_commit_ref": "a9772e1a48d3ff17371da29d817541ecf9cd9e4c"
+>>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
         }
     }
 }

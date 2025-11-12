@@ -109,7 +109,11 @@ The branching policy includes the following tenets:
 - PRs intended to address bug fixes and security patches should be sourced from the develop branch.
 - PRs intended to add new features that break backward compatibility should be discussed before a PR is created.
 
+<<<<<<< HEAD
 Netutils will observe semantic versioning, as of 1.0. This may result in an quick turn around in minor versions to keep pace with an ever growing feature set.
+=======
+Netutils will observe Semantic Versioning, as of 1.0. This may result in an quick turn around in minor versions to keep pace with an ever growing feature set.
+>>>>>>> 725e2d2 (Cookie updated by NetworkToCode Cookie Drift Manager Tool)
 
 ## Release Policy
 
