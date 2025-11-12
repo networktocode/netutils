@@ -23,7 +23,7 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.14"
+python = ">=3.9,<3.14"
 click = "*"
 
 [tool.poetry.group.dev.dependencies]
