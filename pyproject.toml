@@ -36,9 +36,6 @@ optionals = ["jsonschema", "napalm", "legacycrypt"]
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
 invoke = "*"
-
-[tool.poetry.group.dev.dependencies]
-coverage = "*"
 pytest = "*"
 mock = "*"
 mypy = "*"
