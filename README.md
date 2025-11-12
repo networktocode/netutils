@@ -1,4 +1,4 @@
-# netutils
+# Netutils
 
 <!--
 Developer Note - Remove Me!
@@ -11,10 +11,10 @@ To avoid extra work and temporary links, make sure that publishing docs (or merg
 -->
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/networktocode/netutils/develop/docs/images/icon-netutils.png" class="logo" height="200px">
+  <img src="https://raw.githubusercontent.com/networktocode/netutils/develop/docs/images/icon-Netutils.png" class="logo" height="200px">
   <br>
   <a href="https://github.com/networktocode/netutils/actions"><img src="https://github.com/networktocode/netutils/actions/workflows/ci.yml/badge.svg?branch=main"></a>
-  <a href="https://netutils.readthedocs.io/"><img src="https://readthedocs.org/projects/netutils/badge/"></a>
+  <a href="https://netutils.readthedocs.io/en/latest/"><img src="https://readthedocs.org/projects/netutils/badge/"></a>
   <a href="https://pypi.org/project/netutils/"><img src="https://img.shields.io/pypi/v/netutils"></a>
   <a href="https://pypi.org/project/netutils/"><img src="https://img.shields.io/pypi/dm/netutils"></a>
   <br>
@@ -26,7 +26,7 @@ To avoid extra work and temporary links, make sure that publishing docs (or merg
 
 ## Documentation
 
-Full documentation for this library can be found over on [Read the Docs](https://netutils.readthedocs.io/) website:
+Full documentation for this library can be found over on the [Netutils Docs](https://netutils.readthedocs.io/) website:
 
 - [User Guide](https://netutils.readthedocs.io/user/app_overview/) - Overview, Using the Library, Getting Started.
 - [Administrator Guide](https://netutils.readthedocs.io/admin/install/) - How to Install, Configure, Upgrade, or Uninstall the Library.

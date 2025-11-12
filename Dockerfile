@@ -23,4 +23,4 @@ WORKDIR /local
 COPY . /local
 
 # Install the app
-RUN poetry install --with dev
+RUN poetry install --with dev --all-extras

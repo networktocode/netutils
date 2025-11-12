@@ -1,4 +1,4 @@
-"""Basic tests that do not require Django."""
+"""Basic tests that do not require Netutils."""
 
 import os
 import re

@@ -2,12 +2,11 @@
 name = "netutils"
 version = "1.15.1"
 description = "Common helper functions useful in network automation."
-authors = ["Network to Code, LLC <info@networktocode.com>"]
+authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 readme = "README.md"
 homepage = "https://netutils.readthedocs.io/"
 repository = "https://github.com/networktocode/netutils"
 documentation = "https://netutils.readthedocs.io/"
-keywords = ["network automation", "Network to Code", "networking"]
 license = "Apache-2.0"
 classifiers = [
     "Intended Audience :: Developers",

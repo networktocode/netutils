@@ -18,5 +18,5 @@ poetry install
 Option 3: Install from a GitHub branch, such as develop as shown below.
 
 ```bash
-pip install git+https://github.com/{ cookiecutter.github_org }}/netutils.git@develop
+pip install git+https://github.com/networktocode/netutils.git@develop
 ```
