@@ -109,7 +109,7 @@ jobs:
       matrix:
         python-version: ["3.10", "3.13"]
     env:
-      INVOKE_NETUTILS_PYTHON_VER: "${{ matrix.python-version }}"
+      PYTHON_VER: "${{ matrix.python-version }}"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"
@@ -146,7 +146,7 @@ jobs:
         python-version: ["3.10", "3.11", "3.12", "3.13"]
     runs-on: "ubuntu-latest"
     env:
-      INVOKE_NETUTILS_PYTHON_VER: "${{ matrix.python-version }}"
+      PYTHON_VER: "${{ matrix.python-version }}"
     steps:
       - name: "Check out repository code"
         uses: "actions/checkout@v4"
