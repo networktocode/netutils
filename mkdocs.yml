@@ -93,9 +93,6 @@ plugins:
         - "netutils.config.parser"
       classy_libraries:
         - "netutils"
-  - "gen-files":
-      scripts:
-        - "docs/generate_code_reference_pages.py"
   - "glightbox":
       manual: true  # See https://blueswen.github.io/mkdocs-glightbox/flexibility/enable-by-image-or-page/
   - "section-index"
