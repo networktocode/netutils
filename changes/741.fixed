@@ -1,0 +1,1 @@
+Fixed the logic error where `salt=0` was ignored in `encrypt_cisco_type7`

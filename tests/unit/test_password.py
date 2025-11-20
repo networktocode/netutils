@@ -86,6 +86,10 @@ ENCRYPT_CISCO_TYPE7 = [
         "sent": {"unencrypted_password": "cisco", "salt": 10},
         "received": "104D000A0618",
     },
+    {
+        "sent": {"unencrypted_password": "cisco", "salt": 0},
+        "received": "00071A150754",
+    },
 ]
 
 ENCRYPT_CISCO_TYPE9 = [
