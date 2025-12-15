@@ -1,0 +1,32 @@
+{
+    "access port": {
+        "actual": "configure access-port access-1-1-1-3\n      add flow flow-1-1-1-3-1 \"WTRL\" regular-evc disabled disabled disabled disabled 0 disabled none none \"1138-*\" 100160000 0 access-interface access-1-1-1-3 network-interface network-1-1-1-1 flow-based n2a-prio-mapping-profile none a2n-prio-mapping-profile none\n      configure flow flow-1-1-1-3-1\n        policing-control a2n\n        access-max-forwarding-entries 4096\n        network-max-forwarding-entries 4096\n    configure access-port access-1-1-1-3\n      configure flow flow-1-1-1-3-1\n        configure a2n-shaper a2n_shaper-1-1-1-3-1-0\n          buffersize 512\n          back\n        configure a2n-shaper a2n_shaper-1-1-1-3-1-0\n          soam-cir 128000\n    configure access-port access-1-1-1-3\n      configure flow flow-1-1-1-3-1\n        configure a2n-policer a2n_policer-1-1-1-3-1-0\n          cbs 512\n          cir 100032000\n          color-mode color-blind\n          eir 0\n    configure access-port access-1-1-1-3\n      configure flow flow-1-1-1-3-1\n        configure n2a-policer n2a_policer-1-1-1-3-1-0\n          policing-enabled disabled",
+        "cannot_parse": true,
+        "compliant": false,
+        "extra": "configure access-port access-1-1-1-3\n      configure flow flow-1-1-1-3-1\n        access-max-forwarding-entries 4096\n        network-max-forwarding-entries 4096",
+        "intended": "configure access-port access-1-1-1-3\n      add flow flow-1-1-1-3-1 \"WTRL\" regular-evc disabled disabled disabled disabled 0 disabled none none \"1138-*\" 100160000 0 access-interface access-1-1-1-3 network-interface network-1-1-1-1 flow-based n2a-prio-mapping-profile none a2n-prio-mapping-profile none\n      configure flow flow-1-1-1-3-1\n        policing-control a2n\n        access-max-forwarding-entries 2048\n        network-max-forwarding-entries 2048\n    configure access-port access-1-1-1-3\n      configure flow flow-1-1-1-3-1\n        configure a2n-shaper a2n_shaper-1-1-1-3-1-0\n          buffersize 512\n          back\n        configure a2n-shaper a2n_shaper-1-1-1-3-1-0\n          soam-cir 128000\n    configure access-port access-1-1-1-3\n      configure flow flow-1-1-1-3-1\n        configure a2n-policer a2n_policer-1-1-1-3-1-0\n          cbs 512\n          cir 100032000\n          color-mode color-blind\n          eir 0\n    configure access-port access-1-1-1-3\n      configure flow flow-1-1-1-3-1\n        configure n2a-policer n2a_policer-1-1-1-3-1-0\n          policing-enabled disabled",
+        "missing": "configure access-port access-1-1-1-3\n      configure flow flow-1-1-1-3-1\n        access-max-forwarding-entries 2048\n        network-max-forwarding-entries 2048",
+        "ordered_compliant": false,
+        "unordered_compliant": false
+    },
+    "snmp": {
+        "actual": "configure snmp\n  add community \"snmp-comm-1\" readwrite\nconfigure snmp\n  add community \"snmp-comm-2\" readwrite\nconfigure snmp\n  add community \"snmp-comm-3\" trap-only",
+        "cannot_parse": true,
+        "compliant": false,
+        "extra": "configure snmp\n  add community \"snmp-comm-2\" readwrite",
+        "intended": "configure snmp\n  add community \"snmp-comm-1\" readwrite\nconfigure snmp\n  add community \"snmp-comm-2\" readonly\nconfigure snmp\n  add community \"snmp-comm-3\" trap-only",
+        "missing": "configure snmp\n  add community \"snmp-comm-2\" readonly",
+        "ordered_compliant": false,
+        "unordered_compliant": false
+    },
+    "system": {
+        "actual": "configure system\n  prompt \"ADVA-SW1\"\nconfigure system\n  ftp enabled\n  system-tod-type ntp\n  http disabled\n  telnet enabled\n  security-banner \"Warning Notice: This system is restricted solely to Rainbow Industries\\\\nauthorized users for legitimate business purposes only. The actual or attempted\\\\nunauthorized access, use, or modification of this system is strictly prohibited\\\\nby Techno Cosmic Research Institute. Unauthorized users are subject to company\\\\ndisciplinary proceedings and/or criminal and civil penalties under state,\\\\nfederal, or other applicable domestic and foreign laws. The use of this system\\\\nmay be monitored and recorded for administrative and security reasons. Anyone\\\\naccessing this system expressly consents to such monitoring and is advised that\\\\nif such monitoring reveals possible evidence of criminal activity, Techno Cosmic\\\\nResearch Institute may provide the evidence to law enforcement officials. All users\\\\nmust comply with Rainbow Industries security instructions regarding the\\\\nprotection of Rainbow Industries information. Call Network Operations Center\\\\nat 1-888-555-1138 for any information regarding this notice.\"",
+        "cannot_parse": true,
+        "compliant": false,
+        "extra": "configure system\n  prompt \"ADVA-SW1\"\n  telnet enabled",
+        "intended": "configure system\n  prompt \"ADVA-S1\"\nconfigure system\n  ftp enabled\n  system-tod-type ntp\n  http disabled\n  telnet disabled\n  security-banner \"Warning Notice: This system is restricted solely to Rainbow Industries\\\\nauthorized users for legitimate business purposes only. The actual or attempted\\\\nunauthorized access, use, or modification of this system is strictly prohibited\\\\nby Techno Cosmic Research Institute. Unauthorized users are subject to company\\\\ndisciplinary proceedings and/or criminal and civil penalties under state,\\\\nfederal, or other applicable domestic and foreign laws. The use of this system\\\\nmay be monitored and recorded for administrative and security reasons. Anyone\\\\naccessing this system expressly consents to such monitoring and is advised that\\\\nif such monitoring reveals possible evidence of criminal activity, Techno Cosmic\\\\nResearch Institute may provide the evidence to law enforcement officials. All users\\\\nmust comply with Rainbow Industries security instructions regarding the\\\\nprotection of Rainbow Industries information. Call Network Operations Center\\\\nat 1-888-555-1138 for any information regarding this notice.\"",
+        "missing": "configure system\n  prompt \"ADVA-S1\"\n  telnet disabled",
+        "ordered_compliant": false,
+        "unordered_compliant": false
+    }
+}
