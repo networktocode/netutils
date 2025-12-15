@@ -1891,3 +1891,37 @@ class RadEtxConfigParser(BaseSpaceConfigParser):
             )
             self._config = "\n".join(config_lines)
         return self._config
+
+
+class ADVAConfigParser(BaseSpaceConfigParser):
+    """Base ADVA OS ConfigParser class."""
+
+    comment_chars: t.List[str] = ["#", "home", "Preparing configuration file..."]
+    banner_start: t.List[str] = ["security-banner"]
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char."""
+        return '"'
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Build banner specific to ADVA AOS devices.
+
+        Args:
+          config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None.
+
+        Raises:
+            ValueError when parser is unable to identify the banner end.
+        """
+        if config_line.endswith(self.banner_end):
+            self._update_config_lines(config_line)
+            self._current_parents = self._current_parents[:-1]
+            try:
+                return next(self.generator_config)
+            except StopIteration:
+                return None
+
+        raise ValueError("Unable to parse banner end.")
