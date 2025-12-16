@@ -1,0 +1,32 @@
+{
+    "interface": {
+        "actual": "configure interface e100-lan-3\n  portmode Connection-oriented\n  assignstate enable\n  media copper\n  speed 100full\n  description \"P2P-Circuit-2-PORT-DISABLED\"\n  frame-loss-ratio 1.00\n  evc-mode tls\n  circuit-name \"NO-CIRCUIT-NAME-ASSIGNED\"\n  ingress-buffersize 1274\n  ingress-cbs 32\n  ingress-ebs 0\n  egress-limiting enable\n  ingress-eir 0\n  ingress-cir 1024000\n  egress-buffersize 1274\n  egress-cbs 32\n  egress-ebs 64\n  egress-eir 0\n  egress-cir 1024000\n  flowcontrol receive disable\n  flowcontrol send disable\n  tagged-frame enable\n  untagged-frame enable\n  ctag push 103-0 disable\n  stag none\n  wan-if e1000-wan-1\n  no propagate-fault\n  qq-ethertype 0x8100\n  efm-oam localmode passive\n  cpd-filter efm-oam discard\n  adminstate enable\n  port-policing enable\n  elmi\n    async-status enable\n    min-async-status-interval 1\n    n393 4\n    t392 15\nconfigure interface e100-lan-3\n  adminstate disable",
+        "cannot_parse": true,
+        "compliant": false,
+        "extra": "configure interface e100-lan-3\n  flowcontrol receive disable\n  flowcontrol send disable",
+        "intended": "configure interface e100-lan-3\n  portmode Connection-oriented\n  assignstate enable\n  media copper\n  speed 100full\n  description \"P2P-Circuit-2-PORT-DISABLED\"\n  frame-loss-ratio 1.00\n  evc-mode tls\n  circuit-name \"NO-CIRCUIT-NAME-ASSIGNED\"\n  ingress-buffersize 1274\n  ingress-cbs 32\n  ingress-ebs 0\n  egress-limiting enable\n  ingress-eir 0\n  ingress-cir 1024000\n  egress-buffersize 1274\n  egress-cbs 32\n  egress-ebs 64\n  egress-eir 0\n  egress-cir 1024000\n  flowcontrol receive enable\n  flowcontrol send enable\n  tagged-frame enable\n  untagged-frame enable\n  ctag push 103-0 disable\n  stag none\n  wan-if e1000-wan-1\n  no propagate-fault\n  qq-ethertype 0x8100\n  efm-oam localmode passive\n  cpd-filter efm-oam discard\n  adminstate enable\n  port-policing enable\n  elmi\n    async-status enable\n    min-async-status-interval 1\n    n393 4\n    t392 15\nconfigure interface e100-lan-3\n  adminstate disable",
+        "missing": "configure interface e100-lan-3\n  flowcontrol receive enable\n  flowcontrol send enable",
+        "ordered_compliant": false,
+        "unordered_compliant": false
+    },
+    "ping": {
+        "actual": "configure sched ping\n  frequency 1\n  severity minor\n  threshold 1",
+        "cannot_parse": true,
+        "compliant": false,
+        "extra": "configure sched ping\n  frequency 1\n  threshold 1",
+        "intended": "configure sched ping\n  frequency 3\n  severity minor\n  threshold 5",
+        "missing": "configure sched ping\n  frequency 3\n  threshold 5",
+        "ordered_compliant": false,
+        "unordered_compliant": false
+    },
+    "system": {
+        "actual": "configure system\n  sysname \"x-dngr-rm-01\"\n  cli-prompt \"X-DNGR-RM-01\"\n  contact \"XNOC 888-555-1963\"\n  location \"1407 Graymalkin LN, North Salem, NY 10560\"\n  ip-address 192.168.0.63 255.255.255.0\n  security-prompt enable\n  serial enable\n  telnet disable\n  web enable\n  snmp-dying-gasp enable\n  temperature-monitoring enable\n  bwp-mode information-rate\n  clock timezone utc\n  sntpclient mode unicast\n  sntpclient dhcp-supplied disable\n  sntpclient server 198.51.100.251\n  syslogclient dhcp-supplied disable\n  syslogclient server 198.51.100.252\n  security-banner \"Any changes to this system require a change ticket or trouble ticket.  Do you really want to proceed?\\\\n\\\\nBe sure to notify the XNOC of work being performed BEFORE changes are made.\\\\n\\\\nXNOC - 888-555-1963\"\nconfigure system\n  jumbo-frame enable",
+        "cannot_parse": true,
+        "compliant": false,
+        "extra": "configure system\n  ip-address 192.168.0.63 255.255.255.0",
+        "intended": "configure system\n  sysname \"x-dngr-rm-01\"\n  cli-prompt \"X-DNGR-RM-01\"\n  contact \"XNOC 888-555-1963\"\n  location \"1407 Graymalkin LN, North Salem, NY 10560\"\n  ip-address 192.168.0.75 255.255.255.0\n  security-prompt enable\n  serial enable\n  telnet disable\n  web enable\n  snmp-dying-gasp enable\n  temperature-monitoring enable\n  bwp-mode information-rate\n  clock timezone utc\n  sntpclient mode unicast\n  sntpclient dhcp-supplied disable\n  sntpclient server 198.51.100.251\n  syslogclient dhcp-supplied disable\n  syslogclient server 198.51.100.252\n  security-banner \"Any changes to this system require a change ticket or trouble ticket.  Do you really want to proceed?\\\\n\\\\nBe sure to notify the XNOC of work being performed BEFORE changes are made.\\\\n\\\\nXNOC - 888-555-1963\"\nconfigure system\n  jumbo-frame enable",
+        "missing": "configure system\n  ip-address 192.168.0.75 255.255.255.0",
+        "ordered_compliant": false,
+        "unordered_compliant": false
+    }
+}

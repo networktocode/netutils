@@ -1896,7 +1896,6 @@ class RadEtxConfigParser(BaseSpaceConfigParser):
 class ADVAConfigParser(BaseSpaceConfigParser):
     """Base ADVA OS ConfigParser class."""
 
-    comment_chars: t.List[str] = ["#", "home", "Preparing configuration file..."]
     banner_start: t.List[str] = ["security-banner"]
 
     @property
@@ -1925,3 +1924,13 @@ class ADVAConfigParser(BaseSpaceConfigParser):
                 return None
 
         raise ValueError("Unable to parse banner end.")
+
+
+class ADVAFSP150F2ConfigParser(ADVAConfigParser):
+    """ADVA OS FSP-150 F2 ConfigParser."""
+    comment_chars: t.List[str] = ["remark", "exit"]
+
+
+class ADVAFSP150F3ConfigParser(ADVAConfigParser):
+    """ADVA OS FSP-150 F3 ConfigParser."""
+    comment_chars: t.List[str] = ["#", "home", "Preparing configuration file..."]
