@@ -1928,9 +1928,11 @@ class ADVAConfigParser(BaseSpaceConfigParser):
 
 class ADVAFSP150F2ConfigParser(ADVAConfigParser):
     """ADVA OS FSP-150 F2 ConfigParser."""
+
     comment_chars: t.List[str] = ["remark", "exit"]
 
 
 class ADVAFSP150F3ConfigParser(ADVAConfigParser):
     """ADVA OS FSP-150 F3 ConfigParser."""
+
     comment_chars: t.List[str] = ["#", "home", "Preparing configuration file..."]
