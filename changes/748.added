@@ -1,9 +1,0 @@
-### Environment
-
-• netutils version: next
-
-### Proposed Functionality
-
-### Use Case
-
-Parsing ADVA AOS device configs for compliance. FSP150F2 and FSP150F3 map to discrete Netmiko drivers and support different hardware generations.
