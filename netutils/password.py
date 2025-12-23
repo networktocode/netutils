@@ -292,7 +292,7 @@ def encrypt_cisco_type7(unencrypted_password: str, salt: t.Optional[int] = None)
     if len(unencrypted_password) > ENCRYPT_TYPE7_LENGTH:
         raise ValueError("Password must not exceed 25 characters.")
 
-    if not salt:
+    if salt is None:
         salt = random.randint(0, 15)  # noqa: S311
     # Start building the encrypted password - pre-pend the 2 decimal digit offset.
     encrypted_password = format(salt, "02d")
