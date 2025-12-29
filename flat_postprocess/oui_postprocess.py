@@ -12,8 +12,8 @@ URL = "https://standards-oui.ieee.org/oui/oui.txt"
 
 def download_csv_text(url: str = URL) -> str:
     """Download the CSV text from the given URL."""
-    proc = subprocess.run(
-        ["curl", "-fsSL", "https://standards-oui.ieee.org/oui/oui.txt"],
+    proc = subprocess.run(  # noqa: S603
+        ["curl", "-fsSL", url],  # noqa: S607
         check=True,
         capture_output=True,
         text=True,
