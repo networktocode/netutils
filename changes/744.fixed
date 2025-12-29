@@ -1,0 +1,1 @@
+Fixed incomplete org names and incomplete list of mappings in OUI_MAPPINGS dict in netutils/data_files/oui_mappings.py.
