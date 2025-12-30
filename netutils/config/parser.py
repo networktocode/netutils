@@ -1522,11 +1522,10 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
             if not self.is_banner_end(line):
                 banner_config.append(line)
             else:
-                line = normalise_delimiter_caret_c(self.banner_end, line)
                 banner_config.append(line.strip())
                 line = "\n".join(banner_config)
-                if line.endswith("^C"):
-                    banner, end, _ = line.rpartition("^C")
+                if line.endswith('"'):
+                    banner, end, _ = line.rpartition('"')
                     line = banner + end
                 self._update_config_lines(line.strip())
                 self._current_parents = self._current_parents[:-1]
