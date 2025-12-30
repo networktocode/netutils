@@ -1,0 +1,1 @@
+Fix PAN-OS banner parsing by removing IOS-style banner end normalization.
