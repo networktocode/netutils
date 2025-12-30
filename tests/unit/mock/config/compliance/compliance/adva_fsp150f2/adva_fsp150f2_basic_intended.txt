@@ -1,0 +1,101 @@
+remark ####################################################################
+remark #
+remark # Database Version: 13.0
+remark #
+remark ####################################################################
+remark #
+remark # System
+remark #
+configure system
+  sysname "x-dngr-rm-01"
+  cli-prompt "X-DNGR-RM-01"
+  contact "XNOC 888-555-1963"
+  location "1407 Graymalkin LN, North Salem, NY 10560"
+  ip-address 192.168.0.75 255.255.255.0
+  security-prompt enable
+  serial enable
+  telnet disable
+  web enable
+  snmp-dying-gasp enable
+  temperature-monitoring enable
+  bwp-mode information-rate
+  clock timezone utc
+  sntpclient mode unicast
+  sntpclient dhcp-supplied disable
+  sntpclient server 198.51.100.251
+  syslogclient dhcp-supplied disable
+  syslogclient server 198.51.100.252
+  security-banner "Any changes to this system require a change ticket or trouble ticket.  Do you really want to proceed?\\n\\nBe sure to notify the XNOC of work being performed BEFORE changes are made.\\n\\nXNOC - 888-555-1963"
+  pae authentication-control enable
+exit
+
+configure system
+  jumbo-frame enable
+exit
+
+remark #
+remark # Scheduled Ping
+remark #
+configure sched ping
+  frequency 3
+  severity minor
+  threshold 5
+exit
+
+remark #
+remark # Interface: e100-lan-3
+remark #
+configure interface e100-lan-3
+  portmode Connection-oriented
+  remark #
+  remark # Temporarily assign the interface while configuring it.
+  remark # Final value will be assignstate disable.
+  remark #
+  assignstate enable
+  media copper
+  speed 100full
+  description "P2P-Circuit-2-PORT-DISABLED"
+  frame-loss-ratio 1.00
+  evc-mode tls
+  circuit-name "NO-CIRCUIT-NAME-ASSIGNED"
+  ingress-buffersize 1274
+  ingress-cbs 32
+  ingress-ebs 0
+  egress-limiting enable
+  ingress-eir 0
+  ingress-cir 1024000
+  egress-buffersize 1274
+  egress-cbs 32
+  egress-ebs 64
+  egress-eir 0
+  egress-cir 1024000
+  flowcontrol receive enable
+  flowcontrol send enable
+  tagged-frame enable
+  untagged-frame enable
+  ctag push 103-0 disable
+  stag none
+  wan-if e1000-wan-1
+  no propagate-fault
+  qq-ethertype 0x8100
+  efm-oam localmode passive
+  cpd-filter efm-oam discard
+  adminstate enable
+  port-policing enable
+
+  elmi
+    async-status enable
+    min-async-status-interval 1
+    n393 4
+    t392 15
+    exit
+
+exit
+
+configure interface e100-lan-3
+  remark #
+  remark # Temporarily disable the interface while configuring it.
+  remark # Final value will be adminstate enable.
+  remark #
+  adminstate disable
+exit

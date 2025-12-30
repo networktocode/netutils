@@ -1,0 +1,743 @@
+remark #
+remark # Preamble
+remark #
+
+remark #
+remark # End Preamble
+remark #
+
+remark ####################################################################
+remark #
+remark # Database Version: 13.0
+remark #
+remark ####################################################################
+remark #
+remark # System
+remark #
+configure system
+  sysname "x-dngr-rm-01"
+  cli-prompt "X-DNGR-RM-01"
+  contact "XNOC 888-555-1963"
+  location "1407 Graymalkin LN, North Salem, NY 10560"
+  ip-address 192.168.0.63 255.255.255.0
+  security-prompt enable
+  serial enable
+  telnet disable
+  web enable
+  snmp-dying-gasp enable
+  temperature-monitoring enable
+  bwp-mode information-rate
+  clock timezone utc
+  sntpclient mode unicast
+  sntpclient dhcp-supplied disable
+  sntpclient server 198.51.100.251
+  syslogclient dhcp-supplied disable
+  syslogclient server 198.51.100.252
+  security-banner "Any changes to this system require a change ticket or trouble ticket.  Do you really want to proceed?\\n\\nBe sure to notify the XNOC of work being performed BEFORE changes are made.\\n\\nXNOC - 888-555-1963"
+  pae authentication-control enable
+exit
+
+configure system
+  jumbo-frame enable
+exit
+
+remark #
+remark # Custom CPD Filter
+remark #
+configure system
+  cpd-filter custom
+    mac 00:00:00:00:00:00 00:00:00:00:00:00
+    ether-type 0x0000 0x0000
+    sub-type 0x00 0x00
+  exit
+exit
+
+remark #
+remark # Scheduled Ping
+remark #
+configure sched ping
+  frequency 1
+  severity minor
+  threshold 1
+exit
+
+remark #
+remark # SNMP
+remark #
+configure snmp
+  communityname cerebro2 read-only
+  traphost 198.51.100.250:162 2c forge616
+exit
+
+remark #
+remark # Remote Authentication
+remark #
+configure remote-authentication
+  access-order local-first
+  authprotocol tacacs-plus
+  authtype pap
+  tacacs-privilege-control enable
+exit
+
+remark #
+remark # Remote Authentication Server
+remark #
+configure remote-authentication
+  server server-1
+    ip-address 198.51.100.253
+    port 49
+    timeout 3
+    retries 3
+    priority first
+    adminstate enable
+    exit
+exit
+
+remark #
+remark # Remote Authentication Server
+remark #
+configure remote-authentication
+  server server-2
+    ip-address 203.0.100.253
+    port 49
+    timeout 3
+    retries 3
+    priority second
+    adminstate disable
+    exit
+exit
+
+remark #
+remark # Remote Authentication Server
+remark #
+configure remote-authentication
+  server server-3
+    ip-address 192.0.2.253
+    port 49
+    timeout 3
+    retries 3
+    priority third
+    adminstate disable
+    exit
+exit
+
+remark #
+remark # ECPA Stream
+remark #
+configure ecpa stream ecpa-stream-1
+  include-in-test true
+  rate 10000000
+  destmac 00:0B:90:00:00:01
+  frame-size 64
+  ip-version v4
+  ipv4-src 192.168.0.63
+  ipv4-dest 255.255.255.255
+  ipv6-src ::ffff:192.168.0.63
+  ipv6-dest ff0e::1
+  payload random
+  frame-type untagged
+  cos-mode tos
+  priority 0
+exit
+
+remark #
+remark # ECPA Stream
+remark #
+configure ecpa stream ecpa-stream-2
+  include-in-test false
+  rate 10000000
+  destmac 00:0B:90:00:00:01
+  frame-size 64
+  ip-version v4
+  ipv4-src 192.168.0.63
+  ipv4-dest 255.255.255.255
+  ipv6-src ::ffff:192.168.0.63
+  ipv6-dest ff0e::1
+  payload random
+  frame-type vlan
+  vlan 4094
+  vlanprio 1
+  cos-mode tos
+  priority 0
+exit
+
+remark #
+remark # ECPA Stream
+remark #
+configure ecpa stream ecpa-stream-3
+  include-in-test false
+  rate 10000000
+  destmac 00:0B:90:00:00:01
+  frame-size 64
+  ip-version v4
+  ipv4-src 192.168.0.63
+  ipv4-dest 255.255.255.255
+  ipv6-src ::ffff:192.168.0.63
+  ipv6-dest ff0e::1
+  payload random
+  frame-type vlan
+  vlan 4094
+  vlanprio 2
+  cos-mode tos
+  priority 0
+exit
+
+remark #
+remark # Interface: e1000-wan-1
+remark #
+configure interface e1000-wan-1
+  speed auto1000full
+  media fiber
+  circuit-name "BAXTERBDG-RTR616-GE-1/0/4"
+  no propagate-fault
+  ctag-ethertype 0x8100
+  stag-ethertype 0x8100
+  efm-oam localmode passive
+  adminstate enable
+  portshapedbw 1000000000
+  portshapingstate disable
+
+  pae capability none
+  supplicant auth-period 30
+  supplicant held-period 60
+  supplicant start-period 30
+  supplicant max-start 3
+
+  dei enable
+  pcp-mode none
+exit
+
+remark #
+remark # Management Tunnel: e1000-wan-1
+remark #
+configure mgmttnl e1000-wan-1
+  mode disable
+  mode mac
+  tunnel-buffersize 80000
+  tunnel-cir 1024000
+  tunnel-eir 1024000
+  dhcp disable
+  ip-address 172.31.255.181 255.255.255.0
+  dhcp-class-id-control enable
+  dhcp-client-id-control enable mac-address
+  dhcp-host-name-control enable system-name
+  dhcp-log-server-control disable
+  dhcp-ntp-server-control disable
+  ripv2 disable
+  no ip access-group system in
+exit
+
+remark #
+remark # Interface: e1000-wan-1
+remark #
+test interface e1000-wan-1
+exit
+
+remark #
+remark # Interface: e1000-wan-2
+remark #
+configure interface e1000-wan-2
+  assignstate disable
+  efm-oam localmode active
+  adminstate enable
+
+  pae capability none
+  supplicant auth-period 30
+  supplicant held-period 60
+  supplicant start-period 30
+  supplicant max-start 3
+
+exit
+
+remark #
+remark # Management Tunnel: e1000-wan-2
+remark #
+configure mgmttnl e1000-wan-2
+  mode disable
+exit
+
+remark #
+remark # Interface: e1000-wan-2
+remark #
+test interface e1000-wan-2
+exit
+
+remark #
+remark # Interface: e100-lan-1
+remark #
+configure interface e100-lan-1
+  portmode Connection-oriented
+  assignstate enable
+  media copper
+  speed auto
+  description "Internet-Circuit-1-PORT-DISABLED"
+  frame-loss-ratio 1.00
+  evc-mode tls
+  circuit-name "TOWER.AVENGERS.STARK-LLC"
+  ingress-buffersize 512
+  ingress-cbs 512
+  ingress-ebs 0
+  egress-limiting disable
+  ingress-eir 0
+  ingress-cir 50048000
+  flowcontrol receive disable
+  flowcontrol send disable
+  tagged-frame enable
+  untagged-frame enable
+  ctag push 2014-0 disable
+  stag none
+  wan-if e1000-wan-1
+  no propagate-fault
+  qq-ethertype 0x8100
+  efm-oam localmode passive
+  cpd-filter efm-oam discard
+  adminstate enable
+  port-policing enable
+
+  elmi
+    async-status enable
+    min-async-status-interval 1
+    n393 4
+    t392 15
+    exit
+
+exit
+
+configure interface e100-lan-1
+  remark #
+  remark # Temporarily disable the interface while configuring it.
+  remark # Final value will be adminstate enable.
+  remark #
+  adminstate disable
+exit
+
+remark #
+remark # Management Tunnel: e100-lan-1
+remark #
+configure mgmttnl e100-lan-1
+  mode disable
+exit
+
+remark #
+remark # Interface: e100-lan-1
+remark #
+test interface e100-lan-1
+exit
+
+configure interface e100-lan-1
+  assignstate enable
+  adminstate enable
+exit
+
+remark #
+remark # Interface: e100-lan-2
+remark #
+configure interface e100-lan-2
+  portmode Connection-oriented
+  remark #
+  remark # Temporarily assign the interface while configuring it.
+  remark # Final value will be assignstate disable.
+  remark #
+  assignstate enable
+  media copper
+  speed 100full
+  description "P2P-Circuit-1-PORT-DISABLED"
+  frame-loss-ratio 1.00
+  evc-mode tls
+  circuit-name "NO-CIRCUIT-NAME-ASSIGNED"
+  ingress-buffersize 1274
+  ingress-cbs 32
+  ingress-ebs 0
+  egress-limiting enable
+  ingress-eir 0
+  ingress-cir 1024000
+  egress-buffersize 1274
+  egress-cbs 32
+  egress-ebs 64
+  egress-eir 0
+  egress-cir 1024000
+  flowcontrol receive disable
+  flowcontrol send disable
+  tagged-frame enable
+  untagged-frame enable
+  ctag push 102-0 disable
+  stag none
+  wan-if e1000-wan-1
+  no propagate-fault
+  qq-ethertype 0x8100
+  efm-oam localmode passive
+  cpd-filter efm-oam discard
+  adminstate enable
+  port-policing enable
+
+  elmi
+    async-status enable
+    min-async-status-interval 1
+    n393 4
+    t392 15
+    exit
+
+exit
+
+configure interface e100-lan-2
+  remark #
+  remark # Temporarily disable the interface while configuring it.
+  remark # Final value will be adminstate enable.
+  remark #
+  adminstate disable
+exit
+
+remark #
+remark # Management Tunnel: e100-lan-2
+remark #
+configure mgmttnl e100-lan-2
+  mode disable
+exit
+
+remark #
+remark # Interface: e100-lan-2
+remark #
+test interface e100-lan-2
+exit
+
+configure interface e100-lan-2
+  assignstate disable
+  adminstate enable
+exit
+
+remark #
+remark # Interface: e100-lan-3
+remark #
+configure interface e100-lan-3
+  portmode Connection-oriented
+  remark #
+  remark # Temporarily assign the interface while configuring it.
+  remark # Final value will be assignstate disable.
+  remark #
+  assignstate enable
+  media copper
+  speed 100full
+  description "P2P-Circuit-2-PORT-DISABLED"
+  frame-loss-ratio 1.00
+  evc-mode tls
+  circuit-name "NO-CIRCUIT-NAME-ASSIGNED"
+  ingress-buffersize 1274
+  ingress-cbs 32
+  ingress-ebs 0
+  egress-limiting enable
+  ingress-eir 0
+  ingress-cir 1024000
+  egress-buffersize 1274
+  egress-cbs 32
+  egress-ebs 64
+  egress-eir 0
+  egress-cir 1024000
+  flowcontrol receive disable
+  flowcontrol send disable
+  tagged-frame enable
+  untagged-frame enable
+  ctag push 103-0 disable
+  stag none
+  wan-if e1000-wan-1
+  no propagate-fault
+  qq-ethertype 0x8100
+  efm-oam localmode passive
+  cpd-filter efm-oam discard
+  adminstate enable
+  port-policing enable
+
+  elmi
+    async-status enable
+    min-async-status-interval 1
+    n393 4
+    t392 15
+    exit
+
+exit
+
+configure interface e100-lan-3
+  remark #
+  remark # Temporarily disable the interface while configuring it.
+  remark # Final value will be adminstate enable.
+  remark #
+  adminstate disable
+exit
+
+remark #
+remark # Management Tunnel: e100-lan-3
+remark #
+configure mgmttnl e100-lan-3
+  mode disable
+exit
+
+remark #
+remark # Interface: e100-lan-3
+remark #
+test interface e100-lan-3
+exit
+
+configure interface e100-lan-3
+  assignstate disable
+  adminstate enable
+exit
+
+remark #
+remark # Interface: e100-lan-4
+remark #
+configure interface e100-lan-4
+  portmode Connection-oriented
+  remark #
+  remark # Temporarily assign the interface while configuring it.
+  remark # Final value will be assignstate disable.
+  remark #
+  assignstate enable
+  media copper
+  speed auto100full
+  description "P2P-Circuit-3-PORT-DISABLED"
+  frame-loss-ratio 1.00
+  evc-mode tls
+  circuit-name "NO-CIRCUIT-NAME-ASSIGNE"
+  ingress-buffersize 1274
+  ingress-cbs 32
+  ingress-ebs 0
+  egress-limiting enable
+  ingress-eir 0
+  ingress-cir 110016000
+  egress-buffersize 1274
+  egress-cbs 32
+  egress-ebs 64
+  egress-eir 0
+  egress-cir 100032000
+  flowcontrol receive disable
+  flowcontrol send disable
+  tagged-frame enable
+  untagged-frame enable
+  ctag push 50-0 disable
+  stag none
+  wan-if e1000-wan-1
+  no propagate-fault
+  qq-ethertype 0x8100
+  efm-oam localmode passive
+  cpd-filter efm-oam discard
+  adminstate testing
+  port-policing enable
+
+  elmi
+    async-status enable
+    min-async-status-interval 1
+    n393 4
+    t392 15
+    exit
+
+exit
+
+configure interface e100-lan-4
+exit
+
+remark #
+remark # Management Tunnel: e100-lan-4
+remark #
+configure mgmttnl e100-lan-4
+  mode disable
+exit
+
+remark #
+remark # Interface: e100-lan-4
+remark #
+test interface e100-lan-4
+exit
+
+configure interface e100-lan-4
+  assignstate disable
+  adminstate testing
+exit
+
+remark #
+remark # Interface: e1000-lan-5
+remark #
+configure interface e1000-lan-5
+  portmode Connection-oriented
+  remark #
+  remark # Temporarily assign the interface while configuring it.
+  remark # Final value will be assignstate disable.
+  remark #
+  assignstate enable
+  media copper
+  speed auto1000full
+  description "P2P-Internet-Over-100M-PORT-DISABLED"
+  frame-loss-ratio 1.00
+  evc-mode tls
+  circuit-name "NO-CIRCUIT-NAME-ASSIGNED"
+  ingress-buffersize 1274
+  ingress-cbs 32
+  ingress-ebs 0
+  egress-limiting enable
+  ingress-eir 0
+  ingress-cir 1024000
+  egress-buffersize 1274
+  egress-cbs 32
+  egress-ebs 1024
+  egress-eir 0
+  egress-cir 1024000
+  flowcontrol receive disable
+  flowcontrol send disable
+  tagged-frame enable
+  untagged-frame enable
+  ctag push 105-0 disable
+  stag none
+  wan-if e1000-wan-1
+  no propagate-fault
+  qq-ethertype 0x8100
+  efm-oam localmode passive
+  cpd-filter efm-oam discard
+  adminstate enable
+  port-policing enable
+
+  elmi
+    async-status enable
+    min-async-status-interval 1
+    n393 4
+    t392 15
+    exit
+
+exit
+
+configure interface e1000-lan-5
+  remark #
+  remark # Temporarily disable the interface while configuring it.
+  remark # Final value will be adminstate enable.
+  remark #
+  adminstate disable
+exit
+
+remark #
+remark # Management Tunnel: e1000-lan-5
+remark #
+configure mgmttnl e1000-lan-5
+  mode disable
+exit
+
+remark #
+remark # Interface: e1000-lan-5
+remark #
+test interface e1000-lan-5
+exit
+
+configure interface e1000-lan-5
+  assignstate disable
+  adminstate enable
+exit
+
+remark #
+remark # Interface: mgmt-lan
+remark #
+configure interface mgmt-lan
+  adminstate enable
+  speed auto
+  dhcp disable
+  dhcp-class-id-control enable
+  dhcp-client-id-control enable mac-address
+  dhcp-host-name-control enable system-name
+  dhcp-log-server-control disable
+  dhcp-ntp-server-control disable
+  ripv2 disable
+  no ip access-group system in
+exit
+
+remark #
+remark # Communications
+remark #
+configure communications
+  proxyarp disable
+  add ip route 0.0.0.0 0.0.0.0 nexthop 172.31.255.1 no-advertise
+exit
+
+remark #
+remark # System Access Control List
+remark #
+configure system
+exit
+
+remark #
+remark # Power Supply: psu-1
+remark #
+configure power-supply psu-1
+  assignstate enable
+  adminstate enable
+exit
+
+remark #
+remark # Power Supply: psu-2
+remark #
+configure power-supply psu-2
+  assignstate disable
+  adminstate disable
+exit
+
+configure cfm
+  cfm-ethertype 0x8902
+  multicast-mac 01:80:C2:00:00:30
+
+  remark #
+  remark # CFM Vlan Table: CoCfmVlanTbl
+  remark #
+  remark #
+  remark # CFM Default MD Level: CoCfmDefMdLevel
+  remark #
+  configure defmd-level
+    mhf-creation none
+    md-level 0
+
+  exit
+
+  remark #
+  remark # CFM QOS Queue: CFMVIDQUE-WAN1
+  remark #
+  cfm-service1-buffersize 1
+  cfm-service1-cbs 1
+  cfm-service1-ebs 0
+  cfm-service1-cir 320000
+  cfm-service1-eir 0
+
+  remark #
+  remark # CFM QOS Queue: CFMVIDQUE-WAN2
+  remark #
+  cfm-service2-buffersize 1
+  cfm-service2-cbs 1
+  cfm-service2-ebs 0
+  cfm-service2-cir 320000
+  cfm-service2-eir 0
+
+  remark #
+  remark # CFM QOS Queue: CFMPORTQUE-WAN1
+  remark #
+  cfm-port1-buffersize 1
+  cfm-port1-cbs 1
+  cfm-port1-ebs 0
+  cfm-port1-cir 320000
+  cfm-port1-eir 0
+
+  remark #
+  remark # CFM QOS Queue: CFMPORTQUE-WAN2
+  remark #
+  cfm-port2-buffersize 1
+  cfm-port2-cbs 1
+  cfm-port2-ebs 0
+  cfm-port2-cir 320000
+  cfm-port2-eir 0
+
+exit
+
+remark #
+remark # Interface: e1000-wan-1
+remark #
+configure interface e1000-wan-1
+  cpd-filter efm-oam peer
+exit
+
+remark #
+remark # Interface: e1000-wan-2
+remark #
+configure interface e1000-wan-2
+  cpd-filter efm-oam discard
+exit

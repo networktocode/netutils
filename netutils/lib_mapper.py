@@ -423,6 +423,8 @@ HIERCONFIG_LIB_MAPPER: t.Dict[str, str] = {
 
 # Netutils Parser | Normalized
 NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
+    "adva_fsp150f2": "adva_fsp150f2",
+    "adva_fsp150f3": "adva_fsp150f3",
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
     "aruba_os": "aruba_os",
@@ -594,6 +596,8 @@ HIERCONFIG_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 
 # Normalized | Netutils Parser
 NETUTILSPARSER_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+    "adva_fsp150f2": "adva_fsp150f2",
+    "adva_fsp150f3": "adva_fsp150f3",
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
     "aruba_os": "aruba_os",
@@ -656,6 +660,8 @@ NIST_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 # Deep copy the reverse, where there is no actual translation happening with special
 # consideration for OS's not in netmiko.
 _MAIN_LIB_MAPPER = copy.deepcopy(NETMIKO_LIB_MAPPER)
+_MAIN_LIB_MAPPER["adva_fsp150f2"] = "adva_fsp150f2"
+_MAIN_LIB_MAPPER["adva_fsp150f3"] = "adva_fsp150f3"
 _MAIN_LIB_MAPPER["aruba_aoscx"] = "aruba_aoscx"
 _MAIN_LIB_MAPPER["cisco_aireos"] = "cisco_aireos"
 _MAIN_LIB_MAPPER["cisco_dnac"] = "cisco_dnac"

@@ -1,0 +1,109 @@
+#
+#CLI:SUBNETWORK  Edit
+#
+home
+configure system
+  prompt "ADVA-SW1"
+
+#
+#CLI:SYSTEM  Edit
+#
+home
+configure system
+  ftp enabled
+  system-tod-type ntp
+  http disabled
+  telnet enabled
+  security-banner "Warning Notice: This system is restricted solely to Rainbow Industries\\nauthorized users for legitimate business purposes only. The actual or attempted\\nunauthorized access, use, or modification of this system is strictly prohibited\\nby Techno Cosmic Research Institute. Unauthorized users are subject to company\\ndisciplinary proceedings and/or criminal and civil penalties under state,\\nfederal, or other applicable domestic and foreign laws. The use of this system\\nmay be monitored and recorded for administrative and security reasons. Anyone\\naccessing this system expressly consents to such monitoring and is advised that\\nif such monitoring reveals possible evidence of criminal activity, Techno Cosmic\\nResearch Institute may provide the evidence to law enforcement officials. All users\\nmust comply with Rainbow Industries security instructions regarding the\\nprotection of Rainbow Industries information. Call Network Operations Center\\nat 1-888-555-1138 for any information regarding this notice."
+  long-if-alias enabled
+  ntp-client
+    primary-server ipv4 198.51.100.5
+    backup-server ipv4 192.0.2.5
+    control enabled
+    back
+  alarm-attributes access-port sfp-non-qualified nsa nr
+  alarm-attributes network-port sfp-non-qualified nsa nr
+  syslog-server 1
+    configure ipv4-address 198.51.100.3 514
+    back
+  audit-log
+    syslog-control enabled
+    back
+  security-log
+    syslog-control enabled
+    back
+  alarm-log
+    syslog-control enabled
+
+#
+#CLI:SNMP COMMUNITY ENTRY  Create
+#
+home
+configure snmp
+  add community "snmp-comm-1" readwrite
+
+#
+#CLI:SNMP COMMUNITY ENTRY  Create
+#
+home
+configure snmp
+  add community "snmp-comm-2" readwrite
+
+#
+#CLI:SNMP COMMUNITY ENTRY  Create
+#
+home
+configure snmp
+  add community "snmp-comm-3" trap-only
+
+#
+#CLI:FLOW-1-1-1-3-1  Create
+#
+home
+network-element ne-1
+  configure nte nte114pro-1-1-1
+    configure access-port access-1-1-1-3
+      add flow flow-1-1-1-3-1 "WTRL" regular-evc disabled disabled disabled disabled 0 disabled none none "1138-*" 100160000 0 access-interface access-1-1-1-3 network-interface network-1-1-1-1 flow-based n2a-prio-mapping-profile none a2n-prio-mapping-profile none
+      configure flow flow-1-1-1-3-1
+        policing-control a2n
+        access-max-forwarding-entries 4096
+        network-max-forwarding-entries 4096
+
+#
+#CLI:A2N SHAPER-1-1-1-3-1-0  Edit
+#
+home
+network-element ne-1
+  configure nte nte114pro-1-1-1
+    configure access-port access-1-1-1-3
+      configure flow flow-1-1-1-3-1
+        configure a2n-shaper a2n_shaper-1-1-1-3-1-0
+          buffersize 512
+          back
+        configure a2n-shaper a2n_shaper-1-1-1-3-1-0
+          soam-cir 128000
+
+#
+#CLI:A2N POLICER-1-1-1-3-1-0  Edit
+#
+home
+network-element ne-1
+  configure nte nte114pro-1-1-1
+    configure access-port access-1-1-1-3
+      configure flow flow-1-1-1-3-1
+        configure a2n-policer a2n_policer-1-1-1-3-1-0
+          cbs 512
+          cir 100032000
+          color-mode color-blind
+          eir 0
+
+#
+#CLI:N2A POLICER-1-1-1-3-1-0  Edit
+#
+home
+network-element ne-1
+  configure nte nte114pro-1-1-1
+    configure access-port access-1-1-1-3
+      configure flow flow-1-1-1-3-1
+        configure n2a-policer n2a_policer-1-1-1-3-1-0
+          policing-enabled disabled
