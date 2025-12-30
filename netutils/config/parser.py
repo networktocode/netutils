@@ -1917,7 +1917,6 @@ class _ADVAConfigParser(BaseSpaceConfigParser):
         """
         if config_line.endswith(self.banner_end):
             self._update_config_lines(config_line)
-            self._current_parents = self._current_parents[:-1]
             try:
                 return next(self.generator_config)
             except StopIteration:
@@ -1929,10 +1928,10 @@ class _ADVAConfigParser(BaseSpaceConfigParser):
 class ADVAFSP150F2ConfigParser(_ADVAConfigParser):
     """ADVA OS FSP-150 F2 ConfigParser."""
 
-    comment_chars: t.List[str] = ["remark", "exit"]
+    comment_chars: t.List[str] = ["remark"]
 
 
 class ADVAFSP150F3ConfigParser(_ADVAConfigParser):
     """ADVA OS FSP-150 F3 ConfigParser."""
 
-    comment_chars: t.List[str] = ["#", "home", "Preparing configuration file..."]
+    comment_chars: t.List[str] = ["#", "Preparing configuration file..."]

@@ -1,8 +1,10 @@
 from netutils.config.parser import ConfigLine
 
 data = [
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure system", parents=()),
     ConfigLine(config_line='  prompt "ADVA-SW1"', parents=("configure system",)),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure system", parents=()),
     ConfigLine(config_line="  ftp enabled", parents=("configure system",)),
     ConfigLine(config_line="  system-tod-type ntp", parents=("configure system",)),
@@ -12,27 +14,28 @@ data = [
         config_line='  security-banner "Warning Notice: This system is restricted solely to Rainbow Industries\\\\nauthorized users for legitimate business purposes only. The actual or attempted\\\\nunauthorized access, use, or modification of this system is strictly prohibited\\\\nby Techno Cosmic Research Institute. Unauthorized users are subject to company\\\\ndisciplinary proceedings and/or criminal and civil penalties under state,\\\\nfederal, or other applicable domestic and foreign laws. The use of this system\\\\nmay be monitored and recorded for administrative and security reasons. Anyone\\\\naccessing this system expressly consents to such monitoring and is advised that\\\\nif such monitoring reveals possible evidence of criminal activity, Techno Cosmic\\\\nResearch Institute may provide the evidence to law enforcement officials. All users\\\\nmust comply with Rainbow Industries security instructions regarding the\\\\nprotection of Rainbow Industries information. Call Network Operations Center\\\\nat 1-888-555-1138 for any information regarding this notice."',
         parents=("configure system",),
     ),
-    ConfigLine(config_line="  long-if-alias enabled", parents=()),
-    ConfigLine(config_line="  ntp-client", parents=()),
-    ConfigLine(config_line="    primary-server ipv4 198.51.100.5", parents=("  ntp-client",)),
-    ConfigLine(config_line="    backup-server ipv4 192.0.2.5", parents=("  ntp-client",)),
-    ConfigLine(config_line="    control enabled", parents=("  ntp-client",)),
-    ConfigLine(config_line="    back", parents=("  ntp-client",)),
-    ConfigLine(config_line="  alarm-attributes access-port sfp-non-qualified nsa nr", parents=("  ntp-client",)),
-    ConfigLine(config_line="  alarm-attributes network-port sfp-non-qualified nsa nr", parents=("  ntp-client",)),
-    ConfigLine(config_line="  syslog-server 1", parents=("  ntp-client",)),
+    ConfigLine(config_line="  long-if-alias enabled", parents=("configure system",)),
+    ConfigLine(config_line="  ntp-client", parents=("configure system",)),
+    ConfigLine(config_line="    primary-server ipv4 198.51.100.5", parents=("configure system", "  ntp-client")),
+    ConfigLine(config_line="    backup-server ipv4 192.0.2.5", parents=("configure system", "  ntp-client")),
+    ConfigLine(config_line="    control enabled", parents=("configure system", "  ntp-client")),
+    ConfigLine(config_line="    back", parents=("configure system", "  ntp-client")),
+    ConfigLine(config_line="  alarm-attributes access-port sfp-non-qualified nsa nr", parents=("configure system",)),
+    ConfigLine(config_line="  alarm-attributes network-port sfp-non-qualified nsa nr", parents=("configure system",)),
+    ConfigLine(config_line="  syslog-server 1", parents=("configure system",)),
     ConfigLine(
-        config_line="    configure ipv4-address 198.51.100.3 514", parents=("  ntp-client", "  syslog-server 1")
+        config_line="    configure ipv4-address 198.51.100.3 514", parents=("configure system", "  syslog-server 1")
     ),
-    ConfigLine(config_line="    back", parents=("  ntp-client", "  syslog-server 1")),
-    ConfigLine(config_line="  audit-log", parents=("  ntp-client",)),
-    ConfigLine(config_line="    syslog-control enabled", parents=("  ntp-client", "  audit-log")),
-    ConfigLine(config_line="    back", parents=("  ntp-client", "  audit-log")),
-    ConfigLine(config_line="  security-log", parents=("  ntp-client",)),
-    ConfigLine(config_line="    syslog-control enabled", parents=("  ntp-client", "  security-log")),
-    ConfigLine(config_line="    back", parents=("  ntp-client", "  security-log")),
-    ConfigLine(config_line="  alarm-log", parents=("  ntp-client",)),
-    ConfigLine(config_line="    syslog-control enabled", parents=("  ntp-client", "  alarm-log")),
+    ConfigLine(config_line="    back", parents=("configure system", "  syslog-server 1")),
+    ConfigLine(config_line="  audit-log", parents=("configure system",)),
+    ConfigLine(config_line="    syslog-control enabled", parents=("configure system", "  audit-log")),
+    ConfigLine(config_line="    back", parents=("configure system", "  audit-log")),
+    ConfigLine(config_line="  security-log", parents=("configure system",)),
+    ConfigLine(config_line="    syslog-control enabled", parents=("configure system", "  security-log")),
+    ConfigLine(config_line="    back", parents=("configure system", "  security-log")),
+    ConfigLine(config_line="  alarm-log", parents=("configure system",)),
+    ConfigLine(config_line="    syslog-control enabled", parents=("configure system", "  alarm-log")),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure user-security", parents=()),
     ConfigLine(config_line="  tacacs-privilege-control disabled", parents=("configure user-security",)),
     ConfigLine(config_line="  tacacs-user-privilege superuser", parents=("configure user-security",)),
@@ -53,32 +56,42 @@ data = [
     ConfigLine(config_line="  config-rap 3", parents=("configure user-security",)),
     ConfigLine(config_line="    port 49", parents=("configure user-security", "  config-rap 3")),
     ConfigLine(config_line="    accounting-port 49", parents=("configure user-security", "  config-rap 3")),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure snmp", parents=()),
     ConfigLine(config_line='  delete community "private"', parents=("configure snmp",)),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure snmp", parents=()),
     ConfigLine(config_line='  delete community "public"', parents=("configure snmp",)),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure snmp", parents=()),
     ConfigLine(config_line='  add community "snmp-comm-1" readwrite', parents=("configure snmp",)),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure snmp", parents=()),
     ConfigLine(config_line='  add community "snmp-comm-2" readwrite', parents=("configure snmp",)),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure snmp", parents=()),
     ConfigLine(config_line='  add community "snmp-comm-3" trap-only', parents=("configure snmp",)),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure snmp", parents=()),
     ConfigLine(config_line='  add community "snmp-comm-4" readonly', parents=("configure snmp",)),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure snmp", parents=()),
     ConfigLine(
         config_line='  add target-params "Rainbow" snmpv2c snmpv2c "snmp-comm-4" no-auth', parents=("configure snmp",)
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure snmp", parents=()),
     ConfigLine(
         config_line='  add target-params "Trapstation" snmpv2c snmpv2c "snmp-comm-4" no-auth',
         parents=("configure snmp",),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure snmp", parents=()),
     ConfigLine(
         config_line='  add target-params "snmp-comm-3" snmpv2c snmpv2c "snmp-comm-3" no-auth',
         parents=("configure snmp",),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure snmp", parents=()),
     ConfigLine(
         config_line='  add target-address "Anycast" "198.51.100.140:162" ipv4 3 3 "trap" "snmp-comm-3" enabled',
@@ -87,15 +100,18 @@ data = [
     ConfigLine(
         config_line='  configure target-address "Anycast" bulk-traps-control disabled', parents=("configure snmp",)
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line='  name "ADVA-SW1"', parents=("network-element ne-1",)),
     ConfigLine(config_line='  contact "b.stockman@tcri.com"', parents=("network-element ne-1",)),
     ConfigLine(config_line='  location "123 Fake St., Springfield, USA"', parents=("network-element ne-1",)),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
         config_line="    snmp-dying-gasp enabled", parents=("network-element ne-1", "  configure nte nte114pro-1-1-1")
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -110,6 +126,7 @@ data = [
             "    configure network-port network-1-1-1-2",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -169,6 +186,7 @@ data = [
             "      lpbk",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -215,6 +233,7 @@ data = [
         config_line="      priority-mapping-profile prio_map_profile-1",
         parents=("network-element ne-1", "  configure nte nte114pro-1-1-1", "    configure access-port access-1-1-1-3"),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -285,6 +304,7 @@ data = [
         config_line="      cpd-filter 01-80-c2-00-00-0f pass-thru",
         parents=("network-element ne-1", "  configure nte nte114pro-1-1-1", "    configure access-port access-1-1-1-3"),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -319,6 +339,7 @@ data = [
         config_line="      priority-mapping-profile prio_map_profile-1",
         parents=("network-element ne-1", "  configure nte nte114pro-1-1-1", "    configure access-port access-1-1-1-4"),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -389,6 +410,7 @@ data = [
         config_line="      cpd-filter 01-80-c2-00-00-0f pass-thru",
         parents=("network-element ne-1", "  configure nte nte114pro-1-1-1", "    configure access-port access-1-1-1-4"),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -407,6 +429,7 @@ data = [
         config_line="      priority-mapping-profile prio_map_profile-1",
         parents=("network-element ne-1", "  configure nte nte114pro-1-1-1", "    configure access-port access-1-1-1-5"),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -477,6 +500,7 @@ data = [
         config_line="      cpd-filter 01-80-c2-00-00-0f pass-thru",
         parents=("network-element ne-1", "  configure nte nte114pro-1-1-1", "    configure access-port access-1-1-1-5"),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -539,14 +563,17 @@ data = [
             "    configure network-port network-1-1-1-1",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure tm-params bwp-mode information-rate", parents=("network-element ne-1",)),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure communication", parents=()),
     ConfigLine(config_line="  configure mgmttnl mgmt_tnl-1", parents=("configure communication",)),
     ConfigLine(
         config_line="    dhcp-client-id-control disabled",
         parents=("configure communication", "  configure mgmttnl mgmt_tnl-1"),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -638,6 +665,7 @@ data = [
             "      configure flow flow-1-1-1-2-1",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -677,6 +705,7 @@ data = [
             "        configure a2n-policer a2n_policer-1-1-1-2-1-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -718,6 +747,7 @@ data = [
             "      configure flow flow-1-1-1-3-1",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -776,6 +806,7 @@ data = [
             "        configure a2n-shaper a2n_shaper-1-1-1-3-1-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -835,6 +866,7 @@ data = [
             "        configure a2n-policer a2n_policer-1-1-1-3-1-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -864,6 +896,7 @@ data = [
             "        configure n2a-policer n2a_policer-1-1-1-3-1-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -959,6 +992,7 @@ data = [
             "      configure flow flow-1-1-1-3-2",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1017,6 +1051,7 @@ data = [
             "        configure a2n-shaper a2n_shaper-1-1-1-3-2-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1076,6 +1111,7 @@ data = [
             "        configure a2n-policer a2n_policer-1-1-1-3-2-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1105,6 +1141,7 @@ data = [
             "        configure n2a-policer n2a_policer-1-1-1-3-2-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1137,6 +1174,7 @@ data = [
             "      configure flow flow-1-1-1-4-1",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1166,6 +1204,7 @@ data = [
             "        configure a2n-shaper a2n_shaper-1-1-1-4-1-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1215,6 +1254,7 @@ data = [
             "        configure a2n-policer a2n_policer-1-1-1-4-1-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1234,6 +1274,7 @@ data = [
             "      configure n2a-shaper port_n2a_shaper-1-1-1-2-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1262,6 +1303,7 @@ data = [
             "      configure n2a-shaper port_n2a_shaper-1-1-1-3-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1281,6 +1323,7 @@ data = [
             "      configure n2a-shaper port_n2a_shaper-1-1-1-4-0",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1291,6 +1334,7 @@ data = [
         config_line="      admin-state in-service",
         parents=("network-element ne-1", "  configure nte nte114pro-1-1-1", "    configure access-port access-1-1-1-3"),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1301,6 +1345,7 @@ data = [
         config_line="      admin-state in-service",
         parents=("network-element ne-1", "  configure nte nte114pro-1-1-1", "    configure access-port access-1-1-1-4"),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1344,6 +1389,7 @@ data = [
             "        configure net-port-config 1",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="network-element ne-1", parents=()),
     ConfigLine(config_line="  configure nte nte114pro-1-1-1", parents=("network-element ne-1",)),
     ConfigLine(
@@ -1377,10 +1423,12 @@ data = [
             "        configure net-port-config 1",
         ),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="configure communication", parents=()),
     ConfigLine(
         config_line='  add ip-route nexthop 0.0.0.0 0.0.0.0 203.0.113.49 "LTP" 1 disabled',
         parents=("configure communication",),
     ),
+    ConfigLine(config_line="home", parents=()),
     ConfigLine(config_line="admin config-file", parents=()),
 ]
