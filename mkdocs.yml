@@ -93,6 +93,9 @@ plugins:
         - "netutils.config.parser"
       classy_libraries:
         - "netutils"
+  - "glightbox":
+      manual: true  # See https://blueswen.github.io/mkdocs-glightbox/flexibility/enable-by-image-or-page/
+  - "section-index"
   - "mkdocstrings":
       default_handler: "python"
       handlers:

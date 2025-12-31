@@ -1,4 +1,4 @@
-ARG PYTHON_VER="3.9"
+ARG PYTHON_VER="3.10"
 
 FROM python:${PYTHON_VER}-slim
 
