@@ -1,10 +1,30 @@
-**/*.pyc
-**/*.pyo
-**/*.log
-.git/
-.gitignore
+# Docker related
+development/Dockerfile
+development/docker-compose*.yml
+development/*.env
+*.env
+environments/
 Dockerfile
 docker-compose.yml
 .env
+
+# Python
+**/*.pyc
+**/*.pyo
+**/__pycache__/
+**/.pytest_cache/
+**/.venv/
+
+
+# Other
 docs/_build
-**/__pycache__
+FAQ.md
+.git/
+.gitignore
+.github
+tasks.py
+LICENSE
+**/*.log
+**/.vscode/
+invoke*.yml
+tasks.py
