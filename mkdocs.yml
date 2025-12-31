@@ -14,7 +14,10 @@ theme:
     - "python"
     - "yaml"
   features:
+    - "content.action.edit"
+    - "content.action.view"
     - "content.code.copy"
+    - "navigation.footer"
     - "navigation.indexes"
     - "navigation.tabs"
     - "navigation.tabs.sticky"

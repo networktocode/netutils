@@ -1,5 +1,6 @@
 # v1.0 Release Notes
 
+
 ## Release Overview
 
 - Commit to SemVer
@@ -18,4 +19,3 @@
 ### Removed
 
 - [#83](https://github.com/networktocode/netutils/issues/83) Remove support for old function 'is_fqdn_valid' as prep for 1.0.0.
-
