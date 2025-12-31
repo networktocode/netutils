@@ -8,6 +8,16 @@ This document describes all new features and changes in the release. The format 
 - Add parser support for Rad ETX.
 - Update the library to the NTC 2025 development standards.
 
+<!-- towncrier release notes start -->
+
+## [v1.15.2 (2025-12-31)](https://github.com/networktocode/netutils/releases/tag/v1.15.2)
+
+### Fixed
+
+- [#723](https://github.com/networktocode/netutils/issues/723) - Fix the GitHub release failures occurring in CI.
+- [#741](https://github.com/networktocode/netutils/issues/741) - Fixed the logic error where `salt=0` was ignored in `encrypt_cisco_type7`
+- [#750](https://github.com/networktocode/netutils/issues/750) - Fix PAN-OS banner parsing by removing IOS-style banner end normalization.
+
 ## [v1.15.1 (2025-10-20)](https://github.com/networktocode/netutils/releases/tag/v1.15.1)
 
 ### Added
