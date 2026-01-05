@@ -1,4 +1,5 @@
 """Dictionary object to store OUI information."""
+
 # pylint: disable=too-many-lines
 import typing
 
