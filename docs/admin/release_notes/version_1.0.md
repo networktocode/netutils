@@ -29,7 +29,7 @@ This document describes all new features and changes in the release `1.0`. The f
 - Achieved in this `x.y` release
 - Changes to compatibility with Nautobot and/or other apps, libraries etc.
 
-## [v1.0.0] - 2025-11-12
+## [v1.0.0] - 2026-01-09
 
 ### Added
 

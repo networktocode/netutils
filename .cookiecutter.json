@@ -20,11 +20,11 @@
             "template_dir": "python",
             "template_ref": "main",
             "cookie_dir": "",
-            "branch_prefix": "drift-manager",
             "pull_request_strategy": "update-or-create",
             "post_actions": [],
             "draft": false,
-            "baked_commit_ref": ""
+            "baked_commit_ref": "",
+            "drift_managed_branch": "develop"
         }
     }
 }
