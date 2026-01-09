@@ -3,6 +3,13 @@ name = "netutils"
 version = "1.15.2a0"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
+<<<<<<< HEAD
+=======
+readme = "README.md"
+homepage = "https://netutils.readthedocs.io/"
+repository = "https://github.com/networktocode/netutils"
+documentation = "https://netutils.readthedocs.io/"
+>>>>>>> 1476cba (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 license = "Apache-2.0"
 homepage = "https://netutils.readthedocs.io"
 repository = "https://github.com/networktocode/netutils"
@@ -13,7 +20,6 @@ classifiers = [
     "Intended Audience :: Developers",
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -27,6 +33,7 @@ include = [
 
 [tool.poetry.dependencies]
 python = ">=3.9,<3.14"
+<<<<<<< HEAD
 napalm = {version = "^4.0.0", optional = true}
 jsonschema = {version = "^4.17.3", optional = true}
 legacycrypt = {version = "0.3", optional = true}
@@ -37,6 +44,12 @@ optionals = ["jsonschema", "napalm", "legacycrypt"]
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
 invoke = "*"
+=======
+click = "*"
+
+[tool.poetry.group.dev.dependencies]
+coverage = "*"
+>>>>>>> 1476cba (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 pytest = "*"
 mock = "*"
 mypy = "*"
@@ -73,11 +86,19 @@ mkdocstrings = "0.27.0"
 # Python-specific extension to mkdocstrings
 mkdocstrings-python = "1.13.0"
 griffe = "1.1.1"
+<<<<<<< HEAD
 mkdocs-python-classy = "0.1.3"
+=======
+
+[tool.poetry.scripts]
+netutils = 'netutils.cli:main'
+
+
+>>>>>>> 1476cba (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
 [tool.ruff]
 line-length = 120
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = [
@@ -176,6 +197,11 @@ filename = "docs/admin/release_notes/version_X.Y.md"
 template = "towncrier_template.j2"
 start_string = "<!-- towncrier release notes start -->"
 issue_format = "[#{issue}](https://github.com/networktocode/netutils/issues/{issue})"
+
+[[tool.towncrier.type]]
+directory = "breaking"
+name = "Breaking Changes"
+showcontent = true
 
 [[tool.towncrier.type]]
 directory = "security"
