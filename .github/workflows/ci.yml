@@ -134,7 +134,7 @@ jobs:
           cache-from: "type=gha,scope=${{ env.INVOKE_NETUTILS_IMAGE_NAME }}-${{ env.INVOKE_NETUTILS_IMAGE_VER }}-py${{ matrix.python-version }}"
           cache-to: "type=gha,scope=${{ env.INVOKE_NETUTILS_IMAGE_NAME }}-${{ env.INVOKE_NETUTILS_IMAGE_VER }}-py${{ matrix.python-version }}"
           build-args: |
-            PYTHON_VER=${{ env.PYTHON_VER }}
+            PYTHON_VER=${{ matrix.python-version }}
       - name: "Linting: Pylint"
         run: "poetry run invoke pylint"
   pytest:
