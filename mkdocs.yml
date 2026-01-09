@@ -87,12 +87,21 @@ markdown_extensions:
   - "footnotes"
 plugins:
   - "search"
+<<<<<<< HEAD
   - "mkdocs-python-classy":
       classy_strategy: "subclass"
       classy_modules:
         - "netutils.config.parser"
       classy_libraries:
         - "netutils"
+=======
+  - "gen-files":
+      scripts:
+        - "docs/generate_code_reference_pages.py"
+  - "glightbox":
+      manual: true  # See https://blueswen.github.io/mkdocs-glightbox/flexibility/enable-by-image-or-page/
+  - "section-index"
+>>>>>>> 1476cba (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
   - "mkdocstrings":
       default_handler: "python"
       handlers:
