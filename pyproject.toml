@@ -4,12 +4,18 @@ version = "1.15.2a0"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 35e1395 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 readme = "README.md"
 homepage = "https://netutils.readthedocs.io/"
 repository = "https://github.com/networktocode/netutils"
 documentation = "https://netutils.readthedocs.io/"
+<<<<<<< HEAD
 >>>>>>> 1476cba (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
+=======
+>>>>>>> 35e1395 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 license = "Apache-2.0"
 homepage = "https://netutils.readthedocs.io"
 repository = "https://github.com/networktocode/netutils"
@@ -34,6 +40,7 @@ include = [
 [tool.poetry.dependencies]
 python = ">=3.9,<3.14"
 <<<<<<< HEAD
+<<<<<<< HEAD
 napalm = {version = "^4.0.0", optional = true}
 jsonschema = {version = "^4.17.3", optional = true}
 legacycrypt = {version = "0.3", optional = true}
@@ -45,11 +52,16 @@ optionals = ["jsonschema", "napalm", "legacycrypt"]
 coverage = "*"
 invoke = "*"
 =======
+=======
+>>>>>>> 35e1395 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 click = "*"
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
+<<<<<<< HEAD
 >>>>>>> 1476cba (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
+=======
+>>>>>>> 35e1395 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 pytest = "*"
 mock = "*"
 mypy = "*"
