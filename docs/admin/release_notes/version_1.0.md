@@ -7,10 +7,14 @@
 - F5 fixes
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## v1.0.0 - 2021-11
 =======
 ## [v1.0.0] - 2026-01-09
 >>>>>>> 1476cba (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
+=======
+## [v1.0.0] - 2026-01-09
+>>>>>>> 35e1395 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
 ### Added
 
@@ -18,6 +22,7 @@
 
 ### Fixed
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 - [#79](https://github.com/networktocode/netutils/issues/79) F5 parser fix for irules with multiline single command lines.
 
@@ -27,3 +32,6 @@
 =======
 - [#123](https://github.com/networktocode/netutils/issues/123) Fixed Tag filtering not working in job launch form.
 >>>>>>> 1476cba (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
+=======
+- [#123](https://github.com/networktocode/netutils/issues/123) Fixed Tag filtering not working in job launch form.
+>>>>>>> 35e1395 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
