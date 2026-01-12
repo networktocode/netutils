@@ -44,7 +44,7 @@ pylint = "*"
 yamllint = "*"
 toml = "^0.10.2"
 attrs = "^23.2.0"
-towncrier = ">=23.6.0,<=24.8.0"
+towncrier = ">=23.6.0,<=25.8.0"
 ruff = "0.5.5"
 Markdown = "*"
 
