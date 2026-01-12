@@ -1,0 +1,106 @@
+---
+name: "Release"
+on: # yamllint disable-line rule:truthy rule:comments
+  release:
+    types: ["published"]
+
+jobs:
+  build:
+    name: "Build package with poetry"
+    runs-on: "ubuntu-latest"
+    if: "startsWith(github.ref, 'refs/tags/v')"
+    steps:
+      - uses: "actions/checkout@v4"
+      - name: "Setup environment"
+        uses: "networktocode/gh-action-setup-poetry-environment@v6"
+        with:
+          poetry-version: "2.1.3"
+          python-version: "3.13"
+          poetry-install-options: "--no-root"
+      - name: "Run Poetry Build"
+        run: "poetry build"
+
+      - name: "Check that the release tag matches the version in pyproject.toml"
+        run: |
+          if [ "${{ github.ref_name }}" != "v$(poetry version -s)" ]; then exit 1; fi
+
+      - uses: "actions/upload-artifact@v4"
+        with:
+          name: "distfiles"
+          path: "dist/"
+          if-no-files-found: "error"
+
+  publish-github:
+    name: "Publish to GitHub"
+    runs-on: "ubuntu-latest"
+    if: "startsWith(github.ref, 'refs/tags/v')"
+    permissions:
+      contents: "write"
+    needs: "build"
+    steps:
+      - uses: "actions/checkout@v4"
+      - name: "Retrieve built package from cache"
+        uses: "actions/download-artifact@v4"
+        with:
+          name: "distfiles"
+          path: "dist/"
+
+      - name: "Upload binaries to release"
+        run: "gh release upload ${{ github.ref_name }} dist/*.{tar.gz,whl}"
+        env:
+          GH_TOKEN: "${{ secrets.NTC_GITHUB_TOKEN }}"
+
+  publish-pypi:
+    name: "Push Package to PyPI"
+    runs-on: "ubuntu-latest"
+    if: "startsWith(github.ref, 'refs/tags/v')"
+    needs: "build"
+    environment: "pypi"
+    # Steps to publish to PyPI.
+    steps:
+      - name: "Retrieve built package from cache"
+        uses: "actions/download-artifact@v4"
+        with:
+          name: "distfiles"
+          path: "dist/"
+      - name: "Publish package distributions to PyPI"
+        uses: "pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e"  # v1.13.0
+        ## Used for networktocode org since trusted publisher isn't supported for GitHub Plan.
+        with:
+          user: "__token__"
+          password: "${{ secrets.PYPI_API_TOKEN }}"
+        # End publish to PyPI job.
+
+  slack-notify:
+    needs:
+      - "publish-github"
+      - "publish-pypi"
+    runs-on: "ubuntu-latest"
+    env:
+      # Secrets cannot be directly referenced in if: conditionals. They must be set as a job env var first.
+      # Ref: https://docs.github.com/en/actions/writing-workflows/workflow-syntax-for-github-actions#example-using-secrets
+      SLACK_WEBHOOK_URL: "${{ secrets.OSS_PYPI_SLACK_WEBHOOK_URL }}"
+      SLACK_WEBHOOK_TYPE: "INCOMING_WEBHOOK"
+      SLACK_MESSAGE: >-
+        *NOTIFICATION: NEW-RELEASE-PUBLISHED*\n
+        Repository: <${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}>\n
+        Release: <${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.ref_name }}|${{ github.ref_name }}>\n
+        Published by: <${{ github.server_url }}/${{ github.actor }}|${{ github.actor }}>
+    steps:
+      - name: "Send a notification to Slack"
+        if: "${{ env.SLACK_WEBHOOK_URL != '' }}"
+        uses: "slackapi/slack-github-action@fcfb566f8b0aab22203f066d80ca1d7e4b5d05b3"  # v1.27.1
+        with:
+          payload: |
+            {
+              "text": "${{ env.SLACK_MESSAGE }}",
+              "blocks": [
+                {
+                  "type": "section",
+                  "text": {
+                    "type": "mrkdwn",
+                    "text": "${{ env.SLACK_MESSAGE }}"
+                  }
+                }
+              ]
+            }
