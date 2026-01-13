@@ -1,0 +1,6 @@
+remark #
+remark # System
+remark #
+configure system
+  security-banner "Any changes to this system require a change ticket or trouble ticket.  Do you really want to proceed?\\n\\nBe sure to notify the XNOC of work being performed BEFORE changes are made.\\n\\nXNOC - 888-555-1963"
+exit
