@@ -13,7 +13,7 @@
 | citrix_netscaler | netutils.config.parser.NetscalerConfigParser |
 | extreme_netiron | netutils.config.parser.NetironConfigParser |
 | fortinet_fortios | netutils.config.parser.FortinetConfigParser |
-| hp_comware | netutils.config.parser.HPComwareConfigParser |
+| hp_comware | netutils.config.parser.HPEConfigParser |
 | juniper_junos | netutils.config.parser.JunosConfigParser |
 | linux | netutils.config.parser.LINUXConfigParser |
 | mikrotik_routeros | netutils.config.parser.RouterOSConfigParser |

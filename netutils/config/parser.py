@@ -8,6 +8,7 @@ from collections import namedtuple
 
 from netutils.banner import normalise_delimiter_caret_c
 from netutils.config.conversion import paloalto_panos_brace_to_set
+from netutils.config.utils import _deprecated
 
 ConfigLine = namedtuple("ConfigLine", "config_line,parents")
 
@@ -1678,13 +1679,90 @@ class UbiquitiAirOSConfigParser(BaseSpaceConfigParser):
 class HPEConfigParser(BaseSpaceConfigParser):
     """HPE Implementation of ConfigParser Class."""
 
-    regex_banner = re.compile(r"^header\s(\w+)\s+(?P<banner_delimiter>\^C|\S?)")
+    regex_banner = re.compile(r"^\s*header\s(\w+)\s+(?P<banner_delimiter>\^C|\S?)")
+    banner_start: t.List[str] = ["header "]
+    comment_chars: t.List[str] = ["#"]
 
     def __init__(self, config: str):
         """Initialize the HPEConfigParser object."""
         self.delimiter = ""
         self._banner_end: t.Optional[str] = None
         super(HPEConfigParser, self).__init__(config)
+
+    @property
+    def config_lines_only(self) -> str:
+        """Remove spaces and unwanted lines from config lines, but leave comments.
+
+        Returns:
+            The non-space lines from ``config``.
+        """
+        if self._config is None:
+            config_lines = (line.rstrip() for line in self.config.splitlines() if line and not line.isspace())
+            self._config = "\n".join(config_lines)
+        return self._config
+
+    def build_config_relationship(self) -> t.List[ConfigLine]:
+        r"""This is a custom build method for HPE Network OS.
+
+        HP config is a bit different from other network operating systems.
+        It uses comments (#) to demarcate sections of the config.
+        Each new section that starts without a leading space is a new section.
+        That new section may or may not have children.
+        Each config line that has a leading space but not a parent is just a single config line.
+        Single lines that have leading spaces also sometimes differs between models (e.g., 59XX vs 79XX series).
+
+        Examples:
+            >>> from netutils.config.parser import HPEConfigParser, ConfigLine
+            >>> config = '''#
+            ... version 7.1.045, Release 2418P06
+            ... #
+            ...  sysname NTC123456
+            ... #
+            ... vlan 101
+            ...  name Test-Vlan-101
+            ...  description Test Vlan 101
+            ... #'''
+            >>> config_tree = HPEConfigParser(config)
+            >>> config_tree.build_config_relationship() == \
+            ... [
+            ...     ConfigLine(config_line="version 7.1.045, Release 2418P06", parents=()),
+            ...     ConfigLine(config_line=" sysname NTC123456", parents=()),
+            ...     ConfigLine(config_line="vlan 101", parents=()),
+            ...     ConfigLine(config_line=" name Test-Vlan-101", parents=("vlan 101",)),
+            ...     ConfigLine(config_line=" description Test Vlan 101", parents=("vlan 101",)),
+            ... ]
+            True
+            >>>
+        """
+        new_section = True
+        for line in self.generator_config:
+            if line.startswith(tuple(self.comment_chars)):
+                # Closing any previous sections
+                self._current_parents = ()
+                self.indent_level = 0
+                new_section = True
+                continue
+            if line.strip().startswith(tuple(self.comment_chars)):
+                # Just ignore comments inside sections
+                continue
+            if self.is_banner_start(line):
+                # Special case for banners
+                self._build_banner(line)
+                continue
+
+            current_spaces = self.get_leading_space_count(line) if line[0].isspace() else 0
+            if current_spaces == 0:
+                new_section = True
+            if current_spaces > self.indent_level and not new_section:
+                previous_config = self.config_lines[-1]
+                self._current_parents += (previous_config.config_line,)
+            elif current_spaces < self.indent_level:
+                self._current_parents = self._remove_parents(line, current_spaces)
+
+            new_section = False
+            self.indent_level = current_spaces
+            self._update_config_lines(line)
+        return self.config_lines
 
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """
@@ -1763,15 +1841,11 @@ class HPEConfigParser(BaseSpaceConfigParser):
         self._banner_end = self.delimiter
 
 
+@_deprecated(
+    "HPComwareConfigParser is deprecated and will be removed in a future version. Use HPEConfigParser instead."
+)
 class HPComwareConfigParser(HPEConfigParser, BaseSpaceConfigParser):
     """HP Comware Implementation of ConfigParser Class."""
-
-    banner_start: t.List[str] = ["header "]
-    comment_chars: t.List[str] = ["#"]
-
-    def _build_banner(self, config_line: str) -> t.Optional[str]:
-        """Build a banner from the given config line."""
-        return super(HPComwareConfigParser, self)._build_banner(config_line)
 
 
 class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-method
