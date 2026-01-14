@@ -1,7 +1,0 @@
-#
-#CLI:SYSTEM  Edit
-#
-home
-configure system
-  security-banner "Warning Notice: This system is restricted solely to Rainbow Industries\\nauthorized users for legitimate business purposes only. The actual or attempted\\nunauthorized access, use, or modification of this system is strictly prohibited\\nby Techno Global Research Industries. Unauthorized users are subject to company\\ndisciplinary proceedings and/or criminal and civil penalties under state,\\nfederal, or other applicable domestic and foreign laws. The use of this system\\nmay be monitored and recorded for administrative and security reasons. Anyone\\naccessing this system expressly consents to such monitoring and is advised that\\nif such monitoring reveals possible evidence of criminal activity, Techno Global\\nResearch Industries may provide the evidence to law enforcement officials. All users\\nmust comply with Rainbow Industries security instructions regarding the\\nprotection of Rainbow Industries information. Call Network Operations Center\\nat 1-888-555-1138 for any information regarding this notice."
-  long-if-alias enabled
