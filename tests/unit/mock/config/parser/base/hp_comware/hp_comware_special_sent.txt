@@ -2,15 +2,6 @@
 vlan 10
     name management
     description management vlan
-vlan 15
-    name users
-    description users vlan
-vlan 16
-    name phones
-    description phones vlan
-vlan 20
-    name servers vlan
-    description servers vlan
 #
 # Comment lines should be ignored
 #
