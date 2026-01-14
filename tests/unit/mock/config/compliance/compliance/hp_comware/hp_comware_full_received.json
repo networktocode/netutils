@@ -1,0 +1,342 @@
+{
+    "sysname": {
+        "compliant": false,
+        "missing": "sysname NTC-Router",
+        "extra": "sysname NTC123456",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "sysname NTC123456",
+        "intended": "sysname NTC-Router"
+    },
+    "clock": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "clock timezone EST minus 05:00:00\nclock summer-time EDT 02:00:00 03/11 02:00:00 11/04 01:00:00\nclock protocol ntp",
+        "intended": "clock timezone EST minus 05:00:00\nclock summer-time EDT 02:00:00 03/11 02:00:00 11/04 01:00:00\nclock protocol ntp"
+    },
+    "copyright-info": {
+        "compliant": false,
+        "missing": "copyright-info enable",
+        "extra": "undo copyright-info enable",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "undo copyright-info enable",
+        "intended": "copyright-info enable"
+    },
+    "telnet": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "telnet server enable\ntelnet server acl 1111",
+        "intended": "telnet server enable\ntelnet server acl 1111"
+    },
+    "irf": {
+        "compliant": false,
+        "missing": "irf member 1 priority 48\nirf member 3 priority 16",
+        "extra": "irf member 1 priority 32\nirf member 2 priority 1",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "irf domain 123456\nirf mac-address persistent timer\nirf auto-update enable\nundo irf link-delay\nirf member 1 priority 32\nirf member 2 priority 1\nirf mode normal\nirf-port 1/1\n port group interface FortyGigE1/0/49\n port group interface FortyGigE1/0/50\nirf-port 2/2\n port group interface FortyGigE2/0/49\n port group interface FortyGigE2/0/50",
+        "intended": "irf domain 123456\nirf mac-address persistent timer\nirf auto-update enable\nundo irf link-delay\nirf member 1 priority 48\nirf member 3 priority 16\nirf mode normal\nirf-port 1/1\n port group interface FortyGigE1/0/49\n port group interface FortyGigE1/0/50\nirf-port 2/2\n port group interface FortyGigE2/0/49\n port group interface FortyGigE2/0/50"
+    },
+    "igmp": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "igmp-snooping",
+        "intended": "igmp-snooping"
+    },
+    "dns": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "dns source-interface M-GigabitEthernet0/0/0 vpn-instance internal\ndns domain example.com\ndns domain example.com vpn-instance internal\ndns server 192.0.2.47 vpn-instance internal\ndns server 192.0.2.15 vpn-instance internal\ndns server 192.0.2.11 vpn-instance internal\ndns server 192.0.2.2 vpn-instance internal\ndns server 192.0.2.6 vpn-instance internal",
+        "intended": "dns source-interface M-GigabitEthernet0/0/0 vpn-instance internal\ndns domain example.com\ndns domain example.com vpn-instance internal\ndns server 192.0.2.47 vpn-instance internal\ndns server 192.0.2.15 vpn-instance internal\ndns server 192.0.2.11 vpn-instance internal\ndns server 192.0.2.2 vpn-instance internal\ndns server 192.0.2.6 vpn-instance internal"
+    },
+    "lldp": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "lldp global enable",
+        "intended": "lldp global enable"
+    },
+    "password-recovery": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "password-recovery enable",
+        "intended": "password-recovery enable"
+    },
+    "vlan": {
+        "compliant": false,
+        "missing": "vlan 101\n name Test-Vlan-101\n description Test Vlan 101",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "vlan 1\nvlan 101",
+        "intended": "vlan 1\nvlan 101\n name Test-Vlan-101\n description Test Vlan 101"
+    },
+    "irf-port": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "irf-port 1/1\n port group interface FortyGigE1/0/49\n port group interface FortyGigE1/0/50\nirf-port 2/2\n port group interface FortyGigE2/0/49\n port group interface FortyGigE2/0/50",
+        "intended": "irf-port 1/1\n port group interface FortyGigE1/0/49\n port group interface FortyGigE1/0/50\nirf-port 2/2\n port group interface FortyGigE2/0/49\n port group interface FortyGigE2/0/50"
+    },
+    "qos map-table": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "qos map-table dot1p-lp\n import 0 export 0\n import 1 export 1\n import 2 export 2",
+        "intended": "qos map-table dot1p-lp\n import 0 export 0\n import 1 export 1\n import 2 export 2"
+    },
+    "qos policy": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "qos policy NTC-Policy\n classifier NTC-Classifier behavior NTC-Behavior",
+        "intended": "qos policy NTC-Policy\n classifier NTC-Classifier behavior NTC-Behavior"
+    },
+    "qos vlan-policy": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "qos vlan-policy NTC-VLAN-Policy-101 vlan 101 inbound\nqos vlan-policy NTC-VLAN-Policy-102 vlan 102 inbound",
+        "intended": "qos vlan-policy NTC-VLAN-Policy-101 vlan 101 inbound\nqos vlan-policy NTC-VLAN-Policy-102 vlan 102 inbound"
+    },
+    "stp": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "stp region-configuration\n region-name NTC-Region\n revision-level 100\n instance 1 vlan 1 to 4094\n active region-configuration\nstp instance 0 to 1 priority 16384\nstp vlan 1 to 4094 priority 16384\nstp mode pvst\nstp bpdu-protection\nstp global enable",
+        "intended": "stp region-configuration\n region-name NTC-Region\n revision-level 100\n instance 1 vlan 1 to 4094\n active region-configuration\nstp instance 0 to 1 priority 16384\nstp vlan 1 to 4094 priority 16384\nstp mode pvst\nstp bpdu-protection\nstp global enable"
+    },
+    "l2vpn": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "l2vpn enable",
+        "intended": "l2vpn enable"
+    },
+    "bgp": {
+        "compliant": false,
+        "missing": "bgp 65003\n ip vpn-instance vpn2\n  peer 192.0.2.61 as-number 65007\n  peer 192.0.2.61 ebgp-max-hop 4\n  peer 192.0.2.62 as-number 65007\n  peer 192.0.2.62 ebgp-max-hop 4",
+        "extra": "bgp 65003\n ip vpn-instance vpn2\n  peer 192.0.2.61 as-number 65006\n  peer 192.0.2.61 ebgp-max-hop 3\n  peer 192.0.2.62 as-number 65006\n  peer 192.0.2.62 ebgp-max-hop 3\n  address-family ipv4 unicast\n   network 192.0.2.8 255.255.255.248\n   network 192.0.2.0 255.255.255.240\n   network 192.0.2.16 255.255.255.240\n   network 192.0.2.32 255.255.255.240\n   network 192.0.2.48 255.255.255.240",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "bgp 65003\n router-id 192.0.2.31\n timer keepalive 5 hold 15\n ip vpn-instance vpn2\n  peer 192.0.2.61 as-number 65006\n  peer 192.0.2.61 connect-interface LoopBack1\n  peer 192.0.2.61 ebgp-max-hop 3\n  peer 192.0.2.61 password cipher <REDACTED>\n  peer 192.0.2.62 as-number 65006\n  peer 192.0.2.62 connect-interface LoopBack1\n  peer 192.0.2.62 ebgp-max-hop 3\n  address-family ipv4 unicast\n   network 192.0.2.31 255.255.255.255\n   network 192.0.2.8 255.255.255.248\n   network 192.0.2.0 255.255.255.240\n   network 192.0.2.16 255.255.255.240\n   network 192.0.2.32 255.255.255.240\n   network 192.0.2.48 255.255.255.240\n   network 192.0.2.64 255.255.255.240\n   peer 192.0.2.61 enable\n   peer 192.0.2.61 next-hop-local\n   peer 192.0.2.62 enable\n   peer 192.0.2.62 next-hop-local",
+        "intended": "bgp 65003\n router-id 192.0.2.31\n timer keepalive 5 hold 15\n ip vpn-instance vpn2\n  peer 192.0.2.61 as-number 65007\n  peer 192.0.2.61 connect-interface LoopBack1\n  peer 192.0.2.61 ebgp-max-hop 4\n  peer 192.0.2.61 password cipher <REDACTED>\n  peer 192.0.2.62 as-number 65007\n  peer 192.0.2.62 connect-interface LoopBack1\n  peer 192.0.2.62 ebgp-max-hop 4\n  address-family ipv4 unicast\n   network 192.0.2.31 255.255.255.255\n   network 192.0.2.64 255.255.255.240\n   peer 192.0.2.61 enable\n   peer 192.0.2.61 next-hop-local\n   peer 192.0.2.62 enable\n   peer 192.0.2.62 next-hop-local"
+    },
+    "line": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "line class aux\n user-role network-admin\nline class vty\n user-role network-operator\nline aux 0 1\n authentication-mode scheme\n user-role level-0\n idle-timeout 15 0\n command authorization\nline vty 0 4\n authentication-mode scheme\n user-role level-15\n user-role network-operator\n protocol inbound ssh\n idle-timeout 60 0\n command authorization",
+        "intended": "line class aux\n user-role network-admin\nline class vty\n user-role network-operator\nline aux 0 1\n authentication-mode scheme\n user-role level-0\n idle-timeout 15 0\n command authorization\nline vty 0 4\n authentication-mode scheme\n user-role level-15\n user-role network-operator\n protocol inbound ssh\n idle-timeout 60 0\n command authorization"
+    },
+    "ip route-static": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "ip route-static vpn-instance vpn1 0.0.0.0 0 192.0.2.1\nip route-static vpn-instance vpn2 192.0.2.61 32 192.0.2.68 description Test-Peer-2\nip route-static vpn-instance vpn2 192.0.2.62 32 192.0.2.68 description Test-Peer-2",
+        "intended": "ip route-static vpn-instance vpn1 0.0.0.0 0 192.0.2.1\nip route-static vpn-instance vpn2 192.0.2.61 32 192.0.2.68 description Test-Peer-2\nip route-static vpn-instance vpn2 192.0.2.62 32 192.0.2.68 description Test-Peer-2"
+    },
+    "info-center": {
+        "compliant": false,
+        "missing": "info-center logfile enable",
+        "extra": "undo info-center logfile enable\ninfo-center loghost vpn-instance internal 192.0.2.132\ninfo-center loghost vpn-instance internal 192.0.2.227\ninfo-center loghost vpn-instance internal 192.0.2.18",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "info-center timestamp loghost no-year-date\nundo info-center logfile enable\ninfo-center loghost source M-GigabitEthernet0/0/0\ninfo-center loghost vpn-instance internal 192.0.2.132\ninfo-center loghost vpn-instance internal 192.0.2.227\ninfo-center loghost vpn-instance internal 192.0.2.18\ninfo-center loghost vpn-instance internal 192.0.2.195",
+        "intended": "info-center timestamp loghost no-year-date\ninfo-center logfile enable\ninfo-center loghost source M-GigabitEthernet0/0/0\ninfo-center loghost vpn-instance internal 192.0.2.195"
+    },
+    "snmp": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "snmp-agent\nsnmp-agent local-engineid 123456789012345678901234567890\nsnmp-agent community read Test-Community acl 1234\nsnmp-agent sys-info contact Test-Contact\nsnmp-agent sys-info location Test-Location\nsnmp-agent sys-info version v2c v3\nsnmp-agent trap source M-GigabitEthernet0/0/0",
+        "intended": "snmp-agent\nsnmp-agent local-engineid 123456789012345678901234567890\nsnmp-agent community read Test-Community acl 1234\nsnmp-agent sys-info contact Test-Contact\nsnmp-agent sys-info location Test-Location\nsnmp-agent sys-info version v2c v3\nsnmp-agent trap source M-GigabitEthernet0/0/0"
+    },
+    "ssh": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "ssh server enable\nssh server acl 1234\nssh client source interface M-GigabitEthernet0/0/0",
+        "intended": "ssh server enable\nssh server acl 1234\nssh client source interface M-GigabitEthernet0/0/0"
+    },
+    "ftp": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "ftp client source interface M-GigabitEthernet0/0/0",
+        "intended": "ftp client source interface M-GigabitEthernet0/0/0"
+    },
+    "sftp": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "sftp client source interface M-GigabitEthernet0/0/0",
+        "intended": "sftp client source interface M-GigabitEthernet0/0/0"
+    },
+    "ntp": {
+        "compliant": false,
+        "missing": "ntp-service unicast-server ntp.example.com vpn-instance internal",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "ntp-service enable\nntp-service source M-GigabitEthernet0/0/0\nntp-service unicast-server 192.0.2.22 vpn-instance internal\nntp-service unicast-peer 192.0.2.10 vpn-instance internal\nntp-service unicast-server 192.0.2.27 vpn-instance internal\nntp-service unicast-server 192.0.2.70 vpn-instance internal\nntp-service unicast-server 192.0.2.251 vpn-instance internal\nntp-service unicast-server 192.0.2.182 vpn-instance internal",
+        "intended": "ntp-service enable\nntp-service source M-GigabitEthernet0/0/0\nntp-service unicast-server 192.0.2.22 vpn-instance internal\nntp-service unicast-peer 192.0.2.10 vpn-instance internal\nntp-service unicast-server ntp.example.com vpn-instance internal\nntp-service unicast-server 192.0.2.27 vpn-instance internal\nntp-service unicast-server 192.0.2.70 vpn-instance internal\nntp-service unicast-server 192.0.2.251 vpn-instance internal\nntp-service unicast-server 192.0.2.182 vpn-instance internal"
+    },
+    "acl": {
+        "compliant": false,
+        "missing": "acl number 1234 name NTC-ACL\n rule 0 permit icmp destination 0.0.0.0 255.255.255.0\n rule 1 permit tcp destination 0.0.0.0 255.255.255.0 destination-port range 1000 2000\n rule 1 comment hello world",
+        "extra": "acl number 1234 name NTC-ACL\n rule 0 permit tcp destination 0.0.0.0 255.255.255.0 destination-port range 1000 2000\n rule 0 comment hello world",
+        "cannot_parse": true,
+        "unordered_compliant": false,
+        "ordered_compliant": false,
+        "actual": "acl number 1234 name NTC-ACL\n rule 0 permit tcp destination 0.0.0.0 255.255.255.0 destination-port range 1000 2000\n rule 0 comment hello world",
+        "intended": "acl number 1234 name NTC-ACL\n rule 0 permit icmp destination 0.0.0.0 255.255.255.0\n rule 1 permit tcp destination 0.0.0.0 255.255.255.0 destination-port range 1000 2000\n rule 1 comment hello world"
+    },
+    "tftp": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "tftp client source interface M-GigabitEthernet0/0/0",
+        "intended": "tftp client source interface M-GigabitEthernet0/0/0"
+    },
+    "header": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "header motd %\n*******************************************************************************\nUnauthorized Access to or Use of this System is STRICTLY PROHIBITED.\n     ALL Access and Use May be Monitored and Recorded.\n*******************************************************************************\n%",
+        "intended": "header motd %\n*******************************************************************************\nUnauthorized Access to or Use of this System is STRICTLY PROHIBITED.\n     ALL Access and Use May be Monitored and Recorded.\n*******************************************************************************\n%"
+    },
+    "hwtacacs": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "hwtacacs scheme NTC-HWTACACS-Scheme\n primary authentication 192.0.2.112\n primary authorization 192.0.2.112\n primary accounting 192.0.2.112\n secondary authentication 192.0.2.11\n secondary authorization 192.0.2.11\n secondary accounting 192.0.2.11\n key authentication cipher <REDACTED>\n key authorization cipher <REDACTED>\n key accounting cipher <REDACTED>\n user-name-format without-domain\n vpn-instance internal",
+        "intended": "hwtacacs scheme NTC-HWTACACS-Scheme\n primary authentication 192.0.2.112\n primary authorization 192.0.2.112\n primary accounting 192.0.2.112\n secondary authentication 192.0.2.11\n secondary authorization 192.0.2.11\n secondary accounting 192.0.2.11\n key authentication cipher <REDACTED>\n key authorization cipher <REDACTED>\n key accounting cipher <REDACTED>\n user-name-format without-domain\n vpn-instance internal"
+    },
+    "radius": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "radius scheme system\n user-name-format without-domain",
+        "intended": "radius scheme system\n user-name-format without-domain"
+    },
+    "domain": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "domain example.com\n authentication default hwtacacs-scheme NTC-HWTACACS-Scheme local\n authorization default hwtacacs-scheme NTC-HWTACACS-Scheme local\n accounting default hwtacacs-scheme NTC-HWTACACS-Scheme\ndomain system\ndomain default enable example.com",
+        "intended": "domain example.com\n authentication default hwtacacs-scheme NTC-HWTACACS-Scheme local\n authorization default hwtacacs-scheme NTC-HWTACACS-Scheme local\n accounting default hwtacacs-scheme NTC-HWTACACS-Scheme\ndomain system\ndomain default enable example.com"
+    },
+    "role": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "role name level-0\n description NTC-Level-0 role\nrole name level-1\n description NTC-Level-1 role",
+        "intended": "role name level-0\n description NTC-Level-0 role\nrole name level-1\n description NTC-Level-1 role"
+    },
+    "user-group": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "user-group system",
+        "intended": "user-group system"
+    },
+    "local-user": {
+        "compliant": true,
+        "missing": "",
+        "extra": "",
+        "cannot_parse": true,
+        "unordered_compliant": true,
+        "ordered_compliant": true,
+        "actual": "local-user NTC-Admin class manage\n password hash <REDACTED>\n service-type ssh telnet terminal\n authorization-attribute user-role level-15\n authorization-attribute user-role network-admin\n authorization-attribute user-role network-operator\nlocal-user NTC-User class manage\n password hash <REDACTED>\n service-type ssh telnet\n authorization-attribute user-role level-15\n authorization-attribute user-role network-admin\n authorization-attribute user-role network-operator",
+        "intended": "local-user NTC-Admin class manage\n password hash <REDACTED>\n service-type ssh telnet terminal\n authorization-attribute user-role level-15\n authorization-attribute user-role network-admin\n authorization-attribute user-role network-operator\nlocal-user NTC-User class manage\n password hash <REDACTED>\n service-type ssh telnet\n authorization-attribute user-role level-15\n authorization-attribute user-role network-admin\n authorization-attribute user-role network-operator"
+    }
+}
