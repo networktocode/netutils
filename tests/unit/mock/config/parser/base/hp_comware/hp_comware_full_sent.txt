@@ -214,10 +214,6 @@ line vty 0 4
  ntp-service source M-GigabitEthernet0/0/0
  ntp-service unicast-server 192.0.2.22 vpn-instance internal
  ntp-service unicast-peer 192.0.2.10 vpn-instance internal
- ntp-service unicast-peer 192.0.2.10 vpn-instance internal
- ntp-service unicast-peer 192.0.2.10 vpn-instance internal
- ntp-service unicast-peer 192.0.2.10 vpn-instance internal
- ntp-service unicast-peer 192.0.2.10 vpn-instance internal
  ntp-service unicast-server ntp.example.com vpn-instance internal
  ntp-service unicast-server 192.0.2.27 vpn-instance internal
  ntp-service unicast-server 192.0.2.70 vpn-instance internal
