@@ -1754,6 +1754,9 @@ class HPEConfigParser(BaseSpaceConfigParser):
 
             current_spaces = self.get_leading_space_count(line) if line[0].isspace() else 0
             if current_spaces == 0:
+                # Reset current parents and indent level for lines that are not indented.
+                self._current_parents = ()
+                self.indent_level = 0
                 new_section = True
             if current_spaces > self.indent_level and not new_section:
                 previous_config = self.config_lines[-1]
