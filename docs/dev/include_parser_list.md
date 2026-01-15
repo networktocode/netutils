@@ -7,6 +7,8 @@
 | aruba_os | netutils.config.parser.ArubaConfigOSParser |
 | aruba_osswitch | netutils.config.parser.ArubaConfigOSParser |
 | bigip_f5 | netutils.config.parser.F5ConfigParser |
+| ciena_saos | netutils.config.parser.CienaConfigParser |
+| ciena_saos10 | netutils.config.parser.CienaConfigParser |
 | cisco_aireos | netutils.config.parser.AIREOSConfigParser |
 | cisco_asa | netutils.config.parser.ASAConfigParser |
 | cisco_ios | netutils.config.parser.IOSConfigParser |

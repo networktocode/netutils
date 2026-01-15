@@ -1,0 +1,1412 @@
+components component '8180' config name "8180"
+components component '8180' properties property 'base-mac' config name "base-mac"
+components component '8180' properties property 'mac-range' config name "mac-range"
+components component '8180' properties property 'status-led' config name "status-led"
+components component '8180' properties property 'alarm-led' config name "alarm-led"
+components component '8180' properties property 'psa-led' config name "psa-led"
+components component '8180' properties property 'psb-led' config name "psb-led"
+components component '8180' properties property 'battery' config name "battery"
+components component '8180' subcomponents subcomponent 'fan-board' config name "fan-board"
+components component '8180' subcomponents subcomponent 'psu-board' config name "psu-board"
+components component '8180' subcomponents subcomponent 'cpu1-temperature' config name "cpu1-temperature"
+components component '8180' subcomponents subcomponent 'cpu2-temperature' config name "cpu2-temperature"
+components component '8180' subcomponents subcomponent 'front-temperature' config name "front-temperature"
+components component '8180' subcomponents subcomponent 'switch-temperature' config name "switch-temperature"
+components component '8180' subcomponents subcomponent 'slot1' config name "slot1"
+components component '8180' subcomponents subcomponent 'slot2' config name "slot2"
+components component '8180' subcomponents subcomponent 'slot3' config name "slot3"
+components component '8180' subcomponents subcomponent 'slot4' config name "slot4"
+components component 'fan-board' config name "fan-board"
+components component 'fan-board' subcomponents subcomponent 'fan1' config name "fan1"
+components component 'fan-board' subcomponents subcomponent 'fan2' config name "fan2"
+components component 'fan-board' subcomponents subcomponent 'fan3' config name "fan3"
+components component 'fan-board' subcomponents subcomponent 'fan4' config name "fan4"
+components component 'fan-board' subcomponents subcomponent 'fan5' config name "fan5"
+components component 'fan-board' subcomponents subcomponent 'fan6' config name "fan6"
+components component 'fan-board' subcomponents subcomponent 'fan7' config name "fan7"
+components component 'fan-board' subcomponents subcomponent 'fan8' config name "fan8"
+components component 'fan1' config name "fan1"
+components component 'fan1' properties property 'installed' config name "installed"
+components component 'fan1' properties property 'current-speed' config name "current-speed"
+components component 'fan1' properties property 'avg-speed' config name "avg-speed"
+components component 'fan1' properties property 'max-speed' config name "max-speed"
+components component 'fan1' properties property 'min-speed' config name "min-speed"
+components component 'fan2' config name "fan2"
+components component 'fan2' properties property 'installed' config name "installed"
+components component 'fan2' properties property 'current-speed' config name "current-speed"
+components component 'fan2' properties property 'avg-speed' config name "avg-speed"
+components component 'fan2' properties property 'max-speed' config name "max-speed"
+components component 'fan2' properties property 'min-speed' config name "min-speed"
+components component 'fan3' config name "fan3"
+components component 'fan3' properties property 'installed' config name "installed"
+components component 'fan3' properties property 'current-speed' config name "current-speed"
+components component 'fan3' properties property 'avg-speed' config name "avg-speed"
+components component 'fan3' properties property 'max-speed' config name "max-speed"
+components component 'fan3' properties property 'min-speed' config name "min-speed"
+components component 'fan4' config name "fan4"
+components component 'fan4' properties property 'installed' config name "installed"
+components component 'fan4' properties property 'current-speed' config name "current-speed"
+components component 'fan4' properties property 'avg-speed' config name "avg-speed"
+components component 'fan4' properties property 'max-speed' config name "max-speed"
+components component 'fan4' properties property 'min-speed' config name "min-speed"
+components component 'fan5' config name "fan5"
+components component 'fan5' properties property 'installed' config name "installed"
+components component 'fan5' properties property 'current-speed' config name "current-speed"
+components component 'fan5' properties property 'avg-speed' config name "avg-speed"
+components component 'fan5' properties property 'max-speed' config name "max-speed"
+components component 'fan5' properties property 'min-speed' config name "min-speed"
+components component 'fan6' config name "fan6"
+components component 'fan6' properties property 'installed' config name "installed"
+components component 'fan6' properties property 'current-speed' config name "current-speed"
+components component 'fan6' properties property 'avg-speed' config name "avg-speed"
+components component 'fan6' properties property 'max-speed' config name "max-speed"
+components component 'fan6' properties property 'min-speed' config name "min-speed"
+components component 'fan7' config name "fan7"
+components component 'fan7' properties property 'installed' config name "installed"
+components component 'fan7' properties property 'current-speed' config name "current-speed"
+components component 'fan7' properties property 'avg-speed' config name "avg-speed"
+components component 'fan7' properties property 'max-speed' config name "max-speed"
+components component 'fan7' properties property 'min-speed' config name "min-speed"
+components component 'fan8' config name "fan8"
+components component 'fan8' properties property 'installed' config name "installed"
+components component 'fan8' properties property 'current-speed' config name "current-speed"
+components component 'fan8' properties property 'avg-speed' config name "avg-speed"
+components component 'fan8' properties property 'max-speed' config name "max-speed"
+components component 'fan8' properties property 'min-speed' config name "min-speed"
+components component 'psu-board' config name "psu-board"
+components component 'psu-board' properties property 'status' config name "status"
+components component 'psu-board' subcomponents subcomponent 'psa' config name "psa"
+components component 'psu-board' subcomponents subcomponent 'psb' config name "psb"
+components component 'psa' config name "psa"
+components component 'psa' properties property 'installed' config name "installed"
+components component 'psa' properties property 'psu-type' config name "psu-type"
+components component 'psa' properties property 'input-current' config name "input-current"
+components component 'psa' properties property 'input-voltage' config name "input-voltage"
+components component 'psa' properties property 'output-current' config name "output-current"
+components component 'psa' properties property 'output-voltage' config name "output-voltage"
+components component 'psb' config name "psb"
+components component 'psb' properties property 'installed' config name "installed"
+components component 'psb' properties property 'psu-type' config name "psu-type"
+components component 'psb' properties property 'input-current' config name "input-current"
+components component 'psb' properties property 'input-voltage' config name "input-voltage"
+components component 'psb' properties property 'output-current' config name "output-current"
+components component 'psb' properties property 'output-voltage' config name "output-voltage"
+components component 'cpu1-temperature' config name "cpu1-temperature"
+components component 'cpu2-temperature' config name "cpu2-temperature"
+components component 'front-temperature' config name "front-temperature"
+components component 'switch-temperature' config name "switch-temperature"
+components component 'slot1' config name "slot1"
+components component 'slot1' properties property 'fru-type' config name "fru-type" value 4xCFP2-DCO
+components component 'slot1' properties property 'admin-state' config name "admin-state" value enabled
+components component 'slot1' properties property 'module-state' config name "module-state"
+components component 'slot2' config name "slot2"
+components component 'slot2' properties property 'fru-type' config name "fru-type" value none
+components component 'slot2' properties property 'admin-state' config name "admin-state" value enabled
+components component 'slot2' properties property 'module-state' config name "module-state"
+components component 'slot3' config name "slot3"
+components component 'slot3' properties property 'fru-type' config name "fru-type" value none
+components component 'slot3' properties property 'admin-state' config name "admin-state" value enabled
+components component 'slot3' properties property 'module-state' config name "module-state"
+components component 'slot4' config name "slot4"
+components component 'slot4' properties property 'fru-type' config name "fru-type" value none
+components component 'slot4' properties property 'admin-state' config name "admin-state" value enabled
+components component 'slot4' properties property 'module-state' config name "module-state"
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '0' 'green' pcp 0 dei disabled ip-dscp 0 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '1' 'green' pcp 0 dei disabled ip-dscp 1 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '2' 'green' pcp 0 dei disabled ip-dscp 2 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '3' 'green' pcp 0 dei disabled ip-dscp 3 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '4' 'green' pcp 0 dei disabled ip-dscp 4 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '5' 'green' pcp 0 dei disabled ip-dscp 5 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '6' 'green' pcp 0 dei disabled ip-dscp 6 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '7' 'green' pcp 0 dei disabled ip-dscp 7 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '8' 'green' pcp 1 dei disabled ip-dscp 8 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '9' 'green' pcp 1 dei disabled ip-dscp 9 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '10' 'green' pcp 1 dei disabled ip-dscp 10 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '11' 'green' pcp 1 dei disabled ip-dscp 11 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '12' 'green' pcp 1 dei disabled ip-dscp 12 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '13' 'green' pcp 1 dei disabled ip-dscp 13 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '14' 'green' pcp 1 dei disabled ip-dscp 14 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '15' 'green' pcp 1 dei disabled ip-dscp 15 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '16' 'green' pcp 2 dei disabled ip-dscp 16 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '17' 'green' pcp 2 dei disabled ip-dscp 17 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '18' 'green' pcp 2 dei disabled ip-dscp 18 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '19' 'green' pcp 2 dei disabled ip-dscp 19 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '20' 'green' pcp 2 dei disabled ip-dscp 20 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '21' 'green' pcp 2 dei disabled ip-dscp 21 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '22' 'green' pcp 2 dei disabled ip-dscp 22 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '23' 'green' pcp 2 dei disabled ip-dscp 23 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '24' 'green' pcp 3 dei disabled ip-dscp 24 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '25' 'green' pcp 3 dei disabled ip-dscp 25 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '26' 'green' pcp 3 dei disabled ip-dscp 26 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '27' 'green' pcp 3 dei disabled ip-dscp 27 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '28' 'green' pcp 3 dei disabled ip-dscp 28 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '29' 'green' pcp 3 dei disabled ip-dscp 29 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '30' 'green' pcp 3 dei disabled ip-dscp 30 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '31' 'green' pcp 3 dei disabled ip-dscp 31 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '32' 'green' pcp 4 dei disabled ip-dscp 32 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '33' 'green' pcp 4 dei disabled ip-dscp 33 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '34' 'green' pcp 4 dei disabled ip-dscp 34 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '35' 'green' pcp 4 dei disabled ip-dscp 35 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '36' 'green' pcp 4 dei disabled ip-dscp 36 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '37' 'green' pcp 4 dei disabled ip-dscp 37 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '38' 'green' pcp 4 dei disabled ip-dscp 38 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '39' 'green' pcp 4 dei disabled ip-dscp 39 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '40' 'green' pcp 5 dei disabled ip-dscp 40 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '41' 'green' pcp 5 dei disabled ip-dscp 41 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '42' 'green' pcp 5 dei disabled ip-dscp 42 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '43' 'green' pcp 5 dei disabled ip-dscp 43 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '44' 'green' pcp 5 dei disabled ip-dscp 44 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '45' 'green' pcp 5 dei disabled ip-dscp 45 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '46' 'green' pcp 5 dei disabled ip-dscp 46 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '47' 'green' pcp 5 dei disabled ip-dscp 47 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '48' 'green' pcp 6 dei disabled ip-dscp 48 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '49' 'green' pcp 6 dei disabled ip-dscp 49 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '50' 'green' pcp 6 dei disabled ip-dscp 50 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '51' 'green' pcp 6 dei disabled ip-dscp 51 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '52' 'green' pcp 6 dei disabled ip-dscp 52 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '53' 'green' pcp 6 dei disabled ip-dscp 53 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '54' 'green' pcp 6 dei disabled ip-dscp 54 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '55' 'green' pcp 6 dei disabled ip-dscp 55 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '56' 'green' pcp 7 dei disabled ip-dscp 56 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '57' 'green' pcp 7 dei disabled ip-dscp 57 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '58' 'green' pcp 7 dei disabled ip-dscp 58 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '59' 'green' pcp 7 dei disabled ip-dscp 59 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '60' 'green' pcp 7 dei disabled ip-dscp 60 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '61' 'green' pcp 7 dei disabled ip-dscp 61 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '62' 'green' pcp 7 dei disabled ip-dscp 62 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '63' 'green' pcp 7 dei disabled ip-dscp 63 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '0' 'yellow' pcp 0 dei enabled ip-dscp 0 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '1' 'yellow' pcp 0 dei enabled ip-dscp 1 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '2' 'yellow' pcp 0 dei enabled ip-dscp 2 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '3' 'yellow' pcp 0 dei enabled ip-dscp 3 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '4' 'yellow' pcp 0 dei enabled ip-dscp 4 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '5' 'yellow' pcp 0 dei enabled ip-dscp 5 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '6' 'yellow' pcp 0 dei enabled ip-dscp 6 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '7' 'yellow' pcp 0 dei enabled ip-dscp 7 mpls-tc 0
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '8' 'yellow' pcp 1 dei enabled ip-dscp 8 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '9' 'yellow' pcp 1 dei enabled ip-dscp 9 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '10' 'yellow' pcp 1 dei enabled ip-dscp 10 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '11' 'yellow' pcp 1 dei enabled ip-dscp 11 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '12' 'yellow' pcp 1 dei enabled ip-dscp 12 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '13' 'yellow' pcp 1 dei enabled ip-dscp 13 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '14' 'yellow' pcp 1 dei enabled ip-dscp 14 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '15' 'yellow' pcp 1 dei enabled ip-dscp 15 mpls-tc 1
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '16' 'yellow' pcp 2 dei enabled ip-dscp 16 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '17' 'yellow' pcp 2 dei enabled ip-dscp 17 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '18' 'yellow' pcp 2 dei enabled ip-dscp 18 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '19' 'yellow' pcp 2 dei enabled ip-dscp 19 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '20' 'yellow' pcp 2 dei enabled ip-dscp 20 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '21' 'yellow' pcp 2 dei enabled ip-dscp 21 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '22' 'yellow' pcp 2 dei enabled ip-dscp 22 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '23' 'yellow' pcp 2 dei enabled ip-dscp 23 mpls-tc 2
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '24' 'yellow' pcp 3 dei enabled ip-dscp 24 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '25' 'yellow' pcp 3 dei enabled ip-dscp 25 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '26' 'yellow' pcp 3 dei enabled ip-dscp 26 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '27' 'yellow' pcp 3 dei enabled ip-dscp 27 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '28' 'yellow' pcp 3 dei enabled ip-dscp 28 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '29' 'yellow' pcp 3 dei enabled ip-dscp 29 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '30' 'yellow' pcp 3 dei enabled ip-dscp 30 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '31' 'yellow' pcp 3 dei enabled ip-dscp 31 mpls-tc 3
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '32' 'yellow' pcp 4 dei enabled ip-dscp 32 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '33' 'yellow' pcp 4 dei enabled ip-dscp 33 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '34' 'yellow' pcp 4 dei enabled ip-dscp 34 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '35' 'yellow' pcp 4 dei enabled ip-dscp 35 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '36' 'yellow' pcp 4 dei enabled ip-dscp 36 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '37' 'yellow' pcp 4 dei enabled ip-dscp 37 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '38' 'yellow' pcp 4 dei enabled ip-dscp 38 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '39' 'yellow' pcp 4 dei enabled ip-dscp 39 mpls-tc 4
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '40' 'yellow' pcp 5 dei enabled ip-dscp 40 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '41' 'yellow' pcp 5 dei enabled ip-dscp 41 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '42' 'yellow' pcp 5 dei enabled ip-dscp 42 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '43' 'yellow' pcp 5 dei enabled ip-dscp 43 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '44' 'yellow' pcp 5 dei enabled ip-dscp 44 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '45' 'yellow' pcp 5 dei enabled ip-dscp 45 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '46' 'yellow' pcp 5 dei enabled ip-dscp 46 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '47' 'yellow' pcp 5 dei enabled ip-dscp 47 mpls-tc 5
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '48' 'yellow' pcp 6 dei enabled ip-dscp 48 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '49' 'yellow' pcp 6 dei enabled ip-dscp 49 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '50' 'yellow' pcp 6 dei enabled ip-dscp 50 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '51' 'yellow' pcp 6 dei enabled ip-dscp 51 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '52' 'yellow' pcp 6 dei enabled ip-dscp 52 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '53' 'yellow' pcp 6 dei enabled ip-dscp 53 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '54' 'yellow' pcp 6 dei enabled ip-dscp 54 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '55' 'yellow' pcp 6 dei enabled ip-dscp 55 mpls-tc 6
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '56' 'yellow' pcp 7 dei enabled ip-dscp 56 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '57' 'yellow' pcp 7 dei enabled ip-dscp 57 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '58' 'yellow' pcp 7 dei enabled ip-dscp 58 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '59' 'yellow' pcp 7 dei enabled ip-dscp 59 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '60' 'yellow' pcp 7 dei enabled ip-dscp 60 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '61' 'yellow' pcp 7 dei enabled ip-dscp 61 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '62' 'yellow' pcp 7 dei enabled ip-dscp 62 mpls-tc 7
+cos-to-frame-maps cos-to-frame-map 'default-c2f' map-entry '63' 'yellow' pcp 7 dei enabled ip-dscp 63 mpls-tc 7
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp0-dei0-cos0-green' pcp 0 dei disabled cos 0 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp1-dei0-cos8-green' pcp 1 dei disabled cos 8 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp2-dei0-cos16-green' pcp 2 dei disabled cos 16 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp3-dei0-cos24-green' pcp 3 dei disabled cos 24 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp4-dei0-cos32-green' pcp 4 dei disabled cos 32 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp5-dei0-cos40-green' pcp 5 dei disabled cos 40 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp6-dei0-cos48-green' pcp 6 dei disabled cos 48 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp7-dei0-cos56-green' pcp 7 dei disabled cos 56 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp0-dei1-cos4-yellow' pcp 0 dei enabled cos 4 color yellow
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp1-dei1-cos12-yellow' pcp 1 dei enabled cos 12 color yellow
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp2-dei1-cos20-yellow' pcp 2 dei enabled cos 20 color yellow
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp3-dei1-cos28-yellow' pcp 3 dei enabled cos 28 color yellow
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp4-dei1-cos36-yellow' pcp 4 dei enabled cos 36 color yellow
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp5-dei1-cos44-yellow' pcp 5 dei enabled cos 44 color yellow
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp6-dei1-cos52-yellow' pcp 6 dei enabled cos 52 color yellow
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'pcp7-dei1-cos60-yellow' pcp 7 dei enabled cos 60 color yellow
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'mpls-tc0-cos0-green' mpls-tc 0 cos 0 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'mpls-tc1-cos8-green' mpls-tc 1 cos 8 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'mpls-tc2-cos16-green' mpls-tc 2 cos 16 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'mpls-tc3-cos24-green' mpls-tc 3 cos 24 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'mpls-tc4-cos32-green' mpls-tc 4 cos 32 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'mpls-tc5-cos40-green' mpls-tc 5 cos 40 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'mpls-tc6-cos48-green' mpls-tc 6 cos 48 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'mpls-tc7-cos56-green' mpls-tc 7 cos 56 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp0-cos0-green' ip-dscp 0 cos 0 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp1-cos1-green' ip-dscp 1 cos 1 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp2-cos2-green' ip-dscp 2 cos 2 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp3-cos3-green' ip-dscp 3 cos 3 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp4-cos4-green' ip-dscp 4 cos 4 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp5-cos5-green' ip-dscp 5 cos 5 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp6-cos6-green' ip-dscp 6 cos 6 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp7-cos7-green' ip-dscp 7 cos 7 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp8-cos8-green' ip-dscp 8 cos 8 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp9-cos9-green' ip-dscp 9 cos 9 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp10-cos10-green' ip-dscp 10 cos 10 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp11-cos11-green' ip-dscp 11 cos 11 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp12-cos12-green' ip-dscp 12 cos 12 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp13-cos13-green' ip-dscp 13 cos 13 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp14-cos14-green' ip-dscp 14 cos 14 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp15-cos15-green' ip-dscp 15 cos 15 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp16-cos16-green' ip-dscp 16 cos 16 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp17-cos17-green' ip-dscp 17 cos 17 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp18-cos18-green' ip-dscp 18 cos 18 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp19-cos19-green' ip-dscp 19 cos 19 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp20-cos20-green' ip-dscp 20 cos 20 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp21-cos21-green' ip-dscp 21 cos 21 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp22-cos22-green' ip-dscp 22 cos 22 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp23-cos23-green' ip-dscp 23 cos 23 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp24-cos24-green' ip-dscp 24 cos 24 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp25-cos25-green' ip-dscp 25 cos 25 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp26-cos26-green' ip-dscp 26 cos 26 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp27-cos27-green' ip-dscp 27 cos 27 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp28-cos28-green' ip-dscp 28 cos 28 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp29-cos29-green' ip-dscp 29 cos 29 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp30-cos30-green' ip-dscp 30 cos 30 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp31-cos31-green' ip-dscp 31 cos 31 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp32-cos32-green' ip-dscp 32 cos 32 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp33-cos33-green' ip-dscp 33 cos 33 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp34-cos34-green' ip-dscp 34 cos 34 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp35-cos35-green' ip-dscp 35 cos 35 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp36-cos36-green' ip-dscp 36 cos 36 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp37-cos37-green' ip-dscp 37 cos 37 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp38-cos38-green' ip-dscp 38 cos 38 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp39-cos39-green' ip-dscp 39 cos 39 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp40-cos40-green' ip-dscp 40 cos 40 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp41-cos41-green' ip-dscp 41 cos 41 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp42-cos42-green' ip-dscp 42 cos 42 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp43-cos43-green' ip-dscp 43 cos 43 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp44-cos44-green' ip-dscp 44 cos 44 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp45-cos45-green' ip-dscp 45 cos 45 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp46-cos46-green' ip-dscp 46 cos 46 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp47-cos47-green' ip-dscp 47 cos 47 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp48-cos48-green' ip-dscp 48 cos 48 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp49-cos49-green' ip-dscp 49 cos 49 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp50-cos50-green' ip-dscp 50 cos 50 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp51-cos51-green' ip-dscp 51 cos 51 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp52-cos52-green' ip-dscp 52 cos 52 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp53-cos53-green' ip-dscp 53 cos 53 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp54-cos54-green' ip-dscp 54 cos 54 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp55-cos55-green' ip-dscp 55 cos 55 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp56-cos56-green' ip-dscp 56 cos 56 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp57-cos57-green' ip-dscp 57 cos 57 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp58-cos58-green' ip-dscp 58 cos 58 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp59-cos59-green' ip-dscp 59 cos 59 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp60-cos60-green' ip-dscp 60 cos 60 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp61-cos61-green' ip-dscp 61 cos 61 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp62-cos62-green' ip-dscp 62 cos 62 color green
+frame-to-cos-maps frame-to-cos-map 'default-f2c' map-entry 'ip-dscp63-cos63-green' ip-dscp 63 cos 63 color green
+mac-management mac-aging enabled mac-aging-timeout 300
+pfg-profiles
+exit
+xcvrs xcvr '1' properties mode auto
+xcvrs xcvr '1' state admin-state enabled
+xcvrs xcvr '2' properties mode auto
+xcvrs xcvr '2' state admin-state enabled
+xcvrs xcvr '3' properties mode auto
+xcvrs xcvr '3' state admin-state enabled
+xcvrs xcvr '4' properties mode auto
+xcvrs xcvr '4' state admin-state enabled
+xcvrs xcvr '5' properties mode auto
+xcvrs xcvr '5' state admin-state enabled
+xcvrs xcvr '6' properties mode auto
+xcvrs xcvr '6' state admin-state enabled
+xcvrs xcvr '7' properties mode auto
+xcvrs xcvr '7' state admin-state enabled
+xcvrs xcvr '8' properties mode auto
+xcvrs xcvr '8' state admin-state enabled
+xcvrs xcvr '9' properties mode auto
+xcvrs xcvr '9' state admin-state enabled
+xcvrs xcvr '10' properties mode auto
+xcvrs xcvr '10' state admin-state enabled
+xcvrs xcvr '11' properties mode auto
+xcvrs xcvr '11' state admin-state enabled
+xcvrs xcvr '12' properties mode auto
+xcvrs xcvr '12' state admin-state enabled
+xcvrs xcvr '13' properties mode auto
+xcvrs xcvr '13' state admin-state enabled
+xcvrs xcvr '14' properties mode auto
+xcvrs xcvr '14' state admin-state enabled
+xcvrs xcvr '15' properties mode auto
+xcvrs xcvr '15' state admin-state enabled
+xcvrs xcvr '16' properties mode auto
+xcvrs xcvr '16' state admin-state enabled
+xcvrs xcvr '17' properties mode auto
+xcvrs xcvr '17' state admin-state enabled
+xcvrs xcvr '18' properties mode auto
+xcvrs xcvr '18' state admin-state enabled
+xcvrs xcvr '19' properties mode auto
+xcvrs xcvr '19' state admin-state enabled
+xcvrs xcvr '20' properties mode auto
+xcvrs xcvr '20' state admin-state enabled
+xcvrs xcvr '21' properties mode auto
+xcvrs xcvr '21' state admin-state enabled
+xcvrs xcvr '22' properties mode auto
+xcvrs xcvr '22' state admin-state enabled
+xcvrs xcvr '23' properties mode auto
+xcvrs xcvr '23' state admin-state enabled
+xcvrs xcvr '24' properties mode auto
+xcvrs xcvr '24' state admin-state enabled
+xcvrs xcvr '25' properties mode auto
+xcvrs xcvr '25' state admin-state enabled
+xcvrs xcvr '26' properties mode auto
+xcvrs xcvr '26' state admin-state enabled
+xcvrs xcvr '27' properties mode auto
+xcvrs xcvr '27' state admin-state enabled
+xcvrs xcvr '28' properties mode auto
+xcvrs xcvr '28' state admin-state enabled
+xcvrs xcvr '29' properties mode auto
+xcvrs xcvr '29' state admin-state enabled
+xcvrs xcvr '30' properties mode auto
+xcvrs xcvr '30' state admin-state enabled
+xcvrs xcvr '31' properties mode auto
+xcvrs xcvr '31' state admin-state enabled
+xcvrs xcvr '32' properties mode auto
+xcvrs xcvr '32' state admin-state enabled
+xcvrs xcvr '1/1' properties mode 28-100
+xcvrs xcvr '1/1' state admin-state enabled
+xcvrs xcvr '1/2' properties mode 28-100
+xcvrs xcvr '1/2' state admin-state enabled
+xcvrs xcvr '1/3' properties mode 28-100
+xcvrs xcvr '1/3' state admin-state enabled
+xcvrs xcvr '1/4' properties mode 28-100
+xcvrs xcvr '1/4' state admin-state enabled
+ptps ptp '1' state admin-state enabled
+ptps ptp '1' properties parent-id "1"
+ptps ptp '1' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '2' state admin-state enabled
+ptps ptp '2' properties parent-id "2"
+ptps ptp '2' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '3' state admin-state enabled
+ptps ptp '3' properties parent-id "3"
+ptps ptp '3' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '4' state admin-state enabled
+ptps ptp '4' properties parent-id "4"
+ptps ptp '4' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '5' state admin-state enabled
+ptps ptp '5' properties parent-id "5"
+ptps ptp '5' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '6' state admin-state enabled
+ptps ptp '6' properties parent-id "6"
+ptps ptp '6' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '7' state admin-state enabled
+ptps ptp '7' properties parent-id "7"
+ptps ptp '7' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '8' state admin-state enabled
+ptps ptp '8' properties parent-id "8"
+ptps ptp '8' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '9' state admin-state enabled
+ptps ptp '9' properties parent-id "9"
+ptps ptp '9' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '10' state admin-state enabled
+ptps ptp '10' properties parent-id "10"
+ptps ptp '10' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '11' state admin-state enabled
+ptps ptp '11' properties parent-id "11"
+ptps ptp '11' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '12' state admin-state enabled
+ptps ptp '12' properties parent-id "12"
+ptps ptp '12' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '13' state admin-state enabled
+ptps ptp '13' properties parent-id "13"
+ptps ptp '13' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '14' state admin-state enabled
+ptps ptp '14' properties parent-id "14"
+ptps ptp '14' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '15' state admin-state enabled
+ptps ptp '15' properties parent-id "15"
+ptps ptp '15' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '16' state admin-state enabled
+ptps ptp '16' properties parent-id "16"
+ptps ptp '16' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '17' state admin-state enabled
+ptps ptp '17' properties parent-id "17"
+ptps ptp '17' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '18' state admin-state enabled
+ptps ptp '18' properties parent-id "18"
+ptps ptp '18' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '19' state admin-state enabled
+ptps ptp '19' properties parent-id "19"
+ptps ptp '19' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '20' state admin-state enabled
+ptps ptp '20' properties parent-id "20"
+ptps ptp '20' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '21' state admin-state enabled
+ptps ptp '21' properties parent-id "21"
+ptps ptp '21' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '22' state admin-state enabled
+ptps ptp '22' properties parent-id "22"
+ptps ptp '22' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '23' state admin-state enabled
+ptps ptp '23' properties parent-id "23"
+ptps ptp '23' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '24' state admin-state enabled
+ptps ptp '24' properties parent-id "24"
+ptps ptp '24' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '25' state admin-state enabled
+ptps ptp '25' properties parent-id "25"
+ptps ptp '25' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '26' state admin-state enabled
+ptps ptp '26' properties parent-id "26"
+ptps ptp '26' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '27' state admin-state enabled
+ptps ptp '27' properties parent-id "27"
+ptps ptp '27' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '28' state admin-state enabled
+ptps ptp '28' properties parent-id "28"
+ptps ptp '28' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '29' state admin-state enabled
+ptps ptp '29' properties parent-id "29"
+ptps ptp '29' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '30' state admin-state enabled
+ptps ptp '30' properties parent-id "30"
+ptps ptp '30' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '31' state admin-state enabled
+ptps ptp '31' properties parent-id "31"
+ptps ptp '31' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '32' state admin-state enabled
+ptps ptp '32' properties parent-id "32"
+ptps ptp '32' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '1/1' state admin-state enabled
+ptps ptp '1/1' properties parent-id "1/1" forward-error-correction enabled
+ptps ptp '1/1' properties thresholds
+exit
+exit
+exit
+exit
+ptps ptp '1/1' properties transmitter state enabled
+ptps ptp '1/1' properties transmitter frequency value 192000.0
+ptps ptp '1/1' properties transmitter power value 0.0
+ptps ptp '1/1' properties line-system
+exit
+exit
+exit
+exit
+ptps ptp '1/1' properties modem reach-limit 250
+ptps ptp '1/2' state admin-state enabled
+ptps ptp '1/2' properties parent-id "1/2" forward-error-correction enabled
+ptps ptp '1/2' properties thresholds
+exit
+exit
+exit
+exit
+ptps ptp '1/2' properties transmitter state enabled
+ptps ptp '1/2' properties transmitter frequency value 192000.0
+ptps ptp '1/2' properties transmitter power
+exit
+exit
+exit
+exit
+exit
+ptps ptp '1/2' properties line-system
+exit
+exit
+exit
+exit
+ptps ptp '1/2' properties modem reach-limit 250
+ptps ptp '1/3' state admin-state enabled
+ptps ptp '1/3' properties parent-id "1/3" forward-error-correction enabled
+ptps ptp '1/3' properties thresholds
+exit
+exit
+exit
+exit
+ptps ptp '1/3' properties transmitter state enabled
+ptps ptp '1/3' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '1/3' properties transmitter power
+exit
+exit
+exit
+exit
+exit
+ptps ptp '1/3' properties line-system
+exit
+exit
+exit
+exit
+ptps ptp '1/3' properties modem reach-limit 250
+ptps ptp '1/4' state admin-state enabled
+ptps ptp '1/4' properties parent-id "1/4" forward-error-correction enabled
+ptps ptp '1/4' properties thresholds
+exit
+exit
+exit
+exit
+ptps ptp '1/4' properties transmitter state enabled
+ptps ptp '1/4' properties transmitter frequency
+exit
+exit
+exit
+exit
+exit
+ptps ptp '1/4' properties transmitter power
+exit
+exit
+exit
+exit
+exit
+ptps ptp '1/4' properties line-system
+exit
+exit
+exit
+exit
+ptps ptp '1/4' properties modem reach-limit 250
+otn-ports ports '1/1' id type OTUCn
+otn-ports ports '1/1' state admin-state enabled
+otn-ports ports '1/1' properties loopback disabled
+otn-ports ports '1/1' properties otn odu-termination terminated otu-sd-threshold "1E-9" odu-sd-threshold "1E-9"
+otn-ports ports '1/1' properties otn trace section mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/1' properties otn trace path mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/1' channels '1' id label ""
+otn-ports ports '1/1' channels '1' state admin-state enabled
+otn-ports ports '1/1' channels '1' properties odu-sd-threshold "1E-9" odu-terminal-loopback false odu-facility-loopback false
+otn-ports ports '1/1' channels '1' properties trace mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/1' channels '2' id label ""
+otn-ports ports '1/1' channels '2' state admin-state enabled
+otn-ports ports '1/1' channels '2' properties odu-sd-threshold "1E-9" odu-terminal-loopback false odu-facility-loopback false
+otn-ports ports '1/1' channels '2' properties trace mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/2' id type OTUCn
+otn-ports ports '1/2' state admin-state enabled
+otn-ports ports '1/2' properties loopback disabled
+otn-ports ports '1/2' properties otn odu-termination terminated otu-sd-threshold "1E-9" odu-sd-threshold "1E-9"
+otn-ports ports '1/2' properties otn trace section mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/2' properties otn trace path mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/2' channels '1' id label ""
+otn-ports ports '1/2' channels '1' state admin-state enabled
+otn-ports ports '1/2' channels '1' properties odu-sd-threshold "1E-9" odu-terminal-loopback false odu-facility-loopback false
+otn-ports ports '1/2' channels '1' properties trace mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/2' channels '2' id label ""
+otn-ports ports '1/2' channels '2' state admin-state enabled
+otn-ports ports '1/2' channels '2' properties odu-sd-threshold "1E-9" odu-terminal-loopback false odu-facility-loopback false
+otn-ports ports '1/2' channels '2' properties trace mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/3' id type OTUCn
+otn-ports ports '1/3' state admin-state enabled
+otn-ports ports '1/3' properties loopback disabled
+otn-ports ports '1/3' properties otn odu-termination terminated otu-sd-threshold "1E-9" odu-sd-threshold "1E-9"
+otn-ports ports '1/3' properties otn trace section mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/3' properties otn trace path mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/3' channels '1' id label ""
+otn-ports ports '1/3' channels '1' state admin-state enabled
+otn-ports ports '1/3' channels '1' properties odu-sd-threshold "1E-9" odu-terminal-loopback false odu-facility-loopback false
+otn-ports ports '1/3' channels '1' properties trace mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/3' channels '2' id label ""
+otn-ports ports '1/3' channels '2' state admin-state enabled
+otn-ports ports '1/3' channels '2' properties odu-sd-threshold "1E-9" odu-terminal-loopback false odu-facility-loopback false
+otn-ports ports '1/3' channels '2' properties trace mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/4' id type OTUCn
+otn-ports ports '1/4' state admin-state enabled
+otn-ports ports '1/4' properties loopback disabled
+otn-ports ports '1/4' properties otn odu-termination terminated otu-sd-threshold "1E-9" odu-sd-threshold "1E-9"
+otn-ports ports '1/4' properties otn trace section mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/4' properties otn trace path mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/4' channels '1' id label ""
+otn-ports ports '1/4' channels '1' state admin-state enabled
+otn-ports ports '1/4' channels '1' properties odu-sd-threshold "1E-9" odu-terminal-loopback false odu-facility-loopback false
+otn-ports ports '1/4' channels '1' properties trace mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+otn-ports ports '1/4' channels '2' id label ""
+otn-ports ports '1/4' channels '2' state admin-state enabled
+otn-ports ports '1/4' channels '2' properties odu-sd-threshold "1E-9" odu-terminal-loopback false odu-facility-loopback false
+otn-ports ports '1/4' channels '2' properties trace mismatch-mode operator-only mismatch-fail-mode none tx-sapi "" tx-dapi "" tx-oper "" tx-oper-mode automatic exp-sapi "" exp-dapi "" exp-oper ""
+pm global-config admin-state enabled
+pm optical-power-instances '1/1-OpticalPower' state admin-state enabled
+pm optical-power-instances '1/2-OpticalPower' state admin-state enabled
+pm optical-power-instances '1/3-OpticalPower' state admin-state enabled
+pm optical-power-instances '1/4-OpticalPower' state admin-state enabled
+pm modem-performance-instances '1/1-Modem' state admin-state enabled
+pm modem-performance-instances '1/2-Modem' state admin-state enabled
+pm modem-performance-instances '1/3-Modem' state admin-state enabled
+pm modem-performance-instances '1/4-Modem' state admin-state enabled
+pm otu-performance-instances '1/1-OTU' state admin-state enabled
+pm otu-performance-instances '1/2-OTU' state admin-state enabled
+pm otu-performance-instances '1/3-OTU' state admin-state enabled
+pm otu-performance-instances '1/4-OTU' state admin-state enabled
+pm odu-performance-instances '1/1-ODU' state admin-state enabled
+pm odu-performance-instances '1/1.1-ODU' state admin-state enabled
+pm odu-performance-instances '1/1.2-ODU' state admin-state enabled
+pm odu-performance-instances '1/2-ODU' state admin-state enabled
+pm odu-performance-instances '1/2.1-ODU' state admin-state enabled
+pm odu-performance-instances '1/2.2-ODU' state admin-state enabled
+pm odu-performance-instances '1/3-ODU' state admin-state enabled
+pm odu-performance-instances '1/3.1-ODU' state admin-state enabled
+pm odu-performance-instances '1/3.2-ODU' state admin-state enabled
+pm odu-performance-instances '1/4-ODU' state admin-state enabled
+pm odu-performance-instances '1/4.1-ODU' state admin-state enabled
+pm odu-performance-instances '1/4.2-ODU' state admin-state enabled
+fds fd 'MGMT-FD' description "DESCRIPTION" mode vpls vlan-id 99
+fds fd '1204-FD' description "DESCRIPTION" mode vpls vlan-id 1204
+fds fd '1156-FD' description "DESCRIPTION" mode vpls vlan-id 1156
+vrf 'default'
+exit
+hello-params 'mcp-profile' cipher-suites cipher-suite tlscmn:ecdhe-rsa-with-aes-128-cbc-sha
+hello-params 'mcp-profile' elliptic-curves elliptic-curve ciena-tls-types:secp256r1
+pkix peer-auth-profiles peer-auth-profile 'mcp-auth-profile' check-cert-expiry true
+tls-service-profiles 'mcp' tls-profile-name "mcp-profile" tls-peer-auth-profile-name "mcp-auth-profile" tls-certificate-name "mcp-server"
+oc-if:interfaces interface 'mgmtbr0' config name "mgmtbr0" mtu 1500 description "bridge interface for out of band management port/local management interface" role cn-if:management type system
+oc-if:interfaces interface '1' config name "1" description "1" auto-negotiation false flow-control off port-speed 100Gb ptp-id "1" type ettp
+oc-if:interfaces interface '1' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '1' config lldp-port-config notify true
+oc-if:interfaces interface '2' config name "2" description "2" auto-negotiation false flow-control off port-speed 100Gb ptp-id "2" type ettp
+oc-if:interfaces interface '2' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '2' config lldp-port-config notify true
+oc-if:interfaces interface '3' config name "3" description "3" auto-negotiation false flow-control off port-speed 100Gb ptp-id "3" type ettp
+oc-if:interfaces interface '3' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '3' config lldp-port-config notify true
+oc-if:interfaces interface '4' config name "4" description "4" auto-negotiation false flow-control off port-speed 100Gb ptp-id "4" type ettp
+oc-if:interfaces interface '4' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '4' config lldp-port-config notify true
+oc-if:interfaces interface '5' config name "5" description "5" auto-negotiation false flow-control off port-speed 100Gb ptp-id "5" type ettp
+oc-if:interfaces interface '5' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '5' config lldp-port-config notify true
+oc-if:interfaces interface '6' config name "6" description "6" auto-negotiation false flow-control off port-speed 100Gb ptp-id "6" type ettp
+oc-if:interfaces interface '6' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '6' config lldp-port-config notify true
+oc-if:interfaces interface '7' config name "7" description "7" auto-negotiation false flow-control off port-speed 100Gb ptp-id "7" type ettp
+oc-if:interfaces interface '7' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '7' config lldp-port-config notify true
+oc-if:interfaces interface '8' config name "8" description "8" auto-negotiation false flow-control off port-speed 100Gb ptp-id "8" type ettp
+oc-if:interfaces interface '8' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '8' config lldp-port-config notify true
+oc-if:interfaces interface '9' config name "9" description "9" auto-negotiation false flow-control off port-speed 100Gb ptp-id "9" type ettp
+oc-if:interfaces interface '9' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '9' config lldp-port-config notify true
+oc-if:interfaces interface '10' config name "10" description "10" auto-negotiation false flow-control off port-speed 100Gb ptp-id "10" type ettp
+oc-if:interfaces interface '10' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '10' config lldp-port-config notify true
+oc-if:interfaces interface '11' config name "11" description "11" auto-negotiation false flow-control off port-speed 100Gb ptp-id "11" type ettp
+oc-if:interfaces interface '11' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '11' config lldp-port-config notify true
+oc-if:interfaces interface '12' config name "12" description "12" auto-negotiation false flow-control off port-speed 100Gb ptp-id "12" type ettp
+oc-if:interfaces interface '12' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '12' config lldp-port-config notify true
+oc-if:interfaces interface '13' config name "13" description "13" auto-negotiation false flow-control off port-speed 100Gb ptp-id "13" type ettp
+oc-if:interfaces interface '13' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '13' config lldp-port-config notify true
+oc-if:interfaces interface '14' config name "14" description "14" auto-negotiation false flow-control off port-speed 100Gb ptp-id "14" type ettp
+oc-if:interfaces interface '14' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '14' config lldp-port-config notify true
+oc-if:interfaces interface '15' config name "15" description "15" auto-negotiation false flow-control off port-speed 100Gb ptp-id "15" type ettp
+oc-if:interfaces interface '15' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '15' config lldp-port-config notify true
+oc-if:interfaces interface '16' config name "16" description "16" auto-negotiation false flow-control off port-speed 100Gb ptp-id "16" type ettp
+oc-if:interfaces interface '16' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '16' config lldp-port-config notify true
+oc-if:interfaces interface '17' config name "17" description "17" auto-negotiation false flow-control off port-speed 100Gb ptp-id "17" type ettp
+oc-if:interfaces interface '17' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '17' config lldp-port-config notify true
+oc-if:interfaces interface '18' config name "18" description "18" auto-negotiation false flow-control off port-speed 100Gb ptp-id "18" type ettp
+oc-if:interfaces interface '18' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '18' config lldp-port-config notify true
+oc-if:interfaces interface '19' config name "19" description "19" auto-negotiation false flow-control off port-speed 100Gb ptp-id "19" type ettp
+oc-if:interfaces interface '19' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '19' config lldp-port-config notify true
+oc-if:interfaces interface '20' config name "20" description "20" auto-negotiation false flow-control off port-speed 100Gb ptp-id "20" type ettp
+oc-if:interfaces interface '20' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '20' config lldp-port-config notify true
+oc-if:interfaces interface '21' config name "21" description "21" auto-negotiation false flow-control off port-speed 100Gb ptp-id "21" type ettp
+oc-if:interfaces interface '21' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '21' config lldp-port-config notify true
+oc-if:interfaces interface '22' config name "22" description "22" auto-negotiation false flow-control off port-speed 100Gb ptp-id "22" type ettp
+oc-if:interfaces interface '22' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '22' config lldp-port-config notify true
+oc-if:interfaces interface '23' config name "23" description "23" auto-negotiation false flow-control off port-speed 100Gb ptp-id "23" type ettp
+oc-if:interfaces interface '23' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '23' config lldp-port-config notify true
+oc-if:interfaces interface '24' config name "24" description "24" auto-negotiation false flow-control off port-speed 100Gb ptp-id "24" type ettp
+oc-if:interfaces interface '24' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '24' config lldp-port-config notify true
+oc-if:interfaces interface '25' config name "25" description "25" auto-negotiation false flow-control off port-speed 100Gb ptp-id "25" type ettp
+oc-if:interfaces interface '25' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '25' config lldp-port-config notify true
+oc-if:interfaces interface '26' config name "26" description "26" auto-negotiation false flow-control off port-speed 100Gb ptp-id "26" type ettp
+oc-if:interfaces interface '26' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '26' config lldp-port-config notify true
+oc-if:interfaces interface '27' config name "27" description "27" auto-negotiation false flow-control off port-speed 100Gb ptp-id "27" type ettp
+oc-if:interfaces interface '27' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '27' config lldp-port-config notify true
+oc-if:interfaces interface '28' config name "28" description "28" auto-negotiation false flow-control off port-speed 100Gb ptp-id "28" type ettp
+oc-if:interfaces interface '28' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '28' config lldp-port-config notify true
+oc-if:interfaces interface '29' config name "29" description "29" auto-negotiation false flow-control off port-speed 100Gb ptp-id "29" type ettp
+oc-if:interfaces interface '29' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '29' config lldp-port-config notify true
+oc-if:interfaces interface '30' config name "30" description "30" auto-negotiation false flow-control off port-speed 100Gb ptp-id "30" type ettp
+oc-if:interfaces interface '30' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '30' config lldp-port-config notify true
+oc-if:interfaces interface '31' config name "31" description "IF-31" auto-negotiation false flow-control off port-speed 100Gb ptp-id "31" type ettp
+oc-if:interfaces interface '31' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '31' config lldp-port-config notify true
+oc-if:interfaces interface '32' config name "32" description "IF-32" auto-negotiation false flow-control off port-speed 100Gb ptp-id "32" type ettp
+oc-if:interfaces interface '32' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '32' config lldp-port-config notify true
+oc-if:interfaces interface '1/1.1' config name "1/1.1" description "1/1.1" auto-negotiation false channel-id "1" flow-control off otn-port-id "1/1" port-speed 100Gb type ettp
+oc-if:interfaces interface '1/1.1' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '1/1.1' config lldp-port-config notify true
+oc-if:interfaces interface '1/1.2' config name "1/1.2" description "1/1.2" auto-negotiation false channel-id "2" flow-control off otn-port-id "1/1" port-speed 100Gb type ettp
+oc-if:interfaces interface '1/1.2' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '1/1.2' config lldp-port-config notify true
+oc-if:interfaces interface '1/2.1' config name "1/2.1" description "1/2.1" auto-negotiation false channel-id "1" flow-control off otn-port-id "1/2" port-speed 100Gb type ettp
+oc-if:interfaces interface '1/2.1' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '1/2.1' config lldp-port-config notify true
+oc-if:interfaces interface '1/2.2' config name "1/2.2" description "1/2.2" auto-negotiation false channel-id "2" flow-control off otn-port-id "1/2" port-speed 100Gb type ettp
+oc-if:interfaces interface '1/2.2' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '1/2.2' config lldp-port-config notify true
+oc-if:interfaces interface '1/3.1' config name "1/3.1" description "1/3.1" auto-negotiation false channel-id "1" flow-control off otn-port-id "1/3" port-speed 100Gb type ettp
+oc-if:interfaces interface '1/3.1' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '1/3.1' config lldp-port-config notify true
+oc-if:interfaces interface '1/3.2' config name "1/3.2" description "1/3.2" auto-negotiation false channel-id "2" flow-control off otn-port-id "1/3" port-speed 100Gb type ettp
+oc-if:interfaces interface '1/3.2' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '1/3.2' config lldp-port-config notify true
+oc-if:interfaces interface '1/4.1' config name "1/4.1" description "1/4.1" auto-negotiation false channel-id "1" flow-control off otn-port-id "1/4" port-speed 100Gb type ettp
+oc-if:interfaces interface '1/4.1' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '1/4.1' config lldp-port-config notify true
+oc-if:interfaces interface '1/4.2' config name "1/4.2" description "1/4.2" auto-negotiation false channel-id "2" flow-control off otn-port-id "1/4" port-speed 100Gb type ettp
+oc-if:interfaces interface '1/4.2' config agg-port-config
+exit
+exit
+exit
+exit
+oc-if:interfaces interface '1/4.2' config lldp-port-config notify true
+oc-if:interfaces interface 'lag-60' config name "lag-60" type lag
+oc-if:interfaces interface 'lag-60' config agg lag-protection-revert-state on
+oc-if:interfaces interface 'lag-60' config agg member-ports '31'
+exit
+exit
+exit
+exit
+exit
+oc-if:interfaces interface 'lag-60' config agg member-ports '32'
+exit
+exit
+exit
+exit
+exit
+oc-if:interfaces interface 'remote' config name "remote" mtu 9000 role cn-if:management type ip underlay-binding config fd "MGMT-FD"
+oc-if:interfaces interface 'remote' ipv4 addresses address '192.168.0.101' config ip "192.168.0.101" prefix-length 24
+classifiers classifier 'mgmt' filter-entry 'classifier:vtag-stack' untagged-exclude-priority-tagged true
+classifiers classifier '1204' filter-entry 'classifier:vtag-stack' vtags '1' vlan-id 1204
+classifiers classifier 'mgmt-99' filter-entry 'classifier:vtag-stack' vtags '1' vlan-id 99
+classifiers classifier '1156' filter-entry 'classifier:vtag-stack' vtags '1' vlan-id 1156
+logical-ports logical-port '1' binding "1" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "1"
+logical-ports logical-port '2' binding "2" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "2"
+logical-ports logical-port '3' binding "3" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "3"
+logical-ports logical-port '4' binding "4" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "4"
+logical-ports logical-port '5' binding "5" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "5"
+logical-ports logical-port '6' binding "6" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "6"
+logical-ports logical-port '7' binding "7" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "7"
+logical-ports logical-port '8' binding "8" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "8"
+logical-ports logical-port '9' binding "9" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "9"
+logical-ports logical-port '10' binding "10" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "10"
+logical-ports logical-port '11' binding "11" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "11"
+logical-ports logical-port '12' binding "12" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "12"
+logical-ports logical-port '13' binding "13" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "13"
+logical-ports logical-port '14' binding "14" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "14"
+logical-ports logical-port '15' binding "15" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "15"
+logical-ports logical-port '16' binding "16" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "16"
+logical-ports logical-port '17' binding "17" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "17"
+logical-ports logical-port '18' binding "18" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "18"
+logical-ports logical-port '19' binding "19" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "19"
+logical-ports logical-port '20' binding "20" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "20"
+logical-ports logical-port '21' binding "21" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "21"
+logical-ports logical-port '22' binding "22" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "22"
+logical-ports logical-port '23' binding "23" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "23"
+logical-ports logical-port '24' binding "24" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "24"
+logical-ports logical-port '25' binding "25" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "25"
+logical-ports logical-port '26' binding "26" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "26"
+logical-ports logical-port '27' binding "27" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "27"
+logical-ports logical-port '28' binding "28" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "28"
+logical-ports logical-port '29' binding "29" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "29"
+logical-ports logical-port '30' binding "30" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "TEST"
+logical-ports logical-port '31' mtu 9172 frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "PORT DESCRIPTION"
+logical-ports logical-port '32' mtu 9172 frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "PORT DESCRIPTION"
+logical-ports logical-port '1/1.1' binding "1/1.1" mtu 9172 frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "3PORT DESCRIPTION"
+logical-ports logical-port '1/1.2' binding "1/1.2" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "1/1.2"
+logical-ports logical-port '1/2.1' binding "1/2.1" mtu 9172 frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "PORT DESCRIPTION"
+logical-ports logical-port '1/2.2' binding "1/2.2" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "1/2.2"
+logical-ports logical-port '1/3.1' binding "1/3.1" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "1/3.1"
+logical-ports logical-port '1/3.2' binding "1/3.2" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "1/3.2"
+logical-ports logical-port '1/4.1' binding "1/4.1" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "1/4.1"
+logical-ports logical-port '1/4.2' binding "1/4.2" frame-to-cos-map-policy outer-tag frame-to-cos-map "default-f2c" cos-to-frame-map "default-c2f" description "1/4.2"
+logical-ports logical-port 'lag-60' mtu 9172 description "PORT DESCRIPTION"
+egress-qos cos-queue-map 'default-ctq-8q' queue-count 8
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '0' queue 0
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '1' queue 0
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '2' queue 0
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '3' queue 0
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '4' queue 0
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '5' queue 0
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '6' queue 0
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '7' queue 0
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '8' queue 1
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '9' queue 1
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '10' queue 1
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '11' queue 1
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '12' queue 1
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '13' queue 1
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '14' queue 1
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '15' queue 1
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '16' queue 2
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '17' queue 2
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '18' queue 2
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '19' queue 2
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '20' queue 2
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '21' queue 2
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '22' queue 2
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '23' queue 2
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '24' queue 3
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '25' queue 3
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '26' queue 3
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '27' queue 3
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '28' queue 3
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '29' queue 3
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '30' queue 3
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '31' queue 3
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '32' queue 4
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '33' queue 4
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '34' queue 4
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '35' queue 4
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '36' queue 4
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '37' queue 4
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '38' queue 4
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '39' queue 4
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '40' queue 5
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '41' queue 5
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '42' queue 5
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '43' queue 5
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '44' queue 5
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '45' queue 5
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '46' queue 5
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '47' queue 5
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '48' queue 6
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '49' queue 6
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '50' queue 6
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '51' queue 6
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '52' queue 6
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '53' queue 6
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '54' queue 6
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '55' queue 6
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '56' queue 7
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '57' queue 7
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '58' queue 7
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '59' queue 7
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '60' queue 7
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '61' queue 7
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '62' queue 7
+egress-qos cos-queue-map 'default-ctq-8q' map-entry '63' queue 7
+egress-qos cos-queue-map 'default-ctq-4q' queue-count 4
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '0' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '1' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '2' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '3' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '4' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '5' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '6' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '7' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '8' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '9' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '10' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '11' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '12' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '13' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '14' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '15' queue 0
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '16' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '17' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '18' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '19' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '20' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '21' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '22' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '23' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '24' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '25' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '26' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '27' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '28' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '29' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '30' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '31' queue 1
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '32' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '33' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '34' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '35' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '36' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '37' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '38' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '39' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '40' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '41' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '42' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '43' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '44' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '45' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '46' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '47' queue 2
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '48' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '49' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '50' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '51' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '52' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '53' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '54' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '55' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '56' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '57' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '58' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '59' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '60' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '61' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '62' queue 3
+egress-qos cos-queue-map 'default-ctq-4q' map-entry '63' queue 3
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-1' ingress-cos-to-queue-map "default-ctq-8q" logical-port "1"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-2' ingress-cos-to-queue-map "default-ctq-8q" logical-port "2"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-3' ingress-cos-to-queue-map "default-ctq-8q" logical-port "3"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-4' ingress-cos-to-queue-map "default-ctq-8q" logical-port "4"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-5' ingress-cos-to-queue-map "default-ctq-8q" logical-port "5"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-6' ingress-cos-to-queue-map "default-ctq-8q" logical-port "6"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-7' ingress-cos-to-queue-map "default-ctq-8q" logical-port "7"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-8' ingress-cos-to-queue-map "default-ctq-8q" logical-port "8"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-9' ingress-cos-to-queue-map "default-ctq-8q" logical-port "9"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-10' ingress-cos-to-queue-map "default-ctq-8q" logical-port "10"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-11' ingress-cos-to-queue-map "default-ctq-8q" logical-port "11"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-12' ingress-cos-to-queue-map "default-ctq-8q" logical-port "12"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-13' ingress-cos-to-queue-map "default-ctq-8q" logical-port "13"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-14' ingress-cos-to-queue-map "default-ctq-8q" logical-port "14"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-15' ingress-cos-to-queue-map "default-ctq-8q" logical-port "15"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-16' ingress-cos-to-queue-map "default-ctq-8q" logical-port "16"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-17' ingress-cos-to-queue-map "default-ctq-8q" logical-port "17"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-18' ingress-cos-to-queue-map "default-ctq-8q" logical-port "18"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-19' ingress-cos-to-queue-map "default-ctq-8q" logical-port "19"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-20' ingress-cos-to-queue-map "default-ctq-8q" logical-port "20"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-21' ingress-cos-to-queue-map "default-ctq-8q" logical-port "21"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-22' ingress-cos-to-queue-map "default-ctq-8q" logical-port "22"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-23' ingress-cos-to-queue-map "default-ctq-8q" logical-port "23"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-24' ingress-cos-to-queue-map "default-ctq-8q" logical-port "24"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-25' ingress-cos-to-queue-map "default-ctq-8q" logical-port "25"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-26' ingress-cos-to-queue-map "default-ctq-8q" logical-port "26"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-27' ingress-cos-to-queue-map "default-ctq-8q" logical-port "27"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-28' ingress-cos-to-queue-map "default-ctq-8q" logical-port "28"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-29' ingress-cos-to-queue-map "default-ctq-8q" logical-port "29"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-30' ingress-cos-to-queue-map "default-ctq-8q" logical-port "30"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-31' ingress-cos-to-queue-map "default-ctq-8q" logical-port "31"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-32' ingress-cos-to-queue-map "default-ctq-8q" logical-port "32"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-1/1.1' ingress-cos-to-queue-map "default-ctq-8q" logical-port "1/1.1"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-1/1.2' ingress-cos-to-queue-map "default-ctq-8q" logical-port "1/1.2"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-1/2.1' ingress-cos-to-queue-map "default-ctq-8q" logical-port "1/2.1"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-1/2.2' ingress-cos-to-queue-map "default-ctq-8q" logical-port "1/2.2"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-1/3.1' ingress-cos-to-queue-map "default-ctq-8q" logical-port "1/3.1"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-1/3.2' ingress-cos-to-queue-map "default-ctq-8q" logical-port "1/3.2"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-1/4.1' ingress-cos-to-queue-map "default-ctq-8q" logical-port "1/4.1"
+cos-to-queue-map-associations cos-to-queue-map-association 'default-ctq-association-1/4.2' ingress-cos-to-queue-map "default-ctq-8q" logical-port "1/4.2"
+fps fp 'MGMT-lag-60' description "PORT DESCRIPTION" fd-name "MGMT-FD" logical-port "lag-60" admin-state enabled classifier-list-precedence 7 stats-collection on classifier-list "mgmt-99"
+fps fp 'MGMT-1/1.1' description "PORT DESCRIPTION" fd-name "MGMT-FD" logical-port "1/1.1" admin-state enabled classifier-list-precedence 7 stats-collection on classifier-list "mgmt"
+fps fp 'MGMT-1/1.1' ingress-l2-transform 'push-99' vlan-stack '1' push-vid 99
+fps fp 'MGMT-1/1.1' egress-l2-transform 'pop-99' vlan-stack '1' pop-type
+fps fp '1204-1/1.1-FP' description "PORT DESCRIPTION" fd-name "1204-FD" logical-port "1/1.1" admin-state enabled classifier-list-precedence 7 stats-collection on classifier-list "1204"
+fps fp '1204-LAG-60-FP' description "PORT DESCRIPTION" fd-name "1204-FD" logical-port "lag-60" admin-state enabled classifier-list-precedence 7 stats-collection on classifier-list "1204"
+fps fp '1156-lag-60-FP' description "PORT DESCRIPTION" fd-name "1156-FD" logical-port "lag-60" admin-state enabled classifier-list-precedence 7 stats-collection on classifier-list "1156"
+fps fp '1156-1/2.1-FP' description "PORT DESCRIPTION" fd-name "1156-FD" logical-port "1/2.1" admin-state enabled classifier-list-precedence 7 stats-collection on classifier-list "1156"
+fps fp 'MGMT-1/2.1' description "PORT DESCRIPTION" fd-name "MGMT-FD" logical-port "1/2.1" admin-state enabled classifier-list-precedence 7 stats-collection on classifier-list "mgmt"
+fps fp 'MGMT-1/2.1' ingress-l2-transform 'push-99' vlan-stack '1' push-vid 99
+fps fp 'MGMT-1/2.1' egress-l2-transform 'pop-99' vlan-stack '1' pop-type
+subsystems subsystem 'virtual-forwarding-plane' cpu-profile profile default-profile
+subsystems subsystem 'virtual-forwarding-plane' cpu-resource socket '0' cpu num-of-cores 1
+dhcp-client client 'mgmtbr0' admin-enable true requested-lease-time 3600
+dhcp-client client 'mgmtbr0' option-enable time-offset true router true domain-name-server true log-server true host-name true domain-name true ntp-servers true lease-time false tftp-server-name true bootfile-name true vivsi true
+dhcp-client client 'remote' admin-enable false
+dhcpv6-client client 'mgmtbr0' option-enable
+exit
+exit
+exit
+license-management-config license-client-config
+exit
+exit
+license-management-config license-server-config '203.0.113.55'
+exit
+exit
+management-plane server-applications application 'web-gui' enable true
+rib vrf 'default' ipv4 '0.0.0.0/0' next-hop '192.168.0.1'
+exit
+exit
+exit
+exit
+snmp target '5nmp57r1n6' target-params "5nmp57r1n6" udp ip "198.51.100.201"
+snmp target '5nmp57r1n6' tag "notify"
+snmp target-params '5nmp57r1n6' v2c security-name "sec-trap"
+snmp notify 'trap1' tag "notify"
+snmp notify 'inform1' tag "inform" type inform
+snmp community '5nmp57r1n6'
+exit
+exit
+snmp community '57rin641in6'
+exit
+exit
+snmp vacm group 'trap-group' member 'sec-trap' security-model v2c
+snmp vacm group 'trap-group' access '' 'v2c' 'no-auth-no-priv' notify-view "cienaAll"
+snmp vacm group 'get-group' member 'sec-get' security-model v2c
+snmp vacm group 'get-group' access '' 'v2c' 'no-auth-no-priv' read-view "cienaAll"
+snmp vacm view 'cienaAll' include "iso"
+syslog log-actions remote dest '198.51.100.200' severity alert critical debug warning error info notice emergency
+system config hostname "SW1" motd-banner "MOTD BANNER" contact "800-555-1138" description "8180" location "123 Fake ST."
+system dns dns-client domain-name "example.com"
+system dns dns-client server '198.51.100.201' admin-status enabled
+system ntp mode polling polling-interval-min 16 polling-interval-max 16
+system ntp associations remote-ntp-server server-entry '198.51.100.201'
+exit
+exit
+exit
+exit
+exit
+telemetry-system server config tls-service-profile "mcp"
+ztp admin-state disabled
