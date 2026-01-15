@@ -1,0 +1,22 @@
+{
+    "banner": {
+        "actual": "system shell banner create banner login line \"*******************************************************************************\"\nsystem shell banner add banner login line \"***                         THIS IS A LOGIN BANNER                          ***\"\nsystem shell banner add banner login line \"*******************************************************************************\"",
+        "cannot_parse": true,
+        "compliant": false,
+        "extra": "system shell banner add banner login line \"***                         THIS IS A LOGIN BANNER                          ***\"",
+        "intended": "system shell banner create banner login line \"*******************************************************************************\"\nsystem shell banner add banner login line \"***                     THIS IS A LOGIN BANNER MESSAGE                      ***\"\nsystem shell banner add banner login line \"*******************************************************************************\"",
+        "missing": "system shell banner add banner login line \"***                     THIS IS A LOGIN BANNER MESSAGE                      ***\"",
+        "ordered_compliant": false,
+        "unordered_compliant": false
+    },
+    "snmp": {
+        "actual": "snmp create user v2cGet auth-protocol noAuth engine-id 80:00:04:f7:05:2c:4a:11:c9:ca:80:00\nsnmp create user v2cTrap auth-protocol noAuth engine-id 80:00:04:f7:05:2c:4a:11:c9:ca:80:00\nsnmp security-to-group attach user v2cGet sec-model v2c group getGroup\nsnmp security-to-group attach user v2cTrap sec-model v2c group trapGroup\nsnmp create viewtree getView sub-tree iso type include\nsnmp create viewtree getView sub-tree snmpResearch type exclude\nsnmp create viewtree trapView sub-tree iso type exclude\nsnmp create access-entry getGroup sec-model v2c sec-level noAuth read-view getView\nsnmp create access-entry trapGroup sec-model v2c sec-level noAuth read-view trapView notify-view V12cView\nsnmp create target anycast-target addr 192.0.2.5/32 param-name anycast-param transport-domain snmp-udp\nsnmp delete target anywhereIpv6\nsnmp delete target anywhere\nsnmp create target-param anycast-param sec-name v2cTrap sec-model v2c sec-level noAuth\nsnmp delete community-index t0000000\nsnmp delete community-index t0000001\nsnmp create community-index getString community 57r1n6! sec-name v2cGet\nsnmp create community-index trapString community 57r1n6! sec-name v2cTrap",
+        "cannot_parse": true,
+        "compliant": true,
+        "extra": "",
+        "intended": "snmp create user v2cGet auth-protocol noAuth engine-id 80:00:04:f7:05:2c:4a:11:c9:ca:80:00\nsnmp create user v2cTrap auth-protocol noAuth engine-id 80:00:04:f7:05:2c:4a:11:c9:ca:80:00\nsnmp security-to-group attach user v2cGet sec-model v2c group getGroup\nsnmp security-to-group attach user v2cTrap sec-model v2c group trapGroup\nsnmp create viewtree getView sub-tree iso type include\nsnmp create viewtree getView sub-tree snmpResearch type exclude\nsnmp create viewtree trapView sub-tree iso type exclude\nsnmp create access-entry getGroup sec-model v2c sec-level noAuth read-view getView\nsnmp create access-entry trapGroup sec-model v2c sec-level noAuth read-view trapView notify-view V12cView\nsnmp create target anycast-target addr 192.0.2.5/32 param-name anycast-param transport-domain snmp-udp\nsnmp delete target anywhereIpv6\nsnmp delete target anywhere\nsnmp create target-param anycast-param sec-name v2cTrap sec-model v2c sec-level noAuth\nsnmp delete community-index t0000000\nsnmp delete community-index t0000001\nsnmp create community-index getString community 57r1n6! sec-name v2cGet\nsnmp create community-index trapString community 57r1n6! sec-name v2cTrap",
+        "missing": "",
+        "ordered_compliant": true,
+        "unordered_compliant": true
+    }
+}

@@ -1,0 +1,22 @@
+virtual-switch create vs MGMT-VS
+virtual-switch create vs OPS-VS
+system shell banner create banner login line "*******************************************************************************"
+system shell banner add banner login line "***                     THIS IS A LOGIN BANNER MESSAGE                      ***"
+system shell banner add banner login line "*******************************************************************************"
+snmp create user v2cGet auth-protocol noAuth engine-id 80:00:04:f7:05:2c:4a:11:c9:ca:80:00
+snmp create user v2cTrap auth-protocol noAuth engine-id 80:00:04:f7:05:2c:4a:11:c9:ca:80:00
+snmp security-to-group attach user v2cGet sec-model v2c group getGroup
+snmp security-to-group attach user v2cTrap sec-model v2c group trapGroup
+snmp create viewtree getView sub-tree iso type include
+snmp create viewtree getView sub-tree snmpResearch type exclude
+snmp create viewtree trapView sub-tree iso type exclude
+snmp create access-entry getGroup sec-model v2c sec-level noAuth read-view getView
+snmp create access-entry trapGroup sec-model v2c sec-level noAuth read-view trapView notify-view V12cView
+snmp create target anycast-target addr 192.0.2.5/32 param-name anycast-param transport-domain snmp-udp
+snmp delete target anywhereIpv6
+snmp delete target anywhere
+snmp create target-param anycast-param sec-name v2cTrap sec-model v2c sec-level noAuth
+snmp delete community-index t0000000
+snmp delete community-index t0000001
+snmp create community-index getString community 57r1n6! sec-name v2cGet
+snmp create community-index trapString community 57r1n6! sec-name v2cTrap
