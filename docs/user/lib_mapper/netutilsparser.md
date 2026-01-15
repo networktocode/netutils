@@ -1,5 +1,7 @@
 | NETUTILSPARSER | | NORMALIZED |
 | ---------- | -- | ------ |
+| adva_fsp150f2 | → | adva_fsp150f2 |
+| adva_fsp150f3 | → | adva_fsp150f3 |
 | arista_eos | → | arista_eos |
 | aruba_aoscx | → | aruba_aoscx |
 | aruba_os | → | aruba_os |
