@@ -1,5 +1,7 @@
 | OS Name | Parser Class |
 | ---------- | ------ |
+| adva_fsp150f2 | netutils.config.parser.ADVAFSP150F2ConfigParser |
+| adva_fsp150f3 | netutils.config.parser.ADVAFSP150F3ConfigParser |
 | arista_eos | netutils.config.parser.EOSConfigParser |
 | aruba_aoscx | netutils.config.parser.ArubaConfigCXParser |
 | aruba_os | netutils.config.parser.ArubaConfigOSParser |

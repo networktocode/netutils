@@ -150,6 +150,8 @@ NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "a10": "a10",
     "accedian": "accedian",
     "adtran_os": "adtran_os",
+    "adva_fsp150f2": "adva_fsp150f2",
+    "adva_fsp150f3": "adva_fsp150f3",
     "alcatel_aos": "alcatel_aos",
     "alcatel_sros": "alcatel_sros",
     "allied_telesis_awplus": "allied_telesis_awplus",
@@ -308,6 +310,8 @@ NAPALM_LIB_MAPPER: t.Dict[str, str] = {
 
 # Running config command
 RUNNING_CONFIG_MAPPER: t.Dict[str, str] = {
+    "adva_fsp150f2": "show running-config",
+    "adva_fsp150f3": "show running-config delta",
     "arista_eos": "show running-config",
     "aruba_os": "show running-configuration",
     "aruba_osswitch": "show running-config",
@@ -423,6 +427,8 @@ HIERCONFIG_LIB_MAPPER: t.Dict[str, str] = {
 
 # Netutils Parser | Normalized
 NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
+    "adva_fsp150f2": "adva_fsp150f2",
+    "adva_fsp150f3": "adva_fsp150f3",
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
     "aruba_os": "aruba_os",
@@ -594,6 +600,8 @@ HIERCONFIG_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 
 # Normalized | Netutils Parser
 NETUTILSPARSER_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+    "adva_fsp150f2": "adva_fsp150f2",
+    "adva_fsp150f3": "adva_fsp150f3",
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
     "aruba_os": "aruba_os",
