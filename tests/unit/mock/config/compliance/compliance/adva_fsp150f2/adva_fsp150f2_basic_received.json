@@ -22,11 +22,11 @@
   "system": {
     "actual": "configure system\n  sysname \"x-dngr-rm-01\"\n  cli-prompt \"X-DNGR-RM-01\"\n  contact \"XNOC 888-555-1963\"\n  location \"1407 Graymalkin LN, North Salem, NY 10560\"\n  ip-address 192.168.0.63 255.255.255.0\n  security-prompt enable\n  serial enable\n  telnet disable\n  web enable\n  snmp-dying-gasp enable\n  temperature-monitoring enable\n  bwp-mode information-rate\n  clock timezone utc\n  sntpclient mode unicast\n  sntpclient dhcp-supplied disable\n  sntpclient server 198.51.100.251\n  syslogclient dhcp-supplied disable\n  syslogclient server 198.51.100.252\n  security-banner \"Any changes to this system require a change ticket or trouble ticket.  Do you really want to proceed?\\\\n\\\\nBe sure to notify the XNOC of work being performed BEFORE changes are made.\\\\n\\\\nXNOC - 888-555-1963\"\n  pae authentication-control enable\nconfigure system\n  jumbo-frame enable",
     "cannot_parse": true,
-    "compliant": false,
-    "extra": "configure system\n  ip-address 192.168.0.63 255.255.255.0",
-    "intended": "configure system\n  sysname \"x-dngr-rm-01\"\n  cli-prompt \"X-DNGR-RM-01\"\n  contact \"XNOC 888-555-1963\"\n  location \"1407 Graymalkin LN, North Salem, NY 10560\"\n  ip-address 192.168.0.75 255.255.255.0\n  security-prompt enable\n  serial enable\n  telnet disable\n  web enable\n  snmp-dying-gasp enable\n  temperature-monitoring enable\n  bwp-mode information-rate\n  clock timezone utc\n  sntpclient mode unicast\n  sntpclient dhcp-supplied disable\n  sntpclient server 198.51.100.251\n  syslogclient dhcp-supplied disable\n  syslogclient server 198.51.100.252\n  security-banner \"Any changes to this system require a change ticket or trouble ticket.  Do you really want to proceed?\\\\n\\\\nBe sure to notify the XNOC of work being performed BEFORE changes are made.\\\\n\\\\nXNOC - 888-555-1963\"\n  pae authentication-control enable\nconfigure system\n  jumbo-frame enable",
-    "missing": "configure system\n  ip-address 192.168.0.75 255.255.255.0",
-    "ordered_compliant": false,
-    "unordered_compliant": false
+    "compliant": true,
+    "extra": "",
+    "intended": "configure system\n  sysname \"x-dngr-rm-01\"\n  cli-prompt \"X-DNGR-RM-01\"\n  contact \"XNOC 888-555-1963\"\n  location \"1407 Graymalkin LN, North Salem, NY 10560\"\n  ip-address 192.168.0.63 255.255.255.0\n  security-prompt enable\n  serial enable\n  telnet disable\n  web enable\n  snmp-dying-gasp enable\n  temperature-monitoring enable\n  bwp-mode information-rate\n  clock timezone utc\n  sntpclient mode unicast\n  sntpclient dhcp-supplied disable\n  sntpclient server 198.51.100.251\n  syslogclient dhcp-supplied disable\n  syslogclient server 198.51.100.252\n  security-banner \"Any changes to this system require a change ticket or trouble ticket.  Do you really want to proceed?\\\\n\\\\nBe sure to notify the XNOC of work being performed BEFORE changes are made.\\\\n\\\\nXNOC - 888-555-1963\"\n  pae authentication-control enable\nconfigure system\n  jumbo-frame enable",
+    "missing": "",
+    "ordered_compliant": true,
+    "unordered_compliant": true
   }
 }

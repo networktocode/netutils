@@ -11,7 +11,7 @@ configure system
   cli-prompt "X-DNGR-RM-01"
   contact "XNOC 888-555-1963"
   location "1407 Graymalkin LN, North Salem, NY 10560"
-  ip-address 192.168.0.75 255.255.255.0
+  ip-address 192.168.0.63 255.255.255.0
   security-prompt enable
   serial enable
   telnet disable
