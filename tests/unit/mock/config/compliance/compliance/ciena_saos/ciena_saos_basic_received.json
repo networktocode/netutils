@@ -4,8 +4,8 @@
         "cannot_parse": true,
         "compliant": false,
         "extra": "system shell banner add banner login line \"***                         THIS IS A LOGIN BANNER                          ***\"",
-        "intended": "system shell banner create banner login line \"*******************************************************************************\"\nsystem shell banner add banner login line \"***                     THIS IS A LOGIN BANNER MESSAGE                      ***\"\nsystem shell banner add banner login line \"*******************************************************************************\"",
-        "missing": "system shell banner add banner login line \"***                     THIS IS A LOGIN BANNER MESSAGE                      ***\"",
+        "intended": "system shell banner create banner login line \"*******************************************************************************\"\nsystem shell banner add banner login line \"***                     DEMONSTRATE A NON-MATCHING BANNER                      ***\"\nsystem shell banner add banner login line \"*******************************************************************************\"",
+        "missing": "system shell banner add banner login line \"***                     DEMONSTRATE A NON-MATCHING BANNER                      ***\"",
         "ordered_compliant": false,
         "unordered_compliant": false
     },
