@@ -1,7 +1,7 @@
 virtual-switch create vs MGMT-VS
 virtual-switch create vs OPS-VS
 system shell banner create banner login line "*******************************************************************************"
-system shell banner add banner login line "***                     THIS IS A LOGIN BANNER MESSAGE                      ***"
+system shell banner add banner login line "***                     DEMONSTRATE A NON-MATCHING BANNER                      ***"
 system shell banner add banner login line "*******************************************************************************"
 snmp create user v2cGet auth-protocol noAuth engine-id 80:00:04:f7:05:2c:4a:11:c9:ca:80:00
 snmp create user v2cTrap auth-protocol noAuth engine-id 80:00:04:f7:05:2c:4a:11:c9:ca:80:00
