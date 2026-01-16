@@ -1,0 +1,26 @@
+components component '8180' config name "8180"
+exit
+xcvrs xcvr '1' properties mode auto
+xcvrs xcvr '1' state admin-state enabled
+xcvrs xcvr '2' properties mode auto
+xcvrs xcvr '2' state admin-state enabled
+xcvrs xcvr '3' properties mode auto
+xcvrs xcvr '3' state admin-state enabled
+xcvrs xcvr '4' properties mode auto
+xcvrs xcvr '4' state admin-state enabled
+exit
+fds fd 'MGMT-FD' description "MGMT Forwarding Domain" mode vpls vlan-id 99
+fds fd '1204-FD' description "VL1204 Forwarding Domain" mode vpls vlan-id 1204
+fds fd '1156-FD' description "VL1156 Forwarding Domain" mode vpls vlan-id 1156
+vrf 'default'
+exit
+rib vrf 'default' ipv4 '0.0.0.0/0' next-hop '192.168.100.1'
+exit
+system config hostname "SW1" motd-banner "MOTD BANNER" contact "800-555-1138" description "8180" location "123 Fake ST."
+system dns dns-client domain-name "example.com"
+system dns dns-client server '198.51.100.201' admin-status enabled
+system ntp mode polling polling-interval-min 16 polling-interval-max 16
+system ntp associations remote-ntp-server server-entry '198.51.100.201'
+exit
+telemetry-system server config tls-service-profile "mcp"
+ztp admin-state disabled

@@ -14,6 +14,8 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
     "aruba_os": parser.ArubaConfigOSParser,
     "aruba_osswitch": parser.ArubaConfigOSParser,
     "bigip_f5": parser.F5ConfigParser,
+    "ciena_saos": parser.CienaConfigParser,
+    "ciena_saos10": parser.CienaConfigParser,
     "cisco_aireos": parser.AIREOSConfigParser,
     "cisco_asa": parser.ASAConfigParser,
     "cisco_ios": parser.IOSConfigParser,

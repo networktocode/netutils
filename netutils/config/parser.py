@@ -1934,3 +1934,15 @@ class ADVAFSP150F3ConfigParser(_ADVAConfigParser):
     """ADVA OS FSP-150 F3 ConfigParser."""
 
     comment_chars: t.List[str] = ["#", "Preparing configuration file..."]
+
+
+class CienaConfigParser(BaseSpaceConfigParser):
+    """Ciena SAOS/10 ConfigParser class."""
+
+    comment_chars: t.List[str] = []
+    banner_start: t.List[str] = []
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Ciena does not require discrete banner detection.")

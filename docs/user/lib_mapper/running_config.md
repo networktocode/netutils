@@ -7,6 +7,8 @@
 | aruba_osswitch | → | show running-config |
 | aruba_procurve | → | show running-config |
 | checkpoint_gaia | → | clish -c "show configuration" |
+| ciena_saos | → | configuration show brief |
+| ciena_saos10 | → | show running-config |
 | cisco_ios | → | show running-config |
 | cisco_nxos | → | show running-config |
 | cisco_wlc | → | show run-config commands |

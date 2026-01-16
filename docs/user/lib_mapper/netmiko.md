@@ -27,6 +27,7 @@
 | centec_os | → | centec_os |
 | checkpoint_gaia | → | checkpoint_gaia |
 | ciena_saos | → | ciena_saos |
+| ciena_saos10 | → | ciena_saos10 |
 | cisco_asa | → | cisco_asa |
 | cisco_ftd | → | cisco_ftd |
 | cisco_ios | → | cisco_ios |
