@@ -1,10 +1,14 @@
 | NETUTILSPARSER | | NORMALIZED |
 | ---------- | -- | ------ |
+| adva_fsp150f2 | → | adva_fsp150f2 |
+| adva_fsp150f3 | → | adva_fsp150f3 |
 | arista_eos | → | arista_eos |
 | aruba_aoscx | → | aruba_aoscx |
 | aruba_os | → | aruba_os |
 | aruba_osswitch | → | aruba_osswitch |
 | bigip_f5 | → | bigip_f5 |
+| ciena_saos | → | ciena_saos |
+| ciena_saos10 | → | ciena_saos10 |
 | cisco_aireos | → | cisco_aireos |
 | cisco_asa | → | cisco_asa |
 | cisco_ios | → | cisco_ios |

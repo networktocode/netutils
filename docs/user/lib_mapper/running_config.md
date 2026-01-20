@@ -1,10 +1,14 @@
 | NORMALIZED | | RUNNING_CONFIG_COMMAND |
 | ---------- | -- | ------ |
+| adva_fsp150f2 | → | show running-config |
+| adva_fsp150f3 | → | show running-config delta |
 | arista_eos | → | show running-config |
 | aruba_os | → | show running-configuration |
 | aruba_osswitch | → | show running-config |
 | aruba_procurve | → | show running-config |
 | checkpoint_gaia | → | clish -c "show configuration" |
+| ciena_saos | → | configuration show brief |
+| ciena_saos10 | → | show running-config |
 | cisco_ios | → | show running-config |
 | cisco_nxos | → | show running-config |
 | cisco_wlc | → | show run-config commands |

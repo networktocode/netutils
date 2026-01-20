@@ -1,10 +1,14 @@
 | OS Name | Parser Class |
 | ---------- | ------ |
+| adva_fsp150f2 | netutils.config.parser.ADVAFSP150F2ConfigParser |
+| adva_fsp150f3 | netutils.config.parser.ADVAFSP150F3ConfigParser |
 | arista_eos | netutils.config.parser.EOSConfigParser |
 | aruba_aoscx | netutils.config.parser.ArubaConfigCXParser |
 | aruba_os | netutils.config.parser.ArubaConfigOSParser |
 | aruba_osswitch | netutils.config.parser.ArubaConfigOSParser |
 | bigip_f5 | netutils.config.parser.F5ConfigParser |
+| ciena_saos | netutils.config.parser.CienaConfigParser |
+| ciena_saos10 | netutils.config.parser.CienaConfigParser |
 | cisco_aireos | netutils.config.parser.AIREOSConfigParser |
 | cisco_asa | netutils.config.parser.ASAConfigParser |
 | cisco_ios | netutils.config.parser.IOSConfigParser |

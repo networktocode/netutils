@@ -1,0 +1,42 @@
+{
+  "default route": {
+    "actual": "rib vrf 'default' ipv4 '0.0.0.0/0' next-hop '192.168.0.1'",
+    "cannot_parse": true,
+    "compliant": false,
+    "extra": "rib vrf 'default' ipv4 '0.0.0.0/0' next-hop '192.168.0.1'",
+    "intended": "rib vrf 'default' ipv4 '0.0.0.0/0' next-hop '192.168.100.1'",
+    "missing": "rib vrf 'default' ipv4 '0.0.0.0/0' next-hop '192.168.100.1'",
+    "ordered_compliant": false,
+    "unordered_compliant": false
+  },
+  "forwarding domains": {
+    "actual": "fds fd 'MGMT-FD' description \"DESCRIPTION\" mode vpls vlan-id 99\nfds fd '1204-FD' description \"DESCRIPTION\" mode vpls vlan-id 1204\nfds fd '1156-FD' description \"DESCRIPTION\" mode vpls vlan-id 1156",
+    "cannot_parse": true,
+    "compliant": false,
+    "extra": "fds fd 'MGMT-FD' description \"DESCRIPTION\" mode vpls vlan-id 99\nfds fd '1204-FD' description \"DESCRIPTION\" mode vpls vlan-id 1204\nfds fd '1156-FD' description \"DESCRIPTION\" mode vpls vlan-id 1156",
+    "intended": "fds fd 'MGMT-FD' description \"MGMT Forwarding Domain\" mode vpls vlan-id 99\nfds fd '1204-FD' description \"VL1204 Forwarding Domain\" mode vpls vlan-id 1204\nfds fd '1156-FD' description \"VL1156 Forwarding Domain\" mode vpls vlan-id 1156",
+    "missing": "fds fd 'MGMT-FD' description \"MGMT Forwarding Domain\" mode vpls vlan-id 99\nfds fd '1204-FD' description \"VL1204 Forwarding Domain\" mode vpls vlan-id 1204\nfds fd '1156-FD' description \"VL1156 Forwarding Domain\" mode vpls vlan-id 1156",
+    "ordered_compliant": false,
+    "unordered_compliant": false
+  },
+  "system": {
+    "actual": "system config hostname \"SW1\" motd-banner \"MOTD BANNER\" contact \"800-555-1138\" description \"8180\" location \"123 Fake ST.\"\nsystem dns dns-client domain-name \"example.com\"\nsystem dns dns-client server '198.51.100.201' admin-status enabled\nsystem ntp mode polling polling-interval-min 16 polling-interval-max 16\nsystem ntp associations remote-ntp-server server-entry '198.51.100.201'",
+    "cannot_parse": true,
+    "compliant": true,
+    "extra": "",
+    "intended": "system config hostname \"SW1\" motd-banner \"MOTD BANNER\" contact \"800-555-1138\" description \"8180\" location \"123 Fake ST.\"\nsystem dns dns-client domain-name \"example.com\"\nsystem dns dns-client server '198.51.100.201' admin-status enabled\nsystem ntp mode polling polling-interval-min 16 polling-interval-max 16\nsystem ntp associations remote-ntp-server server-entry '198.51.100.201'",
+    "missing": "",
+    "ordered_compliant": true,
+    "unordered_compliant": true
+  },
+  "transceivers": {
+    "actual": "xcvrs xcvr '1' properties mode auto\nxcvrs xcvr '1' state admin-state enabled\nxcvrs xcvr '2' properties mode auto\nxcvrs xcvr '2' state admin-state enabled\nxcvrs xcvr '3' properties mode auto\nxcvrs xcvr '3' state admin-state enabled\nxcvrs xcvr '4' properties mode auto\nxcvrs xcvr '4' state admin-state enabled",
+    "cannot_parse": true,
+    "compliant": true,
+    "extra": "",
+    "intended": "xcvrs xcvr '1' properties mode auto\nxcvrs xcvr '1' state admin-state enabled\nxcvrs xcvr '2' properties mode auto\nxcvrs xcvr '2' state admin-state enabled\nxcvrs xcvr '3' properties mode auto\nxcvrs xcvr '3' state admin-state enabled\nxcvrs xcvr '4' properties mode auto\nxcvrs xcvr '4' state admin-state enabled",
+    "missing": "",
+    "ordered_compliant": true,
+    "unordered_compliant": true
+  }
+}

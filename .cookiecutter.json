@@ -10,20 +10,21 @@
         "repo_url": "https://github.com/networktocode/netutils",
         "base_url": "netutils",
         "project_python_name": "netutils",
-        "project_python_base_version": "3.9",
+        "project_python_base_version": "3.10",
         "project_with_config_settings": "no",
         "generate_docs": "yes",
         "version": "1.15.1",
+        "original_publish_year": "2021",
         "_drift_manager": {
             "template": "https://github.com/networktocode-llc/cookiecutter-ntc.git",
             "template_dir": "python",
             "template_ref": "main",
             "cookie_dir": "",
-            "branch_prefix": "drift-manager",
-            "pull_request_strategy": "create",
+            "pull_request_strategy": "update-or-create",
             "post_actions": [],
             "draft": false,
-            "baked_commit_ref": "cb8b5e31dece5ab2663d2ffd218a96ca1ae794c5"
+            "baked_commit_ref": "b23a9ed5a4714810d83670ad47cc182764c6d464",
+            "drift_managed_branch": "develop"
         }
     }
 }
