@@ -124,6 +124,7 @@ nav:
       - Uninstall: "admin/uninstall.md"
       - Release Notes:
           - "admin/release_notes/index.md"
+          - v1.16: "admin/release_notes/version_1.16.md"
           - v1.15: "admin/release_notes/version_1.15.md"
           - v1.14: "admin/release_notes/version_1.14.md"
           - v1.13: "admin/release_notes/version_1.13.md"
