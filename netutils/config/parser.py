@@ -1890,3 +1890,59 @@ class RadEtxConfigParser(BaseSpaceConfigParser):
             )
             self._config = "\n".join(config_lines)
         return self._config
+
+
+class _ADVAConfigParser(BaseSpaceConfigParser):
+    """Base ADVA OS ConfigParser class."""
+
+    banner_start: t.List[str] = ["security-banner"]
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char."""
+        return '"'
+
+    def _build_banner(self, config_line: str) -> t.Optional[str]:
+        """Build banner specific to ADVA AOS devices.
+
+        Args:
+          config_line: The start of the banner config.
+
+        Returns:
+            The next configuration line in the configuration text or None.
+
+        Raises:
+            ValueError when parser is unable to identify the banner end.
+        """
+        if config_line.endswith(self.banner_end):
+            self._update_config_lines(config_line)
+            try:
+                return next(self.generator_config)
+            except StopIteration:
+                return None
+
+        raise ValueError("Unable to parse banner end.")
+
+
+class ADVAFSP150F2ConfigParser(_ADVAConfigParser):
+    """ADVA OS FSP-150 F2 ConfigParser."""
+
+    comment_chars: t.List[str] = ["remark"]
+
+
+class ADVAFSP150F3ConfigParser(_ADVAConfigParser):
+    """ADVA OS FSP-150 F3 ConfigParser."""
+
+    comment_chars: t.List[str] = ["#", "Preparing configuration file..."]
+
+
+class CienaConfigParser(BaseSpaceConfigParser):
+    """Ciena SAOS/10 ConfigParser class."""
+
+    comment_chars: t.List[str] = []
+    banner_start: t.List[str] = []
+
+    @property
+    def banner_end(self) -> str:
+        """Demarcate End of Banner char(s)."""
+        raise NotImplementedError("Ciena does not require discrete banner detection.")

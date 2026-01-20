@@ -7,11 +7,15 @@ from netutils.config.utils import _open_file_config
 from . import parser  # pylint: disable=relative-beyond-top-level
 
 parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
+    "adva_fsp150f2": parser.ADVAFSP150F2ConfigParser,
+    "adva_fsp150f3": parser.ADVAFSP150F3ConfigParser,
     "arista_eos": parser.EOSConfigParser,
     "aruba_aoscx": parser.ArubaConfigCXParser,
     "aruba_os": parser.ArubaConfigOSParser,
     "aruba_osswitch": parser.ArubaConfigOSParser,
     "bigip_f5": parser.F5ConfigParser,
+    "ciena_saos": parser.CienaConfigParser,
+    "ciena_saos10": parser.CienaConfigParser,
     "cisco_aireos": parser.AIREOSConfigParser,
     "cisco_asa": parser.ASAConfigParser,
     "cisco_ios": parser.IOSConfigParser,

@@ -3,6 +3,8 @@
 | a10 | → | a10 |
 | accedian | → | accedian |
 | adtran_os | → | adtran_os |
+| adva_fsp150f2 | → | adva_fsp150f2 |
+| adva_fsp150f3 | → | adva_fsp150f3 |
 | alcatel_aos | → | alcatel_aos |
 | alcatel_sros | → | alcatel_sros |
 | allied_telesis_awplus | → | allied_telesis_awplus |
@@ -26,6 +28,7 @@
 | centec_os | → | centec_os |
 | checkpoint_gaia | → | checkpoint_gaia |
 | ciena_saos | → | ciena_saos |
+| ciena_saos10 | → | ciena_saos10 |
 | cisco_asa | → | cisco_asa |
 | cisco_ftd | → | cisco_ftd |
 | cisco_ios | → | cisco_ios |
