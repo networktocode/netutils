@@ -461,7 +461,7 @@ def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
 INTERFACE_LIST_ORDERING_OPTIONS = {"alphabetical": sort_interface_list}
 
 
-def abbreviated_interface_name_list(  # pylint: disable=R0913, R0914
+def abbreviated_interface_name_list(  # pylint: disable=R0913,R0914,R0917
     interfaces: t.List[str],
     addl_name_map: t.Optional[t.Dict[str, str]] = None,
     addl_reverse_map: t.Optional[t.Dict[str, str]] = None,
