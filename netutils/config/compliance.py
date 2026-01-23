@@ -461,7 +461,7 @@ def section_config(
             else:
                 match = False
         for line_start in section_starts_with:  # type: ignore
-            if not match and line.config_line.startswith(line_start):
+            if not match and not line.parents and line.config_line.startswith(line_start):
                 section_config_list.append(line.config_line)
                 match = True
     return "\n".join(section_config_list).strip()

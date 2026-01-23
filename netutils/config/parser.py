@@ -1710,7 +1710,6 @@ class HPEConfigParser(BaseSpaceConfigParser):
         That new section may or may not have children.
         Each config line that has a leading space but not a parent is just a single config line.
         Single lines that have leading spaces also sometimes differs between models (e.g., 59XX vs 79XX series).
-        We strip the leading spaces from config lines without parents for consistency.
 
         Examples:
             >>> from netutils.config.parser import HPEConfigParser, ConfigLine
@@ -1727,7 +1726,7 @@ class HPEConfigParser(BaseSpaceConfigParser):
             >>> config_tree.build_config_relationship() == \
             ... [
             ...     ConfigLine(config_line="version 7.1.045, Release 2418P06", parents=()),
-            ...     ConfigLine(config_line="sysname NTC123456", parents=()),
+            ...     ConfigLine(config_line=" sysname NTC123456", parents=()),
             ...     ConfigLine(config_line="vlan 101", parents=()),
             ...     ConfigLine(config_line=" name Test-Vlan-101", parents=("vlan 101",)),
             ...     ConfigLine(config_line=" description Test Vlan 101", parents=("vlan 101",)),
@@ -1748,25 +1747,16 @@ class HPEConfigParser(BaseSpaceConfigParser):
                 continue
             if self.is_banner_start(line):
                 # Special case for banners
-                line = line.lstrip()
                 self._build_banner(line)
                 continue
 
             current_spaces = self.get_leading_space_count(line) if line[0].isspace() else 0
-            if current_spaces == 0:
-                # Reset current parents and indent level for lines that are not indented.
-                self._current_parents = ()
-                self.indent_level = 0
-                new_section = True
             if current_spaces > self.indent_level and not new_section:
                 previous_config = self.config_lines[-1]
                 self._current_parents += (previous_config.config_line,)
             elif current_spaces < self.indent_level:
                 self._current_parents = self._remove_parents(line, current_spaces)
 
-            if not self._current_parents:
-                # Standardize lines without parents to remove leading spaces
-                line = line.lstrip()
             new_section = False
             self.indent_level = current_spaces
             self._update_config_lines(line)
