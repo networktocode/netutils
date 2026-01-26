@@ -2,15 +2,13 @@
 
 import pytest
 
-from netutils.config.parser import HPComwareConfigParser
+from netutils.config.parser import HPEConfigParser
 
 
-def test_hp_comware_config_parser_deprecated():
-    """Test that HPComwareConfigParser is deprecated and issues a warning."""
-    expected_message = (
-        "HPComwareConfigParser is deprecated and will be removed in a future version. Use HPEConfigParser instead."
-    )
+def test_hpe_config_parser_deprecated():
+    """Test that HPEConfigParser is deprecated and issues a warning."""
+    expected_message = "HPEConfigParser is deprecated and will be removed in a future version. Use subclasses like HPComwareConfigParser instead."
 
     with pytest.warns(DeprecationWarning, match=expected_message):
         # Instantiating the class should trigger the deprecation warning
-        HPComwareConfigParser("test config")
+        HPEConfigParser("test config")

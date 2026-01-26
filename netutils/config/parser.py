@@ -1676,7 +1676,7 @@ class UbiquitiAirOSConfigParser(BaseSpaceConfigParser):
         return "\n".join(config_lines)
 
 
-class HPEConfigParser(BaseSpaceConfigParser):
+class _HPEConfigParser(BaseSpaceConfigParser):
     """HPE Implementation of ConfigParser Class."""
 
     regex_banner = re.compile(r"^\s*header\s(\w+)\s+(?P<banner_delimiter>\^C|\S?)")
@@ -1684,10 +1684,10 @@ class HPEConfigParser(BaseSpaceConfigParser):
     comment_chars: t.List[str] = ["#"]
 
     def __init__(self, config: str):
-        """Initialize the HPEConfigParser object."""
+        """Initialize the _HPEConfigParser object."""
         self.delimiter = ""
         self._banner_end: t.Optional[str] = None
-        super(HPEConfigParser, self).__init__(config)
+        super(_HPEConfigParser, self).__init__(config)
 
     @property
     def config_lines_only(self) -> str:
@@ -1712,7 +1712,7 @@ class HPEConfigParser(BaseSpaceConfigParser):
         Single lines that have leading spaces also sometimes differs between models (e.g., 59XX vs 79XX series).
 
         Examples:
-            >>> from netutils.config.parser import HPEConfigParser, ConfigLine
+            >>> from netutils.config.parser import _HPEConfigParser, ConfigLine
             >>> config = '''#
             ... version 7.1.045, Release 2418P06
             ... #
@@ -1722,7 +1722,7 @@ class HPEConfigParser(BaseSpaceConfigParser):
             ...  name Test-Vlan-101
             ...  description Test Vlan 101
             ... #'''
-            >>> config_tree = HPEConfigParser(config)
+            >>> config_tree = _HPEConfigParser(config)
             >>> config_tree.build_config_relationship() == \
             ... [
             ...     ConfigLine(config_line="version 7.1.045, Release 2418P06", parents=()),
@@ -1820,7 +1820,7 @@ class HPEConfigParser(BaseSpaceConfigParser):
 
     def is_banner_start(self, line: str) -> bool:
         """Checks if the given line is the start of a banner."""
-        state = super(HPEConfigParser, self).is_banner_start(line)
+        state = super(_HPEConfigParser, self).is_banner_start(line)
         if state:
             self.banner_end = line
         return state
@@ -1839,11 +1839,15 @@ class HPEConfigParser(BaseSpaceConfigParser):
         self._banner_end = self.delimiter
 
 
-@_deprecated(
-    "HPComwareConfigParser is deprecated and will be removed in a future version. Use HPEConfigParser instead."
-)
-class HPComwareConfigParser(HPEConfigParser, BaseSpaceConfigParser):
+class HPComwareConfigParser(_HPEConfigParser):
     """HP Comware Implementation of ConfigParser Class."""
+
+
+@_deprecated(
+    "HPEConfigParser is deprecated and will be removed in a future version. Use subclasses like HPComwareConfigParser instead."
+)
+class HPEConfigParser(_HPEConfigParser):
+    """Deprecated in favor of internal class _HPEConfigParser."""
 
 
 class NvidiaOnyxConfigParser(BaseConfigParser):  # pylint: disable=abstract-method

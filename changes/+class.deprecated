@@ -1,1 +1,1 @@
-Deprecated the redundant HPComwareConfigParser class in lieu of the HPEConfigParser class and updated the compliance parser_map accordingly.
+Deprecated the public HPEConfigParser class in lieu of a private class that should be subclassed for specific HP platforms.
