@@ -35,6 +35,12 @@ parser_map: t.Dict[str, t.Type[parser.BaseConfigParser]] = {
 }
 
 
+# Network OSes that we do not strip leading whitespace from the config lines.
+NON_STRIP_NETWORK_OS = [
+    "hp_comware",
+]
+
+
 # TODO: Once support for 3.7 is dropped, there should be a typing.TypedDict for this which should then also be used
 # as the return type for a bunch of the following methods.
 default_feature: t.Dict[str, t.Union[str, bool, None]] = {
@@ -464,4 +470,6 @@ def section_config(
             if not match and not line.parents and line.config_line.startswith(line_start):
                 section_config_list.append(line.config_line)
                 match = True
+    if network_os in NON_STRIP_NETWORK_OS:
+        return "\n".join(section_config_list)
     return "\n".join(section_config_list).strip()

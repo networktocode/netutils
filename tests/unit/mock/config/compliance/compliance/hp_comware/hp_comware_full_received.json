@@ -1,13 +1,13 @@
 {
     "sysname": {
         "compliant": false,
-        "missing": "sysname NTC-Router",
-        "extra": "sysname NTC123456",
+        "missing": " sysname NTC-Router",
+        "extra": " sysname NTC123456",
         "cannot_parse": true,
         "unordered_compliant": false,
         "ordered_compliant": false,
-        "actual": "sysname NTC123456",
-        "intended": "sysname NTC-Router"
+        "actual": " sysname NTC123456",
+        "intended": " sysname NTC-Router"
     },
     "clock": {
         "compliant": true,
@@ -16,18 +16,18 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "clock timezone EST minus 05:00:00\n clock summer-time EDT 02:00:00 03/11 02:00:00 11/04 01:00:00\n clock protocol ntp",
-        "intended": "clock timezone EST minus 05:00:00\n clock summer-time EDT 02:00:00 03/11 02:00:00 11/04 01:00:00\n clock protocol ntp"
+        "actual": " clock timezone EST minus 05:00:00\n clock summer-time EDT 02:00:00 03/11 02:00:00 11/04 01:00:00\n clock protocol ntp",
+        "intended": " clock timezone EST minus 05:00:00\n clock summer-time EDT 02:00:00 03/11 02:00:00 11/04 01:00:00\n clock protocol ntp"
     },
     "copyright-info": {
         "compliant": false,
-        "missing": "copyright-info enable",
-        "extra": "undo copyright-info enable",
+        "missing": " copyright-info enable",
+        "extra": " undo copyright-info enable",
         "cannot_parse": true,
         "unordered_compliant": false,
         "ordered_compliant": false,
-        "actual": "undo copyright-info enable",
-        "intended": "copyright-info enable"
+        "actual": " undo copyright-info enable",
+        "intended": " copyright-info enable"
     },
     "telnet": {
         "compliant": true,
@@ -36,18 +36,18 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "telnet server enable\n telnet server acl 1111",
-        "intended": "telnet server enable\n telnet server acl 1111"
+        "actual": " telnet server enable\n telnet server acl 1111",
+        "intended": " telnet server enable\n telnet server acl 1111"
     },
     "irf": {
         "compliant": false,
-        "missing": "irf domain 123456\n irf member 1 priority 48\n irf member 3 priority 16",
-        "extra": "irf domain 123456\n irf member 1 priority 32\n irf member 2 priority 1",
+        "missing": " irf member 1 priority 48\n irf member 3 priority 16",
+        "extra": " irf member 1 priority 32\n irf member 2 priority 1",
         "cannot_parse": true,
         "unordered_compliant": false,
         "ordered_compliant": false,
-        "actual": "irf domain 123456\n irf mac-address persistent timer\n irf auto-update enable\n undo irf link-delay\n irf member 1 priority 32\n irf member 2 priority 1\n irf mode normal",
-        "intended": "irf domain 123456\n irf mac-address persistent timer\n irf auto-update enable\n undo irf link-delay\n irf member 1 priority 48\n irf member 3 priority 16\n irf mode normal"
+        "actual": " irf domain 123456\n irf mac-address persistent timer\n irf auto-update enable\n undo irf link-delay\n irf member 1 priority 32\n irf member 2 priority 1\n irf mode normal",
+        "intended": " irf domain 123456\n irf mac-address persistent timer\n irf auto-update enable\n undo irf link-delay\n irf member 1 priority 48\n irf member 3 priority 16\n irf mode normal"
     },
     "igmp": {
         "compliant": true,
@@ -66,8 +66,8 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "dns source-interface M-GigabitEthernet0/0/0 vpn-instance internal\n dns domain example.com\n dns domain example.com vpn-instance internal\n dns server 192.0.2.47 vpn-instance internal\n dns server 192.0.2.15 vpn-instance internal\n dns server 192.0.2.11 vpn-instance internal\n dns server 192.0.2.2 vpn-instance internal\n dns server 192.0.2.6 vpn-instance internal",
-        "intended": "dns source-interface M-GigabitEthernet0/0/0 vpn-instance internal\n dns domain example.com\n dns domain example.com vpn-instance internal\n dns server 192.0.2.47 vpn-instance internal\n dns server 192.0.2.15 vpn-instance internal\n dns server 192.0.2.11 vpn-instance internal\n dns server 192.0.2.2 vpn-instance internal\n dns server 192.0.2.6 vpn-instance internal"
+        "actual": " dns source-interface M-GigabitEthernet0/0/0 vpn-instance internal\n dns domain example.com\n dns domain example.com vpn-instance internal\n dns server 192.0.2.47 vpn-instance internal\n dns server 192.0.2.15 vpn-instance internal\n dns server 192.0.2.11 vpn-instance internal\n dns server 192.0.2.2 vpn-instance internal\n dns server 192.0.2.6 vpn-instance internal",
+        "intended": " dns source-interface M-GigabitEthernet0/0/0 vpn-instance internal\n dns domain example.com\n dns domain example.com vpn-instance internal\n dns server 192.0.2.47 vpn-instance internal\n dns server 192.0.2.15 vpn-instance internal\n dns server 192.0.2.11 vpn-instance internal\n dns server 192.0.2.2 vpn-instance internal\n dns server 192.0.2.6 vpn-instance internal"
     },
     "lldp": {
         "compliant": true,
@@ -76,8 +76,8 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "lldp global enable",
-        "intended": "lldp global enable"
+        "actual": " lldp global enable",
+        "intended": " lldp global enable"
     },
     "password-recovery": {
         "compliant": true,
@@ -86,8 +86,8 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "password-recovery enable",
-        "intended": "password-recovery enable"
+        "actual": " password-recovery enable",
+        "intended": " password-recovery enable"
     },
     "vlan": {
         "compliant": false,
@@ -136,8 +136,8 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "qos vlan-policy NTC-VLAN-Policy-101 vlan 101 inbound\n qos vlan-policy NTC-VLAN-Policy-102 vlan 102 inbound",
-        "intended": "qos vlan-policy NTC-VLAN-Policy-101 vlan 101 inbound\n qos vlan-policy NTC-VLAN-Policy-102 vlan 102 inbound"
+        "actual": " qos vlan-policy NTC-VLAN-Policy-101 vlan 101 inbound\n qos vlan-policy NTC-VLAN-Policy-102 vlan 102 inbound",
+        "intended": " qos vlan-policy NTC-VLAN-Policy-101 vlan 101 inbound\n qos vlan-policy NTC-VLAN-Policy-102 vlan 102 inbound"
     },
     "stp": {
         "compliant": true,
@@ -156,8 +156,8 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "l2vpn enable",
-        "intended": "l2vpn enable"
+        "actual": " l2vpn enable",
+        "intended": " l2vpn enable"
     },
     "bgp": {
         "compliant": false,
@@ -186,18 +186,18 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "ip route-static vpn-instance vpn1 0.0.0.0 0 192.0.2.1\n ip route-static vpn-instance vpn2 192.0.2.61 32 192.0.2.68 description Test-Peer-2\n ip route-static vpn-instance vpn2 192.0.2.62 32 192.0.2.68 description Test-Peer-2",
-        "intended": "ip route-static vpn-instance vpn1 0.0.0.0 0 192.0.2.1\n ip route-static vpn-instance vpn2 192.0.2.61 32 192.0.2.68 description Test-Peer-2\n ip route-static vpn-instance vpn2 192.0.2.62 32 192.0.2.68 description Test-Peer-2"
+        "actual": " ip route-static vpn-instance vpn1 0.0.0.0 0 192.0.2.1\n ip route-static vpn-instance vpn2 192.0.2.61 32 192.0.2.68 description Test-Peer-2\n ip route-static vpn-instance vpn2 192.0.2.62 32 192.0.2.68 description Test-Peer-2",
+        "intended": " ip route-static vpn-instance vpn1 0.0.0.0 0 192.0.2.1\n ip route-static vpn-instance vpn2 192.0.2.61 32 192.0.2.68 description Test-Peer-2\n ip route-static vpn-instance vpn2 192.0.2.62 32 192.0.2.68 description Test-Peer-2"
     },
     "info-center": {
         "compliant": false,
-        "missing": "info-center timestamp loghost no-year-date\n info-center logfile enable",
-        "extra": "info-center timestamp loghost no-year-date\n undo info-center logfile enable\n info-center loghost vpn-instance internal 192.0.2.132\n info-center loghost vpn-instance internal 192.0.2.227\n info-center loghost vpn-instance internal 192.0.2.18",
+        "missing": " info-center logfile enable",
+        "extra": " undo info-center logfile enable\n info-center loghost vpn-instance internal 192.0.2.132\n info-center loghost vpn-instance internal 192.0.2.227\n info-center loghost vpn-instance internal 192.0.2.18",
         "cannot_parse": true,
         "unordered_compliant": false,
         "ordered_compliant": false,
-        "actual": "info-center timestamp loghost no-year-date\n undo info-center logfile enable\n info-center loghost source M-GigabitEthernet0/0/0\n info-center loghost vpn-instance internal 192.0.2.132\n info-center loghost vpn-instance internal 192.0.2.227\n info-center loghost vpn-instance internal 192.0.2.18\n info-center loghost vpn-instance internal 192.0.2.195",
-        "intended": "info-center timestamp loghost no-year-date\n info-center logfile enable\n info-center loghost source M-GigabitEthernet0/0/0\n info-center loghost vpn-instance internal 192.0.2.195"
+        "actual": " info-center timestamp loghost no-year-date\n undo info-center logfile enable\n info-center loghost source M-GigabitEthernet0/0/0\n info-center loghost vpn-instance internal 192.0.2.132\n info-center loghost vpn-instance internal 192.0.2.227\n info-center loghost vpn-instance internal 192.0.2.18\n info-center loghost vpn-instance internal 192.0.2.195",
+        "intended": " info-center timestamp loghost no-year-date\n info-center logfile enable\n info-center loghost source M-GigabitEthernet0/0/0\n info-center loghost vpn-instance internal 192.0.2.195"
     },
     "snmp": {
         "compliant": true,
@@ -206,8 +206,8 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "snmp-agent\n snmp-agent local-engineid 123456789012345678901234567890\n snmp-agent community read Test-Community acl 1234\n snmp-agent sys-info contact Test-Contact\n snmp-agent sys-info location Test-Location\n snmp-agent sys-info version v2c v3\n snmp-agent trap source M-GigabitEthernet0/0/0",
-        "intended": "snmp-agent\n snmp-agent local-engineid 123456789012345678901234567890\n snmp-agent community read Test-Community acl 1234\n snmp-agent sys-info contact Test-Contact\n snmp-agent sys-info location Test-Location\n snmp-agent sys-info version v2c v3\n snmp-agent trap source M-GigabitEthernet0/0/0"
+        "actual": " snmp-agent\n snmp-agent local-engineid 123456789012345678901234567890\n snmp-agent community read Test-Community acl 1234\n snmp-agent sys-info contact Test-Contact\n snmp-agent sys-info location Test-Location\n snmp-agent sys-info version v2c v3\n snmp-agent trap source M-GigabitEthernet0/0/0",
+        "intended": " snmp-agent\n snmp-agent local-engineid 123456789012345678901234567890\n snmp-agent community read Test-Community acl 1234\n snmp-agent sys-info contact Test-Contact\n snmp-agent sys-info location Test-Location\n snmp-agent sys-info version v2c v3\n snmp-agent trap source M-GigabitEthernet0/0/0"
     },
     "ssh": {
         "compliant": true,
@@ -216,8 +216,8 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "ssh server enable\n ssh server acl 1234\n ssh client source interface M-GigabitEthernet0/0/0",
-        "intended": "ssh server enable\n ssh server acl 1234\n ssh client source interface M-GigabitEthernet0/0/0"
+        "actual": " ssh server enable\n ssh server acl 1234\n ssh client source interface M-GigabitEthernet0/0/0",
+        "intended": " ssh server enable\n ssh server acl 1234\n ssh client source interface M-GigabitEthernet0/0/0"
     },
     "ftp": {
         "compliant": true,
@@ -226,8 +226,8 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "ftp client source interface M-GigabitEthernet0/0/0",
-        "intended": "ftp client source interface M-GigabitEthernet0/0/0"
+        "actual": " ftp client source interface M-GigabitEthernet0/0/0",
+        "intended": " ftp client source interface M-GigabitEthernet0/0/0"
     },
     "sftp": {
         "compliant": true,
@@ -236,18 +236,18 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "sftp client source interface M-GigabitEthernet0/0/0",
-        "intended": "sftp client source interface M-GigabitEthernet0/0/0"
+        "actual": " sftp client source interface M-GigabitEthernet0/0/0",
+        "intended": " sftp client source interface M-GigabitEthernet0/0/0"
     },
     "ntp": {
         "compliant": false,
-        "missing": "ntp-service enable\n ntp-service unicast-server ntp.example.com vpn-instance internal",
+        "missing": " ntp-service unicast-server ntp.example.com vpn-instance internal",
         "extra": "",
         "cannot_parse": true,
         "unordered_compliant": false,
         "ordered_compliant": false,
-        "actual": "ntp-service enable\n ntp-service source M-GigabitEthernet0/0/0\n ntp-service unicast-server 192.0.2.22 vpn-instance internal\n ntp-service unicast-peer 192.0.2.10 vpn-instance internal\n ntp-service unicast-server 192.0.2.27 vpn-instance internal\n ntp-service unicast-server 192.0.2.70 vpn-instance internal\n ntp-service unicast-server 192.0.2.251 vpn-instance internal\n ntp-service unicast-server 192.0.2.182 vpn-instance internal",
-        "intended": "ntp-service enable\n ntp-service source M-GigabitEthernet0/0/0\n ntp-service unicast-server 192.0.2.22 vpn-instance internal\n ntp-service unicast-peer 192.0.2.10 vpn-instance internal\n ntp-service unicast-server ntp.example.com vpn-instance internal\n ntp-service unicast-server 192.0.2.27 vpn-instance internal\n ntp-service unicast-server 192.0.2.70 vpn-instance internal\n ntp-service unicast-server 192.0.2.251 vpn-instance internal\n ntp-service unicast-server 192.0.2.182 vpn-instance internal"
+        "actual": " ntp-service enable\n ntp-service source M-GigabitEthernet0/0/0\n ntp-service unicast-server 192.0.2.22 vpn-instance internal\n ntp-service unicast-peer 192.0.2.10 vpn-instance internal\n ntp-service unicast-server 192.0.2.27 vpn-instance internal\n ntp-service unicast-server 192.0.2.70 vpn-instance internal\n ntp-service unicast-server 192.0.2.251 vpn-instance internal\n ntp-service unicast-server 192.0.2.182 vpn-instance internal",
+        "intended": " ntp-service enable\n ntp-service source M-GigabitEthernet0/0/0\n ntp-service unicast-server 192.0.2.22 vpn-instance internal\n ntp-service unicast-peer 192.0.2.10 vpn-instance internal\n ntp-service unicast-server ntp.example.com vpn-instance internal\n ntp-service unicast-server 192.0.2.27 vpn-instance internal\n ntp-service unicast-server 192.0.2.70 vpn-instance internal\n ntp-service unicast-server 192.0.2.251 vpn-instance internal\n ntp-service unicast-server 192.0.2.182 vpn-instance internal"
     },
     "acl": {
         "compliant": false,
@@ -266,8 +266,8 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "tftp client source interface M-GigabitEthernet0/0/0",
-        "intended": "tftp client source interface M-GigabitEthernet0/0/0"
+        "actual": " tftp client source interface M-GigabitEthernet0/0/0",
+        "intended": " tftp client source interface M-GigabitEthernet0/0/0"
     },
     "header": {
         "compliant": true,
@@ -276,8 +276,8 @@
         "cannot_parse": true,
         "unordered_compliant": true,
         "ordered_compliant": true,
-        "actual": "header motd %\n*******************************************************************************\nUnauthorized Access to or Use of this System is STRICTLY PROHIBITED.\n     ALL Access and Use May be Monitored and Recorded.\n*******************************************************************************\n%",
-        "intended": "header motd %\n*******************************************************************************\nUnauthorized Access to or Use of this System is STRICTLY PROHIBITED.\n     ALL Access and Use May be Monitored and Recorded.\n*******************************************************************************\n%"
+        "actual": " header motd %\n*******************************************************************************\nUnauthorized Access to or Use of this System is STRICTLY PROHIBITED.\n     ALL Access and Use May be Monitored and Recorded.\n*******************************************************************************\n%",
+        "intended": " header motd %\n*******************************************************************************\nUnauthorized Access to or Use of this System is STRICTLY PROHIBITED.\n     ALL Access and Use May be Monitored and Recorded.\n*******************************************************************************\n%"
     },
     "hwtacacs": {
         "compliant": true,
