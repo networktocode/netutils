@@ -1,0 +1,1 @@
+Deprecated the public HPEConfigParser class in lieu of a private class that should be subclassed for specific HP platforms.
