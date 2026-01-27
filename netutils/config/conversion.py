@@ -190,7 +190,7 @@ def paloalto_panos_brace_to_set(cfg: str, cfg_type: str = "file") -> str:
             line = line.split("config ", 1)[1]
             line = "set " + line
             cfg_value.append(line.strip())
-        elif line.endswith('login-banner "') or line.endswith('content "'):
+        elif 'login-banner "' in line or line.endswith('content "'):
             _first_banner_line = "".join(str(s) for s in stack) + line
             cfg_value.append("set " + _first_banner_line.split("config ", 1)[1])
 
