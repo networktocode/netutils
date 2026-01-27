@@ -19,6 +19,7 @@
 | extreme_slx | → | show running-config |
 | extreme_vsp | → | show running-config |
 | fortinet | → | show full-configuration |
+| hp_comware | → | display current-configuration |
 | hp_procurve | → | show running-config |
 | juniper_junos | → | show configuration | display set |
 | mikrotik_routeros | → | /export |
