@@ -145,6 +145,16 @@ DNACENTER_LIB_MAPPER_REVERSE = {
 # REMOVE IN 2.X, kept for backward compatibility
 DNA_CENTER_LIB_MAPPER_REVERSE = copy.deepcopy(DNACENTER_LIB_MAPPER_REVERSE)
 
+# LibreNMS | Normalized
+LIBRENMS_LIB_MAPPER_REVERSE = {
+    "arista_eos": "arista_eos",
+    "iosxe": "cisco_xe",
+    "iosxr": "cisco_xr",
+    "nxos": "cisco_nxos",
+    "junos": "juniper_junos",
+    "procera": "applogic_procera",
+}
+
 # Normalized | Netmiko
 NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "a10": "a10",
@@ -656,6 +666,16 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "paloalto_panos": "PAN_OS",
 }
 
+# Normalized | LibreNMS
+LIBRENMS_LIB_MAPPER = {
+    "arista_eos": "arista_eos",
+    "cisco_xe": "iosxe",
+    "cisco_nxos": "nxos",
+    "cisco_xr": "iosxr",
+    "juniper_junos": "junos",
+    "applogic_procera": "procera",
+}
+
 # Normalized | NIST
 NIST_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "arista:eos",
@@ -709,6 +729,7 @@ NAME_TO_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {
     "dna_center": DNACENTER_LIB_MAPPER,
     "forward_networks": FORWARDNETWORKS_LIB_MAPPER,
     "hier_config": HIERCONFIG_LIB_MAPPER,
+    "librenms": LIBRENMS_LIB_MAPPER,
     "napalm": NAPALM_LIB_MAPPER,
     "netmiko": NETMIKO_LIB_MAPPER,
     "netutils_parser": NETUTILSPARSER_LIB_MAPPER,
@@ -727,6 +748,7 @@ NAME_TO_LIB_MAPPER_REVERSE: t.Dict[str, t.Dict[str, str]] = {
     "dna_center": DNACENTER_LIB_MAPPER_REVERSE,
     "forward_networks": FORWARDNETWORKS_LIB_MAPPER_REVERSE,
     "hier_config": HIERCONFIG_LIB_MAPPER_REVERSE,
+    "librenms": LIBRENMS_LIB_MAPPER_REVERSE,
     "napalm": NAPALM_LIB_MAPPER_REVERSE,
     "netmiko": NETMIKO_LIB_MAPPER_REVERSE,
     "netutils_parser": NETUTILSPARSER_LIB_MAPPER_REVERSE,
