@@ -1,0 +1,45 @@
+set deviceconfig system ip-address 192.0.2.72
+set deviceconfig system netmask 255.255.255.0
+set deviceconfig system update-server updates.paloaltonetworks.com
+set deviceconfig system update-schedule threats recurring weekly day-of-week wednesday
+set deviceconfig system update-schedule threats recurring weekly at 01:02
+set deviceconfig system update-schedule threats recurring weekly action download-only
+set deviceconfig system timezone UTC
+set deviceconfig system service disable-telnet yes
+set deviceconfig system service disable-http yes
+set deviceconfig system service disable-snmp no
+set deviceconfig system hostname pa-ntc
+set deviceconfig system type static
+set deviceconfig system default-gateway 192.0.2.1
+set deviceconfig system domain ntc
+set deviceconfig system locale en
+set deviceconfig system speed-duplex auto-negotiate
+set deviceconfig system dns-setting servers primary 8.8.8.8
+set deviceconfig system dns-setting servers secondary 1.1.1.1
+set deviceconfig system device-telemetry device-health-performance yes
+set deviceconfig system device-telemetry product-usage yes
+set deviceconfig system device-telemetry threat-prevention yes
+set deviceconfig system device-telemetry region Americas
+set deviceconfig system panorama local-panorama panorama-server 192.0.2.58
+set deviceconfig system server-verification no
+set deviceconfig system ntp-servers primary-ntp-server ntp-server-address time.google.com
+set deviceconfig system ntp-servers primary-ntp-server authentication-type none
+set deviceconfig system login-banner "####################################################
+WARNING TO UNAUTHORIZED USERS:
+This system is for use by authorized users only.
+Any individual using this system, by such use,
+acknowledges and consents to the right of the
+company to monitor, access, use, and disclose any
+information generated, received, or stored on the
+systems, and waives any right of privacy or
+expectation of privacy on the part of that
+individual in connection with his or her use of
+this system. Unauthorized and/or improper use of
+this system, as delineated by corporate policies,
+is not tolerated and the company may take formal
+action against such individuals.
+####################################################
+"
+set deviceconfig system snmp-setting access-setting version v2c snmp-community-string ntc1234
+set deviceconfig system snmp-setting snmp-system location ntc
+set deviceconfig system snmp-setting snmp-system contact "john smith"
