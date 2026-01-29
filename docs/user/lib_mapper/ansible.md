@@ -2,6 +2,7 @@
 | ---------- | -- | ------ |
 | a10.acos_axapi.a10 | → | a10 |
 | arista.eos.eos | → | arista_eos |
+| arubanetworks.aos_switch | → | aruba_os |
 | arubanetworks.aoscx | → | aruba_aoscx |
 | ciena.saos6.saos6 | → | ciena_saos |
 | cisco.asa.asa | → | cisco_asa |

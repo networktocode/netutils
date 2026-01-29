@@ -3,6 +3,7 @@
 | a10 | → | a10.acos_axapi.a10 |
 | arista_eos | → | arista.eos.eos |
 | aruba_aoscx | → | arubanetworks.aoscx |
+| aruba_os | → | arubanetworks.aos_switch |
 | bigip_f5 | → | f5networks.f5_bigip.bigip |
 | ciena_saos | → | ciena.saos6.saos6 |
 | cisco_asa | → | cisco.asa.asa |
