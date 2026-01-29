@@ -15,7 +15,7 @@ jobs:
       - name: "Check out code"
         uses: "actions/checkout@v4"
         with:
-          ref: "develop"
+          ref: "ab_oui_updates"
           fetch-depth: 0
 
       - name: "Authenticate git remote"
