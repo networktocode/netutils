@@ -36,7 +36,6 @@ if __name__ == "__main__":
     with open(output_path, "r", encoding="utf-8", newline="") as oui_file:
         for line in oui_file:
             if re.search(HEX_RE, line):
-                print()
                 group_regex_values = re.search(HEX_RE, line).groupdict()
                 if group_regex_values.get("hex") and group_regex_values.get("company"):
                     OUI_MAPPINGS.update({group_regex_values.get("hex").lower(): group_regex_values.get("company")})
