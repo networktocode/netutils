@@ -1496,7 +1496,7 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
         "set deviceconfig system login-banner",
     ]
     # Not used, but must be defined
-    banner_end = None
+    banner_end = ""
 
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
@@ -1512,7 +1512,7 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
         """
         self._update_config_lines(config_line)
         self._current_parents += (config_line,)
-        banner_config = []
+        banner_config: t.List[str] = []
         for line in self.generator_config:
             # Note, this is a little fragile and will cause false positives if any line in
             # the middle of a multi-line banner starts with "set ".
