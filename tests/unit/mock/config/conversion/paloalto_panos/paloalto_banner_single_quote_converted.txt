@@ -1,0 +1,3 @@
+set deviceconfig system hostname pa-ntc
+set deviceconfig system login-banner "'BANNER'"
+set deviceconfig system domain ntc

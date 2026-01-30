@@ -1492,17 +1492,11 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
 
     comment_chars: t.List[str] = []
     banner_start: t.List[str] = [
-        'set system login-banner "',
-        'login-banner "',
-        'set deviceconfig system login-banner "',
+        "set system login-banner",
+        "set deviceconfig system login-banner",
     ]
-    banner_end = '"'
-
-    def is_banner_end(self, line: str) -> bool:
-        """Determine if end of banner."""
-        if line.endswith('"') or line.startswith('";') or line.startswith("set") or line.endswith(self.banner_end):
-            return True
-        return False
+    # Not used, but must be defined
+    banner_end = None
 
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
@@ -1520,22 +1514,22 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
         self._current_parents += (config_line,)
         banner_config = []
         for line in self.generator_config:
-            if not self.is_banner_end(line):
-                banner_config.append(line)
-            else:
-                banner_config.append(line.strip())
-                line = "\n".join(banner_config)
-                if line.endswith('"'):
-                    banner, end, _ = line.rpartition('"')
-                    line = banner + end
-                self._update_config_lines(line.strip())
+            # Note, this is a little fragile and will cause false positives if any line in
+            # the middle of a multi-line banner starts with "set ".
+            if line.startswith("set "):
+                # New command, save the banner and return the next line
+                if banner_config:
+                    banner_string = "\n".join(banner_config)
+                    self._update_config_lines(banner_string)
                 self._current_parents = self._current_parents[:-1]
-                try:
-                    return next(self.generator_config)
-                except StopIteration:
-                    return None
+                return line
+            banner_config.append(line)
 
-        raise ValueError("Unable to parse banner end.")
+        # Edge case, the last line of the config is the banner
+        banner_string = "\n".join(banner_config)
+        self._update_config_lines(banner_string)
+        self._current_parents = self._current_parents[:-1]
+        return None
 
     def build_config_relationship(self) -> t.List[ConfigLine]:  # pylint: disable=too-many-branches
         r"""Parse text of config lines and find their parents.
@@ -1558,42 +1552,27 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
             ... ]
             True
         """
-        # assume configuration does not need conversion
-        _needs_conversion = False
+        if self.config_lines_only is None:
+            raise ValueError("Config is empty.")
 
-        # if config is in palo brace format, convert to set
-        if self.config_lines_only is not None:
-            for line in self.config_lines_only.splitlines():
-                if line.endswith("{"):
-                    _needs_conversion = True
-        if _needs_conversion:
+        if "@dirtyId" in self.config_lines_only:
+            # We have to specifically check for JSON format because it can be confused with the brace format
+            raise ValueError("Found 'json' configuration format. Please provide in 'set' or 'default' (brace) format.")
+        config_lines = self.config_lines_only.splitlines()
+        if any(line.endswith("{") for line in config_lines):
             converted_config = paloalto_panos_brace_to_set(cfg=self.config, cfg_type="string")
             list_config = converted_config.splitlines()
             self.generator_config = (line for line in list_config)
+        elif not any(line.startswith("set ") for line in config_lines):
+            raise ValueError("Unexpected configuration format. Please provide in 'set' or 'default' (brace) format.")
 
         # build config relationships
         for line in self.generator_config:
-            if not line[0].isspace():
-                self._current_parents = ()
-                if self.is_banner_start(line):
-                    line = self._build_banner(line)  # type: ignore
-            else:
-                previous_config = self.config_lines[-1]
-                self._current_parents = (previous_config.config_line,)
-                self.indent_level = self.get_leading_space_count(line)
-                if not self.is_banner_start(line):
-                    line = self._build_nested_config(line)  # type: ignore
-                else:
-                    line = self._build_banner(line)  # type: ignore
-                    if line is not None and line[0].isspace():
-                        line = self._build_nested_config(line)  # type: ignore
-                    else:
-                        self._current_parents = ()
+            if self.is_banner_start(line):
+                line = self._build_banner(line)  # type: ignore
 
             if line is None:
                 break
-            elif self.is_banner_start(line):
-                line = self._build_banner(line)  # type: ignore
 
             self._update_config_lines(line)
         return self.config_lines

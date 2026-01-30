@@ -1,0 +1,13 @@
+config {
+  devices {
+    localhost.localdomain {
+      deviceconfig {
+        system {
+          hostname pa-ntc;
+          login-banner '"BANNER"';
+          domain ntc;
+        }
+      }
+    }
+  }
+}
