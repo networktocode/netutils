@@ -747,7 +747,6 @@ NCCLIENT_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 # Deep copy the reverse, where there is no actual translation happening with special
 # consideration for OS's not in netmiko.
 _MAIN_LIB_MAPPER = copy.deepcopy(NETMIKO_LIB_MAPPER)
-# _MAIN_LIB_MAPPER["aruba_aoscx"] = "aruba_aoscx"
 _MAIN_LIB_MAPPER["cisco_aireos"] = "cisco_aireos"
 _MAIN_LIB_MAPPER["cisco_dnac"] = "cisco_dnac"
 _MAIN_LIB_MAPPER["cisco_meraki"] = "cisco_meraki"
