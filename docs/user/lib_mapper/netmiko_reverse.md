@@ -13,6 +13,7 @@
 | apresia_aeos | → | apresia_aeos |
 | arista_eos | → | arista_eos |
 | arris_cer | → | arris_cer |
+| aruba_aoscx | → | aruba_aoscx |
 | aruba_os | → | aruba_os |
 | aruba_osswitch | → | aruba_osswitch |
 | aruba_procurve | → | aruba_procurve |
