@@ -6,6 +6,7 @@
 | arubanetworks.aoscx | → | aruba_aoscx |
 | ciena.saos6.saos6 | → | ciena_saos |
 | cisco.asa.asa | → | cisco_asa |
+| cisco.catalystcenter | → | cisco_dnac |
 | cisco.ios.ios | → | cisco_ios |
 | cisco.iosxr.iosxr | → | cisco_xr |
 | cisco.meraki.meraki | → | cisco_meraki |

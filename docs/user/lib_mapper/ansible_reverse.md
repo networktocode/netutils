@@ -7,6 +7,7 @@
 | bigip_f5 | → | f5networks.f5_bigip.bigip |
 | ciena_saos | → | ciena.saos6.saos6 |
 | cisco_asa | → | cisco.asa.asa |
+| cisco_dnac | → | cisco.catalystcenter |
 | cisco_ios | → | cisco.ios.ios |
 | cisco_meraki | → | cisco.meraki.meraki |
 | cisco_nxos | → | cisco.nxos.nxos |
