@@ -125,6 +125,7 @@ def paloalto_panos_clean_newlines(cfg: str) -> str:
     return newlines_cleaned_cfg
 
 
+# pylint: disable=too-many-branches
 def paloalto_panos_brace_to_set(cfg: str, cfg_type: str = "file") -> str:
     r"""Convert Palo Alto Brace format configuration to set format.
 
@@ -182,21 +183,44 @@ def paloalto_panos_brace_to_set(cfg: str, cfg_type: str = "file") -> str:
         cfg_raw = paloalto_panos_clean_newlines(cfg=cfg)
         cfg_list = cfg_raw.splitlines()
 
-    for i, line in enumerate(cfg_list):
+    def cfg_generator(cfg_list: t.List[str]) -> t.Generator[str, None, None]:
+        """We use a generator to avoid parsing the banner lines twice."""
+        yield from cfg_list
+
+    cfg_gen = cfg_generator(cfg_list)
+
+    for line in cfg_gen:
         line = line.strip()
         if line.endswith(";") and not line.startswith('";'):
-            line = line.split(";", 1)[0]
+            line = line[:-1]
             line = "".join(str(s) for s in stack) + line
             line = line.split("config ", 1)[1]
             line = "set " + line
             cfg_value.append(line.strip())
-        elif line.endswith('login-banner "') or line.endswith('content "'):
+        elif "login-banner" in line or line.endswith('content "'):
             _first_banner_line = "".join(str(s) for s in stack) + line
             cfg_value.append("set " + _first_banner_line.split("config ", 1)[1])
+            # Palo Alto uses either double or single quotes for the banner delimiter,
+            # but only if there are certain characters or spaces in the banner.
+            if 'login-banner "' in line:
+                delimiter = '"'
+            elif "login-banner '" in line:
+                delimiter = "'"
+            else:
+                delimiter = ""
 
-            for banner_line in cfg_list[i + 1:]:  # fmt: skip
-                if '"' in banner_line:
-                    banner_line = banner_line.split(";", 1)[0]
+            # Deal with single line banners first
+            if line.endswith(f"{delimiter};"):
+                line = line[:-1]
+                cfg_value.append(line.strip())
+                continue
+
+            # Multi-line banners
+            for banner_line in cfg_gen:  # fmt: skip
+                # This is a little brittle and will break if any line in the middle of the banner
+                # ends with the expected delimiter and semicolon.
+                if banner_line.endswith(f"{delimiter};"):
+                    banner_line = banner_line[:-1]
                     cfg_value.append(banner_line.strip())
                     break
                 cfg_value.append(banner_line.strip())

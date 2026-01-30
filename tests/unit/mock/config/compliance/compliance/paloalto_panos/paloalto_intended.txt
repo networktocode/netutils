@@ -21,6 +21,22 @@ set deviceconfig system service disable-http yes
 set deviceconfig system service disable-snmp no
 set deviceconfig system snmp-setting snmp-system 
 set deviceconfig system hostname firewall1
+set deviceconfig system login-banner "####################################################
+WARNING TO UNAUTHORIZED USERS:
+This system is for use by authorized users only.
+Any individual using this system, by such use,
+acknowledges and consents to the right of the
+company to monitor, access, use, and disclose any
+information generated, received, or stored on the
+systems, and waives any right of privacy or
+expectation of privacy on the part of that
+individual in connection with his or her use of
+this system. Unauthorized and/or improper use of
+this system, as delineated by corporate policies,
+is not tolerated and the company may take formal
+action against such individuals.
+####################################################
+"
 set deviceconfig system default-gateway 10.1.1.1
 set deviceconfig system dns-setting servers primary 10.1.1.3
 set deviceconfig system dns-setting servers secondary 10.1.1.4
