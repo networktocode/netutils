@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netutils"
-version = "1.16.1a0"
+version = "1.17.0"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 license = "Apache-2.0"
@@ -171,7 +171,7 @@ show_error_codes = true
 [tool.towncrier]
 package = "netutils"
 directory = "changes"
-filename = "docs/admin/release_notes/version_X.Y.md"
+filename = "docs/admin/release_notes/version_1.17.md"
 template = "towncrier_template.j2"
 start_string = "<!-- towncrier release notes start -->"
 issue_format = "[#{issue}](https://github.com/networktocode/netutils/issues/{issue})"
