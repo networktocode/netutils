@@ -125,6 +125,7 @@ def paloalto_panos_clean_newlines(cfg: str) -> str:
     return newlines_cleaned_cfg
 
 
+# pylint: disable=too-many-branches
 def paloalto_panos_brace_to_set(cfg: str, cfg_type: str = "file") -> str:
     r"""Convert Palo Alto Brace format configuration to set format.
 
