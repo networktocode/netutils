@@ -1,6 +1,7 @@
 | NAPALM | | NORMALIZED |
 | ---------- | -- | ------ |
 | aoscx | → | aruba_aoscx |
+| arubaoss | → | aruba_os |
 | asa | → | cisco_asa |
 | cisco_wlc_ssh | → | cisco_wlc |
 | eos | → | arista_eos |

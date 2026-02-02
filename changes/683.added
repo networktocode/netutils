@@ -1,0 +1,1 @@
+Added `aruba_aoscx` to the Netmiko and Netmiko Reverse library mappers as its a supported Netmiko driver.

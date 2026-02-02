@@ -3,7 +3,7 @@
 | adva_fsp150f2 | → | show running-config |
 | adva_fsp150f3 | → | show running-config delta |
 | arista_eos | → | show running-config |
-| aruba_os | → | show running-configuration |
+| aruba_os | → | show running-config |
 | aruba_osswitch | → | show running-config |
 | aruba_procurve | → | show running-config |
 | checkpoint_gaia | → | clish -c "show configuration" |

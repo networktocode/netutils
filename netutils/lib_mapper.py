@@ -152,17 +152,26 @@ NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "adtran_os": "adtran_os",
     "adva_fsp150f2": "adva_fsp150f2",
     "adva_fsp150f3": "adva_fsp150f3",
+    "alaxala_ax26s": "alaxala_ax26s",
+    "alaxala_ax36s": "alaxala_ax36s",
     "alcatel_aos": "alcatel_aos",
     "alcatel_sros": "alcatel_sros",
     "allied_telesis_awplus": "allied_telesis_awplus",
     "apresia_aeos": "apresia_aeos",
     "arista_eos": "arista_eos",
+    "arris_cer": "arris_cer",
+    "aruba_aoscx": "aruba_aoscx",
     "aruba_os": "aruba_os",
     "aruba_osswitch": "aruba_osswitch",
     "aruba_procurve": "aruba_procurve",
+    "asterfusion_asternos": "asterfusion_asternos",
+    "audiocode_66": "audiocode_66",
+    "audiocode_72": "audiocode_72",
+    "audiocode_shell": "audiocode_shell",
     "avaya_ers": "avaya_ers",
     "avaya_vsp": "avaya_vsp",
     "bigip_f5": "bigip_f5",  # not in netmiko
+    "bintec_boss": "bintec_boss",
     "broadcom_icos": "broadcom_icos",
     "brocade_fastiron": "brocade_fastiron",
     "brocade_fos": "brocade_fos",
@@ -171,21 +180,28 @@ NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "brocade_vdx": "brocade_vdx",
     "brocade_vyos": "brocade_vyos",
     "calix_b6": "calix_b6",
+    "casa_cmts": "casa_cmts",
+    "cdot_cros": "cdot_cros",
     "centec_os": "centec_os",
     "checkpoint_gaia": "checkpoint_gaia",
     "ciena_saos": "ciena_saos",
     "ciena_saos10": "ciena_saos10",
+    "ciena_waveserver": "ciena_waveserver",
+    "cisco_apic": "cisco_apic",
     "cisco_asa": "cisco_asa",
     "cisco_ftd": "cisco_ftd",
     "cisco_ios": "cisco_ios",
     "cisco_nxos": "cisco_nxos",
+    "cisco_s200": "cisco_s200",
     "cisco_s300": "cisco_s300",
     "cisco_tp": "cisco_tp",
     "cisco_wlc": "cisco_wlc",
     "cisco_xe": "cisco_xe",
     "cisco_xr": "cisco_xr",
     "cloudgenix_ion": "cloudgenix_ion",
+    "corelight_linux": "corelight_linux",
     "coriant": "coriant",
+    "cumulus_linux": "cumulus_linux",
     "dell_dnos9": "dell_dnos9",
     "dell_force10": "dell_force10",
     "dell_isilon": "dell_isilon",
@@ -193,47 +209,65 @@ NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "dell_os6": "dell_os6",
     "dell_os9": "dell_os9",
     "dell_powerconnect": "dell_powerconnect",
+    "dell_sonic": "dell_sonic",
+    "digi_transport": "digi_transport",
     "dlink_ds": "dlink_ds",
+    "edgecore_sonic": "edgecore_sonic",
+    "ekinops_ek360": "ekinops_ek360",
     "eltex": "eltex",
     "eltex_esr": "eltex_esr",
     "endace": "endace",
     "enterasys": "enterasys",
     "ericsson_ipos": "ericsson_ipos",
+    "ericsson_mltn63": "ericsson_mltn63",
+    "ericsson_mltn66": "ericsson_mltn66",
     "extreme": "extreme",
     "extreme_ers": "extreme_ers",
     "extreme_exos": "extreme_exos",
     "extreme_netiron": "extreme_netiron",
     "extreme_nos": "extreme_nos",
     "extreme_slx": "extreme_slx",
+    "extreme_tierra": "extreme_tierra",
     "extreme_vdx": "extreme_vdx",
     "extreme_vsp": "extreme_vsp",
     "extreme_wing": "extreme_wing",
     "f5_linux": "bigip_f5",  # no reverse
     "f5_ltm": "bigip_f5",  # no reverse
     "f5_tmsh": "bigip_f5",  # no reverse
+    "fiberstore_fsos": "fiberstore_fsos",
+    "fiberstore_fsosv2": "fiberstore_fsosv2",
     "flexvnf": "flexvnf",
     "fortinet": "fortinet",
     "generic": "generic",
     "generic_termserver": "generic_termserver",
+    "h3c_comware": "h3c_comware",
+    "hillstone_stoneos": "hillstone_stoneos",
     "hp_comware": "hp_comware",
     "hp_procurve": "hp_procurve",
     "huawei": "huawei",
     "huawei_olt": "huawei_olt",
     "huawei_smartax": "huawei_smartax",
+    "huawei_smartaxmmi": "huawei_smartaxmmi",
+    "huawei_vrp": "huawei_vrp",
     "huawei_vrpv8": "huawei_vrpv8",
+    "infinera_packet": "infinera_packet",
     "ipinfusion_ocnos": "ipinfusion_ocnos",
     "juniper": "juniper",
     "juniper_junos": "juniper_junos",
     "juniper_screenos": "juniper_screenos",
     "keymile": "keymile",
     "keymile_nos": "keymile_nos",
+    "lancom_lcossx4": "lancom_lcossx4",
     "linux": "linux",
+    "maipu": "maipu",
     "mellanox": "mellanox",
     "mellanox_mlnxos": "mellanox_mlnxos",
     "mikrotik_routeros": "mikrotik_routeros",
     "mikrotik_switchos": "mikrotik_switchos",
+    "moxa_nos": "moxa_nos",
     "mrv_lx": "mrv_lx",
     "mrv_optiswitch": "mrv_optiswitch",
+    "nec_ix": "nec_ix",
     "netapp_cdot": "netapp_cdot",
     "netgear_prosafe": "netgear_prosafe",
     "netscaler": "netscaler",
@@ -248,19 +282,25 @@ NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "raisecom_roap": "raisecom_roap",
     "ruckus_fastiron": "ruckus_fastiron",
     "ruijie_os": "ruijie_os",
+    "silverpeak_vxoa": "silverpeak_vxoa",
     "sixwind_os": "sixwind_os",
     "sophos_sfos": "sophos_sfos",
+    "telcosystems_binos": "telcosystems_binos",
+    "teldat_cit": "teldat_cit",
     "tplink_jetstream": "tplink_jetstream",
     "ubiquiti_edge": "ubiquiti_edge",
     "ubiquiti_edgerouter": "ubiquiti_edgerouter",
     "ubiquiti_edgeswitch": "ubiquiti_edgeswitch",
     "ubiquiti_unifiswitch": "ubiquiti_unifiswitch",
+    "vertiv_mph": "vertiv_mph",
     "vyatta_vyos": "vyatta_vyos",
     "vyos": "vyos",
     "watchguard_fireware": "watchguard_fireware",
     "yamaha": "yamaha",
     "zte_zxros": "zte_zxros",
+    "zyxel_os": "zyxel_os",
 }
+
 # netmiko is the base name, so every key is a value, this ensure that.
 # Netmiko | Normalized
 NETMIKO_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
@@ -271,7 +311,6 @@ NETMIKO_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 _NTCTEMPLATES_LIB_MAPPER = copy.deepcopy(NETMIKO_LIB_MAPPER)
 _NTCTEMPLATES_LIB_MAPPER["aruba_aoscx"] = "aruba_aoscx"
 _NTCTEMPLATES_LIB_MAPPER["cisco_wlc_ssh"] = "cisco_wlc"
-_NTCTEMPLATES_LIB_MAPPER["huawei_vrp"] = "huawei_vrp"
 _NTCTEMPLATES_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 _NTCTEMPLATES_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
 
@@ -291,6 +330,7 @@ NTCTEMPLATES_LIB_MAPPER_REVERSE = copy.deepcopy(_NTCTEMPLATES_LIB_MAPPER_REVERSE
 # NAPALM | Normalized
 NAPALM_LIB_MAPPER: t.Dict[str, str] = {
     "aoscx": "aruba_aoscx",
+    "arubaoss": "aruba_os",
     "asa": "cisco_asa",
     "cisco_wlc_ssh": "cisco_wlc",
     "eos": "arista_eos",
@@ -314,7 +354,7 @@ RUNNING_CONFIG_MAPPER: t.Dict[str, str] = {
     "adva_fsp150f2": "show running-config",
     "adva_fsp150f3": "show running-config delta",
     "arista_eos": "show running-config",
-    "aruba_os": "show running-configuration",
+    "aruba_os": "show running-config",
     "aruba_osswitch": "show running-config",
     "aruba_procurve": "show running-config",
     "checkpoint_gaia": 'clish -c "show configuration"',
@@ -359,9 +399,11 @@ PYNTC_LIB_MAPPER: t.Dict[str, str] = {
 ANSIBLE_LIB_MAPPER: t.Dict[str, str] = {
     "a10.acos_axapi.a10": "a10",
     "arista.eos.eos": "arista_eos",
+    "arubanetworks.aos_switch": "aruba_os",
     "arubanetworks.aoscx": "aruba_aoscx",
     "ciena.saos6.saos6": "ciena_saos",
     "cisco.asa.asa": "cisco_asa",
+    "cisco.catalystcenter": "cisco_dnac",
     "cisco.ios.ios": "cisco_ios",
     "cisco.iosxr.iosxr": "cisco_xr",
     "cisco.meraki.meraki": "cisco_meraki",
@@ -482,6 +524,19 @@ FORWARDNETWORKS_LIB_MAPPER: t.Dict[str, str] = {
     "SRX": "juniper_junos",  # no reverse
 }
 
+# NCCLIENT | Normalized
+NCCLIENT_LIB_MAPPER: t.Dict[str, str] = {
+    "alu": "alcatel_sros",
+    "ciena": "ciena_saos",
+    "iosxe": "cisco_xe",
+    "iosxr": "cisco_xr",
+    "h3c": "h3c_comware",
+    "huawei": "huawei",
+    "huaweiyang": "huawei_vrp",
+    "hpcomware": "hp_comware",
+    "junos": "juniper_junos",
+}
+
 # NIST | Normalized
 NIST_LIB_MAPPER: t.Dict[str, str] = {
     "arista:eos": "arista_eos",
@@ -499,6 +554,7 @@ NIST_LIB_MAPPER: t.Dict[str, str] = {
 NAPALM_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "eos",
     "aruba_aoscx": "aoscx",
+    "aruba_os": "arubaoss",
     "bigip_f5": "f5",
     "cisco_asa": "asa",
     "cisco_ios": "ios",
@@ -533,9 +589,11 @@ ANSIBLE_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "a10": "a10.acos_axapi.a10",
     "arista_eos": "arista.eos.eos",
     "aruba_aoscx": "arubanetworks.aoscx",
+    "aruba_os": "arubanetworks.aos_switch",
     "bigip_f5": "f5networks.f5_bigip.bigip",
     "ciena_saos": "ciena.saos6.saos6",
     "cisco_asa": "cisco.asa.asa",
+    "cisco_dnac": "cisco.catalystcenter",
     "cisco_ios": "cisco.ios.ios",
     "cisco_meraki": "cisco.meraki.meraki",
     "cisco_nxos": "cisco.nxos.nxos",
@@ -669,10 +727,26 @@ NIST_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "paloalto_panos": "paloaltonetworks:pan-os",
 }
 
+# Normlized | NCCLIENT
+NCCLIENT_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+    "alcatel_sros": "alu",
+    "ciena_saos": "ciena",
+    "cisco_ios": "iosxe",
+    "cisco_nxos": "nexus",
+    "cisco_xe": "iosxe",
+    "cisco_xr": "iosxr",
+    "h3c_comware": "h3c",
+    "huawei": "huawei",
+    "huawei_vrp": "huaweiyang",
+    "huawei_vrpv8": "huaweiyang",
+    "hp_comware": "hpcomware",
+    "juniper_junos": "junos",
+    "nokia_sros": "alu",
+}
+
 # Deep copy the reverse, where there is no actual translation happening with special
 # consideration for OS's not in netmiko.
 _MAIN_LIB_MAPPER = copy.deepcopy(NETMIKO_LIB_MAPPER)
-_MAIN_LIB_MAPPER["aruba_aoscx"] = "aruba_aoscx"
 _MAIN_LIB_MAPPER["cisco_aireos"] = "cisco_aireos"
 _MAIN_LIB_MAPPER["cisco_dnac"] = "cisco_dnac"
 _MAIN_LIB_MAPPER["cisco_meraki"] = "cisco_meraki"
@@ -681,7 +755,6 @@ _MAIN_LIB_MAPPER["citrix_netscaler"] = "citrix_netscaler"
 _MAIN_LIB_MAPPER["cloudarmor"] = "cloudarmor"
 _MAIN_LIB_MAPPER["gce"] = "gce"
 _MAIN_LIB_MAPPER["gcp_hf"] = "gcp_hf"
-_MAIN_LIB_MAPPER["huawei_vrp"] = "huawei_vrp"
 _MAIN_LIB_MAPPER["ipset"] = "ipset"
 _MAIN_LIB_MAPPER["iptables"] = "iptables"
 _MAIN_LIB_MAPPER["k8s"] = "k8s"
@@ -710,6 +783,7 @@ NAME_TO_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {
     "forward_networks": FORWARDNETWORKS_LIB_MAPPER,
     "hier_config": HIERCONFIG_LIB_MAPPER,
     "napalm": NAPALM_LIB_MAPPER,
+    "ncclient": NCCLIENT_LIB_MAPPER,
     "netmiko": NETMIKO_LIB_MAPPER,
     "netutils_parser": NETUTILSPARSER_LIB_MAPPER,
     "nist": NIST_LIB_MAPPER,
@@ -728,6 +802,7 @@ NAME_TO_LIB_MAPPER_REVERSE: t.Dict[str, t.Dict[str, str]] = {
     "forward_networks": FORWARDNETWORKS_LIB_MAPPER_REVERSE,
     "hier_config": HIERCONFIG_LIB_MAPPER_REVERSE,
     "napalm": NAPALM_LIB_MAPPER_REVERSE,
+    "ncclient": NCCLIENT_LIB_MAPPER_REVERSE,
     "netmiko": NETMIKO_LIB_MAPPER_REVERSE,
     "netutils_parser": NETUTILSPARSER_LIB_MAPPER_REVERSE,
     "nist": NIST_LIB_MAPPER_REVERSE,
