@@ -100,7 +100,7 @@ def test_leading_spaces_config_start(network_os):
 
 @pytest.mark.parametrize("network_os", all_network_os)
 def test_empty_config(network_os):
-    "Test that an empty config returns an empty list and does not raise an error."
+    """Test that an empty config returns an empty list and does not raise an error."""
     config = ""
     os_parser = compliance.parser_map[network_os]
     assert os_parser(config).config_lines == []
