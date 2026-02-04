@@ -1,1 +1,0 @@
-Fixed an issue where an empty config would raise an error when parsing Palo Alto Networks PanOS.

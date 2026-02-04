@@ -3,6 +3,12 @@
 
 This document describes all new features and changes in the release. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [v1.17.1 (2026-02-04)](https://github.com/networktocode/netutils/releases/tag/v1.17.1)
+
+### Fixed
+
+- [#803](https://github.com/networktocode/netutils/issues/803) - Fixed an issue where an empty config would raise an error when parsing Palo Alto Networks PanOS.
+
 ## [v1.17.0 (2026-01-30)](https://github.com/networktocode/netutils/releases/tag/v1.17.0)
 
 ### Added

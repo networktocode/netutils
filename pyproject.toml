@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netutils"
-version = "1.17.1a0"
+version = "1.17.1"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 license = "Apache-2.0"
