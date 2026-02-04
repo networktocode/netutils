@@ -1553,12 +1553,14 @@ class PaloAltoNetworksConfigParser(BaseSpaceConfigParser):
             True
         """
         if self.config_lines_only is None:
-            raise ValueError("Config is empty.")
+            return []
+        config_lines = self.config_lines_only.splitlines()
+        if not config_lines:
+            return []
 
         if "@dirtyId" in self.config_lines_only:
             # We have to specifically check for JSON format because it can be confused with the brace format
             raise ValueError("Found 'json' configuration format. Please provide in 'set' or 'default' (brace) format.")
-        config_lines = self.config_lines_only.splitlines()
         if any(line.endswith("{") for line in config_lines):
             converted_config = paloalto_panos_brace_to_set(cfg=self.config, cfg_type="string")
             list_config = converted_config.splitlines()
