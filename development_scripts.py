@@ -120,6 +120,18 @@ MAPPER = {
             "_dict": lib_mapper.NAPALM_LIB_MAPPER_REVERSE,
             "_file": "docs/user/lib_mapper/napalm_reverse.md",
         },
+        "ncclient": {
+            "header_src": "NCCLIENT",
+            "header_dst": "NORMALIZED",
+            "_dict": lib_mapper.NCCLIENT_LIB_MAPPER,
+            "_file": "docs/user/lib_mapper/ncclient.md",
+        },
+        "ncclient_reverse": {
+            "header_src": "NORMALIZED",
+            "header_dst": "NCCLIENT",
+            "_dict": lib_mapper.NCCLIENT_LIB_MAPPER_REVERSE,
+            "_file": "docs/user/lib_mapper/ncclient_reverse.md",
+        },
         "netmiko": {
             "header_src": "NETMIKO",
             "header_dst": "NORMALIZED",
