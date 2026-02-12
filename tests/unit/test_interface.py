@@ -638,3 +638,70 @@ def test_abbreviated_interface_name_order_failure():
     with pytest.raises(ValueError, match=r"weight is not one of the supported orderings"):
         data = {"interfaces": "SuperFastEth 1/0/1", "order": "weight"}
         interface.abbreviated_interface_name_list(**data)
+
+
+SLICE_INTERFACE_RANGE = [
+    {
+        "sent": {
+            "interfaces": ["Ethernet1", "Ethernet2", "Ethernet3", "Ethernet4"],
+            "cut_points": ["Ethernet1", "Ethernet3"],
+        },
+        "received": [["Ethernet1", "Ethernet2"], ["Ethernet3", "Ethernet4"]],
+    },
+    {
+        "sent": {
+            "interfaces": ["Ethernet2", "Ethernet3", "Ethernet4", "Ethernet6", "Ethernet7", "Ethernet8"],
+            "cut_points": ["Ethernet1", "Ethernet5"],
+        },
+        "received": [["Ethernet2", "Ethernet3", "Ethernet4"], ["Ethernet6", "Ethernet7", "Ethernet8"]],
+    },
+    {
+        "sent": {"interfaces": ["Ethernet1", "Ethernet2", "Ethernet3"], "cut_points": ["Ethernet1"]},
+        "received": [["Ethernet1", "Ethernet2", "Ethernet3"]],
+    },
+    {
+        "sent": {"interfaces": ["Ethernet1", "Ethernet2", "Ethernet3"], "cut_points": ["Ethernet2"]},
+        "received": [["Ethernet2", "Ethernet3"]],
+    },
+    {
+        "sent": {
+            "interfaces": ["Ethernet1", "Ethernet2", "Ethernet3", "Ethernet4", "Ethernet5", "Ethernet6"],
+            "cut_points": ["Ethernet1", "Ethernet2", "Ethernet4"],
+        },
+        "received": [["Ethernet1"], ["Ethernet2", "Ethernet3"], ["Ethernet4", "Ethernet5", "Ethernet6"]],
+    },
+    {
+        "sent": {
+            "interfaces": ["Ethernet4", "Ethernet1", "Ethernet3", "Ethernet2"],
+            "cut_points": ["Ethernet1", "Ethernet2"],
+        },
+        "received": [["Ethernet1"], ["Ethernet2", "Ethernet3", "Ethernet4"]],
+    },
+    {
+        "sent": {"interfaces": ["Ethernet1"], "cut_points": ["Ethernet1"]},
+        "received": [["Ethernet1"]],
+    },
+]
+
+
+@pytest.mark.parametrize("data", SLICE_INTERFACE_RANGE)
+def test_slice_interface_range(data):
+    slices = interface.slice_interface_range(data["sent"]["interfaces"], *data["sent"]["cut_points"])
+    assert len(slices) == len(data["received"])
+    for slice_iter, expected in zip(slices, data["received"]):
+        for expected_name in expected:
+            assert next(slice_iter) == expected_name
+        assert next(slice_iter) is None
+
+
+def test_slice_interface_range_none_repeats():
+    slices = interface.slice_interface_range(["Ethernet1"], "Ethernet1")
+    assert next(slices[0]) == "Ethernet1"
+    assert next(slices[0]) is None
+    assert next(slices[0]) is None
+    assert next(slices[0]) is None
+
+
+def test_slice_interface_range_no_cut_points():
+    with pytest.raises(ValueError, match="At least one cut point"):
+        interface.slice_interface_range(["Ethernet1", "Ethernet2"])
