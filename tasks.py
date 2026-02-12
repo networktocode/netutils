@@ -36,7 +36,7 @@ namespace.configure(
     {
         "netutils": {
             "project_name": "netutils",
-            "python_ver": "3.9",
+            "python_ver": "3.10",
             "local": is_truthy(os.getenv("INVOKE_NETUTILS_LOCAL", "false")),
             "image_name": "netutils",
             "image_ver": os.getenv("INVOKE_PARSER_IMAGE_VER", "latest"),
@@ -66,13 +66,14 @@ def task(function=None, *args, **kwargs):
     return task_wrapper
 
 
-def run_command(context, exec_cmd, port=None):
+def run_command(context, exec_cmd, port=None, rm=True):
     """Wrapper to run the invoke task commands.
 
     Args:
         context ([invoke.task]): Invoke task object.
         exec_cmd ([str]): Command to run.
         port (int): Used to serve local docs.
+        rm (bool): Whether to remove the container after running the command.
 
     Returns:
         result (obj): Contains Invoke result from running task.
@@ -86,12 +87,12 @@ def run_command(context, exec_cmd, port=None):
         )
         if port:
             result = context.run(
-                f"docker run -it -p {port} -v {context.netutils.pwd}:/local {context.netutils.image_name}:{context.netutils.image_ver} sh -c '{exec_cmd}'",
+                f"docker run -it {'--rm' if rm else ''} -p {port} -v {context.netutils.pwd}:/local {context.netutils.image_name}:{context.netutils.image_ver} sh -c '{exec_cmd}'",
                 pty=True,
             )
         else:
             result = context.run(
-                f"docker run -it -v {context.netutils.pwd}:/local {context.netutils.image_name}:{context.netutils.image_ver} sh -c '{exec_cmd}'",
+                f"docker run -it {'--rm' if rm else ''} -v {context.netutils.pwd}:/local {context.netutils.image_name}:{context.netutils.image_ver} sh -c '{exec_cmd}'",
                 pty=True,
             )
 

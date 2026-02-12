@@ -10,11 +10,11 @@
         "repo_url": "https://github.com/networktocode/netutils",
         "base_url": "netutils",
         "project_python_name": "netutils",
-        "project_python_base_version": "3.9",
+        "project_python_base_version": "3.10",
         "project_with_config_settings": "no",
         "generate_docs": "yes",
         "version": "1.15.1",
-        "original_publish_year": "2025",
+        "original_publish_year": "2021",
         "_drift_manager": {
             "template": "https://github.com/networktocode-llc/cookiecutter-ntc.git",
             "template_dir": "python",
