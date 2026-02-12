@@ -642,11 +642,17 @@ def test_abbreviated_interface_name_order_failure():
 
 SLICE_INTERFACE_RANGE = [
     {
-        "sent": {"interfaces": ["Ethernet1", "Ethernet2", "Ethernet3", "Ethernet4"], "cut_points": ["Ethernet1", "Ethernet3"]},
+        "sent": {
+            "interfaces": ["Ethernet1", "Ethernet2", "Ethernet3", "Ethernet4"],
+            "cut_points": ["Ethernet1", "Ethernet3"],
+        },
         "received": [["Ethernet1", "Ethernet2"], ["Ethernet3", "Ethernet4"]],
     },
     {
-        "sent": {"interfaces": ["Ethernet2", "Ethernet3", "Ethernet4", "Ethernet6", "Ethernet7", "Ethernet8"], "cut_points": ["Ethernet1", "Ethernet5"]},
+        "sent": {
+            "interfaces": ["Ethernet2", "Ethernet3", "Ethernet4", "Ethernet6", "Ethernet7", "Ethernet8"],
+            "cut_points": ["Ethernet1", "Ethernet5"],
+        },
         "received": [["Ethernet2", "Ethernet3", "Ethernet4"], ["Ethernet6", "Ethernet7", "Ethernet8"]],
     },
     {
@@ -665,7 +671,10 @@ SLICE_INTERFACE_RANGE = [
         "received": [["Ethernet1"], ["Ethernet2", "Ethernet3"], ["Ethernet4", "Ethernet5", "Ethernet6"]],
     },
     {
-        "sent": {"interfaces": ["Ethernet4", "Ethernet1", "Ethernet3", "Ethernet2"], "cut_points": ["Ethernet1", "Ethernet2"]},
+        "sent": {
+            "interfaces": ["Ethernet4", "Ethernet1", "Ethernet3", "Ethernet2"],
+            "cut_points": ["Ethernet1", "Ethernet2"],
+        },
         "received": [["Ethernet1"], ["Ethernet2", "Ethernet3", "Ethernet4"]],
     },
     {
@@ -696,4 +705,3 @@ def test_slice_interface_range_none_repeats():
 def test_slice_interface_range_no_cut_points():
     with pytest.raises(ValueError, match="At least one cut point"):
         interface.slice_interface_range(["Ethernet1", "Ethernet2"])
-

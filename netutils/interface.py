@@ -458,8 +458,7 @@ def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
     return list(_iter_tree(root, []))
 
 
-def slice_interface_range(
-    interface_names: t.List[str], *cut_points: str) -> t.Tuple[t.Iterator[str], ...]:
+def slice_interface_range(interface_names: t.List[str], *cut_points: str) -> t.Tuple[t.Iterator[str], ...]:
     """Slice a sorted list of interface names based on cut points.
 
     The interface names will be cut based on the values in the cut_points list. Each cut
@@ -519,11 +518,13 @@ def slice_interface_range(
                 yield None
 
     interface_names = sort_interface_list(interface_names)
-    sorted_cut_points = sort_interface_list(cut_points) # type: ignore
+    sorted_cut_points = sort_interface_list(cut_points)  # type: ignore
     slices = []
     start_index = None
     for i, interface in enumerate(interface_names):
-        if interface == sorted_cut_points[0] or _split_interface_tuple(sorted_cut_points[0]) < _split_interface_tuple(interface):
+        if interface == sorted_cut_points[0] or _split_interface_tuple(sorted_cut_points[0]) < _split_interface_tuple(
+            interface
+        ):
             if start_index is not None:
                 slices.append(interface_name_yielder(interface_names[start_index:i]))
             start_index = i
