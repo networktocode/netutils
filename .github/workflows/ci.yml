@@ -135,10 +135,14 @@ jobs:
           cache-to: "type=gha,scope=${{ env.INVOKE_NETUTILS_IMAGE_NAME }}-${{ env.INVOKE_NETUTILS_IMAGE_VER }}-py${{ matrix.python-version }}"
           build-args: |
 <<<<<<< HEAD
+<<<<<<< HEAD
             PYTHON_VER=${{ matrix.python-version }}
 =======
             PYTHON_VER=${{ env.INVOKE_{{cookiecutter.project_slug | upper}}_PYTHON_VER }}
 >>>>>>> 3ab07dc (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
+=======
+            PYTHON_VER=${{ matrix.python-version }}
+>>>>>>> 67a15b6 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
       - name: "Linting: Pylint"
         run: "poetry run invoke pylint"
   pytest:
@@ -176,10 +180,14 @@ jobs:
           cache-to: "type=gha,scope=${{ env.INVOKE_NETUTILS_IMAGE_NAME }}-${{ env.INVOKE_NETUTILS_IMAGE_VER }}-py${{ matrix.python-version }}"
           build-args: |
 <<<<<<< HEAD
+<<<<<<< HEAD
             PYTHON_VER=${{ matrix.python-version }}
 =======
             PYTHON_VER=${{ env.INVOKE_{{cookiecutter.project_slug | upper}}_PYTHON_VER }}
 >>>>>>> 3ab07dc (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
+=======
+            PYTHON_VER=${{ matrix.python-version }}
+>>>>>>> 67a15b6 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
       - name: "Run Tests"
         run: "poetry run invoke pytest"
   changelog:
