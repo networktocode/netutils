@@ -11,7 +11,7 @@ To avoid extra work and temporary links, make sure that publishing docs (or merg
 -->
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/networktocode/netutils/develop/docs/images/netutils_logo.png" class="logo" height="200px">
+  <img src="https://raw.githubusercontent.com/networktocode/netutils/develop/docs/images/icon-Netutils.png" class="logo" height="200px">
   <br>
   <a href="https://github.com/networktocode/netutils/actions"><img src="https://github.com/networktocode/netutils/actions/workflows/ci.yml/badge.svg?branch=main"></a>
   <a href="https://netutils.readthedocs.io/en/latest/"><img src="https://readthedocs.org/projects/netutils/badge/"></a>

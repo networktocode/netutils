@@ -1,6 +1,6 @@
 ---
 name: "Release"
-on: # yamllint disable-line rule:truthy rule:comments
+on:  # yamllint disable-line rule:truthy rule:comments
   release:
     types: ["published"]
 
@@ -48,7 +48,7 @@ jobs:
       - name: "Upload binaries to release"
         run: "gh release upload ${{ github.ref_name }} dist/*.{tar.gz,whl}"
         env:
-          GH_TOKEN: "${{ secrets.NTC_GITHUB_TOKEN }}"
+          GH_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
 
   publish-pypi:
     name: "Push Package to PyPI"
