@@ -39,7 +39,7 @@ namespace.configure(
             "python_ver": "3.10",
             "local": is_truthy(os.getenv("INVOKE_NETUTILS_LOCAL", "false")),
             "image_name": "netutils",
-            "image_ver": os.getenv("INVOKE_PARSER_IMAGE_VER", "latest"),
+            "image_ver": os.getenv("INVOKE_NETUTILS_IMAGE_VER", "latest"),
             "pwd": Path(__file__).parent,
         }
     }
@@ -172,10 +172,26 @@ def coverage(context):
     run_command(context, "coverage html")
 
 
-@task
-def pytest(context):
+@task(
+    help={
+        "pattern": "Only run tests which match the given substring. Can be used multiple times.",
+        "label": "Module path to run (e.g., tests/unit/test_foo.py). Can be used multiple times.",
+    },
+    iterable=["pattern", "label"],
+)
+def pytest(context, pattern=None, label=None):
     """Run pytest test cases."""
     exec_cmd = "pytest -vv --doctest-modules netutils/ && coverage run --source=netutils -m pytest && coverage report"
+    run_command(context, exec_cmd)
+
+    doc_test_cmd = "pytest -vv --doctest-modules netutils/"
+    pytest_cmd = "coverage run --source=netutils -m pytest"
+    if pattern:
+        pytest_cmd += "".join([f" -k {_pattern}" for _pattern in pattern])
+    if label:
+        pytest_cmd += "".join([f" {_label}" for _label in label])
+    coverage_cmd = "coverage report"
+    exec_cmd = " && ".join([doc_test_cmd, pytest_cmd, coverage_cmd])
     run_command(context, exec_cmd)
 
 
