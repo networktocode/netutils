@@ -21,6 +21,11 @@ For this reason, for certain Vendor/OS combinations, a custom URL needs to be bu
     - Custom URL Output - `['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:10.2r2:*:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:10.2:r2:*:*:*:*:*:*']`
 
 
+## Custom NIST Drivers
+There are vendor and OS that are widely used in the industry and others that are not.  For the widely adopted options, the `netutils.lib_mapper` will contain the mappings and requests can be made via the repo to update them if something is missing that you believe should be supported there.
+
+For the options that are not widely adopted there is the ability to use your own custom NIST driver value that will be used in the creation of the query URL.
+
 ## Examples
 Here are a few examples showing how to use this in your python code.
 
@@ -32,9 +37,14 @@ from netutils.nist import get_nist_urls
 get_nist_urls("cisco_ios", "15.5(2)S1c")
 # ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:cisco:ios:15.5\\(2\\)s1c:*']
 
+# Get NIST URL for the Cisco IOS object using a custom NIST driver value
+get_nist_urls("cisco_ios", "15.5(2)S1c", "cisco:not_ios")
+# ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:cisco:not_ios:15.5\\(2\\)s1c:*']
+
 # Get NIST URL(s) for the Juniper JunOS object
 get_nist_urls("juniper_junos", "10.2R2.11")
 # ['https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:10.2r2:*:*:*:*:*:*:*', 'https://services.nvd.nist.gov/rest/json/cves/2.0?virtualMatchString=cpe:2.3:o:juniper:junos:10.2:r2:*:*:*:*:*:*']
+
 ```
 
 Currently known OS/Other Platform types that require a custom NIST URL:
