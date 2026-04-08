@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netutils"
-version = "1.17.1"
+version = "1.17.2"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 license = "Apache-2.0"
@@ -17,6 +17,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
 include = [
     "LICENSE",
@@ -25,13 +26,20 @@ include = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.14"
-napalm = {version = "^4.0.0", optional = true}
+python = ">=3.10,<3.15"
+napalm = [
+    {version = "^4.1.0", optional = true, python = ">=3.10,<3.14"},
+    {version = "^5.0.0", optional = true, python = ">=3.14"}
+]
 jsonschema = {version = "^4.17.3", optional = true}
 legacycrypt = {version = "0.3", optional = true}
+# This comes from jsonschema, but does not compile on Python 3.14 directly prior to 0.28.0, so we
+# specify the minimum version here. Can remove this explicit dependency once jsonschema drops support
+# for lower versions of rpds-py
+rpds-py = {version = ">=0.28.0", optional = true}
 
 [tool.poetry.extras]
-optionals = ["jsonschema", "napalm", "legacycrypt"]
+optionals = ["jsonschema", "napalm", "legacycrypt", "rpds-py"]
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
@@ -146,7 +154,7 @@ testpaths = "tests/"
 addopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
 
 [tool.mypy]
-python_version = 3.13
+python_version = 3.14
 ignore_errors = false
 disallow_untyped_calls = true
 disallow_untyped_defs = true
