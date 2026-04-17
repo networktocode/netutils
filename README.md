@@ -18,9 +18,15 @@ A Python library that is a collection of functions that are used in the common n
 
 Full web-based HTML documentation for this library can be found over on the [Netutils Docs](https://netutils.readthedocs.io) website:
 
+<<<<<<< HEAD
 - [User Guide](https://netutils.readthedocs.io/en/latest/user/lib_overview/) - Overview, Using the library, Getting Started.
 - [Administrator Guide](https://netutils.readthedocs.io/en/latest/admin/install/) - How to Install, Configure, Upgrade, or Uninstall the library.
 - [Developer Guide](https://netutils.readthedocs.io/en/latest/dev/contributing/) - Extending the library, Code Reference, Contribution Guide.
+=======
+- [User Guide](https://netutils.readthedocs.io/en/latest/user/app_overview/) - Overview, Using the Library, Getting Started.
+- [Administrator Guide](https://netutils.readthedocs.io/en/latest/admin/install/) - How to Install, Configure, Upgrade, or Uninstall the Library.
+- [Developer Guide](https://netutils.readthedocs.io/en/latest/dev/contributing/) - Extending the Library, Code Reference, Contribution Guide.
+>>>>>>> 039361e (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 - [Release Notes / Changelog](https://netutils.readthedocs.io/en/latest/admin/release_notes/).
 - [Frequently Asked Questions](https://netutils.readthedocs.io/en/latest/user/faq/).
 
