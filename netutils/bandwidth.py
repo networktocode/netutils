@@ -37,6 +37,7 @@ BYTES_MAPPING = _get_bytes_mapping()
 
 
 def _normalize_bw(speed: str) -> str:
+    speed = speed.replace("bit", "b")
     per_second_mapping = {
         "b": "bps",
         "Kb": "Kbps",
