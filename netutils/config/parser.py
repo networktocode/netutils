@@ -390,18 +390,36 @@ class BaseSpaceConfigParser(BaseConfigParser):
                 config.append(cfg_line.config_line)
         return config
 
-    def find_children_w_parents(
-        self, parent_pattern: str, child_pattern: str, match_type: str = "exact"
+    def find_children_w_parents(  # pylint: disable=too-many-arguments,too-many-positional-arguments,too-many-locals
+        self,
+        parent_pattern: str,
+        child_pattern: str,
+        match_type: str = "exact",
+        parent_match_type: t.Optional[str] = None,
+        child_match_type: t.Optional[str] = None,
+        descendant_depth: int = -1,
     ) -> t.List[str]:
-        """Returns configuration part for a specific pattern including parents and children.
+        """Returns lines matching ``child_pattern`` under a top-level parent matching ``parent_pattern``, plus their descendants.
 
         Args:
-            parent_pattern: pattern that describes parent.
-            child_pattern: pattern that describes child.
-            match_type (optional): Exact or regex. Defaults to "exact".
+            parent_pattern: pattern that describes the top-level parent of candidate lines.
+            child_pattern: pattern that describes the line to match.
+            match_type (optional): Default match type used for both patterns when a specific
+                override is not provided. One of ``exact``, ``startswith``, ``endswith``, ``regex``.
+                Defaults to ``exact``.
+            parent_match_type (optional): Match type override for ``parent_pattern``. When
+                ``None`` (default), falls back to ``match_type``.
+            child_match_type (optional): Match type override for ``child_pattern``. When
+                ``None`` (default), falls back to ``match_type``.
+            descendant_depth (optional): How many levels of descendants below a matched line
+                to include. ``-1`` (default) includes all descendants. ``0`` returns only the
+                matched lines themselves. ``N`` includes ``N`` levels of nesting beneath each
+                matched line.
 
         Returns:
-            configuration under that parent pattern.
+            Lines matching ``child_pattern`` (whose top-level parent matches ``parent_pattern``)
+            plus descendants of those matched lines, limited by ``descendant_depth``. Sibling
+            lines that do not themselves match ``child_pattern`` are not included.
 
         Examples:
             >>> from netutils.config.parser import BaseSpaceConfigParser
@@ -414,20 +432,33 @@ class BaseSpaceConfigParser(BaseConfigParser):
             >>> print(bgp_conf)
             ['  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mask']
         """
-        config = []
-        potential_parents = [
-            elem.parents[0]
-            for elem in self.build_config_relationship()
-            if self._match_type_check(elem.config_line, child_pattern, match_type)
-        ]
-        for cfg_line in self.build_config_relationship():
-            parents = cfg_line.parents[0] if cfg_line.parents else None
-            if parents in potential_parents and self._match_type_check(
-                parents,  # type: ignore[arg-type]
-                parent_pattern,
-                match_type,
-            ):
+        p_match = parent_match_type if parent_match_type is not None else match_type
+        c_match = child_match_type if child_match_type is not None else match_type
+        relationship = self.build_config_relationship()
+        matched_indices = {
+            i
+            for i, elem in enumerate(relationship)
+            if elem.parents
+            and self._match_type_check(elem.parents[0], parent_pattern, p_match)
+            and self._match_type_check(elem.config_line, child_pattern, c_match)
+        }
+        config: t.List[str] = []
+        # Stack of (index, depth) for matched lines whose subtree we are still inside.
+        # Identifying matches by index (rather than config_line text) keeps duplicate
+        # line text under different parents from being treated as the same match.
+        active_matches: t.List[t.Tuple[int, int]] = []
+        for i, cfg_line in enumerate(relationship):
+            depth = len(cfg_line.parents)
+            while active_matches and depth <= active_matches[-1][1]:
+                active_matches.pop()
+            if i in matched_indices:
                 config.append(cfg_line.config_line)
+                active_matches.append((i, depth))
+                continue
+            if active_matches:
+                descendant_level = depth - active_matches[-1][1]
+                if descendant_depth < 0 or descendant_level <= descendant_depth:
+                    config.append(cfg_line.config_line)
         return config
 
 
