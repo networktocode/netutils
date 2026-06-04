@@ -398,8 +398,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
         parent_match_type: t.Optional[str] = None,
         child_match_type: t.Optional[str] = None,
         descendant_depth: int = -1,
+        include_parent: bool = False,
     ) -> t.List[str]:
-        """Returns lines matching ``child_pattern`` under a top-level parent matching ``parent_pattern``, plus their descendants.
+        """Return lines matching ``child_pattern`` under a parent matching ``parent_pattern``, plus descendants.
 
         Args:
             parent_pattern: pattern that describes the top-level parent of candidate lines.
@@ -415,6 +416,11 @@ class BaseSpaceConfigParser(BaseConfigParser):
                 to include. ``-1`` (default) includes all descendants. ``0`` returns only the
                 matched lines themselves. ``N`` includes ``N`` levels of nesting beneath each
                 matched line.
+            include_parent (optional): When ``True``, prepends ``parent_pattern`` to the
+                result list. Note that the literal ``parent_pattern`` string is prepended,
+                not the actual matched config line; callers using any match type other
+                than ``exact`` should be aware that the prepended value will be the raw
+                pattern, not the device line. Defaults to ``False``.
 
         Returns:
             Lines matching ``child_pattern`` (whose top-level parent matches ``parent_pattern``)
@@ -428,7 +434,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
             ...   address-family ipv4 unicast
             ...    neighbor 192.168.1.2 activate
             ...    network 172.17.1.0 mask'''
-            >>> bgp_conf = BaseSpaceConfigParser(str(config)).find_children_w_parents(parent_pattern="router bgp", child_pattern="  address-family", match_type="regex")
+            >>> bgp_conf = BaseSpaceConfigParser(str(config)).find_children_w_parents(
+            ...     parent_pattern="router bgp", child_pattern="  address-family", match_type="regex"
+            ... )
             >>> print(bgp_conf)
             ['  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mask']
         """
@@ -459,6 +467,8 @@ class BaseSpaceConfigParser(BaseConfigParser):
                 descendant_level = depth - active_matches[-1][1]
                 if descendant_depth < 0 or descendant_level <= descendant_depth:
                     config.append(cfg_line.config_line)
+        if include_parent:
+            config.insert(0, parent_pattern)
         return config
 
 

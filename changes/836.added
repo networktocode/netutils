@@ -1,1 +1,1 @@
-Added `parent_match_type`, `child_match_type`, and `descendant_depth` parameters to `find_children_w_parents`.
+Added `parent_match_type`, `child_match_type`, `descendant_depth`, and `include_parent` parameters to `find_children_w_parents`.
