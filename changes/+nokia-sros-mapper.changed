@@ -1,0 +1,1 @@
+Updated Netmiko and ntc-templates lib mappers to map `alcatel_sros` to the normalized `nokia_sros` platform.
