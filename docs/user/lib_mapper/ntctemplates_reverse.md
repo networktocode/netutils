@@ -6,7 +6,6 @@
 | adva_fsp150f2 | → | adva_fsp150f2 |
 | adva_fsp150f3 | → | adva_fsp150f3 |
 | alcatel_aos | → | alcatel_aos |
-| alcatel_sros | → | alcatel_sros |
 | allied_telesis_awplus | → | allied_telesis_awplus |
 | apresia_aeos | → | apresia_aeos |
 | arista_eos | → | arista_eos |
