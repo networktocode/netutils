@@ -119,6 +119,7 @@ BASE_INTERFACES = {
     "TenGigabitEthernet": "TenGigabitEthernet",
     "TenGigEthernet": "TenGigabitEthernet",
     "TenGigEth": "TenGigabitEthernet",
+    "TenGigE": "TenGigabitEthernet",
     "TenGig": "TenGigabitEthernet",
     "TeGig": "TenGigabitEthernet",
     "Ten": "TenGigabitEthernet",

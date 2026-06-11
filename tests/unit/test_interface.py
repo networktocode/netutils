@@ -28,6 +28,7 @@ CANONICAL_INTERFACE_NAME = [
         "received": "TwoGigabitEthernet1/0/1",
     },
     {"sent": {"interface": "Tw1/0/1"}, "received": "TwoGigabitEthernet1/0/1"},
+    {"sent": {"interface": "TenGigE0/0/0/1"}, "received": "TenGigabitEthernet0/0/0/1"},
     {
         "sent": {"interface": "SuperFastEth 1/0/1", "addl_name_map": {"SuperFastEth": "SuperFastEthernet"}},
         "received": "SuperFastEthernet1/0/1",
@@ -154,6 +155,7 @@ ABBREVIATED_INTERFACE_NAME = [
         "received": "Tw1/0/1",
     },
     {"sent": {"interface": "Tw1/0/1"}, "received": "Tw1/0/1"},
+    {"sent": {"interface": "TenGigE0/0/0/1"}, "received": "Te0/0/0/1"},
     {
         "sent": {
             "interface": "SuperFastEth 1/0/1",
