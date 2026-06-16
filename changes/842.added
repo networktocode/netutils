@@ -1,0 +1,1 @@
+Added a PYNTC lib mapper entry mapping the `cisco_xr` network driver to pyntc's `cisco_iosxr_ssh` device type.

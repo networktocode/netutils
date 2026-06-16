@@ -350,6 +350,7 @@ PYNTC_LIB_MAPPER: t.Dict[str, str] = {
     "cisco_aireos_ssh": "cisco_wlc",
     "cisco_asa_ssh": "cisco_asa",
     "cisco_ios_ssh": "cisco_ios",
+    "cisco_iosxr_ssh": "cisco_xr",
     "cisco_nxos_nxapi": "cisco_nxos",
     "f5_tmos_icontrol": "bigip_f5",
     "juniper_junos_netconf": "juniper_junos",
@@ -525,6 +526,7 @@ PYNTC_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "cisco_nxos": "cisco_nxos_nxapi",
     "cisco_wlc": "cisco_aireos_ssh",
     "cisco_xe": "cisco_ios_ssh",  # no reverse
+    "cisco_xr": "cisco_iosxr_ssh",
     "juniper_junos": "juniper_junos_netconf",
 }
 
