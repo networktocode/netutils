@@ -7,4 +7,5 @@
 | cisco_nxos | → | cisco_nxos_nxapi |
 | cisco_wlc | → | cisco_aireos_ssh |
 | cisco_xe | → | cisco_ios_ssh |
+| cisco_xr | → | cisco_iosxr_ssh |
 | juniper_junos | → | juniper_junos_netconf |
