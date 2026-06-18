@@ -1,0 +1,1 @@
+Added `sanitize_config_jinja` to render each replacement as a Jinja2 template. Requires the optional `jinja2` dependency (`pip install netutils[optionals]`).
