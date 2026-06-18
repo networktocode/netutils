@@ -1,10 +1,9 @@
 """Variable definitions to map from network automation library to network automation library."""
 
 import copy
-import typing as t
 
 # AERLEON | Normalized
-AERLEON_LIB_MAPPER: t.Dict[str, str] = {
+AERLEON_LIB_MAPPER: dict[str, str] = {
     "arista": "arista_eos",
     "aruba": "aruba_aoscx",
     "brocade": "brocade_nos",
@@ -36,7 +35,7 @@ AERLEON_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # Normalized | AERLEON
-AERLEON_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+AERLEON_LIB_MAPPER_REVERSE: dict[str, str] = {
     "arista_eos": "arista",
     "aruba_aoscx": "aruba",
     "brocade_nos": "brocade",
@@ -65,7 +64,7 @@ AERLEON_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 
 
 # CAPIRCA | Normalized
-CAPIRCA_LIB_MAPPER: t.Dict[str, str] = {
+CAPIRCA_LIB_MAPPER: dict[str, str] = {
     "arista": "arista_eos",
     "aruba": "aruba_aoscx",
     "brocade": "brocade_nos",
@@ -97,7 +96,7 @@ CAPIRCA_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # Normalized | CAPIRCA
-CAPIRCA_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+CAPIRCA_LIB_MAPPER_REVERSE: dict[str, str] = {
     "arista_eos": "arista",
     "aruba_aoscx": "aruba",
     "brocade_nos": "brocade",
@@ -146,14 +145,14 @@ DNACENTER_LIB_MAPPER_REVERSE = {
 DNA_CENTER_LIB_MAPPER_REVERSE = copy.deepcopy(DNACENTER_LIB_MAPPER_REVERSE)
 
 # Normalized | Netmiko
-NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
+NETMIKO_LIB_MAPPER: dict[str, str] = {
     "a10": "a10",
     "accedian": "accedian",
     "adtran_os": "adtran_os",
     "adva_fsp150f2": "adva_fsp150f2",
     "adva_fsp150f3": "adva_fsp150f3",
     "alcatel_aos": "alcatel_aos",
-    "alcatel_sros": "alcatel_sros",
+    "alcatel_sros": "nokia_sros",
     "allied_telesis_awplus": "allied_telesis_awplus",
     "apresia_aeos": "apresia_aeos",
     "arista_eos": "arista_eos",
@@ -263,8 +262,10 @@ NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
 }
 # netmiko is the base name, so every key is a value, this ensure that.
 # Netmiko | Normalized
-NETMIKO_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
-    value: key for key, value in NETMIKO_LIB_MAPPER.items() if key not in ["f5_ltm", "f5_tmsh", "f5_linux"]
+NETMIKO_LIB_MAPPER_REVERSE: dict[str, str] = {
+    value: key
+    for key, value in NETMIKO_LIB_MAPPER.items()
+    if key not in ["f5_ltm", "f5_tmsh", "f5_linux", "alcatel_sros"]
 }
 
 # ntc templates is primarily based on netmiko, so a copy is in order
@@ -276,12 +277,14 @@ _NTCTEMPLATES_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 _NTCTEMPLATES_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
 
 # NTCTemplates | Normalized
-NTCTEMPLATES_LIB_MAPPER: t.Dict[str, str] = {
+NTCTEMPLATES_LIB_MAPPER: dict[str, str] = {
     key: _NTCTEMPLATES_LIB_MAPPER[key] for key in sorted(_NTCTEMPLATES_LIB_MAPPER)
 }
 # Normalized | NTCTemplates
-_NTCTEMPLATES_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
-    value: key for key, value in NTCTEMPLATES_LIB_MAPPER.items() if key not in ["f5_ltm", "f5_tmsh", "f5_linux"]
+_NTCTEMPLATES_LIB_MAPPER_REVERSE: dict[str, str] = {
+    value: key
+    for key, value in NTCTEMPLATES_LIB_MAPPER.items()
+    if key not in ["f5_ltm", "f5_tmsh", "f5_linux", "alcatel_sros"]
 }
 
 _NTCTEMPLATES_LIB_MAPPER_REVERSE["cisco_xe"] = "cisco_ios"  # only reverse
@@ -289,7 +292,7 @@ _NTCTEMPLATES_LIB_MAPPER_REVERSE["cisco_xe"] = "cisco_ios"  # only reverse
 NTCTEMPLATES_LIB_MAPPER_REVERSE = copy.deepcopy(_NTCTEMPLATES_LIB_MAPPER_REVERSE)
 
 # NAPALM | Normalized
-NAPALM_LIB_MAPPER: t.Dict[str, str] = {
+NAPALM_LIB_MAPPER: dict[str, str] = {
     "aoscx": "aruba_aoscx",
     "asa": "cisco_asa",
     "cisco_wlc_ssh": "cisco_wlc",
@@ -310,7 +313,7 @@ NAPALM_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # Running config command
-RUNNING_CONFIG_MAPPER: t.Dict[str, str] = {
+RUNNING_CONFIG_MAPPER: dict[str, str] = {
     "adva_fsp150f2": "show running-config",
     "adva_fsp150f3": "show running-config delta",
     "arista_eos": "show running-config",
@@ -345,7 +348,7 @@ RUNNING_CONFIG_MAPPER: t.Dict[str, str] = {
 }
 
 # PYTNC | Normalized
-PYNTC_LIB_MAPPER: t.Dict[str, str] = {
+PYNTC_LIB_MAPPER: dict[str, str] = {
     "arista_eos_eapi": "arista_eos",
     "cisco_aireos_ssh": "cisco_wlc",
     "cisco_asa_ssh": "cisco_asa",
@@ -357,7 +360,7 @@ PYNTC_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # Ansible | Normalized
-ANSIBLE_LIB_MAPPER: t.Dict[str, str] = {
+ANSIBLE_LIB_MAPPER: dict[str, str] = {
     "a10.acos_axapi.a10": "a10",
     "arista.eos.eos": "arista_eos",
     "arubanetworks.aoscx": "aruba_aoscx",
@@ -393,7 +396,7 @@ ANSIBLE_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # PYATS | Normalized
-PYATS_LIB_MAPPER: t.Dict[str, str] = {
+PYATS_LIB_MAPPER: dict[str, str] = {
     "asa": "cisco_asa",
     "bigip": "bigip_f5",
     "dnac": "cisco_dnac",
@@ -408,7 +411,7 @@ PYATS_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # SCRAPLI | Normalized
-SCRAPLI_LIB_MAPPER: t.Dict[str, str] = {
+SCRAPLI_LIB_MAPPER: dict[str, str] = {
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
     "cisco_iosxe": "cisco_ios",
@@ -419,7 +422,7 @@ SCRAPLI_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # HIERCONFIG | Normalized
-HIERCONFIG_LIB_MAPPER: t.Dict[str, str] = {
+HIERCONFIG_LIB_MAPPER: dict[str, str] = {
     "eos": "arista_eos",
     "fastiron": "ruckus_fastiron",
     "ios": "cisco_ios",
@@ -431,7 +434,7 @@ HIERCONFIG_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # Netutils Parser | Normalized
-NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
+NETUTILSPARSER_LIB_MAPPER: dict[str, str] = {
     "adva_fsp150f2": "adva_fsp150f2",
     "adva_fsp150f3": "adva_fsp150f3",
     "arista_eos": "arista_eos",
@@ -464,7 +467,7 @@ NETUTILSPARSER_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # Forward Networks Parser | Normalized
-FORWARDNETWORKS_LIB_MAPPER: t.Dict[str, str] = {
+FORWARDNETWORKS_LIB_MAPPER: dict[str, str] = {
     "ARISTA_EOS": "arista_eos",
     "ARUBA_SWITCH": "aruba_aoscx",
     "ASA": "cisco_asa",
@@ -484,7 +487,7 @@ FORWARDNETWORKS_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # NIST | Normalized
-NIST_LIB_MAPPER: t.Dict[str, str] = {
+NIST_LIB_MAPPER: dict[str, str] = {
     "arista:eos": "arista_eos",
     "arubanetworks:arubaos": "aruba_os",
     "cisco:adaptive_security_appliance_software": "cisco_asa",
@@ -497,7 +500,7 @@ NIST_LIB_MAPPER: t.Dict[str, str] = {
 }
 
 # Normalized | NAPALM
-NAPALM_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+NAPALM_LIB_MAPPER_REVERSE: dict[str, str] = {
     "arista_eos": "eos",
     "aruba_aoscx": "aoscx",
     "bigip_f5": "f5",
@@ -518,7 +521,7 @@ NAPALM_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # Normalized | PYTNC
-PYNTC_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+PYNTC_LIB_MAPPER_REVERSE: dict[str, str] = {
     "arista_eos": "arista_eos_eapi",
     "bigip_f5": "f5_tmos_icontrol",
     "cisco_asa": "cisco_asa_ssh",
@@ -531,7 +534,7 @@ PYNTC_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # Normalized | ANSIBLE
-ANSIBLE_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+ANSIBLE_LIB_MAPPER_REVERSE: dict[str, str] = {
     "a10": "a10.acos_axapi.a10",
     "arista_eos": "arista.eos.eos",
     "aruba_aoscx": "arubanetworks.aoscx",
@@ -568,7 +571,7 @@ ANSIBLE_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # Normalized | PYATS
-PYATS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+PYATS_LIB_MAPPER_REVERSE: dict[str, str] = {
     "bigip_f5": "bigip",
     "cisco_asa": "asa",
     "cisco_dnac": "dnac",
@@ -583,7 +586,7 @@ PYATS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # Normalized | Scrapli
-SCRAPLI_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+SCRAPLI_LIB_MAPPER_REVERSE: dict[str, str] = {
     "arista_eos": "arista_eos",
     "aruba_aoscx": "aruba_aoscx",
     "cisco_ios": "cisco_iosxe",
@@ -595,7 +598,7 @@ SCRAPLI_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # Normalized | HIERCONFIG
-HIERCONFIG_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+HIERCONFIG_LIB_MAPPER_REVERSE: dict[str, str] = {
     "arista_eos": "eos",
     "cisco_ios": "ios",
     "cisco_nxos": "nxos",
@@ -607,7 +610,7 @@ HIERCONFIG_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # Normalized | Netutils Parser
-NETUTILSPARSER_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+NETUTILSPARSER_LIB_MAPPER_REVERSE: dict[str, str] = {
     "adva_fsp150f2": "adva_fsp150f2",
     "adva_fsp150f3": "adva_fsp150f3",
     "arista_eos": "arista_eos",
@@ -641,7 +644,7 @@ NETUTILSPARSER_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # Normalized | Forward Networks Parser
-FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+FORWARDNETWORKS_LIB_MAPPER_REVERSE: dict[str, str] = {
     "arista_eos": "ARISTA_EOS",
     "aruba_aoscx": "ARUBA_SWITCH",
     "bigip_f5": "F5",
@@ -659,7 +662,7 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 }
 
 # Normalized | NIST
-NIST_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+NIST_LIB_MAPPER_REVERSE: dict[str, str] = {
     "arista_eos": "arista:eos",
     "aruba_os": "arubanetworks:arubaos",
     "cisco_asa": "cisco:adaptive_security_appliance_software",
@@ -702,9 +705,9 @@ _MAIN_LIB_MAPPER["vmware_nsxv"] = "vmware_nsxv"
 _MAIN_LIB_MAPPER["vmware_nsxt"] = "vmware_nsxt"
 _MAIN_LIB_MAPPER["watchguard_firebox"] = "watchguard_firebox"
 _MAIN_LIB_MAPPER["windows"] = "windows"
-MAIN_LIB_MAPPER: t.Dict[str, str] = {key: _MAIN_LIB_MAPPER[key] for key in sorted(_MAIN_LIB_MAPPER)}
+MAIN_LIB_MAPPER: dict[str, str] = {key: _MAIN_LIB_MAPPER[key] for key in sorted(_MAIN_LIB_MAPPER)}
 
-NAME_TO_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {
+NAME_TO_LIB_MAPPER: dict[str, dict[str, str]] = {
     "aerleon": AERLEON_LIB_MAPPER,
     "ansible": ANSIBLE_LIB_MAPPER,
     "capirca": CAPIRCA_LIB_MAPPER,
@@ -722,7 +725,7 @@ NAME_TO_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {
 }
 
 
-NAME_TO_LIB_MAPPER_REVERSE: t.Dict[str, t.Dict[str, str]] = {
+NAME_TO_LIB_MAPPER_REVERSE: dict[str, dict[str, str]] = {
     "aerleon": AERLEON_LIB_MAPPER_REVERSE,
     "ansible": ANSIBLE_LIB_MAPPER_REVERSE,
     "capirca": CAPIRCA_LIB_MAPPER_REVERSE,
@@ -750,7 +753,7 @@ NAME_TO_LIB_MAPPER_REVERSE: t.Dict[str, t.Dict[str, str]] = {
 #         "ansible": "cisco.nxos.nxos",
 #         "napalm": "nxos",
 #     },
-NAME_TO_ALL_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {}
+NAME_TO_ALL_LIB_MAPPER: dict[str, dict[str, str]] = {}
 
 for tool_name, mappings in NAME_TO_LIB_MAPPER_REVERSE.items():
     for normalized_name, mapped_name in mappings.items():
