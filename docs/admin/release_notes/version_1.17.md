@@ -3,6 +3,17 @@
 
 This document describes all new features and changes in the release. The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Release Overview
+
+- Add config parsing and update RUNNING_CONFIG_MAPPER for HP Network OS devices.
+
+## [v1.17.3 (2026-07-07)](https://github.com/networktocode/netutils/releases/tag/v1.17.3)
+
+### Added
+
+- [#841](https://github.com/networktocode/netutils/issues/841) - Added TenGigE to TenGigabitEthernet interface mapping in BASE_INTERFACES.
+- [#843](https://github.com/networktocode/netutils/issues/843) - Added a PYNTC lib mapper entry mapping the `cisco_xr` network driver to pyntc's `cisco_iosxr_ssh` device type.
+
 ## [v1.17.2 (2026-04-02)](https://github.com/networktocode/netutils/releases/tag/v1.17.2)
 
 ### Dependencies
