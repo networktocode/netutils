@@ -290,8 +290,9 @@ class BaseSpaceConfigParser(BaseConfigParser):
         entry = ConfigLine(config_line, self._current_parents)
         self.config_lines.append(entry)
 
+    # pylint: disable=too-many-branches
     def build_config_relationship(self) -> t.List[ConfigLine]:
-        """Parse text tree of config lines and their parents.
+        r"""Parse text tree of config lines and their parents.
 
         Examples:
             >>> from netutils.config.parser import BaseSpaceConfigParser, ConfigLine
@@ -1372,6 +1373,7 @@ class IOSXRConfigParser(CiscoConfigParser):
             return None
         raise ValueError("Unable to find banner delimiter.")
 
+    # pylint: disable=too-many-branches
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
