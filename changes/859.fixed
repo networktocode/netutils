@@ -1,0 +1,1 @@
+Fixed config parser failing to parse more than three consecutive banners, which caused "Unable to parse banner end." errors on configs with many banners (e.g. Cisco IOS).

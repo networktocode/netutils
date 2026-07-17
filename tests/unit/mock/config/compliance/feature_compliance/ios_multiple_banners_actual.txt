@@ -1,0 +1,18 @@
+hostname multi-banner
+!
+banner exec ^C
+* exec banner *
+^C
+banner incoming ^C
+* incoming banner *
+^C
+banner login ^C
+* login banner actual *
+^C
+banner motd ^C
+* motd banner *
+^C
+banner prompt-timeout ^C
+* prompt-timeout banner *
+^C
+!

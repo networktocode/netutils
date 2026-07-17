@@ -337,10 +337,11 @@ class BaseSpaceConfigParser(BaseConfigParser):
             if line is None:
                 break
             elif self.is_banner_start(line):
-                line = self._build_banner(line)  # type: ignore
-                # line can potentially be another banner start therefore we do a secondary check.
-                if self.is_banner_start(line):
+                # Handles multiple consecutive banners (e.g. Cisco IOS)
+                while line is not None and self.is_banner_start(line):
                     line = self._build_banner(line)  # type: ignore
+                if line is None:
+                    break
 
             self._update_config_lines(line)
         return self.config_lines
@@ -1413,7 +1414,11 @@ class IOSXRConfigParser(CiscoConfigParser):
             if line is None:
                 break
             elif self.is_banner_start(line):
-                line = self._build_banner(line)  # type: ignore
+                # Handles multiple consecutive banners (e.g. Cisco IOS)
+                while line is not None and self.is_banner_start(line):
+                    line = self._build_banner(line)  # type: ignore
+                if line is None:
+                    break
 
             self._update_config_lines(line)
         return self.config_lines
