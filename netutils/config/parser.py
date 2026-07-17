@@ -291,7 +291,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         self.config_lines.append(entry)
 
     def build_config_relationship(self) -> t.List[ConfigLine]:
-        r"""Parse text tree of config lines and their parents.
+        """Parse text tree of config lines and their parents.
 
         Examples:
             >>> from netutils.config.parser import BaseSpaceConfigParser, ConfigLine
