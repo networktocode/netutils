@@ -172,7 +172,7 @@ def _get_nist_urls_default(os_platform_data: dict[str, t.Any]) -> list[str]:
     base_url = f"{'https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:'}"
 
     os_platform_data = {"base_url": base_url, **os_platform_data}
-    os_platform_data["version_string"] = os_platform_data.get("version_string", "").replace("-", ":")  # type: ignore
+    os_platform_data["version_string"] = os_platform_data.get("version_string", "").replace("-", ":")
 
     version_string = os_platform_data.get("version_string", "").lower()
     for escape_char in escape_list:
