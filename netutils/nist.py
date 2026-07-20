@@ -9,7 +9,7 @@ from netutils.lib_mapper import NIST_LIB_MAPPER_REVERSE
 from netutils.os_version import version_metadata
 
 # Setting up the dataclass values for specific parsers
-PLATFORM_FIELDS: t.Dict[str, t.Any] = {
+PLATFORM_FIELDS: dict[str, t.Any] = {
     "default": [
         ("vendor", str),
         ("os_type", str),
@@ -38,15 +38,15 @@ PLATFORM_FIELDS: t.Dict[str, t.Any] = {
 }
 
 
-class OsPlatform(metaclass=abc.ABCMeta):
+class OsPlatform(abc.ABC):
     """Base class for dynamically generated vendor specific platform data classes."""
 
-    def asdict(self) -> t.Dict[str, t.Any]:
+    def asdict(self) -> dict[str, t.Any]:
         """Returns dictionary representation of the class attributes."""
         return dataclasses.asdict(self)  # type: ignore
 
     @abc.abstractmethod
-    def get_nist_urls(self) -> t.List[str]:
+    def get_nist_urls(self) -> list[str]:
         """Returns list of NIST URLs for the platform."""
 
     def get(self, key: str) -> t.Any:
@@ -63,7 +63,7 @@ class OsPlatform(metaclass=abc.ABCMeta):
         return getattr(self, key)
 
 
-def _get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:  # pylint: disable=R0911
+def _get_nist_urls_juniper_junos(os_platform_data: dict[str, t.Any]) -> list[str]:  # pylint: disable=R0911
     """Create a list of possible NIST Url strings for JuniperPlatform.
 
     Returns:
@@ -108,14 +108,14 @@ def _get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any]) -> t.List
 
         return nist_urls
 
-    elif os_platform_data["isspecial"]:
+    if os_platform_data["isspecial"]:
         # nist_urls.append(juniper:junos:12.1x47:d40:*:*:*:*:*:*)
         nist_urls.append(f"{base_ext}:{_service}{_service_build}{delim_six}")
 
         # nist_urls.append(juniper:junos:12.1x47-d40:*:*:*:*:*:*:*)
         nist_urls.append(f"{base_ext}-{_service}{_service_build}{delim_seven}")
 
-        return nist_urls  #
+        return nist_urls
 
     if not os_platform_data.get("type"):
         # nist_urls.append(juniper:junos:12.1:-:*:*:*:*:*:*)
@@ -159,7 +159,7 @@ def _get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any]) -> t.List
     raise ValueError("Failure creating Juniper JunOS Version. Format is unknown.")
 
 
-def _get_nist_urls_default(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
+def _get_nist_urls_default(os_platform_data: dict[str, t.Any]) -> list[str]:
     r"""Create a list of possible NIST Url strings.
 
     Child models with NIST URL customizations need their own "get_nist_urls" method.
@@ -172,7 +172,7 @@ def _get_nist_urls_default(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
     base_url = f"{'https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:'}"
 
     os_platform_data = {"base_url": base_url, **os_platform_data}
-    os_platform_data["version_string"] = os_platform_data.get("version_string").replace("-", ":")  # type: ignore
+    os_platform_data["version_string"] = os_platform_data.get("version_string", "").replace("-", ":")  # type: ignore
 
     version_string = os_platform_data.get("version_string", "").lower()
     for escape_char in escape_list:
@@ -218,7 +218,7 @@ def _os_platform_object_builder(vendor: str, platform: str, version: str) -> obj
         "version_string": version,
     }
 
-    if version_parser:
+    if version_parser and "Error" not in version_parser:
         field_values.update(version_parser)
 
     class_name = f"{vendor.capitalize()}{platform.capitalize()}"
@@ -231,13 +231,13 @@ def _os_platform_object_builder(vendor: str, platform: str, version: str) -> obj
     return platform_cls(**field_values)
 
 
-get_nist_url_funcs: t.Dict[str, t.Any] = {
+get_nist_url_funcs: dict[str, t.Any] = {
     "default": _get_nist_urls_default,
     "juniper": {"junos": _get_nist_urls_juniper_junos},
 }
 
 
-def get_nist_vendor_platform_urls(vendor: str, platform: str, version: str) -> t.List[str]:
+def get_nist_vendor_platform_urls(vendor: str, platform: str, version: str) -> list[str]:
     """Generate list of possible NIST URLs for the Vendor, OS Platform, and Version.
 
     Args:
@@ -261,7 +261,7 @@ def get_nist_vendor_platform_urls(vendor: str, platform: str, version: str) -> t
     return _get_nist_urls_default(platform_data)
 
 
-def get_nist_urls(network_driver: str, version: str) -> t.List[str]:
+def get_nist_urls(network_driver: str, version: str) -> list[str]:
     """Generate list of possible NIST URLs for the Network Driver, and Version.
 
     Args:
