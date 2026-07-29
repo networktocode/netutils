@@ -8,7 +8,7 @@ import typing as t
 from netutils.utils import jinja2_convenience_function
 
 try:
-    import jinja2
+    from jinja2.sandbox import SandboxedEnvironment
 
     HAS_JINJA2 = True
 except ImportError:
@@ -142,7 +142,7 @@ def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, st
             "Install it with `pip install netutils[optionals]` or `pip install jinja2`."
         )
 
-    env = jinja2.Environment(autoescape=False)  # noqa: S701  # config text must not be HTML-escaped
+    env = SandboxedEnvironment(autoescape=False)  # noqa: S701  # config text must not be HTML-escaped
     env.filters.update(jinja2_convenience_function())
 
     def _make_replacer(template_str: str) -> t.Callable[[t.Match[str]], str]:
