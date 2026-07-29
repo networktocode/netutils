@@ -93,21 +93,21 @@ def sanitize_config(config: str, filters: t.Optional[t.List[t.Dict[str, str]]] =
 
 
 def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, str]]] = None) -> str:
-    r"""Like ``sanitize_config``, but renders each ``replace`` value as a Jinja2 template.
+    r"""Like `sanitize_config`, but renders each `replace` value as a Jinja2 template.
 
     This allows the replacement text to transform the matched data, e.g. hashing a secret
-    with the ``hash_data`` filter instead of dropping it with a static placeholder. The regex
+    with the `hash_data` filter instead of dropping it with a static placeholder. The regex
     capture groups are exposed to the template so the original values can be transformed in
-    place. References to capture groups follow the familiar ``re.sub`` backreference syntax
-    (``\1``, ``\2``, ...) and may be used anywhere inside a ``{{ ... }}`` expression. Named
-    groups (``(?P<name>...)``) are additionally available by name, so a user-defined group
+    place. References to capture groups follow the familiar `re.sub` backreference syntax
+    (`\1`, `\2`, ...) and may be used anywhere inside a `{{ ... }}` expression. Named
+    groups (`(?P<name>...)`) are additionally available by name, so a user-defined group
     name can never shadow a positional backreference.
 
-    A ``replace`` value that contains no Jinja expression (``{{``) falls back to plain
-    ``re.sub`` string substitution, so a mixed list of filters works as expected.
+    A `replace` value that contains no Jinja expression (`{{`) falls back to plain
+    `re.sub` string substitution, so a mixed list of filters works as expected.
 
-    This function requires the optional ``jinja2`` dependency
-    (``pip install netutils[optionals]``).
+    This function requires the optional `jinja2` dependency
+    (`pip install netutils[optionals]`).
 
     Args:
         config: A string representation of a device configuration.
