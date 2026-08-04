@@ -157,6 +157,7 @@ NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "allied_telesis_awplus": "allied_telesis_awplus",
     "apresia_aeos": "apresia_aeos",
     "arista_eos": "arista_eos",
+    "aruba_aoscx": "aruba_aoscx",
     "aruba_os": "aruba_os",
     "aruba_osswitch": "aruba_osswitch",
     "aruba_procurve": "aruba_procurve",
@@ -420,6 +421,7 @@ SCRAPLI_LIB_MAPPER: t.Dict[str, str] = {
 
 # HIERCONFIG | Normalized
 HIERCONFIG_LIB_MAPPER: t.Dict[str, str] = {
+    "aruba_aoscx": "aruba_aoscx",
     "eos": "arista_eos",
     "fastiron": "ruckus_fastiron",
     "ios": "cisco_ios",
@@ -597,6 +599,7 @@ SCRAPLI_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 # Normalized | HIERCONFIG
 HIERCONFIG_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "eos",
+    "aruba_aoscx": "aruba_aoscx",
     "cisco_ios": "ios",
     "cisco_nxos": "nxos",
     "cisco_xe": "ios",

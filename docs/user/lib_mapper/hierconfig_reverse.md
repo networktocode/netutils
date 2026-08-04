@@ -1,6 +1,7 @@
 | NORMALIZED | | HIERCONFIG |
 | ---------- | -- | ------ |
 | arista_eos | → | eos |
+| aruba_aoscx | → | aruba_aoscx |
 | cisco_ios | → | ios |
 | cisco_nxos | → | nxos |
 | cisco_xe | → | ios |
