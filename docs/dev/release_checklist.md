@@ -78,7 +78,7 @@ For major versions, use `major`:
 Bumping version from 1.0.0-beta.2 to 1.0.0
 ```
 
-For patch versions, use `minor`:
+For minor versions, use `minor`:
 
 ```no-highlight
 > poetry version minor
