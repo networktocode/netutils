@@ -14,7 +14,7 @@ for file_path in Path("netutils").rglob("*.py"):
         parts = parts[:-1]
 
     with mkdocs_gen_files.open(full_doc_path, "w") as fd:
-        IDENTIFIER = ".".join(parts)
-        print(f"::: {IDENTIFIER}", file=fd)
+        identifier = ".".join(parts)
+        print(f"::: {identifier}", file=fd)
 
     mkdocs_gen_files.set_edit_path(full_doc_path, file_path)

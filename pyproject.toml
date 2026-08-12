@@ -22,48 +22,51 @@ include = [
     "README.md",
 ]
 
+packages = [
+    { include = "netutils" },
+]
+
 [tool.poetry.dependencies]
 python = ">=3.10,<3.14"
 click = "*"
 
 [tool.poetry.group.dev.dependencies]
-coverage = "*"
+coverage = "~7.15.4"
 pytest = "*"
 mock = "*"
 pyyaml = "^6.0.1"
-pylint = "^3.1.0"
-yamllint = "^1.35.1"
-invoke = "^2.2.0"
+pylint = "~4.0.6"
+yamllint = "~1.38.0"
+invoke = "~3.0.3"
 toml = "^0.10.2"
 attrs = "^23.2.0"
-towncrier = ">=23.6.0,<=24.8.0"
-ruff = "*"
+towncrier = "~25.8.0"
+ruff = "~0.16.2"
 Markdown = "*"
 
 [tool.poetry.group.docs.dependencies]
 # Rendering docs to HTML
-mkdocs = "1.6.1"
+mkdocs = "~1.6.1"
 # Embedding YAML files into Markdown documents as tables
-markdown-data-tables = "1.0.0"
+markdown-data-tables = "~1.0.0"
 # Render custom markdown for version added/changed/remove notes
-markdown-version-annotations = "1.0.1"
+markdown-version-annotations = "~1.0.1"
 # Automatically generate some files as part of mkdocs build
-mkdocs-gen-files = "0.5.0"
+mkdocs-gen-files = "~0.6.1"
 # Image lightboxing in mkdocs
-mkdocs-glightbox = "0.4.0"
+mkdocs-glightbox = "~0.5.2"
 # Use Jinja2 templating in docs - see settings.md
-mkdocs-macros-plugin = "1.3.7"
+mkdocs-macros-plugin = "~1.5.0"
 # Material for mkdocs theme
-mkdocs-material = "9.6.15"
+mkdocs-material = "~9.7.7"
 # Handle docs redirections
-mkdocs-redirects = "1.2.2"
+mkdocs-redirects = "~1.2.3"
 # Automatically handle index pages for docs sections
-mkdocs-section-index = "0.3.10"
+mkdocs-section-index = "~0.3.12"
 # Automatic documentation from sources, for MkDocs
-mkdocstrings = "0.27.0"
+mkdocstrings = "~1.0.6"
 # Python-specific extension to mkdocstrings
-mkdocstrings-python = "1.13.0"
-griffe = "1.1.1"
+mkdocstrings-python = "~2.0.5"
 
 [tool.poetry.scripts]
 netutils = 'netutils.cli:main'
