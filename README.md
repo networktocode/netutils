@@ -1,7 +1,7 @@
 # Netutils
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/networktocode/netutils/develop/docs/images/icon-Netutils.png" class="logo" height="200px">
+  <img src="https://raw.githubusercontent.com/networktocode/netutils/develop/docs/images/icon-netutils.png" class="logo" height="200px">
   <br>
   <a href="https://github.com/networktocode/netutils/actions"><img src="https://github.com/networktocode/netutils/actions/workflows/ci.yml/badge.svg?branch=main"></a>
   <a href="https://netutils.readthedocs.io/en/latest"><img src="https://readthedocs.org/projects/netutils/badge/"></a>
@@ -20,6 +20,7 @@ Full web-based HTML documentation for this library can be found over on the [Net
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 - [User Guide](https://netutils.readthedocs.io/en/latest/user/lib_overview/) - Overview, Using the library, Getting Started.
 - [Administrator Guide](https://netutils.readthedocs.io/en/latest/admin/install/) - How to Install, Configure, Upgrade, or Uninstall the library.
 - [Developer Guide](https://netutils.readthedocs.io/en/latest/dev/contributing/) - Extending the library, Code Reference, Contribution Guide.
@@ -33,6 +34,11 @@ Full web-based HTML documentation for this library can be found over on the [Net
 - [Administrator Guide](https://netutils.readthedocs.io/en/latest/admin/install/) - How to Install, Configure, Upgrade, or Uninstall the Library.
 - [Developer Guide](https://netutils.readthedocs.io/en/latest/dev/contributing/) - Extending the Library, Code Reference, Contribution Guide.
 >>>>>>> c6f4d54 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
+=======
+- [User Guide](https://netutils.readthedocs.io/en/latest/user/app_overview/) - Overview, Using the Library, Getting Started.
+- [Administrator Guide](https://netutils.readthedocs.io/en/latest/admin/install/) - How to Install, Configure, Upgrade, or Uninstall the Library.
+- [Developer Guide](https://netutils.readthedocs.io/en/latest/dev/contributing/) - Extending the Library, Code Reference, Contribution Guide.
+>>>>>>> fb127c6 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 - [Release Notes / Changelog](https://netutils.readthedocs.io/en/latest/admin/release_notes/).
 - [Frequently Asked Questions](https://netutils.readthedocs.io/en/latest/user/faq/).
 

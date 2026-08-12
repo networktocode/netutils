@@ -229,6 +229,16 @@ def pytest(context, pattern=None, label=None):
     exec_cmd = " && ".join([doc_test_cmd, pytest_cmd, coverage_cmd])
     run_command(context, exec_cmd)
 
+    doc_test_cmd = "pytest -vv --doctest-modules netutils/"
+    pytest_cmd = "coverage run --source=netutils -m pytest"
+    if pattern:
+        pytest_cmd += "".join([f" -k {_pattern}" for _pattern in pattern])
+    if label:
+        pytest_cmd += "".join([f" {_label}" for _label in label])
+    coverage_cmd = "coverage report"
+    exec_cmd = " && ".join([doc_test_cmd, pytest_cmd, coverage_cmd])
+    run_command(context, exec_cmd)
+
 
 @task(aliases=("a",))
 def autoformat(context):
