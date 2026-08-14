@@ -5,10 +5,7 @@ import re
 import subprocess
 import sys
 
-HEX_RE = re.compile(
-    r"^[^,]*,(?P<hex>[0-9A-Fa-f]{6}),"
-    r'(?:"(?P<company_q>(?:[^"]|"")*)"|(?P<company_u>[^,]*))(?:,|$)'
-)
+HEX_RE = re.compile(r"^[^,]*,(?P<hex>[0-9A-Fa-f]{6})," r'(?:"(?P<company_q>(?:[^"]|"")*)"|(?P<company_u>[^,]*))(?:,|$)')
 
 OUI_MAPPINGS = {}
 URL = "https://standards-oui.ieee.org/oui/oui.csv"
