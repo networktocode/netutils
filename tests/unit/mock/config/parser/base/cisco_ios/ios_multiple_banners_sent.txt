@@ -1,0 +1,22 @@
+hostname multi-banner
+!
+banner exec ^C
+* exec banner line 1 *
+* exec banner line 2 *
+^C
+banner incoming ^C
+* incoming banner line 1 *
+* incoming banner line 2 *
+^C
+banner login ^C
+* login banner line 1 *
+* login banner line 2 *
+^C
+banner motd ^C
+* motd banner line 1 *
+* motd banner line 2 *
+^C
+banner prompt-timeout ^C
+* prompt-timeout banner line 1 *
+^C
+ip route 0.0.0.0 0.0.0.0 192.168.1.1

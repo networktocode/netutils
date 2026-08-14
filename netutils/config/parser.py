@@ -290,6 +290,7 @@ class BaseSpaceConfigParser(BaseConfigParser):
         entry = ConfigLine(config_line, self._current_parents)
         self.config_lines.append(entry)
 
+    # pylint: disable=too-many-branches
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
@@ -337,10 +338,11 @@ class BaseSpaceConfigParser(BaseConfigParser):
             if line is None:
                 break
             elif self.is_banner_start(line):
-                line = self._build_banner(line)  # type: ignore
-                # line can potentially be another banner start therefore we do a secondary check.
-                if self.is_banner_start(line):
+                # Handles multiple consecutive banners (e.g. Cisco IOS)
+                while line is not None and self.is_banner_start(line):
                     line = self._build_banner(line)  # type: ignore
+                if line is None:
+                    break
 
             self._update_config_lines(line)
         return self.config_lines
@@ -1371,6 +1373,7 @@ class IOSXRConfigParser(CiscoConfigParser):
             return None
         raise ValueError("Unable to find banner delimiter.")
 
+    # pylint: disable=too-many-branches
     def build_config_relationship(self) -> t.List[ConfigLine]:
         r"""Parse text tree of config lines and their parents.
 
@@ -1413,7 +1416,11 @@ class IOSXRConfigParser(CiscoConfigParser):
             if line is None:
                 break
             elif self.is_banner_start(line):
-                line = self._build_banner(line)  # type: ignore
+                # Handles multiple consecutive banners (e.g. Cisco IOS)
+                while line is not None and self.is_banner_start(line):
+                    line = self._build_banner(line)  # type: ignore
+                if line is None:
+                    break
 
             self._update_config_lines(line)
         return self.config_lines
