@@ -4,10 +4,10 @@ import re
 import subprocess
 import sys
 
-HEX_RE = r"^MA-L,(?P<hex>[0-9A-Fa-f]{6}),\"(?P<company>[^\"]+)\",.*$"
+HEX_RE = re.compile(r"^[^,]*,(?P<hex>[0-9A-Fa-f]{6})," r'(?:"(?P<company_q>(?:[^"]|"")*)"|(?P<company_u>[^,]*))(?:,|$)')
 
 OUI_MAPPINGS = {}
-URL = "https://standards-oui.ieee.org/oui/oui.txt"
+URL = "https://standards-oui.ieee.org/oui/oui.csv"
 
 
 def download_csv_text(url: str = URL) -> str:
@@ -35,10 +35,15 @@ if __name__ == "__main__":
 
     with open(output_path, "r", encoding="utf-8", newline="") as oui_file:
         for line in oui_file:
-            if re.search(HEX_RE, line):
-                group_regex_values = re.search(HEX_RE, line).groupdict()
-                if group_regex_values.get("hex") and group_regex_values.get("company"):
-                    OUI_MAPPINGS.update({group_regex_values.get("hex").lower(): group_regex_values.get("company")})
+            match = HEX_RE.search(line)
+            if not match:
+                continue
+            groups = match.groupdict()
+            hex_value = groups.get("hex")
+            company = groups.get("company_q") or groups.get("company_u") or ""
+            company = company.replace('""', '"').strip()
+            if hex_value and company:
+                OUI_MAPPINGS[hex_value.lower()] = company
 
     with open(output_path, "w", encoding="utf-8") as oui_mappings:
         oui_mappings.write('"""Dictionary object to store OUI information."""\n')
