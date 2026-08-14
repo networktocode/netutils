@@ -8,7 +8,7 @@ This script will do the following:
 It shouldn't be necessary to run this file manually. It is automatically called by `invoke generate-release-notes`.
 
 Example:
-    $ python bin/ensure_release_notes.py --version '1.0'
+    $ python ensure_release_notes.py --version '1.0.0'
 """
 
 import argparse
@@ -23,7 +23,7 @@ from pathlib import Path
 
 def release_notes_pyproject_toml(version):
     """Update the pyproject.toml file to set the towncrier filename for the given version."""
-    pyproject_file = Path(__file__).parent.parent / "pyproject.toml"
+    pyproject_file = Path(__file__).parent.parent.parent / "pyproject.toml"
     pyproject_content = pyproject_file.read_text()
     pyproject_data = tomllib.loads(pyproject_content)
     release_notes_file = f"docs/admin/release_notes/version_{version}.md"
@@ -62,7 +62,9 @@ def release_notes_pyproject_toml(version):
 
 def ensure_release_notes_file(version):
     """Ensure that the release notes file for the given version exists and is referenced in mkdocs.yml."""
-    release_notes_file = Path(__file__).parent.parent / "docs" / "admin" / "release_notes" / f"version_{version}.md"
+    release_notes_file = (
+        Path(__file__).parent.parent.parent / "docs" / "admin" / "release_notes" / f"version_{version}.md"
+    )
     if not release_notes_file.exists():
         # Create a new release notes file with a basic template from towncrier_header.txt
         towncrier_header = Path(__file__).parent.parent / "towncrier_header.txt"
@@ -72,7 +74,7 @@ def ensure_release_notes_file(version):
 
 def ensure_mkdocs_version(version):
     """Ensure that mkdocs.yml includes the new release notes file in the navigation."""
-    mkdocs_yml_file = Path(__file__).parent.parent / "mkdocs.yml"
+    mkdocs_yml_file = Path(__file__).parent.parent.parent / "mkdocs.yml"
     mkdocs_yml_content = mkdocs_yml_file.read_text()
     release_notes_nav_entry = f'          - v{version}: "admin/release_notes/version_{version}.md"\n'
     if release_notes_nav_entry in mkdocs_yml_content:

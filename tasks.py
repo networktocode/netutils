@@ -36,7 +36,7 @@ namespace.configure(
     {
         "netutils": {
             "project_name": "netutils",
-            "python_ver": "3.10",
+            "python_ver": "3.14",
             "local": is_truthy(os.getenv("INVOKE_NETUTILS_LOCAL", "false")),
             "image_name": "netutils",
             "image_ver": os.getenv("INVOKE_NETUTILS_IMAGE_VER", "latest"),
@@ -332,18 +332,21 @@ def docs(context):
     help={
         "version": "Version of netutils to generate the release notes for.",
         "date": "Date of the release (default: today).",
+        "keep": "Keep existing release notes files. Useful for testing. (default: False).",
     }
 )
-def generate_release_notes(context, version="", date=""):
+def generate_release_notes(context, version="", date="", keep=False):
     """Generate Release Notes using Towncrier."""
+    command = "poetry run towncrier build"
     if not version:
         version = context.run("poetry version --short", hide=True).stdout.strip()
-
-    version_major_minor = ".".join(version.split(".")[:2])
-    context.run(f"poetry run python bin/ensure_release_notes.py --version {version_major_minor}")
-
-    command = f"poetry run towncrier build --version {version} --yes"
+    command += f" --version {version}"
     if date:
         command += f" --date {date}"
+    command += " --keep" if keep else " --yes"
+
+    version_major_minor = ".".join(version.split(".")[:2])
+    context.run(f"poetry run python development/bin/ensure_release_notes.py --version {version_major_minor}")
+
     # Due to issues with git repo ownership in the containers, this must always run locally.
     context.run(command)

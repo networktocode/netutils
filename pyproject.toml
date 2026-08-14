@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netutils"
-version = "1.15.1"
+version = "0.1.0a0"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 readme = "README.md"
@@ -16,10 +16,12 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
+
 include = [
-    "LICENSE",
-    "README.md",
+    # Poetry by default will exclude files that are in .gitignore
+    { path = "netutils/static/netutils/docs/**/*", format = ["sdist", "wheel"] }
 ]
 
 packages = [
@@ -27,7 +29,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.14"
+python = ">=3.10,<3.15"
 click = "*"
 
 [tool.poetry.group.dev.dependencies]
@@ -150,7 +152,7 @@ addopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
 package = "netutils"
 directory = "changes"
 filename = "docs/admin/release_notes/version_X.Y.md"
-template = "towncrier_template.j2"
+template = "development/towncrier_template.j2"
 start_string = "<!-- towncrier release notes start -->"
 issue_format = "[#{issue}](https://github.com/networktocode/netutils/issues/{issue})"
 
