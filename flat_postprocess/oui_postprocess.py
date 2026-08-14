@@ -4,7 +4,7 @@ import re
 import subprocess
 import sys
 
-HEX_RE = r"^(?P<hex>[0-9A-Fa-f]{6})\s*\(base 16\)\s+(?P<company>.+?)\s*$"
+HEX_RE = r"^MA-L,(?P<hex>[0-9A-Fa-f]{6}),\"(?P<company>[^\"]+)\",.*$"
 
 OUI_MAPPINGS = {}
 URL = "https://standards-oui.ieee.org/oui/oui.txt"
