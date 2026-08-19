@@ -145,7 +145,17 @@ DNACENTER_LIB_MAPPER_REVERSE = {
 # REMOVE IN 2.X, kept for backward compatibility
 DNA_CENTER_LIB_MAPPER_REVERSE = copy.deepcopy(DNACENTER_LIB_MAPPER_REVERSE)
 
-# Normalized | Netmiko
+# LibreNMS | Normalized
+LIBRENMS_LIB_MAPPER: t.Dict[str, str] = {
+    "arista_eos": "arista_eos",
+    "iosxe": "cisco_xe",
+    "iosxr": "cisco_xr",
+    "junos": "juniper_junos",
+    "nxos": "cisco_nxos",
+    "procera": "applogic_procera",
+}
+
+# Netmiko | Normalized
 NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "a10": "a10",
     "accedian": "accedian",
@@ -661,6 +671,16 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "paloalto_panos": "PAN_OS",
 }
 
+# Normalized | LibreNMS
+LIBRENMS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+    "applogic_procera": "procera",
+    "arista_eos": "arista_eos",
+    "cisco_nxos": "nxos",
+    "cisco_xe": "iosxe",
+    "cisco_xr": "iosxr",
+    "juniper_junos": "junos",
+}
+
 # Normalized | NIST
 NIST_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "arista:eos",
@@ -677,6 +697,7 @@ NIST_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 # Deep copy the reverse, where there is no actual translation happening with special
 # consideration for OS's not in netmiko.
 _MAIN_LIB_MAPPER = copy.deepcopy(NETMIKO_LIB_MAPPER)
+_MAIN_LIB_MAPPER["applogic_procera"] = "applogic_procera"
 _MAIN_LIB_MAPPER["cisco_aireos"] = "cisco_aireos"
 _MAIN_LIB_MAPPER["cisco_dnac"] = "cisco_dnac"
 _MAIN_LIB_MAPPER["cisco_meraki"] = "cisco_meraki"
@@ -713,6 +734,7 @@ NAME_TO_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {
     "dna_center": DNACENTER_LIB_MAPPER,
     "forward_networks": FORWARDNETWORKS_LIB_MAPPER,
     "hier_config": HIERCONFIG_LIB_MAPPER,
+    "librenms": LIBRENMS_LIB_MAPPER,
     "napalm": NAPALM_LIB_MAPPER,
     "netmiko": NETMIKO_LIB_MAPPER,
     "netutils_parser": NETUTILSPARSER_LIB_MAPPER,
@@ -731,6 +753,7 @@ NAME_TO_LIB_MAPPER_REVERSE: t.Dict[str, t.Dict[str, str]] = {
     "dna_center": DNACENTER_LIB_MAPPER_REVERSE,
     "forward_networks": FORWARDNETWORKS_LIB_MAPPER_REVERSE,
     "hier_config": HIERCONFIG_LIB_MAPPER_REVERSE,
+    "librenms": LIBRENMS_LIB_MAPPER_REVERSE,
     "napalm": NAPALM_LIB_MAPPER_REVERSE,
     "netmiko": NETMIKO_LIB_MAPPER_REVERSE,
     "netutils_parser": NETUTILSPARSER_LIB_MAPPER_REVERSE,

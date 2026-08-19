@@ -8,5 +8,4 @@ data = [
     ConfigLine(
         config_line="======\nintended config motd banner\n======\n   || ($hostname) ||\n^C", parents=("banner motd ^C",)
     ),
-    ConfigLine(config_line=None, parents=()),
 ]
