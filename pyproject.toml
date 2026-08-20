@@ -23,9 +23,7 @@ classifiers = [
 include = [
     "LICENSE",
     "README.md",
-    "netutils/protocols.json",
-    # Poetry by default will exclude files that are in .gitignore
-    { path = "netutils/static/netutils/docs/**/*", format = ["sdist", "wheel"] }
+    "netutils/protocols.json"
 ]
 
 packages = [
