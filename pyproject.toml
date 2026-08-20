@@ -51,7 +51,6 @@ optionals = ["jinja2", "jsonschema", "legacycrypt", "napalm", "rpds-py"]
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
-invoke = "*"
 pytest = "*"
 mock = "*"
 mypy = "*"
