@@ -36,11 +36,7 @@ namespace.configure(
     {
         "netutils": {
             "project_name": "netutils",
-<<<<<<< HEAD
-            "python_ver": "3.10",
-=======
             "python_ver": "3.14",
->>>>>>> e865bbc (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
             "local": is_truthy(os.getenv("INVOKE_NETUTILS_LOCAL", "false")),
             "image_name": "netutils",
             "image_ver": os.getenv("INVOKE_NETUTILS_IMAGE_VER", "latest"),
@@ -153,9 +149,15 @@ def lock(context, check=False):
 @task
 def clean(context):
     """Remove the project specific image."""
-    print(f"Attempting to forcefully remove image {context.netutils.image_name}:{context.netutils.image_ver}")
-    context.run(f"docker rmi {context.netutils.image_name}:{context.netutils.image_ver} --force")
-    print(f"Successfully removed image {context.netutils.image_name}:{context.netutils.image_ver}")
+    print(
+        f"Attempting to forcefully remove image {context.netutils.image_name}:{context.netutils.image_ver}"
+    )
+    context.run(
+        f"docker rmi {context.netutils.image_name}:{context.netutils.image_ver} --force"
+    )
+    print(
+        f"Successfully removed image {context.netutils.image_name}:{context.netutils.image_ver}"
+    )
 
 
 @task
@@ -339,7 +341,13 @@ def build_and_check_docs(context):
     if match:
         major = match.group(1)
         minor = match.group(2)
-        release_notes_file = Path(__file__).parent / "docs" / "admin" / "release_notes" / f"version_{major}.{minor}.md"
+        release_notes_file = (
+            Path(__file__).parent
+            / "docs"
+            / "admin"
+            / "release_notes"
+            / f"version_{major}.{minor}.md"
+        )
         if not release_notes_file.exists():
             print(f"Release notes file `version_{major}.{minor}.md` does not exist.")
             raise Exit(code=1)
@@ -370,7 +378,9 @@ def generate_release_notes(context, version="", date="", keep=False):
     command += " --keep" if keep else " --yes"
 
     version_major_minor = ".".join(version.split(".")[:2])
-    context.run(f"poetry run python development/bin/ensure_release_notes.py --version {version_major_minor}")
+    context.run(
+        f"poetry run python development/bin/ensure_release_notes.py --version {version_major_minor}"
+    )
 
     # Due to issues with git repo ownership in the containers, this must always run locally.
     context.run(command)

@@ -6,11 +6,7 @@
 - Commit to SemVer
 - F5 fixes
 
-<<<<<<< HEAD
 ## v1.0.0 - 2021-11
-=======
-## [v1.0.0] - 2026-08-14
->>>>>>> e865bbc (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
 ### Added
 

@@ -74,14 +74,6 @@ jobs:
 
       - name: "Publish package distributions to PyPI"
         uses: "pypa/gh-action-pypi-publish@ed0c53931b1dc9bd32cbe73a98c7f6766f8a527e"  # v1.13.0
-<<<<<<< HEAD
-        ## Used for networktocode org since trusted publisher isn't supported for GitHub Plan.
-        with:
-          user: "__token__"
-          password: "${{ secrets.PYPI_API_TOKEN }}"
-          # End publish to PyPI job.
-=======
->>>>>>> e865bbc (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
   slack-notify:
     needs:
