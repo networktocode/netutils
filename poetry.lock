@@ -1508,6 +1508,22 @@ files = [
 ]
 
 [[package]]
+name = "mkdocs-python-classy"
+version = "0.1.3"
+description = "Mkdocs plugin to view Python Classes."
+optional = false
+python-versions = ">=3.8,<4.0"
+groups = ["docs"]
+files = [
+    {file = "mkdocs_python_classy-0.1.3-py3-none-any.whl", hash = "sha256:fdcfe1cffb39069abdd00873556a88493f463448fad27337ca781e39ad3472a8"},
+    {file = "mkdocs_python_classy-0.1.3.tar.gz", hash = "sha256:a6ffdc7ac995b5773eaca97aea88cab43c10bb8e127b238ec052bd92389cc175"},
+]
+
+[package.dependencies]
+mkdocs = ">=1.4.0,<2.0.0"
+pymdown-extensions = ">=6.3"
+
+[[package]]
 name = "mkdocs-redirects"
 version = "1.2.3"
 description = "A MkDocs plugin for dynamic page redirects to prevent broken links"
@@ -3255,4 +3271,4 @@ optionals = ["jinja2", "jsonschema", "legacycrypt", "napalm", "napalm", "rpds-py
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.10,<3.15"
-content-hash = "1e2aeb0305165b7a6bb4337c105d5b1df12183225c6ef221c5b2c3f64aa5990f"
+content-hash = "f86e344e824436f121dd7644e0f67a119b6492c330b5a5631934be7be6992aca"
