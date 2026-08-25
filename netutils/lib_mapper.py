@@ -145,7 +145,17 @@ DNACENTER_LIB_MAPPER_REVERSE = {
 # REMOVE IN 2.X, kept for backward compatibility
 DNA_CENTER_LIB_MAPPER_REVERSE = copy.deepcopy(DNACENTER_LIB_MAPPER_REVERSE)
 
-# Normalized | Netmiko
+# LibreNMS | Normalized
+LIBRENMS_LIB_MAPPER: t.Dict[str, str] = {
+    "arista_eos": "arista_eos",
+    "iosxe": "cisco_xe",
+    "iosxr": "cisco_xr",
+    "junos": "juniper_junos",
+    "nxos": "cisco_nxos",
+    "procera": "applogic_procera",
+}
+
+# Netmiko | Normalized
 NETMIKO_LIB_MAPPER: t.Dict[str, str] = {
     "a10": "a10",
     "accedian": "accedian",
@@ -390,6 +400,7 @@ PYNTC_LIB_MAPPER: t.Dict[str, str] = {
     "cisco_aireos_ssh": "cisco_wlc",
     "cisco_asa_ssh": "cisco_asa",
     "cisco_ios_ssh": "cisco_ios",
+    "cisco_iosxr_ssh": "cisco_xr",
     "cisco_nxos_nxapi": "cisco_nxos",
     "f5_tmos_icontrol": "bigip_f5",
     "juniper_junos_netconf": "juniper_junos",
@@ -461,6 +472,7 @@ SCRAPLI_LIB_MAPPER: t.Dict[str, str] = {
 
 # HIERCONFIG | Normalized
 HIERCONFIG_LIB_MAPPER: t.Dict[str, str] = {
+    "aruba_aoscx": "aruba_aoscx",
     "eos": "arista_eos",
     "fastiron": "ruckus_fastiron",
     "ios": "cisco_ios",
@@ -581,6 +593,7 @@ PYNTC_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "cisco_nxos": "cisco_nxos_nxapi",
     "cisco_wlc": "cisco_aireos_ssh",
     "cisco_xe": "cisco_ios_ssh",  # no reverse
+    "cisco_xr": "cisco_iosxr_ssh",
     "juniper_junos": "juniper_junos_netconf",
 }
 
@@ -653,6 +666,7 @@ SCRAPLI_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 # Normalized | HIERCONFIG
 HIERCONFIG_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "eos",
+    "aruba_aoscx": "aruba_aoscx",
     "cisco_ios": "ios",
     "cisco_nxos": "nxos",
     "cisco_xe": "ios",
@@ -714,6 +728,16 @@ FORWARDNETWORKS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "paloalto_panos": "PAN_OS",
 }
 
+# Normalized | LibreNMS
+LIBRENMS_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
+    "applogic_procera": "procera",
+    "arista_eos": "arista_eos",
+    "cisco_nxos": "nxos",
+    "cisco_xe": "iosxe",
+    "cisco_xr": "iosxr",
+    "juniper_junos": "junos",
+}
+
 # Normalized | NIST
 NIST_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "arista_eos": "arista:eos",
@@ -747,6 +771,7 @@ NCCLIENT_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
 # Deep copy the reverse, where there is no actual translation happening with special
 # consideration for OS's not in netmiko.
 _MAIN_LIB_MAPPER = copy.deepcopy(NETMIKO_LIB_MAPPER)
+_MAIN_LIB_MAPPER["applogic_procera"] = "applogic_procera"
 _MAIN_LIB_MAPPER["cisco_aireos"] = "cisco_aireos"
 _MAIN_LIB_MAPPER["cisco_dnac"] = "cisco_dnac"
 _MAIN_LIB_MAPPER["cisco_meraki"] = "cisco_meraki"
@@ -782,6 +807,7 @@ NAME_TO_LIB_MAPPER: t.Dict[str, t.Dict[str, str]] = {
     "dna_center": DNACENTER_LIB_MAPPER,
     "forward_networks": FORWARDNETWORKS_LIB_MAPPER,
     "hier_config": HIERCONFIG_LIB_MAPPER,
+    "librenms": LIBRENMS_LIB_MAPPER,
     "napalm": NAPALM_LIB_MAPPER,
     "ncclient": NCCLIENT_LIB_MAPPER,
     "netmiko": NETMIKO_LIB_MAPPER,
@@ -801,6 +827,7 @@ NAME_TO_LIB_MAPPER_REVERSE: t.Dict[str, t.Dict[str, str]] = {
     "dna_center": DNACENTER_LIB_MAPPER_REVERSE,
     "forward_networks": FORWARDNETWORKS_LIB_MAPPER_REVERSE,
     "hier_config": HIERCONFIG_LIB_MAPPER_REVERSE,
+    "librenms": LIBRENMS_LIB_MAPPER_REVERSE,
     "napalm": NAPALM_LIB_MAPPER_REVERSE,
     "ncclient": NCCLIENT_LIB_MAPPER_REVERSE,
     "netmiko": NETMIKO_LIB_MAPPER_REVERSE,

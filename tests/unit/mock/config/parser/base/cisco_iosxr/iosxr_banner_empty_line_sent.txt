@@ -1,0 +1,19 @@
+hostname multi-banner-xr
+!
+banner exec ~
+* exec banner line 1 *
+
+* exec banner line 2 *
+~
+banner login ~
+* login banner line 1 *
+* login banner line 2 *
+~
+banner motd ~
+* motd banner line 1 *
+* motd banner line 2 *
+~
+banner prompt-timeout ~
+* prompt-timeout banner line 1 *
+~
+logging trap informational

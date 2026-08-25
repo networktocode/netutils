@@ -1,0 +1,93 @@
+config {
+  devices {
+    localhost.localdomain {
+      deviceconfig {
+        system {
+          ip-address 192.0.2.72;
+          netmask 255.255.255.0;
+          update-server updates.paloaltonetworks.com;
+          update-schedule {
+            threats {
+              recurring {
+                weekly {
+                  day-of-week wednesday;
+                  at 01:02;
+                  action download-only;
+                }
+              }
+            }
+          }
+          timezone UTC;
+          service {
+            disable-telnet yes;
+            disable-http yes;
+            disable-snmp no;
+          }
+          hostname pa-ntc;
+          type {
+            static;
+          }
+          default-gateway 192.0.2.1;
+          domain ntc;
+          locale en;
+          speed-duplex auto-negotiate;
+          dns-setting {
+            servers {
+              primary 8.8.8.8;
+              secondary 1.1.1.1;
+            }
+          }
+          device-telemetry {
+            device-health-performance yes;
+            product-usage yes;
+            threat-prevention yes;
+            region Americas;
+          }
+          panorama {
+            local-panorama {
+              panorama-server 192.0.2.58;
+            }
+          }
+          server-verification no;
+          ntp-servers {
+            primary-ntp-server {
+              ntp-server-address time.google.com;
+              authentication-type {
+                none;
+              }
+            }
+          }
+          login-banner "####################################################
+WARNING TO UNAUTHORIZED USERS:
+This system is for use by authorized users only.
+Any individual using this system, by such use,
+acknowledges and consents to the right of the
+company to monitor, access, use, and disclose any
+information generated, received, or stored on the
+systems, and waives any right of privacy or
+expectation of privacy on the part of that
+individual in connection with his or her use of
+this system. Unauthorized and/or improper use of
+this system, as delineated by corporate policies,
+is not tolerated and the company may take formal
+action against such individuals.
+####################################################
+";
+          snmp-setting {
+            access-setting {
+              version {
+                v2c {
+                  snmp-community-string ntc1234;
+                }
+              }
+            }
+            snmp-system {
+              location ntc;
+              contact "john smith";
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,5 +1,6 @@
 | HIERCONFIG | | NORMALIZED |
 | ---------- | -- | ------ |
+| aruba_aoscx | → | aruba_aoscx |
 | eos | → | arista_eos |
 | fastiron | → | ruckus_fastiron |
 | ios | → | cisco_ios |

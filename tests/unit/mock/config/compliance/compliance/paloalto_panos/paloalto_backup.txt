@@ -21,6 +21,20 @@ set deviceconfig system service disable-http yes
 set deviceconfig system service disable-snmp no
 set deviceconfig system snmp-setting snmp-system 
 set deviceconfig system hostname firewall1
+set deviceconfig system login-banner "
+************************************************************************
+*                        firewall1.example.com                         *                         [PROD VM500  firewalls]
+************************************************************************
+*                               WARNING                                *
+*   Unauthorized access to this device or devices attached to          *
+*   or accessible from this network is strictly prohibited.            *
+*   Possession of passwords or devices enabling access to this         *
+*   device or devices does not constitute authorization. Unauthorized  *
+*   access will be prosecuted to the fullest extent of the law.        *
+*                                                                      *
+************************************************************************
+
+"
 set deviceconfig system default-gateway 10.1.1.1
 set deviceconfig system dns-setting servers primary 10.1.1.3
 set deviceconfig system dns-setting servers secondary 10.1.1.4

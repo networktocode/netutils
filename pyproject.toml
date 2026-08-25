@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "netutils"
-version = "1.16.1a0"
+version = "1.18.1a0"
 description = "Common helper functions useful in network automation."
 authors = ["Network to Code, LLC <opensource@networktocode.com>"]
 license = "Apache-2.0"
@@ -17,35 +17,49 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
 ]
+
 include = [
     "LICENSE",
     "README.md",
     "netutils/protocols.json"
 ]
 
+packages = [
+    { include = "netutils" },
+]
+
 [tool.poetry.dependencies]
-python = ">=3.10,<3.14"
-napalm = {version = "^4.0.0", optional = true}
+python = ">=3.10,<3.15"
+napalm = [
+    {version = "^4.1.0", optional = true, python = ">=3.10,<3.14"},
+    {version = "^5.0.0", optional = true, python = ">=3.14"}
+]
 jsonschema = {version = "^4.17.3", optional = true}
 legacycrypt = {version = "0.3", optional = true}
+jinja2 = {version = "^3.1.6", optional = true}
+# This comes from jsonschema, but does not compile on Python 3.14 directly prior to 0.28.0, so we
+# specify the minimum version here. Can remove this explicit dependency once jsonschema drops support
+# for lower versions of rpds-py
+rpds-py = {version = ">=0.28.0", optional = true}
 
 [tool.poetry.extras]
-optionals = ["jsonschema", "napalm", "legacycrypt"]
+optionals = ["jinja2", "jsonschema", "legacycrypt", "napalm", "rpds-py"]
 
 [tool.poetry.group.dev.dependencies]
 coverage = "*"
-invoke = "*"
 pytest = "*"
 mock = "*"
 mypy = "*"
 pyyaml = "^6.0.1"
-pylint = "*"
-yamllint = "*"
+pylint = "~4.0.6"
+yamllint = "~1.38.0"
+invoke = "~3.0.3"
 toml = "^0.10.2"
 attrs = "^23.2.0"
-towncrier = ">=23.6.0,<=24.8.0"
-ruff = "0.5.5"
+towncrier = "~25.8.0"
+ruff = "~0.16.2"
 Markdown = "*"
 
 [tool.poetry.group.docs.dependencies]
@@ -73,6 +87,9 @@ mkdocstrings = "0.27.0"
 mkdocstrings-python = "1.13.0"
 griffe = "1.1.1"
 mkdocs-python-classy = "0.1.3"
+
+[tool.poetry.scripts]
+netutils = 'netutils.cli:main'
 
 [tool.ruff]
 line-length = 120
@@ -146,7 +163,7 @@ testpaths = "tests/"
 addopts = "-vv --doctest-modules -p no:warnings --ignore-glob='*mock*'"
 
 [tool.mypy]
-python_version = 3.13
+python_version = 3.14
 ignore_errors = false
 disallow_untyped_calls = true
 disallow_untyped_defs = true
@@ -171,8 +188,8 @@ show_error_codes = true
 [tool.towncrier]
 package = "netutils"
 directory = "changes"
-filename = "docs/admin/release_notes/version_X.Y.md"
-template = "towncrier_template.j2"
+filename = "docs/admin/release_notes/version_1.18.md"
+template = "development/towncrier_template.j2"
 start_string = "<!-- towncrier release notes start -->"
 issue_format = "[#{issue}](https://github.com/networktocode/netutils/issues/{issue})"
 

@@ -230,8 +230,8 @@ Here we can test if a rule is matched via the existing ruleset. We can leverage 
 **Inherit Example**
 
 ```python
-
 from netutils.acl import ACLRule
+
 
 class ExpandAddrGroups(ACLRule):
     address_groups = {"red": ["white", "blue"], "blue": ["cyan"], "yellow": ["orange"]}
