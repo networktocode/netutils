@@ -540,12 +540,12 @@ FORWARDNETWORKS_LIB_MAPPER: t.Dict[str, str] = {
 NCCLIENT_LIB_MAPPER: t.Dict[str, str] = {
     "alu": "alcatel_sros",
     "ciena": "ciena_saos",
-    "iosxe": "cisco_xe",
-    "iosxr": "cisco_xr",
     "h3c": "h3c_comware",
+    "hpcomware": "hp_comware",
     "huawei": "huawei",
     "huaweiyang": "huawei_vrp",
-    "hpcomware": "hp_comware",
+    "iosxe": "cisco_xe",
+    "iosxr": "cisco_xr",
     "junos": "juniper_junos",
 }
 
@@ -760,10 +760,10 @@ NCCLIENT_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "cisco_xe": "iosxe",
     "cisco_xr": "iosxr",
     "h3c_comware": "h3c",
+    "hp_comware": "hpcomware",
     "huawei": "huawei",
     "huawei_vrp": "huaweiyang",
     "huawei_vrpv8": "huaweiyang",
-    "hp_comware": "hpcomware",
     "juniper_junos": "junos",
     "nokia_sros": "alu",
 }

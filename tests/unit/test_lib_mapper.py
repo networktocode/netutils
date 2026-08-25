@@ -12,6 +12,7 @@ LIBRARIES = [
     "FORWARDNETWORKS",
     "HIERCONFIG",
     "LIBRENMS",
+    "NCCLIENT",
     "NETMIKO",
     "NETUTILSPARSER",
     "NTCTEMPLATES",
@@ -94,6 +95,11 @@ def test_lib_mapper_reverse(lib):
         "SCRAPLI",
     ]:
         rev_mapper.pop("cisco_xe")
+    if lib in ["NCCLIENT"]:
+        rev_mapper.pop("cisco_ios")
+        rev_mapper.pop("cisco_nxos")
+        rev_mapper.pop("huawei_vrpv8")
+        rev_mapper.pop("nokia_sros")
     if lib in ["HIERCONFIG"]:
         _mapper.pop("iosxe")
     if lib in ["FORWARDNETWORKS"]:
