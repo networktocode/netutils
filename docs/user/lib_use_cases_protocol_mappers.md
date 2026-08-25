@@ -30,9 +30,7 @@ Here are currently available mappers:
 Here are a few examples showing how you would use these in your python code.
 
 ```python
-
 from netutils.protocol_mapper import (
-
     PROTO_NAME_TO_NUM,
     PROTO_NUM_TO_NAME,
     TCP_NAME_TO_NUM,

@@ -20,15 +20,11 @@ IP Address + 200 = {{ "192.168.0.1" | ip_addition(200) }}
 Below is a code in the `jinja2_environment.py` folder.
 
 ```python
-
 from jinja2.loaders import FileSystemLoader, PackageLoader
 from jinja2 import Environment, PackageLoader, select_autoescape
 from netutils.utils import jinja2_convenience_function
 
-env = Environment(
-    loader=FileSystemLoader("templates"),
-    autoescape=select_autoescape()
-)
+env = Environment(loader=FileSystemLoader("templates"), autoescape=select_autoescape())
 
 env.filters.update(jinja2_convenience_function())
 
@@ -51,6 +47,8 @@ In Ansible, one can add with the following code by adding to a folder called `fi
 
 ```python
 from netutils.utils import jinja2_convenience_function
+
+
 class FilterModule(object):
     def filters(self):
         return jinja2_convenience_function()
@@ -91,10 +89,7 @@ from jinja2.loaders import FileSystemLoader, PackageLoader
 from jinja2 import Environment, PackageLoader, select_autoescape
 from netutils.utils import jinja2_convenience_function
 
-env = Environment(
-    loader=FileSystemLoader("templates"),
-    autoescape=select_autoescape()
-)
+env = Environment(loader=FileSystemLoader("templates"), autoescape=select_autoescape())
 
 env.filters.update(jinja2_convenience_function())
 
@@ -132,10 +127,7 @@ from netutils.utils import jinja2_convenience_function
 env = Environment(loader=BaseLoader())
 env.filters.update(jinja2_convenience_function())
 
-DATA = {
-    "device": "USSCAMS07", 
-    "comma_seperated_devices": "NYC-RT01,NYC-RT02,SFO-SW01,SFO-RT01"
-}
+DATA = {"device": "USSCAMS07", "comma_seperated_devices": "NYC-RT01,NYC-RT02,SFO-SW01,SFO-RT01"}
 
 TEMPLATE_STRING = """
 {% set device_details = '([A-Z]{2})([A-Z]{2})([A-Z]{3})(\d*)' | regex_match(device) %}

@@ -5,14 +5,13 @@ These dictionaries provide mappings in expected vendor names between Netmiko, NA
 These dictionaries allow you to keep your Source of Truth platform data consistent and still easily switch between automation libraries. For example, you may be storing your device platform data in Nautobot. In a Nautobot platform, you can store the NAPALM driver needed for that platform. What if you wanted to write a python script to leverage the backup capabilities of pyntc? Here's an example of how you could use the following dictionaries to perform mappings from your stored Nautobot NAPALM driver to the pyntc driver needed for your script.
 
 ```python
-
 import pynautobot
 from netutils.lib_mapper import NAPALM_LIB_MAPPER, PYNTC_LIB_MAPPER_REVERSE
 from pyntc import ntc_device as NTC
 
 
 # Get device from Nautobot
-nautobot = pynautobot.api(url="http://mynautobotinstance.com",token="mytoken")
+nautobot = pynautobot.api(url="http://mynautobotinstance.com", token="mytoken")
 
 # Get Napalm driver and save for later use.
 device = nautobot.dcim.devices.get(name="mydevice")
@@ -22,11 +21,7 @@ sot_driver = device.platform.napalm_driver
 # Connect to device via Napalm
 driver = napalm.get_network_driver(sot_driver)
 
-device = driver(
-    hostname="device.name",
-    username="demo",
-    password="secret"
-)
+device = driver(hostname="device.name", username="demo", password="secret")
 
 # Do Napalm tasks
 
@@ -49,7 +44,7 @@ There is also a dynamically built mapping that gives you all of the libraries gi
     "cisco_nxos": {
         "ansible": "cisco.nxos.nxos",
         "napalm": "nxos",
-    }
+    },
 }
 ```
 

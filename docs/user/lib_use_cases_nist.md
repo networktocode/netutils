@@ -25,7 +25,6 @@ For this reason, for certain Vendor/OS combinations, a custom URL needs to be bu
 Here are a few examples showing how to use this in your python code.
 
 ```python
-
 from netutils.nist import get_nist_urls
 
 # Get NIST URL for the Cisco IOS object
