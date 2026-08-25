@@ -13,7 +13,7 @@
 | cisco_nxos | → | cisco.nxos.nxos |
 | cisco_xe | → | cisco.ios.ios |
 | cisco_xr | → | cisco.iosxr.iosxr |
-| dell_os10 | → | dellemc.os10.0s10 |
+| dell_os10 | → | dellemc.os10.os10 |
 | dell_os6 | → | dellemc.os6.os6 |
 | dell_os9 | → | dellemc.os9.os9 |
 | ericsson_ipos | → | community.network.eric_eccli |

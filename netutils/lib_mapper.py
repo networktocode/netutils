@@ -433,7 +433,7 @@ ANSIBLE_LIB_MAPPER: t.Dict[str, str] = {
     "community.network.sros": "nokia_sros",
     "community.network.voss": "extreme_vsp",
     "dellemc.enterprise_sonic.sonic": "sonic",
-    "dellemc.os10.0s10": "dell_os10",
+    "dellemc.os10.os10": "dell_os10",
     "dellemc.os6.os6": "dell_os6",
     "dellemc.os9.os9": "dell_os9",
     "f5networks.f5_bigip.bigip": "bigip_f5",
@@ -612,7 +612,7 @@ ANSIBLE_LIB_MAPPER_REVERSE: t.Dict[str, str] = {
     "cisco_nxos": "cisco.nxos.nxos",
     "cisco_xe": "cisco.ios.ios",  # no reverse
     "cisco_xr": "cisco.iosxr.iosxr",
-    "dell_os10": "dellemc.os10.0s10",
+    "dell_os10": "dellemc.os10.os10",
     "dell_os6": "dellemc.os6.os6",
     "dell_os9": "dellemc.os9.os9",
     "ericsson_ipos": "community.network.eric_eccli",
