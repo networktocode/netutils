@@ -49,7 +49,7 @@ jobs:
       - name: "Check out repository code"
         uses: "actions/checkout@v7"
       - name: "Setup environment"
-        uses: "networktocode/gh-action-setup-poetry-environment@v6"
+        uses: "networktocode/gh-action-setup-poetry-environment@v7"
         with:
           python-version: "3.13"
       - name: "Type-Hints: mypy"
@@ -121,9 +121,9 @@ jobs:
         run: "echo INVOKE_NETUTILS_IMAGE_VER=`poetry version -s`-py${{ matrix.python-version }} >> $GITHUB_ENV"
       - name: "Set up Docker Buildx"
         id: "buildx"
-        uses: "docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2"  # v3.10.0
+        uses: "docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e"  # v4.3.0
       - name: "Build"
-        uses: "docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25"  # v5.4.0
+        uses: "docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a"  # v7.3.0
         with:
           builder: "${{ steps.buildx.outputs.name }}"
           context: "./"
@@ -158,9 +158,9 @@ jobs:
         run: "echo INVOKE_NETUTILS_IMAGE_VER=`poetry version -s`-py${{ matrix.python-version }} >> $GITHUB_ENV"
       - name: "Set up Docker Buildx"
         id: "buildx"
-        uses: "docker/setup-buildx-action@b5ca514318bd6ebac0fb2aedd5d36ec1b5c232a2"  # v3.10.0
+        uses: "docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e"  # v4.3.0
       - name: "Build"
-        uses: "docker/build-push-action@ca052bb54ab0790a636c9b5f226502c73d547a25"  # v5.4.0
+        uses: "docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a"  # v7.3.0
         with:
           builder: "${{ steps.buildx.outputs.name }}"
           context: "./"
