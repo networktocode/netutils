@@ -104,6 +104,14 @@ There is also a dynamically built mapping that gives you all of the libraries gi
 
 --8<-- "docs/user/lib_mapper/napalm_reverse.md"
 
+## NCClient Mapper
+
+--8<-- "docs/user/lib_mapper/ncclient.md"
+
+## Reverse NCClient Mapper
+
+--8<-- "docs/user/lib_mapper/ncclient_reverse.md"
+
 ## Netmiko Mapper
 
 --8<-- "docs/user/lib_mapper/netmiko.md"
