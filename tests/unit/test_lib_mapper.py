@@ -11,6 +11,8 @@ LIBRARIES = [
     "CAPIRCA",
     "FORWARDNETWORKS",
     "HIERCONFIG",
+    "LIBRENMS",
+    "NCCLIENT",
     "NETMIKO",
     "NETUTILSPARSER",
     "NTCTEMPLATES",
@@ -51,9 +53,13 @@ def test_lib_mapper():
     assert len(lib_mapper.NETUTILSPARSER_LIB_MAPPER.keys()) > 10
     assert lib_mapper.ANSIBLE_LIB_MAPPER["cisco.ios.ios"] == "cisco_ios"
     assert lib_mapper.NAPALM_LIB_MAPPER["ios"] == "cisco_ios"
+    assert lib_mapper.NETMIKO_LIB_MAPPER["aruba_aoscx"] == "aruba_aoscx"
+    assert lib_mapper.NETMIKO_LIB_MAPPER_REVERSE[lib_mapper.NETMIKO_LIB_MAPPER["aruba_aoscx"]] == "aruba_aoscx"
     assert lib_mapper.PYNTC_LIB_MAPPER["arista_eos_eapi"] == "arista_eos"
     assert lib_mapper.NAPALM_LIB_MAPPER_REVERSE[lib_mapper.ANSIBLE_LIB_MAPPER["cisco.ios.ios"]] == "ios"
+    assert lib_mapper.HIERCONFIG_LIB_MAPPER["aruba_aoscx"] == "aruba_aoscx"
     assert lib_mapper.HIERCONFIG_LIB_MAPPER["ios"] == "cisco_ios"
+    assert lib_mapper.HIERCONFIG_LIB_MAPPER_REVERSE[lib_mapper.HIERCONFIG_LIB_MAPPER["aruba_aoscx"]] == "aruba_aoscx"
     assert lib_mapper.HIERCONFIG_LIB_MAPPER_REVERSE[lib_mapper.HIERCONFIG_LIB_MAPPER["ios"]] == "ios"
     assert lib_mapper.FORWARDNETWORKS_LIB_MAPPER["IOS"] == "cisco_ios"
     assert lib_mapper.FORWARDNETWORKS_LIB_MAPPER_REVERSE[lib_mapper.FORWARDNETWORKS_LIB_MAPPER["IOS"]] == "IOS"
@@ -89,6 +95,11 @@ def test_lib_mapper_reverse(lib):
         "SCRAPLI",
     ]:
         rev_mapper.pop("cisco_xe")
+    if lib in ["NCCLIENT"]:
+        rev_mapper.pop("cisco_ios")
+        rev_mapper.pop("cisco_nxos")
+        rev_mapper.pop("huawei_vrpv8")
+        rev_mapper.pop("nokia_sros")
     if lib in ["HIERCONFIG"]:
         _mapper.pop("iosxe")
     if lib in ["FORWARDNETWORKS"]:
