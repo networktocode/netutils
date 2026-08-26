@@ -21,7 +21,6 @@ jobs:
         with:
           poetry-version: "${{ env.POETRY_VERSION }}"
           python-version: "${{ env.PYTHON_VERSION }}"
-          poetry-install-options: "--no-root"
       - name: "Build Documentation"
         run: "poetry run invoke build-and-check-docs"
       - name: "Run Poetry Build"
