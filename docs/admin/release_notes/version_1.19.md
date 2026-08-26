@@ -8,6 +8,16 @@ This document describes all new features and changes in the release. The format 
 
 <!-- towncrier release notes start -->
 
+## [v1.19.1 (2026-08-26)](https://github.com/networktocode/netutils/releases/tag/v1.19.1)
+
+### Fixed
+
+- [#893](https://github.com/networktocode/netutils/issues/893) - Fixed the release process failing due to missing local environment invoke variable.
+
+### Housekeeping
+
+- Upgrade GitHub actions/checkout@v4 to @v7.
+
 ## [v1.19.0 (2026-08-25)](https://github.com/networktocode/netutils/releases/tag/v1.19.0)
 
 ### Added
