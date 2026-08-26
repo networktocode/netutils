@@ -13,7 +13,7 @@ jobs:
       BRANCH_NAME: "OUI_Updates"
     steps:
       - name: "Check out code"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@v7"
         with:
           ref: "develop"
           fetch-depth: 0
@@ -73,7 +73,7 @@ jobs:
     steps:
       # Checkout repo
       - name: "Check out code"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@v7"
         with:
           ref: "OUI_Updates"
       # Create PR from branch created above into develop
