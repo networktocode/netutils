@@ -458,6 +458,87 @@ def sort_interface_list(interfaces: t.List[str]) -> t.List[str]:
     return list(_iter_tree(root, []))
 
 
+def slice_interface_range(interface_names: t.List[str], *cut_points: str) -> t.Tuple[t.Iterator[str], ...]:
+    """Slice a sorted list of interface names based on cut points.
+
+    The interface names will be cut based on the values in the cut_points list. Each cut
+    point defines the start of its respective slice.  A slice runs from its cut point
+    up to (but not including) the next cut point.  The final slice contains all
+    remaining interface names from the last cut point to the end of the sorted list. This
+    method always returns the same number of iterators as cut points. However, if an
+    iterator of interface names runs out of names it will begin yielding None.
+
+    This method can be used to help finding available interfaces for provisioning systems.
+    If connectivity for systems follows a pattern, then interface name slices can be used
+    to help provide selections for provisioning. For example, if a device has two upstream
+    connections and the first is always provisioned between Ethernet[1-24] and the second
+    between Ethernet[25-48] then two slices are needed. The input would be the total
+    list of available interfaces on the upstream device (those interfaces that are not
+    already connected to something) and the output would be two iterables within the
+    given ranges. Once the ranges are exhausted, the slices start yielding None.
+
+    Args:
+        interfaces: A list of interface names to be sorted and sliced.
+        *cut_points: Interface names that define the start of each slice.  The number
+            of iterables returned equals the number of cut points.
+
+    Returns:
+        A tuple of :class:`InterfaceRangeSlicer.SliceIterator` instances, one per cut point.
+        Each iterator yields the next interface name in its slice yielding `None` once exhausted.
+
+    Raises:
+        ValueError: If no cut points are provided.
+
+    Examples:
+        >>> from netutils.interface import slice_interface_range
+        >>> slices = slice_interface_range(["Ethernet1", "Ethernet2", "Ethernet3", "Ethernet4"], "Ethernet1", "Ethernet3")
+        >>> next(slices[0])
+        'Ethernet1'
+        >>> next(slices[0])
+        'Ethernet2'
+        >>> next(slices[0]) is None
+        True
+        >>> next(slices[1])
+        'Ethernet3'
+        >>> next(slices[1])
+        'Ethernet4'
+        >>> next(slices[1]) is None
+        True
+    """
+    if not cut_points:
+        raise ValueError("At least one cut point must be provided.")
+
+    def interface_name_yielder(interface_names: t.List[str]):
+        _index = 0
+        while True:
+            if _index < len(interface_names):
+                yield interface_names[_index]
+                _index += 1
+            else:
+                yield None
+
+    interface_names = sort_interface_list(interface_names)
+    sorted_cut_points = sort_interface_list(cut_points)  # type: ignore
+    slices = []
+    start_index = None
+    for i, interface in enumerate(interface_names):
+        if interface == sorted_cut_points[0] or _split_interface_tuple(sorted_cut_points[0]) < _split_interface_tuple(
+            interface
+        ):
+            if start_index is not None:
+                slices.append(interface_name_yielder(interface_names[start_index:i]))
+            start_index = i
+            sorted_cut_points.pop(0)
+
+        if len(sorted_cut_points) == 0:
+            slices.append(interface_name_yielder(interface_names[start_index:]))
+            break
+
+    for _ in range(len(sorted_cut_points)):
+        slices.append(interface_name_yielder([]))
+    return tuple(slices)
+
+
 INTERFACE_LIST_ORDERING_OPTIONS = {"alphabetical": sort_interface_list}
 
 
