@@ -50,6 +50,30 @@ PLATFORM_VERSION_METADATA = [
             "vendor_metadata": False,
         },
     },
+    {
+        "sent": {"vendor": "cisco", "platform": "ios", "version": "03.03.05SE"},
+        "received": {
+            "major": "3",
+            "minor": "3",
+            "vendor_metadata": False,
+        },
+    },
+    {
+        "sent": {"vendor": "cisco", "platform": "ios", "version": "3.03.05SE"},
+        "received": {
+            "major": "3",
+            "minor": "3",
+            "vendor_metadata": False,
+        },
+    },
+    {
+        "sent": {"vendor": "cisco", "platform": "ios", "version": "3.3.05SE"},
+        "received": {
+            "major": "3",
+            "minor": "3",
+            "vendor_metadata": False,
+        },
+    },
     # Juniper Junos uses a custom parser
     {
         "sent": {"vendor": "juniper", "platform": "junos", "version": "12.4R"},
