@@ -258,9 +258,9 @@ def _basic_version_metadata(version: str) -> t.Dict[str, t.Any]:
     basic_regex: re.Pattern[str] = re.compile(
         r"""
         ^
-        (?P<major>0|[1-9]\d*)
+        0*(?P<major>\d+)
         \.
-        (?P<minor>0|[1-9]\d*)?
+        (?:0*(?P<minor>\d+))?
         .*$
         """,
         re.VERBOSE,
