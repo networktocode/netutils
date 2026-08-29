@@ -1,0 +1,7 @@
+router bgp 65001
+ address-family ipv4 unicast
+  neighbor 10.0.0.1 activate
+  network 192.168.1.0
+router bgp 65002
+ address-family ipv4 unicast
+  neighbor 10.0.0.2 activate

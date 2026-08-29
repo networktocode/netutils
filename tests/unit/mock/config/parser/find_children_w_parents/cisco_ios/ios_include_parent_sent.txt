@@ -1,0 +1,5 @@
+call-home
+ contact-email-addr test@example.com
+ profile "MAIN"
+  active
+  destination transport-method http

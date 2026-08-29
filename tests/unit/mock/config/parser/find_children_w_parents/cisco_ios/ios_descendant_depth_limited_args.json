@@ -1,0 +1,6 @@
+{
+    "parent_pattern": "policy-map PM_OUT",
+    "child_pattern": " class CM_VOICE",
+    "match_type": "exact",
+    "descendant_depth": 1
+}

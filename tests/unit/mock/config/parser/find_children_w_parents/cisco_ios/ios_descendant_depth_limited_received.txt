@@ -1,0 +1,3 @@
+ class CM_VOICE
+  priority percent 20
+  police 1000000

@@ -1,0 +1,7 @@
+router bgp 65001
+ neighbor 10.0.0.1 remote-as 65002
+ address-family ipv4 unicast
+  neighbor 10.0.0.1 activate
+  network 192.168.1.0
+ address-family ipv6 unicast
+  neighbor 2001::1 activate
