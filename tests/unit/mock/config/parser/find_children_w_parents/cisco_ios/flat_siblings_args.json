@@ -1,0 +1,5 @@
+{
+    "parent_pattern": "context local",
+    "child_pattern": " logging",
+    "match_type": "regex"
+}
