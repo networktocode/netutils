@@ -70,6 +70,39 @@ def test_incorrect_banner_ios():
         compliance.parser_map["cisco_ios"](banner_cfg).config_lines  # pylint: disable=expression-not-assigned
 
 
+def test_indented_banner_is_not_a_banner_start():
+    """An indented banner must not abort the parse of the whole config.
+
+    is_banner_start matched the stripped line while the banner patterns anchor
+    at the start of it. Where the two disagreed the line could not yield a
+    delimiter, and the resulting ValueError left __init__, so one such line lost
+    the entire config. ASAConfigParser already avoided this by not stripping.
+    """
+    cfg = "group-policy P attributes\n banner value hello\n"
+    for network_os in ("cisco_ios", "cisco_nxos", "cisco_asa", "arista_eos", "cisco_iosxr"):
+        config_lines = compliance.parser_map[network_os](cfg).config_lines
+        assert [line.config_line for line in config_lines] == [
+            "group-policy P attributes",
+            " banner value hello",
+        ], network_os
+
+
+@pytest.mark.parametrize(
+    ("network_os", "banner"),
+    [
+        ("cisco_ios", "banner motd ^C\nhello\n^C\n"),
+        ("cisco_nxos", "banner motd ^C\nhello\n^C\n"),
+        ("arista_eos", "banner motd EOF\nhello\nEOF\n"),
+    ],
+)
+def test_top_level_banner_still_folds(network_os, banner):
+    """The guard above must not stop a real, unindented banner being folded."""
+    config_lines = compliance.parser_map[network_os](banner + "hostname r1\n").config_lines
+    assert config_lines[0].config_line.startswith("banner motd")
+    assert "hello" in config_lines[1].config_line
+    assert config_lines[-1].config_line == "hostname r1"
+
+
 def test_duplicate_line():
     logging = (
         "!\n"
