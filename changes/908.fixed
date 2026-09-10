@@ -1,0 +1,1 @@
+Fixed an object name containing a bracket raising `ValueError: Input line is malformed.` in `FortinetConfigParser` and losing the whole config. The restore of a `config system replacemsg` placeholder was guarded by the presence of a bracket alone, so any bracketed name was mistaken for one.
