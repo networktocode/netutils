@@ -14,6 +14,18 @@ try:
 except ImportError:
     HAS_JINJA2 = False
 
+# A `re.sub` backreference, such as \1, within a replacement template.
+_RE_BACKREF = re.compile(r"\\(\d+)")
+
+# The regions of a replacement template that are not literal text. The raw alternative is listed
+# first so that a `{% raw %}` block is matched whole instead of as a bare statement.
+_RE_JINJA_SEGMENT = re.compile(
+    r"({%-?\s*raw\s*-?%}.*?{%-?\s*endraw\s*-?%})"  # raw block
+    r"|({{.*?}})"  # expression
+    r"|({%.*?%})",  # statement
+    re.DOTALL,
+)
+
 
 def clean_config(config: str, filters: t.List[t.Dict[str, str]]) -> str:
     r"""Given a list of regex patterns, delete those lines that match.
@@ -92,27 +104,61 @@ def sanitize_config(config: str, filters: t.Optional[t.List[t.Dict[str, str]]] =
     return config
 
 
-def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, str]]] = None) -> str:
-    r"""Like `sanitize_config`, but renders each `replace` value as a Jinja2 template.
+def _prepare_template(replace: str) -> str:
+    r"""Rewrite the `re.sub` backreferences in a replacement template into Jinja references.
+
+    Positional groups are reached through `_re_groups`, so how a backreference is rewritten
+    depends on where it sits: inside a Jinja expression or statement it becomes a bare
+    subscript, and in literal text it becomes an expression of its own. A `{% raw %}` block
+    is emitted verbatim, so anything inside it stays literal.
+
+    Args:
+        replace: A Jinja-aware replacement template.
+
+    Returns:
+        str: The template with its backreferences rewritten, ready to render.
+    """
+    parts = []
+    position = 0
+    for segment in _RE_JINJA_SEGMENT.finditer(replace):
+        parts.append(_RE_BACKREF.sub(r"{{ _re_groups[\1] }}", replace[position : segment.start()]))
+        raw_block, expression, statement = segment.groups()
+        if raw_block is not None:
+            parts.append(raw_block)
+        else:
+            parts.append(_RE_BACKREF.sub(r"_re_groups[\1]", expression or statement))
+        position = segment.end()
+    parts.append(_RE_BACKREF.sub(r"{{ _re_groups[\1] }}", replace[position:]))
+    return "".join(parts)
+
+
+def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, t.Any]]] = None) -> str:
+    r"""Like `sanitize_config`, but renders opted-in `replace` values as Jinja2 templates.
 
     This allows the replacement text to transform the matched data, e.g. hashing a secret
-    with the `hash_data` filter instead of dropping it with a static placeholder. The regex
-    capture groups are exposed to the template so the original values can be transformed in
-    place. References to capture groups follow the familiar `re.sub` backreference syntax
-    (`\1`, `\2`, ...) and may be used anywhere inside a `{{ ... }}` expression. Named
-    groups (`(?P<name>...)`) are additionally available by name, so a user-defined group
-    name can never shadow a positional backreference.
+    with the `hash_data` filter instead of dropping it with a static placeholder. A filter
+    opts in by setting `jinja` to `True`; every other filter is substituted with plain
+    `re.sub`, so a mixed list of filters works as expected.
 
-    A `replace` value that contains no Jinja expression (`{{`) falls back to plain
-    `re.sub` string substitution, so a mixed list of filters works as expected.
+    The regex capture groups are exposed to the template so the original values can be
+    transformed in place. References to capture groups follow the familiar `re.sub`
+    backreference syntax (`\1`, `\2`, ...) and may be used both inside and outside a
+    `{{ ... }}` expression. Named groups (`(?P<name>...)`) are additionally available by
+    name, so a user-defined group name can never shadow a positional backreference.
+
+    Jinja that should reach the sanitized configuration as literal text, such as a
+    placeholder rendered later by a separate templating pass, must be wrapped in
+    `{% raw %}...{% endraw %}`. The contents of a raw block, backreferences included, are
+    passed through untouched.
 
     This function requires the optional `jinja2` dependency
-    (`pip install netutils[optionals]`).
+    (`pip install netutils[optionals]`) when at least one filter opts in.
 
     Args:
         config: A string representation of a device configuration.
-        filters: A list of dictionaries of regex patterns and Jinja-aware replacement
-            templates used to sanitize configuration. Defaults to an empty list.
+        filters: A list of dictionaries of regex patterns and replacement templates used to
+            sanitize configuration, each optionally setting `jinja` to `True` to render its
+            replacement as a Jinja template. Defaults to an empty list.
 
     Returns:
         str: Sanitized configuration.
@@ -122,8 +168,9 @@ def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, st
         >>> config = "username admin privilege 15 secret 9 SuperSecret"
         >>> SANITIZE_FILTERS = [
         ...     {
-        ...         "regex": r"^username (\S+) privilege 15 secret 9 (\S+)$",
-        ...         "replace": r"username {{ \1 }} privilege 15 secret 9 {{ \2 | hash_data('md5') }}",
+        ...         "regex": r"^(username \S+ privilege 15 secret 9 )(\S+)$",
+        ...         "replace": r"\1{{ \2 | hash_data('md5') }}",
+        ...         "jinja": True,
         ...     }
         ... ]
         >>> sanitize_config_jinja(config, SANITIZE_FILTERS)
@@ -132,8 +179,8 @@ def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, st
     if not filters:
         return config
 
-    # Only the Jinja path needs jinja2; if every filter is plain, behave like sanitize_config.
-    if not any("{{" in item["replace"] for item in filters):
+    # Only the Jinja path needs jinja2; if no filter opts in, behave like sanitize_config.
+    if not any(item.get("jinja", False) for item in filters):
         return sanitize_config(config, filters)
 
     if not HAS_JINJA2:
@@ -146,8 +193,7 @@ def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, st
     env.filters.update(jinja2_convenience_function())
 
     def _make_replacer(template_str: str) -> t.Callable[[t.Match[str]], str]:
-        jinja_ready = re.sub(r"\\(\d+)", r"_re_groups[\1]", template_str)
-        template = env.from_string(jinja_ready)
+        template = env.from_string(_prepare_template(template_str))
 
         def _replace(match: t.Match[str]) -> str:
             # Named groups are exposed by name; positional groups are reached via `_re_groups`,
@@ -159,7 +205,7 @@ def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, st
         return _replace
 
     for item in filters:
-        if "{{" in item["replace"]:
+        if item.get("jinja", False):
             config = re.sub(item["regex"], _make_replacer(item["replace"]), config, flags=re.MULTILINE)
         else:
             config = re.sub(item["regex"], item["replace"], config, flags=re.MULTILINE)
