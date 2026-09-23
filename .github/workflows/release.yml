@@ -21,9 +21,13 @@ jobs:
         with:
           poetry-version: "${{ env.POETRY_VERSION }}"
           python-version: "${{ env.PYTHON_VERSION }}"
+<<<<<<< HEAD
           poetry-install-options: "--only dev,docs"
       - name: "Build Documentation"
         run: "poetry run invoke build-and-check-docs"
+=======
+          poetry-install-options: "--no-root"
+>>>>>>> 26305bc (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
       - name: "Run Poetry Build"
         run: "poetry build"
 

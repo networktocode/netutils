@@ -7,10 +7,14 @@
 - F5 fixes
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 ## v1.0.0 - 2021-11
 =======
 ## [v1.0.0] - 2026-08-26
 >>>>>>> 624e611 (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
+=======
+## [v1.0.0] - 2026-09-23
+>>>>>>> 26305bc (Cookie updated targeting develop by NetworkToCode Cookie Drift Manager Tool)
 
 ### Added
 
