@@ -1,1 +1,0 @@
-Fixed `sanitize_config_jinja` emitting `re.sub` backreferences literally when they appeared outside a Jinja expression, and rewriting those inside a `{% raw %}` block.
