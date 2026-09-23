@@ -58,7 +58,7 @@ yamllint = "~1.38.0"
 invoke = "~3.0.3"
 toml = "^0.10.2"
 attrs = "^23.2.0"
-towncrier = "~25.8.0"
+towncrier = ">=25.8,<26.10"
 ruff = "~0.16.2"
 Markdown = "*"
 
