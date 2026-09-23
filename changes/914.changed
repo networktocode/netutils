@@ -1,1 +1,1 @@
-Changed `sanitize_config_jinja` to render a filter's replacement as a Jinja template only when that filter sets `jinja` to `True`, rather than whenever the replacement contains any Jinja expression.
+Changed `sanitize_config_jinja` to render a filter's replacement as a Jinja template only when that filter sets `render_jinja` to `True`, rather than whenever the replacement contains any Jinja expression.

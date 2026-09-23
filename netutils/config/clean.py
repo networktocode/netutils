@@ -137,7 +137,7 @@ def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, t.
 
     This allows the replacement text to transform the matched data, e.g. hashing a secret
     with the `hash_data` filter instead of dropping it with a static placeholder. A filter
-    opts in by setting `jinja` to `True`; every other filter is substituted with plain
+    opts in by setting `render_jinja` to `True`; every other filter is substituted with plain
     `re.sub`, so a mixed list of filters works as expected.
 
     The regex capture groups are exposed to the template so the original values can be
@@ -157,8 +157,9 @@ def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, t.
     Args:
         config: A string representation of a device configuration.
         filters: A list of dictionaries of regex patterns and replacement templates used to
-            sanitize configuration, each optionally setting `jinja` to `True` to render its
-            replacement as a Jinja template. Defaults to an empty list.
+            sanitize configuration, each optionally setting `render_jinja` to `True` to render its
+            replacement as a Jinja template. Defaults to `None`, which returns the configuration
+            unchanged.
 
     Returns:
         str: Sanitized configuration.
@@ -170,7 +171,7 @@ def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, t.
         ...     {
         ...         "regex": r"^(username \S+ privilege 15 secret 9 )(\S+)$",
         ...         "replace": r"\1{{ \2 | hash_data('md5') }}",
-        ...         "jinja": True,
+        ...         "render_jinja": True,
         ...     }
         ... ]
         >>> sanitize_config_jinja(config, SANITIZE_FILTERS)
@@ -180,7 +181,7 @@ def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, t.
         return config
 
     # Only the Jinja path needs jinja2; if no filter opts in, behave like sanitize_config.
-    if not any(item.get("jinja", False) for item in filters):
+    if not any(item.get("render_jinja", False) for item in filters):
         return sanitize_config(config, filters)
 
     if not HAS_JINJA2:
@@ -205,7 +206,7 @@ def sanitize_config_jinja(config: str, filters: t.Optional[t.List[t.Dict[str, t.
         return _replace
 
     for item in filters:
-        if item.get("jinja", False):
+        if item.get("render_jinja", False):
             config = re.sub(item["regex"], _make_replacer(item["replace"]), config, flags=re.MULTILINE)
         else:
             config = re.sub(item["regex"], item["replace"], config, flags=re.MULTILINE)
