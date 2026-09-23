@@ -35,7 +35,7 @@ jobs:
     runs-on: "ubuntu-latest"
     steps:
       - name: "Checkout code"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@v7"
         with:
           # If target_branch is 'main', use 'develop' as the source branch. Otherwise, the source and target branch are the same.
           ref: "${{ github.event.inputs['target_branch'] == 'main' && 'develop' || github.event.inputs['target_branch'] }}"
