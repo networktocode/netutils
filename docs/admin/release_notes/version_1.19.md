@@ -8,6 +8,16 @@ This document describes all new features and changes in the release. The format 
 
 <!-- towncrier release notes start -->
 
+## [v1.19.2 (2026-09-23)](https://github.com/networktocode/netutils/releases/tag/v1.19.2)
+
+### Changed
+
+- [#914](https://github.com/networktocode/netutils/issues/914) - Changed `sanitize_config_jinja` to render a filter's replacement as a Jinja template only when that filter sets `render_jinja` to `True`, rather than whenever the replacement contains any Jinja expression.
+
+### Fixed
+
+- [#914](https://github.com/networktocode/netutils/issues/914) - Fixed `sanitize_config_jinja` emitting `re.sub` backreferences literally when they appeared outside a Jinja expression, and rewriting those inside a `{% raw %}` block.
+
 ## [v1.19.1 (2026-08-26)](https://github.com/networktocode/netutils/releases/tag/v1.19.1)
 
 ### Fixed
