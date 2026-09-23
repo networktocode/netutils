@@ -416,20 +416,18 @@ class BaseSpaceConfigParser(BaseConfigParser):
             >>> print(bgp_conf)
             ['  address-family ipv4 unicast', '   neighbor 192.168.1.2 activate', '   network 172.17.1.0 mask']
         """
-        config = []
-        potential_parents = [
-            elem.parents[0]
-            for elem in self.build_config_relationship()
+        relationships = self.build_config_relationship()
+        matched_lines = {
+            elem.config_line
+            for elem in relationships
             if self._match_type_check(elem.config_line, child_pattern, match_type)
-        ]
-        for cfg_line in self.build_config_relationship():
-            parents = cfg_line.parents[0] if cfg_line.parents else None
-            if parents in potential_parents and self._match_type_check(
-                parents,  # type: ignore[arg-type]
-                parent_pattern,
-                match_type,
-            ):
-                config.append(cfg_line.config_line)
+            and elem.parents
+            and self._match_type_check(elem.parents[0], parent_pattern, match_type)
+        }
+        config = []
+        for elem in relationships:
+            if elem.config_line in matched_lines or any(parent in matched_lines for parent in elem.parents):
+                config.append(elem.config_line)
         return config
 
 

@@ -1,0 +1,5 @@
+context local
+ something not logging
+ logging something
+ logging something else
+ something else not logging

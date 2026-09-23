@@ -1,4 +1,3 @@
- contact-email-addr sch-smart-licensing@cisco.com
  profile "CiscoTAC-1"
   active
   destination transport-method http
