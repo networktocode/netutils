@@ -6,7 +6,7 @@ import typing as t
 from netutils._private.version import LooseVersion, StrictVersion  # type: ignore
 
 
-def get_upgrade_path(current_version: str, target_version: str, firmware_list: t.List[str]) -> t.List[str]:
+def get_upgrade_path(current_version: str, target_version: str, firmware_list: list[str]) -> list[str]:
     """Utility to return the upgrade path from the current to target firmware version.
 
     Returns:
@@ -76,8 +76,7 @@ def _compare_version(current_version: str, comparison: str, target_version: str,
 
 
 def compare_version_loose(current_version: str, comparison: str, target_version: str) -> bool:
-    """
-    Compares two version strings using the specified comparison operation, based on LooseVersion.
+    """Compares two version strings using the specified comparison operation, based on LooseVersion.
 
     Args:
         current_version (str): The current version string to compare.
@@ -105,8 +104,7 @@ def compare_version_loose(current_version: str, comparison: str, target_version:
 
 
 def compare_version_strict(current_version: str, comparison: str, target_version: str) -> bool:
-    """
-    Compares two version strings using the specified comparison operation, based on LooseVersion.
+    """Compares two version strings using the specified comparison operation, based on LooseVersion.
 
     Args:
         current_version (str): The current version string to compare.
@@ -133,7 +131,7 @@ def compare_version_strict(current_version: str, comparison: str, target_version
     return _compare_version(current_version, comparison, target_version, "strict")
 
 
-def _juniper_junos_version_metadata(version: str) -> t.Dict[str, t.Any]:
+def _juniper_junos_version_metadata(version: str) -> dict[str, t.Any]:
     """Parses JunOS Version into usable bits matching JunOS Standards.
 
     Args:
@@ -170,7 +168,7 @@ def _juniper_junos_version_metadata(version: str) -> t.Dict[str, t.Any]:
     )
     # Set empty params for service pieces and complete them if a second indice exists from the version split
     # Define isservice, isfrs, isspecial, ismaintenance
-    parsed_version: t.Dict[str, t.Any] = {
+    parsed_version: dict[str, t.Any] = {
         "isservice": False,
         "ismaintenance": False,
         "isfrs": False,
@@ -219,7 +217,7 @@ def _juniper_junos_version_metadata(version: str) -> t.Dict[str, t.Any]:
     return parsed_version
 
 
-def _basic_version_metadata(version: str) -> t.Dict[str, t.Any]:
+def _basic_version_metadata(version: str) -> dict[str, t.Any]:
     """Parses version value using SemVer 2.0.0 standards. https://semver.org/spec/v2.0.0.html.
 
     Args:
@@ -289,7 +287,7 @@ version_metadata_parsers = {
 }
 
 
-def version_metadata(vendor: str, os_type: str, version: str) -> t.Dict[str, t.Any]:
+def version_metadata(vendor: str, os_type: str, version: str) -> dict[str, t.Any]:
     """If a custom version parser is avaialable, use it.
 
     Args:

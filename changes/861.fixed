@@ -1,0 +1,1 @@
+Fixed raising TypeError when calling the dynamicaly created dataclass when the "Error" key is present in the arguments when running netutils.nist._os_platform_object_builder function
