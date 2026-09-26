@@ -1,6 +1,7 @@
 | NORMALIZED | | NIST |
 | ---------- | -- | ------ |
 | arista_eos | → | arista:eos |
+| aruba_aoscx | → | hpe:arubaos-cx |
 | aruba_os | → | arubanetworks:arubaos |
 | cisco_asa | → | cisco:adaptive_security_appliance_software |
 | cisco_ios | → | cisco:ios |

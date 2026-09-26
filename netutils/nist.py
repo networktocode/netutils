@@ -21,6 +21,11 @@ PLATFORM_FIELDS: t.Dict[str, t.Any] = {
         ("buildmetadata", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
         ("vendor_metadata", bool, dataclasses.field(default=False)),  # pylint: disable=[E3701]
     ],
+    "hpe": {
+        "arubaos-cx": [
+            ("release", str, dataclasses.field(default=None)),
+        ],
+    },
     "juniper": {
         "junos": [
             ("main", str, dataclasses.field(default=None)),  # pylint: disable=[E3701]
@@ -61,6 +66,18 @@ class OsPlatform(metaclass=abc.ABCMeta):
     def __getitem__(self, key: str) -> t.Any:
         """Allow retrieving attributes using subscript notation."""
         return getattr(self, key)
+
+
+def _get_nist_urls_hpe_arubaos_cx(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:
+    """Create NIST URLs for HPE Aruba AOS-CX."""
+    base_url = "https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:"
+    version = (
+        f"{os_platform_data['major']}."
+        f"{os_platform_data['minor']}."
+        f"{os_platform_data['patch']}"
+    )
+
+    return [f"{base_url}{os_platform_data['vendor']}:{os_platform_data['os_type']}:{version}:*"]
 
 
 def _get_nist_urls_juniper_junos(os_platform_data: t.Dict[str, t.Any]) -> t.List[str]:  # pylint: disable=R0911
@@ -233,6 +250,9 @@ def _os_platform_object_builder(vendor: str, platform: str, version: str) -> obj
 
 get_nist_url_funcs: t.Dict[str, t.Any] = {
     "default": _get_nist_urls_default,
+    "hpe": {
+        "arubaos-cx": _get_nist_urls_hpe_arubaos_cx,
+    },
     "juniper": {"junos": _get_nist_urls_juniper_junos},
 }
 
@@ -255,9 +275,10 @@ def get_nist_vendor_platform_urls(vendor: str, platform: str, version: str) -> t
         >>>
     """
     platform_data = _os_platform_object_builder(vendor, platform, version).__dict__
+    get_nist_urls_func = get_nist_url_funcs.get(vendor.lower(), {}).get(platform.lower())
 
-    if vendor.lower() == "juniper" and platform.lower() == "junos":
-        return _get_nist_urls_juniper_junos(platform_data)
+    if get_nist_urls_func:
+        return get_nist_urls_func(platform_data)
     return _get_nist_urls_default(platform_data)
 
 

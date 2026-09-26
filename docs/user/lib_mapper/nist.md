@@ -7,5 +7,6 @@
 | cisco:ios_xe | → | cisco_xe |
 | cisco:ios_xr | → | cisco_xr |
 | cisco:nx-os | → | cisco_nxos |
+| hpe:arubaos-cx | → | aruba_aoscx |
 | juniper:junos | → | juniper_junos |
 | paloaltonetworks:pan-os | → | paloalto_panos |
