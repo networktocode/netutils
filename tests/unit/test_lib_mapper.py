@@ -15,6 +15,7 @@ LIBRARIES = [
     "NCCLIENT",
     "NETMIKO",
     "NETUTILSPARSER",
+    "NIST",
     "NTCTEMPLATES",
     "NAPALM",
     "PYATS",
