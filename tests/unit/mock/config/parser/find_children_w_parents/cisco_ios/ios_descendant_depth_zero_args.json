@@ -1,0 +1,6 @@
+{
+    "parent_pattern": "router bgp 65001",
+    "child_pattern": " address-family",
+    "child_match_type": "startswith",
+    "descendant_depth": 0
+}

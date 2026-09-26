@@ -1,0 +1,5 @@
+{
+    "parent_pattern": "router bgp 65001",
+    "child_pattern": " address-family ipv4 unicast",
+    "match_type": "exact"
+}

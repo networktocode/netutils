@@ -1,3 +1,4 @@
- profile "CiscoTAC-1"
+call-home
+ profile "MAIN"
   active
   destination transport-method http

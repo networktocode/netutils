@@ -1,0 +1,8 @@
+policy-map PM_OUT
+ class CM_VOICE
+  priority percent 20
+  police 1000000
+   conform-action transmit
+   exceed-action drop
+ class class-default
+  fair-queue
