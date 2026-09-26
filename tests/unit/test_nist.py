@@ -28,19 +28,25 @@ platform_nist_urls = [
             "https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:juniper:junos:12.3x48-d25:*:*:*:*:*:*:*",
         ],
     },
+    {
+        "sent": {"network_driver": "cisco_ios", "version": "15.5", "custom_driver_mapping": "cisco:something_else"},
+        "received": ["https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:cisco:something_else:15.5:*"],
+    },
 ]
 
 
 # Testing the composition of the nist url(s) created for a platform
 @pytest.mark.parametrize("data", platform_nist_urls)
 def test_get_nist_urls(data):
-    platform_obj = nist.get_nist_urls(data["sent"]["network_driver"], data["sent"]["version"])
+    platform_obj = nist.get_nist_urls(
+        data["sent"]["network_driver"], data["sent"]["version"], data["sent"].get("custom_driver_mapping", None)
+    )
     assert platform_obj == data["received"]
 
 
 def test_get_nist_urls_failed():
     with pytest.raises(
-        ValueError, match=r"The network driver `fakeos` has no associated mapping, the supported drivers are*"
+        ValueError, match=r"The network driver `fakeos` has no associated mapping. The supported drivers are*"
     ):
         nist.get_nist_urls("fakeos", "15.5")
 

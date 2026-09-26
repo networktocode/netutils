@@ -261,12 +261,13 @@ def get_nist_vendor_platform_urls(vendor: str, platform: str, version: str) -> t
     return _get_nist_urls_default(platform_data)
 
 
-def get_nist_urls(network_driver: str, version: str) -> t.List[str]:
+def get_nist_urls(network_driver: str, version: str, custom_driver_mapping: str = "") -> t.List[str]:
     """Generate list of possible NIST URLs for the Network Driver, and Version.
 
     Args:
         network_driver (str): Value of device network_driver (Ex: cisco_ios, arista_eos)
         version (str): OS Software Platform Version
+        custom_driver_mapping (str): Custom network driver to NIST platform mapping string (Ex: "cisco:something_else") (Optional, None if not provided)
 
     Returns:
         t.List[str]: NIST URLs to search for possible CVE matches
@@ -275,14 +276,19 @@ def get_nist_urls(network_driver: str, version: str) -> t.List[str]:
         >>> from netutils.nist import get_nist_urls
         >>> get_nist_urls('cisco_ios', '15.3')
         ['https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:cisco:ios:15.3:*']
-        >>>
+        >>> get_nist_urls('cisco_ios', '15.3', 'cisco:something_else')
+        ['https://services.nvd.nist.gov/rest/json/cves/2.0?cpeName=cpe:2.3:o:cisco:something_else:15.3:*']
     """
-    # DICTIONARY FOR VENDOR/PLATFORM TO NETWORK_DRIVER; UPDATE AS NEEDED
-    vendor_os: str = NIST_LIB_MAPPER_REVERSE.get(network_driver, "")
+    if custom_driver_mapping:
+        vendor_os = custom_driver_mapping
+    else:
+        vendor_os = NIST_LIB_MAPPER_REVERSE.get(network_driver, "")
+
     if not vendor_os:
         raise ValueError(
-            f"The network driver `{network_driver}` has no associated mapping, the supported drivers are {list(NIST_LIB_MAPPER_REVERSE.keys())}."
+            f"The network driver `{network_driver}` has no associated mapping. The supported drivers are {list(NIST_LIB_MAPPER_REVERSE.keys())}. You may also "
+            f"provide a custom driver mapping string in the format of 'vendor:os_name' to use a custom NIST driver value."
+            f"Example: get_nist_urls('cisco_ios', '15.3', 'cisco:something_else')"
         )
-    vendor, os_name = vendor_os.split(":")
-
+    vendor, os_name = vendor_os.split(":", 1)
     return get_nist_vendor_platform_urls(vendor, os_name, version)
