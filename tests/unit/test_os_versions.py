@@ -4,6 +4,7 @@ import pytest
 
 from netutils import os_version
 from netutils.constants import UPGRADE_PATHS
+from netutils.os_version import version_metadata
 
 LOOSE_VERSION = [
     {"sent": {"current_version": "10.1", "comparison": ">=", "target_version": "10.2"}, "received": False},
@@ -33,6 +34,35 @@ STRICT_VERSION = [
 ]
 
 PLATFORM_VERSION_METADATA = [
+    # ArubaOS-CX uses a custom version format
+    {
+        "sent": {
+            "vendor": "hpe",
+            "platform": "arubaos-cx",
+            "version": "FL.10.13.1161",
+        },
+        "received": {
+            "major": "10",
+            "minor": "13",
+            "patch": "1161",
+            "release": "FL",
+            "vendor_metadata": True,
+        },
+    },
+    {
+        "sent": {
+            "vendor": "hpe",
+            "platform": "arubaos-cx",
+            "version": "GL.10.13.1090",
+        },
+        "received": {
+            "major": "10",
+            "minor": "13",
+            "patch": "1090",
+            "release": "GL",
+            "vendor_metadata": True,
+        },
+    },
     # Cisco and Arista use the generic parsing
     {
         "sent": {"vendor": "cisco", "platform": "ios", "version": "15.7(2.0z)M"},

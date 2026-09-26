@@ -133,6 +133,28 @@ def compare_version_strict(current_version: str, comparison: str, target_version
     return _compare_version(current_version, comparison, target_version, "strict")
 
 
+def _hpe_arubaos_cx_version_metadata(version: str) -> t.Dict[str, t.Any]:
+    """Parse Aruba AOS-CX versions.
+
+    Examples:
+        >>> _hpe_arubaos_cx_version_metadata("FL.10.13.1161")
+        {'release': 'FL', 'major': '10', 'minor': '13', 'patch': '1161'}
+
+        >>> _hpe_arubaos_cx_version_metadata("GL.10.13.1090")
+        {'release': 'GL', 'major': '10', 'minor': '13', 'patch': '1090'}
+    """
+    regex = re.compile(
+        r"^(?P<release>[A-Z]{2})\.(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)$"
+    )
+
+    parsed_version = regex.match(version)
+
+    if parsed_version:
+        return parsed_version.groupdict()
+
+    return {"Error": "Unable to evaluate the version number entered."}
+
+
 def _juniper_junos_version_metadata(version: str) -> t.Dict[str, t.Any]:
     """Parses JunOS Version into usable bits matching JunOS Standards.
 
@@ -285,6 +307,9 @@ version_metadata_parsers = {
     "default": _basic_version_metadata,
     "juniper": {
         "junos": _juniper_junos_version_metadata,
+    },
+    "hpe": {
+        "arubaos-cx": _hpe_arubaos_cx_version_metadata,
     },
 }
 
