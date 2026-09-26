@@ -70,6 +70,30 @@ def test_incorrect_banner_ios():
         compliance.parser_map["cisco_ios"](banner_cfg).config_lines  # pylint: disable=expression-not-assigned
 
 
+def test_fortinet_bracket_in_object_name():
+    """A bracket in an object name is not a replacemsg placeholder.
+
+    _parse_out_offending replaces a `config system replacemsg` buffer with a
+    `["<name>"]` placeholder and _build_nested_config restores it, but the guard
+    was `"[" in line` alone. Any object name containing a bracket was taken for a
+    placeholder, and the lookup miss raised ValueError out of __init__.
+    """
+    cfg = 'config firewall address\n    edit "obj[1]"\n        set subnet 10.0.0.0 255.0.0.0\n    next\nend\n'
+    config_lines = compliance.parser_map["fortinet_fortios"](cfg).config_lines
+    assert [line.config_line for line in config_lines] == [
+        "config firewall address",
+        '    edit "obj[1]"',
+        "        set subnet 10.0.0.0 255.0.0.0",
+    ]
+
+
+def test_fortinet_replacemsg_buffer_still_restored():
+    """The guard above must not stop a genuine placeholder being restored."""
+    cfg = 'config system replacemsg webproxy "deny"\n    set buffer "<html>body</html>"\nend\n'
+    config_lines = compliance.parser_map["fortinet_fortios"](cfg).config_lines
+    assert any("set buffer" in line.config_line for line in config_lines)
+
+
 def test_duplicate_line():
     logging = (
         "!\n"

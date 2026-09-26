@@ -1119,10 +1119,13 @@ class FortinetConfigParser(BaseSpaceConfigParser):
             IndexError: When the number of parents does not match the expected deindent level.
         """
         if "[" in line:
-            updated_line = self.uncommon_data.get(line.split('"')[1], None)
-            if not updated_line:
-                raise ValueError("Input line is malformed.")
-            line = updated_line
+            # Only a placeholder this parser put here, and nothing else. The
+            # guard used to be the bracket alone, so any object name containing
+            # one was taken for a placeholder and the lookup miss raised, losing
+            # the whole configuration.
+            parts = line.split('"')
+            if len(parts) > 2 and parts[1] in self.uncommon_data:
+                line = self.uncommon_data[parts[1]]
         self._update_config_lines(line)
         for line in self.generator_config:
             if not line[0].isspace():
