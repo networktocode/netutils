@@ -1,0 +1,1 @@
+Fixed an indented banner aborting the parse of an entire config. `is_banner_start` matched the stripped line while the banner patterns anchor at the start of it, and where the two disagreed the resulting `ValueError` left `__init__`. Affected the Cisco IOS, NX-OS, IOS-XR and Arista EOS parsers.

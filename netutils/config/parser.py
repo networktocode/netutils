@@ -580,6 +580,14 @@ class CiscoConfigParser(BaseSpaceConfigParser):
     def is_banner_start(self, line: str) -> bool:
         """Determine if the line starts a banner config."""
         state = super(CiscoConfigParser, self).is_banner_start(line)
+        if state and not self.regex_banner.match(line):
+            # The inherited check matches the stripped line, while regex_banner
+            # anchors `banner` at the start of it. Where the two disagree the
+            # line cannot yield a delimiter, and setting banner_end below would
+            # raise out of __init__ and lose the whole config. Treat it as an
+            # ordinary line instead, which is what ASAConfigParser already does
+            # by not stripping in its own is_banner_start.
+            return False
         if state:
             self.banner_end = line
         return state
@@ -727,6 +735,17 @@ class EOSConfigParser(BaseSpaceConfigParser):
     """EOSConfigParser implementation fo ConfigParser Class."""
 
     banner_end = "EOF"
+
+    def is_banner_start(self, line: str) -> bool:
+        """Determine if the line starts a banner config.
+
+        Deliberately does not strip the line. The inherited check does, so an
+        indented `banner` was taken for the start of a banner, and the search
+        for the "EOF" terminator then ran to the end of the config and raised
+        out of __init__, losing everything. ASAConfigParser does the same thing
+        for the same reason.
+        """
+        return any(line.startswith(banner_start) for banner_start in self.banner_start)
 
     def _build_banner(self, config_line: str) -> t.Optional[str]:
         """Handle banner config lines.
