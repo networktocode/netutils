@@ -28,6 +28,7 @@ _JINJA2_FUNCTION_MAPPINGS = {
     "canonical_interface_name_list": "interface.canonical_interface_name_list",
     "abbreviated_interface_name": "interface.abbreviated_interface_name",
     "abbreviated_interface_name_list": "interface.abbreviated_interface_name_list",
+    "slice_interface_range": "interface.slice_interface_range",
     "sort_interface_list": "interface.sort_interface_list",
     "ip_to_hex": "ip.ip_to_hex",
     "ip_addition": "ip.ip_addition",

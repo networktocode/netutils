@@ -28,6 +28,7 @@
 | canonical_interface_name_list | netutils.interface.canonical_interface_name_list |
 | interface_range_compress | netutils.interface.interface_range_compress |
 | interface_range_expansion | netutils.interface.interface_range_expansion |
+| slice_interface_range | netutils.interface.slice_interface_range |
 | sort_interface_list | netutils.interface.sort_interface_list |
 | split_interface | netutils.interface.split_interface |
 | cidr_to_netmask | netutils.ip.cidr_to_netmask |
