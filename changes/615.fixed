@@ -1,0 +1,1 @@
+Fixed uptime_string_to_seconds raising ValueError for uptime strings without a seconds value, such as "2w1d".
