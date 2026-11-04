@@ -420,6 +420,10 @@ UPTIME_REGEX_PATTERNS = [
         r"(((?P<years>\d+)y)?(?P<weeks>\d+)w)?((?P<days>\d+)d)?((?P<hours>\d+)h)?"
         r"((?P<minutes>\d+)m)?((?P<seconds>\d+)s)"
     ),  # pylint: disable=implicit-str-concat
+    (
+        r"^(?=\d)(((?P<years>\d+)y)?(?P<weeks>\d+)w)?((?P<days>\d+)d)?((?P<hours>\d+)h)?"
+        r"((?P<minutes>\d+)m)?$"
+    ),  # pylint: disable=implicit-str-concat
 ]
 
 # Do not modify list, see UPGRADE_PATHS documentation on the versioning of this

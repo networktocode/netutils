@@ -45,6 +45,11 @@ UPTIME_TO_SECONDS = [
     {"sent": "4m15s", "received": 255},
     {"sent": "6d10m1s", "received": 519001},
     {"sent": "1y3w10m2s", "received": 33351002},
+    {"sent": "2w1d", "received": 1296000},
+    {"sent": "1y3w", "received": 33350400},
+    {"sent": "3d02h", "received": 266400},
+    {"sent": "5h10m", "received": 18600},
+    {"sent": "10m", "received": 600},
 ]
 
 
@@ -58,6 +63,7 @@ def test_uptime_string_to_seconds(data):
     assert uptime_string_to_seconds(data["sent"]) == data["received"]
 
 
-def test_fail_uptime_string_to_seconds():
+@pytest.mark.parametrize("data", ["thisismytime", "", "123", "1mo", "1h 5m", "up for 2w1d"])
+def test_fail_uptime_string_to_seconds(data):
     with pytest.raises(Exception, match=r"Unable to parse uptime string."):
-        uptime_string_to_seconds("thisismytime")
+        uptime_string_to_seconds(data)
