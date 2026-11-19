@@ -92,9 +92,9 @@ def name_to_bits(speed: str) -> int:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     bit_speed, bit_name = match.groups()
     if bit_name in BITS_MAPPING.keys():
-        return int(float(bit_speed) * BITS_MAPPING[bit_name]["low"])
+        return int(float(bit_speed) * max(BITS_MAPPING[bit_name]["low"], 1))
     if bit_name in BYTES_MAPPING.keys():
-        return int(float(bit_speed) * BYTES_MAPPING[bit_name]["low"])
+        return int(float(bit_speed) * max(BYTES_MAPPING[bit_name]["low"], 8))
     raise ValueError(f"Speed of {speed} was not a valid speed representation.")
 
 
@@ -126,9 +126,9 @@ def name_to_bytes(speed: str) -> float:
         raise ValueError(f"Speed of {speed} was not a valid speed representation.")
     byte_speed, byte_name = match.groups()
     if byte_name in BYTES_MAPPING.keys():
-        return (float(byte_speed) * BYTES_MAPPING[byte_name]["low"]) / 8
+        return (float(byte_speed) * max(BYTES_MAPPING[byte_name]["low"], 8)) / 8
     if byte_name in BITS_MAPPING.keys():
-        return (float(byte_speed) * BITS_MAPPING[byte_name]["low"]) * 0.125
+        return (float(byte_speed) * max(BITS_MAPPING[byte_name]["low"], 1)) * 0.125
     raise ValueError(f"Speed of {speed} was not a valid speed representation.")
 
 
@@ -186,11 +186,8 @@ def bytes_to_name(speed: float, nbr_decimal: int = 0) -> str:
 
     byte_speed = speed * 8
     for bit_type, val in BYTES_MAPPING.items():
-        if val["low"] <= speed < val["high"]:
-            try:
-                return f"{round(byte_speed / val['low'], nbr_decimal)}{bit_type}"
-            except ZeroDivisionError:
-                return f"{round(byte_speed, nbr_decimal)}{bit_type}"
+        if val["low"] <= byte_speed < val["high"]:
+            return f"{round(byte_speed / max(val['low'], 8), nbr_decimal)}{bit_type}"
     raise ValueError(f"Speed of {speed} was not a valid speed representation.")
 
 
@@ -231,13 +228,12 @@ def name_to_name(speed: str, speed_type: str, nbr_decimal: int = 0) -> str:
 
     # Find out if the `expected` value is a bit or a byte
     if speed_type in BYTES_MAPPING.keys():
-        bit_multiplier = BYTES_MAPPING[speed_type]["low"]
+        bit_multiplier = max(BYTES_MAPPING[speed_type]["low"], 8)
     elif speed_type in BITS_MAPPING.keys():
-        bit_multiplier = BITS_MAPPING[speed_type]["low"]
+        bit_multiplier = max(BITS_MAPPING[speed_type]["low"], 1)
     else:
         raise ValueError(f"Speed type of {speed_type} was not a valid type.")
 
-    try:
-        return f"{round(bit_value / bit_multiplier, nbr_decimal)}{speed_type}"
-    except ZeroDivisionError:
+    if speed_type == "bps":
         return f"{round(bit_value, nbr_decimal)}{speed_type}"
+    return f"{round(bit_value / bit_multiplier, nbr_decimal)}{speed_type}"

@@ -1,8 +1,10 @@
 """Test for the Bandwidth functions."""
 
 import pytest
+from jinja2 import Environment
 
 from netutils import bandwidth
+from netutils.utils import jinja2_convenience_function
 
 name_to_bits = [
     {"sent": "10Mbps", "received": 10000000},
@@ -83,11 +85,11 @@ def test_bits_to_name_exceptions(data):
 
 
 bytes_to_name = [
-    {"sent": {"speed": 950.0}, "received": "7600.0Bps"},
-    {"sent": {"speed": 1000.0}, "received": "8000.0Bps"},
-    {"sent": {"speed": 1000000.0}, "received": "1000.0KBps"},
-    {"sent": {"speed": 1000000000.0}, "received": "1000.0MBps"},
-    {"sent": {"speed": 1000000000000.0}, "received": "1000.0GBps"},
+    {"sent": {"speed": 950.0}, "received": "950.0Bps"},
+    {"sent": {"speed": 1000.0}, "received": "1.0KBps"},
+    {"sent": {"speed": 1000000.0}, "received": "1.0MBps"},
+    {"sent": {"speed": 1000000000.0}, "received": "1.0GBps"},
+    {"sent": {"speed": 1000000000000.0}, "received": "1.0TBps"},
 ]
 
 
@@ -188,3 +190,72 @@ named_exceptions = [
 def test_name_to_name_exceptions(data):
     with pytest.raises(ValueError):
         assert bandwidth.name_to_name(**data)
+
+
+@pytest.mark.parametrize(
+    "speed,bits,bytes_",
+    [
+        ("0bps", 0, 0.0),
+        ("1bps", 1, 0.125),
+        ("8bps", 8, 1.0),
+        ("100bps", 100, 12.5),
+        ("100bit", 100, 12.5),
+        ("100b/s", 100, 12.5),
+        ("0Bps", 0, 0.0),
+        ("1Bps", 8, 1.0),
+        ("8Bps", 64, 8.0),
+        ("100Bps", 800, 100.0),
+        ("100B", 800, 100.0),
+        ("1.5Bps", 12, 1.5),
+        ("1.5bps", 1, 0.1875),
+    ],
+)
+def test_base_unit_names(speed, bits, bytes_):
+    assert bandwidth.name_to_bits(speed) == bits
+    assert bandwidth.name_to_bytes(speed) == bytes_
+
+
+@pytest.mark.parametrize(
+    "speed,speed_type,expected",
+    [
+        ("1Kbps", "bps", "1000bps"),
+        ("1Kbps", "Bps", "125.0Bps"),
+        ("8bps", "Bps", "1.0Bps"),
+        ("100Bps", "bps", "800.0bps"),
+        ("100Bps", "KBps", "0.1KBps"),
+        ("100bps", "Kbps", "0.1Kbps"),
+        ("0Bps", "bps", "0.0bps"),
+        ("0bps", "Bps", "0.0Bps"),
+    ],
+)
+def test_name_to_name_base_units(speed, speed_type, expected):
+    assert bandwidth.name_to_name(speed, speed_type, nbr_decimal=3) == expected
+
+
+@pytest.mark.parametrize(
+    "speed,expected",
+    [
+        (0.0, "0.0Bps"),
+        (1.0, "1.0Bps"),
+        (999.0, "999.0Bps"),
+        (1000.0, "1.0KBps"),
+        (7999.0, "7.999KBps"),
+        (8000.0, "8.0KBps"),
+        (999999.0, "999.999KBps"),
+        (1000000.0, "1.0MBps"),
+    ],
+)
+def test_bytes_to_name_boundaries(speed, expected):
+    assert bandwidth.bytes_to_name(speed, nbr_decimal=3) == expected
+
+
+@pytest.mark.parametrize("speed", [0.0, 1.0, 950.0, 1000.0, 7999.0, 8000.0, 1000000.0])
+def test_byte_conversion_round_trip(speed):
+    assert bandwidth.name_to_bytes(bandwidth.bytes_to_name(speed, nbr_decimal=3)) == speed
+
+
+def test_bandwidth_jinja_round_trip():
+    environment = Environment()
+    environment.filters.update(jinja2_convenience_function())
+    template = environment.from_string("{{ value | bytes_to_name | name_to_bytes }}")
+    assert template.render(value=950.0) == "950.0"
