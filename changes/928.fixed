@@ -1,0 +1,1 @@
+Fixed base bandwidth unit conversions and byte formatting to use consistent bit and byte scales and decimal SI thresholds.
